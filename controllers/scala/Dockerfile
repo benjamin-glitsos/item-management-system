@@ -1,5 +1,5 @@
-FROM mozilla/sbt
+FROM openjdk
+RUN curl -Ls https://git.io/sbt > /bin/sbt && chmod 0755 /bin/sbt
 RUN mkdir ~/code
-WORKDIR /scala
-COPY . /scala
-CMD ["sbt", "shell"]
+WORKDIR ~/code
+COPY . ~/code
