@@ -12,8 +12,8 @@ do
         "run adminer" )
             docker run adminer
         ;;
-        "run -it --rm mozilla/sbt" )
-            docker run mozilla/sbt
+        "run sbt" )
+            docker run -it --rm mozilla/sbt sbt shell
         ;;
         "prune" )
             sudo docker container prune
