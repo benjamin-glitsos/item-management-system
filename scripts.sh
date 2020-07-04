@@ -12,6 +12,9 @@ do
         "images" )
             sudo docker image ls -a
         ;;
+        "containers" )
+            sudo docker container ls -a
+        ;;
         * )
             cat ./scripts.sh
         ;;

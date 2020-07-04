@@ -20,3 +20,6 @@ services:
     container_name: scala_custom
     build:
       context: ./controllers/scala/
+    env_file: .env
+    stdin_open: true
+    tty: true
