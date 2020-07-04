@@ -7,13 +7,13 @@ do
             sudo docker-compose up
         ;;
         "run postgres" )
-            docker run postgres
+            sudo docker run postgres
         ;;
         "run adminer" )
-            docker run adminer
+            sudo docker run adminer
         ;;
         "run sbt" )
-            docker run -it --rm mozilla/sbt sbt shell
+            sudo docker run -it --rm mozilla/sbt sbt shell
         ;;
         "prune" )
             sudo docker container prune
