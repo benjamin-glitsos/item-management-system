@@ -3,7 +3,7 @@
 for arg in "$@"
 do
     case $arg in
-        "run" )
+        "compose" )
             sudo docker-compose up
         ;;
         "run postgres" )
