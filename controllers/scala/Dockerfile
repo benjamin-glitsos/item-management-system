@@ -1,5 +1,5 @@
 FROM mozilla/sbt
-RUN mkdir -p /scala
+RUN mkdir ~/code
 WORKDIR /scala
 COPY . /scala
 CMD ["sbt", "shell"]

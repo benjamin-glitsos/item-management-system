@@ -16,10 +16,15 @@ services:
   #   restart: always
   #   ports:
   #     - 8080:8080
-  scala:
-    container_name: scala_custom
+  # scala:
+  #   container_name: scala_custom
+  #   build:
+  #     context: ./controllers/scala/
+  #   env_file: .env
+  #   stdin_open: true
+  #   tty: true
+  angular:
+    container_name: postgres_custom
     build:
-      context: ./controllers/scala/
-    env_file: .env
-    stdin_open: true
-    tty: true
+      context: ./models/postgres/
+    restart: always
