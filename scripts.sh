@@ -6,6 +6,15 @@ do
         "run" )
             sudo docker-compose up
         ;;
+        "run postgres" )
+            docker run postgres
+        ;;
+        "run adminer" )
+            docker run adminer
+        ;;
+        "run -it --rm mozilla/sbt" )
+            docker run mozilla/sbt
+        ;;
         "prune" )
             sudo docker container prune
         ;;
