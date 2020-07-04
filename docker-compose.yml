@@ -1,16 +1,20 @@
 version: '3.1'
 services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #   build:
+  #     dockerfile: ./models/postgres/Dockerfile
   adminer:
-    image: adminer
+    container_name: adminer_custom
+    build:
+      context: ./models/adminer/
     restart: always
     ports:
       - 8080:8080
-  scala:
-    image: mozilla/docker-sbt
+  # scala:
+  #   image: mozilla/docker-sbt

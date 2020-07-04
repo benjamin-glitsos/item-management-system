@@ -6,6 +6,12 @@ do
         "compose" )
             sudo docker-compose up
         ;;
+        "prune" )
+            sudo docker container prune
+        ;;
+        "images" )
+            sudo docker image ls -a
+        ;;
         "run postgres" )
             sudo docker run postgres
         ;;
@@ -14,9 +20,6 @@ do
         ;;
         "run sbt" )
             sudo docker run -it --rm mozilla/sbt sbt shell
-        ;;
-        "prune" )
-            sudo docker container prune
         ;;
         * )
             echo "Open this file in a text editor to view the shell scripts that are commonly used for this project"
