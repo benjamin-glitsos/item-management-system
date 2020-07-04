@@ -24,7 +24,7 @@ services:
   #   stdin_open: true
   #   tty: true
   angular:
-    container_name: postgres_custom
+    container_name: angular_custom
     build:
-      context: ./models/postgres/
+      context: ./views/angular/
     restart: always
