@@ -12,3 +12,5 @@ services:
     restart: always
     ports:
       - 8080:8080
+  scala:
+    image: mozilla/docker-sbt
