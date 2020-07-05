@@ -10,4 +10,4 @@ RUN npm install \
 
 FROM nginx:1.19.0-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/ /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
