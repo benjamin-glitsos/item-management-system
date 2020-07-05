@@ -15,10 +15,12 @@
 * Docker Compose
 * Scala
 * Cats
+* Circe
 * Refined
 * Http4s
 * Slick
 * Angular
 * ngx-admin
 * ag-Grid
-* Kafka
+* Kafka?
+* Jenkins?
