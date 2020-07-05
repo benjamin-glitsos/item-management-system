@@ -1,31 +1,39 @@
 version: '3.1'
 services:
-  # database:
-  #   container_name: database
-  #   build:
-  #     context: ./database/
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  # database_admin:
-  #   container_name: database_admin
-  #   build:
-  #     context: ./database-admin/
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
-  # app:
-  #   container_name: app
-  #   build:
-  #     context: ./app/
-  #   stdin_open: true
-  #   tty: true
+  database:
+    build:
+      context: ./database/
+    image: ${APP_SHORTNAME}_database
+    container_name: ${APP_SHORTNAME}_database
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+  database_admin:
+    build:
+      context: ./database-admin/
+    image: ${APP_SHORTNAME}_database_admin
+    container_name: ${APP_SHORTNAME}_database_admin
+    restart: always
+    ports:
+      - 8080:8080
+  app:
+    build:
+      context: ./app/
+    image: ${APP_SHORTNAME}_app
+    container_name: ${APP_SHORTNAME}_app
+    volumes:
+      - app-volume:/usr/src/app
+    stdin_open: true
+    tty: true
   admin:
-    container_name: admin
     build:
       context: ./admin/
+    image: ${APP_SHORTNAME}_admin
+    container_name: ${APP_SHORTNAME}_admin
+    volumes:
+      - app-volume:/usr/src/app
     restart: always
     stdin_open: true
     ports:

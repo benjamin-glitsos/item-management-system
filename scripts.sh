@@ -3,7 +3,7 @@
 for arg in "$@"
 do
     case $arg in
-        "run" | "compose" )
+        "run" | "compose" | "build" )
             docker-compose up
         ;;
         "prune" )
