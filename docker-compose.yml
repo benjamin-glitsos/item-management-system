@@ -18,13 +18,13 @@ services:
     restart: always
     ports:
       - 8080:8080
-  # app:
-  #   container_name: ${APP_SHORTNAME}_app
-  #   build:
-  #     context: ./app/
-  #   image: ${APP_SHORTNAME}_app
-  #   stdin_open: true
-  #   tty: true
+  app:
+    container_name: ${APP_SHORTNAME}_app
+    build:
+      context: ./app/
+    image: ${APP_SHORTNAME}_app
+    stdin_open: true
+    tty: true
   admin:
     build:
       context: ./admin/
