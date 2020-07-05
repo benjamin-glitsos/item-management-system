@@ -33,7 +33,7 @@ services:
     image: ${APP_SHORTNAME}_admin
     container_name: ${APP_SHORTNAME}_admin
     volumes:
-      - app-volume:/usr/src/app
+      - admin-volume:/usr/src/app
     restart: always
     stdin_open: true
     ports:
