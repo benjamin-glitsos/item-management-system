@@ -1,6 +1,6 @@
 ## Build --------------------
 
-FROM node:14.5.0-alpine3.10
+FROM node:14.5.0-alpine3.10 AS build
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install \
