@@ -32,8 +32,6 @@ services:
       context: ./admin/
     image: ${APP_SHORTNAME}_admin
     container_name: ${APP_SHORTNAME}_admin
-    volumes:
-      - admin-volume:/usr/src/app
     restart: always
     stdin_open: true
     ports:
