@@ -4,3 +4,4 @@ RUN curl -Ls https://git.io/sbt > /bin/sbt \
     mkdir /code
 WORKDIR /code
 COPY . /code
+CMD shell
