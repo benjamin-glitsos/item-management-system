@@ -19,10 +19,12 @@ services:
     ports:
       - 8080:8080
   app:
-    container_name: ${APP_SHORTNAME}_app
     build:
       context: ./app/
     image: ${APP_SHORTNAME}_app
+    container_name: ${APP_SHORTNAME}_app
+    volumes:
+      - app-volume:/usr/src/app
     stdin_open: true
     tty: true
   admin:
@@ -30,6 +32,8 @@ services:
       context: ./admin/
     image: ${APP_SHORTNAME}_admin
     container_name: ${APP_SHORTNAME}_admin
+    volumes:
+      - app-volume:/usr/src/app
     restart: always
     stdin_open: true
     ports:
