@@ -1,30 +1,29 @@
 version: '3.1'
 services:
-  # db:
-  #   container_name: postgres_custom
+  # database:
+  #   container_name: database
   #   build:
-  #     context: ./models/postgres/
+  #     context: ./database/
   #   restart: always
   #   environment:
   #     POSTGRES_USER: ${POSTGRES_USER}
   #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   #     POSTGRES_DB: ${POSTGRES_DB}
-  # adminer:
-  #   container_name: adminer_custom
+  # database_admin:
+  #   container_name: database_admin
   #   build:
-  #     context: ./models/adminer/
+  #     context: ./database-admin/
   #   restart: always
   #   ports:
   #     - 8080:8080
-  scala:
-    container_name: scala_custom
+  app:
+    container_name: app
     build:
-      context: ./controllers/scala/
-    # env_file: .env
+      context: ./app/
     stdin_open: true
     tty: true
-  # angular:
-  #   container_name: angular_custom
+  # admin:
+  #   container_name: admin
   #   build:
-  #     context: ./views/angular/
+  #     context: ./admin/
   #   restart: always
