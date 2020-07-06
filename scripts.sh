@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 case "$@" in
-    "run" | "compose" | "build" )
+    "run" | "build" | "compose" )
         docker-compose up
     ;;
     "images" )
