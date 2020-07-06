@@ -4,9 +4,6 @@ case "$@" in
     "run" | "compose" | "build" )
         docker-compose up
     ;;
-    "prune" )
-        docker container prune
-    ;;
     "images" )
         docker image ls -a
     ;;
