@@ -19,6 +19,7 @@
 * Refined
 * Http4s
 * Slick
+* slick-pg
 * Angular
 * ngx-admin
 * ag-Grid
