@@ -6,7 +6,7 @@ RUN apk add --no-cache curl && \
     apk add --no-cache vim && \
     curl -Ls https://git.io/sbt > /usr/local/bin/sbt && \
     chmod 0755 /usr/local/bin/sbt && \
-    mkdir /.sbt
+    mkdir /root/.sbt
 WORKDIR /usr/src/app
 COPY . .
 
