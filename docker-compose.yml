@@ -24,7 +24,7 @@ services:
     image: ${APP_SHORTNAME}_app
     container_name: ${APP_SHORTNAME}_app
     volumes:
-      - app-volume:/usr/src/app
+      - sbt:/.sbt
     stdin_open: true
     tty: true
   admin:
