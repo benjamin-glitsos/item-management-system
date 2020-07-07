@@ -25,6 +25,7 @@ services:
     container_name: ${APP_SHORTNAME}_app
     volumes:
       - sbt:/root/.sbt
+      - ${APP_LOCAL_DIR}/app:/usr/src/app
     stdin_open: true
     tty: true
   admin:

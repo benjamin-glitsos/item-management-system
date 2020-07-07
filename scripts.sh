@@ -14,7 +14,11 @@ case "$@" in
         docker build -t hospital_app ./app/
     ;;
     "run app" )
-        docker run -it --volume=sbt:/root/.sbt hospital_app
+        docker run \
+            -it \
+            --volume=sbt:/root/.sbt \
+            --volume=$HOME/Documents/code/hospital-ms/app:/usr/src/app \
+            hospital_app
     ;;
     "build admin" )
         docker build -t hospital_admin ./admin/
