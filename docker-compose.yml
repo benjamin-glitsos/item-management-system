@@ -24,7 +24,8 @@ services:
     image: ${APP_SHORTNAME}_app
     container_name: ${APP_SHORTNAME}_app
     volumes:
-      - app-volume:/usr/src/app
+      - app:/root
+      - ${APP_LOCAL_DIR}/app:/usr/src/app
     stdin_open: true
     tty: true
   admin:
@@ -32,8 +33,6 @@ services:
       context: ./admin/
     image: ${APP_SHORTNAME}_admin
     container_name: ${APP_SHORTNAME}_admin
-    volumes:
-      - app-volume:/usr/src/app
     restart: always
     stdin_open: true
     ports:
