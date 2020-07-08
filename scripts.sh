@@ -16,7 +16,7 @@ case "$@" in
     "run app" )
         docker run \
             -it \
-            --volume=sbt:/root/.sbt \
+            --volume=app:/root \
             --volume=$HOME/Documents/code/hospital-ms/app:/usr/src/app \
             hospital_app
     ;;
