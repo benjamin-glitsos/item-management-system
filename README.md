@@ -2,7 +2,7 @@
 
 **Architecture**: Dockerised microservice MVC of PostgreSQL (*Model*), Angular (*View*) and Scala (*Controller*).
 
-**Paradigm:** Object-oriented structure, with Functional Programming methods. (OOP in the large, FP in the small.)
+**Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large, FP in the small.)
 
 **Principles:** Database Normalisation, Scalability, Modularisation, Composition over inheritance, Type-safety, Functional purity, DRY.
 
