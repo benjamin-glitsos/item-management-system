@@ -1,4 +1,4 @@
-**Language:** Scala/Java Interop
+**Language:** Scala/Java Interop.
 
 **Architecture**: Dockerised microservice MVC of PostgreSQL (*Model*), Angular (*View*) and Scala (*Controller*).
 
