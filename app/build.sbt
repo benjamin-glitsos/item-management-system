@@ -18,8 +18,6 @@ libraryDependencies := Seq(
     "org.slf4j" % "slf4j-nop" % "1.7.26",
     "com.github.tminglei" %% "slick-pg" % slickPgVersion,
     "com.github.tminglei" %% "slick-pg_circe-json" % slickPgVersion,
-    "com.zaxxer" % "HikariCP" % "3.4.5",
-    "com.typesafe.slick" %% "slick-hikaricp" % "3.3.2",
     "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
     "com.devskiller" % "jfairy" % "0.6.0"
 )
