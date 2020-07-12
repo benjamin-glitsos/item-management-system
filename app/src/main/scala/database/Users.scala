@@ -19,9 +19,6 @@ object Users extends Seeder {
     def initialise() = DBIO.seq(
         users.schema.drop,
         users.schema.create,
-        users ++= Seq(
-            (0, newPerson().getUsername(), newPerson().getPassword()),
-            (0, newPerson().getUsername(), newPerson().getPassword())
-        )
+        users ++= seed(min = 1, max = 10)
     )
 }
