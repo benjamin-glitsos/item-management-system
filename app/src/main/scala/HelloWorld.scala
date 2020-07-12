@@ -41,11 +41,7 @@ object HelloWorld {
 
     def main(args: Array[String]) = {
         val setup = db.run(queries)
-        // println(
-        //     db.run(users.result).map(_.foreach {
-        //       case (id, name) =>
-        //         id + name
-        //     }).mkString("\n")
-        // )
+        val select = db.run(users.result)
+        println(select)
     }
 }
