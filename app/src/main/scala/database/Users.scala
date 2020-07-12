@@ -13,19 +13,12 @@ class UsersTable(tag: Tag) extends Table[(Int, String)](tag, "users") {
 object Users extends Seeder {
     val users = TableQuery[UsersTable]
 
-    def dropCreate() = {
-        DBIO.seq(
-          users.schema.drop,
-          users.schema.create
+    def initialise() = DBIO.seq(
+        users.schema.drop,
+        users.schema.create,
+        users ++= Seq(
+            (0, newPerson().getFirstName()),
+            (0, newPerson().getFirstName())
         )
-    }
-
-    def seed() = {
-        DBIO.seq(
-            users ++= Seq(
-                (0, newPerson().getFirstName()),
-                (0, newPerson().getFirstName())
-            )
-        )
-    }
+    )
 }
