@@ -40,8 +40,7 @@ object HelloWorld {
     )
 
     def main(args: Array[String]) = {
-        val setup = db.run(queries)
-        val select = db.run(users.result)
-        println(select)
+        // val setup = db.run(queries)
+        val select = db.run(users.result).foreach(println)
     }
 }
