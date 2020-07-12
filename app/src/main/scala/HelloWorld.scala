@@ -13,7 +13,7 @@ class Users(tag: Tag) extends Table[(Int, String)](tag, "users") {
 }
 
 object HelloWorld {
-    val fairy: Fairy = Fairy.create()
+    val faker: Fairy = Fairy.create()
 
     val db = Database.forURL(
         s"jdbc:postgresql://${System.getenv("POSTGRES_HOST")}/${System.getenv("POSTGRES_DB")}",
@@ -31,20 +31,21 @@ object HelloWorld {
     // }
 
     val queries = DBIO.seq(
+      users.schema.drop,
       users.schema.create,
       users ++= Seq(
-          (1, fairy.person().getFirstName()),
-          (2, fairy.person().getFirstName())
+          (0, faker.person().getFirstName()),
+          (0, faker.person().getFirstName())
       ),
     )
 
     def main(args: Array[String]) = {
         val setup = db.run(queries)
-        println(
-            db.run(users.result).map(_.foreach {
-              case (id, name) =>
-                id + name
-            }).mkString("\n")
-        )
+        // println(
+        //     db.run(users.result).map(_.foreach {
+        //       case (id, name) =>
+        //         id + name
+        //     }).mkString("\n")
+        // )
     }
 }
