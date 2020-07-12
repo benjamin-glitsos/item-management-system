@@ -22,25 +22,23 @@ object HelloWorld {
         password = System.getenv("POSTGRES_PASSWORD")
     )
 
-    val users = TableQuery[Users]
-
-    // object UsersDAO extends TableQuery(new Users(_)) {
-    //     def findById(id: Int): Future[Option[Users]] = {
-    //         db.run(this.filter(_.id === id).result).map(_.headOption)
-    //     }
-    // }
+    object UsersDAO extends TableQuery(new Users(_)) {
+        def findById(id: Int) = {
+            db.run(this.filter(_.id === id).result)
+        }
+    }
 
     val queries = DBIO.seq(
-      users.schema.drop,
-      users.schema.create,
-      users ++= Seq(
+      UsersDAO.schema.drop,
+      UsersDAO.schema.create,
+      UsersDAO ++= Seq(
           (0, faker.person().getFirstName()),
           (0, faker.person().getFirstName())
       ),
     )
 
     def main(args: Array[String]) = {
-        // val setup = db.run(queries)
-        val select = db.run(users.result).foreach(println)
+        val setup = db.run(queries)
+        // val select = db.run(users.result).foreach(println)
     }
 }
