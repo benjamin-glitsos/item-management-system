@@ -8,7 +8,7 @@ trait Database {
         password = System.getenv("POSTGRES_PASSWORD")
     )
 
-    def run(initialisations: DBIO[Any]*) = {
+    def initialise(initialisations: DBIO[Any]*) = {
         db.run(DBIO.seq(initialisations: _*))
     }
 }
