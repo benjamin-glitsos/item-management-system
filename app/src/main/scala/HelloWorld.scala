@@ -15,7 +15,12 @@ class Users(tag: Tag) extends Table[(Int, String)](tag, "USERS") {
 object HelloWorld {
     val person: Person = Fairy.create().person()
 
-    val db = Database.forConfig("database")
+    val db = Database.forURL(
+        s"jdbc:postgresql://${System.getenv("POSTGRES_HOST")}/${System.getenv("POSTGRES_DB")}",
+        driver = "org.postgresql.Driver",
+        user = System.getenv("POSTGRES_USER"),
+        password = System.getenv("POSTGRES_PASSWORD")
+    )
 
     val users = TableQuery[Users]
 
