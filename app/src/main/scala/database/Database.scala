@@ -1,5 +1,4 @@
 import slick.driver.PostgresDriver.api._
-import com.devskiller.jfairy.Fairy
 
 trait Database {
     val db = Database.forURL(
@@ -8,8 +7,4 @@ trait Database {
         user = System.getenv("POSTGRES_USER"),
         password = System.getenv("POSTGRES_PASSWORD")
     )
-
-    val faker: Fairy = Fairy.create()
-
-    val wow = "wow"
 }
