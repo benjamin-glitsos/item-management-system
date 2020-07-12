@@ -3,3 +3,4 @@ node_modules/
 dist/
 app/target/
 app/project/target/
+app/project/project/
