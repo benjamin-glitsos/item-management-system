@@ -1,27 +1,11 @@
-* **Architecture**: Dockerised microservice MVC of PostgreSQL (*model*), Angular (*view*) and Scala (*controller*).
-* **Coding Principles:** Object-oriented structure, with Functional Programming methods.
-* **Version Control pattern:** Git Trunk (switched from Git Flow).
+**Language:** Scala/Java Interop
 
----
+**Architecture**: Dockerised microservice MVC of PostgreSQL (*Model*), Angular (*View*) and Scala (*Controller*).
 
-* Scalability
-* Absolute Purity and Type-safety
-* Composition over inheritance
+**Paradigm:** Object-oriented structure, with Functional Programming methods. (OOP in the large, FP in the small.)
 
----
+**Principles:** Database Normalisation, Scalability, Modularisation, Composition over inheritance, Type-safety, Functional purity, DRY.
 
-* PostgreSQL
-* Docker
-* Docker Compose
-* Scala
-* Cats
-* Circe
-* Refined
-* Http4s
-* Slick
-* slick-pg
-* Angular
-* ngx-admin
-* ag-Grid
-* Kafka?
-* Jenkins?
+**Workflow:** Git Trunk (switched from Git Flow).
+
+**Stack:** [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [PostgreSQL](https://www.postgresql.org/), [Adminer](https://www.adminer.org/), [Angular](https://angular.io/), [ngx-admin](https://akveo.github.io/ngx-admin/), [ag-grid](https://www.ag-grid.com/), [Scala](https://www.scala-lang.org/), [Cats](https://typelevel.org/cats/), [Circe](https://circe.github.io/circe/), [Http4s](https://http4s.org/), [Slick](http://scala-slick.org/).
