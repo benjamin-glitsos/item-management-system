@@ -19,5 +19,5 @@ libraryDependencies := Seq(
     "com.github.tminglei" %% "slick-pg" % slickPgVersion,
     "com.github.tminglei" %% "slick-pg_circe-json" % slickPgVersion,
     "com.github.pureconfig" %% "pureconfig" % "0.13.0",
-    "com.devskiller" %% "jfairy" % "0.6.0"
+    "com.devskiller" % "jfairy" % "0.6.0"
 )
