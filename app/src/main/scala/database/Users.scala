@@ -1,13 +1,16 @@
 import slick.driver.PostgresDriver.api._
+import slick.jdbc.meta.MTable
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class UsersTable(tag: Tag) extends Table[(Int, String)](tag, "users") {
+class UsersTable(tag: Tag) extends Table[(Int, String, String)](tag, "users") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
-    def name = column[String]("name")
+    def username = column[String]("username")
 
-    def * = (id, name)
+    def password = column[String]("password")
+
+    def * = (id, username, password)
 }
 
 object Users extends Seeder {
@@ -17,8 +20,8 @@ object Users extends Seeder {
         users.schema.drop,
         users.schema.create,
         users ++= Seq(
-            (0, newPerson().getFirstName()),
-            (0, newPerson().getFirstName())
+            (0, newPerson().getUsername(), newPerson().getPassword()),
+            (0, newPerson().getUsername(), newPerson().getPassword())
         )
     )
 }
