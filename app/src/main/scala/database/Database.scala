@@ -1,3 +1,4 @@
+import slick.driver.PostgresDriver.api._
 import com.devskiller.jfairy.Fairy
 
 trait Database {
@@ -9,4 +10,6 @@ trait Database {
     )
 
     val faker: Fairy = Fairy.create()
+
+    val wow = "wow"
 }

@@ -10,20 +10,20 @@ class UsersTable(tag: Tag) extends Table[(Int, String)](tag, "users") {
     def * = (id, name)
 }
 
-object Users extends TableQuery(new UsersTable(_)) with Database {
-    def dropCreate() = {
-        DBIO.seq(
-          this.schema.drop,
-          this.schema.create
-        )
-    }
-
-    def seed() = {
-        DBIO.seq(
-            this ++= Seq(
-                (0, faker.person().getFirstName()),
-                (0, faker.person().getFirstName())
-            )
-        )
-    }
-}
+// object Users extends TableQuery(new UsersTable(_)) with Database {
+//     def dropCreate() = {
+//         DBIO.seq(
+//           this.schema.drop,
+//           this.schema.create
+//         )
+//     }
+//
+//     def seed() = {
+//         DBIO.seq(
+//             this ++= Seq(
+//                 (0, faker.person().getFirstName()),
+//                 (0, faker.person().getFirstName())
+//             )
+//         )
+//     }
+// }
