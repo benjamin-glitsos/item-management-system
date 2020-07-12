@@ -3,7 +3,7 @@ import slick.driver.PostgresDriver.api._
 object Records extends Seeder {
     type Record = (Int, String, Int, String, Int, String, Int)
 
-    class RecordsTable(tag: Tag) extends Table[Record](tag, "users") {
+    class RecordsTable(tag: Tag) extends Table[Record](tag, "records") {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
         def created_at = column[String]("created_at")
         def created_by = column[Int]("created_by")
