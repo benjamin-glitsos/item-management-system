@@ -13,9 +13,8 @@ class Users(tag: Tag) extends Table[(Int, String)](tag, "users") {
 }
 
 object HelloWorld {
-    val person: Person = Fairy.create().person()
+    val fairy: Fairy = Fairy.create()
 
-    // TODO: put this in a config file e.g Typesafe Config
     val db = Database.forURL(
         s"jdbc:postgresql://${System.getenv("POSTGRES_HOST")}/${System.getenv("POSTGRES_DB")}",
         driver = "org.postgresql.Driver",
@@ -25,14 +24,27 @@ object HelloWorld {
 
     val users = TableQuery[Users]
 
+    // object UsersDAO extends TableQuery(new Users(_)) {
+    //     def findById(id: Int): Future[Option[Users]] = {
+    //         db.run(this.filter(_.id === id).result).map(_.headOption)
+    //     }
+    // }
+
     val queries = DBIO.seq(
       users.schema.create,
-      users += (1, person.getFirstName()),
-      users += (2, person.getFirstName()),
+      users ++= Seq(
+          (1, fairy.person().getFirstName()),
+          (2, fairy.person().getFirstName())
+      ),
     )
 
     def main(args: Array[String]) = {
         val setup = db.run(queries)
-        println("Hello World")
+        println(
+            db.run(users.result).map(_.foreach {
+              case (id, name) =>
+                id + name
+            }).mkString("\n")
+        )
     }
 }
