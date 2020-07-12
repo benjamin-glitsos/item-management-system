@@ -4,26 +4,29 @@ import slick.driver.PostgresDriver.api._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
+class Users(tag: Tag) extends Table[(Int, String)](tag, "USERS") {
+    def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
+
+    def name = column[String]("NAME")
+
+    def * = (id, name)
+}
+
 object HelloWorld {
     val person: Person = Fairy.create().person()
+
     val db = Database.forConfig("database")
 
-    class Users(tag: Tag) extends Table[(Int, String)](tag, "USERS") {
-        def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
-        def name = column[String]("NAME")
-        def * = (id, name)
-    }
+    val users = TableQuery[Users]
 
-    object UsersDAO extends TableQuery(new Users(_)) {
-        // def findById(id: Int): Future[Option[Users]] = {
-        //     db.run(this.filter(_.id === id).result).map(_.headOption)
-        // }
-    }
+    val queries = DBIO.seq(
+      users.schema.create,
+      users += (1, "aaaa"),
+      users += (2, "bbbb")
+    )
 
     def main(args: Array[String]) = {
+        val setup = db.run(queries)
         println("Hello World")
-        // UsersDAO.findById(1)
-        // val schema = UsersDAO.schema
-        // schema.create.statements
     }
 }
