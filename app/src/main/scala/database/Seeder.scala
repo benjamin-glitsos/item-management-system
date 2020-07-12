@@ -7,8 +7,8 @@ trait Seeder {
         Fairy.create().person()
     }
 
-    def seed(min: Int, max: Int) = {
+    def seed[A](min: Int, max: Int, row: => A) = {
         val length = Random.between(min, max)
-        (1 to length).map(_ => (0, newPerson().getUsername(), newPerson().getPassword()))
+        (1 to length).map(_ => row)
     }
 }
