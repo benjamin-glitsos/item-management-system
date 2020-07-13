@@ -1,3 +1,7 @@
+import eu.timepit.refined._
+import eu.timepit.refined.api.Refined
+import eu.timepit.refined.auto._
+import eu.timepit.refined.numeric._
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 

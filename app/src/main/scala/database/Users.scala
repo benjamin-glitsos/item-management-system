@@ -1,10 +1,14 @@
 import slick.driver.PostgresDriver.api._
 // import slick.jdbc.meta.MTable
+import eu.timepit.refined._
+import eu.timepit.refined.api.Refined
+import eu.timepit.refined.auto._
+import eu.timepit.refined.numeric._
 
 object Users extends Seeder {
     type User = (Int, String, String)
 
-    val seedCount = 4
+    val seedCount: Int Refined Positive = 4
 
     class UsersTable(tag: Tag) extends Table[User](tag, "users") {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)

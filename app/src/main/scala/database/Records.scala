@@ -1,10 +1,14 @@
 import slick.driver.PostgresDriver.api._
 import java.sql.Timestamp
+import eu.timepit.refined._
+import eu.timepit.refined.api.Refined
+import eu.timepit.refined.auto._
+import eu.timepit.refined.numeric._
 
 object Records extends Seeder {
     type Record = (Int, Timestamp, Int, Timestamp, Int, Timestamp, Int)
 
-    val seedCount = 6
+    val seedCount: Int Refined Positive = 6
 
     class RecordsTable(tag: Tag) extends Table[Record](tag, "records") {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
