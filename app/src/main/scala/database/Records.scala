@@ -35,7 +35,7 @@ object Records extends Seeder {
     val records = TableQuery[RecordsTable]
 
     def initialise() = DBIO.seq(
-        // records.schema.drop,
+        records.schema.drop,
         records.schema.create,
         records ++= seed[Record](
             seedCount,
