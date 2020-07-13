@@ -15,6 +15,8 @@ trait Seeder {
         Random.between(1, max)
     }
 
+    // TODO: random timestamp method
+
     def seed[A](count: Int, row: => A): Iterable[A] = {
         (1 to count).map(_ => row)
     }
