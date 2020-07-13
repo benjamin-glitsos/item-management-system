@@ -1,15 +1,16 @@
 import slick.driver.PostgresDriver.api._
+import java.sql.Timestamp
 
 object Records extends Seeder {
-    type Record = (Int, String, Int, String, Int, String, Int)
+    type Record = (Int, Timestamp, Int, Timestamp, Int, Timestamp, Int)
 
     class RecordsTable(tag: Tag) extends Table[Record](tag, "records") {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-        def created_at = column[String]("created_at")
+        def created_at = column[Timestamp]("created_at")
         def created_by = column[Int]("created_by")
-        def updated_at = column[String]("updated_at")
+        def updated_at = column[Timestamp]("updated_at")
         def updated_by = column[Int]("updated_by")
-        def deleted_at = column[String]("deleted_at")
+        def deleted_at = column[Timestamp]("deleted_at")
         def deleted_by = column[Int]("deleted_by")
         def * = (
             id,
@@ -35,11 +36,11 @@ object Records extends Seeder {
             10,
             (
                 0,
-                "TEST2",
+                new Timestamp(System.currentTimeMillis()),
                 0,
-                "TEST2",
+                new Timestamp(System.currentTimeMillis()),
                 0,
-                "TEST2",
+                new Timestamp(System.currentTimeMillis()),
                 0,
                 )
             )
