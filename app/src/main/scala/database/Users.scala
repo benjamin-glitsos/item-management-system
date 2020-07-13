@@ -6,7 +6,7 @@ import eu.timepit.refined.auto._
 import eu.timepit.refined.numeric._
 
 object Users extends Seeder {
-    type User = (Int, String, String, Int)
+    type User = (Int, String, String)
 
     val seedCount: Int Refined Positive = 4
 
@@ -14,9 +14,7 @@ object Users extends Seeder {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
         def username = column[String]("username")
         def password = column[String]("password")
-        def records_id = column[Int]("records_id")
-        def * = (id, username, password, records_id)
-        def records_fk = foreignKey("results_fk", id, Records.records)(_.id)
+        def * = (id, username, password)
     }
 
     val users = TableQuery[UsersTable]
@@ -26,7 +24,7 @@ object Users extends Seeder {
         users.schema.create,
         users ++= seed[User](
             seedCount,
-            (0, newPerson().getUsername(), newPerson().getPassword(), 1)
+            (0, newPerson().getUsername(), newPerson().getPassword())
         )
     )
 }
