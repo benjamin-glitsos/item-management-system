@@ -14,9 +14,9 @@ object Users extends Seeder {
         def record_id = column[Int]("record_id")
         def username = column[String]("username")
         def password = column[String]("password")
-        def * = (id, username, password)
+        def * = (id, record_id, username, password)
+        def record_fk = foreignKey("record_fk", record_id, Records.records)(_.id)
     }
-    def record_fk = foreignKey("record_fk", record_id, Records.records)(_.id)
 
     val users = TableQuery[UsersTable]
 
@@ -33,12 +33,12 @@ object Users extends Seeder {
         )
     )
 
-    def dropAllTables: DBIO[Unit] =
-      sqlu"""
-          DROP SCHEMA public CASCADE;
-          CREATE SCHEMA public;
-          GRANT ALL ON SCHEMA public TO postgres;
-          GRANT ALL ON SCHEMA public TO public;
-          COMMENT ON SCHEMA public IS 'standard public schema';
-      """
+    // def dropAllTables: DBIO[Unit] =
+    //   sqlu"""
+    //       DROP SCHEMA public CASCADE;
+    //       CREATE SCHEMA public;
+    //       GRANT ALL ON SCHEMA public TO postgres;
+    //       GRANT ALL ON SCHEMA public TO public;
+    //       COMMENT ON SCHEMA public IS 'standard public schema';
+    //   """
 }
