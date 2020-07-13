@@ -27,9 +27,9 @@ object Records extends Seeder {
             deleted_at,
             deleted_by
         )
-        // def created_by_fk = foreignKey("created_by_fk", created_by, Users.users)(_.id)
-        // def updated_by_fk = foreignKey("updated_by_fk", updated_by, Users.users)(_.id)
-        // def deleted_by_fk = foreignKey("deleted_by_fk", deleted_by, Users.users)(_.id)
+        def created_by_fk = foreignKey("created_by_fk", created_by, Users.users)(_.id)
+        def updated_by_fk = foreignKey("updated_by_fk", updated_by, Users.users)(_.id)
+        def deleted_by_fk = foreignKey("deleted_by_fk", deleted_by, Users.users)(_.id)
     }
 
     val records = TableQuery[RecordsTable]
@@ -42,11 +42,11 @@ object Records extends Seeder {
             (
                 0,
                 new Timestamp(System.currentTimeMillis()),
-                0,
+                1,
                 new Timestamp(System.currentTimeMillis()),
-                0,
+                1,
                 new Timestamp(System.currentTimeMillis()),
-                0,
+                1,
                 )
             )
         )
