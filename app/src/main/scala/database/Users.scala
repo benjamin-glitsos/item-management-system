@@ -20,7 +20,7 @@ object Users extends Seeder {
     val users = TableQuery[UsersTable]
 
     def initialise() = DBIO.seq(
-        // users.schema.drop,
+        users.schema.drop,
         users.schema.create,
         users ++= seed[User](
             seedCount,
