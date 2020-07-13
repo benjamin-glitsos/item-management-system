@@ -4,6 +4,8 @@ import java.sql.Timestamp
 object Records extends Seeder {
     type Record = (Int, Timestamp, Int, Timestamp, Int, Timestamp, Int)
 
+    val seedCount = 6
+
     class RecordsTable(tag: Tag) extends Table[Record](tag, "records") {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
         def created_at = column[Timestamp]("created_at")
@@ -32,8 +34,7 @@ object Records extends Seeder {
         records.schema.drop,
         records.schema.create,
         records ++= seed[Record](
-            1,
-            10,
+            seedCount,
             (
                 0,
                 new Timestamp(System.currentTimeMillis()),

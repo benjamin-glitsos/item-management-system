@@ -1,4 +1,3 @@
-import scala.util.Random
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 
@@ -7,8 +6,7 @@ trait Seeder {
         Fairy.create().person()
     }
 
-    def seed[A](min: Int, max: Int, row: => A): Iterable[A] = {
-        val length = Random.between(min, max)
-        (1 to length).map(_ => row)
+    def seed[A](count: Int, row: => A): Iterable[A] = {
+        (1 to count).map(_ => row)
     }
 }

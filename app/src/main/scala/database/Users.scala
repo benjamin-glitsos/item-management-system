@@ -4,6 +4,8 @@ import slick.driver.PostgresDriver.api._
 object Users extends Seeder {
     type User = (Int, String, String)
 
+    val seedCount = 4
+
     class UsersTable(tag: Tag) extends Table[User](tag, "users") {
         def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
         def username = column[String]("username")
@@ -17,8 +19,7 @@ object Users extends Seeder {
         users.schema.drop,
         users.schema.create,
         users ++= seed[User](
-            1,
-            10,
+            seedCount,
             (0, newPerson().getUsername(), newPerson().getPassword())
         )
     )
