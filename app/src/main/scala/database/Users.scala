@@ -1,5 +1,4 @@
 import slick.driver.PostgresDriver.api._
-// import slick.jdbc.meta.MTable
 import eu.timepit.refined._
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.auto._
@@ -20,11 +19,19 @@ object Users extends Seeder {
     val users = TableQuery[UsersTable]
 
     def initialise() = DBIO.seq(
-        users.schema.drop,
         users.schema.create,
         users ++= seed[User](
             seedCount,
             (0, newPerson().getUsername(), newPerson().getPassword())
         )
     )
+
+    def dropAllTables: DBIO[Unit] =
+      sqlu"""
+          DROP SCHEMA public CASCADE;
+          CREATE SCHEMA public;
+          GRANT ALL ON SCHEMA public TO postgres;
+          GRANT ALL ON SCHEMA public TO public;
+          COMMENT ON SCHEMA public IS 'standard public schema';
+      """
 }
