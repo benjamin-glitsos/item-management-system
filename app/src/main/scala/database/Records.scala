@@ -1,4 +1,5 @@
-import slick.driver.PostgresDriver.api._
+// import slick.driver.PostgresDriver.api._
+import MyPostgresProfile.api._
 
 object Records extends Seeder {
     type Record = (Int, String, Int, String, Int, String, Int)
