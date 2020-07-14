@@ -8,7 +8,7 @@ A toy hospital management system.
 
 **Principles:** Database Normalisation, Scalability, Modularisation, Composition over inheritance, Type-safety, Functional purity, DRY.
 
-**Concepts:** Data Access Object pattern, RESTful/CRUD API, monadic async.
+**Concepts:** RESTful/CRUD API, Role-based access control (RBAC), Data Access Object pattern, monadic async.
 
 **Workflow:** Git Trunk (switched from Git Flow).
 
