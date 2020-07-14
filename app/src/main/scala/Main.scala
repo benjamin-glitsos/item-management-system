@@ -1,9 +1,5 @@
-object Main extends Database {
+object Main extends Connection {
     def main(args: Array[String]): Unit = {
-        // val clear = Users.dropAllTables()
-        val setup = initialise(
-            Users.initialise(),
-            Records.initialise()
-        )
+        val setup = Seeder.run
     }
 }
