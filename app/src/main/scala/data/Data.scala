@@ -3,20 +3,12 @@ import slick.driver.PostgresDriver.api._
 import Types._
 
 object Data extends Seeder {
-    def setup(): Unit = {
+    val schema = UsersDAO.schema ++ RecordsDAO.schema
+
+    def setup() = {
         DBIO.seq(
-            UsersDAO.schema.create,
-            UsersDAO ++= generate[User](
-                UsersDAO.seedCount,
-                (
-                    id,
-                    randFK(RecordsDAO.seedCount),
-                    newPerson().getUsername(),
-                    newPerson().getPassword()
-                )
-            ),
-            RecordsDAO.schema.create,
-            RecordsDAO ++= generate[Record](
+            schema.create,
+            RecordsDAO ++= seed[Record](
                 RecordsDAO.seedCount,
                 (
                     id,
@@ -26,6 +18,15 @@ object Data extends Seeder {
                     randFK(UsersDAO.seedCount),
                     new Timestamp(System.currentTimeMillis()),
                     randFK(UsersDAO.seedCount)
+                )
+            ),
+            UsersDAO ++= seed[User](
+                UsersDAO.seedCount,
+                (
+                    id,
+                    randFK(RecordsDAO.seedCount),
+                    newPerson().getUsername(),
+                    newPerson().getPassword()
                 )
             ),
         )
