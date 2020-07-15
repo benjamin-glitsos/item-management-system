@@ -1,10 +1,22 @@
+import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
+import Types._
 
 object Data extends Seeder {
-    def run(): Unit = {
+    def setup(): Unit = {
         DBIO.seq(
+            UsersDAO.schema.create,
+            UsersDAO ++= generate[User](
+                UsersDAO.seedCount,
+                (
+                    id,
+                    randFK(RecordsDAO.seedCount),
+                    newPerson().getUsername(),
+                    newPerson().getPassword()
+                )
+            ),
             RecordsDAO.schema.create,
-            RecordsDAO ++= generate[Types.Record](
+            RecordsDAO ++= generate[Record](
                 RecordsDAO.seedCount,
                 (
                     id,
@@ -16,16 +28,6 @@ object Data extends Seeder {
                     randFK(UsersDAO.seedCount)
                 )
             ),
-            UsersDAO.schema.create,
-            UsersDAO ++= generate[Types.User](
-                UsersDAO.seedCount,
-                (
-                    id,
-                    randFK(RecordsDAO.seedCount),
-                    newPerson().getUsername(),
-                    newPerson().getPassword()
-                )
-            )
         )
     }
 }
