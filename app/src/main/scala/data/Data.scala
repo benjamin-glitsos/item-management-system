@@ -3,7 +3,7 @@ import slick.driver.PostgresDriver.api._
 import SchemaTypes._
 
 object Data extends Seeder {
-    val schema = UsersDAO.schema ++ RecordsDAO.schema
+    val schema = RecordsDAO.schema ++ UsersDAO.schema ++ PeopleDAO.schema
 
     def setup() = {
         DBIO.seq(
@@ -14,10 +14,10 @@ object Data extends Seeder {
                     id,
                     new Timestamp(System.currentTimeMillis()),
                     randFK(UsersDAO.seedCount),
-                    new Timestamp(System.currentTimeMillis()),
-                    randFK(UsersDAO.seedCount),
-                    new Timestamp(System.currentTimeMillis()),
-                    randFK(UsersDAO.seedCount)
+                    Some(new Timestamp(System.currentTimeMillis())),
+                    Some(randFK(UsersDAO.seedCount)),
+                    Some(new Timestamp(System.currentTimeMillis())),
+                    Some(randFK(UsersDAO.seedCount))
                 )
             ),
             UsersDAO ++= seed[User](

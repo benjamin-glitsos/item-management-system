@@ -6,10 +6,10 @@ class RecordsSchema(tag: Tag) extends Table[Record](tag, "records") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def created_at = column[Timestamp]("created_at")
     def created_by = column[Int]("created_by")
-    def updated_at = column[Timestamp]("updated_at")
-    def updated_by = column[Int]("updated_by")
-    def deleted_at = column[Timestamp]("deleted_at")
-    def deleted_by = column[Int]("deleted_by")
+    def updated_at = column[Option[Timestamp]]("updated_at")
+    def updated_by = column[Option[Int]]("updated_by")
+    def deleted_at = column[Option[Timestamp]]("deleted_at")
+    def deleted_by = column[Option[Int]]("deleted_by")
     def * = (
         id,
         created_at,
