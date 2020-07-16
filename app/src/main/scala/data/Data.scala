@@ -7,7 +7,6 @@ object Data extends Seeder {
 
     def setup() = {
         DBIO.seq(
-            schema.create,
             RecordsDAO ++= seed[Record](
                 RecordsDAO.seedCount,
                 (

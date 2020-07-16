@@ -7,4 +7,16 @@ trait Connection {
         user = System.getenv("POSTGRES_USER"),
         password = System.getenv("POSTGRES_PASSWORD")
     )
+
+    def recreateSchema() {
+        db.withSession { session =>
+            for(s <- schema.drop.statements ++ schema.create.statements) {
+                try {
+                    session.withPreparedStatement(s)(_.execute)
+                } catch {
+                    case e: Throwable =>
+                }
+            }
+        }
+    }
 }
