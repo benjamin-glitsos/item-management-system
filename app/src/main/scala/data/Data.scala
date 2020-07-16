@@ -7,6 +7,11 @@ object Data extends Seeder {
 
     def setup() = {
         DBIO.seq(
+            sqlu"SET FOREIGN_KEY_CHECKS = 0",
+            sqlu"DROP TABLE IF EXISTS #${RecordsDAO.baseTableRow.tableName}",
+            sqlu"DROP TABLE IF EXISTS #${PeopleDAO.baseTableRow.tableName}",
+            sqlu"DROP TABLE IF EXISTS #${UsersDAO.baseTableRow.tableName}",
+            sqlu"SET FOREIGN_KEY_CHECKS = 1",
             RecordsDAO ++= seed[Record](
                 RecordsDAO.seedCount,
                 (
@@ -19,11 +24,22 @@ object Data extends Seeder {
                     Some(randFK(UsersDAO.seedCount))
                 )
             ),
+            PeopleDAO ++= seed[Person](
+                PeopleDAO.seedCount,
+                (
+                    id,
+                    randFK(RecordsDAO.seedCount),
+                    newPerson().getFirstName(),
+                    newPerson().getLastName(),
+                    "",
+                    newPerson().getMobileNumber(),
+                )
+            ),
             UsersDAO ++= seed[User](
                 UsersDAO.seedCount,
                 (
                     id,
-                    randFK(RecordsDAO.seedCount),
+                    randFK(PeopleDAO.seedCount),
                     newPerson().getUsername(),
                     newPerson().getPassword()
                 )
