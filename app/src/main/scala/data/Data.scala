@@ -3,7 +3,7 @@ import slick.driver.PostgresDriver.api._
 import SchemaTypes._
 
 object Data extends Seeder {
-    val schema = RecordsDAO.schema ++ UsersDAO.schema ++ PeopleDAO.schema
+    val schema = RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
         DBIO.seq(
