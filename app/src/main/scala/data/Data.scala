@@ -2,7 +2,7 @@ import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
 import SchemaTypes._
 
-object Data extends Seeder {
+object Data extends Connection with Seeder {
     val schema = RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {

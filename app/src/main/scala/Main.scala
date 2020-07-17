@@ -1,5 +1,5 @@
-object Main extends Connection {
+object Main {
     def main(args: Array[String]): Unit = {
-        val setup = db.run(Data.setup)
+        val setup = Data.setup
     }
 }
