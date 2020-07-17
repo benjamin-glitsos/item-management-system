@@ -41,8 +41,7 @@ object Data extends Connection with Seeder {
                         newPerson().getEmail(),
                         newPerson().getTelephoneNumber(),
                         newPerson().getAddress().getAddressLine1(),
-                        Some(newPerson().getAddress().getAddressLine2()),
-                        "NSW",
+                        newPerson().getAddress().getCity(),
                         newPerson().getAddress().getPostalCode()
                     )
                 ),

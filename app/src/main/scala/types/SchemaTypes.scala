@@ -20,7 +20,6 @@ object SchemaTypes {
         String,
         String,
         String,
-        Option[String],
         String,
         String
     )

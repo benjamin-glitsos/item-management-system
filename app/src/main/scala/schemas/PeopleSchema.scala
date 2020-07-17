@@ -10,8 +10,7 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
     def email_address = column[String]("email_address")
     def phone_number = column[String]("phone_number")
     def address_line_one = column[String]("address_line_one")
-    def address_line_two = column[Option[String]]("address_line_two")
-    def state_territory = column[String]("state_territory")
+    def address_line_two = column[String]("address_line_two")
     def postcode = column[String]("postcode")
     def * = (
         id,
@@ -23,7 +22,6 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
         phone_number,
         address_line_one,
         address_line_two,
-        state_territory,
         postcode
     )
     def records_fk = foreignKey("records_fk", record_id, RecordsDAO)(_.id)
