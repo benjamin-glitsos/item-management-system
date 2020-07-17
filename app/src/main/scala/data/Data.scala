@@ -49,7 +49,7 @@ object Data extends Connection with Seeder with Queries {
                 ),
 
                 // Populate static data
-                GenderDAO ++= Seq(
+                SexDAO ++= Seq(
                     (id, "Male"),
                     (id, "Female")
                 ),

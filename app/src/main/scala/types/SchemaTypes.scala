@@ -27,5 +27,5 @@ object SchemaTypes {
 
     type User = (Int, Int, String, String)
 
-    type Gender = (Int, String)
+    type Sex = (Int, String)
 }
