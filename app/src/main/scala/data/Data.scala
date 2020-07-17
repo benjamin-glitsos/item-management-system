@@ -6,7 +6,7 @@ object Data extends Connection with Seeder {
     val schema = RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
-        db.run(
+        request(
             DBIO.seq(
                 // Reset database schema to blank state
                 sqlu"DROP SCHEMA public CASCADE",
