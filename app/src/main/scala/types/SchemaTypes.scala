@@ -3,8 +3,8 @@ import java.sql.Timestamp
 object SchemaTypes {
     type Record = (
         Int,
-        Timestamp,
-        Int,
+        Option[Timestamp],
+        Option[Int],
         Option[Timestamp],
         Option[Int],
         Option[Timestamp],

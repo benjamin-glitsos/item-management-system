@@ -21,8 +21,8 @@ object Data extends Connection with Seeder {
                 RecordsDAO.seedCount,
                 (
                     id,
-                    new Timestamp(System.currentTimeMillis()),
-                    randFK(UsersDAO.seedCount),
+                    Some(new Timestamp(System.currentTimeMillis())),
+                    Some(randFK(UsersDAO.seedCount)),
                     Some(new Timestamp(System.currentTimeMillis())),
                     Some(randFK(UsersDAO.seedCount)),
                     Some(new Timestamp(System.currentTimeMillis())),
