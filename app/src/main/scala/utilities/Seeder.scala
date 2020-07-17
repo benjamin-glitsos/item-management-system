@@ -6,6 +6,10 @@ import com.devskiller.jfairy.producer.person.Person
 trait Seeder {
     val id: Int = 0
 
+    def currentTimestamp(): Timestamp = {
+        new Timestamp(System.currentTimeMillis())
+    }
+
     def newPerson(): Person = {
         Fairy.create().person()
     }

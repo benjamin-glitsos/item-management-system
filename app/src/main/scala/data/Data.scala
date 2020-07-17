@@ -17,17 +17,46 @@ object Data extends Connection with Seeder {
                 // Create schema
                 schema.create,
 
+                // Create the admin user and handle the circular foreign keys
+                RecordsDAO += (id, None, None, None, None, None, None),
+                PeopleDAO += (
+                    id,
+                    1,
+                    System.getenv("ADMIN_FIRST_NAME"),
+                    System.getenv("ADMIN_LAST_NAME"),
+                    System.getenv("ADMIN_MIDDLE_NAME"),
+                    System.getenv("ADMIN_EMAIL"),
+                    System.getenv("ADMIN_PHONE"),
+                    System.getenv("ADMIN_ADDRESS_LINE_1"),
+                    System.getenv("ADMIN_ADDRESS_LINE_2"),
+                    System.getenv("ADMIN_ZIP")
+                ),
+                RecordsDAO.filter(_.id === 1).update((
+                    1,
+                    Some(currentTimestamp()),
+                    Some(randFK(UsersDAO.seedCount)),
+                    Some(currentTimestamp()),
+                    Some(randFK(UsersDAO.seedCount)),
+                    Some(currentTimestamp()),
+                    Some(randFK(UsersDAO.seedCount))
+                )),
+                UsersDAO += (
+                    id,
+                    System.getenv("ADMIN_USERNAME"),
+                    System.getenv("ADMIN_PASSWORD")
+                )
+
                 // Seed tables with fake data
                 RecordsDAO ++= seed[Record](
                     RecordsDAO.seedCount,
                     (
                         id,
-                        Some(new Timestamp(System.currentTimeMillis())),
-                        None,
-                        Some(new Timestamp(System.currentTimeMillis())),
-                        None,
-                        Some(new Timestamp(System.currentTimeMillis())),
-                        None
+                        Some(currentTimestamp()),
+                        Some(randFK(UsersDAO.seedCount)),
+                        Some(currentTimestamp()),
+                        Some(randFK(UsersDAO.seedCount)),
+                        Some(currentTimestamp()),
+                        Some(randFK(UsersDAO.seedCount))
                     )
                 ),
                 PeopleDAO ++= seed[Person](
