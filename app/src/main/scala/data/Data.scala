@@ -23,11 +23,11 @@ object Data extends Connection with Seeder {
                     (
                         id,
                         Some(new Timestamp(System.currentTimeMillis())),
-                        Some(randFK(UsersDAO.seedCount)),
+                        None,
                         Some(new Timestamp(System.currentTimeMillis())),
-                        Some(randFK(UsersDAO.seedCount)),
+                        None,
                         Some(new Timestamp(System.currentTimeMillis())),
-                        Some(randFK(UsersDAO.seedCount))
+                        None
                     )
                 ),
                 PeopleDAO ++= seed[Person](
