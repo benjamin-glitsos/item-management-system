@@ -2,7 +2,7 @@ import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
 import SchemaTypes._
 
-object Data extends Connection with Seeder {
+object Data extends Connection with Seeder with Queries {
     val schema = RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
@@ -31,7 +31,7 @@ object Data extends Connection with Seeder {
                     System.getenv("ADMIN_ADDRESS_LINE_2"),
                     System.getenv("ADMIN_ZIP")
                 ),
-                RecordsDAO.filter(_.id === 1).update((
+                withId(RecordsDAO, 1).update((
                     1,
                     Some(currentTimestamp()),
                     Some(randFK(UsersDAO.seedCount)),

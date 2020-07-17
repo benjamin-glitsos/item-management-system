@@ -23,6 +23,6 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
         address_line_one,
         address_line_two,
         zip
-    )
+    ) <> (Person.tupled, Person.unapply)
     def records_fk = foreignKey("records_fk", record_id, RecordsDAO)(_.id)
 }
