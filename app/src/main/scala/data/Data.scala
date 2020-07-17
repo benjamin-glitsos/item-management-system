@@ -24,7 +24,7 @@ object Data extends Connection with Seeder {
                     1,
                     System.getenv("ADMIN_FIRST_NAME"),
                     System.getenv("ADMIN_LAST_NAME"),
-                    System.getenv("ADMIN_MIDDLE_NAME"),
+                    Some(System.getenv("ADMIN_MIDDLE_NAME")),
                     System.getenv("ADMIN_EMAIL"),
                     System.getenv("ADMIN_PHONE"),
                     System.getenv("ADMIN_ADDRESS_LINE_1"),
@@ -42,9 +42,10 @@ object Data extends Connection with Seeder {
                 )),
                 UsersDAO += (
                     id,
+                    1,
                     System.getenv("ADMIN_USERNAME"),
                     System.getenv("ADMIN_PASSWORD")
-                )
+                ),
 
                 // Seed tables with fake data
                 RecordsDAO ++= seed[Record](
@@ -52,11 +53,11 @@ object Data extends Connection with Seeder {
                     (
                         id,
                         Some(currentTimestamp()),
-                        Some(randFK(UsersDAO.seedCount)),
+                        Some(1),
                         Some(currentTimestamp()),
-                        Some(randFK(UsersDAO.seedCount)),
+                        Some(1),
                         Some(currentTimestamp()),
-                        Some(randFK(UsersDAO.seedCount))
+                        Some(1)
                     )
                 ),
                 PeopleDAO ++= seed[Person](
