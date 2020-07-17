@@ -17,6 +17,7 @@ object SchemaTypes {
         String,
         String,
         Option[String],
+        Int,
         String,
         String,
         String,
@@ -25,4 +26,6 @@ object SchemaTypes {
     )
 
     type User = (Int, Int, String, String)
+
+    type Gender = (Int, String)
 }

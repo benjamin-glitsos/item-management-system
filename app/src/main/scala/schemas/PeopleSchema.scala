@@ -7,6 +7,7 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
     def first_name = column[String]("first_name")
     def last_name = column[String]("last_name")
     def other_names = column[Option[String]]("other_names")
+    def gender = column[Int]("gender")
     def email_address = column[String]("email_address")
     def phone_number = column[String]("phone_number")
     def address_line_one = column[String]("address_line_one")
@@ -18,6 +19,7 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
         first_name,
         last_name,
         other_names,
+        gender,
         email_address,
         phone_number,
         address_line_one,
@@ -25,4 +27,5 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
         zip
     ) <> (Person.tupled, Person.unapply)
     def records_fk = foreignKey("records_fk", record_id, RecordsDAO)(_.id)
+    def gender_fk = foreignKey("gender_fk", record_id, RecordsDAO)(_.id)
 }

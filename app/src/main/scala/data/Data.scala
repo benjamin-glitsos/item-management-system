@@ -25,6 +25,7 @@ object Data extends Connection with Seeder with Queries {
                     System.getenv("ADMIN_FIRST_NAME"),
                     System.getenv("ADMIN_LAST_NAME"),
                     Some(System.getenv("ADMIN_MIDDLE_NAME")),
+                    randFK(GendersDAO.seedCount),
                     System.getenv("ADMIN_EMAIL"),
                     System.getenv("ADMIN_PHONE"),
                     System.getenv("ADMIN_ADDRESS_LINE_1"),
@@ -45,6 +46,12 @@ object Data extends Connection with Seeder with Queries {
                     1,
                     System.getenv("ADMIN_USERNAME"),
                     System.getenv("ADMIN_PASSWORD")
+                ),
+
+                // Populate static data
+                GenderDAO ++= Seq(
+                    (id, "Male"),
+                    (id, "Female")
                 ),
 
                 // Seed tables with fake data
