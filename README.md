@@ -1,6 +1,6 @@
 A toy hospital management system.
 
-**Language:** Scala/Java Interop, Typescript.
+**Language:** Scala/Java Interop, Typescript, Bash.
 
 **Architecture**: Dockerised microservice MVC of PostgreSQL (Model), Angular (View) and Scala (Controller).
 
