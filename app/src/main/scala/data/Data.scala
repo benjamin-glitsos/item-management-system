@@ -2,19 +2,18 @@ import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
 
 object Data extends Connection with Queries {
-    val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
+    val DAOs: List[Table] = List(SexDAO, RecordsDAO, PeopleDAO, UsersDAO)
+
+    // val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
         request(
             DBIO.seq(
                 // Reset database schema to blank state
-                sqlu"DROP SCHEMA public CASCADE",
-                sqlu"CREATE SCHEMA public",
-                sqlu"GRANT ALL ON SCHEMA public TO postgres",
-                sqlu"GRANT ALL ON SCHEMA public TO public",
+                dropSchema(),
 
                 // Create schema
-                schema.create,
+                DAOs.map(_.schema).fold{ (a, b) => a ++ b }.create,
 
                 // Create all predefined data
                 SexDAO ++= SexData.data,
