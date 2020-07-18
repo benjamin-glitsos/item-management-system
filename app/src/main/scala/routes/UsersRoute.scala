@@ -1,3 +1,5 @@
+object UsersRoute {}
+
 // TODO:
 // users
 // users?page=1&sort.username=desc&search.username=lorem
