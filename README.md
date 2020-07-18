@@ -6,7 +6,7 @@ A toy hospital management system.
 
 **Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large, FP in the small.)
 
-**Principles:** Database Normalisation, Scalability, Modularisation, Composition over inheritance, Type-safety, Functional purity, DRY.
+**Principles:** 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Scalability, Type-safety, Functional purity, DRY.
 
 **Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Role-Based Access Control (RBAC), monadic asynchronous events.
 
