@@ -1,5 +1,5 @@
 object RecordsData extends Seeder {
-    val seedCount: Int = PeopleData.seedCount
+    val seedCount: Int = 6
 
     val blank: Record = Record(id, None, None, None, None, None, None)
 

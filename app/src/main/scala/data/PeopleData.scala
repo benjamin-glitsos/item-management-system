@@ -1,5 +1,5 @@
 object PeopleData extends Seeder {
-    val seedCount: Int = UsersData.seedCount + 2
+    val seedCount: Int = 6
 
     val admin: Person = Person(
         id = id,
