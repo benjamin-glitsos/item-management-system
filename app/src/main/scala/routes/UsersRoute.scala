@@ -1,4 +1,5 @@
 // TODO:
 // users
-// users?page=1&username=lorem
+// users?page=1&sort.username=desc&search.username=lorem
 // users/1
+// users/1?tab=person
