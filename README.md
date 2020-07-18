@@ -2,7 +2,7 @@ A toy hospital management system.
 
 **Language:** Scala/Java Interop.
 
-**Architecture**: Dockerised microservice MVC of PostgreSQL (*Model*), Angular (*View*) and Scala (*Controller*).
+**Architecture**: Dockerised microservice MVC of PostgreSQL (Model), Angular (View) and Scala (Controller).
 
 **Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large; FP in the small.)
 
