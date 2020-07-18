@@ -17,10 +17,7 @@ object Data extends Connection with Seeder with Queries {
                 schema.create,
 
                 // Create all predefined data
-                SexDAO ++= Seq(
-                    Sex(id, "Male"),
-                    Sex(id, "Female")
-                ),
+                SexDAO ++= SexData.data,
                 RecordsDAO += Record(id, None, None, None, None, None, None),
                 PeopleDAO += Person(
                     id = id,
