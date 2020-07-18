@@ -4,7 +4,7 @@ A toy hospital management system.
 
 **Architecture**: Dockerised microservice MVC of PostgreSQL (*Model*), Angular (*View*) and Scala (*Controller*).
 
-**Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large, FP in the small.)
+**Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large; FP in the small.)
 
 **Principles:** 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Scalability, Type-safety, Functional purity, DRY.
 
