@@ -23,24 +23,24 @@ object Data extends Connection with Seeder with Queries {
                     Sex(id, "Female")
                 ),
                 RecordsDAO += Record(id, None, None, None, None, None, None),
-                PeopleDAO += (
-                    id,
-                    1,
-                    System.getenv("ADMIN_FIRST_NAME"),
-                    System.getenv("ADMIN_LAST_NAME"),
-                    Some(System.getenv("ADMIN_MIDDLE_NAME")),
-                    System.getenv("ADMIN_SEX").toInt,
-                    System.getenv("ADMIN_EMAIL"),
-                    System.getenv("ADMIN_PHONE"),
-                    System.getenv("ADMIN_ADDRESS_LINE_1"),
-                    System.getenv("ADMIN_ADDRESS_LINE_2"),
-                    System.getenv("ADMIN_ZIP")
+                PeopleDAO += Person(
+                    id = id,
+                    record_id = 1,
+                    first_name = System.getenv("ADMIN_FIRST_NAME"),
+                    last_name = System.getenv("ADMIN_LAST_NAME"),
+                    other_names = Some(System.getenv("ADMIN_MIDDLE_NAME")),
+                    sex_id = System.getenv("ADMIN_SEX").toInt,
+                    email_address = System.getenv("ADMIN_EMAIL"),
+                    phone_number = System.getenv("ADMIN_PHONE"),
+                    address_line_one = System.getenv("ADMIN_ADDRESS_LINE_1"),
+                    address_line_two = System.getenv("ADMIN_ADDRESS_LINE_2"),
+                    zip = System.getenv("ADMIN_ZIP")
                 ),
-                UsersDAO += (
-                    id,
-                    1,
-                    System.getenv("ADMIN_USERNAME"),
-                    System.getenv("ADMIN_PASSWORD")
+                UsersDAO += User(
+                    id = id,
+                    person_id = 1,
+                    username = System.getenv("ADMIN_USERNAME"),
+                    password = System.getenv("ADMIN_PASSWORD")
                 ),
                 RecordsDAO.filter(_.id === 1).update(Record(
                     id = 1,
@@ -67,27 +67,27 @@ object Data extends Connection with Seeder with Queries {
                 ),
                 PeopleDAO ++= seed[Person](
                     PeopleDAO.seedCount,
-                    (
-                        id,
-                        randFK(RecordsDAO.seedCount),
-                        newPerson().getFirstName(),
-                        newPerson().getLastName(),
-                        Some(newPerson().getMiddleName()),
-                        randFK(SexDAO.seedCount), // TODO: not randomising?
-                        newPerson().getEmail(),
-                        newPerson().getTelephoneNumber(),
-                        newPerson().getAddress().getAddressLine1(),
-                        newPerson().getAddress().getCity(),
-                        newPerson().getAddress().getPostalCode()
+                    Person(
+                        id = id,
+                        record_id = randFK(RecordsDAO.seedCount),
+                        first_name = newPerson().getFirstName(),
+                        last_name = newPerson().getLastName(),
+                        other_names = Some(newPerson().getMiddleName()),
+                        sex_id = randFK(SexDAO.seedCount), // TODO: not randomising?
+                        email_address = newPerson().getEmail(),
+                        phone_number = newPerson().getTelephoneNumber(),
+                        address_line_one = newPerson().getAddress().getAddressLine1(),
+                        address_line_two = newPerson().getAddress().getCity(),
+                        zip = newPerson().getAddress().getPostalCode()
                     )
                 ),
                 UsersDAO ++= seed[User](
                     UsersDAO.seedCount,
-                    (
-                        id,
-                        randFK(PeopleDAO.seedCount),
-                        newPerson().getUsername(),
-                        newPerson().getPassword()
+                    User(
+                        id = id,
+                        person_id = randFK(PeopleDAO.seedCount),
+                        username = newPerson().getUsername(),
+                        password = newPerson().getPassword()
                     )
                 )
             )
