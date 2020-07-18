@@ -13,7 +13,7 @@ object RecordsData extends Seeder {
         deleted_by = Some(1)
     )
 
-    def seed() = {
+    def data() = {
         seeder[Record](seedCount, admin)
     }
 }

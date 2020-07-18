@@ -17,16 +17,16 @@ object Data extends Connection with Queries {
                 schema.create,
 
                 // Create all predefined data
-                SexDAO ++= SexData.data,
+                SexDAO ++= SexData.data(),
                 RecordsDAO += RecordsData.blank,
                 PeopleDAO += PeopleData.admin,
                 UsersDAO += UsersData.admin,
                 RecordsDAO.filter(_.id === 1).update(RecordsData.admin), // TODO: create a function like withId
 
                 // Seed tables with randomised fake data
-                RecordsDAO ++= RecordsData.seed,
-                PeopleDAO ++= PeopleData.seed,
-                UsersDAO ++= UsersData.seed
+                RecordsDAO ++= RecordsData.data(),
+                PeopleDAO ++= PeopleData.data(),
+                UsersDAO ++= UsersData.data()
             )
         )
     }

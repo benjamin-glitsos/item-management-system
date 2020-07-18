@@ -15,21 +15,22 @@ object PeopleData extends Seeder {
         zip = System.getenv("ADMIN_ZIP")
     )
 
-    val data: Person = Person(
-        id = id,
-        record_id = randFK(RecordsData.seedCount),
-        first_name = newPerson().getFirstName(),
-        last_name = newPerson().getLastName(),
-        other_names = Some(newPerson().getMiddleName()),
-        sex_id = randFK(SexData.seedCount), // TODO: not randomising?
-        email_address = newPerson().getEmail(),
-        phone_number = newPerson().getTelephoneNumber(),
-        address_line_one = newPerson().getAddress().getAddressLine1(),
-        address_line_two = newPerson().getAddress().getCity(),
-        zip = newPerson().getAddress().getPostalCode()
-    )
-
-    def seed() = {
-        seeder[Person](seedCount, data)
+    def data() = {
+        seeder[Person](
+            seedCount,
+            Person(
+                id = id,
+                record_id = randFK(RecordsData.seedCount),
+                first_name = newPerson().getFirstName(),
+                last_name = newPerson().getLastName(),
+                other_names = Some(newPerson().getMiddleName()),
+                sex_id = randFK(SexData.seedCount), // TODO: not randomising?
+                email_address = newPerson().getEmail(),
+                phone_number = newPerson().getTelephoneNumber(),
+                address_line_one = newPerson().getAddress().getAddressLine1(),
+                address_line_two = newPerson().getAddress().getCity(),
+                zip = newPerson().getAddress().getPostalCode()
+            )
+        )
     }
 }
