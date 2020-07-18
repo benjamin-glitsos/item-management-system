@@ -1,6 +1,6 @@
 import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
-import SchemaTypes._
+import Types._
 
 object Data extends Connection with Seeder with Queries {
     val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema

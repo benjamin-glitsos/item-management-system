@@ -1,5 +1,5 @@
 import slick.driver.PostgresDriver.api._
-import SchemaTypes._
+import Types._
 
 class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
