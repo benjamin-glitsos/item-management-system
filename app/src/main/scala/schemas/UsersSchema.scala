@@ -1,6 +1,5 @@
 import slick.driver.PostgresDriver.api._
 import java.sql.Timestamp
-import Types._
 
 class UsersSchema(tag: Tag) extends Table[User](tag, "users") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
