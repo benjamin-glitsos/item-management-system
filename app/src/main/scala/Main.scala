@@ -11,15 +11,14 @@ object Main extends IOApp  {
     //     val setup = Data.setup
     // }
 
-    val helloWorldService = HttpRoutes.of[IO] {
-        case GET -> Root / "hello" / name =>
-            Ok(s"Hello, $name.")
+    val service = HttpRoutes.of[IO] {
+        case GET -> Root => Ok("root")
     }.orNotFound
 
     def run(args: List[String]): IO[ExitCode] =
         BlazeServerBuilder[IO]
-            .bindHttp(System.getenv("APP_PORT").toInt, "localhost")
-            .withHttpApp(helloWorldService)
+            .bindHttp(System.getenv("APP_PORT").toInt, System.getenv("DOCKER_LOCALHOST"))
+            .withHttpApp(service)
             .serve
             .compile
             .drain
