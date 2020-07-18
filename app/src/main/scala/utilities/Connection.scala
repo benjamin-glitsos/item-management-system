@@ -4,12 +4,12 @@ import ExecutionContext.Implicits.global
 import slick.driver.PostgresDriver.api._
 
 trait Connection {
-    val db = Database.forConfig("postgres")
+    val db = Database.forConfig("database")
 
     def request(action: DBIO[Any]) = {
         db.run(action.asTry).map {
             case Failure(ex) => {
-                println(s"error : ${ex.getMessage}")
+                println(s"Error: ${ex.getMessage}")
                 None
             }
             case Success(x) => x
