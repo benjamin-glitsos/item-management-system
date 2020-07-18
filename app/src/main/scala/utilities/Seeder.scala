@@ -20,7 +20,7 @@ trait Seeder {
 
     // TODO: random timestamp method
 
-    def seed[A](count: Int, row: => A): Iterable[A] = {
+    def seeder[A](count: Int, row: => A): Iterable[A] = {
         (1 to count).map(_ => row)
     }
 }
