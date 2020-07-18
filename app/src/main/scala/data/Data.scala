@@ -1,7 +1,7 @@
 import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
 
-object Data extends Connection with Queries {
+object Data extends Connection {
     val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
