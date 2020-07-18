@@ -18,7 +18,7 @@ object Main extends IOApp  {
 
     def run(args: List[String]): IO[ExitCode] =
         BlazeServerBuilder[IO]
-            .bindHttp(8080, "localhost")
+            .bindHttp(System.getenv("APP_PORT").toInt, "localhost")
             .withHttpApp(helloWorldService)
             .serve
             .compile
