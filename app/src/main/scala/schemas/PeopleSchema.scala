@@ -7,7 +7,7 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
     def first_name = column[String]("first_name")
     def last_name = column[String]("last_name")
     def other_names = column[Option[String]]("other_names")
-    def sex = column[Int]("sex")
+    def sex_id = column[Int]("sex_id")
     def email_address = column[String]("email_address")
     def phone_number = column[String]("phone_number")
     def address_line_one = column[String]("address_line_one")
@@ -19,7 +19,7 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
         first_name,
         last_name,
         other_names,
-        sex,
+        sex_id,
         email_address,
         phone_number,
         address_line_one,
@@ -27,5 +27,5 @@ class PeopleSchema(tag: Tag) extends Table[Person](tag, "people") {
         zip
     )
     def records_fk = foreignKey("records_fk", record_id, RecordsDAO)(_.id)
-    def sex_fk = foreignKey("sex_fk", record_id, SexDAO)(_.id)
+    def sex_fk = foreignKey("sex_fk", sex_id, SexDAO)(_.id)
 }
