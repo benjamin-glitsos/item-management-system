@@ -12,6 +12,6 @@ class UsersSchema(tag: Tag) extends Table[User](tag, "users") {
         person_id,
         username,
         password
-    ) <> (User.tupled, User.unapply)
+    )
     def people_fk = foreignKey("people_fk", person_id, PeopleDAO)(_.id)
 }

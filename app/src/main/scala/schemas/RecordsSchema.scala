@@ -18,7 +18,7 @@ class RecordsSchema(tag: Tag) extends Table[Record](tag, "records") {
         updated_by,
         deleted_at,
         deleted_by
-    ) <> (Record.tupled, Record.unapply)
+    )
     def created_by_fk = foreignKey("created_by_fk", created_by, UsersDAO)(_.id)
     def updated_by_fk = foreignKey("updated_by_fk", updated_by, UsersDAO)(_.id)
     def deleted_by_fk = foreignKey("deleted_by_fk", deleted_by, UsersDAO)(_.id)

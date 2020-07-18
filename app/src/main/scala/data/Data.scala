@@ -3,7 +3,7 @@ import slick.driver.PostgresDriver.api._
 import SchemaTypes._
 
 object Data extends Connection with Seeder with Queries {
-    val schema = RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
+    val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
         request(
@@ -17,7 +17,11 @@ object Data extends Connection with Seeder with Queries {
                 // Create schema
                 schema.create,
 
-                // Create the admin user and handle the circular foreign keys
+                // Create all predefined data
+                SexDAO ++= Seq(
+                    (id, "Male"),
+                    (id, "Female")
+                ),
                 RecordsDAO += (id, None, None, None, None, None, None),
                 PeopleDAO += (
                     id,
@@ -25,36 +29,30 @@ object Data extends Connection with Seeder with Queries {
                     System.getenv("ADMIN_FIRST_NAME"),
                     System.getenv("ADMIN_LAST_NAME"),
                     Some(System.getenv("ADMIN_MIDDLE_NAME")),
-                    System.getenv("ADMIN_SEX"),
+                    System.getenv("ADMIN_SEX").toInt,
                     System.getenv("ADMIN_EMAIL"),
                     System.getenv("ADMIN_PHONE"),
                     System.getenv("ADMIN_ADDRESS_LINE_1"),
                     System.getenv("ADMIN_ADDRESS_LINE_2"),
                     System.getenv("ADMIN_ZIP")
                 ),
-                withId(RecordsDAO, 1).update((
-                    1,
-                    Some(currentTimestamp()),
-                    Some(randFK(UsersDAO.seedCount)),
-                    Some(currentTimestamp()),
-                    Some(randFK(UsersDAO.seedCount)),
-                    Some(currentTimestamp()),
-                    Some(randFK(UsersDAO.seedCount))
-                )),
                 UsersDAO += (
                     id,
                     1,
                     System.getenv("ADMIN_USERNAME"),
                     System.getenv("ADMIN_PASSWORD")
                 ),
+                RecordsDAO.filter(_.id === 1).update((
+                    1,
+                    Some(currentTimestamp()),
+                    Some(1),
+                    Some(currentTimestamp()),
+                    Some(1),
+                    Some(currentTimestamp()),
+                    Some(1)
+                )),
 
-                // Populate static data
-                SexDAO ++= Seq(
-                    (id, "Male"),
-                    (id, "Female")
-                ),
-
-                // Seed tables with fake data
+                // Seed tables with randomised fake data
                 RecordsDAO ++= seed[Record](
                     RecordsDAO.seedCount,
                     (
@@ -75,7 +73,7 @@ object Data extends Connection with Seeder with Queries {
                         newPerson().getFirstName(),
                         newPerson().getLastName(),
                         Some(newPerson().getMiddleName()),
-                        randFK(GendersDAO.seedCount),
+                        randFK(SexDAO.seedCount),
                         newPerson().getEmail(),
                         newPerson().getTelephoneNumber(),
                         newPerson().getAddress().getAddressLine1(),
