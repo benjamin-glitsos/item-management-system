@@ -1,14 +1,14 @@
 import java.sql.Timestamp
 
 object SchemaTypes {
-    type Record = (
-        Int,
-        Option[Timestamp],
-        Option[Int],
-        Option[Timestamp],
-        Option[Int],
-        Option[Timestamp],
-        Option[Int]
+    case class Record(
+        id: Int,
+        created_at: Option[Timestamp],
+        created_by: Option[Int],
+        updated_at: Option[Timestamp],
+        updated_by: Option[Int],
+        deleted_at: Option[Timestamp],
+        deleted_by: Option[Int]
     )
 
     type Person = (
@@ -27,5 +27,5 @@ object SchemaTypes {
 
     type User = (Int, Int, String, String)
 
-    type Sex = (Int, String)
+    case class Sex(id: Int, name: String)
 }

@@ -19,10 +19,10 @@ object Data extends Connection with Seeder with Queries {
 
                 // Create all predefined data
                 SexDAO ++= Seq(
-                    (id, "Male"),
-                    (id, "Female")
+                    Sex(id, "Male"),
+                    Sex(id, "Female")
                 ),
-                RecordsDAO += (id, None, None, None, None, None, None),
+                RecordsDAO += Record(id, None, None, None, None, None, None),
                 PeopleDAO += (
                     id,
                     1,
@@ -42,27 +42,27 @@ object Data extends Connection with Seeder with Queries {
                     System.getenv("ADMIN_USERNAME"),
                     System.getenv("ADMIN_PASSWORD")
                 ),
-                RecordsDAO.filter(_.id === 1).update((
-                    1,
-                    Some(currentTimestamp()),
-                    Some(1),
-                    Some(currentTimestamp()),
-                    Some(1),
-                    Some(currentTimestamp()),
-                    Some(1)
+                RecordsDAO.filter(_.id === 1).update(Record(
+                    id = 1,
+                    created_at = Some(currentTimestamp()),
+                    created_by = Some(1),
+                    updated_at = Some(currentTimestamp()),
+                    updated_by = Some(1),
+                    deleted_at = Some(currentTimestamp()),
+                    deleted_by = Some(1)
                 )),
 
                 // Seed tables with randomised fake data
                 RecordsDAO ++= seed[Record](
                     RecordsDAO.seedCount,
-                    (
-                        id,
-                        Some(currentTimestamp()),
-                        Some(1),
-                        Some(currentTimestamp()),
-                        Some(1),
-                        Some(currentTimestamp()),
-                        Some(1)
+                    Record(
+                        id = id,
+                        created_at = Some(currentTimestamp()),
+                        created_by = Some(1),
+                        updated_at = Some(currentTimestamp()),
+                        updated_by = Some(1),
+                        deleted_at = Some(currentTimestamp()),
+                        deleted_by = Some(1)
                     )
                 ),
                 PeopleDAO ++= seed[Person](
@@ -73,7 +73,7 @@ object Data extends Connection with Seeder with Queries {
                         newPerson().getFirstName(),
                         newPerson().getLastName(),
                         Some(newPerson().getMiddleName()),
-                        randFK(SexDAO.seedCount),
+                        randFK(SexDAO.seedCount), // TODO: not randomising?
                         newPerson().getEmail(),
                         newPerson().getTelephoneNumber(),
                         newPerson().getAddress().getAddressLine1(),
