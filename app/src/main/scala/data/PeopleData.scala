@@ -4,15 +4,15 @@ object PeopleData extends Seeder {
     val admin: Person = Person(
         id = id,
         record_id = 1,
-        first_name = System.getenv("ADMIN_FIRST_NAME"),
-        last_name = System.getenv("ADMIN_LAST_NAME"),
-        other_names = Some(System.getenv("ADMIN_MIDDLE_NAME")),
-        sex_id = System.getenv("ADMIN_SEX").toInt,
-        email_address = System.getenv("ADMIN_EMAIL"),
-        phone_number = System.getenv("ADMIN_PHONE"),
-        address_line_one = System.getenv("ADMIN_ADDRESS_LINE_1"),
-        address_line_two = System.getenv("ADMIN_ADDRESS_LINE_2"),
-        zip = System.getenv("ADMIN_ZIP")
+        first_name = System.getenv("SUPER_FIRST_NAME"),
+        last_name = System.getenv("SUPER_LAST_NAME"),
+        other_names = Some(System.getenv("SUPER_MIDDLE_NAME")),
+        sex_id = System.getenv("SUPER_SEX").toInt,
+        email_address = System.getenv("SUPER_EMAIL"),
+        phone_number = System.getenv("SUPER_PHONE"),
+        address_line_one = System.getenv("SUPER_ADDRESS_LINE_1"),
+        address_line_two = System.getenv("SUPER_ADDRESS_LINE_2"),
+        zip = System.getenv("SUPER_ZIP")
     )
 
     def data() = {

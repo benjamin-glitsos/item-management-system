@@ -3,36 +3,38 @@ services:
   database:
     build:
       context: ./database/
-    image: ${APP_SHORTNAME}_database
-    container_name: ${APP_SHORTNAME}_database
+    image: ${SHORTNAME}_database
+    container_name: ${SHORTNAME}_database
     restart: always
     env_file: .env
   database_admin:
     build:
       context: ./database-admin/
-    image: ${APP_SHORTNAME}_database_admin
-    container_name: ${APP_SHORTNAME}_database_admin
+    image: ${SHORTNAME}_database_admin
+    container_name: ${SHORTNAME}_database_admin
     restart: always
     ports:
-      - 8080:8080
+      - ${DATABASE_ADMIN_PORT}:${DATABASE_ADMIN_PORT}
   app:
     build:
       context: ./app/
-    image: ${APP_SHORTNAME}_app
-    container_name: ${APP_SHORTNAME}_app
+    image: ${SHORTNAME}_app
+    container_name: ${SHORTNAME}_app
     volumes:
       - app:/root
-      - ${APP_LOCAL_DIR}/app:/usr/src/app
+      - ${LOCAL_DIR}/app:/usr/src/app
     env_file: .env
     stdin_open: true
     tty: true
+    ports:
+      - ${APP_PORT}:${APP_PORT}
   admin:
     build:
       context: ./admin/
-    image: ${APP_SHORTNAME}_admin
-    container_name: ${APP_SHORTNAME}_admin
+    image: ${SHORTNAME}_admin
+    container_name: ${SHORTNAME}_admin
     env_file: .env
     restart: always
     stdin_open: true
     ports:
-      - 4200:4200
+      - ${ADMIN_PORT}:${ADMIN_PORT}

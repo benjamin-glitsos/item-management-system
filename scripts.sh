@@ -19,6 +19,7 @@ case "$@" in
             --volume=app:/root \
             --volume=$HOME/Documents/code/hospital-ms/app:/usr/src/app \
             --env-file .env \
+            --expose 3100 \
             hospital_app
     ;;
     "build admin" )
