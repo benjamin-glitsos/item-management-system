@@ -1,6 +1,6 @@
 A toy hospital management system.
 
-**Microservices:** &bull; Database: PostgreSQL. &bull; Database Admin: Adminer. &bull; View: Angular, NGINX. &bull; Controller: Scala.
+**Microservices:** &bull; *Database*: PostgreSQL. &bull; *Database Admin*: Adminer. &bull; *View*: Angular, NGINX. &bull; *Controller*: Scala.
 
 **Language:** Scala/Java Interop, Typescript, Bash.
 
