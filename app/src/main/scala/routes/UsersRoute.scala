@@ -7,7 +7,7 @@ import org.http4s.implicits._
 
 object UsersRoute {
     val service = HttpRoutes.of[IO] {
-        case GET -> Root => Ok(UsersDAO.all)
+        case GET -> Root => Ok(UsersDAO.all().toString())
     }.orNotFound
 }
 
