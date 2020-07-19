@@ -1,10 +1,10 @@
 A toy hospital management system.
 
+**Microservices:** &bull; Database: PostgreSQL. &bull; Database Admin: Adminer. &bull; View: Angular, NGINX. &bull; Controller: Scala.
+
 **Language:** Scala/Java Interop, Typescript, Bash.
 
-**Architecture:** Dockerised microservice MVC.
-
-**Microservices:** Database -- PostgreSQL; View -- Angular, NGINX; Controller -- Scala; Database Admin -- Adminer.
+**Architecture:** Dockerised Linux microservice MVC.
 
 **Principles:** Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY.
 
