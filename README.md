@@ -2,14 +2,14 @@ A toy hospital management system.
 
 **Language:** Scala/Java Interop, Typescript, Bash.
 
-**Architecture**: Dockerised microservice MVC of PostgreSQL (Model), Angular (View) and Scala (Controller).
+**Architecture:** Dockerised microservice MVC.
 
-**Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large; FP in the small.)
+**Microservices:** Database -- PostgreSQL; View -- Angular, NGINX; Controller -- Scala; Database Admin -- Adminer.
 
-**Principles:** 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Scalability, Type-safety, Functional purity, DRY.
+**Principles:** Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY.
 
 **Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Role-Based Access Control (RBAC), monadic asynchronous events.
 
 **Workflow:** Git Trunk (switched from Git Flow).
 
-**Stack:** [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [PostgreSQL](https://www.postgresql.org/), [Adminer](https://www.adminer.org/), [Angular](https://angular.io/), [ngx-admin](https://akveo.github.io/ngx-admin/), [ag-grid](https://www.ag-grid.com/), [Bootstrap](https://getbootstrap.com/), [Scala](https://www.scala-lang.org/), [Cats](https://typelevel.org/cats/), [Circe](https://circe.github.io/circe/), [Http4s](https://http4s.org/), [Slick](http://scala-slick.org/), [Linux](https://www.linux.org/), [NGINX](https://www.nginx.com/).
+**Technologies:** [Docker Compose](https://docs.docker.com/compose/), [Cats](https://typelevel.org/cats/), [Http4s](https://http4s.org/), [Slick](http://scala-slick.org/), [ngx-admin](https://akveo.github.io/ngx-admin/), [Bootstrap](https://getbootstrap.com/).
