@@ -1,7 +1,7 @@
 import scala.util.{Success,Failure}
 import scala.concurrent._
 import ExecutionContext.Implicits.global
-import slick.driver.PostgresDriver.api._
+import slick.jdbc.PostgresProfile.api._
 
 trait Connection {
     val db = Database.forConfig("database")

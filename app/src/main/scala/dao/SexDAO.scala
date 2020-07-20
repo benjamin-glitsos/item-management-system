@@ -1,3 +1,3 @@
-import slick.driver.PostgresDriver.api._
+import slick.jdbc.PostgresProfile.api._
 
 object SexDAO extends TableQuery(new SexSchema(_)) {}
