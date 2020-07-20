@@ -1,4 +1,3 @@
-import java.sql.Timestamp
 import slick.driver.PostgresDriver.api._
 
 object Data extends Connection {

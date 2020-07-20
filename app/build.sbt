@@ -25,3 +25,7 @@ libraryDependencies := Seq(
     "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
     "com.devskiller" % "jfairy" % "0.6.0"
 )
+
+scalacOptions := Seq(
+    "-Ywarn-unused"
+)
