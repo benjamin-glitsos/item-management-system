@@ -3,6 +3,7 @@ import org.http4s.server.blaze._
 
 
 
+
 import cats.effect._
 import cats.implicits._
 import org.http4s.HttpRoutes
@@ -19,21 +20,18 @@ import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
-object Main extends IOApp  {
-    def run(args: List[String]): IO[ExitCode] = {
-        val service = HttpRoutes.of[IO] {
-            case GET -> Root =>
-                Ok(IO.fromFuture(IO(UsersDAO.list)).map((x: Seq[User]) => (x.asJson)))
-        }.orNotFound
 
-        // Data.setup()
-        //
+object Main extends IOApp {
+    def run(args: List[String]): IO[ExitCode] = {
+
+        Data.setup()
+
         BlazeServerBuilder[IO]
             .bindHttp(
                 System.getenv("APP_PORT").toInt,
                 System.getenv("DOCKER_LOCALHOST")
             )
-            .withHttpApp(service)
+            .withHttpApp(UsersRoute.service)
             .serve
             .compile
             .drain
