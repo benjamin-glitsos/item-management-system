@@ -1,4 +1,4 @@
-A toy hospital management system.
+A toy hospital management system with enterprise-grade principles.
 
 **Microservices:** &bull; *Database:* PostgreSQL. &bull; *Database Admin:* Adminer. &bull; *View:* Angular, NGINX. &bull; *Controller:* Scala.
 
@@ -8,7 +8,7 @@ A toy hospital management system.
 
 **Principles:** Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY.
 
-**Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Role-Based Access Control (RBAC), monadic asynchronous events.
+**Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Attribute-Based Access Control (RBAC), monadic asynchronous pipelines.
 
 **Workflow:** Git Trunk (switched from Git Flow).
 
