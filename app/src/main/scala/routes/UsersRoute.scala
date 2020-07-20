@@ -8,15 +8,22 @@ import org.http4s.implicits._
 import org.http4s.circe._
 import io.circe.syntax._
 import io.circe.generic.auto._
-import scala.concurrent._
+
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.global
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Success, Failure}
 
 case class Hello(name: String)
 
 object UsersRoute {
+    implicit val cs: ContextShift[IO] = IO.contextShift(global)
+
     val service = HttpRoutes.of[IO] {
-        case GET -> Root => Ok(UsersDAO.all.map(_.asJson))
+        case GET -> Root => Ok(IO.fromFuture(IO(Future {
+            println("I run when the future is constructed.")
+            "Greetings from the future!"
+        })))
+        // UsersDAO.list.map(_.asJson)
     }.orNotFound
 }
 
