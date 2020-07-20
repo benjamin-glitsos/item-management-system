@@ -13,14 +13,12 @@ import scala.concurrent._
 // import scala.concurrent.ExecutionContext.global
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class Hello(name: String)
-
-object UsersRoute {
-    val service = HttpRoutes.of[IO] {
-        case GET -> Root =>
-           Ok(IO.fromFuture(IO(UsersDAO.list)))
-    }.orNotFound
-}
+// object UsersRoute extends IOApp {
+//     val service = HttpRoutes.of[IO] {
+//         case GET -> Root =>
+//            Ok(IO.fromFuture(IO(UsersDAO.list)))
+//     }.orNotFound
+// }
 
 // TODO:
 // users
