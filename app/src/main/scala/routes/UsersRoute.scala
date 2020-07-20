@@ -18,10 +18,17 @@ object UsersRoute {
 
         case GET -> Root / name / IntVar(id) =>
             Ok(IO.fromFuture(IO(UsersDAO.show(id))))
-            // TODO: nest this route within the one above for DRYness
+
+        case DELETE -> Root / name / IntVar(id) =>
+            Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
 
     }.orNotFound
 }
+
+// TODO: try nested case expression
+// TODO: join: records -> people -> users. Then later the first two can be abstracted out and applied to many queries
+// TODO: nest this route within the one above for DRYness
+// TODO: nest all within /api subdirectory
 
 // TODO:
 // users?page=1&sort.username=desc&search.username=lorem
