@@ -6,7 +6,9 @@ name := "Hospital MS"
 version := "1.0"
 scalaVersion := "2.13.0"
 
-resolvers += Resolver.sonatypeRepo("releases")
+resolvers := Seq(
+    Resolver.sonatypeRepo("releases")
+)
 
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
