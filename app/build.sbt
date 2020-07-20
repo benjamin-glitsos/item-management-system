@@ -29,5 +29,11 @@ libraryDependencies := Seq(
 )
 
 scalacOptions := Seq(
-    "-Ywarn-unused"
+    "-Wdead-code",
+    "-Wnumeric-widen",
+    "-Woctal-literal",
+    "-Wself-implicit",
+    "-Ywarn-unused:imports,patvars,privates,locals,explicits,implicits,params,linted",
+    "-Wvalue-discard",
+    "-Xlint:adapted-args,nullary-unit,inaccessible,nullary-override,infer-any,missing-interpolator,doc-detached,private-shadow,type-parameter-shadow,poly-implicit-overload,option-implicit,delayedinit-select,package-object-classes,stars-align,constant,unused,nonlocal-return,implicit-not-found,serial,valpattern,eta-zero,eta-sam,deprecation"
 )
