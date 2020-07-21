@@ -16,7 +16,8 @@ object UsersRoutes {
             maybeId match {
               case None =>
                 Ok(IO.fromFuture(IO(UsersDAO.list)))
-              case Some(id) => IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
+              case Some(id) =>
+                  IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
             }
         case DELETE -> Root :? Id(id) =>
             Ok(IO.fromFuture(IO(UsersDAO.delete(id))))

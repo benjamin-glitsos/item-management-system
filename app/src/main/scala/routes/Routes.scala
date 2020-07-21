@@ -9,9 +9,6 @@ object Routes {
     implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
     val service = Router(
-        "/users" -> UsersRoutes.routes,
-        "/other" -> HttpRoutes.of[IO] {
-            case GET -> Root => Ok("yes")
-        }
+        "/users" -> UsersRoutes.routes
     ).orNotFound
 }
