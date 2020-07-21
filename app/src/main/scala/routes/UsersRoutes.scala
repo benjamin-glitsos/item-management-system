@@ -10,12 +10,16 @@ object UsersRoutes {
 
     object Id extends QueryParamDecoderMatcher[Int]("id")
     object MaybeId extends OptionalQueryParamDecoderMatcher[Int]("id")
+    object MaybeRows extends OptionalQueryParamDecoderMatcher[Int]("rows")
+    object MaybePage extends OptionalQueryParamDecoderMatcher[Int]("page")
 
     val service = HttpRoutes.of[IO] {
-        case GET -> Root :? MaybeId(maybeId) => {
+        case GET -> Root :? MaybeId(maybeId) +& MaybeRows(maybeRows) +& MaybePage(maybePage) => {
+            val rows = rows.getOrElse(25)
+            val page = page.getOrElse(1)
             maybeId match {
               case None =>
-                Ok(IO.fromFuture(IO(UsersDAO.list)))
+                Ok(IO.fromFuture(IO(UsersDAO.list(rows, page))))
               case Some(id) =>
                 IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
             }
@@ -26,7 +30,3 @@ object UsersRoutes {
 }
 
 // TODO: join: records -> people -> users. Then later the first two can be abstracted out and applied to many queries
-
-// TODO:
-// users?page=1&sort.username=desc&search.username=lorem
-// users?id=1&tab=person
