@@ -10,14 +10,19 @@ import org.http4s.server.Router
 object UsersRoutes {
     implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
-    val routes = HttpRoutes.of[IO] {
-        case GET -> Root => Ok(IO.fromFuture(IO(UsersDAO.list)))
+    object Id extends QueryParamDecoderMatcher[Int]("id")
+    object MaybeId extends OptionalQueryParamDecoderMatcher[Int]("id")
 
-        // case GET -> Root / IntVar(id) =>
-        //     Ok(IO.fromFuture(IO(UsersDAO.show(id))))
-        //
-        // case DELETE -> Root / IntVar(id) =>
-        //     Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
+    val routes = HttpRoutes.of[IO] {
+        case GET -> Root :? MaybeId(maybeId) =>
+            maybeId match {
+              case None =>
+                Ok(IO.fromFuture(IO(UsersDAO.list)))
+              case Some(id) =>
+                Ok(IO.fromFuture(IO(UsersDAO.show(id))))
+            }
+        case DELETE -> Root :? Id(id) =>
+            Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
     }
 }
 
