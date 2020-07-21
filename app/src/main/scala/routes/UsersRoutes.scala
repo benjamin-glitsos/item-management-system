@@ -27,4 +27,4 @@ object UsersRoutes {
 
 // TODO:
 // users?page=1&sort.username=desc&search.username=lorem
-// users/1?tab=person
+// users?id=1&tab=person
