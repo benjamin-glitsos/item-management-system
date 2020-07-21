@@ -2,7 +2,7 @@ import scala.concurrent._
 import slick.jdbc.PostgresProfile.api._
 
 object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
-    implicit val futureExecutionContext: ExecutionContext = ExecutionContext.global
+    implicit val ec: ExecutionContext = ExecutionContext.global
 
     def list(): Future[Seq[User]] = {
         db.run(this.result)
