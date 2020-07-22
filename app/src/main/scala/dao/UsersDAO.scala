@@ -1,4 +1,3 @@
-import java.sql.Timestamp
 import scala.concurrent._
 import slick.jdbc.PostgresProfile.api._
 
@@ -7,7 +6,7 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
     implicit val ec: ExecutionContext = ExecutionContext.global
 
     // TODO: cache in Redis
-    // TODO: add listed UserFull type annotation
+    // TODO: add lifted UserFull type annotation. Rep[UserFull] ?
     private val full = for {
         u <- this
         p <- PeopleDAO if u.person_id === p.id
@@ -19,32 +18,48 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
         up <- PeopleDAO if uu.person_id === up.id
         du <- this if r.deleted_by === du.id
         dp <- PeopleDAO if du.person_id === dp.id
+        user = User(
+            id = u.id,
+            person_id = u.person_id,
+            username = u.username,
+            password = u.password
+        )
+        person = Person(
+            id = p.id,
+            record_id = p.record_id,
+            first_name = p.first_name,
+            last_name = p.last_name,
+            other_names = p.other_names,
+            sex_id = p.sex_id,
+            email_address = p.email_address,
+            phone_number = p.phone_number,
+            address_line_one = p.address_line_one,
+            address_line_two = p.address_line_two,
+            zip = p.zip
+        )
+        sex = Sex(
+            id = s.id,
+            name = s.name
+        )
+        record_metadata = RecordMetadata(
+            created_at = r.created_at,
+            updated_at = r.updated_at,
+            deleted_at = r.deleted_at,
+            id = cu.id,
+            first_name = cp.first_name,
+            last_name = cp.last_name,
+            id = uu.id,
+            first_name = up.first_name,
+            last_name = up.last_name,
+            id = du.id,
+            first_name = dp.first_name,
+            last_name = dp.last_name
+        )
     } yield (
-        u.id,
-        u.username,
-        u.password,
-        p.first_name,
-        p.last_name,
-        p.other_names,
-        p.email_address,
-        p.phone_number,
-        p.address_line_one,
-        p.address_line_two,
-        p.zip,
-        s.id,
-        s.sex_name,
-        r.created_at,
-        r.updated_at,
-        r.deleted_at,
-        cu.id,
-        cp.first_name,
-        cp.last_name,
-        uu.id,
-        up.first_name,
-        up.last_name,
-        du.id,
-        dp.first_name,
-        dp.last_name
+        user,
+        person,
+        sex,
+        record_metadata
     )
 
     def list(rows: Int, page: Int): Future[Seq[UserFull]] = {
