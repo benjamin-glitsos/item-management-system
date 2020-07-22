@@ -10,14 +10,14 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
         p <- PeopleDAO if u.id === p.id
     } yield (
         u.id,
-        // u.username,
-        // u.password,
-        // p.record_id,
+        u.username,
+        u.password,
+        p.record_id,
         p.first_name,
         p.last_name
     )
 
-    def list(rows: Int, page: Int): Future[Seq[(Int, String, String)]] = {
+    def list(rows: Int, page: Int): Future[Seq[(Int, String, String, Int, String, String)]] = {
         db.run(full.drop((page - 1) * rows).take(rows).result) // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
     }
 
