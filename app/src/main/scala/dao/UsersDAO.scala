@@ -41,25 +41,24 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
             id = s.id,
             name = s.name
         )
-        record_metadata = RecordMetadata(
+        record = RecordFull(
             created_at = r.created_at,
             updated_at = r.updated_at,
             deleted_at = r.deleted_at,
-            id = cu.id,
-            first_name = cp.first_name,
-            last_name = cp.last_name,
-            id = uu.id,
-            first_name = up.first_name,
-            last_name = up.last_name,
-            id = du.id,
-            first_name = dp.first_name,
-            last_name = dp.last_name
+            created_by = User( // TODO: this needs to be a new type
+                id = cu.id,
+                first_name = cp.first_name,
+                last_name = cp.first_name,
+                other_names = cp.other_names
+            ),
+            updated_by = User(),
+            deleted_by = User()
         )
     } yield (
         user,
         person,
         sex,
-        record_metadata
+        record
     )
 
     def list(rows: Int, page: Int): Future[Seq[UserFull]] = {
