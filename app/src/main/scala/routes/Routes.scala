@@ -7,6 +7,6 @@ object Routes {
     implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
     val service = Router(
-        "/users" -> UsersRoutes.service
+        s"/${System.getenv("USERS_NAME")}" -> UsersRoutes.service
     ).orNotFound
 }

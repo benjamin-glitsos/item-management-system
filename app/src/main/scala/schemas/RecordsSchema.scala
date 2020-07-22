@@ -1,7 +1,7 @@
 import java.sql.Timestamp
 import slick.jdbc.PostgresProfile.api._
 
-class RecordsSchema(tag: Tag) extends Table[Record](tag, "records") {
+class RecordsSchema(tag: Tag) extends Table[Record](tag, System.getenv("RECORDS_NAME")) {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def created_at = column[Option[Timestamp]]("created_at")
     def created_by = column[Option[Int]]("created_by")

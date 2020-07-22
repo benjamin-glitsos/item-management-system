@@ -15,8 +15,8 @@ object UsersRoutes {
 
     val service = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeId(maybeId) +& MaybeRows(maybeRows) +& MaybePage(maybePage) => {
-            val rows = rows.getOrElse(25)
-            val page = page.getOrElse(1)
+            val rows = maybeRows.getOrElse(25)
+            val page = maybePage.getOrElse(1)
             maybeId match {
               case None =>
                 Ok(IO.fromFuture(IO(UsersDAO.list(rows, page))))

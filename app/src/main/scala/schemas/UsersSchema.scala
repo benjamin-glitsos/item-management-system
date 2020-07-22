@@ -1,6 +1,6 @@
 import slick.jdbc.PostgresProfile.api._
 
-class UsersSchema(tag: Tag) extends Table[User](tag, "users") {
+class UsersSchema(tag: Tag) extends Table[User](tag, System.getenv("USERS_NAME")) {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def person_id = column[Int]("person_id")
     def username = column[String]("username")
