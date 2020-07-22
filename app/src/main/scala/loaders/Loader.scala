@@ -1,6 +1,6 @@
 import slick.jdbc.PostgresProfile.api._
 
-object Loader {
+object Loader extends Connection {
     val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
