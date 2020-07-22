@@ -1,3 +1,4 @@
+import java.sql.Timestamp
 import scala.concurrent._
 import slick.jdbc.PostgresProfile.api._
 
@@ -7,17 +8,20 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
 
     private val full = for {
         u <- this
-        p <- PeopleDAO if u.id === p.id
+        p <- PeopleDAO if u.person_id === p.id
+        r <- RecordsDAO if p.record_id === r.id
     } yield (
         u.id,
         u.username,
         u.password,
-        p.record_id,
         p.first_name,
-        p.last_name
+        p.last_name,
+        r.created_at,
+        r.updated_at,
+        r.deleted_at
     )
 
-    def list(rows: Int, page: Int): Future[Seq[(Int, String, String, Int, String, String)]] = {
+    def list(rows: Int, page: Int): Future[Seq[(Int, String, String, String, String, Option[Timestamp], Option[Timestamp], Option[Timestamp])]] = {
         db.run(full.drop((page - 1) * rows).take(rows).result) // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
     }
 

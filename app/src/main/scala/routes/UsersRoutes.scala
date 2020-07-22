@@ -1,12 +1,19 @@
+import java.sql.Timestamp
 import cats.effect._
 import org.http4s.HttpRoutes
 import org.http4s.dsl.io._
 import org.http4s.circe.CirceEntityEncoder._
+import io.circe.{ Decoder, Encoder, HCursor, Json }
 import io.circe.generic.auto._
 import scala.concurrent._
 
 object UsersRoutes {
     implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
+
+    implicit val TimestampFormat : Encoder[Timestamp] with Decoder[Timestamp] = new Encoder[Timestamp] with Decoder[Timestamp] {
+        override def apply(a: Timestamp): Json = Encoder.encodeLong.apply(a.getTime)
+        override def apply(c: HCursor): Decoder.Result[Timestamp] = Decoder.decodeLong.map(s => new Timestamp(s)).apply(c)
+    }
 
     object Id extends QueryParamDecoderMatcher[Int]("id")
     object MaybeId extends OptionalQueryParamDecoderMatcher[Int]("id")
@@ -18,15 +25,15 @@ object UsersRoutes {
             val rows = maybeRows.getOrElse(25)
             val page = maybePage.getOrElse(1)
             maybeId match {
-              case None =>
-                Ok(IO.fromFuture(IO(UsersDAO.list(rows, page))))
-              case Some(id) =>
-                IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
-                // TODO: split this into separate tabs by a url parameter. default = first tab
+                case None =>
+                    Ok(IO.fromFuture(IO(UsersDAO.list(rows, page))))
+                case Some(id) =>
+                    IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
+                    // TODO: split this into separate tabs by a url parameter. default = first tab
             }
         }
-        case DELETE -> Root :? Id(id) =>
-            Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
+                case DELETE -> Root :? Id(id) =>
+                    Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
     }
 }
 
