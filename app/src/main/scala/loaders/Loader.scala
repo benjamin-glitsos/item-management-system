@@ -1,6 +1,6 @@
 import slick.jdbc.PostgresProfile.api._
 
-object Loader extends Connection {
+object Loader {
     val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
@@ -20,7 +20,7 @@ object Loader extends Connection {
                 RecordsDAO += RecordsLoader.blank,
                 PeopleDAO += PeopleLoader.admin,
                 UsersDAO += UsersLoader.admin,
-                RecordsDAO.filter(_.id === 1).update(RecordsLoader.admin), // TODO: create a function like withId
+                RecordsDAO.filter(_.id === 1).update(RecordsLoader.admin),
 
                 // Seed tables with randomised fake data
                 RecordsDAO ++= RecordsLoader.data(),
