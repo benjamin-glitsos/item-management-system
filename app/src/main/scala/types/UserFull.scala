@@ -1,0 +1,27 @@
+case class UserFull(
+    id: Int,
+    username: String,
+    password: String
+    first_name: String,
+    last_name: String,
+    other_names: Option[String],
+    email_address: String,
+    phone_number: String,
+    address_line_one: String,
+    address_line_two: String,
+    zip: String,
+    sex_id: Int,
+    sex_name: String,
+    created_at: Option[Timestamp],
+    updated_at: Option[Timestamp],
+    deleted_at: Option[Timestamp],
+    created_by_user_id: Int,
+    created_by_user_first_name: String,
+    created_by_user_last_name: String,
+    updated_by_user_id: Int,
+    updated_by_user_first_name: String,
+    updated_by_user_last_name: String,
+    deleted_by_user_id: Int,
+    deleted_by_user_first_name: String,
+    deleted_by_user_last_name: String
+)
