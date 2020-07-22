@@ -1,6 +1,6 @@
 import slick.jdbc.PostgresProfile.api._
 
-object Data extends Connection {
+object Loader extends Connection {
     val schema = SexDAO.schema ++ RecordsDAO.schema ++ PeopleDAO.schema ++ UsersDAO.schema
 
     def setup() = {
@@ -16,16 +16,16 @@ object Data extends Connection {
                 schema.create,
 
                 // Create all predefined data
-                SexDAO ++= SexData.data(),
-                RecordsDAO += RecordsData.blank,
-                PeopleDAO += PeopleData.admin,
-                UsersDAO += UsersData.admin,
-                RecordsDAO.filter(_.id === 1).update(RecordsData.admin), // TODO: create a function like withId
+                SexDAO ++= SexLoader.data(),
+                RecordsDAO += RecordsLoader.blank,
+                PeopleDAO += PeopleLoader.admin,
+                UsersDAO += UsersLoader.admin,
+                RecordsDAO.filter(_.id === 1).update(RecordsLoader.admin), // TODO: create a function like withId
 
                 // Seed tables with randomised fake data
-                RecordsDAO ++= RecordsData.data(),
-                PeopleDAO ++= PeopleData.data(),
-                UsersDAO ++= UsersData.data()
+                RecordsDAO ++= RecordsLoader.data(),
+                PeopleDAO ++= PeopleLoader.data(),
+                UsersDAO ++= UsersLoader.data()
             )
         )
     }

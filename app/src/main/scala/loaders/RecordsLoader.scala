@@ -1,4 +1,4 @@
-object RecordsData extends Seeder {
+object RecordsLoader extends Seeder {
     val seedCount: Int = 6
 
     val blank: Record = Record(id, None, None, None, None, None, None)

@@ -5,7 +5,7 @@ object Main extends IOApp {
 
     def run(args: List[String]): IO[ExitCode] = {
 
-        Data.setup()
+        Loader.setup()
 
         BlazeServerBuilder[IO]
             .bindHttp(

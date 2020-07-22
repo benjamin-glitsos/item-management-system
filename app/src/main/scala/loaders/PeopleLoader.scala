@@ -1,4 +1,4 @@
-object PeopleData extends Seeder {
+object PeopleLoader extends Seeder {
     val seedCount: Int = 6
 
     val admin: Person = Person(
@@ -20,11 +20,11 @@ object PeopleData extends Seeder {
             seedCount,
             Person(
                 id = id,
-                record_id = randFK(RecordsData.seedCount),
+                record_id = randFK(RecordsLoader.seedCount),
                 first_name = newPerson().getFirstName(),
                 last_name = newPerson().getLastName(),
                 other_names = Some(newPerson().getMiddleName()),
-                sex_id = randFK(SexData.seedCount), // TODO: not randomising?
+                sex_id = randFK(SexLoader.seedCount), // TODO: not randomising?
                 email_address = newPerson().getEmail(),
                 phone_number = newPerson().getTelephoneNumber(),
                 address_line_one = newPerson().getAddress().getAddressLine1(),

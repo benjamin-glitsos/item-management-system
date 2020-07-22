@@ -1,4 +1,4 @@
-object UsersData extends Seeder {
+object UsersLoader extends Seeder {
     val seedCount: Int = 4
 
     val admin: User = User(
@@ -11,7 +11,7 @@ object UsersData extends Seeder {
     def data() = {
         seeder[User](seedCount, User(
             id = id,
-            person_id = randFK(PeopleData.seedCount),
+            person_id = randFK(PeopleLoader.seedCount),
             username = newPerson().getUsername(),
             password = newPerson().getPassword()
         ))
