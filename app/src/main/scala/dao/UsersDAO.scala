@@ -1,7 +1,7 @@
 import scala.concurrent._
 import slick.jdbc.PostgresProfile.api._
 
-object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
+object UsersDAO extends TableQuery(new UsersSchema(_)) {
 
     implicit val ec: ExecutionContext = ExecutionContext.global
 
@@ -42,7 +42,7 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
             id = s.id,
             name = s.name
         )
-        record = RecordFull(
+        record = RecordMetadata(
             created_at = r.created_at,
             updated_at = r.updated_at,
             deleted_at = r.deleted_at,
@@ -62,19 +62,9 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
         record
     )
 
-    def list(rows: Int, page: Int): Future[Seq[UserFull]] = {
-        db.run(full.drop((page - 1) * rows).take(rows).result) // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
-    }
+    def list(rows: Int, page: Int): Future[Seq[UserFull]] = UsersService.list(rows, page)
 
-    def show(id: Int): Future[Option[User]] = {
-        db.run(this.filter(_.id === id).result).map(_.headOption)
-    }
+    def show(id: Int): Future[Option[User]] = UsersService.show(id)
 
-    def delete(id: Int): Future[Int] = {
-        db.run(this.filter(_.id === id).delete)
-    }
-
-    // def delete(id: Int): Future[Int] = {
-    //     users.filter(_.id === id).deleted_at.update(Seeder.currentTimestamp()).run
-    // }
+    def delete(id: Int): Future[Int] = UsersService.delete(id)
 }

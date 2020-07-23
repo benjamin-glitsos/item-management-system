@@ -22,7 +22,7 @@ object UsersRoutes {
 
     val service = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeId(maybeId) +& MaybeRows(maybeRows) +& MaybePage(maybePage) => {
-            val rows = maybeRows.getOrElse(25)
+            val rows = maybeRows.getOrElse(25) // TODO: move these into the Service. The parameters will take maybeRows, maybePage
             val page = maybePage.getOrElse(1)
             maybeId match {
                 case None =>

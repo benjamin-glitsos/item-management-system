@@ -1,4 +1,4 @@
-case class UserFull(
+case class UserSummary(
     user: User,
     person: Person,
     sex: Sex,
