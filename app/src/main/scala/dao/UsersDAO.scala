@@ -5,8 +5,8 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
 
     implicit val ec: ExecutionContext = ExecutionContext.global
 
-    // TODO: cache in Redis
     // TODO: add lifted UserFull type annotation. Rep[UserFull] ?
+    // TODO: make this be the API for the summary tab. Rename to: UsersSummary
     private val full = for {
         u <- this
         p <- PeopleDAO if u.person_id === p.id
@@ -18,6 +18,7 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
         up <- PeopleDAO if uu.person_id === up.id
         du <- this if r.deleted_by === du.id
         dp <- PeopleDAO if du.person_id === dp.id
+        // TODO: remove equals sign notation for case classes. just enter the values directly
         user = User(
             id = u.id,
             person_id = u.person_id,
