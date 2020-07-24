@@ -41,9 +41,9 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
     }
     // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
 
-    // def show(id: Int): Future[Option[User]] = {
-    //     db.run(item(id).result.flatMap(_.headOption))
-    // }
+    def show(id: Int): Future[Option[User]] = {
+        db.run(item(id).result.flatMap(_.headOption))
+    }
 
     def delete(id: Int) = {
         db.run(item(id).delete)
