@@ -26,12 +26,12 @@ object UsersRoutes {
             val page = maybePage.getOrElse(1)
             maybeId match {
                 case None =>
-                    Ok(IO.fromFuture(IO(UsersDAO.list(rows, page))))
-                case Some(id) =>
-                    IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
+                    Ok(IO.fromFuture(IO(UsersService.list(rows, page))))
+                // case Some(id) =>
+                //     IO.fromFuture(IO(UsersService.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
             }
         }
         case DELETE -> Root :? Id(id) =>
-            Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
+            Ok(IO.fromFuture(IO(UsersService.delete(id))))
     }
 }

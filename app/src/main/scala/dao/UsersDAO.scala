@@ -1,7 +1,7 @@
 import scala.concurrent._
 import slick.jdbc.PostgresProfile.api._
 
-object UsersDAO extends TableQuery(new UsersSchema(_)) {
+object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
 
     implicit val ec: ExecutionContext = ExecutionContext.global
 
@@ -19,15 +19,17 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
     // } yield (
 
     // TODO: add lifted UsersList type annotation. Rep[UsersList] ?
+    // TODO: take only first letter of other_names, capitalised.
 
-    private def listData = for {
+    private val listData = for {
         u <- this
         p <- PeopleDAO if u.person_id === p.id
-        s <- SexDAO if p.sex_id === s.id
-        r <- RecordsDAO if p.record_id === r.id && r.deleted_at !== None
+        r <- RecordsDAO if p.record_id === r.id // && r.deleted_at !== None
     } yield (
         u.username,
-        p.first_name ++ p.other_names ++ p.last_name, // TODO: take only first letter of other_names, capitalised.
+        p.first_name,
+        p.last_name,
+        p.other_names,
         r.created_at
     )
 
@@ -35,19 +37,16 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
     // Future[Option[User]]
 
     def list(rows: Int, page: Int) = {
-        // Future[Seq[UsersList]]
-        listData.drop((page - 1) * rows).take(rows).result
-        // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
+        db.run(listData.drop((page - 1) * rows).take(rows).result)
     }
+    // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
 
-    def show(id: Int) = {
-        // Future[Option[User]]
-        item(id).result.flatMap(_.headOption)
-    }
+    // def show(id: Int): Future[Option[User]] = {
+    //     db.run(item(id).result.flatMap(_.headOption))
+    // }
 
     def delete(id: Int) = {
-        // Future[Int]
-        item(id).delete
+        db.run(item(id).delete)
     }
 
     // def delete(id: Int): Future[Int] = {
