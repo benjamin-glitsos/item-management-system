@@ -17,13 +17,14 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
         up <- PeopleDAO if uu.person_id === up.id
         du <- this if r.deleted_by === du.id
         dp <- PeopleDAO if du.person_id === dp.id
-        user = User(
+    } yield (
+        User(
             u.id,
             u.person_id,
             u.username,
             u.password
-        )
-        person = Person(
+        ),
+        Person(
             p.id,
             p.record_id,
             p.first_name,
@@ -35,12 +36,12 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
             p.address_line_one,
             p.address_line_two,
             p.zip
-        )
-        sex = Sex(
+        ),
+        Sex(
             s.id,
             s.name
-        )
-        record_metadata = RecordMetadata(
+        ),
+        RecordMetadata(
             created_at = r.created_at,
             created_by = PersonName(
                 id,
@@ -63,11 +64,6 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
                 other_names
             )
         )
-    } yield (
-        user,
-        person,
-        sex,
-        record_metadata
     )
 
     private def item(id: Int): Future[Option[User]] = this.filter(_.id === id)
