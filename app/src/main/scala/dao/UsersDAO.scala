@@ -27,10 +27,8 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
         r <- RecordsDAO if p.record_id === r.id && r.deleted_at !== None
     } yield (
         u.username,
-        p.first_name,
-        p.last_name,
-        r.created_at,
-        r.deleted_at
+        p.first_name ++ p.other_names ++ p.last_name, // TODO: take only first letter of other_names, capitalised.
+        r.created_at
     )
 
     private def item(id: Int) = this.filter(_.id === id)
