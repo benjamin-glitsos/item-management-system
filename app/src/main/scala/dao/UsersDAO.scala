@@ -72,9 +72,9 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) {
 
     private def item(id: Int): Future[Option[User]] = this.filter(_.id === id)
 
-    private def list(rows: Int, page: Int): Future[Seq[UserSummary]] = UsersService.list(rows, page)
+    def list(rows: Int, page: Int): Future[Seq[UserSummary]] = UsersService.list(rows, page)
 
-    private def show(id: Int): Future[Option[User]] = UsersService.show(id)
+    def show(id: Int): Future[Option[User]] = UsersService.show(id)
 
-    private def delete(id: Int): Future[Int] = UsersService.delete(id)
+    def delete(id: Int): Future[Int] = UsersService.delete(id)
 }

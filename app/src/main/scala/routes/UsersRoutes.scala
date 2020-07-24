@@ -30,8 +30,8 @@ object UsersRoutes {
                 case Some(id) =>
                     IO.fromFuture(IO(UsersDAO.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
             }
-            case DELETE -> Root :? Id(id) =>
-                Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
         }
+        case DELETE -> Root :? Id(id) =>
+            Ok(IO.fromFuture(IO(UsersDAO.delete(id))))
     }
 }
