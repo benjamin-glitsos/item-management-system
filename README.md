@@ -8,7 +8,7 @@ A toy hospital management system with enterprise-grade principles.
 
 **Principles:** Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY.
 
-**Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Attribute-Based Access Control (RBAC), monadic asynchronous pipelines.
+**Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Attribute-Based Access Control (ABAC), monadic pipelines.
 
 **Workflow:** ticket-based Git Trunk (Jira).
 
