@@ -18,14 +18,14 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
     //     dp <- PeopleDAO if du.person_id === dp.id
     // } yield (
 
-    // TODO: add lifted UsersList type annotation. Rep[UsersList] ?
     // TODO: take only first letter of other_names, capitalised.
 
     private val listData = for {
         u <- this
         p <- PeopleDAO if u.person_id === p.id
-        r <- RecordsDAO if p.record_id === r.id // && r.deleted_at !== None
+        r <- RecordsDAO if p.record_id === r.id && r.deleted_at !== None
     } yield (
+        u.id,
         u.username,
         p.first_name,
         p.last_name,
@@ -33,7 +33,7 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
         r.created_at
     )
 
-    private def item(id: Int) = this.filter(_.id === id)
+    // private def item(id: Int) = listData.filter(_.id === id)
     // Future[Option[User]]
 
     def list(rows: Int, page: Int) = {
@@ -41,15 +41,13 @@ object UsersDAO extends TableQuery(new UsersSchema(_)) with Connection {
     }
     // TODO: make the last page return a full list of the last items rather than nothing. requires maths.
 
-    def show(id: Int): Future[Option[User]] = {
-        // db.run(item(id).result.flatMap(_.headOption))
-        // db.run(this.filter(_.id === id).result).map(_.headOption)
-        db.run(item(id).result).map(_.headOption)
-    }
+    // def show(id: Int): Future[Option[UsersList]] = {
+    //     db.run(item(id).result).map(_.headOption)
+    // }
 
-    def delete(id: Int) = {
-        db.run(item(id).delete)
-    }
+    // def delete(id: Int) = {
+    //     db.run(item(id).delete)
+    // }
 
     // def delete(id: Int): Future[Int] = {
     //     users.filter(_.id === id).deleted_at.update(Seeder.currentTimestamp()).run
