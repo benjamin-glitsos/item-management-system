@@ -1,6 +1,7 @@
 .env
 node_modules/
 dist/
-app/target/
-app/project/target/
-app/project/project/
+controller/target/
+controller/project/target/
+controller/project/project/
+controller/volumes/

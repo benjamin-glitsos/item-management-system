@@ -21,7 +21,7 @@ services:
     image: ${CONTROLLER_NAME}
     container_name: ${CONTROLLER_NAME}
     volumes:
-      - ./${CONTROLLER_NAME}:/root
+      - ./${CONTROLLER_NAME}/${VOLUMES_NAME}/root:/root
       - ./${CONTROLLER_NAME}:/usr/src/${CONTROLLER_NAME}
     env_file: .env
     stdin_open: true
