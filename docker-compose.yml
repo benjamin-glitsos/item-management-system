@@ -1,43 +1,43 @@
 version: '3.1'
 services:
-  database:
+  ${DATABASE_NAME}:
     build:
-      context: ./database/
-    image: ${SHORTNAME}_database
-    container_name: ${SHORTNAME}_database
+      context: ./${DATABASE_NAME}/
+    image: ${DATABASE_NAME}
+    container_name: ${ABBREVIATION}
     restart: always
     env_file: .env
-  database_admin:
+  ${DATABASE_MANAGEMENT_NAME}:
     build:
-      context: ./database-admin/
-    image: ${SHORTNAME}_database_admin
-    container_name: ${SHORTNAME}_database_admin
+      context: ./${DATABASE_MANAGEMENT_NAME}/
+    image: ${DATABASE_MANAGEMENT_NAME}
+    container_name: ${DATABASE_MANAGEMENT_NAME}
     restart: always
     ports:
-      - ${DATABASE_ADMIN_PORT}:${DATABASE_ADMIN_PORT}
-  app:
+      - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
+  ${CONTROLLER_NAME}:
     build:
-      context: ./app/
-    image: ${SHORTNAME}_app
-    container_name: ${SHORTNAME}_app
+      context: ./${CONTROLLER_NAME}/
+    image: ${CONTROLLER_NAME}
+    container_name: ${CONTROLLER_NAME}
     volumes:
-      - app:/root
-      - ${LOCAL_DIR}/app:/usr/src/app
+      - ${CONTROLLER_NAME}:/root
+      - ${LOCAL_DIR}${ABBREVIATION}/${CONTROLLER_NAME}:/usr/src/${CONTROLLER_NAME}
     env_file: .env
     stdin_open: true
     tty: true
     ports:
-      - ${APP_PORT}:${APP_PORT}
-  admin:
+      - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
+  ${PORTAL_NAME}:
     build:
-      context: ./admin/
-    image: ${SHORTNAME}_admin
-    container_name: ${SHORTNAME}_admin
+      context: ./${PORTAL_NAME}/
+    image: ${PORTAL_NAME}
+    container_name: ${PORTAL_NAME}
     env_file: .env
     restart: always
     stdin_open: true
     ports:
-      - ${ADMIN_PORT}:${ADMIN_PORT}
+      - ${PORTAL_PORT}:${PORTAL_PORT}
     command: >
       /bin/sh -c
       "envsubst '
