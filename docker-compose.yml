@@ -7,6 +7,10 @@ services:
     container_name: ${ABBREVIATION}
     restart: always
     env_file: .env
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   db_management:
     build:
       context: ./${DATABASE_MANAGEMENT_NAME}/
@@ -28,20 +32,20 @@ services:
     tty: true
     ports:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
-  portal:
-    build:
-      context: ./${PORTAL_NAME}/
-    image: ${PORTAL_NAME}
-    container_name: ${PORTAL_NAME}
-    env_file: .env
-    restart: always
-    stdin_open: true
-    ports:
-      - ${PORTAL_PORT}:${PORTAL_PORT}
-    command: >
-      /bin/sh -c
-      "envsubst '
-      $$ADMIN_PORT
-      '< /etc/nginx/nginx.conf.template
-      > /etc/nginx/nginx.conf
-      && nginx -g 'daemon off;'"
+  # portal:
+  #   build:
+  #     context: ./${PORTAL_NAME}/
+  #   image: ${PORTAL_NAME}
+  #   container_name: ${PORTAL_NAME}
+  #   env_file: .env
+  #   restart: always
+  #   stdin_open: true
+  #   ports:
+  #     - ${PORTAL_PORT}:${PORTAL_PORT}
+  #   command: >
+  #     /bin/sh -c
+  #     "envsubst '
+  #     $$ADMIN_PORT
+  #     '< /etc/nginx/nginx.conf.template
+  #     > /etc/nginx/nginx.conf
+  #     && nginx -g 'daemon off;'"

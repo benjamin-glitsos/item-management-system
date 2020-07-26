@@ -22,7 +22,7 @@
 import zio.console._
 import io.getquill._
 
-object MyApp extends zio.App {
+object Main extends zio.App {
 
     lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
     import ctx._
