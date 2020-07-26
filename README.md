@@ -1,15 +1,44 @@
-A toy hospital management system with enterprise-grade principles.
+A toy hospital management system with a dockerised microservice architecture and enterprise-grade principles.
 
-**Microservices:** &bull; *Database:* PostgreSQL. &bull; *Database Admin:* Adminer. &bull; *View:* Angular, NGINX. &bull; *Controller:* Scala.
+## Microservices
 
-**Language:** Scala/Java Interop, Typescript, Bash.
+### Controller
 
-**Architecture:** Dockerised Linux microservice MVC.
+Scala (Java Interop). ([ZIO](https://zio.dev/), [Quill](https://getquill.io/) &amp; [Http4s](https://http4s.org/).)
 
-**Principles:** Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY.
+### Portal
 
-**Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Attribute-Based Access Control (ABAC), monadic pipelines.
+Angular (Typescript) and NGINX. ([ngx-admin](https://akveo.github.io/ngx-admin/) &amp; [Bootstrap](https://getbootstrap.com/).)
 
-**Workflow:** ticket-based Git Trunk (Jira).
+### Database
 
-**Technologies:** [Docker Compose](https://docs.docker.com/compose/), [Cats](https://typelevel.org/cats/), [Http4s](https://http4s.org/), [Slick](http://scala-slick.org/), [ngx-admin](https://akveo.github.io/ngx-admin/), [Bootstrap](https://getbootstrap.com/).
+PostgreSQL.
+
+### Database Portal
+
+Adminer.
+
+
+## Principles
+
+Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY, 
+
+## Concepts
+
+RESTful/CRUD API, Object/Functional-Relational Mapping (ORM/FRM), Attribute-Based Access Control (ABAC), monadic pipelines.
+
+## Workflow
+
+Ticket-based Git Trunk using Jira. (Switched from Git Flow.)
+
+## Microservice Architecture
+
+TODO: diagram
+
+## Controller Architecture
+
+TODO: diagram
+
+## Database Architecture
+
+TODO: diagram
