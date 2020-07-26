@@ -20,14 +20,22 @@
 // }
 
 import zio.console._
-// import ctx._
+import io.getquill._
 
 object MyApp extends zio.App {
 
-    // lazy val ctx = new PostgresJdbcContext(SnakeCase, "ctx")
+    lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
+    import ctx._
 
     def run(args: List[String]) =
         myAppLogic.exitCode
+
+    val pi = quote(3.14159)
+    case class Circle(radius: Float)
+    val areas = quote {
+        query[Circle].map(c => pi * c.radius * c.radius)
+    }
+    ctx.run(areas)
 
     val myAppLogic =
         for {
