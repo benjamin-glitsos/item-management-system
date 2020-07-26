@@ -19,6 +19,9 @@ case "$1" in
     "containers" )
         docker container ls -a
     ;;
+    "volumes" )
+        docker volume ls
+    ;;
     * )
         cat ./scripts.sh
     ;;

@@ -22,7 +22,7 @@ services:
     container_name: ${CONTROLLER_NAME}
     volumes:
       - ./${CONTROLLER_NAME}/${VOLUMES_NAME}/root:/root
-      - ./${CONTROLLER_NAME}:/usr/src/${CONTROLLER_NAME}
+      - ./${CONTROLLER_NAME}:/usr/src/app
     env_file: .env
     stdin_open: true
     tty: true

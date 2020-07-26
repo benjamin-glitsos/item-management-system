@@ -15,7 +15,7 @@ libraryDependencies := Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-generic" % circeVersion,
     "org.postgresql" % "postgresql" % "9.4.1208",
-    "io.getquill" %% "quill-jdbc" % "3.4.2-SNAPSHOT",
+    "io.getquill" %% "quill-jdbc" % "3.5.2",
     "dev.zio" %% "zio" % "1.0.0-RC21-2",
     "org.http4s" %% "http4s-dsl" % http4sVersion,
     "org.http4s" %% "http4s-blaze-server" % http4sVersion,

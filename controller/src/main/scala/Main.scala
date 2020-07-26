@@ -20,11 +20,11 @@
 // }
 
 import zio.console._
-import ctx._
+// import ctx._
 
 object MyApp extends zio.App {
 
-    lazy val ctx = new PostgresJdbcContext(SnakeCase, "ctx")
+    // lazy val ctx = new PostgresJdbcContext(SnakeCase, "ctx")
 
     def run(args: List[String]) =
         myAppLogic.exitCode
