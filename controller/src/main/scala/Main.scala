@@ -8,7 +8,7 @@ object Main extends IOApp {
 
         BlazeServerBuilder[IO]
             .bindHttp(
-                System.getenv("APP_PORT").toInt,
+                System.getenv("CONTROLLER_PORT").toInt,
                 System.getenv("DOCKER_LOCALHOST")
             )
             .withHttpApp(Routes.service)
