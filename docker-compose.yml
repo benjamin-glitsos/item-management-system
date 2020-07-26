@@ -8,9 +8,7 @@ services:
     restart: always
     env_file: .env
     ports:
-      - ${DATABASE_PORT}:${DATABASE_PORT}
-    volumes:
-      - ./scripts:/docker-entrypoint-initdb.d
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
   db_management:
     build:
       context: ./${DATABASE_MANAGEMENT_NAME}/
