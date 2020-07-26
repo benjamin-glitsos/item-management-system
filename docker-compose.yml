@@ -9,7 +9,7 @@ services:
     env_file: .env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-  db_management:
+  db_portal:
     build:
       context: ./${DATABASE_MANAGEMENT_NAME}/
     image: ${DATABASE_MANAGEMENT_NAME}
@@ -17,6 +17,9 @@ services:
     restart: always
     ports:
       - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
+    environment:
+      - ADMINER_DESIGN='lucas-sandery'
+      - ADMINER_PLUGINS='edit-calendar'
   controller:
     build:
       context: ./${CONTROLLER_NAME}/
