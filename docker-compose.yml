@@ -10,7 +10,7 @@ services:
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts:/docker-entrypoint-initdb.d
   db_management:
     build:
       context: ./${DATABASE_MANAGEMENT_NAME}/
