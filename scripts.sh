@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
 case "$1" in
-    "run" | "compose" )
+    "run" )
+        docker-compose run $2
+    ;;
+    "exec" )
+        docker-compose exec $2
+    ;;
+    "up" )
         docker-compose up -d $2
+    ;;
+    "stop" )
+        docker-compose stop
     ;;
     "images" )
         docker image ls -a

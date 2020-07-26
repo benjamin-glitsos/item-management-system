@@ -12,18 +12,17 @@ resolvers := Seq(
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
 libraryDependencies := Seq(
-    "org.typelevel" %% "cats-core" % "2.0.0",
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-generic" % circeVersion,
+    "org.postgresql" % "postgresql" % "9.4.1208",
+    "io.getquill" %% "quill-jdbc" % "3.4.2-SNAPSHOT",
+    "dev.zio" %% "zio" % "1.0.0-RC21-2",
     "org.http4s" %% "http4s-dsl" % http4sVersion,
     "org.http4s" %% "http4s-blaze-server" % http4sVersion,
     "org.http4s" %% "http4s-blaze-client" % http4sVersion,
     "org.http4s" %% "http4s-circe" % http4sVersion,
     "com.typesafe" % "config" % "1.4.0",
     "com.devskiller" % "jfairy" % "0.6.0",
-    "org.postgresql" % "postgresql" % "9.4.1208",
-    "io.getquill" %% "quill-jdbc" % "3.4.2-SNAPSHOT",
-    "dev.zio" %% "zio" % "1.0.0-RC21-2"
 )
 
 scalacOptions := Seq(
