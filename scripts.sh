@@ -2,7 +2,7 @@
 
 case "$1" in
     "run" | "compose" )
-        docker-compose up $2
+        docker-compose up -d $2
     ;;
     "images" )
         docker image ls -a

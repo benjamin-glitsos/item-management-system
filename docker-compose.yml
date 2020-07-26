@@ -21,8 +21,8 @@ services:
     image: ${CONTROLLER_NAME}
     container_name: ${CONTROLLER_NAME}
     volumes:
-      - ${CONTROLLER_NAME}:/root
-      - ${LOCAL_DIR}${ABBREVIATION}/${CONTROLLER_NAME}:/usr/src/${CONTROLLER_NAME}
+      - ./${CONTROLLER_NAME}:/root
+      - ./${CONTROLLER_NAME}:/usr/src/${CONTROLLER_NAME}
     env_file: .env
     stdin_open: true
     tty: true
