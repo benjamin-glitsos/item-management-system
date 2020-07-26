@@ -7,7 +7,7 @@ services:
     container_name: ${ABBREVIATION}
     restart: always
     env_file: .env
-  db_portal:
+  db_management:
     build:
       context: ./${DATABASE_MANAGEMENT_NAME}/
     image: ${DATABASE_MANAGEMENT_NAME}
