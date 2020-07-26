@@ -1,6 +1,5 @@
 val http4sVersion = "0.21.6"
 val circeVersion = "0.12.3"
-val slickPgVersion = "0.19.0"
 
 name := "Hospital MS"
 version := "1.0"
@@ -20,12 +19,11 @@ libraryDependencies := Seq(
     "org.http4s" %% "http4s-blaze-server" % http4sVersion,
     "org.http4s" %% "http4s-blaze-client" % http4sVersion,
     "org.http4s" %% "http4s-circe" % http4sVersion,
-    "com.typesafe.slick" %% "slick" % "3.3.2",
     "com.typesafe" % "config" % "1.4.0",
-    "com.zaxxer" % "HikariCP" % "3.4.5",
-    "com.typesafe.slick" %% "slick-hikaricp" % "3.3.2",
-    "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-    "com.devskiller" % "jfairy" % "0.6.0"
+    "com.devskiller" % "jfairy" % "0.6.0",
+    "org.postgresql" % "postgresql" % "9.4.1208",
+    "io.getquill" %% "quill-jdbc" % "3.4.2-SNAPSHOT",
+    "dev.zio" %% "zio" % "1.0.0-RC21-2"
 )
 
 scalacOptions := Seq(
