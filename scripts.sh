@@ -8,6 +8,9 @@ case "$1" in
         docker-compose exec $2
     ;;
     "up" )
+        docker-compose up $2
+    ;;
+    "bg" )
         docker-compose up -d $2
     ;;
     "stop" )
