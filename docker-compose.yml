@@ -2,20 +2,20 @@ version: '3.1'
 services:
   database:
     build:
-      context: ./${DATABASE_NAME}/
-    image: ${DATABASE_NAME}
+      context: ./${DATABASE_SERVICE}/
+    image: ${DATABASE_SERVICE}
     container_name: ${ABBREVIATION}
     volumes:
-      - ./${DATABASE_NAME}/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./${DATABASE_SERVICE}/init.sh:/docker-entrypoint-initdb.d/init.sh
     restart: always
     env_file: .env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
   db_portal:
     build:
-      context: ./${DATABASE_MANAGEMENT_NAME}/
-    image: ${DATABASE_MANAGEMENT_NAME}
-    container_name: ${DATABASE_MANAGEMENT_NAME}
+      context: ./${DATABASE_MANAGEMENT_SERVICE}/
+    image: ${DATABASE_MANAGEMENT_SERVICE}
+    container_name: ${DATABASE_MANAGEMENT_SERVICE}
     restart: always
     ports:
       - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
@@ -24,12 +24,12 @@ services:
       - ADMINER_DESIGN='lucas-sandery'
   controller:
     build:
-      context: ./${CONTROLLER_NAME}/
-    image: ${CONTROLLER_NAME}
-    container_name: ${CONTROLLER_NAME}
+      context: ./${CONTROLLER_SERVICE}/
+    image: ${CONTROLLER_SERVICE}
+    container_name: ${CONTROLLER_SERVICE}
     volumes:
-      - ./${CONTROLLER_NAME}/${VOLUMES_NAME}/root:/root
-      - ./${CONTROLLER_NAME}:/usr/src/app
+      - ./${CONTROLLER_SERVICE}/${VOLUMES_NAME}/root:/root
+      - ./${CONTROLLER_SERVICE}:/usr/src/app
     env_file: .env
     stdin_open: true
     tty: true
@@ -37,9 +37,9 @@ services:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
   # portal:
   #   build:
-  #     context: ./${PORTAL_NAME}/
-  #   image: ${PORTAL_NAME}
-  #   container_name: ${PORTAL_NAME}
+  #     context: ./${PORTAL_SERVICE}/
+  #   image: ${PORTAL_SERVICE}
+  #   container_name: ${PORTAL_SERVICE}
   #   env_file: .env
   #   restart: always
   #   stdin_open: true
