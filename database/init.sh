@@ -2,6 +2,8 @@
 
 psql << EOF
 
+-- Create tables --
+
 CREATE TABLE $SEX_NAME (
     id serial PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL
@@ -37,5 +39,62 @@ CREATE TABLE $USERS_NAME (
     username VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL
 );
+
+-- Populate with starting values --
+
+INSERT INTO $SEX_NAME (name) VALUES ('Male'), ('Female');
+
+
+INSERT INTO $USERS_NAME (
+    person_id
+  , username
+  , password
+) VALUES (
+    1
+  , '$SUPER_USERNAME'
+  , '$SUPER_PASSWORD'
+);
+
+INSERT INTO $PEOPLE_NAME (
+    record_id
+  , first_name
+  , last_name
+  , other_names
+  , sex_id
+  , email_address
+  , phone_number
+  , address_line_one
+  , address_line_two
+  , zip
+) VALUES (
+    1
+  , '$SUPER_FIRST_NAME'
+  , '$SUPER_LAST_NAME'
+  , '$SUPER_MIDDLE_NAME'
+  , '$SUPER_SEX'
+  , '$SUPER_EMAIL'
+  , '$SUPER_PHONE'
+  , '$SUPER_ADDRESS_LINE_1'
+  , '$SUPER_ADDRESS_LINE_2'
+  , '$SUPER_ZIP'
+);
+
+INSERT INTO $RECORDS_NAME (
+    created_at
+  , created_by
+  , updated_at
+  , updated_by
+  , deleted_at
+  , deleted_by
+) VALUES (
+    NOW()
+  , 1
+  , NOW()
+  , 1
+  , NOW()
+  , 1
+);
+
+-- Create relationships --
 
 EOF
