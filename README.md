@@ -21,7 +21,7 @@ Adminer.
 
 ## Principles
 
-Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY, 
+MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, Service Layer, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY, 
 
 ## Concepts
 
