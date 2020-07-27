@@ -34,7 +34,7 @@ object Main extends zio.App {
     val users = quote {
         query[Users]
     }
-    ctx.run(users);
+    println(ctx.run(users));
 
     val myAppLogic =
         for {
