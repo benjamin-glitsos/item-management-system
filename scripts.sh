@@ -13,6 +13,9 @@ case "$1" in
     "bg" )
         docker-compose up -d $2
     ;;
+    "build" )
+        docker-compose build $2
+    ;;
     "stop" )
         docker-compose stop
     ;;
