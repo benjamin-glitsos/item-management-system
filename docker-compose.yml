@@ -5,6 +5,7 @@ services:
       context: ./${DATABASE_SERVICE}/
     image: ${DATABASE_SERVICE}
     container_name: ${DATABASE_SERVICE}
+    hostname: ${DATABASE_SERVICE}.${ABBREVIATION}.com
     volumes:
       - ./${DATABASE_SERVICE}/init.sh:/docker-entrypoint-initdb.d/init.sh
     restart: always
@@ -21,6 +22,7 @@ services:
       context: ./${DATABASE_MANAGEMENT_SERVICE}/
     image: ${DATABASE_MANAGEMENT_SERVICE}
     container_name: ${DATABASE_MANAGEMENT_SERVICE}
+    hostname: dbportal.${ABBREVIATION}.com
     restart: always
     ports:
       - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
@@ -37,6 +39,7 @@ services:
       context: ./${CONTROLLER_SERVICE}/
     image: ${CONTROLLER_SERVICE}
     container_name: ${CONTROLLER_SERVICE}
+    hostname: ${CONTROLLER_SERVICE}.${ABBREVIATION}.com
     volumes:
       - ./${CONTROLLER_SERVICE}/${VOLUMES_NAME}/root:/root
       - ./${CONTROLLER_SERVICE}:/usr/src/app
