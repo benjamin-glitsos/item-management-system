@@ -21,11 +21,11 @@ Adminer.
 
 ## Principles
 
-MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), Scalability, 5NF Database Normalisation, Service Layer, GRASP, SOLID, Composition over inheritance, Type-safety, Functional purity, DRY, 
+Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Separation of concerns, Type-safety, Functional purity, DRY.
 
 ## Concepts
 
-RESTful/CRUD API, Object/Functional-Relational Mapping (ORM/FRM), Attribute-Based Access Control (ABAC), monadic pipelines.
+MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), RESTful/CRUD API, Service Layer, Object/Functional-Relational Mapping (ORM/FRM), Attribute-Based Access Control (ABAC), monadic pipelines.
 
 ## Workflow
 
