@@ -19,6 +19,9 @@ case "$1" in
     "stop" )
         docker-compose stop
     ;;
+    "inspect" )
+        docker inspect $2 | less
+    ;;
     "images" )
         docker image ls -a
     ;;
