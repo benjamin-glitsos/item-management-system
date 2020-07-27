@@ -11,6 +11,11 @@ services:
     env_file: .env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://${POSTGRES_HOST}:${POSTGRES_PORT}"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
   db_portal:
     build:
       context: ./${DATABASE_MANAGEMENT_SERVICE}/
@@ -22,6 +27,11 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=${POSTGRES_HOST}
       - ADMINER_DESIGN=pepa-linha
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://${POSTGRES_HOST}:${DATABASE_MANAGEMENT_PORT}"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
   controller:
     build:
       context: ./${CONTROLLER_SERVICE}/
