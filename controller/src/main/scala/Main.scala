@@ -30,17 +30,14 @@ object Main extends zio.App {
     def run(args: List[String]) =
         myAppLogic.exitCode
 
-    val pi = quote(3.14159)
-    case class Circle(radius: Float)
-    val areas = quote {
-        query[Circle].map(c => pi * c.radius * c.radius)
+    case class Users(id: Int, person_id: Int, username: String, password: String)
+    val users = quote {
+        query[Users]
     }
-    ctx.run(areas)
+    ctx.run(users);
 
     val myAppLogic =
         for {
-            _    <- putStrLn("Hello! What is your name?")
-            name <- getStrLn
-            _    <- putStrLn(s"Hello, ${name}, welcome to ZIO!")
+            _ <- putStrLn("Hello!")
         } yield ()
 }
