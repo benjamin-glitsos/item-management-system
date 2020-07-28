@@ -4,9 +4,6 @@ case "$1" in
     "run" )
         docker-compose run $2
     ;;
-    "exec" )
-        docker-compose exec $2
-    ;;
     "up" )
         docker-compose up $2
     ;;
@@ -18,6 +15,12 @@ case "$1" in
     ;;
     "stop" )
         docker-compose stop
+    ;;
+    "exec" )
+        docker-compose exec $2
+    ;;
+    "bash" )
+        docker-compose exec $2 bash
     ;;
     "inspect" )
         docker inspect $2 | less

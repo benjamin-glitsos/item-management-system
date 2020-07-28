@@ -30,11 +30,12 @@ object Main extends zio.App {
     def run(args: List[String]) =
         myAppLogic.exitCode
 
-    case class Users(id: Int, person_id: Int, username: String, password: String)
-    val users = quote {
-        query[Users]
-    }
-    println(ctx.run(users));
+    println("HEY")
+    // case class Users(id: Int, person_id: Int, username: String, password: String)
+    // val users = quote {
+    //     query[Users]
+    // }
+    // println(ctx.run(users));
 
     val myAppLogic =
         for {
