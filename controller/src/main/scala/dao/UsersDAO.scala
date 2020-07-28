@@ -4,10 +4,10 @@ object UsersDAO {
     lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
     import ctx._
 
-    def list() = {
+    def create(item: Users) = {
         ctx.run(
             quote {
-                query[Users]
+                query[Users].insert(lift(item))
             }
         )
     }
