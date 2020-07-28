@@ -25,7 +25,7 @@ Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inherita
 
 ## Concepts
 
-MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), RESTful/CRUD API, Service Layer, Object/Functional-Relational Mapping (ORM/FRM), Attribute-Based Access Control (ABAC), monadic pipelines.
+MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), RESTful/CRUD API, Service-oriented architecture, Object/Functional-Relational Mapping (ORM/FRM), Attribute-Based Access Control (ABAC), Monads, Networking.
 
 ## Workflow
 
