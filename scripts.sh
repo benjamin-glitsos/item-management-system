@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
+if [ -f .env ]
+then
+    export $(cat .env | sed 's/#.*//g' | xargs)
+fi
+
 case "$1" in
     "run" )
         docker-compose run $2
     ;;
     "up" )
+        docker rm -f -v $DATABASE_SERVICE
         docker-compose up $2
     ;;
     "bg" )
@@ -19,8 +25,8 @@ case "$1" in
     "exec" )
         docker-compose exec $2
     ;;
-    "bash" )
-        docker-compose exec $2 bash
+    "repl" )
+        docker-compose exec $CONTROLLER_SERVICE bash
     ;;
     "inspect" )
         docker inspect $2 | less
