@@ -26,7 +26,7 @@ object Main extends zio.App {
     def run(args: List[String]) =
         myAppLogic.exitCode
 
-    UsersDAO.create(Users(2, 1, "un", "pw"))
+    UsersServices.create(Users(2, 1, "un", "pw"))
 
     val myAppLogic =
         for {
