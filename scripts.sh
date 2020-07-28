@@ -26,7 +26,7 @@ case "$1" in
         docker-compose exec $2
     ;;
     "repl" )
-        docker-compose exec $CONTROLLER_SERVICE bash
+        docker-compose exec $CONTROLLER_SERVICE bash sbt
     ;;
     "inspect" )
         docker inspect $2 | less
