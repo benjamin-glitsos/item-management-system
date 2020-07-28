@@ -20,24 +20,16 @@
 // }
 
 import zio.console._
-import io.getquill._
 
 object Main extends zio.App {
-
-    lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
-    import ctx._
 
     def run(args: List[String]) =
         myAppLogic.exitCode
 
-    case class Users(id: Int, person_id: Int, username: String, password: String)
-    val users = quote {
-        query[Users]
-    }
-    println(ctx.run(users));
+    println(UsersDAO.list())
 
     val myAppLogic =
         for {
-            _ <- putStrLn("Hello!")
+            _ <- putStrLn("hello")
         } yield ()
 }

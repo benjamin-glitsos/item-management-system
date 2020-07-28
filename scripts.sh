@@ -10,6 +10,7 @@ case "$1" in
         docker-compose run $2
     ;;
     "up" )
+        echo "Deleting database volume:"
         docker rm -f -v $DATABASE_SERVICE
         docker-compose up $2
     ;;

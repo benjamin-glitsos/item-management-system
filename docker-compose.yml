@@ -11,7 +11,7 @@ services:
     env_file: .env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-  db_portal:
+  db-management:
     build:
       context: ./${DATABASE_MANAGEMENT_SERVICE}/
     image: ${DATABASE_MANAGEMENT_SERVICE}
