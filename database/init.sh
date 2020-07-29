@@ -124,7 +124,7 @@ REFERENCES $USERS_TABLE (id);
 
 -- Create custom functions --
 
-CREATE OR REPLACE FUNCTION upsert_$USERS_TABLE(id int, person_id int, username varchar, password varchar) RETURNS VOID AS \$\$
+CREATE OR REPLACE FUNCTION upsert_user(id int, person_id int, username varchar, password varchar) RETURNS VOID AS \$\$
 DECLARE
 BEGIN
     UPDATE $USERS_TABLE SET person_id = person_id, username = username, password = password WHERE id = id;
