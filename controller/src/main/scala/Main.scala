@@ -26,7 +26,8 @@ object Main extends zio.App {
     def run(args: List[String]) =
         myAppLogic.exitCode
 
-    UsersDAO.upsert(Users(2, 1, "slkfj", "slakjf"))
+
+    println(UsersDAO.upsert(Users(8, 1, "ieryds", "BBB")))
 
     // UsersServices.createOrUpdate(
     //     id = 0,
