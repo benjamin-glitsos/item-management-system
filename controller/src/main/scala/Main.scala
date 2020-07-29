@@ -27,7 +27,7 @@ object Main extends zio.App {
         myAppLogic.exitCode
 
 
-    println(UsersDAO.upsert(Users(8, 1, "ieryds", "BBB")))
+    UsersDAO.upsert(Users(8, 1, "IERYDS", "bbb"))
 
     // UsersServices.createOrUpdate(
     //     id = 0,

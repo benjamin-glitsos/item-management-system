@@ -7,7 +7,7 @@ object UsersDAO {
     def upsert(item: Users): Unit = {
         ctx.run(
             quote {
-                infix"upsert_user(${item.id}, ${item.person_id}, ${item.username}, ${item.password})".as[Query[Int]]
+                infix"upsert_user(${lift(item.id)}, ${lift(item.person_id)}, ${lift(item.username)}, ${lift(item.password)})".as[Insert[Any]]
             }
         )
     }
