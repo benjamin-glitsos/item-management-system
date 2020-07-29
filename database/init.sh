@@ -122,4 +122,16 @@ ADD CONSTRAINT fk_deleted_by
 FOREIGN KEY (deleted_by)
 REFERENCES $USERS_TABLE (id);
 
+-- Create custom functions --
+
+CREATE OR REPLACE FUNCTION upsert_$USERS_TABLE(id int, person_id int, username varchar, password varchar) RETURNS VOID AS \$\$
+DECLARE
+BEGIN
+    UPDATE $USERS_TABLE SET person_id = person_id, username = username, password = password WHERE id = id;
+    IF NOT FOUND THEN
+    INSERT INTO $USERS_TABLE values (default, person_id, username, password);
+END IF;
+END;
+\$\$ LANGUAGE 'plpgsql';
+
 EOF
