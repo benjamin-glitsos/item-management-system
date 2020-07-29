@@ -29,13 +29,13 @@ object Main extends zio.App {
     UsersServices.createOrUpdate(
         id = 0,
         user_id = 1,
-        user = Users(0, 0, "un", "pw")
+        user = Users(0, 0, "un", "pw"),
         person = People(
             id = 0,
             record_id = 0,
             first_name = "fn",
             last_name = "ln",
-            other_names = "on",
+            other_names = Some("on"),
             sex_id = 2,
             email_address = "test@example.com",
             phone_number = "0444444444",

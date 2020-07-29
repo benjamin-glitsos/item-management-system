@@ -1,6 +1,6 @@
 import java.sql.Timestamp
 
-case class Record(
+case class Records(
     id: Int,
     created_at: Timestamp,
     created_by: Int,
