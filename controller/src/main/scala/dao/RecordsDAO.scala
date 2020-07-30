@@ -1,5 +1,6 @@
 import java.util.UUID
-import java.sql.Timestamp
+import java.time.Instant
+import java.sql.{Timestamp, Types}
 import io.getquill._
 
 object RecordsDAO {
@@ -7,12 +8,20 @@ object RecordsDAO {
     import ctx._
 
     implicit val encodeUUID = MappedEncoding[UUID, String](_.toString)
-    implicit val encodeTimestamp = MappedEncoding[Timestamp, String](_.toString)
-    implicit val recordsInsertMeta = insertMeta[Records](_.id)
+    implicit val instantEncoder = MappedEncoding[Instant, Timestamp](i => Timestamp.from(i))
 
-    def now(): Timestamp = {
-        new Timestamp(System.currentTimeMillis())
-    }
+    // implicit def encodeInstant(implicit ctx: PostgresContext): ctx.Encoder[Instant] =
+    //     ctx.encoder(
+    //         Types.TIMESTAMP,
+    //         (i, ts, r) => r.setTimestamp(i, Timestamp.from(ts))
+    //     )
+    // implicit val encodeInstant: Encoder[Instant] =
+    //     encoder(
+    //         Types.TIMESTAMP,
+    //         (index, value, row) => r.setTimestamp(index, Timestamp.from(value), Types.TIMESTAMP)
+    //     )
+
+    implicit val recordsInsertMeta = insertMeta[Records](_.id)
 
     def upsert(uuid: UUID, user_id: Int): Unit = {
         ctx.run(
@@ -20,7 +29,7 @@ object RecordsDAO {
                 query[Records]
                     .insert(
                         _.uuid -> lift(uuid),
-                        _.created_at -> lift(now()),
+                        _.created_at -> lift(Instant.now()),
                         _.created_by -> lift(user_id)
                     )
                     // .onConflictUpdate(_.uuid)(
