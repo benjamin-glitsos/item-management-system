@@ -20,10 +20,10 @@ object RecordsDAO {
                         _.created_at -> lift(LocalDateTime.now()),
                         _.created_by -> lift(user_id)
                     )
-                    // .onConflictUpdate(_.uuid)(
-                    //     (t, e) => t.updated_at -> now(),
-                    //     (t, e) => t.updated_by -> user_id
-                    // )
+                    .onConflictUpdate(_.uuid)(
+                        (t, e) => t.updated_at -> lift(Some(LocalDateTime.now()): Option[LocalDateTime]),
+                        (t, e) => t.updated_by -> lift(Some(user_id): Option[Int])
+                    )
             }
         )
     }
