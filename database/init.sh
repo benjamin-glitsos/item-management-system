@@ -10,7 +10,8 @@ CREATE TABLE $SEX_TABLE (
 );
 
 CREATE TABLE $RECORDS_TABLE (
-    id serial PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    uuid UUID UNIQUE NOT NULL,
     created_at TIMESTAMP NOT NULL,
     created_by SMALLINT NOT NULL,
     updated_at TIMESTAMP NOT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE $RECORDS_TABLE (
 );
 
 CREATE TABLE $PEOPLE_TABLE (
-    id serial PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     record_id SMALLINT NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
@@ -34,9 +35,10 @@ CREATE TABLE $PEOPLE_TABLE (
 );
 
 CREATE TABLE $USERS_TABLE (
-    id serial PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    uuid UUID UNIQUE NOT NULL,
     person_id SMALLINT NOT NULL,
-    username VARCHAR(20) NOT NULL UNIQUE,
+    username VARCHAR(20) UNIQUE NOT NULL,
     password VARCHAR(20) NOT NULL
 );
 
@@ -46,11 +48,13 @@ INSERT INTO $SEX_TABLE (name) VALUES ('Male'), ('Female');
 
 
 INSERT INTO $USERS_TABLE (
-    person_id
+    uuid
+  , person_id
   , username
   , password
 ) VALUES (
-    1
+    '$SUPER_UUID'
+  , 1
   , '$SUPER_USERNAME'
   , '$SUPER_PASSWORD'
 );
@@ -80,14 +84,16 @@ INSERT INTO $PEOPLE_TABLE (
 );
 
 INSERT INTO $RECORDS_TABLE (
-    created_at
+    uuid
+  , created_at
   , created_by
   , updated_at
   , updated_by
   , deleted_at
   , deleted_by
 ) VALUES (
-    NOW()
+    '$SUPER_UUID'
+  , NOW()
   , 1
   , NOW()
   , 1
@@ -121,17 +127,5 @@ ALTER TABLE $RECORDS_TABLE
 ADD CONSTRAINT fk_deleted_by
 FOREIGN KEY (deleted_by)
 REFERENCES $USERS_TABLE (id);
-
--- Create custom functions --
-
-CREATE OR REPLACE FUNCTION upsert_user(id int, person_id int, username varchar, password varchar) RETURNS VOID AS \$\$
-DECLARE
-BEGIN
-    UPDATE $USERS_TABLE SET person_id = person_id, username = username, password = password WHERE id = id;
-    IF NOT FOUND THEN
-    INSERT INTO $USERS_TABLE values (default, person_id, username, password);
-END IF;
-END;
-\$\$ LANGUAGE 'plpgsql';
 
 EOF

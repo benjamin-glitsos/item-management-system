@@ -4,6 +4,7 @@ object UsersServices {
     lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
     import ctx._
 
+
     // def createOrUpdate(
     //     id: Int,
     //     user_id: Int,

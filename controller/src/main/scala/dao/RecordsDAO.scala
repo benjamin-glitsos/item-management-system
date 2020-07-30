@@ -5,6 +5,8 @@ object RecordsDAO {
     lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
     import ctx._
 
+    // implicit val recordsInsertMeta = insertMeta[Records](_.id)
+
     // val now = quote {
     //   infix"NOW()".as[Timestamp]
     // }

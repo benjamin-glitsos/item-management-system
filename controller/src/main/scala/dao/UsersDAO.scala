@@ -4,40 +4,19 @@ object UsersDAO {
     lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
     import ctx._
 
+    implicit val usersInsertMeta = insertMeta[Users](_.id)
+
     def upsert(item: Users): Unit = {
         ctx.run(
             quote {
-                infix"upsert_user(${lift(item.id)}, ${lift(item.person_id)}, ${lift(item.username)}, ${lift(item.password)})".as[Insert[Any]]
+                query[Users]
+                    .insert(lift(item))
+                    .onConflictUpdate(_.uuid)(
+                        (t, e) => t.person_id -> e.person_id,
+                        (t, e) => t.username -> e.username,
+                        (t, e) => t.password -> e.password
+                    )
             }
         )
     }
-
-    // implicit val usersInsertMeta = insertMeta[Users](_.id)
-    //
-    // val users = query[Users]
-    //
-    // def upsert(item: Users): Unit = {
-    //     ctx.run(
-    //         quote {
-    //             users.update(lift(item));
-    //             users.filter(s => users.filter(_.id == item.id).nonEmpty)insert(lift(item));
-    //         }
-    //     )
-    // }
-
-    // def insert(item: Users): Unit = {
-    //     ctx.run(
-    //         quote {
-    //             users.insert(lift(item))
-    //         }
-    //     )
-    // }
-    //
-    // def update(item: Users): Unit = {
-    //     ctx.run(
-    //         quote {
-    //             users.update(lift(item))
-    //         }
-    //     )
-    // }
 }
