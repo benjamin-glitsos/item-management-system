@@ -14,10 +14,10 @@ CREATE TABLE $RECORDS_TABLE (
     uuid UUID UNIQUE NOT NULL,
     created_at TIMESTAMP NOT NULL,
     created_by SMALLINT NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
-    updated_by SMALLINT NOT NULL,
-    deleted_at TIMESTAMP NOT NULL,
-    deleted_by SMALLINT NOT NULL
+    updated_at TIMESTAMP,
+    updated_by SMALLINT,
+    deleted_at TIMESTAMP,
+    deleted_by SMALLINT
 );
 
 CREATE TABLE $PEOPLE_TABLE (
@@ -87,16 +87,8 @@ INSERT INTO $RECORDS_TABLE (
     uuid
   , created_at
   , created_by
-  , updated_at
-  , updated_by
-  , deleted_at
-  , deleted_by
 ) VALUES (
     '$SUPER_UUID'
-  , NOW()
-  , 1
-  , NOW()
-  , 1
   , NOW()
   , 1
 );
