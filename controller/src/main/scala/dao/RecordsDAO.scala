@@ -7,7 +7,6 @@ object RecordsDAO {
     import ctx._
 
     implicit val encodeUUID = MappedEncoding[UUID, String](_.toString)
-    // implicit val encodeLocalDateTime = MappedEncoding[LocalDateTime, String](_.format("dd-MM-yyyy HH:mm:ss"))
 
     implicit val recordsInsertMeta = insertMeta[Records](_.id)
 
