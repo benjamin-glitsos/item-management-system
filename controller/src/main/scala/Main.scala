@@ -7,7 +7,7 @@ object Main extends zio.App {
 
 
     // UsersDAO.upsert(Users(8, java.util.UUID.fromString("c1db1203-23ca-43da-8218-aa0b2442e0fb"), 1, "IEMMaMMMRYDS", "bCCCCb"))
-    RecordsDAO.upsert(uuid = java.util.UUID.fromString("c1db1203-23ca-43da-8218-aa0b2442e0fb"), user_id = 1)
+    RecordsDAO.upsert(uuid = java.util.UUID.fromString("c1db1203-23ca-43da-8218-ab0b2442e0fb"), user_id = 1)
 
     val myAppLogic =
         for {

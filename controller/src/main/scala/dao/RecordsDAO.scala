@@ -7,11 +7,7 @@ object RecordsDAO {
     import ctx._
 
     implicit val encodeUUID = MappedEncoding[UUID, String](_.toString)
-    implicit val timestampEncoder = MappedEncoding[LocalDateTime, String](_.format("dd-MM-yyyy HH:mm:ss"))
-
-    def now(): Timestamp = {
-        LocalDateTime.now()
-    }
+    // implicit val encodeLocalDateTime = MappedEncoding[LocalDateTime, String](_.format("dd-MM-yyyy HH:mm:ss"))
 
     implicit val recordsInsertMeta = insertMeta[Records](_.id)
 
@@ -21,7 +17,7 @@ object RecordsDAO {
                 query[Records]
                     .insert(
                         _.uuid -> lift(uuid),
-                        _.created_at -> lift(now()),
+                        _.created_at -> lift(LocalDateTime.now()),
                         _.created_by -> lift(user_id)
                     )
                     // .onConflictUpdate(_.uuid)(
