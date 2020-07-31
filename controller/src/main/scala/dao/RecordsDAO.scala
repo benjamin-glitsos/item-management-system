@@ -10,20 +10,16 @@ object RecordsDAO {
 
     implicit val recordsInsertMeta = insertMeta[Records](_.id)
 
-    def upsert(uuid: UUID, user_id: Int): Unit = {
-        ctx.translate(
-            quote {
-                query[Records]
-                    .insert(
-                        _.uuid -> lift(uuid),
-                        _.created_at -> lift(LocalDateTime.now()),
-                        _.created_by -> lift(user_id)
-                    )
-                    .onConflictUpdate(_.uuid)(
-                        (t, e) => t.updated_at -> lift(Some(LocalDateTime.now()): Option[LocalDateTime]),
-                        (t, e) => t.updated_by -> lift(Some(user_id): Option[Int])
-                    )
-            }
-        )
+    def upsert(uuid: UUID, user_id: Int) = quote {
+        query[Records]
+            .insert(
+                _.uuid -> lift(uuid),
+                _.created_at -> lift(LocalDateTime.now()),
+                _.created_by -> lift(user_id)
+            )
+            .onConflictUpdate(_.uuid)(
+                (t, e) => t.updated_at -> lift(Some(LocalDateTime.now()): Option[LocalDateTime]),
+                (t, e) => t.updated_by -> lift(Some(user_id): Option[Int])
+            )
     }
 }
