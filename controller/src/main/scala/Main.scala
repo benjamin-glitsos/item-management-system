@@ -5,9 +5,21 @@ object Main extends zio.App {
     def run(args: List[String]) =
         myAppLogic.exitCode
 
-
-    UsersDAO.upsert(Users(8, java.util.UUID.fromString("c1db1203-23ca-43da-8219-aa0b2442e0fb"), 1, "IEMMaMMMRYDS", "bCCCCb"))
-    RecordsDAO.upsert(uuid = java.util.UUID.fromString("c1db1203-23ca-43da-8228-ab0b2442d0fb"), user_id = 1)
+    // UsersDAO.upsert(Users(0, java.util.UUID.fromString("c1db1203-23ca-43da-8219-aa0b2442e0fb"), 2, "IEMMaMMMRYDS", "bCCCCb"))
+    // RecordsDAO.upsert(uuid = java.util.UUID.fromString("c1db1203-23ca-43da-8219-aa0b2442e0fb"), user_id = 2)
+    // PeopleDAO.upsert(People(
+    //     id = 0,
+    //     record_id = 2,
+    //     first_name = "fn",
+    //     last_name = "ln",
+    //     other_names = Some("otn"),
+    //     sex_id = 1,
+    //     email_address = "test@example.com",
+    //     phone_number = "0444444444",
+    //     address_line_one = "34 fkldsj st",
+    //     address_line_two = "slkdf alskdjf",
+    //     zip = "2000"
+    // ))
 
     val myAppLogic =
         for {
