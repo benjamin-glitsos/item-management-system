@@ -1,5 +1,5 @@
 import java.util.UUID
-import java.time.LocalDateTime;
+import java.time.LocalDateTime
 import io.getquill._
 
 object RecordsDAO {
@@ -10,8 +10,7 @@ object RecordsDAO {
 
     implicit val recordsInsertMeta = insertMeta[Records](_.id)
 
-    def upsert(uuid: UUID, user_id: Int) = quote {
-        query[Records]
+    def upsert(uuid: UUID, user_id: Int) = query[Records]
             .insert(
                 _.uuid -> lift(uuid),
                 _.created_at -> lift(LocalDateTime.now()),
@@ -21,5 +20,4 @@ object RecordsDAO {
                 (t, e) => t.updated_at -> lift(Some(LocalDateTime.now()): Option[LocalDateTime]),
                 (t, e) => t.updated_by -> lift(Some(user_id): Option[Int])
             )
-    }
 }
