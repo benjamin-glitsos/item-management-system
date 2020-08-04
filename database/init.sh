@@ -36,7 +36,6 @@ CREATE TABLE $PEOPLE_TABLE (
 
 CREATE TABLE $USERS_TABLE (
     id SERIAL PRIMARY KEY,
-    uuid UUID UNIQUE NOT NULL,
     person_id SMALLINT UNIQUE NOT NULL,
     username VARCHAR(20) UNIQUE NOT NULL,
     password VARCHAR(20) NOT NULL
@@ -48,13 +47,11 @@ INSERT INTO $SEX_TABLE (name) VALUES ('Male'), ('Female');
 
 
 INSERT INTO $USERS_TABLE (
-    uuid
-  , person_id
+    person_id
   , username
   , password
 ) VALUES (
-    '$SUPER_UUID'
-  , 1
+    1
   , '$SUPER_USERNAME'
   , '$SUPER_PASSWORD'
 );
