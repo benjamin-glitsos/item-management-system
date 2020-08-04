@@ -23,6 +23,9 @@ libraryDependencies := Seq(
     "org.http4s" %% "http4s-circe" % http4sVersion,
     "com.typesafe" % "config" % "1.4.0",
     "com.devskiller" % "jfairy" % "0.6.0",
+    "org.tpolecat" %% "doobie-core" % "0.8.8",
+    "org.tpolecat" %% "doobie-hikari" % "0.8.8",
+    "org.tpolecat" %% "doobie-postgres" % "0.8.8"
 )
 
 // scalacOptions := Seq(
