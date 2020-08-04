@@ -1,6 +1,22 @@
+import cats._
+import cats.data._
 import cats.effect._
+import cats.implicits._
+import doobie._
+import doobie.implicits._
+import doobie.util.ExecutionContexts
 
 object Main {
+    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+
+    val xa = Transactor.fromDriverManager[IO](
+        "org.postgresql.Driver",
+        s"jdbc:postgresql:${System.getEnv("POSTGRES_DATABASE")}",
+        System.getEnv("POSTGRES_USER"),
+        System.getEnv("POSTGRES_PASSWORD"),
+        Blocker.liftExecutionContext(ExecutionContexts.synchronous)
+    )
+
     def run(args: List[String]): IO[ExitCode] = {
         println(
             UsersServices.createOrUpdate(
