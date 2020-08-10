@@ -17,6 +17,9 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
+    def insert(personId: Int, username: String, password: String): Update0 =
+        sql"INSERT INTO users (person_id, username, password) values ($personId, $username, $password)".update
+
     def select() = {
         sql"SELECT person_id, username, password FROM users"
             .query[(Int, String, String)]
@@ -28,6 +31,7 @@ object Main {
     }
 
     def main(args: Array[String]) {
+        insert(1, "un", "pw").run.transact(xa).unsafeRunSync
         select()
     }
 }
