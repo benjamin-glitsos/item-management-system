@@ -1,4 +1,4 @@
-case class People(
+case class Person(
     id: Int,
     record_id: Int,
     first_name: String,

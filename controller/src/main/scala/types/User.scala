@@ -1,8 +1,7 @@
 import java.util.UUID
 
-case class Users(
+case class User(
     id: Int,
-    uuid: UUID,
     person_id: Int,
     username: String,
     password: String
