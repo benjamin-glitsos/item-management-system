@@ -23,7 +23,20 @@ object Main {
         VALUES ($personId, $username, $password)
         ON CONFLICT (username)
         DO UPDATE SET person_id = EXCLUDED.person_id, password = EXCLUDED.password
-        """.update
+        """.update.run.transact(xa).unsafeRunSync
+
+    def upsertAll(): Update0 = {
+        sql"""
+        WITH upserted_record AS (
+        )
+        WITH upserted_person AS (
+        )
+        INSERT INTO users (person_id, username, password)
+        VALUES ($personId, $username, $password)
+        ON CONFLICT (username)
+        DO UPDATE SET person_id = EXCLUDED.person_id, password = EXCLUDED.password
+        """.update.run.transact(xa).unsafeRunSync
+    }
 
     def select() = {
         sql"SELECT person_id, username, password FROM users"
@@ -36,7 +49,7 @@ object Main {
     }
 
     def main(args: Array[String]) {
-        upsert(1, "un4", "pw6").run.transact(xa).unsafeRunSync
+        // upsert(1, "un4", "pw6")
         select()
     }
 }
