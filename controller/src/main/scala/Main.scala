@@ -17,8 +17,13 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def insert(personId: Int, username: String, password: String): Update0 =
-        sql"INSERT INTO users (person_id, username, password) values ($personId, $username, $password)".update
+    def upsert(personId: Int, username: String, password: String): Update0 =
+        sql"""
+        INSERT INTO users (person_id, username, password)
+        VALUES ($personId, $username, $password)
+        ON CONFLICT (username)
+        DO UPDATE SET person_id = EXCLUDED.person_id, password = EXCLUDED.password
+        """.update
 
     def select() = {
         sql"SELECT person_id, username, password FROM users"
@@ -31,7 +36,7 @@ object Main {
     }
 
     def main(args: Array[String]) {
-        insert(1, "un", "pw").run.transact(xa).unsafeRunSync
+        upsert(1, "un4", "pw6").run.transact(xa).unsafeRunSync
         select()
     }
 }
