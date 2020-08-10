@@ -17,13 +17,17 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def main(args: Array[String]) {
-        sql"SELECT name FROM sex"
-            .query[String]
+    def select() = {
+        sql"SELECT person_id, username, password FROM users"
+            .query[(Int, String, String)]
             .to[List]
             .transact(xa)
             .unsafeRunSync
             .take(5)
             .foreach(println)
+    }
+
+    def main(args: Array[String]) {
+        select()
     }
 }
