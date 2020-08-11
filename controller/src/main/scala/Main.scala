@@ -19,31 +19,48 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def upsertAll(record: RecordEdit, user: User): Update0 =
-        sql"""
-        DO $$
-        BEGIN
-            INSERT INTO sex (name) VALUES ('wow');
-        END
-        $$;
-        """.update
-
     def main(args: Array[String]) {
-        upsertAll(
-            record = RecordEdit(
-                uuid = UUID.randomUUID,
-                time = LocalDateTime.now(),
-                user_id = 1
-            ),
-            user = User(
-                id = 0,
-                person_id = 0,
-                username = "un4",
-                password = "pw6"
-            )
-        ).run.transact(xa).unsafeRunSync
+        def upsert(): ConnectionIO[Person] =
+            for {
+                r  <- sql"""
+                    | INSERT INTO records (uuid, created_at, created_by)
+                    | VALUES ('746bc87f-4efe-43cb-8a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
+                    | ON CONFLICT (uuid)
+                    | DO UPDATE SET
+                    |       updated_at = EXCLUDED.created_at
+                    |     , updated_by = EXCLUDED.created_by
+                    | RETURNING id AS up_record_id
+                    |         , CAST(updated_by AS BOOLEAN) AS is_new;
+                    """.update.run
+                if () {
+                } else {
+                }
+            } yield p
     }
 }
+
+// def upsertAll(record: RecordEdit, user: User): Update0 =
+//     sql"""
+//     DO $$
+//     BEGIN
+//         INSERT INTO sex (name) VALUES ('wow');
+//     END
+//     $$;
+//     """.update
+
+// upsertAll(
+//     record = RecordEdit(
+//         uuid = UUID.randomUUID,
+//         time = LocalDateTime.now(),
+//         user_id = 1
+//     ),
+//     user = User(
+//         id = 0,
+//         person_id = 0,
+//         username = "un4",
+//         password = "pw6"
+//     )
+// ).run.transact(xa).unsafeRunSync
 
 // | WITH up_record AS (
 // |     INSERT INTO records (uuid, created_at, created_by)
