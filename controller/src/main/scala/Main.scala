@@ -19,23 +19,46 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
+    case class Record2(
+        id: Int,
+        updated_by: Option[Int],
+    )
+
+    val program3: ConnectionIO[(Int, Double)] =
+      for {
+        r <- sql"""
+            INSERT INTO records (uuid, created_at, created_by)
+            VALUES ('846bc87f-4efe-43cb-9a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
+            ON CONFLICT (uuid)
+            DO UPDATE SET
+                  updated_at = EXCLUDED.created_at
+                , updated_by = EXCLUDED.created_by
+            RETURNING id, updated_by
+            """.query[Record2].unique
+        if (r.updated_by.isDefined) {
+            b <- sql"select 999".query[Double].unique
+        } else {
+            val b = 888
+        }
+      } yield (r.id, b)
+
+    // def upsert(): ConnectionIO[Int] =
+    //     for {
+    //         r  <- sql"""
+    //             | INSERT INTO records (uuid, created_at, created_by)
+    //             | VALUES ('746bc87f-4efe-43cb-9a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
+    //             | ON CONFLICT (uuid)
+    //             | DO UPDATE SET
+    //             |       updated_at = EXCLUDED.created_at
+    //             |     , updated_by = EXCLUDED.created_by
+    //             """.update.run
+    //         // if () {
+    //         // } else {
+    //         // }
+    //     } yield r
+
     def main(args: Array[String]) {
-        def upsert(): ConnectionIO[Person] =
-            for {
-                r  <- sql"""
-                    | INSERT INTO records (uuid, created_at, created_by)
-                    | VALUES ('746bc87f-4efe-43cb-8a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
-                    | ON CONFLICT (uuid)
-                    | DO UPDATE SET
-                    |       updated_at = EXCLUDED.created_at
-                    |     , updated_by = EXCLUDED.created_by
-                    | RETURNING id AS up_record_id
-                    |         , CAST(updated_by AS BOOLEAN) AS is_new;
-                    """.update.run
-                if () {
-                } else {
-                }
-            } yield p
+        println(program3.transact(xa).unsafeRunSync)
     }
 }
 
