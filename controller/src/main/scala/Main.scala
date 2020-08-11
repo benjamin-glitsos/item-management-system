@@ -50,3 +50,65 @@ object Main {
         ).run.transact(xa).unsafeRunSync
     }
 }
+
+// DO $$
+// BEGIN
+//     WITH up_record AS (
+//         INSERT INTO records (uuid, created_at, created_by)
+//         VALUES ('746bc87f-4efe-43cb-8a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
+//         ON CONFLICT (uuid)
+//         DO UPDATE SET
+//               updated_at = EXCLUDED.created_at
+//             , updated_by = EXCLUDED.created_by
+//         RETURNING id AS up_record_id
+//                 , CAST(updated_by AS BOOLEAN) AS is_new;
+//     )
+//     IF is_new THEN
+//         WITH up_person AS (
+//             INSERT INTO people (
+//                 record_id
+//               , first_name
+//               , last_name
+//               , other_names
+//               , sex_id
+//               , email_address
+//               , phone_number
+//               , address_line_one
+//               , address_line_two
+//               , zip
+//             ) VALUES (
+//                 up_record_id
+//               , 'fn'
+//               , 'ln'
+//               , 'on'
+//               , 1
+//               , 'test@example.com'
+//               , '0444444444'
+//               , '1 Test St'
+//               , 'Sydney NSW'
+//               , '2000'
+//             ) RETURNING id AS up_person_id;
+//         )
+//         INSERT INTO users (person_id, username, password)
+//         VALUES (up_person_id, 'un', 'pw');
+//     ELSE
+//         WITH up_person AS (
+//             UPDATE people SET
+//                 first_name = 'fn'
+//               , last_name = 'ln'
+//               , other_names = 'on'
+//               , sex_id = 1
+//               , email_address = 'test@example.com'
+//               , phone_number = '0444444444'
+//               , address_line_one = '1 Test St'
+//               , address_line_two = 'Sydney NSW'
+//               , zip = '2000'
+//             WHERE record_id = up_record_id
+//             RETURNING id AS up_person_id;
+//         )
+//         UPDATE users SET
+//             username = 'un'
+//           , password = 'pw';
+//     END IF;
+// END
+// $$;
