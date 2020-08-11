@@ -21,17 +21,11 @@ object Main {
 
     def upsertAll(record: RecordEdit, user: User): Update0 =
         sql"""
-        | WITH up_record AS (
-        |     INSERT INTO records (uuid, created_at, created_by)
-        |     VALUES (${record.uuid}, ${record.time}, ${record.user_id})
-        |     ON CONFLICT (uuid)
-        |     DO UPDATE SET updated_at = EXCLUDED.created_at, updated_by = EXCLUDED.created_by
-        |     RETURNING id
-        | )
-        | INSERT INTO users (person_id, username, password)
-        | VALUES (${user.person_id}, ${user.username}, ${user.password})
-        | ON CONFLICT (username)
-        | DO UPDATE SET person_id = EXCLUDED.person_id, password = EXCLUDED.password
+        DO $$
+        BEGIN
+            INSERT INTO sex (name) VALUES ('wow');
+        END
+        $$;
         """.update
 
     def main(args: Array[String]) {
@@ -50,6 +44,18 @@ object Main {
         ).run.transact(xa).unsafeRunSync
     }
 }
+
+// | WITH up_record AS (
+// |     INSERT INTO records (uuid, created_at, created_by)
+// |     VALUES (${record.uuid}, ${record.time}, ${record.user_id})
+// |     ON CONFLICT (uuid)
+// |     DO UPDATE SET updated_at = EXCLUDED.created_at, updated_by = EXCLUDED.created_by
+// |     RETURNING id
+// | )
+// | INSERT INTO users (person_id, username, password)
+// | VALUES (${user.person_id}, ${user.username}, ${user.password})
+// | ON CONFLICT (username)
+// | DO UPDATE SET person_id = EXCLUDED.person_id, password = EXCLUDED.password
 
 // DO $$
 // BEGIN
