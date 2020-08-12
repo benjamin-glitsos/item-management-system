@@ -72,10 +72,24 @@ object Main {
                 """.query[Unit].unique
             } else {
                 sql"""
+                WITH existing_person AS (
+                    UPDATE people SET
+                        first_name = 'fn'
+                      , last_name = 'ln'
+                      , other_names = 'on'
+                      , sex_id = 1
+                      , email_address = 'test@example.com'
+                      , phone_number = '0444444444'
+                      , address_line_one = '1 Test St'
+                      , address_line_two = 'Sydney NSW'
+                      , zip = '2000'
+                    WHERE record_id = ${record.id}
+                    RETURNING id
+                )
                 UPDATE users SET
                     username = 'un'
                   , password = 'pw'
-                WHERE person_id = 1
+                WHERE person_id = (SELECT id FROM existing_person)
                 """.query[Unit].unique
             }
       } yield record.id
