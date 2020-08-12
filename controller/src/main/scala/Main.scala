@@ -89,24 +89,24 @@ object Main {
                   INSERT INTO users (person_id, username, password)
                   VALUES (
                       (SELECT id FROM new_person)
-                    , 'un2'
-                    , 'pw'
+                    , ${user.username}
+                    , ${user.password}
                   )
                   """.update.run
               } else {
                   sql"""
                   WITH existing_person AS (
                       UPDATE people SET
-                          first_name = 'fn'
-                        , last_name = 'ln'
-                        , other_names = 'on'
-                        , sex_id = 1
-                        , email_address = 'test@example.com'
-                        , phone_number = '0444444444'
-                        , address_line_one = '1 Test St'
-                        , address_line_two = 'Sydney NSW'
-                        , zip = '2000'
-                      WHERE record_id = ${r.id}
+                          first_name       = ${person.first_name}
+                        , last_name        = ${person.last_name}
+                        , other_names      = ${person.other_names}
+                        , sex_id           = ${person.sex_id}
+                        , email_address    = ${person.email_address}
+                        , phone_number     = ${person.phone_number}
+                        , address_line_one = ${person.address_line_one}
+                        , address_line_two = ${person.address_line_two}
+                        , zip              = ${person.zip}
+                      WHERE record_id      = ${r.id}
                       RETURNING id
                   )
                   UPDATE users SET
