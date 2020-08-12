@@ -59,7 +59,7 @@ object Main {
                   , updated_by = EXCLUDED.created_by
               RETURNING id, updated_by
               """.query[RecordReturn].unique
-          _ <- if (r.updated_by.isDefined) {
+          _ <- if (r.updated_by.isEmpty) {
                   sql"""
                   WITH new_person AS (
                       INSERT INTO people (
@@ -125,9 +125,9 @@ object Main {
                 user_id = 1
             ),
             PersonEdit(
-                first_name = "fn",
-                last_name = "ln",
-                other_names = Some("on"),
+                first_name = "fn2",
+                last_name = "ln2",
+                other_names = Some("on2"),
                 sex_id = 1,
                 email_address = "test@example.com",
                 phone_number = "0444444444",
@@ -137,7 +137,7 @@ object Main {
             ),
             UserEdit(
                 username = "un3",
-                password = "pw"
+                password = "pw3"
             )
         ).transact(xa).unsafeRunSync
     }
