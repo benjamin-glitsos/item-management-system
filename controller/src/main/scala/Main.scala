@@ -21,7 +21,7 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    case class RecordInsert(
+    case class RecordEdit(
         uuid: UUID,
         user_id: Int
     )
@@ -31,7 +31,7 @@ object Main {
         updated_by: Option[Int]
     )
 
-    case class PersonInsert(
+    case class PersonEdit(
         first_name: String,
         last_name: String,
         other_names: Option[String],
@@ -43,7 +43,12 @@ object Main {
         zip: String
     )
 
-    def upsert(record: RecordInsert, person: PersonInsert): ConnectionIO[Unit] = {
+    case class UserEdit(
+        username: String,
+        password: String
+    )
+
+    def upsert(record: RecordEdit, person: PersonEdit, user: UserEdit): ConnectionIO[Unit] = {
         for {
           r <- sql"""
               INSERT INTO records (uuid, created_at, created_by)
@@ -105,8 +110,8 @@ object Main {
                       RETURNING id
                   )
                   UPDATE users SET
-                      username = 'un'
-                    , password = 'pw'
+                      username = ${user.username}
+                    , password = ${user.password}
                   WHERE person_id = (SELECT id FROM existing_person)
                   """.update.run
               }
@@ -114,12 +119,12 @@ object Main {
     }
 
     def main(args: Array[String]) {
-        println(upsert(
-            RecordInsert(
+        upsert(
+            RecordEdit(
                 uuid = java.util.UUID.randomUUID,
                 user_id = 1
             ),
-            PersonInsert(
+            PersonEdit(
                 first_name = "fn",
                 last_name = "ln",
                 other_names = Some("on"),
@@ -129,7 +134,11 @@ object Main {
                 address_line_one = "1 Test St",
                 address_line_two = "Sydney",
                 zip = "2000"
+            ),
+            UserEdit(
+                username = "un3",
+                password = "pw"
             )
-        ).transact(xa).unsafeRunSync)
+        ).transact(xa).unsafeRunSync
     }
 }
