@@ -19,8 +19,6 @@ services:
     restart: always
     ports:
       - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
-    environment:
-      - ADMINER_DESIGN=pepa-linha
   controller:
     build:
       context: ./${CONTROLLER_SERVICE}/
