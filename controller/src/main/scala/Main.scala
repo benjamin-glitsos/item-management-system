@@ -24,7 +24,7 @@ object Main {
         updated_by: Option[Int],
     )
 
-    val program3: ConnectionIO[(Int, Double)] =
+    val program3: ConnectionIO[(Int, Int)] =
       for {
         r <- sql"""
             INSERT INTO records (uuid, created_at, created_by)
@@ -35,41 +35,18 @@ object Main {
                 , updated_by = EXCLUDED.created_by
             RETURNING id, updated_by
             """.query[Record2].unique
-        if (r.updated_by.isDefined) {
-            b <- sql"select 999".query[Double].unique
-        } else {
-            val b = 888
-        }
+        val isNew = r.updated_by.isDefined
+        b <- if (isNew) {
+                sql"select 1".query[Int].unique
+            } else {
+                sql"select 0".query[Int].unique
+            }
       } yield (r.id, b)
-
-    // def upsert(): ConnectionIO[Int] =
-    //     for {
-    //         r  <- sql"""
-    //             | INSERT INTO records (uuid, created_at, created_by)
-    //             | VALUES ('746bc87f-4efe-43cb-9a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
-    //             | ON CONFLICT (uuid)
-    //             | DO UPDATE SET
-    //             |       updated_at = EXCLUDED.created_at
-    //             |     , updated_by = EXCLUDED.created_by
-    //             """.update.run
-    //         // if () {
-    //         // } else {
-    //         // }
-    //     } yield r
 
     def main(args: Array[String]) {
         println(program3.transact(xa).unsafeRunSync)
     }
 }
-
-// def upsertAll(record: RecordEdit, user: User): Update0 =
-//     sql"""
-//     DO $$
-//     BEGIN
-//         INSERT INTO sex (name) VALUES ('wow');
-//     END
-//     $$;
-//     """.update
 
 // upsertAll(
 //     record = RecordEdit(
