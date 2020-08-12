@@ -31,7 +31,19 @@ object Main {
         updated_by: Option[Int]
     )
 
-    def upsert(record: RecordInsert): ConnectionIO[Unit] = {
+    case class PersonInsert(
+        first_name: String,
+        last_name: String,
+        other_names: Option[String],
+        sex_id: Int,
+        email_address: String,
+        phone_number: String,
+        address_line_one: String,
+        address_line_two: String,
+        zip: String
+    )
+
+    def upsert(record: RecordInsert, person: PersonInsert): ConnectionIO[Unit] = {
         for {
           r <- sql"""
               INSERT INTO records (uuid, created_at, created_by)
@@ -58,15 +70,15 @@ object Main {
                       , zip
                       ) VALUES (
                             ${r.id}
-                          , 'fn'
-                          , 'ln'
-                          , 'on'
-                          , 1
-                          , 'test@example.com'
-                          , '0444444444'
-                          , '1 Test St'
-                          , 'Sydney NSW'
-                          , '2000'
+                          , ${person.first_name}
+                          , ${person.last_name}
+                          , ${person.other_names}
+                          , ${person.sex_id}
+                          , ${person.email_address}
+                          , ${person.phone_number}
+                          , ${person.address_line_one}
+                          , ${person.address_line_two}
+                          , ${person.zip}
                       ) RETURNING id
                   )
                   INSERT INTO users (person_id, username, password)
@@ -106,6 +118,17 @@ object Main {
             RecordInsert(
                 uuid = java.util.UUID.randomUUID,
                 user_id = 1
+            ),
+            PersonInsert(
+                first_name = "fn",
+                last_name = "ln",
+                other_names = Some("on"),
+                sex_id = 1,
+                email_address = "test@example.com",
+                phone_number = "0444444444",
+                address_line_one = "1 Test St",
+                address_line_two = "Sydney",
+                zip = "2000"
             )
         ).transact(xa).unsafeRunSync)
     }
