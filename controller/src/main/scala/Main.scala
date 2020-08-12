@@ -7,6 +7,8 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import java.util.UUID
 import java.time.LocalDateTime
+import doobie.postgres._
+import doobie.postgres.implicits._
 
 object Main {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
@@ -19,24 +21,28 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    case class RecordReturn(
-        id: Int,
-        updated_by: Option[Int],
+    case class RecordInsert(
+        uuid: UUID,
+        user_id: Int
     )
 
-    def upsert(): ConnectionIO[Unit] = {
+    case class RecordReturn(
+        id: Int,
+        updated_by: Option[Int]
+    )
+
+    def upsert(record: RecordInsert): ConnectionIO[Unit] = {
         for {
-          record <- sql"""
+          r <- sql"""
               INSERT INTO records (uuid, created_at, created_by)
-              VALUES ('846bc87f-4efe-43cb-9a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
+              VALUES (${record.uuid}, NOW(), ${record.user_id})
               ON CONFLICT (uuid)
               DO UPDATE SET
                     updated_at = EXCLUDED.created_at
                   , updated_by = EXCLUDED.created_by
               RETURNING id, updated_by
               """.query[RecordReturn].unique
-          val isNew = record.updated_by.isDefined
-          _ <- if (isNew) {
+          _ <- if (r.updated_by.isDefined) {
                   sql"""
                   WITH new_person AS (
                       INSERT INTO people (
@@ -51,7 +57,7 @@ object Main {
                       , address_line_two
                       , zip
                       ) VALUES (
-                            ${record.id}
+                            ${r.id}
                           , 'fn'
                           , 'ln'
                           , 'on'
@@ -83,7 +89,7 @@ object Main {
                         , address_line_one = '1 Test St'
                         , address_line_two = 'Sydney NSW'
                         , zip = '2000'
-                      WHERE record_id = ${record.id}
+                      WHERE record_id = ${r.id}
                       RETURNING id
                   )
                   UPDATE users SET
@@ -96,6 +102,11 @@ object Main {
     }
 
     def main(args: Array[String]) {
-        println(upsert.transact(xa).unsafeRunSync)
+        println(upsert(
+            RecordInsert(
+                uuid = java.util.UUID.randomUUID,
+                user_id = 1
+            )
+        ).transact(xa).unsafeRunSync)
     }
 }
