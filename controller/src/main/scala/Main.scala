@@ -24,9 +24,9 @@ object Main {
         updated_by: Option[Int],
     )
 
-    val program3: ConnectionIO[(Int, Int)] =
+    val program3: ConnectionIO[Int] =
       for {
-        r <- sql"""
+        record <- sql"""
             INSERT INTO records (uuid, created_at, created_by)
             VALUES ('846bc87f-4efe-43cb-9a57-75e20f96db6f', '2020-08-11 08:28:09.517903', 1)
             ON CONFLICT (uuid)
@@ -35,13 +35,20 @@ object Main {
                 , updated_by = EXCLUDED.created_by
             RETURNING id, updated_by
             """.query[Record2].unique
-        val isNew = r.updated_by.isDefined
-        b <- if (isNew) {
-                sql"select 1".query[Int].unique
+        val isNew = record.updated_by.isDefined
+        _ <- if (isNew) {
+                sql"""
+                INSERT INTO users (person_id, username, password)
+                VALUES (1, 'un', 'pw')
+                """.query[Unit].unique
             } else {
-                sql"select 0".query[Int].unique
+                sql"""
+                UPDATE users SET
+                    username = 'un'
+                  , password = 'pw'
+                """.query[Unit].unique
             }
-      } yield (r.id, b)
+      } yield record.id
 
     def main(args: Array[String]) {
         println(program3.transact(xa).unsafeRunSync)
