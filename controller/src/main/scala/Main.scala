@@ -66,10 +66,10 @@ object Main {
                 INSERT INTO users (person_id, username, password)
                 VALUES (
                     (SELECT id FROM new_person)
-                  , 'un'
+                  , 'un2'
                   , 'pw'
                 )
-                """.query[Unit].unique
+                """.update.run
             } else {
                 sql"""
                 WITH existing_person AS (
@@ -90,7 +90,7 @@ object Main {
                     username = 'un'
                   , password = 'pw'
                 WHERE person_id = (SELECT id FROM existing_person)
-                """.query[Unit].unique
+                """.update.run
             }
       } yield record.id
 
