@@ -42,10 +42,14 @@ CREATE TABLE $PEOPLE_TABLE (
     sex_id SMALLINT NOT NULL,
     date_of_birth DATE NOT NULL,
     email_address VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(20),
-    address_line_one VARCHAR(255),
+    phone_number VARCHAR(20) NOT NULL,
+    address_line_one VARCHAR(255) NOT NULL,
     address_line_two VARCHAR(255),
-    zip VARCHAR(20)
+    zip VARCHAR(20) NOT NULL,
+    aboriginal_or_torres_strait_islander BOOLEAN NOT NULL,
+    australian_citizen BOOLEAN NOT NULL,
+    born_overseas BOOLEAN NOT NULL,
+    english_second_language BOOLEAN NOT NULL
 );
 
 CREATE TABLE $STAFF_TABLE (
@@ -139,6 +143,10 @@ INSERT INTO $PEOPLE_TABLE (
   , address_line_one
   , address_line_two
   , zip
+  , aboriginal_or_torres_strait_islander,
+  , australian_citizen
+  , born_overseas
+  , english_second_language
 ) VALUES (
     '$SUPER_CARD_NUMBER'
   , '$SUPER_FIRST_NAME'
@@ -151,6 +159,10 @@ INSERT INTO $PEOPLE_TABLE (
   , '$SUPER_ADDRESS_LINE_1'
   , '$SUPER_ADDRESS_LINE_2'
   , '$SUPER_ZIP'
+  , '$SUPER_ABORIGINAL_OR_TORRES_STRAIT_ISLANDER'
+  , '$SUPER_AUSTRALIAN_CITIZEN'
+  , '$SUPER_BORN_OVERSEAS'
+  , '$SUPER_ENGLISH_SECOND_LANGUAGE'
 );
 
 INSERT INTO $STAFF_DEPARTMENTS (
