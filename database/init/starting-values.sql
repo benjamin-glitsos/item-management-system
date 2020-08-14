@@ -75,9 +75,11 @@ INSERT INTO $STAFF_DEPARTMENTS (
 INSERT INTO $RECORDS_TABLE (
     uuid
   , created_by
+  , notes
 ) VALUES (
     '$SUPER_UUID'
   , 1
+  , 'This record applies to all of the objects related to the Super Admin.'
 );
 
 INSERT INTO $STAFF_TABLE (

@@ -13,6 +13,7 @@ CREATE TABLE $RECORDS_TABLE (
   , edited_by SMALLINT
   , deleted_at TIMESTAMP
   , deleted_by SMALLINT
+  , notes TEXT
 );
 
 CREATE TABLE $ROLES_TABLE (
