@@ -72,35 +72,49 @@ INSERT INTO $STAFF_DEPARTMENTS (
   , 1
 );
 
-INSERT INTO $RECORDS_TABLE (
-    uuid
-  , created_by
-  , notes
-) VALUES (
-    '$SUPER_UUID'
-  , 1
-  , 'This record applies to all of the objects related to the Super Admin.'
-);
-
+WITH $STAFF_RECORD_INSERT AS (
+    INSERT INTO $RECORDS_TABLE (
+        uuid
+      , created_by
+      , notes
+    ) VALUES (
+        '$SUPER_STAFF_UUID'
+      , 1
+      , '$SUPER_ADMIN_RECORD_NOTE'
+    )
+    RETURNING id
+)
 INSERT INTO $STAFF_TABLE (
     record_id
   , person_id
   , staff_number
   , employment_start
 ) VALUES (
-    1
+    (SELECT id FROM $STAFF_RECORD_INSERT)
   , 1
   , '$SUPER_STAFF_NUMBER'
   , '$SUPER_EMPLOYMENT_START'
 );
 
+WITH $USER_RECORD_INSERT AS (
+    INSERT INTO $RECORDS_TABLE (
+        uuid
+      , created_by
+      , notes
+    ) VALUES (
+        '$SUPER_USER_UUID'
+      , 1
+      , '$SUPER_ADMIN_RECORD_NOTE'
+    )
+    RETURNING id
+)
 INSERT INTO $USERS_TABLE (
     record_id
   , staff_id
   , username
   , password
 ) VALUES (
-    1
+    (SELECT id FROM $USER_RECORD_INSERT)
   , 1
   , '$SUPER_USERNAME'
   , '$SUPER_PASSWORD'

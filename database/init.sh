@@ -1,6 +1,14 @@
 #!/bin/bash
 
+# Table Names:
+
 STAFF_DEPARTMENTS=${STAFF_TABLE}_${DEPARTMENTS_TABLE}
+STAFF_RECORD_INSERT=${STAFF_TABLE}_${RECORDS_TABLE}_insert
+USER_RECORD_INSERT=${USERS_TABLE}_${RECORDS_TABLE}_insert
+
+# Other Values:
+
+SUPER_ADMIN_RECORD_NOTE="Do not edit or delete this record. It belongs to the Super Admin."
 
 psql << EOP
 
