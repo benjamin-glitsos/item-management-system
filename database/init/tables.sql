@@ -32,7 +32,8 @@ CREATE TABLE $PEOPLE_TABLE (
   , other_names VARCHAR(255)
   , sex_id SMALLINT NOT NULL
   , date_of_birth DATE NOT NULL
-  , email_address EMAIL NOT NULL
+  -- , email_address EMAIL NOT NULL
+  , email_address VARCHAR(55) NOT NULL
   , phone_number VARCHAR(20) NOT NULL
   , address_line_one VARCHAR(255) NOT NULL
   , address_line_two VARCHAR(255)

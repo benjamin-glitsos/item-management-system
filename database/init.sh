@@ -2,10 +2,25 @@
 
 STAFF_DEPARTMENTS=${STAFF_TABLE}_${DEPARTMENTS_TABLE}
 
-eval "cat << EOSQL
-$(cat init/custom-functionality.sql | sed 's#\`#\\`#g' | sed 's#\\#\\\\#g' )
-$(cat init/tables.sql )
-$(cat init/starting-values.sql )
-$(cat init/relationships.sql )
+psql << EOP
+
+$(eval "cat << EOSQL
+
+-- Create custom functionality:
+
+-- Create tables:
+
+$(cat /docker-entrypoint-initdb.d/init/tables.sql )
+
+-- Populate with starting values:
+
+$(cat /docker-entrypoint-initdb.d/init/starting-values.sql )
+
+-- Create relationships:
+
+$(cat /docker-entrypoint-initdb.d/init/relationships.sql )
+
 EOSQL
-" 2> /dev/null
+" 2> /dev/null)
+
+EOP
