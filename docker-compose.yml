@@ -5,8 +5,6 @@ services:
       context: ./${DATABASE_SERVICE}/
     image: ${DATABASE_SERVICE}
     container_name: ${DATABASE_SERVICE}
-    volumes:
-      - ./${DATABASE_SERVICE}/init.sh:/docker-entrypoint-initdb.d/init.sh
     restart: always
     env_file: .env
     ports:
