@@ -2,7 +2,9 @@ INSERT INTO $SEX_TABLE (name) VALUES ('Male'), ('Female');
 
 INSERT INTO $ROLES_TABLE (name)
 VALUES
-    ('Admin')
+    ('System Admin')
+  , ('Office Admin')
+  , ('Office User')
   , ('Doctor')
   , ('Nurse');
 
