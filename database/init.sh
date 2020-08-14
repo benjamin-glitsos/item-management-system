@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PEOPLE_ROLES=${PEOPLE_TABLE}_${ROLES_TABLE}
+STAFF_DEPARTMENTS=${STAFF_TABLE}_${DEPARTMENTS_TABLE}
 
 psql << EOF
 
@@ -28,14 +28,19 @@ CREATE TABLE $ROLES_TABLE (
     name VARCHAR(255) UNIQUE NOT NULL
 );
 
+CREATE TABLE $DEPARTMENTS_TABLE (
+    id serial PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
 CREATE TABLE $PEOPLE_TABLE (
     id SERIAL PRIMARY KEY,
-    record_id SMALLINT NOT NULL,
     card_number VARCHAR(12) UNIQUE NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     other_names VARCHAR(255),
     sex_id SMALLINT NOT NULL,
+    date_of_birth DATE NOT NULL,
     email_address VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20),
     address_line_one VARCHAR(255),
@@ -43,10 +48,39 @@ CREATE TABLE $PEOPLE_TABLE (
     zip VARCHAR(20)
 );
 
-CREATE TABLE $PEOPLE_ROLES (
+CREATE TABLE $STAFF_TABLE (
+    id serial PRIMARY KEY,
+    record_id SMALLINT NOT NULL,
     person_id SMALLINT NOT NULL,
-    role_id SMALLINT NOT NULL,
-    PRIMARY KEY(person_id, role_id)
+    staff_number VARCHAR(12) NOT NULL,
+    employment_start DATE NOT NULL,
+    employment_end DATE
+);
+
+CREATE TABLE $PATIENTS_TABLE (
+    id serial PRIMARY KEY,
+    record_id SMALLINT NOT NULL,
+    person_id SMALLINT NOT NULL,
+    patient_number VARCHAR(12) NOT NULL,
+    medicare_number VARCHAR(10),
+    medicare_ref INT,
+    medicare_expiry DATE,
+    UNIQUE(medicare_number, medicare_ref)
+);
+
+CREATE TABLE $STAFF_DEPARTMENTS (
+    staff_id SMALLINT NOT NULL,
+    department_id SMALLINT NOT NULL,
+    PRIMARY KEY(staff_id, department_id)
+);
+
+CREATE TABLE $VISITS_TABLE (
+    id serial PRIMARY KEY,
+    patient_id SMALLINT NOT NULL,
+    staff_id SMALLINT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    UNIQUE(patient_id, staff_id, start_date)
 );
 
 CREATE TABLE $USERS_TABLE (
@@ -64,28 +98,54 @@ INSERT INTO $SEX_TABLE (name) VALUES ('Male'), ('Female');
 INSERT INTO $ROLES_TABLE (name)
 VALUES
     ('Admin')
-  , ('Staff')
-  , ('Patient');
+  , ('Doctor')
+  , ('Nurse');
+
+INSERT INTO $DEPARTMENTS_TABLE (name)
+VALUES
+    ('Anaesthetics and Pain Management')
+  , ('Cardiology')
+  , ('Dermatology')
+  , ('Drug Health Service')
+  , ('Emergency')
+  , ('Endocrinology')
+  , ('Gastroenterology')
+  , ('Haematology')
+  , ('Immunology')
+  , ('Intensive Care Unit')
+  , ('Microbiology and Infectious Diseases')
+  , ('National Centre for Veterans’ Healthcare (NCVH)')
+  , ('NSW Institute of Sports Medicine')
+  , ('Neurosurgery')
+  , ('Ophthalmology')
+  , ('Orthopaedics')
+  , ('Plastic, Reconstructive and Hand Surgery Unit')
+  , ('Podiatry')
+  , ('Pre-Admission Clinic')
+  , ('Psychology')
+  , ('Radiology')
+  , ('Speech Pathology')
+  , ('Vascular');
 
 INSERT INTO $PEOPLE_TABLE (
-    record_id
-  , card_number
+    card_number
   , first_name
   , last_name
   , other_names
   , sex_id
+  , date_of_birth
   , email_address
   , phone_number
   , address_line_one
   , address_line_two
   , zip
 ) VALUES (
-    1
-  , '$SUPER_CARD_NUMBER'
+    '$SUPER_CARD_NUMBER'
   , '$SUPER_FIRST_NAME'
   , '$SUPER_LAST_NAME'
   , '$SUPER_MIDDLE_NAME'
   , '$SUPER_SEX'
+  , '$SUPER_DATE_OF_BIRTH'
   , '$SUPER_EMAIL'
   , '$SUPER_PHONE'
   , '$SUPER_ADDRESS_LINE_1'
@@ -93,9 +153,9 @@ INSERT INTO $PEOPLE_TABLE (
   , '$SUPER_ZIP'
 );
 
-INSERT INTO $PEOPLE_ROLES (
-    person_id
-  , role_id
+INSERT INTO $STAFF_DEPARTMENTS (
+    staff_id
+  , department_id
 ) VALUES (
     1
   , 1
@@ -107,6 +167,18 @@ INSERT INTO $RECORDS_TABLE (
 ) VALUES (
     '$SUPER_UUID'
   , 1
+);
+
+INSERT INTO $STAFF_TABLE (
+    record_id
+  , person_id
+  , staff_number
+  , employment_start
+) VALUES (
+    1
+  , 1
+  , '$SUPER_STAFF_NUMBER'
+  , '$SUPER_EMPLOYMENT_START'
 );
 
 INSERT INTO $USERS_TABLE (
@@ -138,20 +210,45 @@ ADD CONSTRAINT fk_deleted_by
 FOREIGN KEY (deleted_by)
 REFERENCES $USERS_TABLE (id);
 
-ALTER TABLE $PEOPLE_TABLE
-ADD CONSTRAINT fk_${RECORDS_TABLE}
+ALTER TABLE $STAFF_TABLE
+ADD CONSTRAINT fk_record_id
 FOREIGN KEY (record_id)
 REFERENCES $RECORDS_TABLE (id);
 
-ALTER TABLE $PEOPLE_ROLES
+ALTER TABLE $STAFF_TABLE
 ADD CONSTRAINT fk_person_id
 FOREIGN KEY (person_id)
 REFERENCES $PEOPLE_TABLE (id);
 
-ALTER TABLE $PEOPLE_ROLES
-ADD CONSTRAINT fk_role_id
-FOREIGN KEY (role_id)
-REFERENCES $ROLES_TABLE (id);
+ALTER TABLE $PATIENTS_TABLE
+ADD CONSTRAINT fk_record_id
+FOREIGN KEY (record_id)
+REFERENCES $RECORDS_TABLE (id);
+
+ALTER TABLE $PATIENTS_TABLE
+ADD CONSTRAINT fk_person_id
+FOREIGN KEY (person_id)
+REFERENCES $PEOPLE_TABLE (id);
+
+ALTER TABLE $STAFF_DEPARTMENTS
+ADD CONSTRAINT fk_staff_id
+FOREIGN KEY (staff_id)
+REFERENCES $STAFF_TABLE (id);
+
+ALTER TABLE $STAFF_DEPARTMENTS
+ADD CONSTRAINT fk_department_id
+FOREIGN KEY (department_id)
+REFERENCES $DEPARTMENTS_TABLE (id);
+
+ALTER TABLE $VISITS_TABLE
+ADD CONSTRAINT fk_patient_id
+FOREIGN KEY (patient_id)
+REFERENCES $PATIENTS_TABLE (id);
+
+ALTER TABLE $VISITS_TABLE
+ADD CONSTRAINT fk_staff_id
+FOREIGN KEY (staff_id)
+REFERENCES $STAFF_TABLE (id);
 
 ALTER TABLE $USERS_TABLE
 ADD CONSTRAINT fk_${RECORDS_TABLE}
