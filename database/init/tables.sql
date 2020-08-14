@@ -46,18 +46,18 @@ CREATE TABLE $PEOPLE_TABLE (
 
 CREATE TABLE $STAFF_TABLE (
     id serial PRIMARY KEY
-  , record_id SMALLINT NOT NULL
-  , person_id SMALLINT NOT NULL
-  , staff_number VARCHAR(12) NOT NULL
+  , record_id SMALLINT UNIQUE NOT NULL
+  , person_id SMALLINT UNIQUE NOT NULL
+  , staff_number VARCHAR(12) UNIQUE NOT NULL
   , employment_start DATE NOT NULL
   , employment_end DATE
 );
 
 CREATE TABLE $PATIENTS_TABLE (
     id serial PRIMARY KEY
-  , record_id SMALLINT NOT NULL
-  , person_id SMALLINT NOT NULL
-  , patient_number VARCHAR(12) NOT NULL
+  , record_id SMALLINT UNIQUE NOT NULL
+  , person_id SMALLINT UNIQUE NOT NULL
+  , patient_number VARCHAR(12) UNIQUE NOT NULL
   , medicare_number VARCHAR(10)
   , medicare_ref INT
   , medicare_expiry DATE
@@ -82,7 +82,7 @@ CREATE TABLE $VISITS_TABLE (
 
 CREATE TABLE $USERS_TABLE (
     id SERIAL PRIMARY KEY
-  , record_id SMALLINT NOT NULL
+  , record_id SMALLINT UNIQUE NOT NULL
   , staff_id SMALLINT UNIQUE NOT NULL
   , username VARCHAR(20) UNIQUE NOT NULL
   , password VARCHAR(20) NOT NULL
