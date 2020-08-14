@@ -75,6 +75,7 @@ CREATE TABLE $VISITS_TABLE (
   , staff_id SMALLINT NOT NULL
   , start_date DATE NOT NULL
   , end_date DATE
+  , diagnosis TEXT
   , UNIQUE(patient_id, staff_id, start_date)
 );
 
