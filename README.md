@@ -12,6 +12,12 @@ Dockerisation, MVC, Networking, Scalability.
 
 Object-orientation, Functional programming, (OOP in the large; FP in the small), GRASP, SOLID, Type-safety, Functional purity, RESTful/CRUD API, Composition over inheritance, Separation of concerns, DRY.
 
+Multilayered Architecture:
+
+* Server/Routing Layer
+* Service Layer
+* DAO/ORM Layer
+
 ## Portal
 
 **Angular (Typescript).**
@@ -23,7 +29,6 @@ Angular architecture.
 **PostgreSQL, Bash.**
 
 4NF database normalisation.
-
 
 ## Database Management
 
