@@ -8,9 +8,9 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="1132"
-   height="661"
-   viewBox="-992 -32 1132 661"
+   width="1232"
+   height="761"
+   viewBox="-992 -32 1232 761"
    id="ccdiagram"
    sodipodi:docname="HMS (4).svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
@@ -40,7 +40,7 @@
      id="namedview410"
      showgrid="false"
      inkscape:zoom="0.63169643"
-     inkscape:cx="718.18707"
+     inkscape:cx="745.89025"
      inkscape:cy="450.99029"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -61,10 +61,11 @@
   </defs>
   <g
      id="g407"
-     transform="translate(-344.93286,-191.37103)">
+     transform="translate(-344.93286,-91.37103)">
     <g
        pointer-events="auto"
-       id="g19">
+       id="g19"
+       transform="translate(50,-48)">
       <g
          id="g17"
          style="opacity:1">
@@ -73,11 +74,11 @@
           <g
              id="g13">
             <polygon
-               points="-128,167 -64,167 480,481 480,518 -32,814 -96,814 -640,500 -640,463 "
+               points="-640,463 -128,167 -64,167 480,481 480,518 -32,814 -96,814 -640,500 "
                id="polygon9"
                style="fill:#ffffff;stroke:#818181;stroke-width:2" />
             <polygon
-               points="-608,481 -96,185 448,500 -64,796 "
+               points="-64,796 -608,481 -96,185 448,500 "
                id="polygon11"
                style="fill:#e6e7e8;stroke:#818181;stroke-width:0" />
           </g>
@@ -86,23 +87,30 @@
     </g>
     <g
        pointer-events="auto"
-       id="g21" />
+       id="g21"
+       transform="translate(50,-48)" />
     <g
-       id="g23" />
-    <g
-       pointer-events="auto"
-       id="g25" />
-    <g
-       id="g27" />
+       id="g23"
+       transform="translate(50,-48)" />
     <g
        pointer-events="auto"
-       id="g29" />
+       id="g25"
+       transform="translate(50,-48)" />
+    <g
+       id="g27"
+       transform="translate(50,-48)" />
+    <g
+       pointer-events="auto"
+       id="g29"
+       transform="translate(50,-48)" />
     <g
        pointer-events="none"
-       id="g31" />
+       id="g31"
+       transform="translate(50,-48)" />
     <g
        pointer-events="auto"
-       id="g93">
+       id="g93"
+       transform="translate(50,-48)">
       <g
          id="g43">
         <g
@@ -123,11 +131,11 @@
              id="line35"
              style="stroke:#000000;stroke-width:2;stroke-linecap:round" />
           <polygon
-             points="-450,658 -460,673 -434,667 -447,665 "
+             points="-447,665 -450,658 -460,673 -434,667 "
              id="polygon37"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
           <polygon
-             points="-329,607 -320,592 -346,597 -332,599 "
+             points="-332,599 -329,607 -320,592 -346,597 "
              id="polygon39"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
         </g>
@@ -152,11 +160,11 @@
              id="line47"
              style="stroke:#000000;stroke-width:2;stroke-linecap:round" />
           <polygon
-             points="-199,349 -226,353 -205,362 -209,355 "
+             points="-209,355 -199,349 -226,353 -205,362 "
              id="polygon49"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
           <polygon
-             points="5,392 32,389 11,379 15,386 "
+             points="15,386 5,392 32,389 11,379 "
              id="polygon51"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
         </g>
@@ -181,11 +189,11 @@
              id="line59"
              style="stroke:#000000;stroke-width:2;stroke-linecap:round" />
           <polygon
-             points="137,318 128,333 154,328 140,326 "
+             points="140,326 137,318 128,333 154,328 "
              id="polygon61"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
           <polygon
-             points="238,279 248,264 222,269 235,271 "
+             points="235,271 238,279 248,264 222,269 "
              id="polygon63"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
         </g>
@@ -210,11 +218,11 @@
              id="line71"
              style="stroke:#000000;stroke-width:2;stroke-linecap:round" />
           <polygon
-             points="-74,503 -48,509 -57,494 -60,502 "
+             points="-60,502 -74,503 -48,509 -57,494 "
              id="polygon73"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
           <polygon
-             points="-214,403 -240,398 -231,413 -228,405 "
+             points="-228,405 -214,403 -240,398 -231,413 "
              id="polygon75"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
         </g>
@@ -239,11 +247,11 @@
              id="line83"
              style="stroke:#000000;stroke-width:2;stroke-linecap:round" />
           <polygon
-             points="-43,568 -16,564 -37,555 -33,562 "
+             points="-33,562 -43,568 -16,564 -37,555 "
              id="polygon85"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
           <polygon
-             points="-197,533 -224,537 -203,546 -207,539 "
+             points="-207,539 -197,533 -224,537 -203,546 "
              id="polygon87"
              style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linejoin:round" />
         </g>
@@ -251,7 +259,8 @@
     </g>
     <g
        pointer-events="auto"
-       id="g209">
+       id="g209"
+       transform="translate(50,-48)">
       <g
          id="g100"
          style="opacity:1">
@@ -281,19 +290,19 @@
           <g
              id="g110">
             <polygon
-               points="0,333 64,296 128,333 64,370 "
+               points="64,370 0,333 64,296 128,333 "
                id="polygon102"
                style="fill:#ececed" />
             <polygon
-               points="0,333 0,370 64,407 64,370 "
+               points="64,370 0,333 0,370 64,407 "
                id="polygon104"
                style="fill:#d2d2d4;stroke:#83838a" />
             <polygon
-               points="64,370 64,407 128,370 128,333 "
+               points="128,333 64,370 64,407 128,370 "
                id="polygon106"
                style="fill:#b8b8bb;stroke:#83838a" />
             <polygon
-               points="128,333 64,296 0,333 0,370 64,407 128,370 "
+               points="128,370 128,333 64,296 0,333 0,370 64,407 "
                id="polygon108"
                style="fill:none;stroke:#000000;stroke-width:2" />
           </g>
@@ -467,19 +476,19 @@
           <g
              id="g184">
             <polygon
-               points="-48,509 16,472 80,509 16,546 "
+               points="16,546 -48,509 16,472 80,509 "
                id="polygon176"
                style="fill:#ececed" />
             <polygon
-               points="-48,509 -48,546 16,583 16,546 "
+               points="16,546 -48,509 -48,546 16,583 "
                id="polygon178"
                style="fill:#d2d2d4;stroke:#83838a" />
             <polygon
-               points="16,546 16,583 80,546 80,509 "
+               points="80,509 16,546 16,583 80,546 "
                id="polygon180"
                style="fill:#b8b8bb;stroke:#83838a" />
             <polygon
-               points="80,509 16,472 -48,509 -48,546 16,583 80,546 "
+               points="80,546 80,509 16,472 -48,509 -48,546 16,583 "
                id="polygon182"
                style="fill:none;stroke:#000000;stroke-width:2" />
           </g>
@@ -493,19 +502,19 @@
           <g
              id="g197">
             <polygon
-               points="-352,537 -288,500 -224,537 -288,574 "
+               points="-288,574 -352,537 -288,500 -224,537 "
                id="polygon189"
                style="fill:#ececed" />
             <polygon
-               points="-352,537 -352,574 -288,611 -288,574 "
+               points="-288,574 -352,537 -352,574 -288,611 "
                id="polygon191"
                style="fill:#d2d2d4;stroke:#83838a" />
             <polygon
-               points="-288,574 -288,611 -224,574 -224,537 "
+               points="-224,537 -288,574 -288,611 -224,574 "
                id="polygon193"
                style="fill:#b8b8bb;stroke:#83838a" />
             <polygon
-               points="-224,537 -288,500 -352,537 -352,574 -288,611 -224,574 "
+               points="-224,574 -224,537 -288,500 -352,537 -352,574 -288,611 "
                id="polygon195"
                style="fill:none;stroke:#000000;stroke-width:2" />
           </g>
@@ -535,10 +544,12 @@
     </g>
     <g
        pointer-events="auto"
-       id="g211" />
+       id="g211"
+       transform="translate(50,-48)" />
     <g
        pointer-events="auto"
-       id="g258">
+       id="g258"
+       transform="translate(50,-48)">
       <g
          id="g226"
          style="opacity:1">
@@ -683,7 +694,8 @@
     </g>
     <g
        pointer-events="auto"
-       id="g403">
+       id="g403"
+       transform="translate(50,-48)">
       <g
          id="g271"
          style="opacity:1">
@@ -1115,6 +1127,7 @@
       </g>
     </g>
     <g
-       id="g405" />
+       id="g405"
+       transform="translate(50,-48)" />
   </g>
 </svg>
