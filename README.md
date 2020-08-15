@@ -1,44 +1,30 @@
-A toy hospital management system with a dockerised microservice architecture and enterprise-grade principles.
+A toy hospital management system with enterprise-grade architecture and principles.
 
-## Microservices
+# Microservice Architecture
 
-### Controller
+Dockerisation, MVC, Networking, Scalability.
 
-Scala (Java Interop). ([ZIO](https://zio.dev/), [Quill](https://getquill.io/) &amp; [Http4s](https://http4s.org/).)
+## Controller
 
-### Portal
+**Scala (Java language).**
 
-Angular (Typescript) and NGINX. ([ngx-admin](https://akveo.github.io/ngx-admin/) &amp; [Bootstrap](https://getbootstrap.com/).)
+Object-orientation, Functional programming, RESTful/CRUD API, GRASP, SOLID, Composition over inheritance, Separation of concerns, Type-safety, Functional purity, DRY.
 
-### Database
+## Portal
 
-PostgreSQL.
+**Angular (Typescript).**
 
-### Database Portal
+## Database
 
-Adminer.
+**PostgreSQL.**
+
+4NF Database Normalisation, 
 
 
-## Principles
+## Database Management
 
-Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Separation of concerns, Type-safety, Functional purity, DRY.
+**Adminer.**
 
-## Concepts
+# Workflow
 
-MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), RESTful/CRUD API, Service-oriented architecture, SQL, Attribute-Based Access Control (ABAC), Dependency injection, Monads, Networking.
-
-## Workflow
-
-Ticket-based Git Trunk using Jira. (Switched from Git Flow.)
-
-## Microservice Architecture
-
-TODO: diagram
-
-## Controller Architecture
-
-TODO: diagram
-
-## Database Architecture
-
-TODO: diagram
+Ticket-based Git Trunk, with Jira.
