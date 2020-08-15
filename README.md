@@ -8,15 +8,17 @@ Dockerisation, MVC, Networking, Scalability.
 
 **Scala (Java language).**
 
-Object-orientation, Functional programming, RESTful/CRUD API, GRASP, SOLID, Composition over inheritance, Separation of concerns, Type-safety, Functional purity, DRY.
+Object-orientation, Functional programming, GRASP, SOLID, Type-safety, Functional purity, RESTful/CRUD API, Composition over inheritance, Separation of concerns, DRY.
 
 ## Portal
 
-**Angular (Typescript).**
+**Angular, Typescript.**
+
+Angular architecture.
 
 ## Database
 
-**PostgreSQL.**
+**PostgreSQL, Bash.**
 
 4NF Database Normalisation, 
 
