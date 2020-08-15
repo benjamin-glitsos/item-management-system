@@ -12,7 +12,7 @@ Object-orientation, Functional programming, GRASP, SOLID, Type-safety, Functiona
 
 ## Portal
 
-**Angular, Typescript.**
+**Angular (Typescript).**
 
 Angular architecture.
 
@@ -20,7 +20,7 @@ Angular architecture.
 
 **PostgreSQL, Bash.**
 
-4NF Database Normalisation, 
+4NF Database Normalisation.
 
 
 ## Database Management
