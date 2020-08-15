@@ -1,5 +1,7 @@
 A toy hospital management system with enterprise-grade architecture and principles.
 
+(Work in progress.)
+
 # Microservice Architecture
 
 Dockerisation, MVC, Networking, Scalability.
