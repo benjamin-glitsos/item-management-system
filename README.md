@@ -6,7 +6,7 @@ A toy hospital management system with enterprise-grade architecture and principl
 
 Dockerisation, MVC, Networking, Scalability.
 
-![HMS Architecture](images/hms-architecture.svg?v=5)
+![HMS Architecture](http://benglitsos.com.au/hms/hms-architecture.svg)
 
 ## Controller
 
