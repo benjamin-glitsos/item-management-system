@@ -1,15 +1,44 @@
-A toy hospital management system.
+A toy hospital management system with a dockerised microservice architecture and enterprise-grade principles.
 
-**Language:** Scala/Java Interop.
+## Microservices
 
-**Architecture**: Dockerised microservice MVC of PostgreSQL (*Model*), Angular (*View*) and Scala (*Controller*).
+### Controller
 
-**Paradigm:** Object-Oriented structure, with Functional Programming methods. (OOP in the large, FP in the small.)
+Scala (Java Interop). ([ZIO](https://zio.dev/), [Quill](https://getquill.io/) &amp; [Http4s](https://http4s.org/).)
 
-**Principles:** 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Scalability, Type-safety, Functional purity, DRY.
+### Portal
 
-**Concepts:** RESTful/CRUD API, Object-Relational Mapping (ORM), Role-Based Access Control (RBAC), monadic asynchronous events.
+Angular (Typescript) and NGINX. ([ngx-admin](https://akveo.github.io/ngx-admin/) &amp; [Bootstrap](https://getbootstrap.com/).)
 
-**Workflow:** Git Trunk (switched from Git Flow).
+### Database
 
-**Stack:** [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [PostgreSQL](https://www.postgresql.org/), [Adminer](https://www.adminer.org/), [Angular](https://angular.io/), [ngx-admin](https://akveo.github.io/ngx-admin/), [ag-grid](https://www.ag-grid.com/), [Bootstrap](https://getbootstrap.com/), [Scala](https://www.scala-lang.org/), [Cats](https://typelevel.org/cats/), [Circe](https://circe.github.io/circe/), [Http4s](https://http4s.org/), [Slick](http://scala-slick.org/).
+PostgreSQL.
+
+### Database Portal
+
+Adminer.
+
+
+## Principles
+
+Scalability, 5NF Database Normalisation, GRASP, SOLID, Composition over inheritance, Separation of concerns, Type-safety, Functional purity, DRY.
+
+## Concepts
+
+MVC, Object-orientation, Functional programming, (OOP in the large; FP in the small), RESTful/CRUD API, Service-oriented architecture, SQL, Attribute-Based Access Control (ABAC), Dependency injection, Monads, Networking.
+
+## Workflow
+
+Ticket-based Git Trunk using Jira. (Switched from Git Flow.)
+
+## Microservice Architecture
+
+TODO: diagram
+
+## Controller Architecture
+
+TODO: diagram
+
+## Database Architecture
+
+TODO: diagram
