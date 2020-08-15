@@ -20,7 +20,7 @@ Angular architecture.
 
 **PostgreSQL, Bash.**
 
-4NF Database Normalisation.
+4NF database normalisation.
 
 
 ## Database Management
