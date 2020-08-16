@@ -34,7 +34,7 @@ Angular architecture.
 
 4NF database normalisation.
 
-[Database Architecture](https://benglitsos.com.au/hms/schemaspy/constraints.html)
+[View the Database Architecture](https://benglitsos.com.au/hms/schemaspy/relationships.html)
 
 ### Database Management
 
