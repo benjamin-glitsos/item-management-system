@@ -45,10 +45,10 @@ INSERT INTO $PEOPLE_TABLE (
   , address_line_one
   , address_line_two
   , postcode
-  , aboriginal_or_torres_strait_islander
-  , australian_citizen
-  , born_overseas
-  , english_second_language
+  , is_aboriginal_or_torres_strait_islander
+  , is_australian_citizen
+  , is_born_overseas
+  , is_english_second_language
 ) VALUES (
     '$SUPER_FIRST_NAME'
   , '$SUPER_LAST_NAME'
