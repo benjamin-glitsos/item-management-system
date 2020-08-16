@@ -38,10 +38,10 @@ CREATE TABLE $PEOPLE_TABLE (
   , address_line_one VARCHAR(255) NOT NULL
   , address_line_two VARCHAR(255)
   , postcode VARCHAR(20) NOT NULL
-  , aboriginal_or_torres_strait_islander BOOLEAN NOT NULL
-  , australian_citizen BOOLEAN NOT NULL
-  , born_overseas BOOLEAN NOT NULL
-  , english_second_language BOOLEAN NOT NULL
+  , is_aboriginal_or_torres_strait_islander BOOLEAN NOT NULL
+  , is_australian_citizen BOOLEAN NOT NULL
+  , is_born_overseas BOOLEAN NOT NULL
+  , is_english_second_language BOOLEAN NOT NULL
 );
 
 CREATE TABLE $STAFF_TABLE (
