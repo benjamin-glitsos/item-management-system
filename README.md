@@ -1,14 +1,16 @@
+# Hospital MS
+
 A toy hospital management system with enterprise-grade architecture and principles.
 
 (Work in progress.)
 
-# Microservice Architecture
+## Microservice Architecture
 
 Dockerisation, MVC, Networking, Scalability.
 
 ![HMS Architecture](images/hms-architecture.svg?v=8)
 
-## Controller
+### Controller
 
 **Scala (Java language).**
 
@@ -20,22 +22,22 @@ Multilayered Architecture:
 * Service Layer
 * DAO/ORM Layer
 
-## Portal
+### Portal
 
 **Angular (Typescript).**
 
 Angular architecture.
 
-## Database
+### Database
 
 **PostgreSQL, Bash.**
 
 4NF database normalisation.
 
-## Database Management
+### Database Management
 
 **Adminer.**
 
-# Workflow
+## Workflow
 
 Ticket-based Git Trunk, with Jira.
