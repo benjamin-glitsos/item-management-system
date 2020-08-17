@@ -2,11 +2,11 @@ import cats._
 import cats.data._
 import cats.effect._
 import cats.implicits._
+import java.util.UUID
+import java.time.LocalDateTime
 import doobie._
 import doobie.implicits._
 import doobie.util.ExecutionContexts
-import java.util.UUID
-import java.time.LocalDateTime
 import doobie.postgres._
 import doobie.postgres.implicits._
 
@@ -27,18 +27,10 @@ object Main {
                 uuid = java.util.UUID.randomUUID,
                 user_id = 1
             ),
-            PersonEdit(
-                first_name = "fn2",
-                last_name = "ln2",
-                other_names = Some("on2"),
-                sex_id = 1,
-                email_address = "test@example.com",
-                phone_number = "0444444444",
-                address_line_one = "1 Test St",
-                address_line_two = "Sydney",
-                zip = "2000"
-            ),
-            UserEdit(
+            User(
+                id = 0,
+                record_id = 0,
+                staff_id = 1,
                 username = "un3",
                 password = "pw3"
             )

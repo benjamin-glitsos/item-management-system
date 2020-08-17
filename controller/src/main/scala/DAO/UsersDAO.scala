@@ -1,60 +1,43 @@
+import cats._
+import cats.data._
+import cats.effect._
+import cats.implicits._
+import doobie._
+import doobie.implicits._
+import doobie.util.ExecutionContexts
+import doobie.postgres._
+import doobie.postgres.implicits._
+
 object UsersDAO {
-    def insert(record_id: Int, person: PersonEdit, user: UserEdit) = {
+    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+
+    val xa = Transactor.fromDriverManager[IO](
+        "org.postgresql.Driver",
+        s"jdbc:postgresql://${System.getenv("DATABASE_SERVICE")}/${System.getenv("POSTGRES_DATABASE")}",
+        System.getenv("POSTGRES_USER"),
+        System.getenv("POSTGRES_PASSWORD"),
+        Blocker.liftExecutionContext(ExecutionContexts.synchronous)
+    )
+
+    def insert(user: User) = {
         sql"""
-        WITH new_person AS (
-            INSERT INTO people (
-              record_id
-            , first_name
-            , last_name
-            , other_names
-            , sex_id
-            , email_address
-            , phone_number
-            , address_line_one
-            , address_line_two
-            , zip
-            ) VALUES (
-                  ${record_id}
-                , ${person.first_name}
-                , ${person.last_name}
-                , ${person.other_names}
-                , ${person.sex_id}
-                , ${person.email_address}
-                , ${person.phone_number}
-                , ${person.address_line_one}
-                , ${person.address_line_two}
-                , ${person.zip}
-            ) RETURNING id
-        )
-        INSERT INTO users (person_id, username, password)
+        INSERT INTO users (record_id, staff_id, username, password)
         VALUES (
-            (SELECT id FROM new_person)
+            ${user.record_id}
+          , ${user.staff_id}
           , ${user.username}
           , ${user.password}
         )
         """.update.run
     }
 
-    def update(record_id: Int, person: PersonEdit, user: UserEdit) = {
+    def update(user: User) = {
         sql"""
-        WITH existing_person AS (
-            UPDATE people SET
-                first_name       = ${person.first_name}
-              , last_name        = ${person.last_name}
-              , other_names      = ${person.other_names}
-              , sex_id           = ${person.sex_id}
-              , email_address    = ${person.email_address}
-              , phone_number     = ${person.phone_number}
-              , address_line_one = ${person.address_line_one}
-              , address_line_two = ${person.address_line_two}
-              , zip              = ${person.zip}
-            WHERE record_id      = ${record_id}
-            RETURNING id
-        )
         UPDATE users SET
-            username = ${user.username}
+            record_id = ${user.record_id}
+          , staff_id = ${user.staff_id}
+          , username = ${user.username}
           , password = ${user.password}
-        WHERE person_id = (SELECT id FROM existing_person)
         """.update.run
     }
 }

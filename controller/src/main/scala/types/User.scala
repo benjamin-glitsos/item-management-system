@@ -1,8 +1,7 @@
-import java.util.UUID
-
 case class User(
     id: Int,
-    person_id: Int,
+    record_id: Int,
+    staff_id: Int,
     username: String,
     password: String
 )

@@ -1,15 +1,26 @@
+import cats._
+import cats.data._
+import cats.effect._
+import cats.implicits._
+import java.util.UUID
+import java.time.LocalDateTime
+import doobie._
+import doobie.implicits._
+import doobie.util.ExecutionContexts
+import doobie.postgres._
+import doobie.postgres.implicits._
+
 object UsersServices {
     def upsert(
         record: RecordEdit,
-        person: PersonEdit,
-        user: UserEdit
+        user: User
     ): ConnectionIO[Unit] = {
         for {
           r <- RecordsDAO.upsert(record)
           _ <- if (r.updated_by.isEmpty) {
-                  UsersDAO.insert(r.id, person, user)
+                  UsersDAO.insert(user.copy(record_id = r.id))
               } else {
-                  UsersDAO.update(r.id, person, user)
+                  UsersDAO.update(user.copy(record_id = r.id))
               }
         } yield ()
     }
