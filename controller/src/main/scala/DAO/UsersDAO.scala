@@ -31,19 +31,19 @@ object UsersDAO {
         run(q)
     }
 
-    def insert(user: User) = {
-        sql"""
-        INSERT INTO users (record_id, staff_id, username, password)
-        VALUES (
-            ${user.record_id}
-          , ${user.staff_id}
-          , ${user.username}
-          , ${user.password}
-        )
-        """.update.run
+    def insert(user: Users) = {
+        val q = quote {
+            query[Users].insert(
+                _.record_id -> lift(user.record_id),
+                _.staff_id -> lift(user.staff_id),
+                _.username -> lift(user.username),
+                _.password -> lift(user.password)
+            )
+        }
+        run(q)
     }
 
-    def update(user: User) = {
+    def update(user: Users) = {
         sql"""
         UPDATE users SET
             username = ${user.username}

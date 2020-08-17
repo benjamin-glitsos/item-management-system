@@ -24,15 +24,15 @@ object Main {
     def main(args: Array[String]) {
         UsersServices.upsert(
             RecordEdit(
-                uuid = UUID.fromString("86be8089-7862-4832-b521-72ab4d553089"),
+                uuid = UUID.fromString("86be8089-7862-4832-b521-72ab4d543089"),
                 user_id = 1
             ),
-            User(
+            Users(
                 id = 0,
                 record_id = 0,
                 staff_id = 1,
-                username = "un9",
-                password = "pw9"
+                username = "un90",
+                password = "pw90"
             )
         ).transact(xa).unsafeRunSync
 

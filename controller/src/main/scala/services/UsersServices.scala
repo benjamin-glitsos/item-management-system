@@ -13,7 +13,7 @@ import doobie.postgres.implicits._
 object UsersServices {
     def upsert(
         record: RecordEdit,
-        user: User
+        user: Users
     ): ConnectionIO[Unit] = {
         for {
           r <- RecordsDAO.upsert(record)
