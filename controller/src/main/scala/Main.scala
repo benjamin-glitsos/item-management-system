@@ -31,8 +31,8 @@ object Main {
                 id = 0,
                 record_id = 0,
                 staff_id = 1,
-                username = "un3",
-                password = "pw3"
+                username = "un4",
+                password = "pw4"
             )
         ).transact(xa).unsafeRunSync
     }

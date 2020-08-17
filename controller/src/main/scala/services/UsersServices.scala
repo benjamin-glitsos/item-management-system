@@ -17,10 +17,11 @@ object UsersServices {
     ): ConnectionIO[Unit] = {
         for {
           r <- RecordsDAO.upsert(record)
+          val u = user.copy(record_id = r.id)
           _ <- if (r.updated_by.isEmpty) {
-                  UsersDAO.insert(user.copy(record_id = r.id))
+                  UsersDAO.insert(u)
               } else {
-                  UsersDAO.update(user.copy(record_id = r.id))
+                  UsersDAO.update(u)
               }
         } yield ()
     }
