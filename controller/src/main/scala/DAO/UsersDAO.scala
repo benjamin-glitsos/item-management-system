@@ -34,10 +34,9 @@ object UsersDAO {
     def update(user: User) = {
         sql"""
         UPDATE users SET
-            record_id = ${user.record_id}
-          , staff_id = ${user.staff_id}
-          , username = ${user.username}
+            username = ${user.username}
           , password = ${user.password}
+        WHERE record_id = ${user.record_id}
         """.update.run
     }
 }

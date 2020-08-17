@@ -26,19 +26,19 @@ object Main {
     import ctx._
 
     def main(args: Array[String]) {
-        // UsersServices.upsert(
-        //     RecordEdit(
-        //         uuid = java.util.UUID.randomUUID,
-        //         user_id = 1
-        //     ),
-        //     User(
-        //         id = 0,
-        //         record_id = 0,
-        //         staff_id = 1,
-        //         username = "un3",
-        //         password = "pw3"
-        //     )
-        // ).transact(xa).unsafeRunSync
+        UsersServices.upsert(
+            RecordEdit(
+                uuid = UUID.fromString("86be8089-7862-4832-b521-72ab4d553089"),
+                user_id = 1
+            ),
+            User(
+                id = 0,
+                record_id = 0,
+                staff_id = 1,
+                username = "un9",
+                password = "pw9"
+            )
+        ).transact(xa).unsafeRunSync
 
         val q = quote {
             query[Users]

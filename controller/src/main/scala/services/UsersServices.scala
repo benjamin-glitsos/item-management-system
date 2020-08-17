@@ -18,7 +18,7 @@ object UsersServices {
         for {
           r <- RecordsDAO.upsert(record)
           val u = user.copy(record_id = r.id)
-          _ <- if (r.updated_by.isEmpty) {
+          _ <- if (r.edited_by.isEmpty) {
                   UsersDAO.insert(u)
               } else {
                   UsersDAO.update(u)
