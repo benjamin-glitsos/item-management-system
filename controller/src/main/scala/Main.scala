@@ -36,6 +36,6 @@ object Main {
             )
         ).transact(xa).unsafeRunSync
 
-        println(UsersDAO.list())
+        println(UsersDAO.list().transact(xa).unsafeRunSync)
     }
 }

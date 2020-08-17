@@ -28,7 +28,7 @@ object UsersDAO {
         val q = quote {
             query[Users]
         }
-        run(q).transact(xa).unsafeRunSync
+        run(q)
     }
 
     def insert(user: User) = {
