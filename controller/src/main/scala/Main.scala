@@ -9,9 +9,13 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
-import io.getquill._
+import io.getquill.{ idiom => _, _ }
+import doobie.quill.DoobieContext
 
 object Main {
+    val dc = new DoobieContext.Postgres(SnakeCase)
+    import dc._
+
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     val xa = Transactor.fromDriverManager[IO](
@@ -21,9 +25,6 @@ object Main {
         System.getenv("POSTGRES_PASSWORD"),
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
-
-    lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
-    import ctx._
 
     def main(args: Array[String]) {
         UsersServices.upsert(
@@ -43,6 +44,6 @@ object Main {
         val q = quote {
             query[Users]
         }
-        println(ctx.run(q))
+        println(run(q).transact(xa).unsafeRunSync)
     }
 }
