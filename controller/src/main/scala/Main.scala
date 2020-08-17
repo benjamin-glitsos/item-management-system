@@ -9,6 +9,7 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
+import io.getquill._
 
 object Main {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
@@ -21,19 +22,27 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
+    lazy val ctx = new PostgresJdbcContext(SnakeCase, "quill")
+    import ctx._
+
     def main(args: Array[String]) {
-        UsersServices.upsert(
-            RecordEdit(
-                uuid = java.util.UUID.randomUUID,
-                user_id = 1
-            ),
-            User(
-                id = 0,
-                record_id = 0,
-                staff_id = 1,
-                username = "un4",
-                password = "pw4"
-            )
-        ).transact(xa).unsafeRunSync
+        // UsersServices.upsert(
+        //     RecordEdit(
+        //         uuid = java.util.UUID.randomUUID,
+        //         user_id = 1
+        //     ),
+        //     User(
+        //         id = 0,
+        //         record_id = 0,
+        //         staff_id = 1,
+        //         username = "un3",
+        //         password = "pw3"
+        //     )
+        // ).transact(xa).unsafeRunSync
+
+        val q = quote {
+            query[Users]
+        }
+        println(ctx.run(q))
     }
 }
