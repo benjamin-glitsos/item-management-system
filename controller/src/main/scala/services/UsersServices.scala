@@ -13,8 +13,8 @@ import doobie.postgres.implicits._
 object UsersServices {
     def insert(r: RecordEdit, u: Users): ConnectionIO[Unit] = {
         for {
-          _ <- RecordsDAO.insert(r)
-          _ <- UsersDAO.insert(u)
+          r_id <- RecordsDAO.insert(r)
+          _ <- UsersDAO.insert(u.copy(record_id = r_id))
         } yield ()
     }
 

@@ -7,9 +7,14 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
+import io.getquill.{ idiom => _, _ }
+import doobie.quill.DoobieContext
 import java.time.LocalDateTime
 
 object RecordsDAO {
+    val dc = new DoobieContext.Postgres(SnakeCase)
+    import dc._
+
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     val xa = Transactor.fromDriverManager[IO](
@@ -24,9 +29,9 @@ object RecordsDAO {
         val q = quote {
             query[Records].insert(
                 _.uuid -> lift(r.uuid),
-                _.created_at -> infix"NOW()".as[LocalDateTime]
-                _.created_by -> lift(r.created_by)
-            )
+                _.created_at -> lift(LocalDateTime.now()),
+                _.created_by -> lift(r.user_id)
+            ).returningGenerated(_.id)
         }
         run(q)
     }
