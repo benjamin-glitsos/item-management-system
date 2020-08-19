@@ -11,6 +11,13 @@ import doobie.postgres._
 import doobie.postgres.implicits._
 
 object UsersServices {
+    def insert(r: RecordEdit, u: Users): ConnectionIO[Unit] = {
+        for {
+          _ <- RecordsDAO.insert(r)
+          _ <- UsersDAO.insert(u)
+        } yield ()
+    }
+
     def upsert(
         record: RecordEdit,
         user: Users

@@ -7,6 +7,7 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
+import java.time.LocalDateTime
 
 object RecordsDAO {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
@@ -18,6 +19,17 @@ object RecordsDAO {
         System.getenv("POSTGRES_PASSWORD"),
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
+
+    def insert(r: RecordEdit) = {
+        val q = quote {
+            query[Records].insert(
+                _.uuid -> lift(r.uuid),
+                _.created_at -> infix"NOW()".as[LocalDateTime]
+                _.created_by -> lift(r.created_by)
+            )
+        }
+        run(q)
+    }
 
     def upsert(record: RecordEdit) = {
         sql"""
