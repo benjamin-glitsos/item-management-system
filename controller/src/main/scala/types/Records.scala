@@ -6,6 +6,7 @@ case class Records(
     uuid: UUID,
     created_at: LocalDateTime,
     created_by: Int,
+    edits: Int,
     edited_at: Option[LocalDateTime],
     edited_by: Option[Int],
     deleted_at: Option[LocalDateTime],

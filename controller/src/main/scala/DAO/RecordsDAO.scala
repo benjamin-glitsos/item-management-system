@@ -36,16 +36,20 @@ object RecordsDAO {
         run(q)
     }
 
-    def upsert(record: RecordEdit) = {
-        sql"""
-        INSERT INTO records (uuid, created_at, created_by)
-        VALUES (${record.uuid}, NOW(), ${record.user_id})
-        ON CONFLICT (uuid)
-        DO UPDATE SET
-              edits = records.edits + 1
-            , edited_at = EXCLUDED.created_at
-            , edited_by = EXCLUDED.created_by
-        RETURNING id, edited_by
-        """.query[RecordReturn].unique
+    def update(r: RecordEdit) = {
+        val q = quote {
+            query[Records]
+                .filter(x => x.uuid == lift(r.uuid))
+                .update(
+                    _.edits -> 2
+                )
+        }
+        run(q)
     }
 }
+
+// .update(
+//     u => u.edits -> (u.edits + 1),
+//     _.edited_at -> lift(LocalDateTime.now()),
+//     _.edited_by -> lift(r.user_id)
+// )

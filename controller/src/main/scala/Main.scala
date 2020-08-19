@@ -36,6 +36,20 @@ object Main {
             )
         ).transact(xa).unsafeRunSync
 
+        UsersServices.update(
+            RecordEdit(
+                uuid = UUID.fromString("86be8089-7862-4832-b521-72ab4d543089"),
+                user_id = 1
+            ),
+            Users(
+                id = 0,
+                record_id = 0,
+                staff_id = 1,
+                username = "un9999",
+                password = "pw9999"
+            )
+        ).transact(xa).unsafeRunSync
+
         println(UsersDAO.list().transact(xa).unsafeRunSync)
     }
 }

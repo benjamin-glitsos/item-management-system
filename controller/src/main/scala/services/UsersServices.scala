@@ -18,18 +18,10 @@ object UsersServices {
         } yield ()
     }
 
-    def upsert(
-        record: RecordEdit,
-        user: Users
-    ): ConnectionIO[Unit] = {
+    def update(r: RecordEdit, u: Users): ConnectionIO[Unit] = {
         for {
-          r <- RecordsDAO.upsert(record)
-          val u = user.copy(record_id = r.id)
-          _ <- if (r.edited_by.isEmpty) {
-                  UsersDAO.insert(u)
-              } else {
-                  UsersDAO.update(u)
-              }
+          _ <- RecordsDAO.update(r)
+          _ <- UsersDAO.update(u)
         } yield ()
     }
 }

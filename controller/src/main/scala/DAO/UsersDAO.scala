@@ -23,24 +23,27 @@ object UsersDAO {
         run(q)
     }
 
-    def insert(user: Users) = {
+    def insert(u: Users) = {
         val q = quote {
             query[Users].insert(
-                _.record_id -> lift(user.record_id),
-                _.staff_id -> lift(user.staff_id),
-                _.username -> lift(user.username),
-                _.password -> lift(user.password)
+                _.record_id -> lift(u.record_id),
+                _.staff_id -> lift(u.staff_id),
+                _.username -> lift(u.username),
+                _.password -> lift(u.password)
             )
         }
         run(q)
     }
 
-    def update(user: Users) = {
-        sql"""
-        UPDATE users SET
-            username = ${user.username}
-          , password = ${user.password}
-        WHERE record_id = ${user.record_id}
-        """.update.run
+    def update(u: Users) = {
+        val q = quote {
+            query[Users]
+                .filter(x => x.record_id == lift(u.record_id))
+                .update(
+                    _.username -> lift(u.username),
+                    _.password -> lift(u.password)
+                )
+        }
+        run(q)
     }
 }
