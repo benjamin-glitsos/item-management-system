@@ -41,15 +41,11 @@ object RecordsDAO {
             query[Records]
                 .filter(x => x.uuid == lift(r.uuid))
                 .update(
-                    _.edits -> 2
+                    u => u.edits -> (u.edits + 1),
+                    _.edited_at -> Some(lift(LocalDateTime.now())),
+                    _.edited_by -> Some(lift(r.user_id))
                 )
         }
         run(q)
     }
 }
-
-// .update(
-//     u => u.edits -> (u.edits + 1),
-//     _.edited_at -> lift(LocalDateTime.now()),
-//     _.edited_by -> lift(r.user_id)
-// )
