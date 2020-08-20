@@ -6,13 +6,7 @@ object Schema {
     import dc._
 
     val records = quote {
-        querySchema[Record](
-            // sys.env.get("RECORDS_TABLE").orElse("records")
-            "records"
-        )
-        querySchema[User](
-            // sys.env.get("USERS_TABLE").orElse("users")
-            "users"
-        )
+        querySchema[Record]("records")
+        querySchema[User]("users")
     }
 }
