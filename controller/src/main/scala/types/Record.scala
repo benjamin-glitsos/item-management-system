@@ -1,7 +1,7 @@
 import java.util.UUID
 import java.time.LocalDateTime
 
-case class Records(
+case class Record(
     id: Int,
     uuid: UUID,
     created_at: LocalDateTime,

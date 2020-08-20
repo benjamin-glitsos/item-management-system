@@ -27,7 +27,7 @@ object Main {
                 uuid = UUID.fromString("86be8089-7862-4832-b521-72ab4d543089"),
                 user_id = 1
             ),
-            Users(
+            User(
                 id = 0,
                 record_id = 0,
                 staff_id = 1,
@@ -41,7 +41,7 @@ object Main {
                 uuid = UUID.fromString("86be8089-7862-4832-b521-72ab4d543089"),
                 user_id = 1
             ),
-            Users(
+            User(
                 id = 0,
                 record_id = 0,
                 staff_id = 1,

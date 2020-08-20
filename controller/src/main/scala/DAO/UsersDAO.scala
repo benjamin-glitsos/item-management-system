@@ -18,14 +18,14 @@ object UsersDAO {
 
     def list() = {
         val q = quote {
-            query[Users]
+            query[User]
         }
         run(q)
     }
 
-    def insert(u: Users) = {
+    def insert(u: User) = {
         val q = quote {
-            query[Users].insert(
+            query[User].insert(
                 _.record_id -> lift(u.record_id),
                 _.staff_id -> lift(u.staff_id),
                 _.username -> lift(u.username),
@@ -35,9 +35,9 @@ object UsersDAO {
         run(q)
     }
 
-    def update(u: Users) = {
+    def update(u: User) = {
         val q = quote {
-            query[Users]
+            query[User]
                 .filter(x => x.record_id == lift(u.record_id))
                 .update(
                     _.username -> lift(u.username),
