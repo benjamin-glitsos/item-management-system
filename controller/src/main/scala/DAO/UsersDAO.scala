@@ -16,13 +16,6 @@ object UsersDAO {
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
-    def list() = {
-        val q = quote {
-            query[User]
-        }
-        run(q)
-    }
-
     def insert(u: User) = {
         val q = quote {
             query[User].insert(
@@ -43,6 +36,18 @@ object UsersDAO {
                     _.username -> lift(u.username),
                     _.password -> lift(u.password)
                 )
+        }
+        run(q)
+    }
+
+    def list() = {
+        val q = quote {
+            for {
+              u <- query[User]
+              r <- query[Record]
+                  .join(lift(u.record_id) == _.id)
+                  .filter(x => x.deleted_at.isEmpty)
+            } yield (u, r)
         }
         run(q)
     }
