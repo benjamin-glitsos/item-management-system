@@ -12,7 +12,7 @@ import doobie.postgres.implicits._
 import java.util.UUID
 
 object UsersServices {
-    def insert(u: User): ConnectionIO[Unit] = {
+    def insert(u: User) = {
         for {
           r_id <- RecordsDAO.insert(
               id = u.record_id,
@@ -22,7 +22,7 @@ object UsersServices {
         } yield ()
     }
 
-    def update(u: User): ConnectionIO[Unit] = {
+    def update(u: User) = {
         for {
           _ <- RecordsDAO.update(
               id = u.record_id,
@@ -32,14 +32,14 @@ object UsersServices {
         } yield ()
     }
 
-    def delete(u: User): ConnectionIO[Unit] = {
+    def delete(u: User) = {
         RecordsDAO.delete(
             id = u.record_id,
             user_id = u.id
         )
     }
 
-    def restore(u: User): ConnectionIO[Unit] = {
+    def restore(u: User) = {
         RecordsDAO.restore(id = u.record_id)
     }
 }

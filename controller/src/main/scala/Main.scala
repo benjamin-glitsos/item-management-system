@@ -22,25 +22,25 @@ object Main {
     )
 
     def main(args: Array[String]) {
-        UsersServices.insert(
-            User(
-                id = 0,
-                record_id = 0,
-                staff_id = 1,
-                username = "un90",
-                password = "pw90"
-            )
-        ).transact(xa).unsafeRunSync
-
-        UsersServices.update(
-            User(
-                id = 0,
-                record_id = 0,
-                staff_id = 1,
-                username = "un9999",
-                password = "pw9999"
-            )
-        ).transact(xa).unsafeRunSync
+        // UsersServices.insert(
+        //     User(
+        //         id = 0,
+        //         record_id = 0,
+        //         staff_id = 1,
+        //         username = "un90",
+        //         password = "pw90"
+        //     )
+        // ).transact(xa).unsafeRunSync
+        //
+        // UsersServices.update(
+        //     User(
+        //         id = 0,
+        //         record_id = 0,
+        //         staff_id = 1,
+        //         username = "un9999",
+        //         password = "pw9999"
+        //     )
+        // ).transact(xa).unsafeRunSync
 
         println(UsersDAO.list().transact(xa).unsafeRunSync)
     }

@@ -31,7 +31,7 @@ object RecordsDAO {
             query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
-                _.created_by -> lift(r.user_id)
+                _.created_by -> lift(user_id)
             ).returningGenerated(_.id)
         }
         run(q)
@@ -40,11 +40,11 @@ object RecordsDAO {
     def update(id: Int, user_id: Int) = {
         val q = quote {
             query[Record]
-                .filter(x => x.uuid == lift(r.uuid))
+                .filter(x => x.id == lift(id))
                 .update(
                     u => u.edits -> (u.edits + 1),
                     _.edited_at -> Some(lift(LocalDateTime.now())),
-                    _.edited_by -> Some(lift(r.user_id))
+                    _.edited_by -> Some(lift(user_id))
                 )
         }
         run(q)

@@ -42,12 +42,13 @@ object UsersDAO {
 
     def list() = {
         val q = quote {
-            for {
-              u <- query[User]
-              r <- query[Record]
-                  .join(lift(u.record_id) == _.id)
-                  .filter(x => x.deleted_at.isEmpty)
-            } yield (u, r)
+            // for {
+            //   u <- query[User]
+            //   r <- query[Record]
+            //       .join(lift(u.record_id) == _.id)
+            //       .filter(x => x.deleted_at.isEmpty)
+            // } yield (u, r)
+            query[User]
         }
         run(q)
     }
