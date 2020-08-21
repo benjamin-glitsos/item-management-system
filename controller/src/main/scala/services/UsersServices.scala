@@ -14,10 +14,7 @@ import java.util.UUID
 object UsersServices {
     def insert(u: User) = {
         for {
-          r_id <- RecordsDAO.insert(
-              id = u.record_id,
-              user_id = u.id
-          )
+          r_id <- RecordsDAO.insert(user_id = u.id)
           _ <- UsersDAO.insert(u.copy(record_id = r_id))
         } yield ()
     }
@@ -42,4 +39,10 @@ object UsersServices {
     def restore(u: User) = {
         RecordsDAO.restore(id = u.record_id)
     }
+
+    def list() = {
+        UsersDAO.list()
+    }
+
+    // def view(u_id: Int) = {}
 }

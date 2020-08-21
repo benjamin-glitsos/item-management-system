@@ -7,6 +7,9 @@ object Schema {
 
     val records = quote {
         querySchema[Record]("records")
+    }
+
+    val users = quote {
         querySchema[User]("users")
     }
 }

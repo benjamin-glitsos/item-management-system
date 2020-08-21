@@ -26,9 +26,9 @@ object RecordsDAO {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def insert(id: Int, user_id: Int) = {
+    def insert(user_id: Int) = {
         val q = quote {
-            query[Record].insert(
+            querySchema[Record]("records").insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id)
@@ -39,7 +39,7 @@ object RecordsDAO {
 
     def update(id: Int, user_id: Int) = {
         val q = quote {
-            query[Record]
+            querySchema[Record]("records")
                 .filter(x => x.id == lift(id))
                 .update(
                     u => u.edits -> (u.edits + 1),
@@ -52,7 +52,7 @@ object RecordsDAO {
 
     def delete(id: Int, user_id: Int) = {
         val q = quote {
-            query[Record].filter(x => x.id == lift(id)).update(
+            querySchema[Record]("records").filter(x => x.id == lift(id)).update(
                 _.deleted_at -> Some(lift(LocalDateTime.now())),
                 _.deleted_by -> Some(lift(user_id))
             )
@@ -62,7 +62,7 @@ object RecordsDAO {
 
     def restore(id: Int) = {
         val q = quote {
-            query[Record].filter(x => x.id == lift(id)).update(
+            querySchema[Record]("records").filter(x => x.id == lift(id)).update(
                 _.deleted_at -> None,
                 _.deleted_by -> None
             )
