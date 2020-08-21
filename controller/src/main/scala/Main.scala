@@ -23,6 +23,7 @@ object Main {
 
     def main(args: Array[String]) {
         UsersServices.insert(
+            user_id = 1,
             User(
                 id = 0,
                 record_id = 0,
@@ -31,7 +32,7 @@ object Main {
                 password = "pw90"
             )
         ).transact(xa).unsafeRunSync
-        //
+
         // UsersServices.update(
         //     User(
         //         id = 0,

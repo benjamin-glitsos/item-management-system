@@ -61,11 +61,13 @@ object RecordsDAO {
         run(q)
     }
 
-    def restore(id: Int) = {
+    def restore(id: Int, user_id: Int) = {
         val q = quote {
             query[Record].filter(x => x.id == lift(id)).update(
                 _.deleted_at -> None,
-                _.deleted_by -> None
+                _.deleted_by -> None,
+                _.edited_at -> Some(lift(LocalDateTime.now())),
+                _.edited_by -> Some(lift(user_id))
             )
         }
         run(q)

@@ -29,7 +29,7 @@ object UsersDAO {
         run(q)
     }
 
-    def update(u: User) = {
+    def update( u: User) = {
         val q = quote {
             query[User]
                 .filter(x => x.record_id == lift(u.record_id))
