@@ -46,13 +46,26 @@ object UsersDAO {
         val q = quote {
             (for {
                 u <- query[User]
-                r <- query[Record].join(_.id == u.record_id)
-            } yield (u, r))
-                .filter(_._2.deleted_at.isEmpty)
-                .sortBy(_._2.edited_at)(Ord.descNullsLast)
-                .drop(lift((p.number - 1) * p.length))
+                r <- query[Record]
+                    .join(_.id == u.record_id)
+                    .filter(_.deleted_at.isEmpty)
+                creator <- query[User].join(_.id == r.created_by)
+            } yield (UserList(
+                    username = lift(u.username),
+                    created_at = lift(r.created_at),
+                    created_by = lift(creator.username),
+                    edited_at = lift(None),
+                    edited_by = lift(None)
+                )))
+                .drop((lift(p.number) - 1) * lift(p.length))
                 .take(lift(p.length))
         }
         run(q)
     }
+
+    // TODO: for view() return (u, r). These will contain User() and Record() which will become the json
 }
+// .sortBy(x => (x.edited_at, x.created_at)) // (Ord(Ord.descNullsLast, Ord.descNullsLast))
+// editor <- query[User].join(_.id == r.edited_by)
+// edited_at = r.edited_at,
+// edited_by = Some(editor.username),
