@@ -44,7 +44,7 @@ object Main {
         //     )
         // ).transact(xa).unsafeRunSync
 
-        UsersServices.delete(
+        UsersServices.restore(
             record_id = 8,
             user_id = 1
         ).transact(xa).unsafeRunSync
