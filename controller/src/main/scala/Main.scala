@@ -33,15 +33,20 @@ object Main {
         //     )
         // ).transact(xa).unsafeRunSync
 
-        UsersServices.update(
-            user_id = 1,
-            User(
-                id = 2,
-                record_id = 8,
-                staff_id = 1,
-                username = "un9999",
-                password = "pw9999"
-            )
+        // UsersServices.update(
+        //     user_id = 1,
+        //     User(
+        //         id = 2,
+        //         record_id = 8,
+        //         staff_id = 1,
+        //         username = "un9999",
+        //         password = "pw9999"
+        //     )
+        // ).transact(xa).unsafeRunSync
+
+        UsersServices.delete(
+            record_id = 8,
+            user_id = 1
         ).transact(xa).unsafeRunSync
 
         // println(UsersDAO.list().transact(xa).unsafeRunSync)

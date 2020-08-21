@@ -19,7 +19,7 @@ object UsersServices {
         } yield ()
     }
 
-    def update(user_id: Int, u: User) = {
+    def update(u: User, user_id: Int) = {
         for {
           _ <- RecordsDAO.update(
               id = u.record_id,
@@ -29,18 +29,12 @@ object UsersServices {
         } yield ()
     }
 
-    def delete(user_id: Int, u: User) = {
-        RecordsDAO.delete(
-            id = u.record_id,
-            user_id
-        )
+    def delete(record_id: Int, user_id: Int) = {
+        RecordsDAO.delete(record_id, user_id)
     }
 
-    def restore(user_id: Int, u: User) = {
-        RecordsDAO.restore(
-            id = u.record_id,
-            user_id
-        )
+    def restore(record_id: Int, user_id: Int) = {
+        RecordsDAO.restore(record_id, user_id)
     }
 
     def list() = {
