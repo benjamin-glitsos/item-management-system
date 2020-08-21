@@ -17,6 +17,7 @@ object RecordsDAO {
     import dc._
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+    implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
     val xa = Transactor.fromDriverManager[IO](
         "org.postgresql.Driver",
@@ -28,7 +29,7 @@ object RecordsDAO {
 
     def insert(user_id: Int) = {
         val q = quote {
-            querySchema[Record]("records").insert(
+            query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id)
@@ -39,7 +40,7 @@ object RecordsDAO {
 
     def update(id: Int, user_id: Int) = {
         val q = quote {
-            querySchema[Record]("records")
+            query[Record]
                 .filter(x => x.id == lift(id))
                 .update(
                     u => u.edits -> (u.edits + 1),
@@ -52,7 +53,7 @@ object RecordsDAO {
 
     def delete(id: Int, user_id: Int) = {
         val q = quote {
-            querySchema[Record]("records").filter(x => x.id == lift(id)).update(
+            query[Record].filter(x => x.id == lift(id)).update(
                 _.deleted_at -> Some(lift(LocalDateTime.now())),
                 _.deleted_by -> Some(lift(user_id))
             )
@@ -62,7 +63,7 @@ object RecordsDAO {
 
     def restore(id: Int) = {
         val q = quote {
-            querySchema[Record]("records").filter(x => x.id == lift(id)).update(
+            query[Record].filter(x => x.id == lift(id)).update(
                 _.deleted_at -> None,
                 _.deleted_by -> None
             )

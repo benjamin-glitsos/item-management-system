@@ -15,6 +15,7 @@ object UsersDAO {
     import dc._
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+    implicit val usersSchemaMeta = schemaMeta[User]("users")
 
     def insert(u: User) = {
         val q = quote {
