@@ -46,7 +46,9 @@ object UsersDAO {
         val q = quote {
             for {
               u <- query[User]
-              r <- query[Record].join(r => r.id == u.record_id)
+              r <- query[Record]
+                  .join(r => r.id == u.record_id)
+                  .filter(x => x.deleted_at.isEmpty)
             } yield (u, r)
         }
         run(q)
