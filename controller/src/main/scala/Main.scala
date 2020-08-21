@@ -44,10 +44,15 @@ object Main {
         //     )
         // ).transact(xa).unsafeRunSync
 
-        UsersServices.restore(
-            record_id = 8,
-            user_id = 1
-        ).transact(xa).unsafeRunSync
+        // UsersServices.delete(
+        //     record_id = 8,
+        //     user_id = 1
+        // ).transact(xa).unsafeRunSync
+
+        // UsersServices.restore(
+        //     record_id = 8,
+        //     user_id = 1
+        // ).transact(xa).unsafeRunSync
 
         // println(UsersDAO.list().transact(xa).unsafeRunSync)
     }
