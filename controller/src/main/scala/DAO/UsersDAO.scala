@@ -46,10 +46,10 @@ object UsersDAO {
         val q = quote {
             (for {
                 u <- query[User]
-                r <- query[Record].join(r => r.id == u.record_id)
+                r <- query[Record].join(_.id == u.record_id)
             } yield (u, r))
-                .filter(x => x._2.deleted_at.isEmpty)
-                .sortBy(x => x._2.edited_at)(Ord.descNullsLast)
+                .filter(_._2.deleted_at.isEmpty)
+                .sortBy(_._2.edited_at)(Ord.descNullsLast)
         }
         run(q)
     }
