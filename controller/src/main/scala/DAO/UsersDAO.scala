@@ -16,6 +16,7 @@ object UsersDAO {
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
     implicit val usersSchemaMeta = schemaMeta[User]("users")
+    implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
     def insert(u: User) = {
         val q = quote {
@@ -43,13 +44,10 @@ object UsersDAO {
 
     def list() = {
         val q = quote {
-            // for {
-            //   u <- query[User]
-            //   r <- query[Record]
-            //       .join(lift(u.record_id) == _.id)
-            //       .filter(x => x.deleted_at.isEmpty)
-            // } yield (u, r)
-            query[User]
+            for {
+              u <- query[User]
+              r <- query[Record].join(r => r.id == u.record_id)
+            } yield (u, r)
         }
         run(q)
     }
