@@ -27,25 +27,27 @@ object RecordsDAO {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def insert(user_id: Int) = {
+    def insert(user_id: Int, notes: Option[String]) = {
         val q = quote {
             query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
-                _.created_by -> lift(user_id)
+                _.created_by -> lift(user_id),
+                _.notes -> lift(notes)
             ).returningGenerated(_.id)
         }
         run(q)
     }
 
-    def update(id: Int, user_id: Int) = {
+    def update(id: Int, user_id: Int, notes: Option[String]) = {
         val q = quote {
             query[Record]
                 .filter(x => x.id == lift(id))
                 .update(
                     u => u.edits -> (u.edits + 1),
                     _.edited_at -> Some(lift(LocalDateTime.now())),
-                    _.edited_by -> Some(lift(user_id))
+                    _.edited_by -> Some(lift(user_id)),
+                    _.notes -> lift(notes)
                 )
         }
         run(q)

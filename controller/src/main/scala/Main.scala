@@ -33,16 +33,17 @@ object Main {
         //     )
         // ).transact(xa).unsafeRunSync
 
-        // UsersServices.update(
-        //     user_id = 1,
-        //     User(
-        //         id = 2,
-        //         record_id = 8,
-        //         staff_id = 1,
-        //         username = "un9999",
-        //         password = "pw9999"
-        //     )
-        // ).transact(xa).unsafeRunSync
+        UsersServices.update(
+            User(
+                id = 2,
+                record_id = 8,
+                staff_id = 1,
+                username = "un9999",
+                password = "pw9999"
+            ),
+            user_id = 1,
+            notes = Some("Test of updating notes.")
+        ).transact(xa).unsafeRunSync
 
         // UsersServices.delete(
         //     record_id = 8,

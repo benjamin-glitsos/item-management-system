@@ -12,18 +12,19 @@ import doobie.postgres.implicits._
 import java.util.UUID
 
 object UsersServices {
-    def insert(user_id: Int, u: User) = {
+    def insert(u: User, user_id: Int, notes: Option[String]) = {
         for {
-          r_id <- RecordsDAO.insert(user_id)
+          r_id <- RecordsDAO.insert(user_id, notes)
           _ <- UsersDAO.insert(u.copy(record_id = r_id))
         } yield ()
     }
 
-    def update(u: User, user_id: Int) = {
+    def update(u: User, user_id: Int, notes: Option[String]) = {
         for {
           _ <- RecordsDAO.update(
               id = u.record_id,
-              user_id
+              user_id,
+              notes
           )
           _ <- UsersDAO.update(u)
         } yield ()
