@@ -38,8 +38,8 @@ object UsersServices {
         RecordsDAO.restore(record_id, user_id)
     }
 
-    def list() = {
-        UsersDAO.list()
+    def list(p: Page) = {
+        UsersDAO.list(p: Page)
     }
 
     // def view(u_id: Int) = {}

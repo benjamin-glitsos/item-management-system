@@ -56,6 +56,13 @@ object Main {
         //     user_id = 1
         // ).transact(xa).unsafeRunSync
 
-        println(UsersDAO.list().transact(xa).unsafeRunSync)
+        println(
+            UsersDAO.list(
+                Page(
+                    number = 1,
+                    length = 25
+                )
+            ).transact(xa).unsafeRunSync
+        )
     }
 }

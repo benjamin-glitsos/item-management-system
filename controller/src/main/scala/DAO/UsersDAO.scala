@@ -42,7 +42,7 @@ object UsersDAO {
         run(q)
     }
 
-    def list() = {
+    def list(p: Page) = {
         val q = quote {
             (for {
                 u <- query[User]
@@ -50,6 +50,8 @@ object UsersDAO {
             } yield (u, r))
                 .filter(_._2.deleted_at.isEmpty)
                 .sortBy(_._2.edited_at)(Ord.descNullsLast)
+                .drop(lift((p.number - 1) * p.length))
+                .take(lift(p.length))
         }
         run(q)
     }
