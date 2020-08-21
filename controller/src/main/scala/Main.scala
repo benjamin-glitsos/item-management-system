@@ -23,35 +23,36 @@ object Main {
 
     def main(args: Array[String]) {
         // UsersServices.insert(
-        //     user_id = 1,
         //     User(
         //         id = 0,
         //         record_id = 0,
         //         staff_id = 1,
         //         username = "un90",
         //         password = "pw90"
-        //     )
+        //     ),
+        //     user_id = 1,
+        //     notes = None
         // ).transact(xa).unsafeRunSync
 
-        UsersServices.update(
-            User(
-                id = 2,
-                record_id = 8,
-                staff_id = 1,
-                username = "un9999",
-                password = "pw9999"
-            ),
-            user_id = 1,
-            notes = Some("Test of updating notes.")
-        ).transact(xa).unsafeRunSync
+        // UsersServices.update(
+        //     User(
+        //         id = 2,
+        //         record_id = 8,
+        //         staff_id = 1,
+        //         username = "un9999",
+        //         password = "pw9999"
+        //     ),
+        //     user_id = 1,
+        //     notes = Some("Test of updating notes.")
+        // ).transact(xa).unsafeRunSync
 
         // UsersServices.delete(
-        //     record_id = 8,
+        //     record_id = 3,
         //     user_id = 1
         // ).transact(xa).unsafeRunSync
 
         // UsersServices.restore(
-        //     record_id = 8,
+        //     record_id = 3,
         //     user_id = 1
         // ).transact(xa).unsafeRunSync
 

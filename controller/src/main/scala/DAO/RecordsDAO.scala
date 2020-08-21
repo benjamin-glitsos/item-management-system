@@ -44,7 +44,7 @@ object RecordsDAO {
             query[Record]
                 .filter(x => x.id == lift(id))
                 .update(
-                    u => u.edits -> (u.edits + 1),
+                    x => x.edits -> (x.edits + 1),
                     _.edited_at -> Some(lift(LocalDateTime.now())),
                     _.edited_by -> Some(lift(user_id)),
                     _.notes -> lift(notes)
@@ -56,6 +56,7 @@ object RecordsDAO {
     def delete(id: Int, user_id: Int) = {
         val q = quote {
             query[Record].filter(x => x.id == lift(id)).update(
+                x => x.deletions -> (x.deletions + 1),
                 _.deleted_at -> Some(lift(LocalDateTime.now())),
                 _.deleted_by -> Some(lift(user_id))
             )
@@ -68,8 +69,8 @@ object RecordsDAO {
             query[Record].filter(x => x.id == lift(id)).update(
                 _.deleted_at -> None,
                 _.deleted_by -> None,
-                _.edited_at -> Some(lift(LocalDateTime.now())),
-                _.edited_by -> Some(lift(user_id))
+                _.restored_at -> Some(lift(LocalDateTime.now())),
+                _.restored_by -> Some(lift(user_id))
             )
         }
         run(q)

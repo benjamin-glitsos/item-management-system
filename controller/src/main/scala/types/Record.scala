@@ -9,7 +9,10 @@ case class Record(
     edits: Int,
     edited_at: Option[LocalDateTime],
     edited_by: Option[Int],
+    deletions: Int,
     deleted_at: Option[LocalDateTime],
     deleted_by: Option[Int],
+    restored_at: Option[LocalDateTime],
+    restored_by: Option[Int],
     notes: Option[String]
 )

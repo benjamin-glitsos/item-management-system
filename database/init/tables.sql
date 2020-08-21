@@ -11,8 +11,11 @@ CREATE TABLE $RECORDS_TABLE (
   , edits SMALLINT DEFAULT 0
   , edited_at TIMESTAMP
   , edited_by SMALLINT
+  , deletions SMALLINT DEFAULT 0
   , deleted_at TIMESTAMP
   , deleted_by SMALLINT
+  , restored_at TIMESTAMP
+  , restored_by SMALLINT
   , notes TEXT
 );
 
