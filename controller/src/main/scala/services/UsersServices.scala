@@ -14,19 +14,19 @@ import java.util.UUID
 object UsersServices {
     def create(u: User, user_id: Int, notes: Option[String]) = {
         for {
-          r_id <- RecordsDAO.insert(user_id, notes)
-          _ <- UsersDAO.insert(u.copy(record_id = r_id))
+          r_id <- RecordsDAO.create(user_id, notes)
+          _ <- UsersDAO.create(u.copy(record_id = r_id))
         } yield ()
     }
 
     def edit(u: User, user_id: Int, notes: Option[String]) = {
         for {
-          _ <- RecordsDAO.update(
+          _ <- RecordsDAO.edit(
               id = u.record_id,
               user_id,
               notes
           )
-          _ <- UsersDAO.update(u)
+          _ <- UsersDAO.edit(u)
         } yield ()
     }
 
@@ -45,11 +45,16 @@ object UsersServices {
     def open(username: String, user_id: Int) = {
         for {
           u <- UsersDAO.open(username)
+          val record_id = u.head.record_id
           r <- RecordsDAO.open(
-              id = 1,
+              id = record_id,
               user_id
           )
-        } yield (u, u.staff_id, r)
+          _ <- RecordsDAO.opened(
+              id = record_id,
+              user_id
+          )
+        } yield (u.head, r.head)
         // TODO: make a custom class mapping for Doobie to allow your nested case classes (UserOpen) to convert into Json
     }
 

@@ -82,13 +82,6 @@ object RecordsDAO {
                 editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
                 deletor <- query[User].leftJoin(x => r.deleted_by.exists(_ == x.id))
                 restorer <- query[User].leftJoin(x => r.restored_by.exists(_ == x.id))
-                _ <- query[Record]
-                    .filter(x => x.id == lift(id))
-                    .update(
-                        x => x.opens -> (x.opens + 1),
-                        _.opened_at -> Some(lift(LocalDateTime.now())),
-                        _.opened_by -> Some(lift(user_id))
-                    )
             } yield (
                 RecordOpen(
                     uuid = r.uuid,
@@ -109,5 +102,16 @@ object RecordsDAO {
                 )
             ))
         ))
+    }
+
+    def opened(id: Int, user_id: Int) = {
+        run(quote(
+            query[Record]
+                .filter(x => x.id == lift(id))
+                .update(
+                    x => x.opens -> (x.opens + 1),
+                    _.opened_at -> Some(lift(LocalDateTime.now())),
+                    _.opened_by -> Some(lift(user_id))
+        )))
     }
 }

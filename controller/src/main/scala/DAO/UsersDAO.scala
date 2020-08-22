@@ -65,10 +65,7 @@ object UsersDAO {
 
     def open(username: String) = {
         run(quote(
-            (for {
-                u <- query[User].filter(_.username == lift(username))
-                r <- query[Record].join(_.id == u.record_id)
-            } yield (u))
+            query[User].filter(_.username == lift(username))
         ))
     }
 }
