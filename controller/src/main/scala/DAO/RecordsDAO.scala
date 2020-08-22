@@ -28,7 +28,7 @@ object RecordsDAO {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def insert(user_id: Int, notes: Option[String]) = {
+    def create(user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
@@ -39,19 +39,7 @@ object RecordsDAO {
         ))
     }
 
-    def view(id: Int, user_id: Int) = {
-        run(quote(
-            query[Record]
-                .filter(x => x.id == lift(id))
-                .update(
-                    x => x.views -> (x.views + 1),
-                    _.viewed_at -> Some(lift(LocalDateTime.now())),
-                    _.viewed_by -> Some(lift(user_id))
-                )
-        ))
-    }
-
-    def update(id: Int, user_id: Int, notes: Option[String]) = {
+    def edit(id: Int, user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record]
                 .filter(x => x.id == lift(id))
@@ -85,23 +73,30 @@ object RecordsDAO {
         ))
     }
 
-    def open(id: Int) = {
+    def open(id: Int, user_id: Int) = {
         run(quote(
             (for {
                 r <- query[Record].filter(_.id == lift(id))
                 creator <- query[User].join(_.id == r.created_by)
-                viewer <- query[User].leftJoin(x => r.viewed_by.exists(_ == x.id))
+                opener <- query[User].leftJoin(x => r.opened_by.exists(_ == x.id))
                 editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
                 deletor <- query[User].leftJoin(x => r.deleted_by.exists(_ == x.id))
                 restorer <- query[User].leftJoin(x => r.restored_by.exists(_ == x.id))
+                _ <- query[Record]
+                    .filter(x => x.id == lift(id))
+                    .update(
+                        x => x.opens -> (x.opens + 1),
+                        _.opened_at -> Some(lift(LocalDateTime.now())),
+                        _.opened_by -> Some(lift(user_id))
+                    )
             } yield (
                 RecordOpen(
                     uuid = r.uuid,
                     created_at = r.created_at,
                     created_by = creator.username,
-                    views = r.views,
-                    viewed_at = r.viewed_at,
-                    viewed_by = viewer.map(_.username),
+                    opens = r.opens,
+                    opened_at = r.opened_at,
+                    opened_by = opener.map(_.username),
                     edits = r.edits,
                     edited_at = r.edited_at,
                     edited_by = editor.map(_.username),

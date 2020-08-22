@@ -18,7 +18,7 @@ object UsersDAO {
     implicit val usersSchemaMeta = schemaMeta[User]("users")
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
-    def insert(u: User) = {
+    def create(u: User) = {
         run(quote(
             query[User].insert(
                 _.record_id -> lift(u.record_id),
@@ -29,7 +29,7 @@ object UsersDAO {
         ))
     }
 
-    def update(u: User) = {
+    def edit(u: User) = {
         run(quote(
             query[User]
                 .filter(x => x.record_id == lift(u.record_id))
