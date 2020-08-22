@@ -66,7 +66,21 @@ object UsersDAO {
         val q = quote {
             (for {
                 u <- query[User].filter(_.username == lift(username))
-            } yield (u))
+                r <- query[Record].join(_.id == u.record_id)
+            } yield (UserOpen(
+                user = u,
+                relations = StaffSummary(
+                    first_name = lift("Peter"),
+                    last_name = lift("Chen"),
+                    staff_number = lift("1234567890")
+                ),
+                record = RecordOpen(
+                    uuid = r.uuid,
+                    created_at = r.created_at,
+                    created_by = lift("bengyup"),
+                    notes = r.notes
+                )
+            )))
         }
         run(q)
     }
