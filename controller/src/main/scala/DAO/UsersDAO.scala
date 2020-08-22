@@ -19,31 +19,29 @@ object UsersDAO {
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
     def insert(u: User) = {
-        val q = quote {
+        run(quote(
             query[User].insert(
                 _.record_id -> lift(u.record_id),
                 _.staff_id -> lift(u.staff_id),
                 _.username -> lift(u.username),
                 _.password -> lift(u.password)
             )
-        }
-        run(q)
+        ))
     }
 
     def update(u: User) = {
-        val q = quote {
+        run(quote(
             query[User]
                 .filter(x => x.record_id == lift(u.record_id))
                 .update(
                     _.username -> lift(u.username),
                     _.password -> lift(u.password)
                 )
-        }
-        run(q)
+        ))
     }
 
     def list(p: Page) = {
-        val q = quote {
+        run(quote(
             (for {
                 u <- query[User]
                 r <- query[Record]
@@ -61,8 +59,11 @@ object UsersDAO {
                     .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
                     .drop((lift(p.number) - 1) * lift(p.length))
                     .take(lift(p.length))
-        }
-        run(q)
+        ))
+    }
+
+    def open(id: Int) = {
+
     }
 
     // TODO: for view() return (u, r). These will contain User() and Record() which will become the json

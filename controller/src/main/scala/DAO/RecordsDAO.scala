@@ -28,19 +28,18 @@ object RecordsDAO {
     )
 
     def insert(user_id: Int, notes: Option[String]) = {
-        val q = quote {
+        run(quote(
             query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
             ).returningGenerated(_.id)
-        }
-        run(q)
+        ))
     }
 
     def update(id: Int, user_id: Int, notes: Option[String]) = {
-        val q = quote {
+        run(quote(
             query[Record]
                 .filter(x => x.id == lift(id))
                 .update(
@@ -49,30 +48,27 @@ object RecordsDAO {
                     _.edited_by -> Some(lift(user_id)),
                     _.notes -> lift(notes)
                 )
-        }
-        run(q)
+        ))
     }
 
     def delete(id: Int, user_id: Int) = {
-        val q = quote {
+        run(quote(
             query[Record].filter(x => x.id == lift(id)).update(
                 x => x.deletions -> (x.deletions + 1),
                 _.deleted_at -> Some(lift(LocalDateTime.now())),
                 _.deleted_by -> Some(lift(user_id))
             )
-        }
-        run(q)
+        ))
     }
 
     def restore(id: Int, user_id: Int) = {
-        val q = quote {
+        run(quote(
             query[Record].filter(x => x.id == lift(id)).update(
                 _.deleted_at -> None,
                 _.deleted_by -> None,
                 _.restored_at -> Some(lift(LocalDateTime.now())),
                 _.restored_by -> Some(lift(user_id))
             )
-        }
-        run(q)
+        ))
     }
 }
