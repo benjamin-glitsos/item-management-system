@@ -67,7 +67,7 @@ object Main {
 
         println(
             UsersServices.open(
-                username: "bengyup",
+                username = "bengyup",
                 user_id = 1
             ).transact(xa).unsafeRunSync
         )
