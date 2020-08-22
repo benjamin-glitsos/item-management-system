@@ -40,6 +40,7 @@ object UsersDAO {
         ))
     }
 
+    // TODO: don't decompose this into modular Records and Users lists because it needs to all be ordered together as one list
     def list(p: Page) = {
         run(quote(
             (for {
