@@ -67,28 +67,25 @@ object UsersDAO {
             (for {
                 u <- query[User].filter(_.username == lift(username))
                 r <- query[Record].join(_.id == u.record_id)
-            } yield (UserOpen(
-                user = u,
-                relations = StaffSummary(
+            } yield (
+                u,
+                StaffSummary(
                     first_name = lift("Peter"),
                     last_name = lift("Chen"),
                     staff_number = lift("1234567890")
                 ),
-                record = RecordOpen(
+                RecordOpen(
                     uuid = r.uuid,
                     created_at = r.created_at,
                     created_by = lift("bengyup"),
                     notes = r.notes
                 )
-            )))
+            ))
         }
         run(q)
     }
 }
 
-// r <- query[Record]
-//     .join(_.id == u.record_id)
-//     .filter(_.deleted_at.isEmpty)
 
 // creator <- query[User].join(_.id == r.created_by)
 // viewer <- query[User].leftJoin(x => r.viewed_by.exists(_ == x.id))
