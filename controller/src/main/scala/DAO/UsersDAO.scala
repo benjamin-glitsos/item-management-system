@@ -50,13 +50,13 @@ object UsersDAO {
                     .join(_.id == u.record_id)
                     .filter(_.deleted_at.isEmpty)
                 creator <- query[User].join(_.id == r.created_by)
-                // editor <- query[User].leftJoin(x => Some(x.id) == r.edited_by)
+                editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
             } yield (UserList(
                     username = u.username,
+                    edited_at = r.edited_at,
+                    edited_by = editor.map(_.username),
                     created_at = r.created_at,
-                    created_by = creator.username,
-                    // edited_at = r.edited_at,
-                    // edited_by = editor.map(_.username)
+                    created_by = creator.username
                 )))
         }
         run(q)
