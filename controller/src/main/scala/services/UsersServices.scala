@@ -44,12 +44,13 @@ object UsersServices {
 
     def open(username: String, user_id: Int) = {
         for {
-          u <- UsersDAO.open(username: String)
+          u <- UsersDAO.open(username)
+          r <- RecordsDAO.open(id = 1)
           _ <- RecordsDAO.view(
               id = 1,
               user_id
           )
-        } yield (u)
+        } yield (u, r)
     }
 
     // TODO: next and prev services will get the username of the next user and then run the 'open' service using that

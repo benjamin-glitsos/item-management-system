@@ -63,40 +63,17 @@ object UsersDAO {
     }
 
     def open(username: String) = {
-        val q = quote {
+        run(quote(
             (for {
                 u <- query[User].filter(_.username == lift(username))
                 r <- query[Record].join(_.id == u.record_id)
-                creator <- query[User].join(_.id == r.created_by)
-                viewer <- query[User].leftJoin(x => r.viewed_by.exists(_ == x.id))
-                editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
-                deletor <- query[User].leftJoin(x => r.deleted_by.exists(_ == x.id))
-                restorer <- query[User].leftJoin(x => r.restored_by.exists(_ == x.id))
-            } yield (
-                u,
-                StaffSummary(
-                    first_name = lift("Peter"),
-                    last_name = lift("Chen"),
-                    staff_number = lift("1234567890")
-                ),
-                RecordOpen(
-                    uuid = r.uuid,
-                    created_at = r.created_at,
-                    created_by = creator.username,
-                    views = r.views,
-                    viewed_at = r.viewed_at,
-                    viewed_by = viewer.map(_.username),
-                    edits = r.edits,
-                    edited_at = r.edited_at,
-                    edited_by = editor.map(_.username),
-                    deletions = r.deletions,
-                    deleted_at = r.deleted_at,
-                    deleted_by = deletor.map(_.username),
-                    restored_at = r.restored_at,
-                    restored_by = restorer.map(_.username),
-                    notes = r.notes
-                )
-            ))
-        }
-        run(q)
-    } }
+            } yield (u))
+        ))
+    }
+}
+
+// StaffSummary(
+//     first_name = lift("Peter"),
+//     last_name = lift("Chen"),
+//     staff_number = lift("1234567890")
+// ),
