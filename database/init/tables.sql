@@ -8,6 +8,9 @@ CREATE TABLE $RECORDS_TABLE (
   , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
   , created_by SMALLINT NOT NULL
+  , views SMALLINT DEFAULT 0
+  , viewed_at TIMESTAMP
+  , viewed_by SMALLINT
   , edits SMALLINT DEFAULT 0
   , edited_at TIMESTAMP
   , edited_by SMALLINT

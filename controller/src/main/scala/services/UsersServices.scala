@@ -42,5 +42,13 @@ object UsersServices {
         UsersDAO.list(p: Page)
     }
 
-    // def view(u_id: Int) = {}
+    def open(username: String, user_id: Int) = {
+        for {
+          u <- UsersDAO.open(username: String)
+          _ <- RecordsDAO.view(
+              record_id = u.record_id,
+              user_id
+          )
+        } yield (u)
+    }
 }

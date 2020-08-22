@@ -38,6 +38,18 @@ object RecordsDAO {
         ))
     }
 
+    def view(id: Int, user_id: Int) = {
+        run(quote(
+            query[Record]
+                .filter(x => x.id == lift(id))
+                .update(
+                    x => x.views -> (x.views + 1),
+                    _.viewed_at -> Some(lift(LocalDateTime.now())),
+                    _.viewed_by -> Some(lift(user_id))
+                )
+        ))
+    }
+
     def update(id: Int, user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record]

@@ -1,21 +1,20 @@
 import java.util.UUID
 import java.time.LocalDateTime
 
-case class Record(
-    id: Int,
+case class RecordOpen(
     uuid: UUID,
     created_at: LocalDateTime,
-    created_by: Int,
+    created_by: String,
     views: Int,
     viewed_at: Option[LocalDateTime],
-    viewed_by: Option[Int],
+    viewed_by: Option[String],
     edits: Int,
     edited_at: Option[LocalDateTime],
-    edited_by: Option[Int],
+    edited_by: Option[String],
     deletions: Int,
     deleted_at: Option[LocalDateTime],
-    deleted_by: Option[Int],
+    deleted_by: Option[String],
     restored_at: Option[LocalDateTime],
-    restored_by: Option[Int],
+    restored_by: Option[String],
     notes: Option[String]
 )
