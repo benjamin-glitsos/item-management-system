@@ -45,16 +45,22 @@ object UsersServices {
     def open(username: String, user_id: Int) = {
         for {
           u <- UsersDAO.open(username)
+
           val record_id = u.head.record_id
+          val staff_id = u.head.record_id
+
+          s <- StaffDAO.summary(staff_id)
+
           r <- RecordsDAO.open(
               id = record_id,
               user_id
           )
+
           _ <- RecordsDAO.opened(
               id = record_id,
               user_id
           )
-        } yield (u.head, r.head)
+        } yield (u.head, s, r.head)
         // TODO: make a custom class mapping for Doobie to allow your nested case classes (UserOpen) to convert into Json
     }
 

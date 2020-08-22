@@ -16,15 +16,21 @@ object StaffDAO {
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
     implicit val staffSchemaMeta = schemaMeta[User]("staff")
+    implicit val personSchemaMeta = schemaMeta[Person]("people")
     implicit val usersSchemaMeta = schemaMeta[User]("users")
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
-    // def summary(id: Int) = {
-    //     run(quote(
-            // (for {
-            //     u <- query[User].filter(_.username == lift(username))
-            //     r <- query[Record].join(_.id == u.record_id)
-            // } yield (u))
-        // ))
-    // }
+    def summary(id: Int) = {
+        run(quote(
+            (for {
+                s <- query[Staff].filter(_.id == lift(id))
+                p <- query[Person].join(_.id == s.person_id)
+            } yield (StaffSummary(
+                first_name = p.first_name,
+                other_names = p.other_names,
+                last_name = p.last_name,
+                staff_number = s.staff_number
+            )))
+        ))
+    }
 }
