@@ -60,8 +60,11 @@ object UsersServices {
               id = record_id,
               user_id
           )
-        } yield (u.head, s, r.head)
-        // TODO: make a custom class mapping for Doobie to allow your nested case classes (UserOpen) to convert into Json
+        } yield (UserOpen(
+            user = u.head,
+            relations = (s.head),
+            record = r.head
+        ))
     }
 
     // TODO: next and prev services will get the username of the next user and then run the 'open' service using that

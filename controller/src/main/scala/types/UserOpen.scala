@@ -1,5 +1,5 @@
 case class UserOpen(
     user: User,
-    relations: StaffSummary,
+    relations: (StaffSummary),
     record: RecordOpen
 )
