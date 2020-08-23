@@ -67,5 +67,5 @@ object UsersServices {
         ))
     }
 
-    // TODO: next and prev services will get the username of the next user and then run the 'open' service using that
+    // TODO: next and prev services will get the record_id of the next user and then run the 'open' service using that. if its the last record, then it will loop to the first again
 }
