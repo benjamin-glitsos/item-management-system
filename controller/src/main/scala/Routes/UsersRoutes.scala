@@ -24,25 +24,71 @@ object UsersRoutes {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
+    object MaybeUsername extends OptionalQueryParamDecoderMatcher[String]("username")
+
     val router = HttpRoutes.of[IO] {
-        case GET -> Root => {
-            Ok(UsersServices.list(
-                Page(
-                    number = 1,
-                    length = 25
-                )
+        case GET -> Root :? MaybeUsername(maybeUsername) => {
+            maybeUsername match {
+                case None => {
+                    Ok(UsersServices.list(
+                        Page(
+                            number = 1,
+                            length = 25
+                        )
+                    ).transact(xa).unsafeRunSync)
+                }
+                case Some(username) => {
+                    Ok(UsersServices.open(
+                        username = "bengyup",
+                        user_id = 1
+                    ).transact(xa).unsafeRunSync)
+                }
+            }
+        }
+        case POST -> Root => {
+            Ok(UsersServices.create(
+                User(
+                    id = 0,
+                    record_id = 0,
+                    staff_id = 1,
+                    username = "un90",
+                    password = "pw90"
+                ),
+                user_id = 1,
+                notes = None
             ).transact(xa).unsafeRunSync)
+        }
+        case PUT -> Root => {
+            Ok(UsersServices.update(
+                User(
+                    id = 2,
+                    record_id = 8,
+                    staff_id = 1,
+                    username = "un9999",
+                    password = "pw9999"
+                ),
+                user_id = 1,
+                notes = Some("Test of updating notes.")
+            ).transact(xa).unsafeRunSync)
+        }
+        case DELETE -> Root => {
+            Ok(UsersServices.delete(
+                record_id = 3,
+                user_id = 1
+            ).transact(xa).unsafeRunSync)
+            // UsersServices.restore(
+            //     record_id = 3,
+            //     user_id = 1
+            // ).transact(xa).unsafeRunSync
         }
     }
 }
+
 
 // object Id extends QueryParamDecoderMatcher[Int]("id")
 // object MaybeId extends OptionalQueryParamDecoderMatcher[Int]("id")
 // object MaybeRows extends OptionalQueryParamDecoderMatcher[Int]("rows")
 // object MaybePage extends OptionalQueryParamDecoderMatcher[Int]("page")
-
-// case DELETE -> Root :? Id(id) =>
-//     Ok(IO.fromFuture(IO(UsersService.delete(id))))
 
 // case Some(id) =>
 //     IO.fromFuture(IO(UsersService.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
@@ -53,7 +99,3 @@ object UsersRoutes {
 
 // val rows = maybeRows.getOrElse(25)
 // val page = maybePage.getOrElse(1)
-
-// maybeId match {
-//     case None =>
-// }
