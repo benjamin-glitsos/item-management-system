@@ -6,7 +6,7 @@ import org.http4s.server.Router
 object Routes {
     implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
-    val service = Router(
-        s"/${System.getenv("USERS_NAME")}" -> UsersRoutes.service
+    val router = Router(
+        s"/${System.getenv("USERS_TABLE")}" -> UsersRoutes.router
     ).orNotFound
 }

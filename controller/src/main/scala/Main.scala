@@ -72,19 +72,19 @@ object Main extends IOApp {
         //     ).transact(xa).unsafeRunSync
         // )
 
-        println(
-            UsersServices.open(
-                username = "bengyup",
-                user_id = 1
-            ).transact(xa).unsafeRunSync
-        )
+        // println(
+        //     UsersServices.open(
+        //         username = "bengyup",
+        //         user_id = 1
+        //     ).transact(xa).unsafeRunSync
+        // )
 
         BlazeServerBuilder[IO]
             .bindHttp(
                 System.getenv("CONTROLLER_PORT").toInt,
                 System.getenv("DOCKER_LOCALHOST")
             )
-            .withHttpApp(Routes.service)
+            .withHttpApp(Routes.router)
             .serve
             .compile
             .drain
