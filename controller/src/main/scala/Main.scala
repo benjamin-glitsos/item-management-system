@@ -9,8 +9,9 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
+import org.http4s.server.blaze._
 
-object Main {
+object Main extends IOApp {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     val xa = Transactor.fromDriverManager[IO](
@@ -21,7 +22,7 @@ object Main {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def main(args: Array[String]) {
+    def run(args: List[String]): IO[ExitCode] = {
         // UsersServices.insert(
         //     User(
         //         id = 0,
@@ -77,5 +78,16 @@ object Main {
                 user_id = 1
             ).transact(xa).unsafeRunSync
         )
+
+        BlazeServerBuilder[IO]
+            .bindHttp(
+                System.getenv("CONTROLLER_PORT").toInt,
+                System.getenv("DOCKER_LOCALHOST")
+            )
+            .withHttpApp(Routes.service)
+            .serve
+            .compile
+            .drain
+            .as(ExitCode.Success)
     }
 }
