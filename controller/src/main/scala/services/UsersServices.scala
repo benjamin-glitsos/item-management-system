@@ -47,7 +47,7 @@ object UsersServices {
           u <- UsersDAO.open(username)
 
           val record_id = u.head.record_id
-          val staff_id = u.head.record_id
+          val staff_id = u.head.staff_id
 
           s <- StaffDAO.summary(staff_id)
 

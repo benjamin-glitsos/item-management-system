@@ -65,17 +65,17 @@ object Main {
         //     ).transact(xa).unsafeRunSync
         // )
 
-        println(
-            StaffDAO.summary(
-                id = 1
-            ).transact(xa).unsafeRunSync
-        )
-
         // println(
-        //     UsersServices.open(
-        //         username = "bengyup",
-        //         user_id = 1
+        //     StaffDAO.summary(
+        //         id = 1
         //     ).transact(xa).unsafeRunSync
         // )
+
+        println(
+            UsersServices.open(
+                username = "bengyup",
+                user_id = 1
+            ).transact(xa).unsafeRunSync
+        )
     }
 }
