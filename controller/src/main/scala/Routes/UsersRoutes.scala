@@ -24,27 +24,25 @@ object UsersRoutes {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    object MaybeUsername extends OptionalQueryParamDecoderMatcher[String]("username")
+    object MaybeRestore extends OptionalQueryParamDecoderMatcher[String]("restore")
 
     val router = HttpRoutes.of[IO] {
-        case GET -> Root :? MaybeUsername(maybeUsername) => {
-            maybeUsername match {
-                case None => {
-                    Ok(UsersServices.list(
-                        Page(
-                            number = 1,
-                            length = 25
-                        )
-                    ).transact(xa).unsafeRunSync)
-                }
-                case Some(username) => {
-                    Ok(UsersServices.open(
-                        username = "bengyup",
-                        user_id = 1
-                    ).transact(xa).unsafeRunSync)
-                }
-            }
+        case GET -> Root => {
+            Ok(UsersServices.list(
+                Page(
+                    number = 1,
+                    length = 25
+                )
+            ).transact(xa).unsafeRunSync)
         }
+
+        case GET -> Root / username => {
+            Ok(UsersServices.open(
+                username,
+                user_id = 1
+            ).transact(xa).unsafeRunSync)
+        }
+
         case POST -> Root => {
             Ok(UsersServices.create(
                 User(
@@ -58,8 +56,9 @@ object UsersRoutes {
                 notes = None
             ).transact(xa).unsafeRunSync)
         }
+
         case PUT -> Root => {
-            Ok(UsersServices.update(
+            Ok(UsersServices.edit(
                 User(
                     id = 2,
                     record_id = 8,
@@ -71,15 +70,22 @@ object UsersRoutes {
                 notes = Some("Test of updating notes.")
             ).transact(xa).unsafeRunSync)
         }
-        case DELETE -> Root => {
-            Ok(UsersServices.delete(
-                record_id = 3,
-                user_id = 1
-            ).transact(xa).unsafeRunSync)
-            // UsersServices.restore(
-            //     record_id = 3,
-            //     user_id = 1
-            // ).transact(xa).unsafeRunSync
+
+        case DELETE -> Root :? MaybeRestore(maybeRestore) => {
+            maybeRestore match {
+                case None => {
+                    Ok(UsersServices.delete(
+                        record_id = 3,
+                        user_id = 1
+                    ).transact(xa).unsafeRunSync)
+                }
+                case Some(isRestore) => {
+                    Ok(UsersServices.restore(
+                        record_id = 3,
+                        user_id = 1
+                    ).transact(xa).unsafeRunSync)
+                }
+            }
         }
     }
 }
