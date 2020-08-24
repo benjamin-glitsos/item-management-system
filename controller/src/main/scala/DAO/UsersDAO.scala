@@ -40,7 +40,6 @@ object UsersDAO {
         ))
     }
 
-    // TODO: don't decompose this into modular Records and Users lists because it needs to all be ordered together as one list
     def list(p: Page) = {
         run(quote(
             (for {
@@ -69,9 +68,3 @@ object UsersDAO {
         ))
     }
 }
-
-// StaffSummary(
-//     first_name = lift("Peter"),
-//     last_name = lift("Chen"),
-//     staff_number = lift("1234567890")
-// ),

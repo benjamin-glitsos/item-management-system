@@ -30,16 +30,11 @@ object UsersServices {
         } yield ()
     }
 
-    def delete(record_id: Int, user_id: Int) = {
-        RecordsDAO.delete(record_id, user_id)
-    }
+    def list(maybeNumber: Option[Int], maybeLength: Option[Int]) = {
+        val number = maybeNumber.getOrElse(1)
+        val length = maybeLength.getOrElse(25)
 
-    def restore(record_id: Int, user_id: Int) = {
-        RecordsDAO.restore(record_id, user_id)
-    }
-
-    def list(p: Page) = {
-        UsersDAO.list(p: Page)
+        UsersDAO.list(Page(number, length))
     }
 
     def open(username: String, user_id: Int) = {
@@ -62,7 +57,7 @@ object UsersServices {
           )
         } yield (UserOpen(
             user = u.head,
-            relations = (s.head),
+            relations = List(s.head),
             record = r.head
         ))
     }

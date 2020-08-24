@@ -24,16 +24,12 @@ object UsersRoutes {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    object MaybeRestore extends OptionalQueryParamDecoderMatcher[String]("restore")
+    object MaybeNumber extends OptionalQueryParamDecoderMatcher[Int]("number")
+    object MaybeLength extends OptionalQueryParamDecoderMatcher[Int]("length")
 
     val router = HttpRoutes.of[IO] {
-        case GET -> Root => {
-            Ok(UsersServices.list(
-                Page(
-                    number = 1,
-                    length = 25
-                )
-            ).transact(xa).unsafeRunSync)
+        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
+            Ok(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
         case GET -> Root / username => {
@@ -70,38 +66,8 @@ object UsersRoutes {
                 notes = Some("Test of updating notes.")
             ).transact(xa).unsafeRunSync)
         }
-
-        case DELETE -> Root :? MaybeRestore(maybeRestore) => {
-            maybeRestore match {
-                case None => {
-                    Ok(UsersServices.delete(
-                        record_id = 3,
-                        user_id = 1
-                    ).transact(xa).unsafeRunSync)
-                }
-                case Some(isRestore) => {
-                    Ok(UsersServices.restore(
-                        record_id = 3,
-                        user_id = 1
-                    ).transact(xa).unsafeRunSync)
-                }
-            }
-        }
     }
 }
 
-
-// object Id extends QueryParamDecoderMatcher[Int]("id")
-// object MaybeId extends OptionalQueryParamDecoderMatcher[Int]("id")
-// object MaybeRows extends OptionalQueryParamDecoderMatcher[Int]("rows")
-// object MaybePage extends OptionalQueryParamDecoderMatcher[Int]("page")
-
 // case Some(id) =>
 //     IO.fromFuture(IO(UsersService.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
-
-// TODO: move these into the Service. The parameters will take maybeRows, maybePage
-
-// :? MaybeId(maybeId) +& MaybeRows(maybeRows) +& MaybePage(maybePage)
-
-// val rows = maybeRows.getOrElse(25)
-// val page = maybePage.getOrElse(1)
