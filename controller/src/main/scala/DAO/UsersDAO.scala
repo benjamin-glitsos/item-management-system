@@ -30,6 +30,12 @@ object UsersDAO {
     //     } yield (resp)
     // }.orNotFound
 
+    def getRecord(username: String) = {
+        run(quote(
+            query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
+        ))
+    }
+
     def create(u: User) = {
         run(quote(
             query[User].insert(
@@ -81,31 +87,22 @@ object UsersDAO {
     }
 
     def delete(username: String, user_id: Int) = {
-        run(quote(
-            for {
-              r_id <- query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
-              _ <- query[Record].filter(x => x.id == r_id).update(
-                  x => x.deletions -> (x.deletions + 1),
-                  _.deleted_at -> Some(lift(LocalDateTime.now())),
-                  _.deleted_by -> Some(lift(user_id))
-              )
-            } yield (r_id)
-        ))
+        for {
+            r_id <- getRecord(username)
+            _ <- RecordsDAO.delete(
+                id = r_id.head,
+                user_id
+            )
+        } yield ()
     }
 
     def restore(username: String, user_id: Int) = {
-        run(quote(
-            for {
-              r_id <- query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
-            } yield (r_id)
-            // query[Record].filter(x => x.id == (
-            //     query[User].filter(x => x.username == lift(username)).map(x => x.record_id))
-            // ).update(
-            //     _.deleted_at -> None,
-            //     _.deleted_by -> None,
-            //     _.restored_at -> Some(lift(LocalDateTime.now())),
-            //     _.restored_by -> Some(lift(user_id))
-            // )
-        ))
+        for {
+            r_id <- getRecord(username)
+            _ <- RecordsDAO.restore(
+                id = r_id.head,
+                user_id
+            )
+        } yield ()
     }
 }

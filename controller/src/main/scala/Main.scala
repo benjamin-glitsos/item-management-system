@@ -79,6 +79,7 @@ object Main extends IOApp {
         //     ).transact(xa).unsafeRunSync
         // )
 
+
         BlazeServerBuilder[IO]
             .bindHttp(
                 System.getenv("CONTROLLER_PORT").toInt,
