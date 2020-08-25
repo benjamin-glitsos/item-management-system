@@ -24,6 +24,7 @@ object UsersRoutes {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
+    object MaybeRestore extends OptionalQueryParamDecoderMatcher[Unit]("restore")
     object MaybeNumber extends OptionalQueryParamDecoderMatcher[Int]("number")
     object MaybeLength extends OptionalQueryParamDecoderMatcher[Int]("length")
 
@@ -65,6 +66,23 @@ object UsersRoutes {
                 user_id = 1,
                 notes = Some("Test of updating notes.")
             ).transact(xa).unsafeRunSync)
+        }
+
+        case DELETE -> Root / username :? MaybeRestore(maybeRestore) => {
+            maybeRestore match {
+                case None => {
+                    Ok(UsersServices.delete(
+                        username,
+                        user_id = 1
+                    ).transact(xa).unsafeRunSync)
+                }
+                case Some(isRestore) => {
+                    Ok(UsersServices.restore(
+                        username,
+                        user_id = 1
+                    ).transact(xa).unsafeRunSync)
+                }
+            }
         }
     }
 }

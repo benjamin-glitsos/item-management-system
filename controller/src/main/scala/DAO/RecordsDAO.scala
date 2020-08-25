@@ -52,27 +52,6 @@ object RecordsDAO {
         ))
     }
 
-    def delete(id: Int, user_id: Int) = {
-        run(quote(
-            query[Record].filter(x => x.id == lift(id)).update(
-                x => x.deletions -> (x.deletions + 1),
-                _.deleted_at -> Some(lift(LocalDateTime.now())),
-                _.deleted_by -> Some(lift(user_id))
-            )
-        ))
-    }
-
-    def restore(id: Int, user_id: Int) = {
-        run(quote(
-            query[Record].filter(x => x.id == lift(id)).update(
-                _.deleted_at -> None,
-                _.deleted_by -> None,
-                _.restored_at -> Some(lift(LocalDateTime.now())),
-                _.restored_by -> Some(lift(user_id))
-            )
-        ))
-    }
-
     def open(id: Int, user_id: Int) = {
         run(quote(
             (for {

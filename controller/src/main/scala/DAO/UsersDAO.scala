@@ -9,6 +9,7 @@ import doobie.postgres._
 import doobie.postgres.implicits._
 import io.getquill.{ idiom => _, _ }
 import doobie.quill.DoobieContext
+import java.time.LocalDateTime
 
 object UsersDAO {
     val dc = new DoobieContext.Postgres(SnakeCase)
@@ -17,6 +18,17 @@ object UsersDAO {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
     implicit val usersSchemaMeta = schemaMeta[User]("users")
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
+
+    // TODO: accept json body like this:
+    // val jsonApp = HttpRoutes.of[IO] {
+    //   case req @ POST -> Root / "hello" =>
+    //     for {
+    //       // Decode a User request
+    //       user <- req.as[User]
+    //       // Encode a hello response
+    //       resp <- Ok(Hello(user.name).asJson)
+    //     } yield (resp)
+    // }.orNotFound
 
     def create(u: User) = {
         run(quote(
@@ -65,6 +77,35 @@ object UsersDAO {
     def open(username: String) = {
         run(quote(
             query[User].filter(_.username == lift(username))
+        ))
+    }
+
+    def delete(username: String, user_id: Int) = {
+        run(quote(
+            for {
+              r_id <- query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
+              _ <- query[Record].filter(x => x.id == r_id).update(
+                  x => x.deletions -> (x.deletions + 1),
+                  _.deleted_at -> Some(lift(LocalDateTime.now())),
+                  _.deleted_by -> Some(lift(user_id))
+              )
+            } yield (r_id)
+        ))
+    }
+
+    def restore(username: String, user_id: Int) = {
+        run(quote(
+            for {
+              r_id <- query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
+            } yield (r_id)
+            // query[Record].filter(x => x.id == (
+            //     query[User].filter(x => x.username == lift(username)).map(x => x.record_id))
+            // ).update(
+            //     _.deleted_at -> None,
+            //     _.deleted_by -> None,
+            //     _.restored_at -> Some(lift(LocalDateTime.now())),
+            //     _.restored_by -> Some(lift(user_id))
+            // )
         ))
     }
 }
