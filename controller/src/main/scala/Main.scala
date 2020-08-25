@@ -23,62 +23,7 @@ object Main extends IOApp {
     )
 
     def run(args: List[String]): IO[ExitCode] = {
-        // UsersServices.insert(
-        //     User(
-        //         id = 0,
-        //         record_id = 0,
-        //         staff_id = 1,
-        //         username = "un90",
-        //         password = "pw90"
-        //     ),
-        //     user_id = 1,
-        //     notes = None
-        // ).transact(xa).unsafeRunSync
-
-        // UsersServices.update(
-        //     User(
-        //         id = 2,
-        //         record_id = 8,
-        //         staff_id = 1,
-        //         username = "un9999",
-        //         password = "pw9999"
-        //     ),
-        //     user_id = 1,
-        //     notes = Some("Test of updating notes.")
-        // ).transact(xa).unsafeRunSync
-
-        // UsersServices.delete(
-        //     record_id = 3,
-        //     user_id = 1
-        // ).transact(xa).unsafeRunSync
-
-        // UsersServices.restore(
-        //     record_id = 3,
-        //     user_id = 1
-        // ).transact(xa).unsafeRunSync
-
-        // println(
-        //     UsersServices.list(
-        //         Page(
-        //             number = 1,
-        //             length = 25
-        //         )
-        //     ).transact(xa).unsafeRunSync
-        // )
-
-        // println(
-        //     StaffDAO.summary(
-        //         id = 1
-        //     ).transact(xa).unsafeRunSync
-        // )
-
-        // println(
-        //     UsersServices.open(
-        //         username = "bengyup",
-        //         user_id = 1
-        //     ).transact(xa).unsafeRunSync
-        // )
-
+        Loaders.run()
 
         BlazeServerBuilder[IO]
             .bindHttp(
