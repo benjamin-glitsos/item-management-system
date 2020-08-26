@@ -5,7 +5,7 @@ import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 import scala.math.pow
 
-trait Loader {
+trait Seeder {
     def randomDigits(n: Int) = {
         val ran = new Random()
         val digits = pow(10, n).toInt

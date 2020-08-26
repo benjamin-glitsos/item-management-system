@@ -1,6 +1,6 @@
 import scala.util.Random
 
-object UsersLoader extends Loader {
+object UsersSeeder extends Seeder {
     def create() = {
         val person = newPerson()
         val text = newText()
