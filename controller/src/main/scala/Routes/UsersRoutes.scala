@@ -40,6 +40,16 @@ object UsersRoutes {
             ).transact(xa).unsafeRunSync)
         }
 
+        // TODO: accept json body like this:
+        // val jsonApp = HttpRoutes.of[IO] {
+        //   case req @ POST -> Root / "hello" =>
+        //     for {
+        //       // Decode a User request
+        //       user <- req.as[User]
+        //       // Encode a hello response
+        //       resp <- Ok(Hello(user.name).asJson)
+        //     } yield (resp)
+        // }.orNotFound
         case POST -> Root => {
             Ok(UsersServices.create(
                 User(

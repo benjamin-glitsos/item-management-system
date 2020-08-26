@@ -19,17 +19,6 @@ object UsersDAO {
     implicit val usersSchemaMeta = schemaMeta[User]("users")
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
-    // TODO: accept json body like this:
-    // val jsonApp = HttpRoutes.of[IO] {
-    //   case req @ POST -> Root / "hello" =>
-    //     for {
-    //       // Decode a User request
-    //       user <- req.as[User]
-    //       // Encode a hello response
-    //       resp <- Ok(Hello(user.name).asJson)
-    //     } yield (resp)
-    // }.orNotFound
-
     def getRecord(username: String) = {
         run(quote(
             query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
@@ -109,6 +98,14 @@ object UsersDAO {
     def permanentlyDelete(username: String) = {
         run(quote(
             query[User].filter(_.username == lift(username)).delete
+        ))
+    }
+
+    def populateAllStaffIds() = {
+        run(quote(
+            query[User]
+                .filter(_.username != lift(sys.env.getOrElse("SUPER_USERNAME", "superuser")))
+                .update(x => x.staff_id -> x.record_id)
         ))
     }
 }

@@ -70,8 +70,8 @@ object UsersServices {
         UsersDAO.restore(username, user_id)
     }
 
-    def hardDelete(username: String, user_id: Int) = {
-        UsersDAO.hardDelete(username, user_id)
+    def permanentlyDelete(username: String) = {
+        UsersDAO.permanentlyDelete(username)
     }
 
     // TODO: next and prev services will get the record_id of the next user and then run the 'open' service using that. if its the last record, then it will loop to the first again

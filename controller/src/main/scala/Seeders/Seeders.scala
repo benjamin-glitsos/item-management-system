@@ -12,6 +12,10 @@ import org.http4s.server.blaze._
 object Seeders {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
+    implicit def intTimes(i: Int) = new {
+        def times(fn: => Unit) = (1 to i) foreach (x => fn)
+    }
+
     val xa = Transactor.fromDriverManager[IO](
         "org.postgresql.Driver",
         s"jdbc:postgresql://${System.getenv("DATABASE_SERVICE")}/${System.getenv("POSTGRES_DATABASE")}",
@@ -20,17 +24,13 @@ object Seeders {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def load(count: Int, nameEnv: String, nameAlt: String, fn: => Unit) = {
-        (1 to count) foreach (x => fn)
+    def log(nameEnv: String, nameAlt: String) = {
         println(s"Populated ${sys.env.getOrElse(nameEnv, nameAlt)}")
     }
 
     def script() = {
-        load(
-            count = 15,
-            nameEnv = "USERS_TABLE",
-            nameAlt = "users",
-            fn = UsersLoader.create().transact(xa).unsafeRunSync
-        )
+        15 times UsersSeeder.create().transact(xa).unsafeRunSync
+        UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
+        log("USERS_TABLE", "users")
     }
 }

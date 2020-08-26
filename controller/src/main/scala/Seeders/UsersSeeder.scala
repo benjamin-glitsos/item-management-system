@@ -19,4 +19,10 @@ object UsersSeeder extends Seeder {
             )
         )
     }
+
+    def populateAllStaffIds() = {
+        UsersDAO.populateAllStaffIds()
+    }
+
+    // TODO: make a service that updates all staff_ids to equal record_ids. Run this after making all the users.
 }
