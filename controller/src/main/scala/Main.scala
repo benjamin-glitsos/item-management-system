@@ -6,7 +6,7 @@ import org.http4s.server.blaze._
 
 object Main extends IOApp {
     def run(args: List[String]): IO[ExitCode] = {
-        Loaders.run()
+        Seeders.script()
 
         BlazeServerBuilder[IO]
             .bindHttp(

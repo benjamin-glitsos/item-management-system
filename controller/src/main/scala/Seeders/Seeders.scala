@@ -9,7 +9,7 @@ import doobie.postgres._
 import doobie.postgres.implicits._
 import org.http4s.server.blaze._
 
-object Loaders {
+object Seeders {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     val xa = Transactor.fromDriverManager[IO](
@@ -25,7 +25,7 @@ object Loaders {
         println(s"Populated ${sys.env.getOrElse(nameEnv, nameAlt)}")
     }
 
-    def run() = {
+    def script() = {
         load(
             count = 15,
             nameEnv = "USERS_TABLE",
