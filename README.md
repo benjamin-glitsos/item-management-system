@@ -18,7 +18,8 @@ Object-orientation, Functional programming, (OOP in the large; FP in the small),
 
 Multilayered Architecture:
 
-* Server/Routing Layer
+* Routing Layer
+* Seeding Layer
 * Service Layer
 * DAO/ORM Layer
 
