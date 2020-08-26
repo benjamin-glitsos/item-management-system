@@ -1,5 +1,3 @@
-import scala.util.Random
-
 object UsersSeeder extends Seeder {
     def create() = {
         val person = newPerson()

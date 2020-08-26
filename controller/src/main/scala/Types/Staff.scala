@@ -6,5 +6,5 @@ case class Staff(
     person_id: Int,
     staff_number: String,
     employment_start: Date,
-    employment_end: Date
+    employment_end: Option[Date]
 )
