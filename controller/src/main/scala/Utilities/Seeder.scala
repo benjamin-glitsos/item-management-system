@@ -6,7 +6,7 @@ import com.devskiller.jfairy.producer.text.TextProducer
 import scala.math.pow
 
 trait Seeder {
-    def randomDigits(n: Int) = {
+    def randomDigits(n: Int): Int = {
         val ran = new Random()
         val digits = pow(10, n).toInt
         digits + ran.nextInt(digits * 9)
@@ -18,5 +18,9 @@ trait Seeder {
 
     def newText(): TextProducer = {
         Fairy.create().textProducer()
+    }
+
+    def randomNotes(): Option[String] = {
+        Some(newText().sentence(Random.between(1, 3)))
     }
 }

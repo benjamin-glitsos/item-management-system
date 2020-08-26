@@ -20,6 +20,18 @@ object StaffDAO {
     implicit val usersSchemaMeta = schemaMeta[User]("users")
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
+    def create(s: Staff) = {
+        run(quote(
+            query[Staff].insert(
+                _.record_id -> lift(s.record_id),
+                _.person_id -> lift(s.person_id),
+                _.staff_number -> lift(s.staff_number),
+                _.employment_start -> lift(s.employment_start),
+                _.employment_end -> lift(s.employment_end)
+            )
+        ))
+    }
+
     def summary(id: Int) = {
         run(quote(
             (for {

@@ -14,15 +14,11 @@ object UsersSeeder extends Seeder {
                 password = person.getPassword()
             ),
             user_id = 1,
-            notes = Some(
-                text.sentence(Random.between(1, 3))
-            )
+            notes = randomNotes()
         )
     }
 
     def populateAllStaffIds() = {
         UsersDAO.populateAllStaffIds()
     }
-
-    // TODO: make a service that updates all staff_ids to equal record_ids. Run this after making all the users.
 }
