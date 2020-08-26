@@ -105,4 +105,10 @@ object UsersDAO {
             )
         } yield ()
     }
+
+    def permanentlyDelete(username: String) = {
+        run(quote(
+            query[User].filter(_.username == lift(username)).delete
+        ))
+    }
 }

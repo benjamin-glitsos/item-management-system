@@ -68,19 +68,23 @@ object UsersRoutes {
             ).transact(xa).unsafeRunSync)
         }
 
-        case DELETE -> Root / username :? MaybeRestore(maybeRestore) => {
-            maybeRestore match {
-                case None => {
+        case DELETE -> Root / username / action => {
+            action match {
+                case "soft" => {
                     Ok(UsersServices.delete(
                         username,
                         user_id = 1
                     ).transact(xa).unsafeRunSync)
                 }
-                case Some(isRestore) => {
+                case "restore" => {
                     Ok(UsersServices.restore(
                         username,
                         user_id = 1
                     ).transact(xa).unsafeRunSync)
+                }
+                case "hard" => {
+                    Ok(UsersServices.permanentlyDelete(username)
+                        .transact(xa).unsafeRunSync)
                 }
             }
         }
