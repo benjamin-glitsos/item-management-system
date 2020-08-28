@@ -1,4 +1,4 @@
-object UsersSeeder extends Seeder {
+object UsersSeeder extends SeederUtilities {
     def create() = {
         val person = newPerson()
         val text = newText()

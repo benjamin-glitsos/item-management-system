@@ -1,6 +1,6 @@
 import scala.util.Random
 
-object StaffSeeder extends Seeder {
+object StaffSeeder extends SeederUtilities with LogicUtilities {
     def create() = {
         val person = newPerson()
         val address = person.getAddress()
@@ -9,12 +9,11 @@ object StaffSeeder extends Seeder {
         val is_australian_citizen = biasedFlip(9/10)
         val is_aboriginal_or_torres_strait_islander = if (is_australian_citizen) biasedFlip(1/10) else false
         val is_born_overseas = if (is_australian_citizen) biasedFlip(15/100) else true
-        val is_english_second_language = if (List(
+        val is_english_second_language = if (any(List(
             ! is_australian_citizen,
             is_aboriginal_or_torres_strait_islander,
             is_born_overseas
-        ).exists(x => true)) biasedFlip(1/2) else biasedFlip(1/10)
-        // TODO: 'any' function
+        ))) biasedFlip(1/2) else biasedFlip(1/10)
 
         val thisStaff = Staff(
             id = 0,

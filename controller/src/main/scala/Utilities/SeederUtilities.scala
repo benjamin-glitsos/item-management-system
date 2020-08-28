@@ -5,7 +5,7 @@ import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 import scala.math.pow
 
-trait Seeder {
+trait SeederUtilities {
     private def powerOfTen(p: Int): Int = {
         pow(10, p).toInt
     }
