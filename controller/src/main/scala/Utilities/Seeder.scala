@@ -31,7 +31,11 @@ trait Seeder {
         new Date(System.currentTimeMillis())
     }
 
+    def randomBinary(): Int = {
+        Random.nextInt(2)
+    }
+
     def coinFlip(): Boolean = {
-        Random.nextInt(1) > 0
+        randomBinary > 0
     }
 }

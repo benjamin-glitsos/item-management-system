@@ -20,7 +20,7 @@ object StaffSeeder extends Seeder {
             first_name = person.getFirstName(),
             last_name = person.getLastName(),
             other_names = normaliseEmptyString(person.getMiddleName()),
-            sex_id = Random.between(1, 2),
+            sex_id = randomBinary(),
             date_of_birth = currentDate(),
             email_address = person.getEmail(),
             phone_number = person.getTelephoneNumber(),

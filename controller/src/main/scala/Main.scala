@@ -4,8 +4,14 @@ import cats.effect._
 import cats.implicits._
 import org.http4s.server.blaze._
 
-object Main extends IOApp {
+
+
+import scala.util.Random
+
+object Main extends IOApp
+with Seeder {
     def run(args: List[String]): IO[ExitCode] = {
+
         Seeders.script()
 
         BlazeServerBuilder[IO]
