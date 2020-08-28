@@ -27,8 +27,8 @@ trait Seeder {
         digits + Random.nextInt(digits * 9)
     }
 
-    def randomNotes(): Option[String] = {
-        normaliseEmptyString(newText().latinSentence(Random.nextInt(3)))
+    def randomSentences(min: Int, max: Int): String = {
+        newText().latinSentence(Random.between(min, max + 1))
     }
 
     def currentDate(): Date = {
@@ -45,10 +45,14 @@ trait Seeder {
 
     def biasedFlip(probability: Double): Boolean = {
         val precision = powerOfTen(2)
-        Random.nextInt(precision + 1) * probability > precision
+        Random.nextInt(precision + 1) > precision * (1 - probability)
     }
 
-    def sometimesNone[A](probability: Double, x: A): Option[A] = {
+    def randomExists[A](probability: Double, x: A): Option[A] = {
         if (biasedFlip(probability)) Some(x) else None
+    }
+
+    def randomNotes(): Option[String] = {
+        randomExists(0.1, randomSentences(1, 4))
     }
 }
