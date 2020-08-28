@@ -19,7 +19,7 @@ object StaffSeeder extends Seeder {
             id = 0,
             first_name = person.getFirstName(),
             last_name = person.getLastName(),
-            other_names = Some(person.getMiddleName()),
+            other_names = normaliseEmptyString(person.getMiddleName()),
             sex_id = Random.between(1, 2),
             date_of_birth = currentDate(),
             email_address = person.getEmail(),
@@ -32,6 +32,8 @@ object StaffSeeder extends Seeder {
             is_born_overseas = coinFlip(),
             is_english_second_language = coinFlip()
         )
+
+        // TODO: make staff services take an array of department ids to create?
 
         StaffServices.create(
             s = randomStaff,

@@ -31,4 +31,12 @@ trait Seeder {
     def coinFlip(): Boolean = {
         Random.between(0, 1) == 0
     }
+
+    def normaliseEmptyString(s: String): Option[String] = {
+        if (s.isEmpty) {
+            None
+        } else {
+            Some(s)
+        }
+    }
 }
