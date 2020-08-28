@@ -14,14 +14,17 @@ trait Seeder {
         Fairy.create().textProducer()
     }
 
+    def normaliseEmptyString(s: String): Option[String] = {
+        if (s.isEmpty) None else Some(s)
+    }
+
     def randomDigits(n: Int): Int = {
-        val ran = new Random()
         val digits = pow(10, n).toInt
-        digits + ran.nextInt(digits * 9)
+        digits + Random.nextInt(digits * 9)
     }
 
     def randomNotes(): Option[String] = {
-        Some(newText().sentence(Random.between(1, 3)))
+        normaliseEmptyString(newText().latinSentence(Random.nextInt(3)))
     }
 
     def currentDate(): Date = {
@@ -29,14 +32,6 @@ trait Seeder {
     }
 
     def coinFlip(): Boolean = {
-        Random.between(0, 1) == 0
-    }
-
-    def normaliseEmptyString(s: String): Option[String] = {
-        if (s.isEmpty) {
-            None
-        } else {
-            Some(s)
-        }
+        Random.nextInt(1) > 0
     }
 }
