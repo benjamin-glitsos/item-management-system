@@ -6,6 +6,10 @@ import com.devskiller.jfairy.producer.text.TextProducer
 import scala.math.pow
 
 trait Seeder {
+    private def powerOfTen(p: Int): Int = {
+        pow(10, p).toInt
+    }
+
     def newPerson(): Person = {
         Fairy.create().person()
     }
@@ -19,7 +23,7 @@ trait Seeder {
     }
 
     def randomDigits(n: Int): Int = {
-        val digits = pow(10, n).toInt
+        val digits = powerOfTen(n)
         digits + Random.nextInt(digits * 9)
     }
 
@@ -37,5 +41,14 @@ trait Seeder {
 
     def coinFlip(): Boolean = {
         randomBinary > 0
+    }
+
+    def biasedFlip(probability: Double): Boolean = {
+        val precision = powerOfTen(2)
+        Random.nextInt(precision + 1) * probability > precision
+    }
+
+    def sometimesNone[A](probability: Double, x: A): Option[A] = {
+        if (biasedFlip(probability)) Some(x) else None
     }
 }
