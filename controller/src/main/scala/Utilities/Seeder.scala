@@ -6,8 +6,8 @@ import com.devskiller.jfairy.producer.text.TextProducer
 import scala.math.pow
 
 trait Seeder {
-    private def powerOfTen(p: Int): Int = {
-        pow(10, p).toInt
+    private def powerOfTen(p: Int): Double = {
+        pow(10, p)
     }
 
     def newPerson(): Person = {
@@ -22,9 +22,8 @@ trait Seeder {
         if (s.isEmpty) None else Some(s)
     }
 
-    def randomDigits(n: Int): Int = {
-        val digits = powerOfTen(n)
-        digits + Random.nextInt(digits * 9)
+    def randomFixedDigits(digits: Int): Double = {
+        (Random.nextDouble() * powerOfTen(digits)) % 1
     }
 
     def randomSentences(min: Int, max: Int): String = {

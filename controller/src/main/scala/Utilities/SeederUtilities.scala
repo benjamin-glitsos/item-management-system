@@ -22,7 +22,7 @@ trait SeederUtilities {
         if (s.isEmpty) None else Some(s)
     }
 
-    def randomDigits(n: Int): Int = {
+    def randomFixedDigits(n: Int): Int = {
         val digits = powerOfTen(n)
         digits + Random.nextInt(digits * 9)
     }

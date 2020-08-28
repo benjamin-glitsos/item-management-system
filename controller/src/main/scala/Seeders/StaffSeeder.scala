@@ -19,9 +19,9 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             id = 0,
             record_id = 0,
             person_id = 0,
-            staff_number = randomDigits(12).toString,
+            staff_number = randomFixedDigits(12).toString,
             employment_start = currentDate(),
-            employment_end = None
+            employment_end = None // TODO: use today minus random number of days. Also use randomExists
         )
 
         val thisPerson = Person(
@@ -35,7 +35,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             phone_number = person.getTelephoneNumber(),
             address_line_one = address.getAddressLine1(),
             address_line_two = randomExists(2/3, address.getCity()),
-            postcode = 2.toString + randomDigits(3).toString,
+            postcode = 2.toString + randomFixedDigits(3).toString,
             is_aboriginal_or_torres_strait_islander,
             is_australian_citizen,
             is_born_overseas,
