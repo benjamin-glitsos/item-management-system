@@ -12,23 +12,30 @@ object Main extends IOApp
 with Seeder {
     def run(args: List[String]): IO[ExitCode] = {
 
-        println(randomFixedDigits(1))
-        println(randomFixedDigits(2))
-        println(randomFixedDigits(3))
-        println(randomFixedDigits(4))
-        println(randomFixedDigits(5))
-        println(randomFixedDigits(6))
-        println(randomFixedDigits(7))
-        println(randomFixedDigits(8))
-        println(randomFixedDigits(9))
-        println(randomFixedDigits(10))
-        println(randomFixedDigits(11))
-        println(randomFixedDigits(12))
-        println(randomFixedDigits(13))
-        println(randomFixedDigits(14))
-        println(randomFixedDigits(15))
-
         // Seeders.script()
+        println(randomFixedDigits(9).toString)
+        println(randomFixedDigits(10).toString)
+        println(randomFixedDigits(11).toString)
+        println(randomFixedDigits(12).toString)
+        println(randomFixedDigits(13).toString)
+        println(randomFixedDigits(14).toString)
+        println(randomFixedDigits(15).toString)
+
+        println(biasedFlip(1/3))
+        println(biasedFlip(1/3))
+        println(biasedFlip(1/3))
+        println(biasedFlip(1/3))
+        println(biasedFlip(1/3))
+        println(biasedFlip(1/3))
+        println(biasedFlip(1/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
+        println(biasedFlip(2/3))
 
         BlazeServerBuilder[IO]
             .bindHttp(

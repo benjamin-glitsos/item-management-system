@@ -45,7 +45,10 @@ trait Seeder {
 
     def biasedFlip(probability: Double): Boolean = {
         val precision = powerOfTen(2)
-        Random.nextInt(precision.toInt + 1) > precision * (1 - probability)
+        val flip = Random.nextInt(precision.toInt + 1)
+        val bias = (precision - 1/2) * probability
+        val decider = precision / 2
+        flip + bias > decider
     }
 
     def randomExists[A](probability: Double, x: A): Option[A] = {
@@ -53,6 +56,6 @@ trait Seeder {
     }
 
     def randomNotes(): Option[String] = {
-        randomExists(1/10, randomSentences(1, 4))
+        randomExists(1/5, randomSentences(1, 4))
     }
 }
