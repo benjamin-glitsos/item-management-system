@@ -24,16 +24,17 @@ object Seeders {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    def log(nameEnv: String, nameAlt: String) = {
-        println(s"Populated ${sys.env.getOrElse(nameEnv, nameAlt)}")
+    private def log(name: String) = {
+        println(s"** Populated ${name} **")
     }
 
     def script() = {
         15 times StaffSeeder.create().transact(xa).unsafeRunSync
-        log("STAFF_TABLE", "staff")
+        log(StaffDAO.name)
 
+        UsersSeeder.deleteAll().transact(xa).unsafeRunSync
         15 times UsersSeeder.create().transact(xa).unsafeRunSync
         UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
-        log("USERS_TABLE", "users")
+        log(UsersDAO.name)
     }
 }

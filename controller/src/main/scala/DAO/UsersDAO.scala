@@ -12,6 +12,8 @@ import doobie.quill.DoobieContext
 import java.time.LocalDateTime
 
 object UsersDAO {
+    val name = sys.env.getOrElse("USERS_TABLE", "users")
+
     val dc = new DoobieContext.Postgres(SnakeCase)
     import dc._
 
@@ -107,5 +109,15 @@ object UsersDAO {
                 .filter(_.username != lift(sys.env.getOrElse("SUPER_USERNAME", "superuser")))
                 .update(x => x.staff_id -> x.record_id)
         ))
+    }
+
+    def deleteAll() = {
+        sql"""
+        BEGIN;
+        ALTER TABLE ${name} DISABLE TRIGGER ALL;
+        TRUNCATE ${name};
+        ALTER TABLE ${name} ENABLE TRIGGER ALL;
+        COMMIT;
+        """.update.run
     }
 }

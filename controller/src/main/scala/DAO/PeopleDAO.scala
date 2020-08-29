@@ -11,6 +11,8 @@ import io.getquill.{ idiom => _, _ }
 import doobie.quill.DoobieContext
 
 object PeopleDAO {
+    val name = sys.env.getOrElse("PEOPLE_TABLE", "people")
+
     val dc = new DoobieContext.Postgres(SnakeCase)
     import dc._
 

@@ -1,6 +1,10 @@
 object UsersSeeder extends SeederUtilities {
-    def randomPassword(): String = {
+    private def randomPassword(): String = {
         randomString(randomBetween(8, 14))
+    }
+
+    def deleteAll() = {
+        UsersDAO.deleteAll()
     }
 
     def create() = {

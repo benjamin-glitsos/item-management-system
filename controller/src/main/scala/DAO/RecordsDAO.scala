@@ -13,6 +13,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 object RecordsDAO {
+    val name = sys.env.getOrElse("RECORDS_TABLE", "records")
+
     val dc = new DoobieContext.Postgres(SnakeCase)
     import dc._
 
