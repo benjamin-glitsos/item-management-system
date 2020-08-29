@@ -63,6 +63,7 @@ trait SeederUtilities {
     }
 
     def randomString(length: Int): String = {
-        Seq.fill(length)(Random.nextPrintableChar()).mkString("")
+        val randomChar = if (biasedFlip(2/3)) Random.nextString(1).head else Random.nextPrintableChar()
+        Seq.fill(length)(randomChar).mkString("")
     }
 }
