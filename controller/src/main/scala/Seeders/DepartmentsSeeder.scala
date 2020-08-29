@@ -24,4 +24,8 @@ object DepartmentsSeeder extends SeederUtilities {
         "Speech Pathology",
         "Vascular"
     )
+
+    def createAll() = {
+        DepartmentsDAO.createMultiple(data)
+    }
 }

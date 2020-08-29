@@ -49,7 +49,11 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             is_english_second_language
         )
 
-        val thisDepartments = List(1, 2, 3) // TODO: randomise numbers using count
+        val thisDepartments = () => {
+            val length = randomBetween(1 to 4)
+            val maxId = DepartmentsSeeder.data.length()
+            List.fill(length)(randomNextInt(maxId))
+        }
 
         StaffServices.create(
             s = thisStaff,

@@ -17,18 +17,13 @@ object DepartmentsDAO {
     import dc._
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
-    implicit val staffSchemaMeta = schemaMeta[User]("staff")
-    implicit val staffDepartmentsSchemaMeta = schemaMeta[StaffDepartment]("staff_departments")
     implicit val departmentsSchemaMeta = schemaMeta[Department]("departments")
-    implicit val personSchemaMeta = schemaMeta[Person]("people")
-    implicit val usersSchemaMeta = schemaMeta[User]("users")
-    implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
-    def count() = {
-        run(
-            quote(
-                query[Department]
-            ).size
-        )
+    def createMultiple(names: List[String]) = {
+        run(quote(
+            liftQuery(names).foreach(x => query[Department].insert(
+                _.name -> lift(x)
+            ))
+        ))
     }
 }

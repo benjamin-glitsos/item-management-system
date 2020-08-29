@@ -10,7 +10,7 @@ trait SeederUtilities {
         pow(10, p).toLong
     }
 
-    def randomToInt(n: Int): Int = {
+    def randomNextInt(n: Int): Int = {
         Random.nextInt(n)
     }
 
