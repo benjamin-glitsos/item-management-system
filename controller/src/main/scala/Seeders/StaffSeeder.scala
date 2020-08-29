@@ -22,7 +22,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             is_born_overseas
         ))) biasedFlip(1/4) else biasedFlip(1/10)
 
-        val thisStaff = Staff(
+        val randomStaff = Staff(
             id = 0,
             record_id = 0,
             person_id = 0,
@@ -31,7 +31,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             employment_end = None // TODO: use today minus random number of days. Also use randomExists
         )
 
-        val thisPerson = Person(
+        val randomPerson = Person(
             id = 0,
             first_name = person.getFirstName(),
             last_name = person.getLastName(),
@@ -51,8 +51,8 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
         // TODO: make staff services take an array of department ids to create?
 
         StaffServices.create(
-            s = thisStaff,
-            p = thisPerson,
+            s = randomStaff,
+            p = randomPerson,
             user_id = 1,
             notes = randomNotes()
         )
