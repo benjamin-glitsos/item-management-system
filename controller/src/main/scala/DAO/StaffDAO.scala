@@ -31,7 +31,7 @@ object StaffDAO {
                 _.staff_number -> lift(s.staff_number),
                 _.employment_start -> lift(s.employment_start),
                 _.employment_end -> lift(s.employment_end)
-            )
+            ).returningGenerated(_.id)
         ))
     }
 
