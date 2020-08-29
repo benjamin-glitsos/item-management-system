@@ -24,9 +24,9 @@ CREATE DOMAIN email AS citext
 
 $(cat /docker-entrypoint-initdb.d/init/schema.sql)
 
--- Populate with starting values:
+-- Populate with starting data:
 
-$(cat /docker-entrypoint-initdb.d/init/starting-values.sql)
+$(cat /docker-entrypoint-initdb.d/init/starting-data.sql)
 
 -- Create relationships:
 
