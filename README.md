@@ -18,13 +18,6 @@ Object-orientation, Functional programming, (OOP in the large; FP in the small),
 
 Multilayered Architecture:
 
-<div>
-<div style="padding: 5px; border: 1px solid red; background-color: blue; color: white;">Routing Layer</div>
-<div style="padding: 5px; border: 1px solid red; background-color: blue; color: white;">Seeding Layer</div>
-<div style="padding: 5px; border: 1px solid red; background-color: blue; color: white;">Service Layer</div>
-<div style="padding: 5px; border: 1px solid red; background-color: blue; color: white;">DAO/ORM Layer</div>
-</div>
-
 * Routing Layer
 * Seeding Layer
 * Service Layer
