@@ -1,4 +1,8 @@
 object UsersSeeder extends SeederUtilities {
+    def randomPassword(): String = {
+        randomString(randomBetween(8, 14))
+    }
+
     def create() = {
         val person = newPerson()
         val text = newText()
@@ -9,7 +13,7 @@ object UsersSeeder extends SeederUtilities {
                 record_id = 0,
                 staff_id = 1,
                 username = person.getUsername(),
-                password = person.getPassword()
+                password = randomPassword()
             ),
             user_id = 1,
             notes = randomNotes()
