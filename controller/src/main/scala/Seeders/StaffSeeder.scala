@@ -48,11 +48,13 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             is_born_overseas,
             is_english_second_language
         )
-        // TODO: make staff services take an array of department ids to create?
+
+        val thisDepartments = List(1, 2, 3)
 
         StaffServices.create(
             s = thisStaff,
             p = thisPerson,
+            d_ids = thisDepartments,
             user_id = 1,
             notes = randomNotes()
         )

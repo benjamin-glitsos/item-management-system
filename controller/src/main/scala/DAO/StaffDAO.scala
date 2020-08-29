@@ -18,6 +18,7 @@ object StaffDAO {
 
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
     implicit val staffSchemaMeta = schemaMeta[User]("staff")
+    implicit val staffDepartmentsSchemaMeta = schemaMeta[StaffDepartment]("staff_departments")
     implicit val personSchemaMeta = schemaMeta[Person]("people")
     implicit val usersSchemaMeta = schemaMeta[User]("users")
     implicit val recordSchemaMeta = schemaMeta[Record]("records")
@@ -31,6 +32,13 @@ object StaffDAO {
                 _.employment_start -> lift(s.employment_start),
                 _.employment_end -> lift(s.employment_end)
             )
+        ))
+    }
+
+    def assignDepartments(staff_id: Int, department_ids: List[Int]) = {
+        val staffDepartments = department_ids.map(department_id => StaffDepartment(staff_id, department_id))
+        run(quote(
+            liftQuery(staffDeparments).foreach(x => query[StaffDepartment].insert(x))
         ))
     }
 
