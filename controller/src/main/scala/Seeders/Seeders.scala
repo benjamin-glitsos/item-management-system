@@ -25,15 +25,18 @@ object Seeders {
     )
 
     private def log(name: String) = {
-        println(s"** Populated ${name} **")
+        println(s"** Populating ${name} **")
     }
 
     def script() = {
-        15 times StaffSeeder.create().transact(xa).unsafeRunSync
-        log(StaffDAO.name)
+        log(DepartmentsDAO.name)
+        DepartmentsSeeder.createAll().transact(xa).unsafeRunSync
 
+        log(StaffDAO.name)
+        15 times StaffSeeder.create().transact(xa).unsafeRunSync
+
+        log(UsersDAO.name)
         15 times UsersSeeder.create().transact(xa).unsafeRunSync
         UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
-        log(UsersDAO.name)
     }
 }
