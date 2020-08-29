@@ -3,10 +3,6 @@ object UsersSeeder extends SeederUtilities {
         randomString(randomBetween(8, 14))
     }
 
-    def deleteAll() = {
-        UsersDAO.deleteAll()
-    }
-
     def create() = {
         val person = newPerson()
         val text = newText()

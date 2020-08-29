@@ -110,14 +110,4 @@ object UsersDAO {
                 .update(x => x.staff_id -> x.record_id)
         ))
     }
-
-    def deleteAll() = {
-        sql"""
-        BEGIN;
-        ALTER TABLE ${name} DISABLE TRIGGER ALL;
-        TRUNCATE ${name};
-        ALTER TABLE ${name} ENABLE TRIGGER ALL;
-        COMMIT;
-        """.update.run
-    }
 }

@@ -29,10 +29,11 @@ object Seeders {
     }
 
     def script() = {
+        DAO.truncateAll().transact(xa).unsafeRunSync
+
         15 times StaffSeeder.create().transact(xa).unsafeRunSync
         log(StaffDAO.name)
 
-        UsersSeeder.deleteAll().transact(xa).unsafeRunSync
         15 times UsersSeeder.create().transact(xa).unsafeRunSync
         UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
         log(UsersDAO.name)
