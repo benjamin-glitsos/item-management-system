@@ -28,7 +28,7 @@ object StaffServices {
           ))
           _ <- StaffDAO.assignDepartments(
               staff_id = s_id,
-              department_ids = d
+              department_ids = d_ids
           )
         } yield ()
     }
