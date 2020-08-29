@@ -26,7 +26,7 @@ object StaffServices {
               record_id = r_id,
               person_id = p_id
           ))
-          _ <- StaffDAO.assignDepartments(
+          _ <- StaffDepartmentsDAO.create(
               staff_id = s_id,
               department_ids = d_ids
           )

@@ -9,8 +9,13 @@ trait SeederUtilities {
     private def powerOfTen(p: Int): Long = {
         pow(10, p).toLong
     }
-    def randomBetween(min: Int, max: Int): Int = {
-        Random.between(min, max)
+
+    def randomToInt(n: Int): Int = {
+        Random.nextInt(n)
+    }
+
+    def randomBetween(r: Range): Int = {
+        Random.between(r.min, r.max)
     }
 
     def newPerson(): Person = {
@@ -30,8 +35,8 @@ trait SeederUtilities {
         Random.nextLong(digits * 9) + digits
     }
 
-    def randomSentences(min: Int, max: Int): String = {
-        newText().latinSentence(randomBetween(min, max + 1))
+    def randomSentences(r: Range): String = {
+        newText().latinSentence(randomBetween(r.min to r.max + 1))
     }
 
     def currentDate(): Date = {
@@ -59,7 +64,7 @@ trait SeederUtilities {
     }
 
     def randomNotes(): Option[String] = {
-        randomExists(1/8, randomSentences(1, 4))
+        randomExists(1/8, randomSentences(1 to 4))
     }
 
     def randomString(length: Int): String = {

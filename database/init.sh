@@ -22,15 +22,15 @@ CREATE DOMAIN email AS citext
 
 -- Create schema:
 
-$(cat /docker-entrypoint-initdb.d/init/schema.sql )
+$(cat /docker-entrypoint-initdb.d/init/schema.sql)
 
 -- Populate with starting values:
 
-$(cat /docker-entrypoint-initdb.d/init/starting-values.sql )
+$(cat /docker-entrypoint-initdb.d/init/starting-values.sql)
 
 -- Create relationships:
 
-$(cat /docker-entrypoint-initdb.d/init/relationships.sql )
+$(cat /docker-entrypoint-initdb.d/init/relationships.sql)
 
 EOSQL
 " 2> /dev/null)
