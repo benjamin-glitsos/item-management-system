@@ -38,7 +38,7 @@ object StaffDAO {
     def assignDepartments(staff_id: Int, department_ids: List[Int]) = {
         val staffDepartments = department_ids.map(department_id => StaffDepartment(staff_id, department_id))
         run(quote(
-            liftQuery(staffDeparments).foreach(x => query[StaffDepartment].insert(x))
+            liftQuery(department_ids).foreach(x => query[StaffDepartment].insert(x))
         ))
     }
 
