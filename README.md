@@ -1,6 +1,6 @@
 # Hospital MS
 
-A toy hospital management system with enterprise-grade architecture and principles.
+A largely back-end and networking and devops project which is a toy hospital management system with enterprise-grade architecture and principles.
 
 (Work in progress.)
 
