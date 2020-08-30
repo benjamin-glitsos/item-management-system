@@ -50,6 +50,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
         )
 
         val thisDepartments = () => {
+            // TODO: make a Count function for the departments table then use a monad to feed this into the departments service so you can do this
             val length = randomBetween(1 to 4)
             val maxId = DepartmentsSeeder.data.length()
             List.fill(length)(randomNextInt(maxId))

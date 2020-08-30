@@ -29,9 +29,6 @@ object Seeders {
     }
 
     def script() = {
-        log(DepartmentsDAO.name)
-        DepartmentsSeeder.createAll().transact(xa).unsafeRunSync
-
         log(StaffDAO.name)
         15 times StaffSeeder.create().transact(xa).unsafeRunSync
 

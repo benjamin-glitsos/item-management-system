@@ -8,7 +8,31 @@ VALUES
   , ('Doctor')
   , ('Nurse');
 
-INSERT INTO $DEPARTMENTS_TABLE (name) VALUES ('Other');
+INSERT INTO $DEPARTMENTS_TABLE (name)
+VALUES
+    ('Anaesthetics and Pain Management')
+  , ('Cardiology')
+  , ('Dermatology')
+  , ('Drug Health Service')
+  , ('Emergency')
+  , ('Endocrinology')
+  , ('Gastroenterology')
+  , ('Haematology')
+  , ('Immunology')
+  , ('Intensive Care Unit')
+  , ('Microbiology and Infectious Diseases')
+  , ('National Centre for Veterans’ Healthcare (NCVH)')
+  , ('NSW Institute of Sports Medicine')
+  , ('Neurosurgery')
+  , ('Ophthalmology')
+  , ('Orthopaedics')
+  , ('Plastic, Reconstructive and Hand Surgery Unit')
+  , ('Podiatry')
+  , ('Pre-Admission Clinic')
+  , ('Psychology')
+  , ('Radiology')
+  , ('Speech Pathology')
+  , ('Vascular');
 
 INSERT INTO $PEOPLE_TABLE (
     first_name
