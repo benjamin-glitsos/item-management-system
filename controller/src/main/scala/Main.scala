@@ -2,14 +2,13 @@ import cats._
 import cats.data._
 import cats.effect._
 import cats.implicits._
-import org.http4s.server.blaze._
 
-object Main extends IOApp {
+object Main extends IOApp with BlazeImports {
     def run(args: List[String]): IO[ExitCode] = {
 
         Seeders.script()
 
-        BlazeServerBuilder[IO]
+        blaze[IO]
             .bindHttp(
                 System.getenv("CONTROLLER_PORT").toInt,
                 System.getenv("DOCKER_LOCALHOST")
