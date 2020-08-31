@@ -1,6 +1,6 @@
 object UsersSeeder extends SeederUtilities {
     private def randomPassword(): String = {
-        randomString(randomBetween(8, 14))
+        randomString(randomBetween(8 to 14))
     }
 
     def create() = {

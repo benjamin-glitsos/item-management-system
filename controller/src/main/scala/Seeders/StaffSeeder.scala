@@ -1,3 +1,13 @@
+import cats._
+import cats.data._
+import cats.effect._
+import cats.implicits._
+import doobie._
+import doobie.implicits._
+import doobie.util.ExecutionContexts
+import doobie.postgres._
+import doobie.postgres.implicits._
+
 object StaffSeeder extends SeederUtilities with LogicUtilities {
     private def randomLicenseNumber(): String = {
         val length = 12
@@ -49,19 +59,21 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             is_english_second_language
         )
 
-        val thisDepartments = () => {
-            // TODO: make a Count function for the departments table then use a monad to feed this into the departments service so you can do this
+        def thisDepartments(maxId: Int) = {
             val length = randomBetween(1 to 4)
-            val maxId = DepartmentsSeeder.data.length()
-            List.fill(length)(randomNextInt(maxId))
+            // List.fill(length)(randomNextInt(maxId))
+            List(1, 2, 3, 4)
         }
 
-        StaffServices.create(
-            s = thisStaff,
-            p = thisPerson,
-            d_ids = thisDepartments,
-            user_id = 1,
-            notes = randomNotes()
-        )
+        for {
+            dc <- DepartmentsDAO.count()
+            _ <- StaffServices.create(
+                s = thisStaff,
+                p = thisPerson,
+                d_ids = thisDepartments(dc.toInt),
+                user_id = 1,
+                notes = randomNotes()
+            )
+        } yield ()
     }
 }

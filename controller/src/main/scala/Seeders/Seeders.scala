@@ -25,7 +25,8 @@ object Seeders {
     )
 
     private def log(name: String) = {
-        println(s"** Populating ${name} **")
+        val decoration = "*" * 5
+        println(s"${decoration} Populating ${name} ${decoration}")
     }
 
     def script() = {

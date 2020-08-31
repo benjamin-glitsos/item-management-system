@@ -19,11 +19,11 @@ object DepartmentsDAO {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
     implicit val departmentsSchemaMeta = schemaMeta[Department]("departments")
 
-    def createMultiple(names: List[String]) = {
-        run(quote(
-            liftQuery(names).foreach(x => query[Department].insert(
-                _.name -> lift(x)
-            ))
-        ))
+    def count() = {
+        run(
+            quote(
+                query[Department]
+            ).size
+        )
     }
 }
