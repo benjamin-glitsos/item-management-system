@@ -25,7 +25,7 @@ object Seeders {
     )
 
     private def log(name: String) = {
-        val decoration = "*" * 5
+        val decoration = "*" * 3
         println(s"${decoration} Populating ${name} ${decoration}")
     }
 
@@ -37,5 +37,7 @@ object Seeders {
 
         log(UsersDAO.name)
         staffCount times UsersSeeder.create().transact(xa).unsafeRunSync
+        UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
+        // TODO: put all transacts inside one monad
     }
 }

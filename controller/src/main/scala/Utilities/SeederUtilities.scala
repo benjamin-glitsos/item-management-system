@@ -10,10 +10,6 @@ trait SeederUtilities {
         pow(10, p).toLong
     }
 
-    def randomNextInt(n: Int): Int = {
-        Random.nextInt(n)
-    }
-
     def randomBetween(r: Range): Int = {
         Random.between(r.min, r.max)
     }

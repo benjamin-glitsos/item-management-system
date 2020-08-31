@@ -61,7 +61,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
 
         def thisDepartments(maxId: Int) = {
             val length = randomBetween(1 to 4)
-            List.fill(length)(randomNextInt(maxId))
+            List.fill(length)(randomBetween(1 to maxId))
         }
 
         for {
