@@ -58,12 +58,12 @@ trait SeederUtilities {
     }
 
     def randomNotes(): Option[String] = {
-        randomExists(1/8, randomSentences(1 to 4))
+        randomExists(1d/8, randomSentences(1 to 4))
     }
 
     def randomString(length: Int): String = {
         def randomChar() = {
-            if (biasedFlip(2/3)) Random.alphanumeric(1) else Random.nextPrintableChar()
+            if (biasedFlip(2d/3)) Random.alphanumeric(1) else Random.nextPrintableChar()
         }
         Seq.fill(length)(randomChar()).mkString("")
     }
