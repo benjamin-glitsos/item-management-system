@@ -20,17 +20,17 @@ CREATE EXTENSION citext;
 CREATE DOMAIN email AS citext
     CHECK ( value ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_\\\`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$' );
 
--- Create tables:
+-- Create schema:
 
-$(cat /docker-entrypoint-initdb.d/init/tables.sql )
+$(cat /docker-entrypoint-initdb.d/init/schema.sql)
 
--- Populate with starting values:
+-- Populate with starting data:
 
-$(cat /docker-entrypoint-initdb.d/init/starting-values.sql )
+$(cat /docker-entrypoint-initdb.d/init/starting-data.sql)
 
 -- Create relationships:
 
-$(cat /docker-entrypoint-initdb.d/init/relationships.sql )
+$(cat /docker-entrypoint-initdb.d/init/relationships.sql)
 
 EOSQL
 " 2> /dev/null)

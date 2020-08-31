@@ -1,13 +1,119 @@
+import cats._
+import cats.data._
+import cats.effect._
+import cats.implicits._
+import doobie._
+import doobie.implicits._
+import doobie.util.ExecutionContexts
+import doobie.postgres._
+import doobie.postgres.implicits._
+import io.getquill.{ idiom => _, _ }
+import doobie.quill.DoobieContext
+import java.time.LocalDateTime
+import java.util.UUID
+
 object RecordsDAO {
-    def upsert(record: RecordEdit) = {
-        sql"""
-        INSERT INTO records (uuid, created_at, created_by)
-        VALUES (${record.uuid}, NOW(), ${record.user_id})
-        ON CONFLICT (uuid)
-        DO UPDATE SET
-              updated_at = EXCLUDED.created_at
-            , updated_by = EXCLUDED.created_by
-        RETURNING id, updated_by
-        """.query[RecordReturn].unique
+    val name = sys.env.getOrElse("RECORDS_TABLE", "records")
+
+    val dc = new DoobieContext.Postgres(SnakeCase)
+    import dc._
+
+    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+    implicit val recordSchemaMeta = schemaMeta[Record]("records")
+    implicit val usersSchemaMeta = schemaMeta[User]("users")
+
+    val xa = Transactor.fromDriverManager[IO](
+        "org.postgresql.Driver",
+        s"jdbc:postgresql://${System.getenv("DATABASE_SERVICE")}/${System.getenv("POSTGRES_DATABASE")}",
+        System.getenv("POSTGRES_USER"),
+        System.getenv("POSTGRES_PASSWORD"),
+        Blocker.liftExecutionContext(ExecutionContexts.synchronous)
+    )
+
+    def create(user_id: Int, notes: Option[String]) = {
+        run(quote(
+            query[Record].insert(
+                _.uuid -> lift(java.util.UUID.randomUUID()),
+                _.created_at -> lift(LocalDateTime.now()),
+                _.created_by -> lift(user_id),
+                _.notes -> lift(notes)
+            ).returningGenerated(_.id)
+        ))
+    }
+
+    def edit(id: Int, user_id: Int, notes: Option[String]) = {
+        run(quote(
+            query[Record]
+                .filter(x => x.id == lift(id))
+                .update(
+                    x => x.edits -> (x.edits + 1),
+                    _.edited_at -> Some(lift(LocalDateTime.now())),
+                    _.edited_by -> Some(lift(user_id)),
+                    _.notes -> lift(notes)
+                )
+        ))
+    }
+
+    def open(id: Int, user_id: Int) = {
+        run(quote(
+            (for {
+                r <- query[Record].filter(_.id == lift(id))
+                creator <- query[User].join(_.id == r.created_by)
+                opener <- query[User].leftJoin(x => r.opened_by.exists(_ == x.id))
+                editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
+                deletor <- query[User].leftJoin(x => r.deleted_by.exists(_ == x.id))
+                restorer <- query[User].leftJoin(x => r.restored_by.exists(_ == x.id))
+            } yield (
+                RecordOpen(
+                    uuid = r.uuid,
+                    created_at = r.created_at,
+                    created_by = creator.username,
+                    opens = r.opens,
+                    opened_at = r.opened_at,
+                    opened_by = opener.map(_.username),
+                    edits = r.edits,
+                    edited_at = r.edited_at,
+                    edited_by = editor.map(_.username),
+                    deletions = r.deletions,
+                    deleted_at = r.deleted_at,
+                    deleted_by = deletor.map(_.username),
+                    restored_at = r.restored_at,
+                    restored_by = restorer.map(_.username),
+                    notes = r.notes
+                )
+            ))
+        ))
+    }
+
+    def opened(id: Int, user_id: Int) = {
+        run(quote(
+            query[Record]
+                .filter(x => x.id == lift(id))
+                .update(
+                    x => x.opens -> (x.opens + 1),
+                    _.opened_at -> Some(lift(LocalDateTime.now())),
+                    _.opened_by -> Some(lift(user_id))
+        )))
+    }
+
+    def delete(id: Int, user_id: Int) = {
+        run(quote(
+            query[Record].filter(x => x.id == lift(id)).update(
+                x => x.deletions -> (x.deletions + 1),
+                _.deleted_at -> Some(lift(LocalDateTime.now())),
+                _.deleted_by -> Some(lift(user_id))
+            )
+        ))
+    }
+
+    def restore(id: Int, user_id: Int) = {
+        run(quote(
+            query[Record].filter(x => x.id == lift(id)).update(
+                _.deleted_at -> None,
+                _.deleted_by -> None,
+                _.restored_at -> Some(lift(LocalDateTime.now())),
+                _.restored_by -> Some(lift(user_id))
+            )
+        ))
     }
 }

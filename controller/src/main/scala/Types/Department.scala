@@ -1,4 +1,4 @@
-case class Sex(
+case class Department(
     id: Int,
     name: String
 )

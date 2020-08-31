@@ -8,11 +8,17 @@ CREATE TABLE $RECORDS_TABLE (
   , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
   , created_by SMALLINT NOT NULL
+  , opens SMALLINT DEFAULT 0
+  , opened_at TIMESTAMP
+  , opened_by SMALLINT
   , edits SMALLINT DEFAULT 0
   , edited_at TIMESTAMP
   , edited_by SMALLINT
+  , deletions SMALLINT DEFAULT 0
   , deleted_at TIMESTAMP
   , deleted_by SMALLINT
+  , restored_at TIMESTAMP
+  , restored_by SMALLINT
   , notes TEXT
 );
 
@@ -83,7 +89,7 @@ CREATE TABLE $VISITS_TABLE (
 CREATE TABLE $USERS_TABLE (
     id SERIAL PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
-  , staff_id SMALLINT UNIQUE NOT NULL
+  , staff_id SMALLINT NOT NULL
   , username VARCHAR(20) UNIQUE NOT NULL
   , password VARCHAR(20) NOT NULL
 );

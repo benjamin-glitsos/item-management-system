@@ -1,60 +1,111 @@
+import cats._
+import cats.data._
+import cats.effect._
+import cats.implicits._
+import doobie._
+import doobie.implicits._
+import doobie.util.ExecutionContexts
+import doobie.postgres._
+import doobie.postgres.implicits._
+import io.getquill.{ idiom => _, _ }
+import doobie.quill.DoobieContext
+import java.time.LocalDateTime
+
 object UsersDAO {
-    def insert(record_id: Int, person: PersonEdit, user: UserEdit) = {
-        sql"""
-        WITH new_person AS (
-            INSERT INTO people (
-              record_id
-            , first_name
-            , last_name
-            , other_names
-            , sex_id
-            , email_address
-            , phone_number
-            , address_line_one
-            , address_line_two
-            , zip
-            ) VALUES (
-                  ${record_id}
-                , ${person.first_name}
-                , ${person.last_name}
-                , ${person.other_names}
-                , ${person.sex_id}
-                , ${person.email_address}
-                , ${person.phone_number}
-                , ${person.address_line_one}
-                , ${person.address_line_two}
-                , ${person.zip}
-            ) RETURNING id
-        )
-        INSERT INTO users (person_id, username, password)
-        VALUES (
-            (SELECT id FROM new_person)
-          , ${user.username}
-          , ${user.password}
-        )
-        """.update.run
+    val name = sys.env.getOrElse("USERS_TABLE", "users")
+
+    val dc = new DoobieContext.Postgres(SnakeCase)
+    import dc._
+
+    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+    implicit val usersSchemaMeta = schemaMeta[User]("users")
+    implicit val recordSchemaMeta = schemaMeta[Record]("records")
+
+    def getRecord(username: String) = {
+        run(quote(
+            query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
+        ))
     }
 
-    def update(record_id: Int, person: PersonEdit, user: UserEdit) = {
-        sql"""
-        WITH existing_person AS (
-            UPDATE people SET
-                first_name       = ${person.first_name}
-              , last_name        = ${person.last_name}
-              , other_names      = ${person.other_names}
-              , sex_id           = ${person.sex_id}
-              , email_address    = ${person.email_address}
-              , phone_number     = ${person.phone_number}
-              , address_line_one = ${person.address_line_one}
-              , address_line_two = ${person.address_line_two}
-              , zip              = ${person.zip}
-            WHERE record_id      = ${record_id}
-            RETURNING id
-        )
-        UPDATE users SET
-            username = ${user.username}
-          , password = ${user.password}
-        WHERE person_id = (SELECT id FROM existing_person)
-        """.update.run
+    def create(u: User) = {
+        run(quote(
+            query[User].insert(
+                _.record_id -> lift(u.record_id),
+                _.staff_id -> lift(u.staff_id),
+                _.username -> lift(u.username),
+                _.password -> lift(u.password)
+            )
+        ))
+    }
+
+    def edit(u: User) = {
+        run(quote(
+            query[User]
+                .filter(x => x.record_id == lift(u.record_id))
+                .update(
+                    _.username -> lift(u.username),
+                    _.password -> lift(u.password)
+                )
+        ))
+    }
+
+    def list(p: Page) = {
+        run(quote(
+            (for {
+                u <- query[User]
+                r <- query[Record]
+                    .join(_.id == u.record_id)
+                    .filter(_.deleted_at.isEmpty)
+                creator <- query[User].join(_.id == r.created_by)
+                editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
+            } yield (UserList(
+                    username = u.username,
+                    edited_at = r.edited_at,
+                    edited_by = editor.map(_.username),
+                    created_at = r.created_at,
+                    created_by = creator.username
+                )))
+                    .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
+                    .drop((lift(p.number) - 1) * lift(p.length))
+                    .take(lift(p.length))
+        ))
+    }
+
+    def open(username: String) = {
+        run(quote(
+            query[User].filter(_.username == lift(username))
+        ))
+    }
+
+    def delete(username: String, user_id: Int) = {
+        for {
+            r_id <- getRecord(username)
+            _ <- RecordsDAO.delete(
+                id = r_id.head,
+                user_id
+            )
+        } yield ()
+    }
+
+    def restore(username: String, user_id: Int) = {
+        for {
+            r_id <- getRecord(username)
+            _ <- RecordsDAO.restore(
+                id = r_id.head,
+                user_id
+            )
+        } yield ()
+    }
+
+    def permanentlyDelete(username: String) = {
+        run(quote(
+            query[User].filter(_.username == lift(username)).delete
+        ))
+    }
+
+    def populateAllStaffIds() = {
+        run(quote(
+            query[User].update(x => x.staff_id -> x.id)
+        ))
     }
 }
