@@ -29,7 +29,7 @@ object Seeders {
         println(s"${decoration} Populating ${name} ${decoration}")
     }
 
-    private val staffCount = 15 // TODO: to env file
+    private val staffCount = sys.env.getOrElse("STAFF_SEED_COUNT", "15").toInt
 
     def script() = {
         log(StaffDAO.name)

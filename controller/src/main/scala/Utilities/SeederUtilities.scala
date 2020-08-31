@@ -40,17 +40,17 @@ trait SeederUtilities {
     }
 
     def randomBinary(): Int = {
-        randomBetween(1 to 2)
+        randomBetween(0 to 1)
     }
 
     def coinFlip(): Boolean = {
-        randomBinary > 0
+        randomBinary >= 0
     }
 
     def biasedFlip(probability: Double): Boolean = {
         val precision = powerOfTen(2).toInt
-        val flip = randomBetween(1 to precision) / precision
-        probability > flip
+        val flip = randomBetween(1 to precision).toDouble / precision
+        probability >= flip
     }
 
     def randomExists[A](probability: Double, x: A): Option[A] = {

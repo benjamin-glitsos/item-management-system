@@ -11,8 +11,7 @@ import scala.util.Random
 
 object StaffSeeder extends SeederUtilities with LogicUtilities {
     private def randomLicenseNumber(): String = {
-        val length = 12
-        randomFixedDigits(length).toString
+        randomFixedDigits(12).toString
     }
 
     private def randomPostcode(): String = {
@@ -25,13 +24,13 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
         val text = newText()
 
         val is_australian_citizen = biasedFlip(9/10)
-        val is_aboriginal_or_torres_strait_islander = if (is_australian_citizen) biasedFlip(1/20) else false
-        val is_born_overseas = if (is_australian_citizen) biasedFlip(1/5) else true
+        val is_aboriginal_or_torres_strait_islander = if (is_australian_citizen) biasedFlip(1d/20) else false
+        val is_born_overseas = if (is_australian_citizen) biasedFlip(1d/5) else true
         val is_english_second_language = if (any(List(
             ! is_australian_citizen,
             is_aboriginal_or_torres_strait_islander,
             is_born_overseas
-        ))) biasedFlip(1/4) else biasedFlip(1/10)
+        ))) biasedFlip(1d/4) else biasedFlip(1d/10)
 
         val thisStaff = Staff(
             id = 0,
@@ -52,7 +51,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
             email_address = person.getEmail(),
             phone_number = person.getTelephoneNumber(),
             address_line_one = address.getAddressLine1(),
-            address_line_two = randomExists(2/3, address.getCity()),
+            address_line_two = randomExists(2d/3, address.getCity()),
             postcode = randomPostcode(),
             is_aboriginal_or_torres_strait_islander,
             is_australian_citizen,
