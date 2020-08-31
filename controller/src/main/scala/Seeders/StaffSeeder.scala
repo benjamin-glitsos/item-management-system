@@ -7,6 +7,7 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
+import scala.util.Random
 
 object StaffSeeder extends SeederUtilities with LogicUtilities {
     private def randomLicenseNumber(): String = {
@@ -60,8 +61,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
         )
 
         def thisDepartments(maxId: Int) = {
-            val length = randomBetween(1 to 4)
-            List.fill(length)(randomBetween(1 to maxId))
+            Random.shuffle((1 to maxId).toList).take(randomBetween(1 to 3))
         }
 
         for {

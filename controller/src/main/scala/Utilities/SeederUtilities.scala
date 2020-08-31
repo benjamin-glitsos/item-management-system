@@ -40,7 +40,7 @@ trait SeederUtilities {
     }
 
     def randomBinary(): Int = {
-        Random.nextInt(2)
+        randomBetween(1 to 2)
     }
 
     def coinFlip(): Boolean = {
@@ -48,11 +48,9 @@ trait SeederUtilities {
     }
 
     def biasedFlip(probability: Double): Boolean = {
-        val precision = powerOfTen(2)
-        val flip = Random.nextInt(precision.toInt + 1)
-        val bias = (precision - 1/2) * probability
-        val decider = precision / 2
-        flip + bias > decider
+        val precision = powerOfTen(2).toInt
+        val flip = randomBetween(1 to precision) / precision
+        probability > flip
     }
 
     def randomExists[A](probability: Double, x: A): Option[A] = {
@@ -64,7 +62,9 @@ trait SeederUtilities {
     }
 
     def randomString(length: Int): String = {
-        val randomChar = if (biasedFlip(2/3)) Random.alphanumeric(1) else Random.nextPrintableChar()
-        Seq.fill(length)(randomChar).mkString("")
+        def randomChar() = {
+            if (biasedFlip(2/3)) Random.alphanumeric(1) else Random.nextPrintableChar()
+        }
+        Seq.fill(length)(randomChar()).mkString("")
     }
 }
