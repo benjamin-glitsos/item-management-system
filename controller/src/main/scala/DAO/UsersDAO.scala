@@ -102,12 +102,4 @@ object UsersDAO {
             query[User].filter(_.username == lift(username)).delete
         ))
     }
-
-    def populateAllStaffIds() = {
-        run(quote(
-            query[User]
-                .filter(_.username != lift(sys.env.getOrElse("SUPER_USERNAME", "superuser")))
-                .update(x => x.staff_id -> x.record_id)
-        ))
-    }
 }

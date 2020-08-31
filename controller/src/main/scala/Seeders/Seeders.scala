@@ -29,12 +29,13 @@ object Seeders {
         println(s"${decoration} Populating ${name} ${decoration}")
     }
 
+    private val staffCount = 15 // TODO: to env file
+
     def script() = {
         log(StaffDAO.name)
-        15 times StaffSeeder.create().transact(xa).unsafeRunSync
+        staffCount times StaffSeeder.create().transact(xa).unsafeRunSync
 
         log(UsersDAO.name)
-        15 times UsersSeeder.create().transact(xa).unsafeRunSync
-        UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
+        staffCount times UsersSeeder.create().transact(xa).unsafeRunSync
     }
 }
