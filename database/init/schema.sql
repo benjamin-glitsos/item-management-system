@@ -40,10 +40,10 @@ CREATE TABLE $PEOPLE_TABLE (
   , sex_id SMALLINT NOT NULL
   , date_of_birth DATE NOT NULL
   , email_address EMAIL NOT NULL
-  , phone_number VARCHAR(20) NOT NULL
+  , phone_number PHONE NOT NULL
   , address_line_one VARCHAR(255) NOT NULL
   , address_line_two VARCHAR(255)
-  , postcode VARCHAR(20) NOT NULL
+  , postcode POSTCODE NOT NULL
   , is_aboriginal_or_torres_strait_islander BOOLEAN NOT NULL
   , is_australian_citizen BOOLEAN NOT NULL
   , is_born_overseas BOOLEAN NOT NULL
@@ -54,7 +54,7 @@ CREATE TABLE $STAFF_TABLE (
     id serial PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , person_id SMALLINT UNIQUE NOT NULL
-  , staff_number VARCHAR(12) UNIQUE NOT NULL
+  , staff_number HOSPITAL_NUMBER UNIQUE NOT NULL
   , employment_start DATE NOT NULL
   , employment_end DATE
 );
@@ -63,8 +63,8 @@ CREATE TABLE $PATIENTS_TABLE (
     id serial PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , person_id SMALLINT UNIQUE NOT NULL
-  , patient_number VARCHAR(12) UNIQUE NOT NULL
-  , medicare_number VARCHAR(10)
+  , patient_number HOSPITAL_NUMBER UNIQUE NOT NULL
+  , medicare_number MEDICARE_NUMBER
   , medicare_ref INT
   , medicare_expiry DATE
   , UNIQUE(medicare_number, medicare_ref)
@@ -90,6 +90,6 @@ CREATE TABLE $USERS_TABLE (
     id SERIAL PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , staff_id SMALLINT NOT NULL
-  , username VARCHAR(20) UNIQUE NOT NULL
-  , password VARCHAR(20) NOT NULL
+  , username VARCHAR(20) UNIQUE NOT NULL CHECK(length(username) >= 6)
+  , password VARCHAR(20) NOT NULL CHECK(length(password) >= 8)
 );
