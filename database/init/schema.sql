@@ -91,5 +91,5 @@ CREATE TABLE $USERS_TABLE (
   , record_id SMALLINT UNIQUE NOT NULL
   , staff_id SMALLINT NOT NULL
   , username VARCHAR(20) UNIQUE NOT NULL CHECK(length(username) >= 6)
-  , password VARCHAR(20) NOT NULL CHECK(length(password) >= 8)
+  , password VARCHAR(20) NOT NULL
 );
