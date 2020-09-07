@@ -3,6 +3,7 @@ object UsersSeeder extends SeederUtilities {
         randomString(randomBetween(8 to 14))
     }
 
+    // TODO: this seeder should create staff then return Id and create user. Remove StaffSeeder and merge it into this
     def create() = {
         val person = newPerson()
         val text = newText()

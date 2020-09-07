@@ -9,6 +9,7 @@ object Main extends IOApp {
 
         Seeders.script()
 
+        // TODO: put this into Router.scala
         BlazeServerBuilder[IO]
             .bindHttp(
                 System.getenv("CONTROLLER_PORT").toInt,
