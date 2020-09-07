@@ -8,19 +8,19 @@ CHECK (
 CREATE DOMAIN phone AS text
 CHECK (
     VALUE ~ '^[0-9\s-+()]{6,20}$'
-)
+);
 
 CREATE DOMAIN postcode AS text
 CHECK (
     VALUE ~ '^[0-9\s-]{4}$'
-)
+);
 
 CREATE DOMAIN hospital_number AS text
 CHECK (
     VALUE ~ '^[0-9]{12}$'
-)
+);
 
 CREATE DOMAIN medicare_number AS text
 CHECK (
     VALUE ~ '^[0-9]{10}$'
-)
+);
