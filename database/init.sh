@@ -10,9 +10,9 @@ USER_RECORD_INSERT=${USERS_TABLE}_${RECORDS_TABLE}_insert
 
 SUPER_ADMIN_RECORD_NOTE="Do not edit or delete this record. It belongs to the Super Admin."
 
-psql -f /docker-entrypoint-initdb.d/init/domains.sql
+# Run SQL:
 
-# TODO: this double-cat is now redundant?
+psql -f /docker-entrypoint-initdb.d/init/domains.sql
 psql << EOP
 $(eval "cat << EOSQL
 $(cat /docker-entrypoint-initdb.d/init/schema.sql)
