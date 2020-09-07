@@ -7,7 +7,7 @@ CHECK (
 
 CREATE DOMAIN phone AS text
 CHECK (
-    VALUE ~ '^[0-9\s-+()]{6,20}$'
+    VALUE ~ '^[0-9 +-]{6,20}$'
 );
 
 CREATE DOMAIN postcode AS text
@@ -17,7 +17,7 @@ CHECK (
 
 CREATE DOMAIN hospital_number AS text
 CHECK (
-    VALUE ~ '^[0-9]{12}$'
+    VALUE ~ '^[0-9A-Z]{12}$'
 );
 
 CREATE DOMAIN medicare_number AS text
