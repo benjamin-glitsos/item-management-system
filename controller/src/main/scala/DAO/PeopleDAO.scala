@@ -8,19 +8,11 @@ import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
 import io.getquill.{ idiom => _, _ }
-import doobie.quill.DoobieContext
+import bundles.doobie.database._
+import bundles.doobie.database.dc._
 
 object PeopleDAO {
     val name = sys.env.getOrElse("PEOPLE_TABLE", "people")
-
-    val dc = new DoobieContext.Postgres(SnakeCase)
-    import dc._
-
-    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
-    implicit val staffSchemaMeta = schemaMeta[User]("staff")
-    implicit val personSchemaMeta = schemaMeta[Person]("people")
-    implicit val usersSchemaMeta = schemaMeta[User]("users")
-    implicit val recordSchemaMeta = schemaMeta[Record]("records")
 
     def create(p: Person) = {
         run(quote(

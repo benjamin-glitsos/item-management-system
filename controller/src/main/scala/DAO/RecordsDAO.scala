@@ -8,27 +8,13 @@ import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
 import io.getquill.{ idiom => _, _ }
-import doobie.quill.DoobieContext
 import java.time.LocalDateTime
 import java.util.UUID
+import bundles.doobie.database._
+import bundles.doobie.database.dc._
 
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
-
-    val dc = new DoobieContext.Postgres(SnakeCase)
-    import dc._
-
-    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
-    implicit val recordSchemaMeta = schemaMeta[Record]("records")
-    implicit val usersSchemaMeta = schemaMeta[User]("users")
-
-    val xa = Transactor.fromDriverManager[IO](
-        "org.postgresql.Driver",
-        s"jdbc:postgresql://${System.getenv("DATABASE_SERVICE")}/${System.getenv("POSTGRES_DATABASE")}",
-        System.getenv("POSTGRES_USER"),
-        System.getenv("POSTGRES_PASSWORD"),
-        Blocker.liftExecutionContext(ExecutionContexts.synchronous)
-    )
 
     def create(user_id: Int, notes: Option[String]) = {
         run(quote(

@@ -9,14 +9,10 @@ import doobie.postgres._
 import doobie.postgres.implicits._
 import io.getquill.{ idiom => _, _ }
 import bundles.doobie.database._
+import bundles.doobie.database.dc._
 
 object DepartmentsDAO {
     val name = sys.env.getOrElse("DEPARTMENTS_TABLE", "departments")
-
-    import dc._
-
-    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
-    implicit val departmentsSchemaMeta = schemaMeta[Department]("departments")
 
     def count() = {
         run(

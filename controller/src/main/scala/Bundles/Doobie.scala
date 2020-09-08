@@ -10,6 +10,7 @@ import doobie.postgres._
 import io.getquill.{ idiom => _, _ }
 import doobie.quill.DoobieContext
 import doobie.postgres.implicits._
+import io.getquill.{ idiom => _, _ }
 
 package bundles {
     object doobie {
@@ -27,6 +28,17 @@ package bundles {
 
         object database {
             val dc = new DoobieContext.Postgres(SnakeCase)
+
+            implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+
+            import dc._
+
+            implicit val departmentsSchemaMeta = schemaMeta[Department]("departments")
+            implicit val personSchemaMeta = schemaMeta[Person]("people")
+            implicit val recordSchemaMeta = schemaMeta[Record]("records")
+            implicit val staffSchemaMeta = schemaMeta[Staff]("staff")
+            implicit val staffDepartmentsSchemaMeta = schemaMeta[StaffDepartment]("staff_departments")
+            implicit val usersSchemaMeta = schemaMeta[User]("users")
         }
     }
 }
