@@ -1,17 +1,7 @@
-import cats._
-import cats.data._
-import cats.effect._
-import cats.implicits._
-import doobie._
-import doobie.implicits._
-import doobie.util.ExecutionContexts
-import doobie.postgres._
-import doobie.postgres.implicits._
-import io.getquill.{ idiom => _, _ }
-import java.time.LocalDateTime
-import java.util.UUID
 import bundles.doobie.database._
 import bundles.doobie.database.dc._
+import java.time.LocalDateTime
+import java.util.UUID
 
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
