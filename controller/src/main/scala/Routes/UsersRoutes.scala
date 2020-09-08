@@ -13,12 +13,9 @@ import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
 import bundles.doobie.connection._
+import bundles.http4s._
 
 object UsersRoutes {
-    object MaybeRestore extends OptionalQueryParamDecoderMatcher[Unit]("restore")
-    object MaybeNumber extends OptionalQueryParamDecoderMatcher[Int]("number")
-    object MaybeLength extends OptionalQueryParamDecoderMatcher[Int]("length")
-
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
             Ok(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
