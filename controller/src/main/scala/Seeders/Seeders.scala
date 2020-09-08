@@ -1,13 +1,7 @@
-import cats._
-import cats.data._
 import cats.effect._
-import cats.implicits._
 import doobie._
 import doobie.implicits._
 import doobie.util.ExecutionContexts
-import doobie.postgres._
-import doobie.postgres.implicits._
-import org.http4s.server.blaze._
 
 object Seeders extends LoggingUtilities {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)

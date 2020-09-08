@@ -1,6 +1,4 @@
-import cats.effect._
 import org.http4s.implicits._
-import scala.concurrent._
 import org.http4s.server.Router
 import bundles.doobie.connection._
 

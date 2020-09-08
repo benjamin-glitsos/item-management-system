@@ -1,6 +1,5 @@
 import bundles.doobie.database._
 import bundles.doobie.database.dc._
-import java.time.LocalDateTime
 
 object UsersDAO {
     val name = sys.env.getOrElse("USERS_TABLE", "users")
@@ -84,12 +83,6 @@ object UsersDAO {
     def permanentlyDelete(username: String) = {
         run(quote(
             query[User].filter(_.username == lift(username)).delete
-        ))
-    }
-
-    def populateAllStaffIds() = {
-        run(quote(
-            query[User].update(x => x.staff_id -> x.id)
         ))
     }
 }

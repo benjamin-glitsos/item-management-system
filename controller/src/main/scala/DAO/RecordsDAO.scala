@@ -1,7 +1,6 @@
 import bundles.doobie.database._
 import bundles.doobie.database.dc._
 import java.time.LocalDateTime
-import java.util.UUID
 
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")

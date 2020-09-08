@@ -1,12 +1,4 @@
-import cats._
-import cats.data._
-import cats.effect._
 import cats.implicits._
-import doobie._
-import doobie.implicits._
-import doobie.util.ExecutionContexts
-import doobie.postgres._
-import doobie.postgres.implicits._
 import scala.util.Random
 
 object StaffSeeder extends SeederUtilities with LogicUtilities {

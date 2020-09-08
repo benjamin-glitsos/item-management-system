@@ -1,16 +1,3 @@
-import cats._
-import cats.data._
-import cats.effect._
-import cats.implicits._
-import java.util.UUID
-import java.time.LocalDateTime
-import doobie._
-import doobie.implicits._
-import doobie.util.ExecutionContexts
-import doobie.postgres._
-import doobie.postgres.implicits._
-import java.util.UUID
-
 object UsersServices {
     def create(u: User, user_id: Int, notes: Option[String]) = {
         for {
@@ -73,6 +60,4 @@ object UsersServices {
     def permanentlyDelete(username: String) = {
         UsersDAO.permanentlyDelete(username)
     }
-
-    // TODO: next and prev services will get the record_id of the next user and then run the 'open' service using that. if its the last record, then it will loop to the first again
 }

@@ -1,7 +1,4 @@
-import cats._
-import cats.data._
 import cats.effect._
-import cats.implicits._
 import org.http4s.server.blaze._
 
 object Main extends IOApp with LoggingUtilities {
