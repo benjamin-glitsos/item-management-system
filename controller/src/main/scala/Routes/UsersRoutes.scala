@@ -15,16 +15,6 @@ import doobie.postgres.implicits._
 import bundles.doobie._
 
 object UsersRoutes {
-    implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
-
-    // val xa = Transactor.fromDriverManager[IO](
-    //     "org.postgresql.Driver",
-    //     s"jdbc:postgresql://${System.getenv("DATABASE_SERVICE")}/${System.getenv("POSTGRES_DATABASE")}",
-    //     System.getenv("POSTGRES_USER"),
-    //     System.getenv("POSTGRES_PASSWORD"),
-    //     Blocker.liftExecutionContext(ExecutionContexts.synchronous)
-    // )
-
     object MaybeRestore extends OptionalQueryParamDecoderMatcher[Unit]("restore")
     object MaybeNumber extends OptionalQueryParamDecoderMatcher[Int]("number")
     object MaybeLength extends OptionalQueryParamDecoderMatcher[Int]("length")

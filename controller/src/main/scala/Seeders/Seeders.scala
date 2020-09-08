@@ -9,7 +9,7 @@ import doobie.postgres._
 import doobie.postgres.implicits._
 import org.http4s.server.blaze._
 
-object Seeders {
+object Seeders extends LoggingUtilities {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     implicit def intTimes(i: Int) = new {
@@ -24,18 +24,17 @@ object Seeders {
         Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
 
-    private def log(name: String) = {
-        val decoration = "*" * 3
-        println(s"${decoration} Populating ${name} ${decoration}")
+    private def logSeederStatus(name: String) = {
+        logSmallHeading(s"Populating ${name}")
     }
 
     private val staffCount = sys.env.getOrElse("STAFF_SEED_COUNT", "15").toInt
 
     def script() = {
-        log(StaffDAO.name)
+        logSeederStatus(StaffDAO.name)
         staffCount times StaffSeeder.create().transact(xa).unsafeRunSync
 
-        log(UsersDAO.name)
+        logSeederStatus(UsersDAO.name)
         staffCount times UsersSeeder.create().transact(xa).unsafeRunSync
         UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
         // TODO: put all transacts inside one monad

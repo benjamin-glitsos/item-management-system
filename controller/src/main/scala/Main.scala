@@ -4,12 +4,13 @@ import cats.effect._
 import cats.implicits._
 import org.http4s.server.blaze._
 
-object Main extends IOApp {
+object Main extends IOApp with LoggingUtilities {
     def run(args: List[String]): IO[ExitCode] = {
 
         Seeders.script()
 
         // TODO: put this into Router.scala
+        logSmallHeading("Starting server")
         BlazeServerBuilder[IO]
             .bindHttp(
                 System.getenv("CONTROLLER_PORT").toInt,
