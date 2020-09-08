@@ -1,11 +1,16 @@
+import cats.effect._
+import scala.concurrent._
+import cats._
+import cats.data._
+import cats.implicits._
 import doobie._
 import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
 
-package com.bundle.doobie {
-    object imports {
+package bundles {
+    object doobie {
         implicit val contextShift: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
         val xa = Transactor.fromDriverManager[IO](
