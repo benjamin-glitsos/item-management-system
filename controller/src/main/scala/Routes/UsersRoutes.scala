@@ -12,7 +12,7 @@ import doobie.implicits._
 import doobie.util.ExecutionContexts
 import doobie.postgres._
 import doobie.postgres.implicits._
-import bundles.doobie._
+import bundles.doobie.connection._
 
 object UsersRoutes {
     object MaybeRestore extends OptionalQueryParamDecoderMatcher[Unit]("restore")
@@ -91,6 +91,3 @@ object UsersRoutes {
         }
     }
 }
-
-// case Some(id) =>
-//     IO.fromFuture(IO(UsersService.show(id))).flatMap(_.fold(NotFound())(Ok(_)))
