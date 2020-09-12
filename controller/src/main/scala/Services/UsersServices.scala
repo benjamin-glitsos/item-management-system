@@ -28,30 +28,41 @@ object UsersServices {
         for {
           u <- UsersDAO.open(username)
 
-          userOpen = u match {
-              case None => None
-              case Some(u) => for {
-                  s <- StaffDAO.summary(u.staff_id)
+          s <- StaffDAO.summary(u.staff_id)
 
-                  r <- RecordsDAO.open(
-                      id = u.record_id,
-                      u.user_id
-                  )
+          r <- RecordsDAO.open(
+              id = u.record_id,
+              u.user_id
+          )
 
-                  _ <- RecordsDAO.opened(
-                      id = u.record_id,
-                      u.user_id
-                  )
-              } yield (
-                  Some(
-                      UserOpen(
-                          user = u,
-                          relations = List(s),
-                          record = r
-                      )
-                  )
+          _ <- RecordsDAO.opened(
+              id = u.record_id,
+              u.user_id
+          )
+
+
+
+          userOpen = Some(
+              UserOpen(
+                  user = u,
+                  relations = List(s),
+                  record = r
               )
-          }
+          )
+
+          // userOpen = u match {
+          //     case None => None
+          //     case Some(u) => for {
+          //     } yield (
+          //         Some(
+          //             UserOpen(
+          //                 user = u,
+          //                 relations = List(s),
+          //                 record = r
+          //             )
+          //         )
+          //     )
+          // }
         } yield (userOpen)
     }
 

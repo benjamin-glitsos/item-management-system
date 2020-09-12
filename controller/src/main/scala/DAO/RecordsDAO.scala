@@ -56,8 +56,8 @@ object RecordsDAO {
                     restored_by = restorer.map(_.username),
                     notes = r.notes
                 )
-            ))
-        )).head
+            )).lift(0)
+        ))
     }
 
     def opened(id: Int, user_id: Int) = {
