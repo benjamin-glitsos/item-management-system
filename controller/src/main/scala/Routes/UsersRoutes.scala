@@ -17,6 +17,7 @@ object UsersRoutes {
         }
 
         case GET -> Root / username => {
+            println(UserValidators.isUsernameValid(username))
             UsersServices.open(
                 username,
                 user_id = 1

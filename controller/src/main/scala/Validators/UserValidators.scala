@@ -2,16 +2,22 @@ import cats.data.ValidatedNel
 import cats.syntax.validated._
 
 object UserValidators {
-    def userExists(u: List[User], username: String): ValidatedNel[Error, User] = {
+    private val usernameMinLength = 4
+    private val usernameMaxLength = 16
+
+    private def isUsernameTooShort(username: String): ValidatedNel[Error, User] = {
+        if (username.length <= usernameMinLength) UserErrors.usernameTooShort(username, usernameMinLength).invalidNel else username.validNel
+    }
+
+    private def isUsernameTooLong(username: String): ValidatedNel[Error, User] = {
+        if (username.length <= usernameMinLength) UserErrors.usernameTooShort(username, usernameMinLength).invalidNel else username.validNel
+    }
+
+    def doesUserExist(u: List[User], username: String): ValidatedNel[Error, User] = {
         if (u.isEmpty) UserErrors.userDoesntExist(username).invalidNel else u.head.validNel
     }
 
-    def usernameIsValid(username: String): ValidatedNel[Error, User] = {
-        // TODO: accumulate all errors in username 
-        if (username.length >= 4) {
-            username.validNel
-        } else {
-            "Username must be at least four characters in length.".invalidNel
-        }
+    def isUsernameValid(username: String): ValidatedNel[Error, String] = {
+        isUsernameTooShort(username) |+| isUsernameTooLong(username) map { _ + _ }
     }
 }
