@@ -60,7 +60,7 @@ object UsersDAO {
     def open(username: String): ConnectionIO[ValidatedNel[Error, User]] = {
         run(quote(
             query[User].filter(_.username == lift(username))
-        )).map(UserValidators.doesUserExist(_, username))
+        )).map(UserValidators.isUserNotFound(_, username))
     }
 
     // def delete(username: String, user_id: Int) = {
