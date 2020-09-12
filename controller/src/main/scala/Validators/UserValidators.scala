@@ -25,6 +25,13 @@ object UserValidators extends ValidationUtilities with MathUtilities {
             }
         }
 
+        def hasAtLeastOneSymbol(username: String): ValidatedNel[Error, String] = {
+        }
+
+        isUsernameValidLength(username) |+| hasAtLeastOneSymbol(username) map { _ + _ }
+    }
+
+    def isPasswordValid(password: String): ValidatedNel[Error, String] = {
         def hasOverusedChars(username: String): ValidatedNel[Error, String] = {
             val length: Int = username.size
             val charUsageAsProportions: List[Long] = countAll[String](username)
@@ -34,12 +41,10 @@ object UserValidators extends ValidationUtilities with MathUtilities {
 
             if(charsExceeding > 0) {
                 val areSingleOrMultipleChars = if (charsExceeding > 1) s"is ${charsExceeding} characters" else s"are ${charsExceeding} characters"
-                Error(code(3), s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${maxCharUsageProportion.toString} of the entire password.")
+                Error(code(9), s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${maxCharUsageProportion.toString} of the entire password.")
             } else {
                 username.validNel
             }
         }
-
-        isUsernameValidLength(username) |+| hasOverusedChars(username) map { _ + _ }
     }
 }
