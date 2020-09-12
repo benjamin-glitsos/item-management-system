@@ -21,7 +21,7 @@ object UsersRoutes {
                 user_id = 1
             ).transact(xa).unsafeRunSync match {
                 case Valid(u) => Ok(u)
-                case Invalid(e) => NotFound(username)
+                case Invalid(e) => NotFound(e)
             }
 
             // Ok(UsersServices.open(
