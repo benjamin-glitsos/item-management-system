@@ -16,16 +16,13 @@ object UsersRoutes {
         }
 
         case GET -> Root / username => {
-            Ok("wow")
-            // UsersServices.open(
-            //     username,
-            //     user_id = 1
-            // ).transact(xa).unsafeRunSync
-
-            // match {
-            //     case Valid(u) => Ok(u)
-            //     case Invalid => NotFound(username)
-            // }
+            UsersServices.open(
+                username,
+                user_id = 1
+            ).transact(xa).unsafeRunSync match {
+                case Valid(u) => Ok(u)
+                case Invalid(e) => NotFound(username)
+            }
 
             // Ok(UsersServices.open(
             //     username,
