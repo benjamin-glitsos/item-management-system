@@ -90,6 +90,6 @@ CREATE TABLE $USERS_TABLE (
     id SERIAL PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , staff_id SMALLINT NOT NULL
-  , username VARCHAR(20) UNIQUE NOT NULL CHECK(length(username) >= 4)
+  , username VARCHAR(20) UNIQUE NOT NULL
   , password VARCHAR(20) NOT NULL
 );

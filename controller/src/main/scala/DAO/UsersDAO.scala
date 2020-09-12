@@ -1,9 +1,7 @@
 import bundles.doobie.database._
 import bundles.doobie.database.dc._
 
-import cats.Applicative
-import cats.data.ValidatedNel
-import cats.syntax.validated._
+import doobie._
 
 object UsersDAO {
     val name = sys.env.getOrElse("USERS_TABLE", "users")
@@ -58,16 +56,10 @@ object UsersDAO {
         ))
     }
 
-    def open(username: String): ConnectionIO[ErrorOr[User]] = {
+    def open(username: String): ConnectionIO[Error.Validated[User]] = {
         run(quote(
-            for {
-                u <- query[User].filter(_.username == lift(username))
-                x = u.exists match {
-                    case Some(x) => Valid(x)
-                    case None => Invalid("Username not found")
-                }
-            } yield (x)
-        ))
+            query[User].filter(_.username == lift(username))
+        )).map(_.isEmpty.optionToValidated(x, "No user with that username exists."))
     }
 
     def delete(username: String, user_id: Int) = {
