@@ -31,7 +31,7 @@ object RecordsDAO {
 
     def open(id: Int, user_id: Int) = {
         run(quote(
-            for {
+            (for {
                 r <- query[Record].filter(_.id == lift(id))
                 creator <- query[User].join(_.id == r.created_by)
                 opener <- query[User].leftJoin(x => r.opened_by.exists(_ == x.id))
@@ -56,7 +56,7 @@ object RecordsDAO {
                     restored_by = restorer.map(_.username),
                     notes = r.notes
                 )
-            )
+            ))
         ))
     }
 

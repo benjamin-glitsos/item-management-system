@@ -52,13 +52,13 @@ object UsersServices {
         } yield (u)
     }
 
-    def delete(username: String, user_id: Int) = {
-        UsersDAO.delete(username, user_id)
-    }
-
-    def restore(username: String, user_id: Int) = {
-        UsersDAO.restore(username, user_id)
-    }
+    // def delete(username: String, user_id: Int) = {
+    //     UsersDAO.delete(username, user_id)
+    // }
+    //
+    // def restore(username: String, user_id: Int) = {
+    //     UsersDAO.restore(username, user_id)
+    // }
 
     def permanentlyDelete(username: String) = {
         UsersDAO.permanentlyDelete(username)

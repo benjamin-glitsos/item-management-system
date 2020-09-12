@@ -27,7 +27,8 @@ libraryDependencies := Seq(
 )
 
 scalacOptions := Seq(
-    "-Ywarn-unused:imports"
+    // "-Ywarn-unused:imports"
+
     // "-Wdead-code",
     // "-Wnumeric-widen",
     // "-Woctal-literal",

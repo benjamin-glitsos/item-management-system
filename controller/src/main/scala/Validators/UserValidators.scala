@@ -2,11 +2,11 @@ import cats.data.ValidatedNel
 import cats.syntax.validated._
 
 object UserValidators {
-    def userExists(u: List[User]) = {
-        if (u.nonEmpty) {
-            u.head.validNec
+    def userExists(u: List[User]): ValidatedNel[String, User] = {
+        if (u.isEmpty) {
+            UserErrors.userDoesntExist.invalidNel
         } else {
-            UserErrors.userDoesntExist.invalidNec
+            u.head.validNel
         }
     }
 

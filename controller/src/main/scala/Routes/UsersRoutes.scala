@@ -16,13 +16,16 @@ object UsersRoutes {
         }
 
         case GET -> Root / username => {
-            UsersServices.open(
-                username,
-                user_id = 1
-            ).transact(xa).unsafeRunSync match {
-                case Valid(u) => Ok(u)
-                case Invalid => NotFound(username)
-            }
+            Ok("wow")
+            // UsersServices.open(
+            //     username,
+            //     user_id = 1
+            // ).transact(xa).unsafeRunSync
+
+            // match {
+            //     case Valid(u) => Ok(u)
+            //     case Invalid => NotFound(username)
+            // }
 
             // Ok(UsersServices.open(
             //     username,
@@ -68,25 +71,25 @@ object UsersRoutes {
             ).transact(xa).unsafeRunSync)
         }
 
-        case DELETE -> Root / username / action => {
-            action match {
-                case "soft" => {
-                    Ok(UsersServices.delete(
-                        username,
-                        user_id = 1
-                    ).transact(xa).unsafeRunSync)
-                }
-                case "restore" => {
-                    Ok(UsersServices.restore(
-                        username,
-                        user_id = 1
-                    ).transact(xa).unsafeRunSync)
-                }
-                case "hard" => {
-                    Ok(UsersServices.permanentlyDelete(username)
-                        .transact(xa).unsafeRunSync)
-                }
-            }
-        }
+        // case DELETE -> Root / username / action => {
+        //     action match {
+        //         case "soft" => {
+        //             Ok(UsersServices.delete(
+        //                 username,
+        //                 user_id = 1
+        //             ).transact(xa).unsafeRunSync)
+        //         }
+        //         case "restore" => {
+        //             Ok(UsersServices.restore(
+        //                 username,
+        //                 user_id = 1
+        //             ).transact(xa).unsafeRunSync)
+        //         }
+        //         case "hard" => {
+        //             Ok(UsersServices.permanentlyDelete(username)
+        //                 .transact(xa).unsafeRunSync)
+        //         }
+        //     }
+        // }
     }
 }

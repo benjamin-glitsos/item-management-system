@@ -63,29 +63,29 @@ object UsersDAO {
         )).map(UserValidators.userExists(_))
     }
 
-    def delete(username: String, user_id: Int) = {
-        run(quote(
-            for {
-                r_id <- getRecord(username)
-                _ <- RecordsDAO.delete(
-                    id = r_id.head,
-                    user_id
-                )
-            } yield ()
-        ))
-    }
+    // def delete(username: String, user_id: Int) = {
+    //     run(quote(
+    //         for {
+    //             r_id <- getRecord(username)
+    //             _ <- RecordsDAO.delete(
+    //                 id = r_id.head,
+    //                 user_id
+    //             )
+    //         } yield ()
+    //     ))
+    // }
 
-    def restore(username: String, user_id: Int) = {
-        run(quote(
-            for {
-                r_id <- getRecord(username)
-                _ <- RecordsDAO.restore(
-                    id = r_id.head,
-                    user_id
-                )
-            } yield ()
-        ))
-    }
+    // def restore(username: String, user_id: Int) = {
+    //     run(quote(
+    //         for {
+    //             r_id <- getRecord(username)
+    //             _ <- RecordsDAO.restore(
+    //                 id = r_id.head,
+    //                 user_id
+    //             )
+    //         } yield ()
+    //     ))
+    // }
 
     def permanentlyDelete(username: String) = {
         run(quote(
