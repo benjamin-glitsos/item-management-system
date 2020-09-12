@@ -14,10 +14,18 @@ object UsersRoutes {
         }
 
         case GET -> Root / username => {
-            Ok(UsersServices.open(
+            UsersServices.open(
                 username,
                 user_id = 1
-            ).transact(xa).unsafeRunSync)
+            ).transact(xa).unsafeRunSync.flatMap {
+                case Some(user) => Ok(user)
+                case None => NotFound(username)
+            }
+
+            // Ok(UsersServices.open(
+            //     username,
+            //     user_id = 1
+            // ).transact(xa).unsafeRunSync)
         }
 
         // TODO: accept json body like this:

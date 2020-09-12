@@ -57,7 +57,7 @@ object RecordsDAO {
                     notes = r.notes
                 )
             ))
-        ))
+        )).head
     }
 
     def opened(id: Int, user_id: Int) = {

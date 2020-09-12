@@ -28,25 +28,31 @@ object UsersServices {
         for {
           u <- UsersDAO.open(username)
 
-          val record_id = u.head.record_id
-          val staff_id = u.head.staff_id
+          userOpen = u match {
+              case None => None
+              case Some(u) => for {
+                  s <- StaffDAO.summary(u.staff_id)
 
-          s <- StaffDAO.summary(staff_id)
+                  r <- RecordsDAO.open(
+                      id = u.record_id,
+                      u.user_id
+                  )
 
-          r <- RecordsDAO.open(
-              id = record_id,
-              user_id
-          )
-
-          _ <- RecordsDAO.opened(
-              id = record_id,
-              user_id
-          )
-        } yield (UserOpen(
-            user = u.head,
-            relations = List(s.head),
-            record = r.head
-        ))
+                  _ <- RecordsDAO.opened(
+                      id = u.record_id,
+                      u.user_id
+                  )
+              } yield (
+                  Some(
+                      UserOpen(
+                          user = u,
+                          relations = List(s),
+                          record = r
+                      )
+                  )
+              )
+          }
+        } yield (userOpen)
     }
 
     def delete(username: String, user_id: Int) = {

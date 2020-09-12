@@ -56,28 +56,34 @@ object UsersDAO {
 
     def open(username: String) = {
         run(quote(
-            query[User].filter(_.username == lift(username))
+            for {
+                u <- query[User].filter(_.username == lift(username))
+            } yield (u.lift(0))
         ))
     }
 
     def delete(username: String, user_id: Int) = {
-        for {
-            r_id <- getRecord(username)
-            _ <- RecordsDAO.delete(
-                id = r_id.head,
-                user_id
-            )
-        } yield ()
+        run(quote(
+            for {
+                r_id <- getRecord(username)
+                _ <- RecordsDAO.delete(
+                    id = r_id.head,
+                    user_id
+                )
+            } yield ()
+        ))
     }
 
     def restore(username: String, user_id: Int) = {
-        for {
-            r_id <- getRecord(username)
-            _ <- RecordsDAO.restore(
-                id = r_id.head,
-                user_id
-            )
-        } yield ()
+        run(quote(
+            for {
+                r_id <- getRecord(username)
+                _ <- RecordsDAO.restore(
+                    id = r_id.head,
+                    user_id
+                )
+            } yield ()
+        ))
     }
 
     def permanentlyDelete(username: String) = {
