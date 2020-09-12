@@ -7,6 +7,8 @@ import doobie.implicits._
 import bundles.doobie.connection._
 import bundles.http4s._
 
+import cats.data.Validated.{Invalid, Valid}
+
 object UsersRoutes {
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
@@ -17,9 +19,9 @@ object UsersRoutes {
             UsersServices.open(
                 username,
                 user_id = 1
-            ).transact(xa).unsafeRunSync.flatMap {
-                case Some(user) => Ok(user)
-                case None => NotFound(username)
+            ).transact(xa).unsafeRunSync match {
+                case Valid(u) => Ok(u)
+                case Invalid => NotFound(username)
             }
 
             // Ok(UsersServices.open(

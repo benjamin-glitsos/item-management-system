@@ -1,3 +1,6 @@
+import doobie._
+import cats.data.ValidatedNel
+
 object UsersServices {
     def create(u: User, user_id: Int, notes: Option[String]) = {
         for {
@@ -24,46 +27,29 @@ object UsersServices {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_id: Int) = {
+    def open(username: String, user_id: Int): ConnectionIO[ValidatedNel[String, User]] = {
         for {
           u <- UsersDAO.open(username)
 
-          s <- StaffDAO.summary(u.staff_id)
+          // s <- StaffDAO.summary(u.staff_id)
+          //
+          // r <- RecordsDAO.open(
+          //     id = u.record_id,
+          //     u.user_id
+          // )
+          //
+          // _ <- RecordsDAO.opened(
+          //     id = u.record_id,
+          //     u.user_id
+          // )
 
-          r <- RecordsDAO.open(
-              id = u.record_id,
-              u.user_id
-          )
+          // UserOpen(
+          //     user = u,
+          //     relations = List(s.head),
+          //     record = r.head
+          // )
 
-          _ <- RecordsDAO.opened(
-              id = u.record_id,
-              u.user_id
-          )
-
-
-
-          userOpen = Some(
-              UserOpen(
-                  user = u,
-                  relations = List(s),
-                  record = r
-              )
-          )
-
-          // userOpen = u match {
-          //     case None => None
-          //     case Some(u) => for {
-          //     } yield (
-          //         Some(
-          //             UserOpen(
-          //                 user = u,
-          //                 relations = List(s),
-          //                 record = r
-          //             )
-          //         )
-          //     )
-          // }
-        } yield (userOpen)
+        } yield (u)
     }
 
     def delete(username: String, user_id: Int) = {
