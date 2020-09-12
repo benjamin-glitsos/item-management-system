@@ -1,3 +1,4 @@
+import java.time.LocalDateTime
 import cats.effect._
 import org.http4s.HttpRoutes
 import org.http4s.dsl.io._
@@ -21,13 +22,8 @@ object UsersRoutes {
                 user_id = 1
             ).transact(xa).unsafeRunSync match {
                 case Valid(u) => Ok(u)
-                case Invalid(e) => NotFound(e)
+                case Invalid(es) => NotFound(es)
             }
-
-            // Ok(UsersServices.open(
-            //     username,
-            //     user_id = 1
-            // ).transact(xa).unsafeRunSync)
         }
 
         // TODO: accept json body like this:

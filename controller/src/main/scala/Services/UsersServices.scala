@@ -27,7 +27,7 @@ object UsersServices {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_id: Int): ConnectionIO[ValidatedNel[String, User]] = {
+    def open(username: String, user_id: Int): ConnectionIO[ValidatedNel[Error, User]] = {
         for {
           u <- UsersDAO.open(username)
 

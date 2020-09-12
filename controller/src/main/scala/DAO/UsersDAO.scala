@@ -57,7 +57,7 @@ object UsersDAO {
         ))
     }
 
-    def open(username: String): ConnectionIO[ValidatedNel[String, User]] = {
+    def open(username: String): ConnectionIO[ValidatedNel[Error, User]] = {
         run(quote(
             query[User].filter(_.username == lift(username))
         )).map(UserValidators.userExists(_))
