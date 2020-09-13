@@ -6,11 +6,9 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     private val maxCharUsageProportion = 1d/4
 
     def isUserNotFound(u: List[User], username: String): Validation[User] = {
-        if (u.isEmpty) {
-            Error("USERNAME_NOT_FOUND", s"No user with the username '${username}' was found.").invalidNel
-        } else {
-            u.head.validNel
-        }
+        val code = "USERNAME_NOT_FOUND"
+        val message = s"No user with the username '${username}' was found."
+        if (u.isEmpty) Error(code, message).invalidNel else u.head.validNel
     }
 
     // private def validateUserName(userName: String): ValidationResult[String] =
