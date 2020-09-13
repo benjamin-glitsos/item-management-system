@@ -1,7 +1,7 @@
 import doobie._
-import cats.data.ValidatedNel
+import cats.data.Validated.{Invalid, Valid}
 
-object UsersServices {
+object UsersServices extends ValidationUtilities {
     def create(u: User, user_id: Int, notes: Option[String]) = {
         for {
           r_id <- RecordsDAO.create(user_id, notes)
@@ -27,29 +27,33 @@ object UsersServices {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_id: Int): ConnectionIO[ValidatedNel[Error, User]] = {
+    // TODO: try making a Validated datatype for simplicity: Validated[User]
+    def open(username: String, user_id: Int): ConnectionIO[Validated[UserOpen]] = {
         for {
           u <- UsersDAO.open(username)
 
-          // s <- StaffDAO.summary(u.staff_id)
-          //
-          // r <- RecordsDAO.open(
-          //     id = u.record_id,
-          //     u.user_id
-          // )
-          //
-          // _ <- RecordsDAO.opened(
-          //     id = u.record_id,
-          //     u.user_id
-          // )
+          val x = u match {
+              case Valid(u) => for {
+                  s <- StaffDAO.summary(u.staff_id)
 
-          // UserOpen(
-          //     user = u,
-          //     relations = List(s.head),
-          //     record = r.head
-          // )
+                  r <- RecordsDAO.open(
+                      id = u.record_id,
+                      u.id
+                  )
 
-        } yield (u)
+                  _ <- RecordsDAO.opened(
+                      id = u.record_id,
+                      u.id
+                  )
+              } yield (Valid(UserOpen(
+                  user = u,
+                  relations = List(s.head),
+                  record = r.head
+              )))
+              case Invalid(es) => Invalid(es)
+              // TODO: make mapping over this Validated type work
+          }
+        } yield (x)
     }
 
     // def delete(username: String, user_id: Int) = {

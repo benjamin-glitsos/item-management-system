@@ -6,8 +6,9 @@ object Main extends IOApp with LoggingUtilities {
 
         Seeders.script()
 
-        // TODO: put this into Router.scala
+        // TODO: put this into Router/Server.scala
         // TODO: make an env yes/no config for whether to start server or just return ExitCode
+        // TODO: write at least one test case for MVP
         logSmallHeading("Starting server")
         BlazeServerBuilder[IO]
             .bindHttp(

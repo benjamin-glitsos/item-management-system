@@ -7,7 +7,6 @@ import io.circe.generic.auto._
 import doobie.implicits._
 import bundles.doobie.connection._
 import bundles.http4s._
-
 import cats.data.Validated.{Invalid, Valid}
 
 object UsersRoutes {
@@ -17,7 +16,6 @@ object UsersRoutes {
         }
 
         case GET -> Root / username => {
-            println(UserValidators.isUsernameValid(username))
             UsersServices.open(
                 username,
                 user_id = 1
