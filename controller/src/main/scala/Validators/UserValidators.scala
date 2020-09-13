@@ -2,14 +2,12 @@ import cats.data.ValidatedNel
 import cats.syntax.validated._
 
 object UserValidators extends ValidationUtilities with MathUtilities {
-    private def code(n: Int) = generateCode(sys.env.getOrElse("USERS_TABLE", "users"), n)
-
     private val usernameLengthBounds = 4 to 16
     private val maxCharUsageProportion = 1d/4
 
     def isUserNotFound(u: List[User], username: String): ValidatedNel[Error, User] = {
         if (u.isEmpty) {
-            Error(code(1), s"No user with the username '${username}' was found.").invalidNel
+            Error("USERNAME_NOT_FOUND", s"No user with the username '${username}' was found.").invalidNel
         } else {
             u.head.validNel
         }
