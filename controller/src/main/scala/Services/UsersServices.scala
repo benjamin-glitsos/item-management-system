@@ -28,7 +28,7 @@ object UsersServices extends ValidationUtilities {
     }
 
     // TODO: try making a Validated datatype for simplicity: Validated[User]
-    def open(username: String, user_id: Int): ConnectionIO[Validated[UserOpen]] = {
+    def open(username: String, user_id: Int): ConnectionIO[Validation[UserOpen]] = {
         for {
           u <- UsersDAO.open(username)
 

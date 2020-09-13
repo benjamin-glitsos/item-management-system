@@ -2,9 +2,8 @@ import bundles.doobie.database._
 import bundles.doobie.database.dc._
 
 import doobie._
-import cats.data.ValidatedNel
 
-object UsersDAO {
+object UsersDAO extends ValidationUtilities {
     val name = sys.env.getOrElse("USERS_TABLE", "users")
 
     def getRecord(username: String) = {
@@ -57,7 +56,7 @@ object UsersDAO {
         ))
     }
 
-    def open(username: String): ConnectionIO[ValidatedNel[Error, User]] = {
+    def open(username: String): ConnectionIO[Validation[User]] = {
         run(quote(
             query[User].filter(_.username == lift(username))
         )).map(UserValidators.isUserNotFound(_, username))
