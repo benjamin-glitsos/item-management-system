@@ -1,7 +1,7 @@
 import cats.Applicative
 import cats.implicits._
 import cats.data.ValidatedNel
-// import cats.syntax.validated._
+import scala.util.matching.Regex
 
 object UserValidators extends ValidationUtilities with MathUtilities {
     private val usernameLengthBounds = 4 to 16
@@ -13,62 +13,49 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         if (u.isEmpty) Error(code, message).invalidNel else u.head.validNel
     }
 
-    final case class RegistrationData(username: String, password: String, firstName: String, lastName: String, age: Int)
-    private def validateUserName(userName: String): Validation[String] =
-      if (userName.matches("^[a-zA-Z0-9]+$")) userName.validNel else Error("wow", "ok").invalidNel
+    private def isUsernameValidLength(username: String): Validation[String] = {
+        if (!isWithinRange(username.length, usernameLengthBounds)) {
+            val aboveOrBelowTheLength = if (username.length < usernameLengthBounds.min) "below the minimum" else "above the maximum"
+            Error("USERNAME_NOT_VALID_LENGTH", s"The username provided is ${aboveOrBelowTheLength} of ${usernameLengthBounds.max} characters in length. The provided username is ${username.size} characters in length.").invalidNel
+        } else {
+            username.validNel
+        }
+    }
 
-    private def validatePassword(password: String): Validation[String] =
-      if (password.matches("(?=^.{10,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")) password.validNel
-      else Error("wow", "ok").invalidNel
+    private def doesPasswordContainNumber(password: String): Validation[String] = {
+        doesStringContainPattern(
+            string = password,
+            pattern = "[0-9]".r,
+            error = Error("PASSWORD_DOESNT_CONTAIN_NUMBER", "The password provided doesn't contain a number.")
+        )
+    }
 
-    private def validateFirstName(firstName: String): Validation[String] =
-      if (firstName.matches("^[a-zA-Z]+$")) firstName.validNel else Error("wow", "ok").invalidNel
+    private def doesPasswordContainLowercaseLetter(password: String): Validation[String] = {
+        doesStringContainPattern(
+            string = password,
+            pattern = "[a-z]".r,
+            error = Error("PASSWORD_DOESNT_CONTAIN_LOWERCASE_LETTER", "The password provided doesn't contain a lowercase letter.")
+        )
+    }
 
-    private def validateLastName(lastName: String): Validation[String] =
-      if (lastName.matches("^[a-zA-Z]+$")) lastName.validNel else Error("wow", "ok").invalidNel
+    private def doesPasswordContainCapitalLetter(password: String): Validation[String] = {
+        doesStringContainPattern(
+            string = password,
+            pattern = "[A-Z]".r,
+            error = Error("PASSWORD_DOESNT_CONTAIN_CAPITAL_LETTER", "The password provided doesn't contain a capital letter.")
+        )
+    }
 
-    private def validateAge(age: Int): Validation[Int] =
-      if (age >= 18 && age <= 75) age.validNel else Error("wow", "ok").invalidNel
-
-    def validateForm(username: String, password: String, firstName: String, lastName: String, age: Int): Validation[RegistrationData] = {
-        (validateUserName(username),
-        validatePassword(password),
-        validateFirstName(firstName),
-        validateLastName(lastName),
-        validateAge(age)).mapN(RegistrationData)
+    case class Password(password: String)
+    def isPasswordValid(password: String): Validation[String] = {
+        (
+            doesPasswordContainNumber(password) productR doesPasswordContainLowercaseLetter(password) productR doesPasswordContainCapitalLetter(password)
+        ).map(s => s)
     }
 
 
 
 
-    // import cats.Semigroup
-    //
-    // def parallelValidate[E : Semigroup, A, B, C](v1: Validated[E, A], v2: Validated[E, B])(f: (A, B) => C): Validated[E, C] =
-    //     (v1, v2) match {
-    //         case (Valid(a), Valid(b))       => Valid(f(a, b))
-    //         case (Valid(_), i@Invalid(_))   => i
-    //         case (i@Invalid(_), Valid(_))   => i
-    //         case (Invalid(e1), Invalid(e2)) => Invalid(Semigroup[E].combine(e1, e2))
-    //     }
-
-
-
-
-    // def isUsernameValid(username: String): ValidatedNel[Error, String] = {
-    //     def isValidLength(username: String): ValidatedNel[Error, String] = {
-    //         if (!isWithinRange(username.length, usernameLengthBounds)) {
-    //             val aboveOrBelowTheLength = if (username.length < usernameLengthBounds.min) "below the minimum" else "above the maximum"
-    //             Error(code(2), s"The username provided is ${aboveOrBelowTheLength} of ${validUsernameLength.max} characters in length. The provided username (${username}) is ${username.size} characters in length.")
-    //         } else {
-    //             username.validNel
-    //         }
-    //     }
-    //
-    //     def hasAtLeastOneSymbol(username: String): ValidatedNel[Error, String] = {
-    //     }
-    //
-    //     isUsernameValidLength(username) |+| hasAtLeastOneSymbol(username) map { _ + _ }
-    // }
 
     // def isPasswordValid(password: String): ValidatedNel[Error, String] = {
     //     def hasOverusedChars(username: String): ValidatedNel[Error, String] = {
