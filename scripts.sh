@@ -26,7 +26,7 @@ case "$1" in
     "exec" )
         docker-compose exec $2
     ;;
-    "repl" )
+    "repl" | "r" )
         docker-compose exec $CONTROLLER_SERVICE bash sbt
     ;;
     "inspect" )

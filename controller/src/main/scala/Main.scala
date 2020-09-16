@@ -10,6 +10,7 @@ object Main extends IOApp with LoggingUtilities {
         // TODO: make an env yes/no config for whether to start server or just return ExitCode
         // TODO: write at least one test case for MVP
         logSmallHeading("Starting server")
+        println(UserValidators.validateForm(username = "wow", password = "cool", firstName = "ok", lastName = "no", age = 99))
         BlazeServerBuilder[IO]
             .bindHttp(
                 System.getenv("CONTROLLER_PORT").toInt,

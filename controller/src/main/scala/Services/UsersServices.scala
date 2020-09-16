@@ -27,32 +27,32 @@ object UsersServices extends ValidationUtilities {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_id: Int): ConnectionIO[Validation[UserOpen]] = {
+    def open(username: String, user_id: Int): ConnectionIO[Validation[User]] = {
         for {
           u <- UsersDAO.open(username)
 
-          val x = u match {
-              case Valid(u) => for {
-                  s <- StaffDAO.summary(u.staff_id)
-
-                  r <- RecordsDAO.open(
-                      id = u.record_id,
-                      u.id
-                  )
-
-                  _ <- RecordsDAO.opened(
-                      id = u.record_id,
-                      u.id
-                  )
-              } yield (Valid(UserOpen(
-                  user = u,
-                  relations = List(s.head),
-                  record = r.head
-              )))
-              case Invalid(es) => Invalid(es)
-              // TODO: make mapping over this Validated type work
-          }
-        } yield (x)
+          // val x = u match {
+          //     case Valid(u) => for {
+          //         s <- StaffDAO.summary(u.staff_id)
+          //
+          //         r <- RecordsDAO.open(
+          //             id = u.record_id,
+          //             u.id
+          //         )
+          //
+          //         _ <- RecordsDAO.opened(
+          //             id = u.record_id,
+          //             u.id
+          //         )
+          //     } yield (Valid(UserOpen(
+          //         user = u,
+          //         relations = List(s.head),
+          //         record = r.head
+          //     )))
+          //     case Invalid(es) => Invalid(es)
+          //     // TODO: make mapping over this Validated type work
+          // }
+        } yield (u)
     }
 
     // def delete(username: String, user_id: Int) = {
