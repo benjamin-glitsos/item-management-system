@@ -5,9 +5,10 @@ import org.http4s.implicits._
 import org.http4s.server.blaze._
 import scala.concurrent.ExecutionContext.global
 
-object Server extends IOApp with EnvUtilities {
+object Server extends IOApp with EnvUtilities with LoggingUtilities {
     def run(args: List[String]): IO[ExitCode] = {
         if(getEnvBool("ENABLE_SERVER")) {
+            logSmallHeading("Starting Server")
             BlazeServerBuilder[IO]
                 .bindHttp(
                     System.getenv("CONTROLLER_PORT").toInt,

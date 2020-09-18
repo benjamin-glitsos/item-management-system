@@ -1,9 +1,6 @@
-object Main extends LoggingUtilities {
+object Main {
     def run() = {
-        Seeders.script()
-
-        // TODO: write at least one test case for MVP
-        logSmallHeading("Starting server")
+        Seeders.run()
         // println(UserValidators.isPasswordValid(password = "wow"))
         // println(UserValidators.isPasswordValid(password = "Benji123!"))
         Server.run(List())
