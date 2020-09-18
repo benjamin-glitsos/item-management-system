@@ -3,7 +3,7 @@ import doobie._
 import doobie.implicits._
 import doobie.util.ExecutionContexts
 
-object Seeders extends LoggingUtilities {
+object Seeders extends LoggingUtilities with EnvUtilities {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     implicit def intTimes(i: Int) = new {
@@ -25,12 +25,14 @@ object Seeders extends LoggingUtilities {
     private val staffCount = sys.env.getOrElse("STAFF_SEED_COUNT", "15").toInt
 
     def script() = {
-        logSeederStatus(StaffDAO.name)
-        staffCount times StaffSeeder.create().transact(xa).unsafeRunSync
+        if(getEnvBool("ENABLE_SEEDER")) {
+            logSeederStatus(StaffDAO.name)
+            staffCount times StaffSeeder.create().transact(xa).unsafeRunSync
 
-        logSeederStatus(UsersDAO.name)
-        staffCount times UsersSeeder.create().transact(xa).unsafeRunSync
-        UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
-        // TODO: put all transacts inside one monad
+            logSeederStatus(UsersDAO.name)
+            staffCount times UsersSeeder.create().transact(xa).unsafeRunSync
+            UsersSeeder.populateAllStaffIds().transact(xa).unsafeRunSync
+            // TODO: put all transacts inside one monad
+        }
     }
 }

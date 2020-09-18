@@ -47,13 +47,13 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     }
 
     def isPasswordValid(password: String): Validation[String] = {
-        val validators = List(doesPasswordContainNumber(_), doesPasswordContainLowercaseLetter(_), doesPasswordContainCapitalLetter(_))
-        type ValidatePassword = (String) => Validation[String]
-        validators.fold("".validNel)((f1: ValidatePassword, f2: ValidatePassword) => f1(password) *> f2(password))
+        doesPasswordContainNumber(password)
+        // val validators = List(doesPasswordContainNumber(_), doesPasswordContainLowercaseLetter(_), doesPasswordContainCapitalLetter(_))
+        // type ValidatePassword = (String) => Validation[String]
+        // validators.fold("".validNel)((f1: ValidatePassword, f2: ValidatePassword) => f1(password) *> f2(password))
 
-        // (
-        //     doesPasswordContainNumber(password) *> doesPasswordContainLowercaseLetter(password) *> doesPasswordContainCapitalLetter(password)
-        // ).map(s => s)
+        // doesPasswordContainNumber(password) *> doesPasswordContainLowercaseLetter(password) *> doesPasswordContainCapitalLetter(password)
+
         // productR
     }
 
