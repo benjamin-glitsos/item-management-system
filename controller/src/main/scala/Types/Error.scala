@@ -1,4 +1,5 @@
 case class Error(
     code: String,
-    message: String
+    message: String,
+    field: Option[String]
 )
