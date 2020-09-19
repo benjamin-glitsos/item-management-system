@@ -36,54 +36,48 @@ object UsersRoutes extends ValidationUtilities {
 
         case req @ POST -> Root => {
             for {
-              body <- req.as[Json]
+                body <- req.as[Json]
 
-              val username = Validators.getRequiredField("username", body)
-              val password = Validators.getRequiredField("password", body)
-              val user_id = Validators.getRequiredField("user_id", body)
-              val notes = Validators.getRequiredField("notes", body)
+                val username = Validators.getRequiredField("username", body)
+                val password = Validators.getRequiredField("password", body)
+                val user_id = Validators.getRequiredField("user_id", body)
+                val notes = Validators.getRequiredField("notes", body)
 
-              val meta = (
-                  user_id,
-                  notes
-              ).mapN(RecordRequest)
+                val meta = (
+                    user_id,
+                    notes
+                ).mapN(RecordRequest)
 
-              val data = (
-                  username,
-                  password,
-                  meta
-              ).mapN(UserRequest)
+                val data = (
+                    username,
+                    password,
+                    meta
+                ).mapN(UserRequest)
 
-              res <- data match {
-                  case Invalid(e) => BadRequest(e)
-                  case Valid(x) => {
-                      try {
-                          Ok(
-                              UsersServices.create(
-                                  user = User(
-                                      id = 0,
-                                      record_id = 1,
-                                      staff_id = 1,
-                                      username = x.username,
-                                      password = x.password
-                                  ),
-                                  user_id = x.meta.user_id.toInt,
-                                  notes = Some(x.meta.notes)
-                              )
-                          )
-                      } catch {
-                          case e: SQLException => {
-                              BadRequest(Validators.sqlException(entitity = UsersDAO.name, error = e))
-                          }
-                      }
-                  }
-              }
-
-              // TODO: out of this map try to get the user object, user id and notes. if you cant get required things then you can return invalid
-              // and at this stage (before converting to an object), you can validate the fields
-              // (Use the key name (a string) to pass to the Error as the field name)
-              // then if all this is still Valid then you can run the Service which will return Valid if all the DAOs within return Valid
-              // then if that is Valid this returns Ok. Otherwise returns BadRequest or NotFound
+                res <- data match {
+                    case Invalid(e) => BadRequest(e)
+                    case Valid(x) => {
+                        try {
+                            val user = User(
+                                id = 0,
+                                record_id = 0,
+                                staff_id = 1,
+                                username = x.username,
+                                password = x.password
+                            )
+                            val user_id = x.meta.user_id.toInt
+                            val notes = Some(x.meta.notes)
+                            Ok(UsersServices.create(user, user_id, notes))
+                        } catch {
+                            case e: SQLException => {
+                                BadRequest(Validators.sqlException(
+                                    entitity = UsersDAO.name,
+                                    error = e)
+                                )
+                            }
+                        }
+                    }
+                }
             } yield (res)
         }
 
