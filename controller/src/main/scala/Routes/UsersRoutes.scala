@@ -15,6 +15,7 @@ import cats.data.Validated.{Invalid, Valid}
 import cats.Applicative
 import cats.implicits._
 import cats.data.ValidatedNel
+import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
@@ -26,7 +27,8 @@ object UsersRoutes extends ValidationUtilities {
             UsersServices.open(
                 username,
                 user_id = 1
-            ).transact(xa).unsafeRunSync match {
+            ).transact(xa).unsafeRunSync match { 
+                // TODO: abstract this into a function for reusability
                 case Invalid(e) => NotFound(e)
                 case Valid(v) => Ok(v)
             }
@@ -54,22 +56,27 @@ object UsersRoutes extends ValidationUtilities {
 
               res <- data match {
                   case Invalid(e) => BadRequest(e)
-                  case Valid(x) => UsersServices
-                      .create(
-                          user = User(
-                              id = 0,
-                              record_id = 1,
-                              staff_id = 1,
-                              username = x.username,
-                              password = x.password
-                          ),
-                          user_id = x.meta.user_id.toInt,
-                          notes = Some(x.meta.notes)
-                      )
-                          .transact(xa).unsafeRunSync match { // TODO: abstract this into a function for reusability
-                              case Invalid(e) => NotFound(e)
-                              case Valid(v) => Ok(v)
+                  case Valid(x) => {
+                      try {
+                          Ok(
+                              UsersServices.create(
+                                  user = User(
+                                      id = 0,
+                                      record_id = 1,
+                                      staff_id = 1,
+                                      username = x.username,
+                                      password = x.password
+                                  ),
+                                  user_id = x.meta.user_id.toInt,
+                                  notes = Some(x.meta.notes)
+                              )
+                          )
+                      } catch {
+                          case e: SQLException => {
+                              BadRequest(Validators.sqlException(entitity = UsersDAO.name, error = e))
                           }
+                      }
+                  }
               }
 
               // TODO: out of this map try to get the user object, user id and notes. if you cant get required things then you can return invalid
@@ -112,6 +119,7 @@ object UsersRoutes extends ValidationUtilities {
         //             Ok(UsersServices.permanentlyDelete(username)
         //                 .transact(xa).unsafeRunSync)
         //         }
+        // // TODO: case other => BadRequest
         //     }
         // }
     }

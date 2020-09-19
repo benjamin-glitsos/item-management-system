@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
 
-    def create(user_id: Int, notes: Option[String]) = {
+    def create(user_id: Int, notes: Option[String]): ConnectionIO[Int] = {
         run(quote(
             query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
@@ -13,7 +13,7 @@ object RecordsDAO {
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
             ).returningGenerated(_.id)
-        )).map(Validators.hasNoneBeenCreated(_))
+        ))
     }
 
     def edit(id: Int, user_id: Int, notes: Option[String]) = {

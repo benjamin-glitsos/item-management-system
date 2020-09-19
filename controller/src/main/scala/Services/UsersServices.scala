@@ -5,10 +5,8 @@ object UsersServices extends ValidationUtilities {
     def create(user: User, user_id: Int, notes: Option[String]) = {
         for {
           r <- RecordsDAO.create(user_id, notes)
-          u <- r.andThen { id =>
-              UsersDAO.create(user.copy(record_id = id))
-          }
-        } yield (u)
+          u <- UsersDAO.create(user.copy(record_id = r))
+        } yield ()
     }
 
     def edit(u: User, user_id: Int, notes: Option[String]) = {

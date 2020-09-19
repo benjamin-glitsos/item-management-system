@@ -12,7 +12,7 @@ object UsersDAO extends ValidationUtilities {
         ))
     }
 
-    def create(u: User): ConnectionIO[Validation[Int]] = {
+    def create(u: User): ConnectionIO[Int] = {
         run(quote(
             query[User].insert(
                 _.record_id -> lift(u.record_id),
@@ -20,8 +20,7 @@ object UsersDAO extends ValidationUtilities {
                 _.username -> lift(u.username),
                 _.password -> lift(u.password)
             ).returningGenerated(_.id)
-        )).map(Validators.hasNoneBeenCreated(_))
-        // TODO: use try catch as well in order to return database errors using doobie/quill?
+        ))
     }
 
     def edit(u: User) = {

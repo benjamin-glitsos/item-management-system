@@ -5,6 +5,8 @@ import cats.data.ValidatedNel
 import io.circe.{Error => _, _}
 import io.circe.syntax._
 
+import java.sql.SQLException
+
 object Validators extends ValidationUtilities {
     def getRequiredField(key: String, entity: String, body: Json): Validation[String] = {
         val code = "REQUIRED_FIELD_NOT_PROVIDED"
@@ -17,15 +19,19 @@ object Validators extends ValidationUtilities {
         }
     }
 
-    def hasNoneBeenCreated(id: Int, entity: String): Validation[Int] = {
-        if (id > 0) {
-            ids.validNel
-        } else {
-            val code = "CREATE_OPERATION_FAILED"
-            val message = "This item could be created due to an error."
-            val entity = Some(entity)
-            val field = None
-            Error(code, message, entity, field).invalidNel
-        }
+    def sqlException(entity: String, error: SQLException): Validation[String] = {
+        val code = "SQL_EXCEPTION"
+        val message = s"""
+        |An error was thrown by the database.
+        |
+        |Message:
+        |${error.getMessage}
+        |
+        |State:
+        |${e.getSQLState}
+        """
+        val entity = Some(entity)
+        val field = None
+        Error(code, message, entity, field).invalidNel
     }
 }
