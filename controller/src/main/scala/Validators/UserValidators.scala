@@ -4,8 +4,8 @@ import cats.data.ValidatedNel
 import scala.util.matching.Regex
 
 object UserValidators extends ValidationUtilities with MathUtilities {
-    private val usernameLengthBounds = 4 to 16
-    private val maxCharUsageProportion = 1d/4
+    private val passwordLengthBounds = 4 to 16
+    private val passwordMaxCharUsageProportion = 1d/4
 
     def isUserNotFound(u: List[User], username: String): Validation[User] = {
         val code = "USERNAME_NOT_FOUND"
@@ -13,12 +13,15 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         if (u.isEmpty) Error(code, message).invalidNel else u.head.validNel
     }
 
-    private def isUsernameValidLength(username: String): Validation[String] = {
-        if (!isWithinRange(username.length, usernameLengthBounds)) {
-            val aboveOrBelowTheLength = if (username.length < usernameLengthBounds.min) "below the minimum" else "above the maximum"
-            Error("USERNAME_NOT_VALID_LENGTH", s"The username provided is ${aboveOrBelowTheLength} of ${usernameLengthBounds.max} characters in length. The provided username is ${username.size} characters in length.").invalidNel
+    private def isPasswordValidLength(password: String): Validation[String] = {
+        if (!isWithinRange(password.length, passwordLengthBounds)) {
+            val aboveOrBelowTheLength = if (password.length < passwordLengthBounds.min) "below the minimum" else "above the maximum"
+            Error(
+                "PASSWORD_NOT_VALID_LENGTH",
+                s"The password provided is ${aboveOrBelowTheLength} of ${passwordLengthBounds.max} characters in length. The provided password is ${password.size} characters in length."
+            ).invalidNel
         } else {
-            username.validNel
+            password.validNel
         }
     }
 
@@ -46,29 +49,34 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         )
     }
 
-    def isPasswordValid(password: String): Validation[String] = {
-        val validators = List(doesPasswordContainNumber(_), doesPasswordContainLowercaseLetter(_), doesPasswordContainCapitalLetter(_))
-        multipleValidations[String](password, validators)
+    def doesPasswordContainOverusedChars(password: String): Validation[String] = {
+        val length: Int = password.size
+        val charUsageAsProportions: List[Double] = countAll[Char](password.toList)
+            .values
+            .toList
+            .map(_.toDouble / length)
+        val charsExceeding: Int = charUsageAsProportions.count(_ > passwordMaxCharUsageProportion)
+        val hasOverusedChars = charsExceeding > 0
+
+        if(hasOverusedChars) {
+            val areSingleOrMultipleChars = if (charsExceeding > 1) s"is ${charsExceeding} characters" else s"are ${charsExceeding} characters"
+            Error(
+                "PASSWORD_CONTAINS_OVERUSED_CHARACTERS",
+                s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${passwordMaxCharUsageProportion.toString} of the entire password."
+            ).invalidNel
+        } else {
+            password.validNel
+        }
     }
 
-
-
-
-
-    // def isPasswordValid(password: String): ValidatedNel[Error, String] = {
-    //     def hasOverusedChars(username: String): ValidatedNel[Error, String] = {
-    //         val length: Int = username.size
-    //         val charUsageAsProportions: List[Long] = countAll[String](username)
-    //             .values
-    //             .map(_ / length)
-    //         val charsExceeding: Int = charUsageAsProportions.count(_ > maxCharUsageProportion)
-    //
-    //         if(charsExceeding > 0) {
-    //             val areSingleOrMultipleChars = if (charsExceeding > 1) s"is ${charsExceeding} characters" else s"are ${charsExceeding} characters"
-    //             Error(code(9), s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${maxCharUsageProportion.toString} of the entire password.")
-    //         } else {
-    //             username.validNel
-    //         }
-    //     }
-    // }
+    def isPasswordValid(password: String): Validation[String] = {
+        val validators = List(
+            isPasswordValidLength(_),
+            doesPasswordContainNumber(_),
+            doesPasswordContainLowercaseLetter(_),
+            doesPasswordContainCapitalLetter(_),
+            doesPasswordContainOverusedChars(_)
+        )
+        multipleValidations[String](password, validators)
+    }
 }

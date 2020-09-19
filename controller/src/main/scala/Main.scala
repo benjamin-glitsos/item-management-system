@@ -1,9 +1,27 @@
-object Main {
-    def run() = {
+import cats.effect._
+import org.http4s.server.blaze._
+
+object Main extends IOApp with LoggingUtilities with EnvUtilities {
+    def run(args: List[String]): IO[ExitCode] = {
+
         Seeders.run()
-        println("wow:")
-        println(UserValidators.isPasswordValid(password = "wow"))
-        println(UserValidators.isPasswordValid(password = "Benji123!"))
-        Server.run(List())
+
+        UserValidators.doesPasswordContainOverusedChars("aaaaaaaabbbbbbbbbbccccccccc")
+
+        if(getEnvBool("ENABLE_SERVER")) {
+            logSmallHeading("Starting server")
+            BlazeServerBuilder[IO]
+                .bindHttp(
+                    System.getenv("CONTROLLER_PORT").toInt,
+                    System.getenv("DOCKER_LOCALHOST")
+                )
+                .withHttpApp(Routes.router)
+                .serve
+                .compile
+                .drain
+                .as(ExitCode.Success)
+        } else {
+            IO.pure(ExitCode.Success)
+        }
     }
 }
