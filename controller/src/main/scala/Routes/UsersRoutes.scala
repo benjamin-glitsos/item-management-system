@@ -2,6 +2,9 @@ import java.time.LocalDateTime
 import cats.effect._
 import org.http4s.HttpRoutes
 import org.http4s.dsl.io._
+import io.circe.syntax._
+import io.circe.Json
+import org.http4s.circe._
 import org.http4s.circe.CirceEntityEncoder._
 import io.circe.generic.auto._
 import doobie.implicits._
@@ -14,6 +17,10 @@ import cats.implicits._
 import cats.data.ValidatedNel
 
 object UsersRoutes extends ValidationUtilities {
+    // implicit val keyValueDecoder: KeyDecoder[String] = new KeyDecoder[String] {
+    //   override def apply(key: String): Option[String] = Some(key)
+    // }
+
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
             Ok(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
@@ -31,17 +38,16 @@ object UsersRoutes extends ValidationUtilities {
 
         case req @ POST -> Root => {
             for {
-              json <- req
-              val fields = io.circe.parser.decode[Map[String, String]](json)
-              val user = User(
-                  id = 2,
-                  record_id = 8,
-                  staff_id = 1,
-                  username = "un9999",
-                  password = "pw9999"
-              ).validNel
-              val user_id = Validators.getField(required = true, "user_id", fields)
-              val notes = Validators.getField(required = false, "notes", fields)
+              fields <- Ok(req.as[Json])
+              // val user = User(
+              //     id = 2,
+              //     record_id = 8,
+              //     staff_id = 1,
+              //     username = "un9999",
+              //     password = "pw9999"
+              // ).validNel
+              // val user_id = Validators.getField(required = true, "user_id", fields)
+              // val notes = Validators.getField(required = false, "notes", fields)
               // println(user *> user_id *> notes)
               // TODO: out of this map try to get the user object, user id and notes. if you cant get required things then you can return invalid
               // and at this stage (before converting to an object), you can validate the fields
@@ -53,7 +59,7 @@ object UsersRoutes extends ValidationUtilities {
               //         .create(user, user_id, notes)
               //         .transact(xa).unsafeRunSync
               //     )
-            } yield (notes)
+            } yield (fields)
         }
 
         case PUT -> Root => {

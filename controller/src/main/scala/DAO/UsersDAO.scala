@@ -12,7 +12,7 @@ object UsersDAO extends ValidationUtilities {
         ))
     }
 
-    def create(u: User): ConnectionIO[Validation[Int]] = {
+    def create(u: User) = {
         run(quote(
             query[User].insert(
                 _.record_id -> lift(u.record_id),
