@@ -6,12 +6,6 @@ import doobie._
 object UsersDAO extends ValidationUtilities {
     val name = sys.env.getOrElse("USERS_TABLE", "users")
 
-    def getRecord(username: String) = {
-        run(quote(
-            query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
-        ))
-    }
-
     def create(u: User) = {
         run(quote(
             query[User].insert(
