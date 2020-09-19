@@ -1,4 +1,4 @@
 case class RecordRequest(
-    user_id: Int,
-    notes: String
+    user_username: String,
+    notes: Option[String]
 )

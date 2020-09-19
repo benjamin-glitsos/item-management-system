@@ -6,7 +6,7 @@ object Main extends IOApp with LoggingUtilities with EnvUtilities {
 
         Seeders.run()
 
-        if(getEnvBool("ENABLE_SERVER")) {
+        if(true) {
             consoleHeading("Starting server")
             BlazeServerBuilder[IO]
                 .bindHttp(

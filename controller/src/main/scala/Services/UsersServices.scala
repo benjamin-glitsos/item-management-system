@@ -1,12 +1,13 @@
 import doobie._
 import cats.data.Validated.{Invalid, Valid}
 
-object UsersServices extends ValidationUtilities {
-    def create(user: User, user_id: Int, notes: Option[String]) = {
+object UsersServices {
+    def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[CreateResponse] = {
         for {
-          r <- RecordsDAO.create(user_id, notes)
-          u <- UsersDAO.create(user.copy(record_id = r))
-        } yield ()
+          u <- UsersDAO.open(user_username)
+          r <- RecordsDAO.create(user_id = u.head.id, notes)
+          _ <- UsersDAO.create(user.copy(record_id = r.id))
+        } yield (CreateResponse(r.uuid))
     }
 
     def edit(u: User, user_id: Int, notes: Option[String]) = {
@@ -27,7 +28,7 @@ object UsersServices extends ValidationUtilities {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_id: Int): ConnectionIO[Validation[User]] = {
+    def open(username: String) = {
         for {
           u <- UsersDAO.open(username)
 
@@ -50,7 +51,6 @@ object UsersServices extends ValidationUtilities {
           //         record = r.head
           //     )))
           //     case Invalid(es) => Invalid(es)
-          //     // TODO: make mapping over this Validated type work
           // }
         } yield (u)
     }

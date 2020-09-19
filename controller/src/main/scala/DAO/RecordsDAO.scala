@@ -13,7 +13,7 @@ object RecordsDAO {
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
-            ).returningGenerated(_.id)
+            ).returningGenerated(r => RecordResponse(r.id, r.uuid))
         ))
     }
 

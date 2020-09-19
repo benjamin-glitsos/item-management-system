@@ -20,19 +20,15 @@ import java.sql.SQLException
 object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
-            Ok(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
+            PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
-        case GET -> Root / username => {
-            UsersServices.open(
-                username,
-                user_id = 1
-            ).transact(xa).unsafeRunSync match { 
-                // TODO: abstract this into a function for reusability
-                case Invalid(e) => NotFound(e)
-                case Valid(v) => Ok(v)
-            }
-        }
+        // case GET -> Root / username => {
+        //     UsersServices.open(username).transact(xa).unsafeRunSync match {
+        //         case Invalid(e) => NotFound(e)
+        //         case Valid(v) => Ok(v)
+        //     }
+        // }
 
         case req @ POST -> Root => {
             for {
@@ -40,11 +36,11 @@ object UsersRoutes extends ValidationUtilities {
 
                 val username = Validators.getRequiredField("username", body)
                 val password = Validators.getRequiredField("password", body)
-                val user_id = Validators.getRequiredField("user_id", body).map(_.toInt)
-                val notes = Validators.getRequiredField("notes", body) // TODO: optional field
+                val user_username = Validators.getRequiredField("user_username", body)
+                val notes = Validators.getOptionalField("notes", body)
 
                 val meta = (
-                    user_id,
+                    user_username,
                     notes
                 ).mapN(RecordRequest)
 
@@ -65,14 +61,16 @@ object UsersRoutes extends ValidationUtilities {
                                 username = x.username,
                                 password = x.password
                             )
-                            val user_id = x.meta.user_id
-                            val notes = Some(x.meta.notes)
-                            UsersServices.create(user, user_id, notes)
-                            Created()
+                            val user_username = x.meta.user_username
+                            val notes = x.meta.notes
+                            Created(
+                                UsersServices
+                                    .create(user, user_username, notes)
+                                    .transact(xa).unsafeRunSync
+                            )
                         } catch {
                             case e: SQLException => {
-                                BadRequest(Validators.sqlException(e)
-                                )
+                                BadRequest(Validators.sqlException(e))
                             }
                         }
                     }
@@ -80,7 +78,7 @@ object UsersRoutes extends ValidationUtilities {
             } yield (res)
         }
 
-        case PUT -> Root => {
+        case PATCH -> Root => {
             Ok(UsersServices.edit(
                 User(
                     id = 2,
@@ -97,19 +95,19 @@ object UsersRoutes extends ValidationUtilities {
         // case DELETE -> Root / username / action => {
         //     action match {
         //         case "soft" => {
-        //             Ok(UsersServices.delete(
+        //             NoContent(UsersServices.delete(
         //                 username,
         //                 user_id = 1
         //             ).transact(xa).unsafeRunSync)
         //         }
         //         case "restore" => {
-        //             Ok(UsersServices.restore(
+        //             NoContent(UsersServices.restore(
         //                 username,
         //                 user_id = 1
         //             ).transact(xa).unsafeRunSync)
         //         }
         //         case "hard" => {
-        //             Ok(UsersServices.permanentlyDelete(username)
+        //             NoContent(UsersServices.permanentlyDelete(username)
         //                 .transact(xa).unsafeRunSync)
         //         }
         // // TODO: case other => BadRequest
