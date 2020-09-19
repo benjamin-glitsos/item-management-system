@@ -2,23 +2,23 @@ import doobie._
 import cats.data.Validated.{Invalid, Valid}
 
 object UsersServices {
-    def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[CreateResponse] = {
+    def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {
         for {
           u <- UsersDAO.open(user_username)
           r <- RecordsDAO.create(user_id = u.head.id, notes)
           _ <- UsersDAO.create(user.copy(record_id = r.id))
-        } yield (CreateResponse(r.uuid))
+        } yield (RecordResponse(r.uuid))
     }
 
-    def edit(u: User, user_id: Int, notes: Option[String]) = {
+    def edit(u: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {
         for {
-          _ <- RecordsDAO.edit(
+          r <- RecordsDAO.edit(
               id = u.record_id,
-              user_id,
+              user_username,
               notes
           )
           _ <- UsersDAO.edit(u)
-        } yield ()
+        } yield (RecordResponse(r.uuid))
     }
 
     def list(maybeNumber: Option[Int], maybeLength: Option[Int]) = {

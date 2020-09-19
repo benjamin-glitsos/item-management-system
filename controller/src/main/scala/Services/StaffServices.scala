@@ -3,11 +3,11 @@ object StaffServices {
         s: Staff,
         p: Person,
         d_ids: List[Int],
-        user_id: Int,
+        user_username: String,
         notes: Option[String]
     ) = {
         for {
-          r_id <- RecordsDAO.create(user_id, notes)
+          r_id <- RecordsDAO.create(user_username, notes)
           p_id <- PeopleDAO.create(p)
           s_id <- StaffDAO.create(s.copy(
               record_id = r_id,

@@ -1,36 +1,37 @@
 import bundles.doobie.database._
 import bundles.doobie.database.dc._
+import doobie._
 import java.time.LocalDateTime
 import java.util.UUID
 
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
 
-    def create(user_id: Int, notes: Option[String]) = {
+    def create(user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentityResponse] = {
         run(quote(
             query[Record].insert(
                 _.uuid -> lift(UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
-            ).returningGenerated(r => RecordResponse(r.id, r.uuid))
+            ).returningGenerated(r => RecordIdentityResponse(r.id, r.uuid))
         ))
     }
 
-    def edit(id: Int, user_id: Int, notes: Option[String]) = {
+    def edit(id: Int, user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentityResponse] = {
         run(quote(
             query[Record]
-                .filter(x => x.id == lift(id))
+                .filter(_.id == lift(id))
                 .update(
                     x => x.edits -> (x.edits + 1),
                     _.edited_at -> Some(lift(LocalDateTime.now())),
                     _.edited_by -> Some(lift(user_id)),
                     _.notes -> lift(notes)
-                )
+                ).returning(r => RecordIdentityResponse(r.id, r.uuid))
         ))
     }
 
-    def open(id: Int, user_id: Int) = {
+    def open(id: Int, user_id: Int): ConnectionIO[RecordOpen] = {
         run(quote(
             (for {
                 r <- query[Record].filter(_.id == lift(id))
@@ -61,35 +62,40 @@ object RecordsDAO {
         ))
     }
 
-    def opened(id: Int, user_id: Int) = {
+    def opened(id: Int, user_id: Int): ConnectionIO[RecordIdentityResponse] = {
         run(quote(
             query[Record]
-                .filter(x => x.id == lift(id))
+                .filter(_.id == lift(id))
                 .update(
                     x => x.opens -> (x.opens + 1),
                     _.opened_at -> Some(lift(LocalDateTime.now())),
                     _.opened_by -> Some(lift(user_id))
+                .returning(r => RecordIdentityResponse(r.id, r.uuid))
         )))
     }
 
-    def delete(id: Int, user_id: Int) = {
+    def delete(id: Int, user_id: Int): ConnectionIO[RecordIdentityResponse] = {
         run(quote(
-            query[Record].filter(x => x.id == lift(id)).update(
-                x => x.deletions -> (x.deletions + 1),
-                _.deleted_at -> Some(lift(LocalDateTime.now())),
-                _.deleted_by -> Some(lift(user_id))
-            )
+            query[Record]
+                .filter(_.id == lift(id))
+                .update(
+                    x => x.deletions -> (x.deletions + 1),
+                    _.deleted_at -> Some(lift(LocalDateTime.now())),
+                    _.deleted_by -> Some(lift(user_id)))
+                .returning(r => RecordIdentityResponse(r.id, r.uuid))
         ))
     }
 
-    def restore(id: Int, user_id: Int) = {
+    def restore(id: Int, user_id: Int): ConnectionIO[RecordIdentityResponse] = {
         run(quote(
-            query[Record].filter(x => x.id == lift(id)).update(
-                _.deleted_at -> None,
-                _.deleted_by -> None,
-                _.restored_at -> Some(lift(LocalDateTime.now())),
-                _.restored_by -> Some(lift(user_id))
-            )
+            query[Record]
+                .filter(x => x.id == lift(id))
+                .update(
+                    _.deleted_at -> None,
+                    _.deleted_by -> None,
+                    _.restored_at -> Some(lift(LocalDateTime.now())),
+                    _.restored_by -> Some(lift(user_id))
+                )
         ))
     }
 }
