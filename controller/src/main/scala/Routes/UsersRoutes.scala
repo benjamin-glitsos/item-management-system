@@ -48,7 +48,7 @@ object UsersRoutes extends ValidationUtilities {
                   notes
               ).mapN(UserRequest)
 
-              val res = data match {
+              res <- data match {
                   case Invalid(e) => BadRequest(e)
                   case Valid(x) => Ok(UsersServices
                       .create(
@@ -66,14 +66,12 @@ object UsersRoutes extends ValidationUtilities {
                   )
               }
 
-              test <- Ok(req.as[Json])
-
               // TODO: out of this map try to get the user object, user id and notes. if you cant get required things then you can return invalid
               // and at this stage (before converting to an object), you can validate the fields
               // (Use the key name (a string) to pass to the Error as the field name)
               // then if all this is still Valid then you can run the Service which will return Valid if all the DAOs within return Valid
               // then if that is Valid this returns Ok. Otherwise returns BadRequest or NotFound
-            } yield (test)
+            } yield (res)
         }
 
         case PUT -> Root => {
