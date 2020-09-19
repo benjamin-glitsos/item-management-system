@@ -24,14 +24,17 @@ object Validators extends ValidationUtilities {
         val message = s"""
         |An error was thrown by the database.
         |
-        |Message:
+        |${smallHeading("Message:")}
+        |
         |${error.getMessage}
         |
-        |State:
+        |${smallHeading("State:")}
+        |
         |${e.getSQLState}
         """
         val entity = Some(entity)
         val field = None
+        println(error)
         Error(code, message, entity, field).invalidNel
     }
 }

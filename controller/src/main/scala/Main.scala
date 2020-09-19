@@ -7,7 +7,7 @@ object Main extends IOApp with LoggingUtilities with EnvUtilities {
         Seeders.run()
 
         if(getEnvBool("ENABLE_SERVER")) {
-            logSmallHeading("Starting server")
+            consoleHeading("Starting server")
             BlazeServerBuilder[IO]
                 .bindHttp(
                     System.getenv("CONTROLLER_PORT").toInt,

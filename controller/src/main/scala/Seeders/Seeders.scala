@@ -19,14 +19,14 @@ object Seeders extends LoggingUtilities with EnvUtilities {
     )
 
     private def logSeederStatus(name: String) = {
-        logSmallHeading(s"Populating ${name}")
+        consoleHeading(s"Populating ${name}")
     }
 
     private val staffCount = sys.env.getOrElse("STAFF_SEED_COUNT", "15").toInt
 
     def run() = {
         if(getEnvBool("ENABLE_SEEDER")) {
-            logSmallHeading("Starting Seeder")
+            consoleHeading("Starting Seeder")
             logSeederStatus(StaffDAO.name)
             staffCount times StaffSeeder.create().transact(xa).unsafeRunSync
 
