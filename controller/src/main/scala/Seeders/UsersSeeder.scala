@@ -9,7 +9,7 @@ object UsersSeeder extends SeederUtilities {
         val text = newText()
 
         UsersServices.create(
-            u = User(
+            user = User(
                 id = 0,
                 record_id = 0,
                 staff_id = 1,

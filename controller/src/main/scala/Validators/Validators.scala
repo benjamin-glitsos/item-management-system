@@ -7,19 +7,18 @@ import io.circe.syntax._
 
 import java.sql.SQLException
 
-object Validators extends ValidationUtilities {
-    def getRequiredField(key: String, entity: String, body: Json): Validation[String] = {
+object Validators extends ValidationUtilities with LoggingUtilities {
+    def getRequiredField(key: String, body: Json): Validation[String] = {
         val code = "REQUIRED_FIELD_NOT_PROVIDED"
         val message = s"The required field '$key' was not provided."
-        val entity = Some()
         val field = Some(key)
         body.hcursor.get[String](key).toOption match {
             case Some(value) => value.validNel
-            case None => Error(code, message, entity, field).invalidNel
+            case None => Error(code, message, field).invalidNel
         }
     }
 
-    def sqlException(entity: String, error: SQLException): Validation[String] = {
+    def sqlException(error: SQLException): Validation[String] = {
         val code = "SQL_EXCEPTION"
         val message = s"""
         |An error was thrown by the database.
@@ -30,11 +29,10 @@ object Validators extends ValidationUtilities {
         |
         |${smallHeading("State:")}
         |
-        |${e.getSQLState}
+        |${error.getSQLState}
         """
-        val entity = Some(entity)
         val field = None
         println(error)
-        Error(code, message, entity, field).invalidNel
+        Error(code, message, field).invalidNel
     }
 }

@@ -4,7 +4,6 @@ import cats.data.ValidatedNel
 import scala.util.matching.Regex
 
 object UserValidators extends ValidationUtilities with MathUtilities {
-    private val entity = Some(UsersDAO.name)
     private val passwordLengthBounds = 4 to 16
     private val passwordMaxCharUsageProportion = 1d/4
 
@@ -14,7 +13,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
                 val code = "USERNAME_NOT_FOUND"
                 val message = s"No user with this username was found."
                 val field = Some("username")
-                Error(code, message, entity, field).invalidNel
+                Error(code, message, field).invalidNel
             }
             case Some(user) => user.validNel
         }
@@ -26,7 +25,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
             val code = "PASSWORD_NOT_VALID_LENGTH"
             val message = s"The password provided is ${aboveOrBelowTheLength} of ${passwordLengthBounds.max} characters in length. The provided password is ${password.size} characters in length."
             val field = Some("password")
-            Error(code, message, entity, field).invalidNel
+            Error(code, message, field).invalidNel
         } else {
             password.validNel
         }
@@ -39,7 +38,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         doesStringContainPattern(
             string = password,
             pattern = "[0-9]".r,
-            error = Error(code, message, entity, field)
+            error = Error(code, message, field)
         )
     }
 
@@ -50,7 +49,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         doesStringContainPattern(
             string = password,
             pattern = "[a-z]".r,
-            error = Error(code, message, entity, field)
+            error = Error(code, message, field)
         )
     }
 
@@ -61,7 +60,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         doesStringContainPattern(
             string = password,
             pattern = "[A-Z]".r,
-            error = Error(code, message, entity, field)
+            error = Error(code, message, field)
         )
     }
 
@@ -72,7 +71,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         doesStringContainPattern(
             string = password,
             pattern = "[^0-9a-zA-Z]".r,
-            error = Error(code, message, entity, field)
+            error = Error(code, message, field)
         )
     }
 
@@ -90,7 +89,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
             val code = "PASSWORD_CONTAINS_OVERUSED_CHARACTERS"
             val message = s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${passwordMaxCharUsageProportion.toString} of the entire password."
             val field = Some("password")
-            Error(code, message, entity, field).invalidNel
+            Error(code, message, field).invalidNel
         } else {
             password.validNel
         }

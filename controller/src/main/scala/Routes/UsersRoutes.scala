@@ -40,8 +40,8 @@ object UsersRoutes extends ValidationUtilities {
 
                 val username = Validators.getRequiredField("username", body)
                 val password = Validators.getRequiredField("password", body)
-                val user_id = Validators.getRequiredField("user_id", body)
-                val notes = Validators.getRequiredField("notes", body)
+                val user_id = Validators.getRequiredField("user_id", body).map(_.toInt)
+                val notes = Validators.getRequiredField("notes", body) // TODO: optional field
 
                 val meta = (
                     user_id,
@@ -65,14 +65,13 @@ object UsersRoutes extends ValidationUtilities {
                                 username = x.username,
                                 password = x.password
                             )
-                            val user_id = x.meta.user_id.toInt
+                            val user_id = x.meta.user_id
                             val notes = Some(x.meta.notes)
-                            Ok(UsersServices.create(user, user_id, notes))
+                            UsersServices.create(user, user_id, notes)
+                            Created()
                         } catch {
                             case e: SQLException => {
-                                BadRequest(Validators.sqlException(
-                                    entitity = UsersDAO.name,
-                                    error = e)
+                                BadRequest(Validators.sqlException(e)
                                 )
                             }
                         }

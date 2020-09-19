@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
 
-    def create(user_id: Int, notes: Option[String]): ConnectionIO[Int] = {
+    def create(user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record].insert(
                 _.uuid -> lift(java.util.UUID.randomUUID()),
