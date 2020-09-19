@@ -12,4 +12,10 @@ trait ValidationUtilities {
             case None => error.invalidNel
         }
     }
+
+    def multipleValidations[A](value: A, validators: List[A => Validation[A]]) = {
+        validators
+            .map(f => f(value))
+            .fold(value.validNel)((a: Validation[A], b: Validation[A]) => a *> b)
+    }
 }
