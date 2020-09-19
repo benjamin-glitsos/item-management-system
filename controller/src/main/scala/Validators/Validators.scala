@@ -16,8 +16,8 @@ object Validators extends ValidationUtilities {
         }
     }
 
-    def hasNoneBeenCreated(ids: Int): Validation[Int] = {
-        if (ids > 0) {
+    def hasNoneBeenCreated(id: Int): Validation[Int] = {
+        if (id > 0) {
             ids.validNel
         } else {
             val code = "CREATE_OPERATION_FAILED"
