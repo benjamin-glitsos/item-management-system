@@ -5,7 +5,6 @@ import scala.util.matching.Regex
 
 trait ValidationUtilities {
     type Validation[A] = ValidatedNel[Error, A]
-    type Fields = Map[String, String]
 
     def multipleValidations[A](value: A, validators: List[A => Validation[A]]) = {
         validators

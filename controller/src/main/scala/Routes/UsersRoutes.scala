@@ -17,10 +17,6 @@ import cats.implicits._
 import cats.data.ValidatedNel
 
 object UsersRoutes extends ValidationUtilities {
-    // implicit val keyValueDecoder: KeyDecoder[String] = new KeyDecoder[String] {
-    //   override def apply(key: String): Option[String] = Some(key)
-    // }
-
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
             Ok(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
@@ -38,16 +34,20 @@ object UsersRoutes extends ValidationUtilities {
 
         case req @ POST -> Root => {
             for {
-              fields <- Ok(req.as[Json])
-              // val user = User(
-              //     id = 2,
-              //     record_id = 8,
-              //     staff_id = 1,
-              //     username = "un9999",
-              //     password = "pw9999"
-              // ).validNel
-              // val user_id = Validators.getField(required = true, "user_id", fields)
-              // val notes = Validators.getField(required = false, "notes", fields)
+              body <- req.as[Json]
+              val user_id = Validators.getRequiredField("user_id", body)
+              val notes = Validators.getRequiredField("notes", body)
+              val id = 0.validNel
+              val record_id = Validators.getRequiredField("record_id", body)
+              val staff_id = Validators.getRequiredField("staff_id", body)
+              val username = Validators.getRequiredField("username", body)
+              val password = Validators.getRequiredField("password", body)
+
+
+              // TODO: use mapN to accumulate the validated fields into a User case class. Then andThen to run UsersServices
+              test <- Ok(req.as[Json])
+              // val response = Ok(body)
+
               // println(user *> user_id *> notes)
               // TODO: out of this map try to get the user object, user id and notes. if you cant get required things then you can return invalid
               // and at this stage (before converting to an object), you can validate the fields
@@ -59,7 +59,7 @@ object UsersRoutes extends ValidationUtilities {
               //         .create(user, user_id, notes)
               //         .transact(xa).unsafeRunSync
               //     )
-            } yield (fields)
+            } yield (test)
         }
 
         case PUT -> Root => {
