@@ -12,7 +12,7 @@ object UsersDAO extends ValidationUtilities {
         ))
     }
 
-    def create(u: User) = {
+    def create(u: User): ConnectionIO[Validation[Int]] = {
         run(quote(
             query[User].insert(
                 _.record_id -> lift(u.record_id),
@@ -59,7 +59,7 @@ object UsersDAO extends ValidationUtilities {
     def open(username: String): ConnectionIO[Validation[User]] = {
         run(quote(
             query[User].filter(_.username == lift(username))
-        )).map(UserValidators.isUserNotFound(_))
+        )).map(UserValidators.isUserWithUsernameNotFound(_))
     }
 
     // def delete(username: String, user_id: Int) = {

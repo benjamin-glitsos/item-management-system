@@ -7,7 +7,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     private val passwordLengthBounds = 4 to 16
     private val passwordMaxCharUsageProportion = 1d/4
 
-    def isUserNotFound(u: List[User]): Validation[User] = {
+    def isUserWithUsernameNotFound(u: List[User]): Validation[User] = {
         val code = "USERNAME_NOT_FOUND"
         val message = s"No user with this username was found."
         val field = Some("username")
