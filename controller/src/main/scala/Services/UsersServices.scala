@@ -2,11 +2,13 @@ import doobie._
 import cats.data.Validated.{Invalid, Valid}
 
 object UsersServices extends ValidationUtilities {
-    def create(u: User, user_id: Int, notes: Option[String]) = {
+    def create(user: User, user_id: Int, notes: Option[String]) = {
         for {
-          r_id <- RecordsDAO.create(user_id, notes)
-          _ <- UsersDAO.create(u.copy(record_id = r_id))
-        } yield ()
+          r <- RecordsDAO.create(user_id, notes)
+          u <- r.andThen { id =>
+              UsersDAO.create(user.copy(record_id = id))
+          }
+        } yield (u)
     }
 
     def edit(u: User, user_id: Int, notes: Option[String]) = {

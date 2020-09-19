@@ -13,7 +13,7 @@ object RecordsDAO {
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
             ).returningGenerated(_.id)
-        ))
+        )).map(Validators.hasNoneBeenCreated(_))
     }
 
     def edit(id: Int, user_id: Int, notes: Option[String]) = {
