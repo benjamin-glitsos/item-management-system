@@ -35,30 +35,41 @@ object UsersRoutes extends ValidationUtilities {
         case req @ POST -> Root => {
             for {
               body <- req.as[Json]
+
               val user_id = Validators.getRequiredField("user_id", body)
               val notes = Validators.getRequiredField("notes", body)
               val id = 0.validNel
-              val record_id = Validators.getRequiredField("record_id", body)
-              val staff_id = Validators.getRequiredField("staff_id", body)
+              val record_id = 0.validNel
+              val staff_id = 1.validNel
               val username = Validators.getRequiredField("username", body)
               val password = Validators.getRequiredField("password", body)
 
+              val user = (
+                  id,
+                  record_id,
+                  staff_id,
+                  username,
+                  password
+              ).mapN(User)
 
-              // TODO: use mapN to accumulate the validated fields into a User case class. Then andThen to run UsersServices
+              val allValidations = user *> user_id *> notes
+
+              if (allValidations.isValid) {
+                  val res = Ok(UsersServices
+                      .create(user, user_id, notes)
+                      .transact(xa).unsafeRunSync
+                  ))
+              } else {
+                  val res = BadRequest(allValidations)
+              }
+
               test <- Ok(req.as[Json])
-              // val response = Ok(body)
 
-              // println(user *> user_id *> notes)
               // TODO: out of this map try to get the user object, user id and notes. if you cant get required things then you can return invalid
               // and at this stage (before converting to an object), you can validate the fields
               // (Use the key name (a string) to pass to the Error as the field name)
               // then if all this is still Valid then you can run the Service which will return Valid if all the DAOs within return Valid
               // then if that is Valid this returns Ok. Otherwise returns BadRequest or NotFound
-              // res <- Ok(
-              //     UsersServices
-              //         .create(user, user_id, notes)
-              //         .transact(xa).unsafeRunSync
-              //     )
             } yield (test)
         }
 
