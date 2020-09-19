@@ -27,8 +27,8 @@ object UsersRoutes extends ValidationUtilities {
                 username,
                 user_id = 1
             ).transact(xa).unsafeRunSync match {
-                case Valid(v) => Ok(v)
                 case Invalid(e) => NotFound(e)
+                case Valid(v) => Ok(v)
             }
         }
 
@@ -36,31 +36,34 @@ object UsersRoutes extends ValidationUtilities {
             for {
               body <- req.as[Json]
 
-              val user_id = Validators.getRequiredField("user_id", body)
-              val notes = Validators.getRequiredField("notes", body)
-              val id = 0.validNel
-              val record_id = 0.validNel
-              val staff_id = 1.validNel
               val username = Validators.getRequiredField("username", body)
               val password = Validators.getRequiredField("password", body)
+              val user_id = Validators.getRequiredField("user_id", body)
+              val notes = Validators.getRequiredField("notes", body)
 
-              val user = (
-                  id,
-                  record_id,
-                  staff_id,
+              val data = (
                   username,
-                  password
-              ).mapN(User)
+                  password,
+                  user_id, // TODO: make this modular by using nested case class? RecordRequest
+                  notes
+              ).mapN(UserRequest)
 
-              val allValidations = user *> user_id *> notes
-
-              if (allValidations.isValid) {
-                  val res = Ok(UsersServices
-                      .create(user, user_id, notes)
+              val res = data match {
+                  case Invalid(e) => BadRequest(e)
+                  case Valid(x) => Ok(UsersServices
+                      .create(
+                          u = User(
+                              id = 0,
+                              record_id = 1,
+                              staff_id = 1,
+                              username = x.username,
+                              password = x.password
+                          ),
+                          user_id = x.user_id.toInt,
+                          notes = Some(x.notes)
+                      )
                       .transact(xa).unsafeRunSync
-                  ))
-              } else {
-                  val res = BadRequest(allValidations)
+                  )
               }
 
               test <- Ok(req.as[Json])
