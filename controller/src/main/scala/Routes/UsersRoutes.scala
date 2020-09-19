@@ -41,11 +41,15 @@ object UsersRoutes extends ValidationUtilities {
               val user_id = Validators.getRequiredField("user_id", body)
               val notes = Validators.getRequiredField("notes", body)
 
+              val meta = (
+                  user_id,
+                  notes
+              ).mapN(RecordRequest)
+
               val data = (
                   username,
                   password,
-                  user_id, // TODO: make this modular by using nested case class? RecordRequest
-                  notes
+                  meta
               ).mapN(UserRequest)
 
               res <- data match {
@@ -59,8 +63,8 @@ object UsersRoutes extends ValidationUtilities {
                               username = x.username,
                               password = x.password
                           ),
-                          user_id = x.user_id.toInt,
-                          notes = Some(x.notes)
+                          user_id = x.meta.user_id.toInt,
+                          notes = Some(x.meta.notes)
                       )
                       .transact(xa).unsafeRunSync
                   )
