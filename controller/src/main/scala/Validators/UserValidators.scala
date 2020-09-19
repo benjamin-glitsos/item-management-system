@@ -49,7 +49,15 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         )
     }
 
-    def doesPasswordContainOverusedChars(password: String): Validation[String] = {
+    private def doesPasswordContainSymbol(password: String): Validation[String] = {
+        doesStringContainPattern(
+            string = password,
+            pattern = "[^0-9a-zA-Z]".r,
+            error = Error("PASSWORD_DOESNT_CONTAIN_SYMBOL", s"The password provided doesn't contain at least one symbol (a character which is not a standard letter or number).")
+        )
+    }
+
+    private def doesPasswordContainOverusedChars(password: String): Validation[String] = {
         val length: Int = password.size
         val charUsageAsProportions: List[Double] = countAll[Char](password.toList)
             .values
@@ -75,6 +83,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
             doesPasswordContainNumber(_),
             doesPasswordContainLowercaseLetter(_),
             doesPasswordContainCapitalLetter(_),
+            doesPasswordContainSymbol(_),
             doesPasswordContainOverusedChars(_)
         )
         multipleValidations[String](password, validators)

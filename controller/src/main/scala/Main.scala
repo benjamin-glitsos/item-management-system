@@ -6,8 +6,6 @@ object Main extends IOApp with LoggingUtilities with EnvUtilities {
 
         Seeders.run()
 
-        UserValidators.doesPasswordContainOverusedChars("aaaaaaaabbbbbbbbbbccccccccc")
-
         if(getEnvBool("ENABLE_SERVER")) {
             logSmallHeading("Starting server")
             BlazeServerBuilder[IO]
