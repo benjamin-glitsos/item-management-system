@@ -1,6 +1,7 @@
 import bundles.doobie.database._
 import bundles.doobie.database.dc._
 import java.time.LocalDateTime
+import java.util.UUID
 
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
@@ -8,7 +9,7 @@ object RecordsDAO {
     def create(user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record].insert(
-                _.uuid -> lift(java.util.UUID.randomUUID()),
+                _.uuid -> lift(UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
