@@ -5,19 +5,20 @@ object UsersServices {
     def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {
         for {
           u <- UsersDAO.open(user_username)
-          r <- RecordsDAO.create(user_id = u.head.id, notes)
+          r <- RecordsDAO.create(user_id = u.id, notes)
           _ <- UsersDAO.create(user.copy(record_id = r.id))
         } yield (RecordResponse(r.uuid))
     }
 
     def edit(u: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {
         for {
-          r <- RecordsDAO.edit(
-              id = u.record_id,
-              user_username,
-              notes
-          )
-          _ <- UsersDAO.edit(u)
+            u <- UsersDAO.open(user_username)
+            r <- RecordsDAO.edit(
+                id = u.record_id,
+                user_id = u.id,
+                notes
+            )
+            _ <- UsersDAO.edit(u)
         } yield (RecordResponse(r.uuid))
     }
 
@@ -28,7 +29,7 @@ object UsersServices {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String) = {
+    def open(username: String, user_username: String) = {
         for {
           u <- UsersDAO.open(username)
 

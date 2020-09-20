@@ -56,10 +56,10 @@ object UsersDAO extends ValidationUtilities {
         ))
     }
 
-    def open(username: String) = {
+    def open(username: String): ConnectionIO[User] = {
         run(quote(
             query[User].filter(_.username == lift(username))
-        ))
+        )).map(_.head)
     }
 
     // def delete(username: String, user_id: Int) = {

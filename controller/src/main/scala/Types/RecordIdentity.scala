@@ -1,6 +1,6 @@
 import java.util.UUID
 
-case class RecordIdentityResponse(
+case class RecordIdentity(
     id: Int,
     uuid: UUID
 )

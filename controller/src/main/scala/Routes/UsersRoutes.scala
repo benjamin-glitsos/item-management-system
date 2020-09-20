@@ -87,7 +87,7 @@ object UsersRoutes extends ValidationUtilities {
                     username = "un9999",
                     password = "pw9999"
                 ),
-                user_id = 1,
+                user_username = "bengyup",
                 notes = Some("Test of updating notes.")
             ).transact(xa).unsafeRunSync)
         }

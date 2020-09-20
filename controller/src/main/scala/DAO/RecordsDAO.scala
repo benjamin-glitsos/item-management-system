@@ -7,18 +7,18 @@ import java.util.UUID
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
 
-    def create(user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentityResponse] = {
+    def create(user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentity] = {
         run(quote(
             query[Record].insert(
                 _.uuid -> lift(UUID.randomUUID()),
                 _.created_at -> lift(LocalDateTime.now()),
                 _.created_by -> lift(user_id),
                 _.notes -> lift(notes)
-            ).returningGenerated(r => RecordIdentityResponse(r.id, r.uuid))
+            ).returningGenerated(r => RecordIdentity(r.id, r.uuid))
         ))
     }
 
-    def edit(id: Int, user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentityResponse] = {
+    def edit(id: Int, user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentity] = {
         run(quote(
             query[Record]
                 .filter(_.id == lift(id))
@@ -27,7 +27,7 @@ object RecordsDAO {
                     _.edited_at -> Some(lift(LocalDateTime.now())),
                     _.edited_by -> Some(lift(user_id)),
                     _.notes -> lift(notes)
-                ).returning(r => RecordIdentityResponse(r.id, r.uuid))
+                ).returning(r => RecordIdentity(r.id, r.uuid))
         ))
     }
 
@@ -62,7 +62,7 @@ object RecordsDAO {
         ))
     }
 
-    def opened(id: Int, user_id: Int): ConnectionIO[RecordIdentityResponse] = {
+    def opened(id: Int, user_id: Int): ConnectionIO[RecordIdentity] = {
         run(quote(
             query[Record]
                 .filter(_.id == lift(id))
@@ -70,11 +70,11 @@ object RecordsDAO {
                     x => x.opens -> (x.opens + 1),
                     _.opened_at -> Some(lift(LocalDateTime.now())),
                     _.opened_by -> Some(lift(user_id))
-                .returning(r => RecordIdentityResponse(r.id, r.uuid))
+                .returning(r => RecordIdentity(r.id, r.uuid))
         )))
     }
 
-    def delete(id: Int, user_id: Int): ConnectionIO[RecordIdentityResponse] = {
+    def delete(id: Int, user_id: Int): ConnectionIO[RecordIdentity] = {
         run(quote(
             query[Record]
                 .filter(_.id == lift(id))
@@ -82,11 +82,11 @@ object RecordsDAO {
                     x => x.deletions -> (x.deletions + 1),
                     _.deleted_at -> Some(lift(LocalDateTime.now())),
                     _.deleted_by -> Some(lift(user_id)))
-                .returning(r => RecordIdentityResponse(r.id, r.uuid))
+                .returning(r => RecordIdentity(r.id, r.uuid))
         ))
     }
 
-    def restore(id: Int, user_id: Int): ConnectionIO[RecordIdentityResponse] = {
+    def restore(id: Int, user_id: Int): ConnectionIO[RecordIdentity] = {
         run(quote(
             query[Record]
                 .filter(x => x.id == lift(id))
