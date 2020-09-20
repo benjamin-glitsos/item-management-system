@@ -3,7 +3,7 @@ import bundles.doobie.database.dc._
 
 import doobie._
 
-object UsersDAO extends ValidationUtilities {
+object UsersDAO {
     val name = sys.env.getOrElse("USERS_TABLE", "users")
 
     private def getRecord(username: String) = {
@@ -12,29 +12,29 @@ object UsersDAO extends ValidationUtilities {
         ))
     }
 
-    def create(user: User) = {
+    def create(user: User): ConnectionIO[Int] = {
         run(quote(
             query[User].insert(
                 _.record_id -> lift(user.record_id),
                 _.staff_id -> lift(user.staff_id),
                 _.username -> lift(user.username),
                 _.password -> lift(user.password)
-            )
+            ).returningGenerated(_.id)
         ))
     }
 
-    def edit(u: User) = {
+    def edit(u: User): ConnectionIO[Int] = {
         run(quote(
             query[User]
                 .filter(x => x.record_id == lift(u.record_id))
                 .update(
                     _.username -> lift(u.username),
-                    _.password -> lift(u.password)
-                )
+                    _.password -> lift(u.password))
+                .returning(_.id)
         ))
     }
 
-    def list(p: Page) = {
+    def list(p: Page): ConnectionIO[UserList] = {
         run(quote(
             (for {
                 u <- query[User]
@@ -86,13 +86,16 @@ object UsersDAO extends ValidationUtilities {
     //     ))
     // }
 
-    def permanentlyDelete(username: String) = {
+    def permanentlyDelete(username: String): ConnectionIO[Int] = {
         run(quote(
-            query[User].filter(_.username == lift(username)).delete
+            query[User]
+                .filter(_.username == lift(username))
+                .delete
+                .returning(_.id)
         ))
     }
 
-    def populateAllStaffIds() = {
+    def populateAllStaffIds(): ConnectionIO[Int] = {
         run(quote(
             query[User].update(x => x.staff_id -> x.id)
         ))
