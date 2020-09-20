@@ -29,7 +29,7 @@ object UsersServices {
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_username: String) = {
+    def open(username: String, user_username: String): ConnectionIO[User] = {
         for {
           u <- UsersDAO.open(username)
 
@@ -64,7 +64,7 @@ object UsersServices {
     //     UsersDAO.restore(username, user_id)
     // }
 
-    def permanentlyDelete(username: String) = {
+    def permanentlyDelete(username: String): ConnectionIO[Int] = {
         UsersDAO.permanentlyDelete(username)
     }
 }

@@ -8,7 +8,7 @@ object UsersDAO {
 
     private def getRecord(username: String) = {
         run(quote(
-            query[User].filter(x => x.username == lift(username)).map(x => x.record_id)
+            query[User].filter(_.username == lift(username)).map(_.record_id)
         ))
     }
 

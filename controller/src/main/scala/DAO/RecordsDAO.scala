@@ -69,8 +69,8 @@ object RecordsDAO {
                 .update(
                     x => x.opens -> (x.opens + 1),
                     _.opened_at -> Some(lift(LocalDateTime.now())),
-                    _.opened_by -> Some(lift(user_id))
-                .returning(r => RecordIdentity(r.id, r.uuid))
+                    _.opened_by -> Some(lift(user_id)))
+                .returning(r => RecordIdentity(r.id, r.uuid)
         )))
     }
 
