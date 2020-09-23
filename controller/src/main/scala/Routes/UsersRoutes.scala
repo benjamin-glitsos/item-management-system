@@ -19,7 +19,7 @@ import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
-        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
+        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => { // TODO: move these query params into the body?
             PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
@@ -30,14 +30,14 @@ object UsersRoutes extends ValidationUtilities {
         //     }
         // }
 
-        case req @ POST -> Root => {
+        case body @ POST -> Root => {
             for {
-                body <- req.as[Json]
+                json <- body.as[Json]
 
-                val username = Validators.getRequiredField("username", body)
-                val password = Validators.getRequiredField("password", body)
-                val user_username = Validators.getRequiredField("user_username", body)
-                val notes = Validators.getOptionalField("notes", body)
+                val username = Validators.getRequiredField("username", json)
+                val password = Validators.getRequiredField("password", json)
+                val user_username = Validators.getRequiredField("user_username", json)
+                val notes = Validators.getOptionalField("notes", json)
 
                 val meta = (
                     user_username,
@@ -92,7 +92,7 @@ object UsersRoutes extends ValidationUtilities {
             ).transact(xa).unsafeRunSync)
         }
 
-        case DELETE -> Root / username / action => {
+        case DELETE -> Root / username / action => { // TODO: move action into the body (and also add user_username into it as well)
             action match {
                 case "soft" => {
                     NoContent(UsersServices.delete(
