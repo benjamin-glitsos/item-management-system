@@ -6,12 +6,6 @@ import doobie._
 object UsersDAO {
     val name = sys.env.getOrElse("USERS_TABLE", "users")
 
-    private def getRecord(username: String) = {
-        run(quote(
-            query[User].filter(_.username == lift(username)).map(_.record_id)
-        ))
-    }
-
     def create(user: User) = {
         run(quote(
             query[User].insert(
@@ -62,29 +56,31 @@ object UsersDAO {
         )).map(_.head)
     }
 
-    // def delete(username: String, user_id: Int) = {
-    //     run(quote(
-    //         for {
-    //             r_id <- getRecord(username)
-    //             _ <- RecordsDAO.delete(
-    //                 id = r_id.head,
-    //                 user_id
-    //             )
-    //         } yield ()
-    //     ))
-    // }
+    def delete(username: String, user_username: String) = {
+        run(quote(
+            for {
+                r <- open(username)
+                u <- open(user_username)
+                _ <- RecordsDAO.delete(
+                    id = r.id.head,
+                    user_id = u.id.head
+                )
+            } yield ()
+        ))
+    }
 
-    // def restore(username: String, user_id: Int) = {
-    //     run(quote(
-    //         for {
-    //             r_id <- getRecord(username)
-    //             _ <- RecordsDAO.restore(
-    //                 id = r_id.head,
-    //                 user_id
-    //             )
-    //         } yield ()
-    //     ))
-    // }
+    def restore(username: String, user_username: String) = {
+        run(quote(
+            for {
+                r <- open(username)
+                u <- open(user_username)
+                _ <- RecordsDAO.restore(
+                    id = r.id.head,
+                    user_id = u.id.head
+                )
+            } yield ()
+        ))
+    }
 
     def permanentlyDelete(username: String) = {
         run(quote(

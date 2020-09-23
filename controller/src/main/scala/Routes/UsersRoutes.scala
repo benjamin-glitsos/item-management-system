@@ -87,31 +87,31 @@ object UsersRoutes extends ValidationUtilities {
                     username = "un9999",
                     password = "pw9999"
                 ),
-                user_username = "bengyup",
+                user_username = System.getenv("SUPER_USERNAME"),
                 notes = Some("Test of updating notes.")
             ).transact(xa).unsafeRunSync)
         }
 
-        // case DELETE -> Root / username / action => {
-        //     action match {
-        //         case "soft" => {
-        //             NoContent(UsersServices.delete(
-        //                 username,
-        //                 user_id = 1
-        //             ).transact(xa).unsafeRunSync)
-        //         }
-        //         case "restore" => {
-        //             NoContent(UsersServices.restore(
-        //                 username,
-        //                 user_id = 1
-        //             ).transact(xa).unsafeRunSync)
-        //         }
-        //         case "hard" => {
-        //             NoContent(UsersServices.permanentlyDelete(username)
-        //                 .transact(xa).unsafeRunSync)
-        //         }
-        // // TODO: case other => BadRequest
-        //     }
-        // }
+        case DELETE -> Root / username / action => {
+            action match {
+                case "soft" => {
+                    NoContent(UsersServices.delete(
+                        username,
+                        user_username = System.getenv("SUPER_USERNAME")
+                    ).transact(xa).unsafeRunSync)
+                }
+                case "restore" => {
+                    NoContent(UsersServices.restore(
+                        username,
+                        user_username = System.getenv("SUPER_USERNAME")
+                    ).transact(xa).unsafeRunSync)
+                }
+                case "hard" => {
+                    NoContent(UsersServices.permanentlyDelete(username)
+                        .transact(xa).unsafeRunSync)
+                }
+        // TODO: case other => BadRequest
+            }
+        }
     }
 }
