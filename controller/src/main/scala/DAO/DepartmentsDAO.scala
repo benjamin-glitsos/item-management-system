@@ -5,7 +5,7 @@ import doobie._
 object DepartmentsDAO {
     val name = sys.env.getOrElse("DEPARTMENTS_TABLE", "departments")
 
-    def count(): ConnectionIO[Long] = {
+    def count() = {
         run(
             quote(
                 query[Department]

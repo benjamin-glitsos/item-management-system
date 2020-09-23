@@ -12,7 +12,7 @@ object UsersDAO {
         ))
     }
 
-    def create(user: User): ConnectionIO[Int] = {
+    def create(user: User) = {
         run(quote(
             query[User].insert(
                 _.record_id -> lift(user.record_id),
@@ -23,7 +23,7 @@ object UsersDAO {
         ))
     }
 
-    def edit(u: User): ConnectionIO[Int] = {
+    def edit(u: User) = {
         run(quote(
             query[User]
                 .filter(x => x.record_id == lift(u.record_id))
@@ -34,7 +34,7 @@ object UsersDAO {
         ))
     }
 
-    def list(p: Page): ConnectionIO[UserList] = {
+    def list(p: Page) = {
         run(quote(
             (for {
                 u <- query[User]
@@ -56,7 +56,7 @@ object UsersDAO {
         ))
     }
 
-    def open(username: String): ConnectionIO[User] = {
+    def open(username: String) = {
         run(quote(
             query[User].filter(_.username == lift(username))
         )).map(_.head)
@@ -86,16 +86,16 @@ object UsersDAO {
     //     ))
     // }
 
-    def permanentlyDelete(username: String): ConnectionIO[Int] = {
+    def permanentlyDelete(username: String) = {
         run(quote(
             query[User]
                 .filter(_.username == lift(username))
                 .delete
-                .returning(_.id)
+                // .returning(_.id)
         ))
     }
 
-    def populateAllStaffIds(): ConnectionIO[Int] = {
+    def populateAllStaffIds() = {
         run(quote(
             query[User].update(x => x.staff_id -> x.id)
         ))

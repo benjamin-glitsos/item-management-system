@@ -5,7 +5,7 @@ import doobie._
 object PeopleDAO {
     val name = sys.env.getOrElse("PEOPLE_TABLE", "people")
 
-    def create(p: Person): ConnectionIO[Int] = {
+    def create(p: Person) = {
         run(quote(
             query[Person].insert(
                 _.first_name -> lift(p.first_name),

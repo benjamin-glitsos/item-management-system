@@ -7,7 +7,7 @@ import java.util.UUID
 object RecordsDAO {
     val name = sys.env.getOrElse("RECORDS_TABLE", "records")
 
-    def create(user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentity] = {
+    def create(user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record].insert(
                 _.uuid -> lift(UUID.randomUUID()),
@@ -18,7 +18,7 @@ object RecordsDAO {
         ))
     }
 
-    def edit(id: Int, user_id: Int, notes: Option[String]): ConnectionIO[RecordIdentity] = {
+    def edit(id: Int, user_id: Int, notes: Option[String]) = {
         run(quote(
             query[Record]
                 .filter(_.id == lift(id))
@@ -31,7 +31,7 @@ object RecordsDAO {
         ))
     }
 
-    def open(id: Int, user_id: Int): ConnectionIO[RecordOpen] = {
+    def open(id: Int, user_id: Int) = {
         run(quote(
             (for {
                 r <- query[Record].filter(_.id == lift(id))
@@ -62,7 +62,7 @@ object RecordsDAO {
         ))
     }
 
-    def opened(id: Int, user_id: Int): ConnectionIO[RecordIdentity] = {
+    def opened(id: Int, user_id: Int) = {
         run(quote(
             query[Record]
                 .filter(_.id == lift(id))
@@ -74,7 +74,7 @@ object RecordsDAO {
         )))
     }
 
-    def delete(id: Int, user_id: Int): ConnectionIO[RecordIdentity] = {
+    def delete(id: Int, user_id: Int) = {
         run(quote(
             query[Record]
                 .filter(_.id == lift(id))
@@ -86,7 +86,7 @@ object RecordsDAO {
         ))
     }
 
-    def restore(id: Int, user_id: Int): ConnectionIO[RecordIdentity] = {
+    def restore(id: Int, user_id: Int) = {
         run(quote(
             query[Record]
                 .filter(x => x.id == lift(id))

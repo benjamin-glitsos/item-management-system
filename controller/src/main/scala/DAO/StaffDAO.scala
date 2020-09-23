@@ -5,7 +5,7 @@ import doobie._
 object StaffDAO {
     val name = sys.env.getOrElse("STAFF_TABLE", "staff")
 
-    def create(s: Staff): ConnectionIO[Int] = {
+    def create(s: Staff) = {
         run(quote(
             query[Staff].insert(
                 _.record_id -> lift(s.record_id),
@@ -17,7 +17,7 @@ object StaffDAO {
         ))
     }
 
-    def summary(id: Int): ConnectionIO[StaffSummary] = {
+    def summary(id: Int) = {
         run(quote(
             (for {
                 s <- query[Staff].filter(_.id == lift(id))

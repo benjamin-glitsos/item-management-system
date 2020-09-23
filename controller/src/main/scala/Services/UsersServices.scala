@@ -64,7 +64,7 @@ object UsersServices {
     //     UsersDAO.restore(username, user_id)
     // }
 
-    def permanentlyDelete(username: String): ConnectionIO[Int] = {
+    def permanentlyDelete(username: String): ConnectionIO[Long] = {
         UsersDAO.permanentlyDelete(username)
     }
 }
