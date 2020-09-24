@@ -22,6 +22,10 @@ object Validators extends ValidationUtilities with LoggingUtilities {
         body.hcursor.get[String](key).toOption.validNel
     }
 
+    // def getDefaultedField[A](key: String, default: A, body: Json): Validation[Option[String]] = {
+    //     body.hcursor.get[String](key).toOption.validNel
+    // }
+
     def sqlException(error: SQLException): Validation[String] = {
         val code = "SQL_EXCEPTION"
         val message = s"""
