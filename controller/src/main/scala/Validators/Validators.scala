@@ -32,4 +32,11 @@ object Validators extends ValidationUtilities with LoggingUtilities {
         val field = None
         Error(code, message, field).invalidNel
     }
+
+    def unsupportedDeleteAction(action: String): Validation[String] = {
+        val code = "UNSUPPORTED_DELETE_ACTION"
+        val message = s"The delete action that was provided ('$action') is unsupported. Only the actions 'soft', 'restore' and 'hard' are supported."
+        val field = Some("action")
+        Error(code, message, field).invalidNel
+    }
 }

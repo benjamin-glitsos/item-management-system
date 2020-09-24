@@ -43,12 +43,12 @@ object UsersRoutes extends ValidationUtilities {
 
         case body @ POST -> Root => {
             for {
-                body_ <- body.as[Json]
+                json <- body.as[Json]
 
-                val username = Validators.getRequiredField("username", body_)
-                val password = Validators.getRequiredField("password", body_)
-                val user_username = Validators.getRequiredField("user_username", body_)
-                val notes = Validators.getOptionalField("notes", body_)
+                val username = Validators.getRequiredField("username", json)
+                val password = Validators.getRequiredField("password", json)
+                val user_username = Validators.getRequiredField("user_username", json)
+                val notes = Validators.getOptionalField("notes", json)
 
                 val meta = (
                     user_username,
@@ -59,7 +59,7 @@ object UsersRoutes extends ValidationUtilities {
                     username,
                     password,
                     meta
-                ).mapN(UserRequest)
+                ).mapN(UserCreateBody)
 
                 res <- data match {
                     case Invalid(e) => BadRequest(e)
@@ -113,29 +113,60 @@ object UsersRoutes extends ValidationUtilities {
             ).transact(xa).unsafeRunSync)
         }
 
-        case DELETE -> Root / username / action => {
-            // TODO: error - user cannot delete themselves
-            // TODO: move everything into the body
+        case body @ DELETE -> Root => {
             // TODO: should accept list of usernames then bulk delete them
-            action match {
-                case "soft" => {
-                    Ok(UsersServices.delete(
-                        username,
-                        user_username = System.getenv("SUPER_USERNAME")
-                    ).transact(xa).unsafeRunSync)
+            for {
+                json <- body.as[Json]
+
+                val action = Validators.getRequiredField("action", json)
+                val user_username = Validators.getRequiredField("user_username", json)
+                val username = Validators.getRequiredField("username", json).andThen{ username_ =>
+                    user_username.andThen{ user_username_ =>
+                        UserValidators.isUserDeletingThemselves(username_, user_username_)
+                    }
                 }
-                case "restore" => {
-                    Ok(UsersServices.restore(
-                        username,
-                        user_username = System.getenv("SUPER_USERNAME")
-                    ).transact(xa).unsafeRunSync)
+
+                val data = (
+                    username,
+                    action,
+                    user_username
+                ).mapN(UserDeleteBody)
+
+                res <- data match {
+                    case Invalid(e) => BadRequest(e)
+                    case Valid(x) => {
+                        x.action match {
+                            case "soft" => {
+                                Ok(UsersServices.delete(
+                                    x.username,
+                                    System.getenv("SUPER_USERNAME")
+                                ).transact(xa).unsafeRunSync)
+                            }
+                            case "restore" => {
+                                Ok(UsersServices.restore(
+                                    x.username,
+                                    System.getenv("SUPER_USERNAME")
+                                ).transact(xa).unsafeRunSync)
+                            }
+                            case "hard" => {
+                                Ok(UsersServices.permanentlyDelete(x.username)
+                                    .transact(xa).unsafeRunSync)
+                            }
+                            case other => BadRequest(Validators.unsupportedDeleteAction(other))
+                        }
+                    }
                 }
-                case "hard" => {
-                    Ok(UsersServices.permanentlyDelete(username)
-                        .transact(xa).unsafeRunSync)
-                }
-        // TODO: case other => BadRequest
-            }
+            } yield (res)
+            // import io.circe.optics.JsonPath._
+            // val username = root.username.getOption(json) match {
+            //     case Some(x) => x.validNel
+            //     case None => {
+            //         val code = "REQUIRED_FIELD_NOT_PROVIDED"
+            //         val message = s"The required field 'username' was not provided."
+            //         val field = "username"
+            //         Error(code, message, field).invalidNel
+            //     }
+            // }
         }
     }
 }

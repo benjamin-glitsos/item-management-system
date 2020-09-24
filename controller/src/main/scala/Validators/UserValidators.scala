@@ -94,4 +94,11 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         )
         multipleValidations[String](password, validators)
     }
+
+    def isUserDeletingThemselves(username: String, user_username: String): Validation[String] = {
+        val code = "USER_CANNOT_DELETE_THEMSELVES"
+        val message = s"A user cannot delete themselves. This error is thrown when the username of the user ('$username') and the username of the user they are attempting to delete ('$user_username') are the same."
+        val field = None
+        Error(code, message, field).invalidNel
+    }
 }
