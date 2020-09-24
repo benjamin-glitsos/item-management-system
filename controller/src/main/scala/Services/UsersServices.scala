@@ -25,35 +25,23 @@ object UsersServices {
     def list(maybeNumber: Option[Int], maybeLength: Option[Int]) = {
         val number = maybeNumber.getOrElse(1)
         val length = maybeLength.getOrElse(25)
-
         UsersDAO.list(Page(number, length))
     }
 
-    def open(username: String, user_username: String): ConnectionIO[User] = {
+    def open(username: String, user_username: String): ConnectionIO[UserOpen] = {
         for {
           u <- UsersDAO.open(username)
-
-          // val x = u match {
-          //     case Valid(u) => for {
-          //         s <- StaffDAO.summary(u.staff_id)
-          //
-          //         r <- RecordsDAO.open(
-          //             id = u.record_id,
-          //             u.id
-          //         )
-          //
-          //         _ <- RecordsDAO.opened(
-          //             id = u.record_id,
-          //             u.id
-          //         )
-          //     } yield (Valid(UserOpen(
-          //         user = u,
-          //         relations = List(s.head),
-          //         record = r.head
-          //     )))
-          //     case Invalid(es) => Invalid(es)
-          // }
-        } yield (u)
+          s <- StaffDAO.summary(u.staff_id)
+          r <- RecordsDAO.open(id = u.record_id)
+          _ <- RecordsDAO.opened(
+              id = u.record_id,
+              user_id = u.id
+          )
+        } yield (UserOpen(
+            user = u,
+            relations = List(s),
+            record = r
+        ))
     }
 
     def delete(username: String, user_username: String): ConnectionIO[RecordResponse] = {

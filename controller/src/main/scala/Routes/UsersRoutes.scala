@@ -36,13 +36,10 @@ object UsersRoutes extends ValidationUtilities {
             PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
-        // case GET -> Root / username => {
-        //     // TODO: add user_username to the body
-        //     UsersServices.open(username).transact(xa).unsafeRunSync match {
-        //         case Invalid(e) => NotFound(e)
-        //         case Valid(v) => Ok(v)
-        //     }
-        // }
+       case GET -> Root / username => {
+            // TODO: add user_username to the body
+            Ok(UsersServices.open(username, System.getenv("SUPER_USERNAME")).transact(xa).unsafeRunSync)
+        }
 
         case body @ POST -> Root => {
             for {

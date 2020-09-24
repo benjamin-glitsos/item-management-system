@@ -34,13 +34,13 @@ object RecordsDAO {
     def openBasic(id: Int) = {
         run(quote(
             query[Record].filter(_.id == lift(id))
-        ))
+        )).map(_.head)
     }
 
     def open(id: Int) = {
         run(quote(
             (for {
-                r <- openBasic(id)
+                r <- query[Record].filter(_.id == lift(id))
                 creator <- query[User].join(_.id == r.created_by)
                 opener <- query[User].leftJoin(x => r.opened_by.exists(_ == x.id))
                 editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))

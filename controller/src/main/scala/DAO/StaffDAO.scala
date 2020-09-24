@@ -28,6 +28,6 @@ object StaffDAO {
                 last_name = p.last_name,
                 staff_number = s.staff_number
             )))
-        ))
+        )).map(_.head)
     }
 }
