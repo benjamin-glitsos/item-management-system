@@ -122,12 +122,7 @@ object UsersRoutes extends ValidationUtilities {
                     Validators.isDeleteActionSupported(x.action)
                 }
                 val user_username = Validators.getRequiredField("user_username", json)
-                val username = Validators.getRequiredField("username", json).andThen { username_ =>
-                    user_username match {
-                        // TODO: rename all validators to be named based on their error codes e.g. userCannotDeleteThemselves
-                        case Valid(user_username_) => Validators.isUserDeletingThemselves(x.username, x.user_username)
-                        case Invalid(x) => x
-                    }
+                val username = Validators.getRequiredField("username", json)
                 }
 
                 val data = (
@@ -137,26 +132,27 @@ object UsersRoutes extends ValidationUtilities {
                 ).mapN(UserDeleteBody)
 
                 res <- data match {
+                    val username = Validators.isUserDeletingThemselves(x.username, x.user_username)
+
                     case Invalid(e) => BadRequest(e)
                     case Valid(x) => {
                         x.action match {
                             case "soft" => {
                                 Ok(UsersServices.delete(
-                                    x.username,
+                                    username,
                                     System.getenv("SUPER_USERNAME")
                                 ).transact(xa).unsafeRunSync)
                             }
                             case "restore" => {
                                 Ok(UsersServices.restore(
-                                    x.username,
+                                    username,
                                     System.getenv("SUPER_USERNAME")
                                 ).transact(xa).unsafeRunSync)
                             }
                             case "hard" => {
-                                Ok(UsersServices.permanentlyDelete(x.username)
-                                    .transact(xa).unsafeRunSync)
+                                Ok(UsersServices.permanentlyDelete(username).transact(xa).unsafeRunSync)
                             }
-                            case other => BadRequest(Validators.unsupportedDeleteAction(other))
+                            case other => BadRequest(other)
                         }
                     }
                 }
