@@ -7,7 +7,7 @@ import io.circe.syntax._
 
 import java.sql.SQLException
 
-object Validators extends ValidationUtilities with LoggingUtilities {
+object Validators extends ValidationUtilities with TextUtilities {
     def getRequiredField(key: String, body: Json): Validation[String] = {
         val code = "REQUIRED_FIELD_NOT_PROVIDED"
         val message = s"The required field '$key' was not provided."
@@ -33,10 +33,17 @@ object Validators extends ValidationUtilities with LoggingUtilities {
         Error(code, message, field).invalidNel
     }
 
-    def unsupportedDeleteAction(action: String): Validation[String] = {
-        val code = "UNSUPPORTED_DELETE_ACTION"
-        val message = s"The delete action that was provided ('$action') is unsupported. Only the actions 'soft', 'restore' and 'hard' are supported."
-        val field = Some("action")
-        Error(code, message, field).invalidNel
+    def isDeleteActionSupported(action: String): Validation[String] = {
+        val supportedDeleteActions = List("soft", "restore", "hard")
+
+        supportedDeleteActions.find(_ == action) match {
+            case Some(x) => x
+            case None => {
+                val code = "UNSUPPORTED_DELETE_ACTION"
+                val message = s"The delete action that was provided ('$action') is unsupported. Only the actions ${naturalList(supportedDeleteActions)} are supported."
+                val field = Some("action")
+                Error(code, message, field).invalidNel
+            }
+        }
     }
 }

@@ -118,11 +118,15 @@ object UsersRoutes extends ValidationUtilities {
             for {
                 json <- body.as[Json]
 
-                val action = Validators.getRequiredField("action", json)
+                val action = Validators.getRequiredField("action", json).andThen { action_ =>
+                    Validators.isDeleteActionSupported(x.action)
+                }
                 val user_username = Validators.getRequiredField("user_username", json)
-                val username = Validators.getRequiredField("username", json).andThen{ username_ =>
-                    user_username.andThen{ user_username_ =>
-                        UserValidators.isUserDeletingThemselves(username_, user_username_)
+                val username = Validators.getRequiredField("username", json).andThen { username_ =>
+                    user_username match {
+                        // TODO: rename all validators to be named based on their error codes e.g. userCannotDeleteThemselves
+                        case Valid(user_username_) => Validators.isUserDeletingThemselves(x.username, x.user_username)
+                        case Invalid(x) => x
                     }
                 }
 

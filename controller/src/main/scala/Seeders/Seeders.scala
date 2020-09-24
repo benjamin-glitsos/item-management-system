@@ -3,7 +3,7 @@ import doobie._
 import doobie.implicits._
 import doobie.util.ExecutionContexts
 
-object Seeders extends LoggingUtilities with EnvUtilities {
+object Seeders extends TextUtilities with EnvUtilities {
     implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
 
     implicit def intTimes(i: Int) = new {
