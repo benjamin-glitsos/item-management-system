@@ -45,6 +45,11 @@ object UsersRoutes extends ValidationUtilities {
             for {
                 json <- body.as[Json]
 
+                // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
+                // {
+                //     head: {},
+                //     data: {}
+                // }
                 val username = Validators.getRequiredField("username", json)
                 val password = Validators.getRequiredField("password", json)
                 val user_username = Validators.getRequiredField("user_username", json)
@@ -132,10 +137,10 @@ object UsersRoutes extends ValidationUtilities {
                 ).mapN(UserDeleteBody)
 
                 res <- data match {
-                    val username = Validators.isUserDeletingThemselves(x.username, x.user_username)
-
                     case Invalid(e) => BadRequest(e)
                     case Valid(x) => {
+                        val username = Validators.isUserDeletingThemselves(x.username, x.user_username)
+
                         x.action match {
                             case "soft" => {
                                 Ok(UsersServices.delete(
