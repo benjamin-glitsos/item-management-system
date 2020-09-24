@@ -19,11 +19,25 @@ import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
-        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => { // TODO: move these query params into the body?
+        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
+            // TODO: move these query params into the body
+            // TODO: return total length (count) of list
+            // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
+            // TODO: return all data in Json response:
+            // meta: {
+            //     total_length: Int,
+            //     page_length: Int,
+            //     page: Int,
+            //     total_pages: Int,
+            //     range_start: Int,
+            //     range_end: Int,
+            // },
+            // data: Json
             PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
         // case GET -> Root / username => {
+        //     // TODO: add user_username to the body
         //     UsersServices.open(username).transact(xa).unsafeRunSync match {
         //         case Invalid(e) => NotFound(e)
         //         case Valid(v) => Ok(v)
@@ -32,12 +46,12 @@ object UsersRoutes extends ValidationUtilities {
 
         case body @ POST -> Root => {
             for {
-                json <- body.as[Json]
+                body_ <- body.as[Json]
 
-                val username = Validators.getRequiredField("username", json)
-                val password = Validators.getRequiredField("password", json)
-                val user_username = Validators.getRequiredField("user_username", json)
-                val notes = Validators.getOptionalField("notes", json)
+                val username = Validators.getRequiredField("username", body_)
+                val password = Validators.getRequiredField("password", body_)
+                val user_username = Validators.getRequiredField("user_username", body_)
+                val notes = Validators.getOptionalField("notes", body_)
 
                 val meta = (
                     user_username,
@@ -79,6 +93,15 @@ object UsersRoutes extends ValidationUtilities {
         }
 
         case PATCH -> Root => {
+            // TODO: the body will be like:
+            // {
+            //     username: String,
+            //     data: {
+            //         user: User,
+            //         notes: String
+            //     },
+            //     user_username: String
+            // }
             Ok(UsersServices.edit(
                 User(
                     id = 2,
@@ -92,7 +115,10 @@ object UsersRoutes extends ValidationUtilities {
             ).transact(xa).unsafeRunSync)
         }
 
-        case DELETE -> Root / username / action => { // TODO: move action into the body (and also add user_username into it as well)
+        case DELETE -> Root / username / action => {
+            // TODO: error - user cannot delete themselves
+            // TODO: move everything into the body
+            // TODO: should accept list of usernames then bulk delete them
             action match {
                 case "soft" => {
                     NoContent(UsersServices.delete(
