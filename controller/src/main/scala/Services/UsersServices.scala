@@ -81,7 +81,7 @@ object UsersServices {
     def permanentlyDelete(username: String): ConnectionIO[RecordResponse] = {
         for {
             u <- UsersDAO.open(username)
-            r <- RecordsDAO.open(u.record_id)
+            r <- RecordsDAO.openBasic(u.record_id)
             _ <- UsersDAO.permanentlyDelete(username)
             _ <- RecordsDAO.permanentlyDelete(u.record_id)
         } yield (RecordResponse(r.uuid))
