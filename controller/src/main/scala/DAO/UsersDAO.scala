@@ -56,38 +56,11 @@ object UsersDAO {
         )).map(_.head)
     }
 
-    def delete(username: String, user_username: String) = {
-        run(quote(
-            for {
-                r <- open(username)
-                u <- open(user_username)
-                _ <- RecordsDAO.delete(
-                    id = r.id.head,
-                    user_id = u.id.head
-                )
-            } yield ()
-        ))
-    }
-
-    def restore(username: String, user_username: String) = {
-        run(quote(
-            for {
-                r <- open(username)
-                u <- open(user_username)
-                _ <- RecordsDAO.restore(
-                    id = r.id.head,
-                    user_id = u.id.head
-                )
-            } yield ()
-        ))
-    }
-
     def permanentlyDelete(username: String) = {
         run(quote(
             query[User]
                 .filter(_.username == lift(username))
                 .delete
-                // .returning(_.id)
         ))
     }
 

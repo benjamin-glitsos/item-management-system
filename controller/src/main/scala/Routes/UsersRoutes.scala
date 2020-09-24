@@ -102,6 +102,7 @@ object UsersRoutes extends ValidationUtilities {
             //     },
             //     user_username: String
             // }
+            // TODO: for accessing the nested data, you'll need to make Validators.getRequiredField take a list of strings which will act as a path to the JSON data. And then it will join it with dots to pass to the error message e.g. data.notes. TODO: actually, should you use 'optics' for accessing this considering there are nested paths?
             Ok(UsersServices.edit(
                 User(
                     id = 2,
@@ -121,19 +122,19 @@ object UsersRoutes extends ValidationUtilities {
             // TODO: should accept list of usernames then bulk delete them
             action match {
                 case "soft" => {
-                    NoContent(UsersServices.delete(
+                    Ok(UsersServices.delete(
                         username,
                         user_username = System.getenv("SUPER_USERNAME")
                     ).transact(xa).unsafeRunSync)
                 }
                 case "restore" => {
-                    NoContent(UsersServices.restore(
+                    Ok(UsersServices.restore(
                         username,
                         user_username = System.getenv("SUPER_USERNAME")
                     ).transact(xa).unsafeRunSync)
                 }
                 case "hard" => {
-                    NoContent(UsersServices.permanentlyDelete(username)
+                    Ok(UsersServices.permanentlyDelete(username)
                         .transact(xa).unsafeRunSync)
                 }
         // TODO: case other => BadRequest

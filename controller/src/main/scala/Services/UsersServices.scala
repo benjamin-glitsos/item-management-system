@@ -56,15 +56,34 @@ object UsersServices {
         } yield (u)
     }
 
-    def delete(username: String, user_username: String): ConnectionIO[Int] = {
-        UsersDAO.delete(username, user_username)
+    def delete(username: String, user_username: String): ConnectionIO[RecordResponse] = {
+        for {
+            u <- UsersDAO.open(username)
+            e <- UsersDAO.open(user_username)
+            r <- RecordsDAO.delete(
+                id = u.record_id,
+                user_id = e.id
+            )
+        } yield (RecordResponse(r.uuid))
     }
 
-    def restore(username: String, user_username: String): ConnectionIO[Int] = {
-        UsersDAO.restore(username, user_username)
+    def restore(username: String, user_username: String): ConnectionIO[RecordResponse] = {
+        for {
+            u <- UsersDAO.open(username)
+            e <- UsersDAO.open(user_username)
+            r <- RecordsDAO.restore(
+                id = u.record_id,
+                user_id = e.id
+            )
+        } yield (RecordResponse(r.uuid))
     }
 
-    def permanentlyDelete(username: String): ConnectionIO[Long] = {
-        UsersDAO.permanentlyDelete(username)
+    def permanentlyDelete(username: String): ConnectionIO[RecordResponse] = {
+        for {
+            u <- UsersDAO.open(username)
+            r <- RecordsDAO.open(u.record_id)
+            _ <- UsersDAO.permanentlyDelete(username)
+            _ <- RecordsDAO.permanentlyDelete(u.record_id)
+        } yield (RecordResponse(r.uuid))
     }
 }

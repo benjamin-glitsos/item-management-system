@@ -31,7 +31,7 @@ object RecordsDAO {
         ))
     }
 
-    def open(id: Int, user_id: Int) = {
+    def open(id: Int) = {
         run(quote(
             (for {
                 r <- query[Record].filter(_.id == lift(id))
@@ -59,7 +59,7 @@ object RecordsDAO {
                     notes = r.notes
                 )
             ))
-        ))
+        )).map(_.head)
     }
 
     def opened(id: Int, user_id: Int) = {
@@ -96,6 +96,15 @@ object RecordsDAO {
                     _.restored_at -> Some(lift(LocalDateTime.now())),
                     _.restored_by -> Some(lift(user_id))
                 )
+                .returning(r => RecordIdentity(r.id, r.uuid))
+        ))
+    }
+
+    def permanentlyDelete(id: Int) = {
+        run(quote(
+            query[Record]
+                .filter(_.id == lift(id))
+                .delete
         ))
     }
 }

@@ -28,19 +28,8 @@ object Validators extends ValidationUtilities with LoggingUtilities {
 
     def sqlException(error: SQLException): Validation[String] = {
         val code = "SQL_EXCEPTION"
-        val message = s"""
-        |An error was thrown by the database.
-        |
-        |${smallHeading("Message:")}
-        |
-        |${error.getMessage}
-        |
-        |${smallHeading("State:")}
-        |
-        |${error.getSQLState}
-        """
+        val message = error.getMessage
         val field = None
-        println(error)
         Error(code, message, field).invalidNel
     }
 }
