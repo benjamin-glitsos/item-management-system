@@ -47,7 +47,7 @@ object UsersRoutes extends ValidationUtilities {
 
                 // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
                 // {
-                //     head: {},
+                //     params: {},
                 //     data: {}
                 // }
                 val username = Validators.getRequiredField("username", json)
@@ -120,12 +120,19 @@ object UsersRoutes extends ValidationUtilities {
 
         case body @ DELETE -> Root => {
             // TODO: should accept list of usernames then bulk delete them
+            // TODO: will need try catch for db errors like all endpoints
+            // TODO: rename 'action' to 'method'
+            // TODO: use XML XSD or Parambulator or JSON Schema?
+            // TODO: accept XML data, but have option to return data as JSON. Then always use that option from the front-end but use XML for many of the tests so that you can validate it against schemas. You may have XSD testing schemas.
+            // TODO: use a Java DOM XML parser
+            // TODO: add to readme: XML, XSD, contract-based API, Java interop.
             for {
                 json <- body.as[Json]
 
                 val action = Validators.getRequiredField("action", json).andThen { action_ =>
                     Validators.isDeleteActionSupported(x.action)
                 }
+                // TODO: instead of getRequiredField function, try just using an optic and then using a function on the resulting Option. E.g. required and default functions just take an Option and return a Validated
                 val user_username = Validators.getRequiredField("user_username", json)
                 val username = Validators.getRequiredField("username", json)
                 }

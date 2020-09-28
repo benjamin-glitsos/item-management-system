@@ -61,6 +61,7 @@ object UsersDAO {
             query[User]
                 .filter(_.username == lift(username))
                 .delete
+                // TODO: delete doesnt work. Is this because doobie overrides the import from quill?
         ))
     }
 
