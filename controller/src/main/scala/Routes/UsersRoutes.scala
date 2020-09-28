@@ -122,12 +122,20 @@ object UsersRoutes extends ValidationUtilities {
             // TODO: should accept list of usernames then bulk delete them
             // TODO: will need try catch for db errors like all endpoints
             // TODO: rename 'action' to 'method'
+            // TODO: use NonEmptyChain for validation instead of NonEmptyList
             // TODO: use XML XSD or Parambulator or JSON Schema?
             // TODO: accept XML data, but have option to return data as JSON. Then always use that option from the front-end but use XML for many of the tests so that you can validate it against schemas. You may have XSD testing schemas.
             // TODO: use a Java DOM XML parser
-            // TODO: add to readme: XML, XSD, contract-based API, Java interop.
+            // TODO: add to readme: XML, XSD, contract-based API, Java interop. Add to layers: contract layer
+            // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
+            // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
+            // TODO: xml format:
+            // <message>
+            //     <head></head>
+            //     <body></body>
+            // </message>
             for {
-                json <- body.as[Json]
+                json <- body.as[Json] // TODO: xml <- body map { parseXml(_) }
 
                 val action = Validators.getRequiredField("action", json).andThen { action_ =>
                     Validators.isDeleteActionSupported(x.action)
