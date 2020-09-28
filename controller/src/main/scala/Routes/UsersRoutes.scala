@@ -130,10 +130,27 @@ object UsersRoutes extends ValidationUtilities {
             // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
             // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
             // TODO: xml format:
-            // <message>
+            // <root>
             //     <head></head>
             //     <body></body>
-            // </message>
+            // </root>
+            // TODO: use java 4's built-in xml libraries
+            // TODO: within head and body, or instead of this, you may split your code into modules which will be validated by related XSD documents:
+            // <root>
+            //     <head>
+            //         <global_settings></global_settings>
+            //         <user_settings></user_settings>
+            //     </head>
+            //     <body>
+            //         <record></record>
+            //         <user></user>
+            //     </body>
+            // </root>
+            // TODO: add front-end information to the XSD schemas and then make an API that the front-end calls then maps over the data to generate the front-end form and tabs? e.g.
+            // users/open
+            // users/open/username
+            // <name id="users-name" bootstrap_col="6" description="The users name">lorem</name>
+            // TODO: Maybe you will use XSTL to transform the XSD into the actual XML to return by only including the attributes that are wanted in the response
             for {
                 json <- body.as[Json] // TODO: xml <- body map { parseXml(_) }
 
