@@ -155,6 +155,8 @@ object UsersRoutes extends ValidationUtilities {
             // TODO: make the table names not part of the env file? Just reuse the same strings throughout?
             // TODO: change this HMS to be an Equipment Management System (for a Hospital)
             // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
+            // TODO: maybe have a Services register as well, as it can just use the same Service popup as the Equipment register and the Equipment view.
+            // TODO: Services register will use a calendar view rather than a list. It will consume the same API data format though.
             for {
                 json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
 
