@@ -151,8 +151,12 @@ object UsersRoutes extends ValidationUtilities {
             // users/open/username
             // <name id="users-name" bootstrap_col="6" description="The users name">lorem</name>
             // TODO: Maybe you will use XSTL to transform the XSD into the actual XML to return by only including the attributes that are wanted in the response
+            // TODO: Add 'level' to Error. type Level = High | Medium | Low. Then when a High error occurs, send me an email (backlog feature).
+            // TODO: make the table names not part of the env file? Just reuse the same strings throughout?
+            // TODO: change this HMS to be an Equipment Management System (for a Hospital)
+            // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
             for {
-                json <- body.as[Json] // TODO: xml <- body map { parseXml(_) }
+                json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
 
                 val action = Validators.getRequiredField("action", json).andThen { action_ =>
                     Validators.isDeleteActionSupported(x.action)
