@@ -157,6 +157,24 @@ object UsersRoutes extends ValidationUtilities {
             // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
             // TODO: maybe have a Services register as well, as it can just use the same Service popup as the Equipment register and the Equipment view.
             // TODO: Services register will use a calendar view rather than a list. It will consume the same API data format though.
+            // TODO: Services won't have the calendar view for now. That is a backlog task.
+            // TODO: Have two users that are created at startup: Super Admin (super_admin role) & Guest Admin (admin role)
+            // TODO: Use database Views plus JSON to merge commonly-merged tables into one and then just use the Quill/Doobie to work with these Views. Multiple columns are merged into one JSON column. Have a new views.sql file for this. These Views will be:
+            // * users_with_roles
+            // * transactions_with_type
+            // * records_with_users (json fields: username, avatar)
+            // TODO: use middleware for XSD and also ABAC. request -> XSD -> ABAC -> response
+            // TODO: consider using middleware pattern for more steps: request -> XSD -> custom validations -> ABAC -> convert to JSON or clean the XML -> response
+            // TODO: XML requests will need to use the application/xml media type header versus application/json. You can then match on this header in order to interpret the request as either JSON vs XML
+            // TODO: use XLST to generate a html report for the user?
+            // TODO: use this 'value' attribute pattern to make XML more concise:
+            // <address>
+            //     <line value="534 Erewhon St"/> 
+            //     <city value="PleasantVille"/> 
+            //     <district value="Rainbow"/> 
+            // </address>
+            // TODO: (backlog feature) support payment after the transaction. Then have a user option for whether cash accounting or accrual accounting is used in the calculations.
+
             for {
                 json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
 
