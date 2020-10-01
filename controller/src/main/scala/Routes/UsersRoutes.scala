@@ -174,6 +174,9 @@ object UsersRoutes extends ValidationUtilities {
             //     <district value="Rainbow"/> 
             // </address>
             // TODO: (backlog feature) support payment after the transaction. Then have a user option for whether cash accounting or accrual accounting is used in the calculations.
+            // TODO: document the API. Potentially use openAPI with links to the XSD documents which will use Xs3p in their header to allow them to be rendered in a browser as HTML
+            // TODO: make error codes all lowercase rather than all uppercase
+            // TODO: make request and response contracts (XSD) for each endpoint. then use these for e2e testing. and use them inside the swagger ui documentation (link to them) or other service discovery/documentation hub instead of providing swagger specs for these parameters
 
             for {
                 json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
