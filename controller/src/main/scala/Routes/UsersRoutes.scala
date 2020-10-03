@@ -33,6 +33,7 @@ object UsersRoutes extends ValidationUtilities {
     // * records_with_users (json fields: username, avatar)
     // TODO: make error codes all lowercase rather than all uppercase
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
+    // TODO: casbin model will be ABAC with roles and superuser role
     // TODO: add to readme: algebraic data types
     // TODO: use either circe-json-schema or Open API. Use references to smaller schema parts for DRYness. Use a documentation generator on these schemas to create the written contracts.
     // TODO: request format:
@@ -41,6 +42,12 @@ object UsersRoutes extends ValidationUtilities {
     //     body: {}
     // }
     // TODO: add additional information to the json schemas and then use that to generate the front-end forms automatically? Have an api parameter that requests the schema of an endpoint and it will return properties like description, bootstrap-column
+    // TODO: make logging middleware that prints to console for now. A good simple middleware to create firstly
+    // TODO: add to readme: single page app (SPA)
+    // TODO: after OAS validation, you can just use optics to get values directly out of Circe JSON. don't even use maybe. it's already within validated data type so already typesafe
+    // TODO: middleware after request will check response against the openapi, but only if testing parameter is set to true
+    // TODO: add to readme: Open API (Swagger), JWT
+    // TODO: hash passwords asyncronously (use ZIO)
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
             // TODO: move these query params into the body
