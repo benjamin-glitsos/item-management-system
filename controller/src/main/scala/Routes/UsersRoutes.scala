@@ -177,6 +177,14 @@ object UsersRoutes extends ValidationUtilities {
             // TODO: document the API. Potentially use openAPI with links to the XSD documents which will use Xs3p in their header to allow them to be rendered in a browser as HTML
             // TODO: make error codes all lowercase rather than all uppercase
             // TODO: make request and response contracts (XSD) for each endpoint. then use these for e2e testing. and use them inside the swagger ui documentation (link to them) or other service discovery/documentation hub instead of providing swagger specs for these parameters
+            // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
+            // TODO: instead of XSD, use circe-json-schema
+            // TODO: add to readme: algebraic data types
+            // TODO: request format:
+            // {
+            //     head: {},
+            //     body: {}
+            // }
 
             for {
                 json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
