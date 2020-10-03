@@ -35,8 +35,8 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
     // TODO: add to readme: algebraic data types
-    // TODO: use either circe-json-schema or Open API. Use references to smaller schema parts for DRYness. Use a documentation generator on these schemas to create the written contracts.
-    // TODO: request format:
+    // TODO: use openapi4j and swagger ui for contracts
+    // TODO: request and response format:
     // {
     //     head: {},
     //     body: {}
@@ -48,6 +48,27 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: middleware after request will check response against the openapi, but only if testing parameter is set to true
     // TODO: add to readme: Open API (Swagger), JWT
     // TODO: hash passwords asyncronously (use ZIO)
+    // TODO: have a centre-aligned menu for front-end. Don't use a sidebar menu.
+    // TODO: new routing pattern:
+    // GET /api/
+    // Returns an array of all of the objects from that table in the database.
+    // GET /api/{object}
+    // Returns an array of the available actions that this user has access to perform. This call is made when the page first loads.
+    // GET /api/{object}/{action}
+    // Where action:
+    //     open
+    //     save
+    //     create
+    //     delete (restore is a parameter)
+    //     hard delete
+    //     buy
+    //     sell
+    // Entire routing structure is:
+    // / => Front-end
+    // /api/ => API
+    // /docs/ => Documentation
+    // TODO: make two functions for casbin: one to validate a request, and the other to validate a list of actions to return only the ones that can be accessed. This will map casbin over the list of actions but keep the other parameters the same between each step in the map
+
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
             // TODO: move these query params into the body
