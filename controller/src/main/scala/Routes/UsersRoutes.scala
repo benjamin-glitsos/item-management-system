@@ -18,6 +18,29 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
+    // TODO: use NonEmptyChain for validation instead of NonEmptyList
+    // TODO: add to readme: Contract-based API, Json schema, Java interop. Add to layers: contract layer
+    // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
+    // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
+    // TODO: Add 'level' to Error. type Level = High | Medium | Low
+    // TODO: make the table names not part of the env file? Just reuse the same strings throughout?
+    // TODO: change this Hospital Management System to be an Inventory Management System
+    // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
+    // TODO: Have two users that are created at startup: Super Admin (super_admin role) & Guest Admin (admin role)
+    // TODO: Use database Views plus JSON to merge commonly-merged tables into one and then just use the Quill/Doobie to work with these Views. Multiple columns are merged into one JSON column. Have a new views.sql file for this. These Views will be:
+    // * users_with_roles
+    // * transactions_with_type
+    // * records_with_users (json fields: username, avatar)
+    // TODO: make error codes all lowercase rather than all uppercase
+    // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
+    // TODO: add to readme: algebraic data types
+    // TODO: use either circe-json-schema or Open API. Use references to smaller schema parts for DRYness. Use a documentation generator on these schemas to create the written contracts.
+    // TODO: request format:
+    // {
+    //     head: {},
+    //     body: {}
+    // }
+    // TODO: add additional information to the json schemas and then use that to generate the front-end forms automatically? Have an api parameter that requests the schema of an endpoint and it will return properties like description, bootstrap-column
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
             // TODO: move these query params into the body
@@ -119,73 +142,8 @@ object UsersRoutes extends ValidationUtilities {
         }
 
         case body @ DELETE -> Root => {
-            // TODO: should accept list of usernames then bulk delete them
             // TODO: will need try catch for db errors like all endpoints
             // TODO: rename 'action' to 'method'
-            // TODO: use NonEmptyChain for validation instead of NonEmptyList
-            // TODO: use XML XSD or Parambulator or JSON Schema?
-            // TODO: accept XML data, but have option to return data as JSON. Then always use that option from the front-end but use XML for many of the tests so that you can validate it against schemas. You may have XSD testing schemas.
-            // TODO: use a Java DOM XML parser
-            // TODO: add to readme: XML, XSD, contract-based API, Java interop. Add to layers: contract layer
-            // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
-            // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
-            // TODO: xml format:
-            // <root>
-            //     <head></head>
-            //     <body></body>
-            // </root>
-            // TODO: use java 4's built-in xml libraries
-            // TODO: within head and body, or instead of this, you may split your code into modules which will be validated by related XSD documents:
-            // <root>
-            //     <head>
-            //         <global_settings></global_settings>
-            //         <user_settings></user_settings>
-            //     </head>
-            //     <body>
-            //         <record></record>
-            //         <user></user>
-            //     </body>
-            // </root>
-            // TODO: add front-end information to the XSD schemas and then make an API that the front-end calls then maps over the data to generate the front-end form and tabs? e.g.
-            // users/open
-            // users/open/username
-            // <name id="users-name" bootstrap_col="6" description="The users name">lorem</name>
-            // TODO: Maybe you will use XSTL to transform the XSD into the actual XML to return by only including the attributes that are wanted in the response
-            // TODO: Add 'level' to Error. type Level = High | Medium | Low. Then when a High error occurs, send me an email (backlog feature).
-            // TODO: make the table names not part of the env file? Just reuse the same strings throughout?
-            // TODO: change this HMS to be an Equipment Management System (for a Hospital)
-            // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
-            // TODO: maybe have a Services register as well, as it can just use the same Service popup as the Equipment register and the Equipment view.
-            // TODO: Services register will use a calendar view rather than a list. It will consume the same API data format though.
-            // TODO: Services won't have the calendar view for now. That is a backlog task.
-            // TODO: Have two users that are created at startup: Super Admin (super_admin role) & Guest Admin (admin role)
-            // TODO: Use database Views plus JSON to merge commonly-merged tables into one and then just use the Quill/Doobie to work with these Views. Multiple columns are merged into one JSON column. Have a new views.sql file for this. These Views will be:
-            // * users_with_roles
-            // * transactions_with_type
-            // * records_with_users (json fields: username, avatar)
-            // TODO: use middleware for XSD and also ABAC. request -> XSD -> ABAC -> response
-            // TODO: consider using middleware pattern for more steps: request -> XSD -> custom validations -> ABAC -> convert to JSON or clean the XML -> response
-            // TODO: XML requests will need to use the application/xml media type header versus application/json. You can then match on this header in order to interpret the request as either JSON vs XML
-            // TODO: use XLST to generate a html report for the user?
-            // TODO: use this 'value' attribute pattern to make XML more concise:
-            // <address>
-            //     <line value="534 Erewhon St"/> 
-            //     <city value="PleasantVille"/> 
-            //     <district value="Rainbow"/> 
-            // </address>
-            // TODO: (backlog feature) support payment after the transaction. Then have a user option for whether cash accounting or accrual accounting is used in the calculations.
-            // TODO: document the API. Potentially use openAPI with links to the XSD documents which will use Xs3p in their header to allow them to be rendered in a browser as HTML
-            // TODO: make error codes all lowercase rather than all uppercase
-            // TODO: make request and response contracts (XSD) for each endpoint. then use these for e2e testing. and use them inside the swagger ui documentation (link to them) or other service discovery/documentation hub instead of providing swagger specs for these parameters
-            // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
-            // TODO: instead of XSD, use circe-json-schema
-            // TODO: add to readme: algebraic data types
-            // TODO: request format:
-            // {
-            //     head: {},
-            //     body: {}
-            // }
-
             for {
                 json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
 
