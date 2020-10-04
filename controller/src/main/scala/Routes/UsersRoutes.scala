@@ -50,10 +50,7 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: hash passwords asyncronously (use ZIO)
     // TODO: have a centre-aligned menu for front-end. Don't use a sidebar menu.
     // TODO: new routing pattern:
-    // GET /api/
-    // Returns an array of all of the objects from that table in the database.
-    // GET /api/{object}
-    // Returns an array of the available actions that this user has access to perform. This call is made when the page first loads.
+    // GET /api/options (Returns an array of the available actions that this user has access to perform. This call is made when the page first loads.)
     // GET /api/{object}/{action}
     // Where action:
     //     open
@@ -63,11 +60,22 @@ object UsersRoutes extends ValidationUtilities {
     //     hard delete
     //     buy
     //     sell
-    // Entire routing structure is:
+    //     options (Returns an array of all of the objects from that table in the database. (Add an attribute to filter by only those in the menu (have a table field for this) and then use this API to map the menu items. Make sure to add this header: Allow: POST)
+    // Overall routing structure is:
     // / => Front-end
     // /api/ => API
     // /docs/ => Documentation
     // TODO: make two functions for casbin: one to validate a request, and the other to validate a list of actions to return only the ones that can be accessed. This will map casbin over the list of actions but keep the other parameters the same between each step in the map
+    // TODO: reword in readme to 'REST-like'
+    // TODO: add a cache control middleware to disable all caching
+    // TODO: add server redirect middleware http to https
+    // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
+    // TODO: make a middleware folder
+    // TODO: consider using a batch request json syntax inside the body which will tell the individual DAOs/Services what to do:
+    // body: {
+    //     user: {},
+    //     record: {}
+    // }
 
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
