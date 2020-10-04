@@ -71,11 +71,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: add server redirect middleware http to https
     // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
     // TODO: make a middleware folder
-    // TODO: consider using a batch request json syntax inside the body which will tell the individual DAOs/Services what to do:
-    // body: {
-    //     user: {},
-    //     record: {}
-    // }
 
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
