@@ -71,6 +71,8 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: add server redirect middleware http to https
     // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
     // TODO: make a middleware folder
+    // TODO: change controller to port 80
+    // TODO: remove NGINX from angular container, then from readme
 
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
@@ -90,10 +92,11 @@ object UsersRoutes extends ValidationUtilities {
             PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
-       case GET -> Root / username => {
-            // TODO: add user_username to the body
-            Ok(UsersServices.open(username, System.getenv("SUPER_USERNAME")).transact(xa).unsafeRunSync)
-        }
+       // case GET -> Root / username => {
+       //      // TODO: add user_username to the body
+       //
+       //      Ok(UsersServices.open(username, System.getenv("SUPER_USERNAME")).transact(xa).unsafeRunSync)
+       //  }
 
         case body @ POST -> Root => {
             for {
@@ -172,52 +175,52 @@ object UsersRoutes extends ValidationUtilities {
             ).transact(xa).unsafeRunSync)
         }
 
-        case body @ DELETE -> Root => {
-            // TODO: will need try catch for db errors like all endpoints
-            // TODO: rename 'action' to 'method'
-            for {
-                json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
-
-                val action = Validators.getRequiredField("action", json).andThen { action_ =>
-                    Validators.isDeleteActionSupported(x.action)
-                }
-                // TODO: instead of getRequiredField function, try just using an optic and then using a function on the resulting Option. E.g. required and default functions just take an Option and return a Validated
-                val user_username = Validators.getRequiredField("user_username", json)
-                val username = Validators.getRequiredField("username", json)
-                }
-
-                val data = (
-                    username,
-                    action,
-                    user_username
-                ).mapN(UserDeleteBody)
-
-                res <- data match {
-                    case Invalid(e) => BadRequest(e)
-                    case Valid(x) => {
-                        val username = Validators.isUserDeletingThemselves(x.username, x.user_username)
-
-                        x.action match {
-                            case "soft" => {
-                                Ok(UsersServices.delete(
-                                    username,
-                                    System.getenv("SUPER_USERNAME")
-                                ).transact(xa).unsafeRunSync)
-                            }
-                            case "restore" => {
-                                Ok(UsersServices.restore(
-                                    username,
-                                    System.getenv("SUPER_USERNAME")
-                                ).transact(xa).unsafeRunSync)
-                            }
-                            case "hard" => {
-                                Ok(UsersServices.permanentlyDelete(username).transact(xa).unsafeRunSync)
-                            }
-                            case other => BadRequest(other)
-                        }
-                    }
-                }
-            } yield (res)
+        // case body @ DELETE -> Root => {
+        //     // TODO: will need try catch for db errors like all endpoints
+        //     // TODO: rename 'action' to 'method'
+        //     for {
+        //         json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
+        //
+        //         val action = Validators.getRequiredField("action", json).andThen { action_ =>
+        //             Validators.isDeleteActionSupported(x.action)
+        //         }
+        //         // TODO: instead of getRequiredField function, try just using an optic and then using a function on the resulting Option. E.g. required and default functions just take an Option and return a Validated
+        //         val user_username = Validators.getRequiredField("user_username", json)
+        //         val username = Validators.getRequiredField("username", json)
+        //         }
+        //
+        //         val data = (
+        //             username,
+        //             action,
+        //             user_username
+        //         ).mapN(UserDeleteBody)
+        //
+        //         res <- data match {
+        //             case Invalid(e) => BadRequest(e)
+        //             case Valid(x) => {
+        //                 val username = Validators.isUserDeletingThemselves(x.username, x.user_username)
+        //
+        //                 x.action match {
+        //                     case "soft" => {
+        //                         Ok(UsersServices.delete(
+        //                             username,
+        //                             System.getenv("SUPER_USERNAME")
+        //                         ).transact(xa).unsafeRunSync)
+        //                     }
+        //                     case "restore" => {
+        //                         Ok(UsersServices.restore(
+        //                             username,
+        //                             System.getenv("SUPER_USERNAME")
+        //                         ).transact(xa).unsafeRunSync)
+        //                     }
+        //                     case "hard" => {
+        //                         Ok(UsersServices.permanentlyDelete(username).transact(xa).unsafeRunSync)
+        //                     }
+        //                     case other => BadRequest(other)
+        //                 }
+        //             }
+        //         }
+        //     } yield (res)
             // import io.circe.optics.JsonPath._
             // val username = root.username.getOption(json) match {
             //     case Some(x) => x.validNel
@@ -228,6 +231,6 @@ object UsersRoutes extends ValidationUtilities {
             //         Error(code, message, field).invalidNel
             //     }
             // }
-        }
+        // }
     }
 }
