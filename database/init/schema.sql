@@ -2,6 +2,7 @@ CREATE TABLE objects (
     id serial PRIMARY KEY
   , key VARCHAR(125) UNIQUE NOT NULL
   , name VARCHAR(125) UNIQUE NOT NULL
+  , description VARCHAR(255) NOT NULL
   , is_in_main_menu BOOLEAN DEFAULT FALSE
 )
 
@@ -9,6 +10,7 @@ CREATE TABLE actions (
     id serial PRIMARY KEY
   , key VARCHAR(75) UNIQUE NOT NULL
   , name VARCHAR(75) UNIQUE NOT NULL
+  , description VARCHAR(255) NOT NULL
   , colour HEX_COLOUR
 )
 
