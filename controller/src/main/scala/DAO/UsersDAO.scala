@@ -4,8 +4,6 @@ import bundles.doobie.database.dc._
 import doobie._
 
 object UsersDAO {
-    val name = sys.env.getOrElse("USERS_TABLE", "users")
-
     def create(user: User) = {
         run(quote(
             query[User].insert(

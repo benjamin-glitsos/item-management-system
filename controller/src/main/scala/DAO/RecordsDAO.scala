@@ -5,7 +5,9 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 object RecordsDAO {
-    val name = sys.env.getOrElse("RECORDS_TABLE", "records")
+    val recordsOpenView = quote {
+      querySchema[RecordOpen]("records_open_view")
+    }
 
     def create(user_id: Int, notes: Option[String]) = {
         run(quote(
@@ -38,11 +40,8 @@ object RecordsDAO {
     }
 
     def open(id: Int) = {
-        val recordOpen = quote {
-          querySchema[RecordOpen]("records_open_view")
-        }
         run(quote(
-            recordOpen.filter(_.id == lift(id))
+            recordsOpenView.filter(_.id == lift(id))
         )).map(_.head)
 
         // (for {

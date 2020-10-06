@@ -3,8 +3,6 @@ import bundles.doobie.database.dc._
 import doobie._
 
 object StaffDAO {
-    val name = sys.env.getOrElse("STAFF_TABLE", "staff")
-
     def create(s: Staff) = {
         run(quote(
             query[Staff].insert(
