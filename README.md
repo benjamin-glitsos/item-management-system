@@ -25,6 +25,10 @@ Multilayered Architecture:
 * Service Layer
 * DAO/ORM Layer
 
+Middleware Architecture:
+
+`Req` → Ensure HTTPS → Request Logging → OpenAPI Request Validation → Authorisation → Access Control → `Controller` → Prevent Caching → Error Formatting → `Res`
+
 ### Portal
 
 **Angular (Typescript).**
