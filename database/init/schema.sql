@@ -1,9 +1,9 @@
-CREATE TABLE $SEX_TABLE (
+CREATE TABLE sex (
     id serial PRIMARY KEY
   , name VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE $RECORDS_TABLE (
+CREATE TABLE records (
     id SERIAL PRIMARY KEY
   , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
@@ -22,17 +22,17 @@ CREATE TABLE $RECORDS_TABLE (
   , notes TEXT
 );
 
-CREATE TABLE $ROLES_TABLE (
+CREATE TABLE roles (
     id serial PRIMARY KEY
   , name VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE $DEPARTMENTS_TABLE (
+CREATE TABLE departments (
     id serial PRIMARY KEY
   , name VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE $PEOPLE_TABLE (
+CREATE TABLE people (
     id SERIAL PRIMARY KEY
   , first_name VARCHAR(255) NOT NULL
   , last_name VARCHAR(255) NOT NULL
@@ -50,7 +50,7 @@ CREATE TABLE $PEOPLE_TABLE (
   , is_english_second_language BOOLEAN NOT NULL
 );
 
-CREATE TABLE $STAFF_TABLE (
+CREATE TABLE staff (
     id serial PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , person_id SMALLINT UNIQUE NOT NULL
@@ -59,7 +59,7 @@ CREATE TABLE $STAFF_TABLE (
   , employment_end DATE
 );
 
-CREATE TABLE $PATIENTS_TABLE (
+CREATE TABLE patients (
     id serial PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , person_id SMALLINT UNIQUE NOT NULL
@@ -70,13 +70,13 @@ CREATE TABLE $PATIENTS_TABLE (
   , UNIQUE(medicare_number, medicare_ref)
 );
 
-CREATE TABLE $STAFF_DEPARTMENTS (
+CREATE TABLE staff_departments (
     staff_id SMALLINT NOT NULL
   , department_id SMALLINT NOT NULL
   , PRIMARY KEY(staff_id, department_id)
 );
 
-CREATE TABLE $VISITS_TABLE (
+CREATE TABLE visits (
     id serial PRIMARY KEY
   , patient_id SMALLINT NOT NULL
   , staff_id SMALLINT NOT NULL
@@ -86,7 +86,7 @@ CREATE TABLE $VISITS_TABLE (
   , UNIQUE(patient_id, staff_id, start_date)
 );
 
-CREATE TABLE $USERS_TABLE (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
   , staff_id SMALLINT NOT NULL
