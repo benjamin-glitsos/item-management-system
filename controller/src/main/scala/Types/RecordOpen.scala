@@ -11,7 +11,6 @@ case class RecordOpen(
     edits: Int,
     edited_at: Option[LocalDateTime],
     edited_by: Option[String],
-    deletions: Int,
     deleted_at: Option[LocalDateTime],
     deleted_by: Option[String],
     restored_at: Option[LocalDateTime],

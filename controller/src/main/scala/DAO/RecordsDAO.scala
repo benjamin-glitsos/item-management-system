@@ -57,7 +57,6 @@ object RecordsDAO {
                     edits = r.edits,
                     edited_at = r.edited_at,
                     edited_by = editor.map(_.username),
-                    deletions = r.deletions,
                     deleted_at = r.deleted_at,
                     deleted_by = deletor.map(_.username),
                     restored_at = r.restored_at,
@@ -85,7 +84,6 @@ object RecordsDAO {
             query[Record]
                 .filter(_.id == lift(id))
                 .update(
-                    x => x.deletions -> (x.deletions + 1),
                     _.deleted_at -> Some(lift(LocalDateTime.now())),
                     _.deleted_by -> Some(lift(user_id)))
                 .returning(r => RecordIdentity(r.id, r.uuid))

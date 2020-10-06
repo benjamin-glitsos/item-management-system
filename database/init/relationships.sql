@@ -18,6 +18,26 @@ ADD CONSTRAINT fk_restored_by
 FOREIGN KEY (restored_by)
 REFERENCES users (id);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ALTER TABLE people
 ADD CONSTRAINT fk_sex
 FOREIGN KEY (sex_id)

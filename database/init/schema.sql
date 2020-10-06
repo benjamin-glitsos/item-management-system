@@ -1,7 +1,16 @@
-CREATE TABLE sex (
+CREATE TABLE objects (
     id serial PRIMARY KEY
-  , name VARCHAR(255) UNIQUE NOT NULL
-);
+  , key VARCHAR(125) UNIQUE NOT NULL
+  , name VARCHAR(125) UNIQUE NOT NULL
+  , is_in_main_menu BOOLEAN DEFAULT FALSE
+)
+
+CREATE TABLE actions (
+    id serial PRIMARY KEY
+  , key VARCHAR(75) UNIQUE NOT NULL
+  , name VARCHAR(75) UNIQUE NOT NULL
+  , colour HEX_COLOUR
+)
 
 CREATE TABLE records (
     id SERIAL PRIMARY KEY
@@ -14,82 +23,32 @@ CREATE TABLE records (
   , edits SMALLINT DEFAULT 0
   , edited_at TIMESTAMP
   , edited_by SMALLINT
-  , deletions SMALLINT DEFAULT 0
   , deleted_at TIMESTAMP
   , deleted_by SMALLINT
   , restored_at TIMESTAMP
   , restored_by SMALLINT
-  , notes TEXT
-);
-
-CREATE TABLE roles (
-    id serial PRIMARY KEY
-  , name VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE departments (
-    id serial PRIMARY KEY
-  , name VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE people (
-    id SERIAL PRIMARY KEY
-  , first_name VARCHAR(255) NOT NULL
-  , last_name VARCHAR(255) NOT NULL
-  , other_names VARCHAR(255)
-  , sex_id SMALLINT NOT NULL
-  , date_of_birth DATE NOT NULL
-  , email_address EMAIL NOT NULL
-  , phone_number PHONE NOT NULL
-  , address_line_one VARCHAR(255) NOT NULL
-  , address_line_two VARCHAR(255)
-  , postcode POSTCODE NOT NULL
-  , is_aboriginal_or_torres_strait_islander BOOLEAN NOT NULL
-  , is_australian_citizen BOOLEAN NOT NULL
-  , is_born_overseas BOOLEAN NOT NULL
-  , is_english_second_language BOOLEAN NOT NULL
-);
-
-CREATE TABLE staff (
-    id serial PRIMARY KEY
-  , record_id SMALLINT UNIQUE NOT NULL
-  , person_id SMALLINT UNIQUE NOT NULL
-  , staff_number HOSPITAL_NUMBER UNIQUE NOT NULL
-  , employment_start DATE NOT NULL
-  , employment_end DATE
-);
-
-CREATE TABLE patients (
-    id serial PRIMARY KEY
-  , record_id SMALLINT UNIQUE NOT NULL
-  , person_id SMALLINT UNIQUE NOT NULL
-  , patient_number HOSPITAL_NUMBER UNIQUE NOT NULL
-  , medicare_number MEDICARE_NUMBER
-  , medicare_ref INT
-  , medicare_expiry DATE
-  , UNIQUE(medicare_number, medicare_ref)
-);
-
-CREATE TABLE staff_departments (
-    staff_id SMALLINT NOT NULL
-  , department_id SMALLINT NOT NULL
-  , PRIMARY KEY(staff_id, department_id)
-);
-
-CREATE TABLE visits (
-    id serial PRIMARY KEY
-  , patient_id SMALLINT NOT NULL
-  , staff_id SMALLINT NOT NULL
-  , start_date DATE NOT NULL
-  , end_date DATE
-  , diagnosis TEXT
-  , UNIQUE(patient_id, staff_id, start_date)
+  , notes HTML
 );
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY
   , record_id SMALLINT UNIQUE NOT NULL
-  , staff_id SMALLINT NOT NULL
+  , email_address EMAIL_ADDRESS NOT NULL
   , username VARCHAR(20) UNIQUE NOT NULL
   , password VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE stock (
+    id SERIAL PRIMARY KEY
+  , record_id SMALLINT UNIQUE NOT NULL
+  , sku SKU UNIQUE NOT NULL
+  , name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY
+  , record_id SMALLINT UNIQUE NOT NULL
+  , action_id SMALLINT UNIQUE NOT NULL
+  , quantity INTEGER
+  , price NUMERIC(2)
 );
