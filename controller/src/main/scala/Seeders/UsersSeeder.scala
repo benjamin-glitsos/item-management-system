@@ -16,7 +16,7 @@ object UsersSeeder extends SeederUtilities {
                 username = person.getUsername(),
                 password = randomPassword()
             ),
-            user_username = System.getenv("SUPER_USERNAME"),
+            user_username = System.getenv("SUPER_ADMIN_USERNAME"),
             notes = randomNotes()
         )
     }

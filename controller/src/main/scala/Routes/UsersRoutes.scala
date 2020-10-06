@@ -95,7 +95,7 @@ object UsersRoutes extends ValidationUtilities {
        // case GET -> Root / username => {
        //      // TODO: add user_username to the body
        //
-       //      Ok(UsersServices.open(username, System.getenv("SUPER_USERNAME")).transact(xa).unsafeRunSync)
+       //      Ok(UsersServices.open(username, System.getenv("SUPER_ADMIN_USERNAME")).transact(xa).unsafeRunSync)
        //  }
 
         case body @ POST -> Root => {
@@ -170,7 +170,7 @@ object UsersRoutes extends ValidationUtilities {
                     username = "un9999",
                     password = "pw9999"
                 ),
-                user_username = System.getenv("SUPER_USERNAME"),
+                user_username = System.getenv("SUPER_ADMIN_USERNAME"),
                 notes = Some("Test of updating notes.")
             ).transact(xa).unsafeRunSync)
         }
@@ -204,13 +204,13 @@ object UsersRoutes extends ValidationUtilities {
         //                     case "soft" => {
         //                         Ok(UsersServices.delete(
         //                             username,
-        //                             System.getenv("SUPER_USERNAME")
+        //                             System.getenv("SUPER_ADMIN_USERNAME")
         //                         ).transact(xa).unsafeRunSync)
         //                     }
         //                     case "restore" => {
         //                         Ok(UsersServices.restore(
         //                             username,
-        //                             System.getenv("SUPER_USERNAME")
+        //                             System.getenv("SUPER_ADMIN_USERNAME")
         //                         ).transact(xa).unsafeRunSync)
         //                     }
         //                     case "hard" => {

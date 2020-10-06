@@ -61,7 +61,7 @@ object StaffSeeder extends SeederUtilities with LogicUtilities {
                 s = thisStaff,
                 p = thisPerson,
                 d_ids = thisDepartments(dc.toInt),
-                user_username = System.getenv("SUPER_USERNAME"),
+                user_username = System.getenv("SUPER_ADMIN_USERNAME"),
                 notes = randomNotes()
             )
         } yield ()
