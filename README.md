@@ -1,14 +1,12 @@
-# Hospital MS
+# Inventory Management System
 
-A largely back-end and networking and devops project which is a toy hospital management system with enterprise-grade architecture and principles.
-
-(Work in progress.)
+A toy inventory management system that is built with enterprise-grade architecture and principles.
 
 ## Microservice Architecture
 
 Dockerisation, MVC, Networking, Scalability.
 
-![HMS Architecture](images/hms-architecture.svg?v=8)
+<!-- ![HMS Architecture](images/hms-architecture.svg?v=8) -->
 
 ### Controller
 
