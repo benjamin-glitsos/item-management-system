@@ -19,7 +19,6 @@ import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
     // TODO: use NonEmptyChain for validation instead of NonEmptyList
-    // TODO: add to readme: Contract-based API, Json schema, Java interop. Add to layers: contract layer
     // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
     // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
     // TODO: Add 'level' to Error. type Level = High | Medium | Low
@@ -32,7 +31,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: make error codes all lowercase rather than all uppercase
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
-    // TODO: add to readme: algebraic data types
     // TODO: use openapi4j and swagger ui for contracts
     // TODO: request and response format:
     // {
@@ -41,10 +39,8 @@ object UsersRoutes extends ValidationUtilities {
     // }
     // TODO: add additional information to the json schemas and then use that to generate the front-end forms automatically? Have an api parameter that requests the schema of an endpoint and it will return properties like description, bootstrap-column
     // TODO: make logging middleware that prints to console for now. A good simple middleware to create firstly
-    // TODO: add to readme: single page app (SPA)
     // TODO: after OAS validation, you can just use optics to get values directly out of Circe JSON. don't even use maybe. it's already within validated data type so already typesafe
     // TODO: middleware after request will check response against the openapi, but only if testing parameter is set to true
-    // TODO: add to readme: Open API (Swagger), JWT
     // TODO: hash passwords asyncronously (use ZIO)
     // TODO: have a centre-aligned menu for front-end. Don't use a sidebar menu.
     // TODO: new routing pattern:
@@ -71,13 +67,12 @@ object UsersRoutes extends ValidationUtilities {
     // DevRoutes.scala
     // ApiRoutes.scala
     // TODO: make two functions for casbin: one to validate a request, and the other to validate a list of actions to return only the ones that can be accessed. This will map casbin over the list of actions but keep the other parameters the same between each step in the map
-    // TODO: reword in readme to 'REST-like'
     // TODO: add a cache control middleware to disable all caching
     // TODO: add server redirect middleware http to https
     // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
     // TODO: make a middleware folder
     // TODO: change controller to port 80
-    // TODO: remove NGINX from angular container, then from readme
+    // TODO: remove NGINX from angular container
 
     val router = HttpRoutes.of[IO] {
         case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {

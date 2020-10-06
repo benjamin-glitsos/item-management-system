@@ -10,12 +10,16 @@ Dockerisation, MVC, Networking, Scalability.
 
 ### Controller
 
-**Scala (Java language).**
+**Scala (Java-based language).**
 
-Object-orientation, Functional programming, (OOP in the large; FP in the small), GRASP, SOLID, Type-safety, Functional purity, RESTful/CRUD API, Composition over inheritance, Separation of concerns, DRY.
+Contract-based API, OpenAPI (Swagger, JSON Schema) Java interop, algebraic data types, object-orientation, Functional programming, (OOP in the large; FP in the small), GRASP, SOLID, Type-safety, Functional purity, REST-like/CRUD API, Composition over inheritance, Separation of concerns, DRY.
 
 Multilayered Architecture:
 
+* Schema Layer
+* Testing Layer
+* Documentation Layer
+* View Layer
 * Routing Layer
 * Seeding Layer
 * Service Layer
@@ -25,7 +29,7 @@ Multilayered Architecture:
 
 **Angular (Typescript).**
 
-Angular architecture.
+Angular architecture, Single Page App (SPA).
 
 ### Database
 
