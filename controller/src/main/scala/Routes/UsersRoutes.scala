@@ -64,7 +64,14 @@ object UsersRoutes extends ValidationUtilities {
     // Overall routing structure is:
     // / => Front-end
     // /api/ => API
-    // /docs/ => Documentation
+    // /dev/ => dev portal (serve a plain HTML page which lists the dev pages. you will create a 'views' folder)
+    // /dev/adminer/
+    // /dev/api-docs/
+    // /dev/db-docs/
+    // TODO: create routing files:
+    // RootRoutes.scala
+    // DevRoutes.scala
+    // ApiRoutes.scala
     // TODO: make two functions for casbin: one to validate a request, and the other to validate a list of actions to return only the ones that can be accessed. This will map casbin over the list of actions but keep the other parameters the same between each step in the map
     // TODO: reword in readme to 'REST-like'
     // TODO: add a cache control middleware to disable all caching
