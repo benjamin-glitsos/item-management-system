@@ -39,7 +39,7 @@ object RecordsDAO {
 
     def open(id: Int) = {
         val recordOpen = quote {
-          querySchema[RecordOpen]("records_with_users")
+          querySchema[RecordOpen]("records_open_view")
         }
         run(quote(
             recordOpen.filter(_.id == lift(id))

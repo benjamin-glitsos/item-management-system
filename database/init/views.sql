@@ -1,5 +1,15 @@
 -- TODO: build this up from a list-view one that only includes the creator and editor?
-CREATE VIEW records_with_users AS
+
+-- CREATE VIEW records_list_view
+-- CREATE VIEW users_list_view
+-- CREATE VIEW stock_list_view
+-- CREATE VIEW transactions_list_view
+-- CREATE VIEW records_open_view
+-- CREATE VIEW users_open_view
+-- CREATE VIEW stock_open_view
+-- CREATE VIEW transactions_open_view
+
+CREATE VIEW records_open_view AS
     SELECT
         records.uuid
       , records.created_at
