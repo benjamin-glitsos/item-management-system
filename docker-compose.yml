@@ -19,7 +19,7 @@ services:
     container_name: ${DATABASE_MANAGEMENT_SERVICE}
     restart: always
     ports:
-      - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
+      - ${DB_MANAGEMENT_PORT}:${DB_MANAGEMENT_PORT}
   controller:
     build:
       context: ./${CONTROLLER_SERVICE}/
@@ -32,7 +32,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
+      - ${CONTROLLER_PORT}:80
   # portal:
   #   build:
   #     context: ./${PORTAL_SERVICE}/
