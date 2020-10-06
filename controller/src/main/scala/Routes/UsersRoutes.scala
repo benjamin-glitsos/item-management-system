@@ -23,7 +23,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
     // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
     // TODO: Add 'level' to Error. type Level = High | Medium | Low
-    // TODO: make the table names not part of the env file? Just reuse the same strings throughout?
     // TODO: change this Hospital Management System to be an Inventory Management System
     // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
     // TODO: Have two users that are created at startup: Super Admin (super_admin role) & Guest Admin (admin role)
