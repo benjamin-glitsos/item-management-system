@@ -38,33 +38,38 @@ object RecordsDAO {
     }
 
     def open(id: Int) = {
+        val recordOpen = quote {
+          querySchema[RecordOpen]("records_with_users")
+        }
         run(quote(
-            (for {
-                r <- query[Record].filter(_.id == lift(id))
-                creator <- query[User].join(_.id == r.created_by)
-                opener <- query[User].leftJoin(x => r.opened_by.exists(_ == x.id))
-                editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
-                deletor <- query[User].leftJoin(x => r.deleted_by.exists(_ == x.id))
-                restorer <- query[User].leftJoin(x => r.restored_by.exists(_ == x.id))
-            } yield (
-                RecordOpen(
-                    uuid = r.uuid,
-                    created_at = r.created_at,
-                    created_by = creator.username,
-                    opens = r.opens,
-                    opened_at = r.opened_at,
-                    opened_by = opener.map(_.username),
-                    edits = r.edits,
-                    edited_at = r.edited_at,
-                    edited_by = editor.map(_.username),
-                    deleted_at = r.deleted_at,
-                    deleted_by = deletor.map(_.username),
-                    restored_at = r.restored_at,
-                    restored_by = restorer.map(_.username),
-                    notes = r.notes
-                )
-            ))
+            recordOpen.filter(_.id == lift(id))
         )).map(_.head)
+
+        // (for {
+        //     r <- query[Record].filter(_.id == lift(id))
+        //     creator <- query[User].join(_.id == r.created_by)
+        //     opener <- query[User].leftJoin(x => r.opened_by.exists(_ == x.id))
+        //     editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
+        //     deletor <- query[User].leftJoin(x => r.deleted_by.exists(_ == x.id))
+        //     restorer <- query[User].leftJoin(x => r.restored_by.exists(_ == x.id))
+        // } yield (
+        //     RecordOpen(
+        //         uuid = r.uuid,
+        //         created_at = r.created_at,
+        //         created_by = creator.username,
+        //         opens = r.opens,
+        //         opened_at = r.opened_at,
+        //         opened_by = opener.map(_.username),
+        //         edits = r.edits,
+        //         edited_at = r.edited_at,
+        //         edited_by = editor.map(_.username),
+        //         deleted_at = r.deleted_at,
+        //         deleted_by = deletor.map(_.username),
+        //         restored_at = r.restored_at,
+        //         restored_by = restorer.map(_.username),
+        //         notes = r.notes
+        //     )
+        // ))
     }
 
     def opened(id: Int, user_id: Int) = {

@@ -18,17 +18,17 @@ CREATE TABLE records (
     id SERIAL PRIMARY KEY
   , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
-  , created_by SMALLINT NOT NULL
+  , created_by_id SMALLINT NOT NULL
   , opens SMALLINT DEFAULT 0
   , opened_at TIMESTAMP
-  , opened_by SMALLINT
+  , opened_by_id SMALLINT
   , edits SMALLINT DEFAULT 0
   , edited_at TIMESTAMP
-  , edited_by SMALLINT
+  , edited_by_id SMALLINT
   , deleted_at TIMESTAMP
-  , deleted_by SMALLINT
+  , deleted_by_id SMALLINT
   , restored_at TIMESTAMP
-  , restored_by SMALLINT
+  , restored_by_id SMALLINT
   , notes HTML
 );
 
