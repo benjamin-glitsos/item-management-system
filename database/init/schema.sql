@@ -43,6 +43,8 @@ CREATE TABLE stock (
   , record_id SMALLINT UNIQUE NOT NULL
   , sku SKU UNIQUE NOT NULL
   , name VARCHAR(255) NOT NULL
+  , break_even_price NUMERIC(2) NOT NULL
+  , quantity_capacity INTEGER NOT NULL
 );
 
 CREATE TABLE transactions (
