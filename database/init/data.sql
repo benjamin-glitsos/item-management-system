@@ -1,6 +1,6 @@
-INSERT INTO $SEX_TABLE (name) VALUES ('Male'), ('Female');
+INSERT INTO sex (name) VALUES ('Male'), ('Female');
 
-INSERT INTO $ROLES_TABLE (name)
+INSERT INTO roles (name)
 VALUES
     ('System Admin')
   , ('Office Admin')
@@ -8,7 +8,7 @@ VALUES
   , ('Doctor')
   , ('Nurse');
 
-INSERT INTO $DEPARTMENTS_TABLE (name)
+INSERT INTO departments (name)
 VALUES
     ('Anaesthetics and Pain Management')
   , ('Cardiology')
@@ -34,7 +34,7 @@ VALUES
   , ('Speech Pathology')
   , ('Vascular');
 
-INSERT INTO $PEOPLE_TABLE (
+INSERT INTO people (
     first_name
   , last_name
   , other_names
@@ -66,7 +66,7 @@ INSERT INTO $PEOPLE_TABLE (
   , '$SUPER_ENGLISH_SECOND_LANGUAGE'
 );
 
-INSERT INTO $STAFF_DEPARTMENTS (
+INSERT INTO departments (
     staff_id
   , department_id
 ) VALUES (
@@ -74,8 +74,8 @@ INSERT INTO $STAFF_DEPARTMENTS (
   , 1
 );
 
-WITH $STAFF_RECORD_INSERT AS (
-    INSERT INTO $RECORDS_TABLE (
+WITH staff_records_insert AS (
+    INSERT INTO records (
         uuid
       , created_by
       , notes
@@ -86,20 +86,20 @@ WITH $STAFF_RECORD_INSERT AS (
     )
     RETURNING id
 )
-INSERT INTO $STAFF_TABLE (
+INSERT INTO staff (
     record_id
   , person_id
   , staff_number
   , employment_start
 ) VALUES (
-    (SELECT id FROM $STAFF_RECORD_INSERT)
+    (SELECT id FROM staff_records_insert)
   , 1
   , '$SUPER_STAFF_NUMBER'
   , '$SUPER_EMPLOYMENT_START'
 );
 
-WITH $USER_RECORD_INSERT AS (
-    INSERT INTO $RECORDS_TABLE (
+WITH user_records_insert AS (
+    INSERT INTO records (
         uuid
       , created_by
       , notes
@@ -110,13 +110,13 @@ WITH $USER_RECORD_INSERT AS (
     )
     RETURNING id
 )
-INSERT INTO $USERS_TABLE (
+INSERT INTO users (
     record_id
   , staff_id
   , username
   , password
 ) VALUES (
-    (SELECT id FROM $USER_RECORD_INSERT)
+    (SELECT id FROM user_records_insert)
   , 1
   , '$SUPER_USERNAME'
   , '$SUPER_PASSWORD'
