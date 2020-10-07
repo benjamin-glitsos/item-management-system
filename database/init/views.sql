@@ -9,9 +9,26 @@
 -- CREATE VIEW stock_open_view
 -- CREATE VIEW transactions_open_view
 
+CREATE VIEW records_list_view AS
+    SELECT
+        records.id
+      , records.created_at
+      , creators.username AS created_by
+      , records.opened_at
+      , openers.username AS opened_by
+      , records.edited_at
+      , editors.username AS edited_by
+      , records.deleted_at
+      , records.notes
+    FROM records
+    LEFT JOIN users creators ON records.created_by_id = creators.id
+    LEFT JOIN users openers ON records.opened_by_id = openers.id
+    LEFT JOIN users editors ON records.edited_by_id = editors.id
+
 CREATE VIEW records_open_view AS
     SELECT
-        records.uuid
+        records.id
+      , records.uuid
       , records.created_at
       , creators.username AS created_by
       , records.opens
