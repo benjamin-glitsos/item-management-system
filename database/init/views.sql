@@ -1,6 +1,5 @@
 -- TODO: build this up from a list-view one that only includes the creator and editor?
 
--- CREATE VIEW records_list_view
 -- CREATE VIEW users_list_view
 -- CREATE VIEW stock_list_view
 -- CREATE VIEW transactions_list_view
