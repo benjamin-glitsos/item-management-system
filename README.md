@@ -1,20 +1,20 @@
 # Inventory Management System
 
-A toy inventory management system that is built with enterprise-grade architecture and principles.
+A toy inventory management system that is built with enterprise-grade architecture and principles. It is deliberately over-engineered to resemble real-world systems used in Finance, Government, Medicine, Retail, Agriculture, et al.
+
+**This is a work-in-progress, but the current state of the project is as follows.**
 
 ## Microservice Architecture
 
-Dockerisation, MVC, Networking, Scalability.
-
-<!-- ![HMS Architecture](images/hms-architecture.svg?v=8) -->
+Dockerised MVC architecture.
 
 ### Controller
 
-**Scala (Java language).**
+**Scala (Java-platform language).**
 
-Object-orientation, Functional programming, (OOP in the large; FP in the small), GRASP, SOLID, Type-safety, Functional purity, RESTful/CRUD API, Composition over inheritance, Separation of concerns, DRY.
+Object-Oriented architecture with Functional Programming style, REST-inspired API, GRASP, SOLID, Type-safety, Functional purity, Composition over inheritance, Separation of concerns, DRY.
 
-Multilayered Architecture:
+Multitier Architecture:
 
 * Routing Layer
 * Seeding Layer
@@ -23,22 +23,12 @@ Multilayered Architecture:
 
 ### Portal
 
-**Angular (Typescript).**
+**Angular (Typescript language).**
 
-Angular architecture.
+Standard Angular architecture.
 
 ### Database
 
-**PostgreSQL, Bash.**
+**PostgreSQL**
 
-4NF database normalisation.
-
-[View the Database Architecture](https://benglitsos.com.au/hms/schemaspy/relationships.html)
-
-### Database Management
-
-**Adminer.**
-
-## Workflow
-
-Ticket-based Git Trunk, with Jira.
+3NF database normalisation.
