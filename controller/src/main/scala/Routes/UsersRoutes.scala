@@ -18,7 +18,7 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
-    // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/{uuid}/redirect -> /{object}/{business_key}
+    // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
     // TODO: rename Records to Meta
     // TODO: use .gitattributes to add SQL to the language statistics. Remove CSS?
     // TODO: use NonEmptyChain for validation instead of NonEmptyList
