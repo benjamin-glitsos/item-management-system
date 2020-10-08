@@ -10,9 +10,9 @@ Dockerised MVC architecture.
 
 ### Controller
 
-**Scala (Java-platform language).**
+**Scala (Java-platform language with Haskell-like type system).**
 
-Object-Oriented architecture with Functional Programming style, REST-inspired API, GRASP, SOLID, Type-safety, Functional purity, Composition over inheritance, Separation of concerns, DRY.
+Object-Oriented architecture with Functional Programming style, REST-inspired API, GRASP, SOLID, Type-safety with Algebraic Data Types, Functional purity, Composition over inheritance, Separation of concerns, DRY.
 
 Multitier Architecture:
 
