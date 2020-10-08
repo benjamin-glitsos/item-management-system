@@ -32,4 +32,4 @@ Standard Angular architecture.
 
 **PostgreSQL**
 
-3NF database normalisation.
+Design utilises metadata table and business keys. 3NF database normalisation.
