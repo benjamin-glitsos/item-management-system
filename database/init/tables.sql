@@ -14,7 +14,7 @@ CREATE TABLE actions (
   , colour HEX_COLOUR
 )
 
-CREATE TABLE records (
+CREATE TABLE meta (
     id SERIAL PRIMARY KEY
   , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
@@ -34,7 +34,7 @@ CREATE TABLE records (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY
-  , record_id SMALLINT UNIQUE NOT NULL
+  , meta_id SMALLINT UNIQUE NOT NULL
   , email_address EMAIL_ADDRESS NOT NULL
   , username VARCHAR(20) UNIQUE NOT NULL
   , password VARCHAR(20) NOT NULL
@@ -42,7 +42,7 @@ CREATE TABLE users (
 
 CREATE TABLE stock (
     id SERIAL PRIMARY KEY
-  , record_id SMALLINT UNIQUE NOT NULL
+  , meta_id SMALLINT UNIQUE NOT NULL
   , sku SKU UNIQUE NOT NULL
   , name VARCHAR(255) NOT NULL
   , break_even_price NUMERIC(2) NOT NULL
@@ -51,7 +51,7 @@ CREATE TABLE stock (
 
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY
-  , record_id SMALLINT UNIQUE NOT NULL
+  , meta_id SMALLINT UNIQUE NOT NULL
   , action_id SMALLINT UNIQUE NOT NULL
   , quantity INTEGER
   , price NUMERIC(2)
