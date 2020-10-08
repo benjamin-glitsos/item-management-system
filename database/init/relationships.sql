@@ -1,4 +1,9 @@
 ALTER TABLE records
+ADD CONSTRAINT fk_object
+FOREIGN KEY (object_id)
+REFERENCES objects (id);
+
+ALTER TABLE records
 ADD CONSTRAINT fk_created_by
 FOREIGN KEY (created_by_id)
 REFERENCES users (id);

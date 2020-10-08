@@ -16,6 +16,7 @@ CREATE TABLE actions (
 
 CREATE TABLE meta (
     id SERIAL PRIMARY KEY
+  , object_id SMALLINT NOT NULL
   , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
   , created_by_id SMALLINT NOT NULL
