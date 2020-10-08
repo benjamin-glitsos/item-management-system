@@ -18,6 +18,7 @@ Multitier Architecture:
 
 * Routing Layer
 * Seeding Layer
+* Validation Layer
 * Service Layer
 * DAO/ORM Layer
 
