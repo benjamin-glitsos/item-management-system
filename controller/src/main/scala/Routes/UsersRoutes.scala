@@ -78,7 +78,9 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: remove NGINX from angular container
 
     val router = HttpRoutes.of[IO] {
-        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
+        case req @ POST -> Root / "list" => {
+            req *> (json => PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync))
+            // TODO: use PartialContent or Ok?
             // TODO: move these query params into the body
             // TODO: return total length (count) of list
             // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
@@ -92,7 +94,6 @@ object UsersRoutes extends ValidationUtilities {
             //     range_end: Int,
             // },
             // data: Json
-            PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
        // case GET -> Root / username => {
@@ -101,82 +102,82 @@ object UsersRoutes extends ValidationUtilities {
        //      Ok(UsersServices.open(username, System.getenv("SUPER_ADMIN_USERNAME")).transact(xa).unsafeRunSync)
        //  }
 
-        case body @ POST -> Root => {
-            for {
-                json <- body.as[Json]
+        // case body @ POST -> Root => {
+        //     for {
+        //         json <- body.as[Json]
+        //
+        //         // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
+        //         // {
+        //         //     params: {},
+        //         //     data: {}
+        //         // }
+        //         val username = Validators.getRequiredField("username", json)
+        //         val password = Validators.getRequiredField("password", json)
+        //         val user_username = Validators.getRequiredField("user_username", json)
+        //         val notes = Validators.getOptionalField("notes", json)
+        //
+        //         val meta = (
+        //             user_username,
+        //             notes
+        //         ).mapN(RecordRequest)
+        //
+        //         val data = (
+        //             username,
+        //             password,
+        //             meta
+        //         ).mapN(UserCreateBody)
+        //
+        //         res <- data match {
+        //             case Invalid(e) => BadRequest(e)
+        //             case Valid(x) => {
+        //                 try {
+        //                     val user = User(
+        //                         id = 0,
+        //                         record_id = 0,
+        //                         staff_id = 1,
+        //                         username = x.username,
+        //                         password = x.password
+        //                     )
+        //                     val user_username = x.meta.user_username
+        //                     val notes = x.meta.notes
+        //                     Created(
+        //                         UsersServices
+        //                             .create(user, user_username, notes)
+        //                             .transact(xa).unsafeRunSync
+        //                     )
+        //                 } catch {
+        //                     case e: SQLException => {
+        //                         BadRequest(Validators.sqlException(e))
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     } yield (res)
+        // }
 
-                // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
-                // {
-                //     params: {},
-                //     data: {}
-                // }
-                val username = Validators.getRequiredField("username", json)
-                val password = Validators.getRequiredField("password", json)
-                val user_username = Validators.getRequiredField("user_username", json)
-                val notes = Validators.getOptionalField("notes", json)
-
-                val meta = (
-                    user_username,
-                    notes
-                ).mapN(RecordRequest)
-
-                val data = (
-                    username,
-                    password,
-                    meta
-                ).mapN(UserCreateBody)
-
-                res <- data match {
-                    case Invalid(e) => BadRequest(e)
-                    case Valid(x) => {
-                        try {
-                            val user = User(
-                                id = 0,
-                                record_id = 0,
-                                staff_id = 1,
-                                username = x.username,
-                                password = x.password
-                            )
-                            val user_username = x.meta.user_username
-                            val notes = x.meta.notes
-                            Created(
-                                UsersServices
-                                    .create(user, user_username, notes)
-                                    .transact(xa).unsafeRunSync
-                            )
-                        } catch {
-                            case e: SQLException => {
-                                BadRequest(Validators.sqlException(e))
-                            }
-                        }
-                    }
-                }
-            } yield (res)
-        }
-
-        case PATCH -> Root => {
-            // TODO: the body will be like:
-            // {
-            //     username: String,
-            //     data: {
-            //         user: User,
-            //         notes: String
-            //     },
-            //     user_username: String
-            // }
-            // TODO: for accessing the nested data, you'll need to make Validators.getRequiredField take a list of strings which will act as a path to the JSON data. And then it will join it with dots to pass to the error message e.g. data.notes. TODO: actually, should you use 'optics' for accessing this considering there are nested paths?
-            Ok(UsersServices.edit(
-                User(
-                    id = 2,
-                    record_id = 8,
-                    staff_id = 1,
-                    username = "un9999",
-                    password = "pw9999"
-                ),
-                user_username = System.getenv("SUPER_ADMIN_USERNAME"),
-                notes = Some("Test of updating notes.")
-            ).transact(xa).unsafeRunSync)
-        }
+        // case PATCH -> Root => {
+        //     // TODO: the body will be like:
+        //     // {
+        //     //     username: String,
+        //     //     data: {
+        //     //         user: User,
+        //     //         notes: String
+        //     //     },
+        //     //     user_username: String
+        //     // }
+        //     // TODO: for accessing the nested data, you'll need to make Validators.getRequiredField take a list of strings which will act as a path to the JSON data. And then it will join it with dots to pass to the error message e.g. data.notes. TODO: actually, should you use 'optics' for accessing this considering there are nested paths?
+        //     Ok(UsersServices.edit(
+        //         User(
+        //             id = 2,
+        //             record_id = 8,
+        //             staff_id = 1,
+        //             username = "un9999",
+        //             password = "pw9999"
+        //         ),
+        //         user_username = System.getenv("SUPER_ADMIN_USERNAME"),
+        //         notes = Some("Test of updating notes.")
+        //     ).transact(xa).unsafeRunSync)
+        // }
 
         // case body @ DELETE -> Root => {
         //     // TODO: will need try catch for db errors like all endpoints

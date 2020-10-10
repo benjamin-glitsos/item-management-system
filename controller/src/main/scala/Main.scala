@@ -4,7 +4,7 @@ import org.http4s.server.blaze._
 object Main extends IOApp with TextUtilities with EnvUtilities {
     def run(args: List[String]): IO[ExitCode] = {
 
-        Seeders.run()
+        // Seeders.run()
 
         if(true) {
             consoleHeading("Starting server")
