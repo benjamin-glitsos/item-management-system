@@ -16,6 +16,8 @@ Contract-first API, OpenAPI (Swagger, JSON Schema) Java Interop, Algebraic Data 
 
 Multitier Architecture:
 
+* Contracts Layer
+* Middleware Layer
 * Routing Layer
 * Validation Layer
 * Service Layer
