@@ -81,7 +81,8 @@ object UsersRoutes extends ValidationUtilities {
 
     val router = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
-            req *> (json => PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync))
+            json <- req.as[Json]
+            PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync)
             // TODO: since it is PartialContent it needs the proper header range parameters. Or just use Ok and use the head section in your json?
             // TODO: move these query params into the body
             // TODO: return total length (count) of list
