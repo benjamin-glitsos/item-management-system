@@ -18,6 +18,8 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
+    // remove microservice names from env file
+    // use kompose for converting docker compose to kubernetes
     // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
     // TODO: rename Records to Meta
     // TODO: use .gitattributes to add SQL to the language statistics. Remove CSS?
@@ -80,7 +82,7 @@ object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
             req *> (json => PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync))
-            // TODO: use PartialContent or Ok?
+            // TODO: since it is PartialContent it needs the proper header range parameters. Or just use Ok and use the head section in your json?
             // TODO: move these query params into the body
             // TODO: return total length (count) of list
             // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route

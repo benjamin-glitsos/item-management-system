@@ -8,7 +8,7 @@ object UsersDAO {
         run(quote(
             (for {
                 u <- query[User]
-                r <- query[Record]
+                r <- query[Meta]
                     .join(_.id == u.record_id)
                     .filter(_.deleted_at.isEmpty)
                 creator <- query[User].join(_.id == r.created_by)

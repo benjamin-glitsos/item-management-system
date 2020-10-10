@@ -1,7 +1,7 @@
 ALTER TABLE records
 ADD CONSTRAINT fk_object
-FOREIGN KEY (object_id)
-REFERENCES objects (id);
+FOREIGN KEY (object_key)
+REFERENCES objects (key);
 
 ALTER TABLE records
 ADD CONSTRAINT fk_created_by

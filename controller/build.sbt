@@ -23,7 +23,7 @@ libraryDependencies := Seq(
     "org.http4s" %% "http4s-circe" % http4sVersion,
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-generic" % circeVersion,
-    // "io.circe" %% "circe-optics" % circeVersion,
+    "io.circe" %% "circe-optics" % circeVersion,
     "com.devskiller" % "jfairy" % "0.6.0"
 )
 
