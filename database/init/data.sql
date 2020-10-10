@@ -6,7 +6,8 @@ VALUES
 
 INSERT INTO actions (key, name, description, colour)
 VALUES
-    ('options', 'Options', 'List the objects.', NULL)
+    ('options', 'Options', 'List the available actions.', NULL)
+  , ('list', 'List', 'View the list of these items.', NULL)
   , ('open', 'Open', 'Open this item to view or edit it.', NULL)
   , ('save', 'Save', 'Save any edits you have made to the system.', NULL)
   , ('create', 'Create New', 'Create a new item.', NULL)
