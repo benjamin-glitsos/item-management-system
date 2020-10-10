@@ -40,4 +40,4 @@ Single-Page App (SPA) with industry-standard Angular architecture.
 
 **PostgreSQL**
 
-The design utilises a metadata table and business keys. 3NF database normalisation.
+The schema utilises a metadata table and business keys. 3NF database normalisation.
