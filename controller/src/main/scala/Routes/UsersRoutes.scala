@@ -82,9 +82,7 @@ object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
             json <- req.as[Json]
-            PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync)
-            // TODO: since it is PartialContent it needs the proper header range parameters. Or just use Ok and use the head section in your json?
-            // TODO: move these query params into the body
+            Ok(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync)
             // TODO: return total length (count) of list
             // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
             // TODO: return all data in Json response:
