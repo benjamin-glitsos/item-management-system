@@ -18,13 +18,13 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
+    // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
+    // TODO: rename Records to Meta
+    // TODO: use .gitattributes to add SQL to the language statistics. Remove CSS?
     // TODO: use NonEmptyChain for validation instead of NonEmptyList
-    // TODO: add to readme: Contract-based API, Json schema, Java interop. Add to layers: contract layer
     // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
     // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
     // TODO: Add 'level' to Error. type Level = High | Medium | Low
-    // TODO: make the table names not part of the env file? Just reuse the same strings throughout?
-    // TODO: change this Hospital Management System to be an Inventory Management System
     // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
     // TODO: Have two users that are created at startup: Super Admin (super_admin role) & Guest Admin (admin role)
     // TODO: Use database Views plus JSON to merge commonly-merged tables into one and then just use the Quill/Doobie to work with these Views. Multiple columns are merged into one JSON column. Have a new views.sql file for this. These Views will be:
@@ -34,7 +34,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: make error codes all lowercase rather than all uppercase
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
-    // TODO: add to readme: algebraic data types
     // TODO: use openapi4j and swagger ui for contracts
     // TODO: request and response format:
     // {
@@ -43,10 +42,8 @@ object UsersRoutes extends ValidationUtilities {
     // }
     // TODO: add additional information to the json schemas and then use that to generate the front-end forms automatically? Have an api parameter that requests the schema of an endpoint and it will return properties like description, bootstrap-column
     // TODO: make logging middleware that prints to console for now. A good simple middleware to create firstly
-    // TODO: add to readme: single page app (SPA)
     // TODO: after OAS validation, you can just use optics to get values directly out of Circe JSON. don't even use maybe. it's already within validated data type so already typesafe
     // TODO: middleware after request will check response against the openapi, but only if testing parameter is set to true
-    // TODO: add to readme: Open API (Swagger), JWT
     // TODO: hash passwords asyncronously (use ZIO)
     // TODO: have a centre-aligned menu for front-end. Don't use a sidebar menu.
     // TODO: new routing pattern:
@@ -64,18 +61,26 @@ object UsersRoutes extends ValidationUtilities {
     // Overall routing structure is:
     // / => Front-end
     // /api/ => API
-    // /docs/ => Documentation
+    // /dev/ => dev portal (serve a plain HTML page which lists the dev pages. you will create a 'views' folder)
+    // /dev/adminer/
+    // /dev/api-docs/
+    // /dev/db-docs/
+    // TODO: create routing files:
+    // RootRoutes.scala
+    // DevRoutes.scala
+    // ApiRoutes.scala
     // TODO: make two functions for casbin: one to validate a request, and the other to validate a list of actions to return only the ones that can be accessed. This will map casbin over the list of actions but keep the other parameters the same between each step in the map
-    // TODO: reword in readme to 'REST-like'
     // TODO: add a cache control middleware to disable all caching
     // TODO: add server redirect middleware http to https
     // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
     // TODO: make a middleware folder
     // TODO: change controller to port 80
-    // TODO: remove NGINX from angular container, then from readme
+    // TODO: remove NGINX from angular container
 
     val router = HttpRoutes.of[IO] {
-        case GET -> Root :? MaybeNumber(maybeNumber) +& MaybeLength(maybeLength) => {
+        case req @ POST -> Root / "list" => {
+            req *> (json => PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync))
+            // TODO: use PartialContent or Ok?
             // TODO: move these query params into the body
             // TODO: return total length (count) of list
             // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
@@ -89,91 +94,90 @@ object UsersRoutes extends ValidationUtilities {
             //     range_end: Int,
             // },
             // data: Json
-            PartialContent(UsersServices.list(maybeNumber, maybeLength).transact(xa).unsafeRunSync)
         }
 
        // case GET -> Root / username => {
        //      // TODO: add user_username to the body
        //
-       //      Ok(UsersServices.open(username, System.getenv("SUPER_USERNAME")).transact(xa).unsafeRunSync)
+       //      Ok(UsersServices.open(username, System.getenv("SUPER_ADMIN_USERNAME")).transact(xa).unsafeRunSync)
        //  }
 
-        case body @ POST -> Root => {
-            for {
-                json <- body.as[Json]
+        // case body @ POST -> Root => {
+        //     for {
+        //         json <- body.as[Json]
+        //
+        //         // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
+        //         // {
+        //         //     params: {},
+        //         //     data: {}
+        //         // }
+        //         val username = Validators.getRequiredField("username", json)
+        //         val password = Validators.getRequiredField("password", json)
+        //         val user_username = Validators.getRequiredField("user_username", json)
+        //         val notes = Validators.getOptionalField("notes", json)
+        //
+        //         val meta = (
+        //             user_username,
+        //             notes
+        //         ).mapN(RecordRequest)
+        //
+        //         val data = (
+        //             username,
+        //             password,
+        //             meta
+        //         ).mapN(UserCreateBody)
+        //
+        //         res <- data match {
+        //             case Invalid(e) => BadRequest(e)
+        //             case Valid(x) => {
+        //                 try {
+        //                     val user = User(
+        //                         id = 0,
+        //                         record_id = 0,
+        //                         staff_id = 1,
+        //                         username = x.username,
+        //                         password = x.password
+        //                     )
+        //                     val user_username = x.meta.user_username
+        //                     val notes = x.meta.notes
+        //                     Created(
+        //                         UsersServices
+        //                             .create(user, user_username, notes)
+        //                             .transact(xa).unsafeRunSync
+        //                     )
+        //                 } catch {
+        //                     case e: SQLException => {
+        //                         BadRequest(Validators.sqlException(e))
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     } yield (res)
+        // }
 
-                // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
-                // {
-                //     params: {},
-                //     data: {}
-                // }
-                val username = Validators.getRequiredField("username", json)
-                val password = Validators.getRequiredField("password", json)
-                val user_username = Validators.getRequiredField("user_username", json)
-                val notes = Validators.getOptionalField("notes", json)
-
-                val meta = (
-                    user_username,
-                    notes
-                ).mapN(RecordRequest)
-
-                val data = (
-                    username,
-                    password,
-                    meta
-                ).mapN(UserCreateBody)
-
-                res <- data match {
-                    case Invalid(e) => BadRequest(e)
-                    case Valid(x) => {
-                        try {
-                            val user = User(
-                                id = 0,
-                                record_id = 0,
-                                staff_id = 1,
-                                username = x.username,
-                                password = x.password
-                            )
-                            val user_username = x.meta.user_username
-                            val notes = x.meta.notes
-                            Created(
-                                UsersServices
-                                    .create(user, user_username, notes)
-                                    .transact(xa).unsafeRunSync
-                            )
-                        } catch {
-                            case e: SQLException => {
-                                BadRequest(Validators.sqlException(e))
-                            }
-                        }
-                    }
-                }
-            } yield (res)
-        }
-
-        case PATCH -> Root => {
-            // TODO: the body will be like:
-            // {
-            //     username: String,
-            //     data: {
-            //         user: User,
-            //         notes: String
-            //     },
-            //     user_username: String
-            // }
-            // TODO: for accessing the nested data, you'll need to make Validators.getRequiredField take a list of strings which will act as a path to the JSON data. And then it will join it with dots to pass to the error message e.g. data.notes. TODO: actually, should you use 'optics' for accessing this considering there are nested paths?
-            Ok(UsersServices.edit(
-                User(
-                    id = 2,
-                    record_id = 8,
-                    staff_id = 1,
-                    username = "un9999",
-                    password = "pw9999"
-                ),
-                user_username = System.getenv("SUPER_USERNAME"),
-                notes = Some("Test of updating notes.")
-            ).transact(xa).unsafeRunSync)
-        }
+        // case PATCH -> Root => {
+        //     // TODO: the body will be like:
+        //     // {
+        //     //     username: String,
+        //     //     data: {
+        //     //         user: User,
+        //     //         notes: String
+        //     //     },
+        //     //     user_username: String
+        //     // }
+        //     // TODO: for accessing the nested data, you'll need to make Validators.getRequiredField take a list of strings which will act as a path to the JSON data. And then it will join it with dots to pass to the error message e.g. data.notes. TODO: actually, should you use 'optics' for accessing this considering there are nested paths?
+        //     Ok(UsersServices.edit(
+        //         User(
+        //             id = 2,
+        //             record_id = 8,
+        //             staff_id = 1,
+        //             username = "un9999",
+        //             password = "pw9999"
+        //         ),
+        //         user_username = System.getenv("SUPER_ADMIN_USERNAME"),
+        //         notes = Some("Test of updating notes.")
+        //     ).transact(xa).unsafeRunSync)
+        // }
 
         // case body @ DELETE -> Root => {
         //     // TODO: will need try catch for db errors like all endpoints
@@ -204,13 +208,13 @@ object UsersRoutes extends ValidationUtilities {
         //                     case "soft" => {
         //                         Ok(UsersServices.delete(
         //                             username,
-        //                             System.getenv("SUPER_USERNAME")
+        //                             System.getenv("SUPER_ADMIN_USERNAME")
         //                         ).transact(xa).unsafeRunSync)
         //                     }
         //                     case "restore" => {
         //                         Ok(UsersServices.restore(
         //                             username,
-        //                             System.getenv("SUPER_USERNAME")
+        //                             System.getenv("SUPER_ADMIN_USERNAME")
         //                         ).transact(xa).unsafeRunSync)
         //                     }
         //                     case "hard" => {

@@ -1,123 +1,43 @@
-INSERT INTO $SEX_TABLE (name) VALUES ('Male'), ('Female');
-
-INSERT INTO $ROLES_TABLE (name)
+INSERT INTO objects (key, name, description, is_in_main_menu)
 VALUES
-    ('System Admin')
-  , ('Office Admin')
-  , ('Office User')
-  , ('Doctor')
-  , ('Nurse');
+    ('users', 'Users', 'The user accounts for this system.', TRUE)
+  , ('stock', 'Stock', 'The stock items that are in this inventory, or have been in the past.', TRUE)
+  , ('transactions', 'Transactions', 'The transactions that have occured for each stock item.', FALSE)
 
-INSERT INTO $DEPARTMENTS_TABLE (name)
+INSERT INTO actions (key, name, description, colour)
 VALUES
-    ('Anaesthetics and Pain Management')
-  , ('Cardiology')
-  , ('Dermatology')
-  , ('Drug Health Service')
-  , ('Emergency')
-  , ('Endocrinology')
-  , ('Gastroenterology')
-  , ('Haematology')
-  , ('Immunology')
-  , ('Intensive Care Unit')
-  , ('Microbiology and Infectious Diseases')
-  , ('National Centre for Veterans’ Healthcare (NCVH)')
-  , ('NSW Institute of Sports Medicine')
-  , ('Neurosurgery')
-  , ('Ophthalmology')
-  , ('Orthopaedics')
-  , ('Plastic, Reconstructive and Hand Surgery Unit')
-  , ('Podiatry')
-  , ('Pre-Admission Clinic')
-  , ('Psychology')
-  , ('Radiology')
-  , ('Speech Pathology')
-  , ('Vascular');
+    ('options', 'Options', 'List the objects.', NULL)
+  , ('open', 'Open', 'Open this item to view or edit it.', NULL)
+  , ('save', 'Save', 'Save any edits you have made to the system.', NULL)
+  , ('create', 'Create New', 'Create a new item.', NULL)
+  , ('delete', 'Delete', 'Delete this item. (This is a soft delete.)', NULL)
+  , ('restore', 'Restore', 'Restore this item which has been deleted.', NULL)
+  , ('hard-delete', 'Hard Delete', 'Permanently delete this item. (This item won’t be recoverable once deleted. This is a hard delete.)', '#be382d')
+  , ('buy', 'Buy', 'Record a transaction in which this stock was bought.', '#318a4a')
+  , ('sell', 'Sell', 'Record a transaction in which this stock was sold.', '#be382d')
 
-INSERT INTO $PEOPLE_TABLE (
-    first_name
-  , last_name
-  , other_names
-  , sex_id
-  , date_of_birth
-  , email_address
-  , phone_number
-  , address_line_one
-  , address_line_two
-  , postcode
-  , is_aboriginal_or_torres_strait_islander
-  , is_australian_citizen
-  , is_born_overseas
-  , is_english_second_language
-) VALUES (
-    '$SUPER_FIRST_NAME'
-  , '$SUPER_LAST_NAME'
-  , '$SUPER_MIDDLE_NAME'
-  , '$SUPER_SEX'
-  , '$SUPER_DATE_OF_BIRTH'
-  , '$SUPER_EMAIL'
-  , '$SUPER_PHONE'
-  , '$SUPER_ADDRESS_LINE_1'
-  , '$SUPER_ADDRESS_LINE_2'
-  , '$SUPER_POSTCODE'
-  , '$SUPER_ABORIGINAL_OR_TORRES_STRAIT_ISLANDER'
-  , '$SUPER_AUSTRALIAN_CITIZEN'
-  , '$SUPER_BORN_OVERSEAS'
-  , '$SUPER_ENGLISH_SECOND_LANGUAGE'
-);
-
-INSERT INTO $STAFF_DEPARTMENTS (
-    staff_id
-  , department_id
-) VALUES (
-    1
-  , 1
-);
-
-WITH $STAFF_RECORD_INSERT AS (
-    INSERT INTO $RECORDS_TABLE (
-        uuid
-      , created_by
-      , notes
-    ) VALUES (
-        '$SUPER_STAFF_UUID'
-      , 1
-      , '$SUPER_ADMIN_RECORD_NOTE'
-    )
+WITH user_records_insert AS (
+    INSERT INTO records (uuid, created_by)
+    VALUES (gen_random_uuid(), 1)
     RETURNING id
 )
-INSERT INTO $STAFF_TABLE (
-    record_id
-  , person_id
-  , staff_number
-  , employment_start
-) VALUES (
-    (SELECT id FROM $STAFF_RECORD_INSERT)
+INSERT INTO users (record_id, email_address, username, password) VALUES (
+    (SELECT id FROM user_records_insert)
   , 1
-  , '$SUPER_STAFF_NUMBER'
-  , '$SUPER_EMPLOYMENT_START'
+  , '$SUPER_ADMIN_EMAIL_ADDRESS'
+  , '$SUPER_ADMIN_USERNAME'
+  , '$SUPER_ADMIN_PASSWORD'
 );
 
-WITH $USER_RECORD_INSERT AS (
-    INSERT INTO $RECORDS_TABLE (
-        uuid
-      , created_by
-      , notes
-    ) VALUES (
-        '$SUPER_USER_UUID'
-      , 1
-      , '$SUPER_ADMIN_RECORD_NOTE'
-    )
+WITH user_records_insert AS (
+    INSERT INTO records (uuid, created_by)
+    VALUES (gen_random_uuid(), 1)
     RETURNING id
 )
-INSERT INTO $USERS_TABLE (
-    record_id
-  , staff_id
-  , username
-  , password
-) VALUES (
-    (SELECT id FROM $USER_RECORD_INSERT)
+INSERT INTO users (record_id, email_address, username, password) VALUES (
+    (SELECT id FROM user_records_insert)
   , 1
-  , '$SUPER_USERNAME'
-  , '$SUPER_PASSWORD'
+  , '$DEMO_ADMIN_EMAIL_ADDRESS'
+  , '$DEMO_ADMIN_USERNAME'
+  , '$DEMO_ADMIN_PASSWORD'
 );

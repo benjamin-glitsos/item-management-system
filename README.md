@@ -12,24 +12,32 @@ Dockerised MVC architecture.
 
 **Scala (Java-platform language with Haskell-like type system).**
 
-Object-Oriented architecture with Functional Programming style, REST-inspired API, GRASP, SOLID, Type-safety with Algebraic Data Types, Functional purity, Composition over inheritance, Separation of concerns, DRY.
+Contract-first API, OpenAPI (Swagger, JSON Schema) Java Interop, Algebraic Data Types, Object-Oriented in the large, Functional Programming in the small, GRASP, SOLID, Type-safety, Functional purity, REST-like/CRUD API, Composition over inheritance, Separation of concerns, DRY.
 
 Multitier Architecture:
 
 * Routing Layer
-* Seeding Layer
 * Validation Layer
 * Service Layer
 * DAO/ORM Layer
+<!-- * Schema Layer -->
+<!-- * Testing Layer -->
+<!-- * Documentation Layer -->
+<!-- * View Layer -->
+<!-- * Seeding Layer -->
+
+<!-- Middleware Architecture: -->
+<!--  -->
+<!-- `Req` → Ensure HTTPS → Request Logging → OpenAPI Request Validation → Authorisation → Access Control → `Controller` → Prevent Caching → Error Formatting → `Res` -->
 
 ### Portal
 
 **Angular (Typescript language).**
 
-Standard Angular architecture.
+Single-Page App (SPA) with industry-standard Angular architecture.
 
 ### Database
 
 **PostgreSQL**
 
-Design utilises metadata table and business keys. 3NF database normalisation.
+The design utilises a metadata table and business keys. 3NF database normalisation.

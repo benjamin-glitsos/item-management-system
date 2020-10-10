@@ -1,0 +1,7 @@
+# Adding additional filetypes to Github Linguist
+
+*.txt linguist-language=txt
+*.csv linguist-language=csv
+*.json linguist-language=json
+*.yml linguist-language=yml
+*.sql linguist-language=sql

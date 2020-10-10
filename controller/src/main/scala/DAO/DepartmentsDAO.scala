@@ -1,15 +1,13 @@
-import bundles.doobie.database._
-import bundles.doobie.database.dc._
-import doobie._
-
-object DepartmentsDAO {
-    val name = sys.env.getOrElse("DEPARTMENTS_TABLE", "departments")
-
-    def count() = {
-        run(
-            quote(
-                query[Department]
-            ).size
-        )
-    }
-}
+// import bundles.doobie.database._
+// import bundles.doobie.database.dc._
+// import doobie._
+//
+// object DepartmentsDAO {
+//     def count() = {
+//         run(
+//             quote(
+//                 query[Department]
+//             ).size
+//         )
+//     }
+// }
