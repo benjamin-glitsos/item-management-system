@@ -12,7 +12,7 @@ Dockerisation, MVC, Networking, Scalability.
 
 **Scala (Java-based language).**
 
-Contract-based API, OpenAPI (Swagger, JSON Schema) Java interop, algebraic data types, object-orientation, Functional programming, (OOP in the large; FP in the small), GRASP, SOLID, Type-safety, Functional purity, REST-like/CRUD API, Composition over inheritance, Separation of concerns, DRY.
+Contract-first API, OpenAPI (Swagger, JSON Schema) Java interop, algebraic data types, object-orientation, Functional programming, (OOP in the large; FP in the small), GRASP, SOLID, Type-safety, Functional purity, REST-like/CRUD API, Composition over inheritance, Separation of concerns, DRY.
 
 Multilayered Architecture:
 
