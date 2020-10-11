@@ -1,6 +1,5 @@
 CREATE TABLE meta (
     id SERIAL PRIMARY KEY
-  , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
   , created_by_id SMALLINT NOT NULL
   , opens SMALLINT DEFAULT 0

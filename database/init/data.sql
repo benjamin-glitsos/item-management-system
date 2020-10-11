@@ -1,6 +1,6 @@
 WITH user_records_insert AS (
-    INSERT INTO records (uuid, created_by)
-    VALUES (gen_random_uuid(), 1)
+    INSERT INTO records (created_by)
+    VALUES (1)
     RETURNING id
 )
 INSERT INTO users (record_id, email_address, username, password) VALUES (
@@ -12,8 +12,8 @@ INSERT INTO users (record_id, email_address, username, password) VALUES (
 );
 
 WITH user_records_insert AS (
-    INSERT INTO records (uuid, created_by)
-    VALUES (gen_random_uuid(), 1)
+    INSERT INTO records (created_by)
+    VALUES (1)
     RETURNING id
 )
 INSERT INTO users (record_id, email_address, username, password) VALUES (

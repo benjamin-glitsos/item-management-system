@@ -1,9 +1,7 @@
-import java.util.UUID
 import java.time.LocalDateTime
 
 case class Meta(
     id: Int,
-    uuid: UUID,
     created_at: LocalDateTime,
     created_by: Int,
     opens: Int,
