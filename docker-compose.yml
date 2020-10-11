@@ -19,7 +19,7 @@ services:
     container_name: ${DATABASE_MANAGEMENT_SERVICE}
     restart: always
     ports:
-      - ${DB_MANAGEMENT_PORT}:${DB_MANAGEMENT_PORT}
+      - ${DATABASE_MANAGEMENT_PORT}:${DATABASE_MANAGEMENT_PORT}
   controller:
     build:
       context: ./${CONTROLLER_SERVICE}/
