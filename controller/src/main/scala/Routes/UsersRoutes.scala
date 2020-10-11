@@ -18,7 +18,6 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
-    // remove microservice names from env file
     // use kompose for converting docker compose to kubernetes
     // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
     // TODO: rename Records to Meta
@@ -76,7 +75,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: add server redirect middleware http to https
     // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
     // TODO: make a middleware folder
-    // TODO: change controller to port 80
     // TODO: remove NGINX from angular container
 
     val endpoints = HttpRoutes.of[IO] {
