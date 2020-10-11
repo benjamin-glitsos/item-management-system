@@ -5,8 +5,8 @@ import org.http4s._
 import org.http4s.dsl.io._
 import org.http4s.implicits._
 
-object ReqContractValidateMiddle {
-    def validateByContract(req: Request[IO]): HttpRoutes[IO] = {
+object ReqContractValidationMiddle {
+    def contractValidation(req: Request[IO]): HttpRoutes[IO] = {
         openApiValidation(req) match {
             case Valid(req) => req
             case Invalid(err) => BadRequest(err)
@@ -14,6 +14,6 @@ object ReqContractValidateMiddle {
     }
 
     def apply(service: HttpRoutes[IO]): HttpRoutes[IO] = {
-        service.map(validateByContract(_))
+        service.map(contractValidation(_))
     }
 }

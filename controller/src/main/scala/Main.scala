@@ -13,7 +13,7 @@ object Main extends IOApp with TextUtilities with EnvUtilities {
                     System.getenv("CONTROLLER_PORT").toInt,
                     System.getenv("DOCKER_LOCALHOST")
                 )
-                .withHttpApp(Routes.router)
+                .withHttpApp(ReqContractValidationMiddle(Routes.router)) // TODO: compose middleware into one, like this: https://github.com/http4s/http4s/issues/1967
                 .serve
                 .compile
                 .drain
