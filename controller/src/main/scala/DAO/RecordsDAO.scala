@@ -2,7 +2,6 @@
 // import bundles.doobie.database.dc._
 // import doobie._
 // import java.time.LocalDateTime
-// import java.util.UUID
 //
 // object RecordsDAO {
 //     val recordsOpenView = quote {
@@ -12,11 +11,10 @@
 //     def create(user_id: Int, notes: Option[String]) = {
 //         run(quote(
 //             query[Record].insert(
-//                 _.uuid -> lift(UUID.randomUUID()),
 //                 _.created_at -> lift(LocalDateTime.now()),
 //                 _.created_by -> lift(user_id),
 //                 _.notes -> lift(notes)
-//             ).returningGenerated(r => RecordIdentity(r.id, r.uuid))
+//             ).returningGenerated(r => RecordIdentity(r.id))
 //         ))
 //     }
 //
