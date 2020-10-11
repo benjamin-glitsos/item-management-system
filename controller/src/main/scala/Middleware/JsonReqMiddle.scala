@@ -5,6 +5,7 @@ import org.http4s._
 import org.http4s.dsl.io._
 import org.http4s.implicits._
 
+// TODO: currently this is a response middleware. It needs to be a request middleware.
 def JsonReqMiddle(service: HttpRoutes[IO], header: Header): HttpRoutes[IO] = Kleisli { req: Request[IO] =>
   service(req).map {
     case Status.Successful(resp) =>

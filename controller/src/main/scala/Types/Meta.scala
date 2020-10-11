@@ -3,7 +3,6 @@ import java.time.LocalDateTime
 
 case class Meta(
     id: Int,
-    object_key: String,
     uuid: UUID,
     created_at: LocalDateTime,
     created_by: Int,
