@@ -79,7 +79,7 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: change controller to port 80
     // TODO: remove NGINX from angular container
 
-    val router = HttpRoutes.of[IO] {
+    val endpoints = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
             json <- req.as[Json]
             try {
