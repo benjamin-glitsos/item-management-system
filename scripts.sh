@@ -11,7 +11,7 @@ case "$1" in
     ;;
     "up" )
         echo "Deleting database volume:"
-        docker rm -f -v $DATABASE_SERVICE
+        docker rm -f -v database
         docker-compose up $2
     ;;
     "bg" )
@@ -27,7 +27,7 @@ case "$1" in
         docker-compose exec $2
     ;;
     "repl" | "r" )
-        docker-compose exec $CONTROLLER_SERVICE bash sbt
+        docker-compose exec controller bash sbt
     ;;
     "inspect" )
         docker inspect $2 | less
