@@ -9,7 +9,7 @@ import java.sql.SQLException
 
 object Validators extends ValidationUtilities with TextUtilities {
     def getRequiredField(key: String, body: Json): Validation[String] = {
-        val code = "REQUIRED_FIELD_NOT_PROVIDED"
+        val code = "required_field_not_provided"
         val message = s"The required field '$key' was not provided."
         val field = Some(key)
         body.hcursor.get[String](key).toOption match {
@@ -27,7 +27,7 @@ object Validators extends ValidationUtilities with TextUtilities {
     // }
 
     def sqlException(error: SQLException): Validation[String] = {
-        val code = "SQL_EXCEPTION"
+        val code = "sql_exception"
         val message = error.getMessage
         val field = None
         Error(code, message, field).invalidNel
@@ -39,7 +39,7 @@ object Validators extends ValidationUtilities with TextUtilities {
         supportedDeleteActions.find(_ == action) match {
             case Some(x) => x
             case None => {
-                val code = "UNSUPPORTED_DELETE_ACTION"
+                val code = "unsupported_delete_action"
                 val message = s"The delete action that was provided ('$action') is unsupported. Only the actions ${naturalList(supportedDeleteActions)} are supported."
                 val field = Some("action")
                 Error(code, message, field).invalidNel

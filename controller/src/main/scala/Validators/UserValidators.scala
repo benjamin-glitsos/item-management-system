@@ -10,7 +10,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     private def isPasswordValidLength(password: String): Validation[String] = {
         if (!isWithinRange(password.length, passwordLengthBounds)) {
             val aboveOrBelowTheLength = if (password.length < passwordLengthBounds.min) "below the minimum" else "above the maximum"
-            val code = "PASSWORD_NOT_VALID_LENGTH"
+            val code = "password_not_valid_length"
             val message = s"The password provided is ${aboveOrBelowTheLength} of ${passwordLengthBounds.max} characters in length. The provided password is ${password.size} characters in length."
             val field = Some("password")
             Error(code, message, field).invalidNel
@@ -20,7 +20,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     }
 
     private def doesPasswordContainNumber(password: String): Validation[String] = {
-        val code = "PASSWORD_DOESNT_CONTAIN_NUMBER"
+        val code = "password_doesnt_contain_number"
         val message = "The password provided doesn't contain a number."
         val field = Some("password")
         doesStringContainPattern(
@@ -31,7 +31,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     }
 
     private def doesPasswordContainLowercaseLetter(password: String): Validation[String] = {
-        val code = "PASSWORD_DOESNT_CONTAIN_LOWERCASE_LETTER"
+        val code = "password_doesnt_contain_lowercase_letter"
         val message = "The password provided doesn't contain a lowercase letter."
         val field = Some("password")
         doesStringContainPattern(
@@ -42,7 +42,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     }
 
     private def doesPasswordContainCapitalLetter(password: String): Validation[String] = {
-        val code = "PASSWORD_DOESNT_CONTAIN_CAPITAL_LETTER"
+        val code = "password_doesnt_contain_capital_letter"
         val message = "The password provided doesn't contain a capital letter."
         val field = Some("password")
         doesStringContainPattern(
@@ -53,7 +53,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     }
 
     private def doesPasswordContainSymbol(password: String): Validation[String] = {
-        val code = "PASSWORD_DOESNT_CONTAIN_SYMBOL"
+        val code = "password_doesnt_contain_symbol"
         val message = "The password provided doesn't contain at least one symbol (a character which is not a standard letter or number)."
         val field = Some("password")
         doesStringContainPattern(
@@ -74,7 +74,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
 
         if(hasOverusedChars) {
             val areSingleOrMultipleChars = if (charsExceeding > 1) s"is ${charsExceeding} characters" else s"are ${charsExceeding} characters"
-            val code = "PASSWORD_CONTAINS_OVERUSED_CHARACTERS"
+            val code = "password_contains_overused_characters"
             val message = s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${passwordMaxCharUsageProportion.toString} of the entire password."
             val field = Some("password")
             Error(code, message, field).invalidNel
@@ -96,7 +96,7 @@ object UserValidators extends ValidationUtilities with MathUtilities {
     }
 
     def isUserDeletingThemselves(username: String, user_username: String): Validation[String] = {
-        val code = "USER_CANNOT_DELETE_THEMSELVES"
+        val code = "user_cannot_delete_themselves"
         val message = s"A user cannot delete themselves. This error is thrown when the username of the user ('$username') and the username of the user they are attempting to delete ('$user_username') are the same."
         val field = None
         Error(code, message, field).invalidNel

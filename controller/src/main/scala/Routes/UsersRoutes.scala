@@ -32,7 +32,6 @@ object UsersRoutes extends ValidationUtilities {
     // * users_with_roles
     // * transactions_with_type
     // * records_with_users (json fields: username, avatar)
-    // TODO: make error codes all lowercase rather than all uppercase
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
     // TODO: use openapi4j and swagger ui for contracts
