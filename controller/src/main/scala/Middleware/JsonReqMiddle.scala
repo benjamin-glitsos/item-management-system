@@ -5,12 +5,15 @@ import org.http4s._
 import org.http4s.dsl.io._
 import org.http4s.implicits._
 
-// TODO: currently this is a response middleware. It needs to be a request middleware.
-def JsonReqMiddle(service: HttpRoutes[IO], header: Header): HttpRoutes[IO] = Kleisli { req: Request[IO] =>
-  service(req).map {
-    case Status.Successful(resp) =>
-      resp.putHeaders(header)
-    case resp =>
-      resp
-  }
+object ReqContractValidateMiddle {
+    def validateByContract(req: Request[IO]): HttpRoutes[IO] = {
+        openApiValidation(req) match {
+            case Valid(req) => req
+            case Invalid(err) => BadRequest(err)
+        }
+    }
+
+    def apply(service: HttpRoutes[IO]): HttpRoutes[IO] = {
+        service.map(validateByContract(_))
+    }
 }
