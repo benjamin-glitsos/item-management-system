@@ -82,7 +82,17 @@ object UsersRoutes extends ValidationUtilities {
     val router = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
             json <- req.as[Json]
-            Ok(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync)
+            try {
+                Ok(
+                    UsersServices.list(
+                        json.body.page_number, json.body.page_length
+                    ).transact(xa).unsafeRunSync
+                )
+            } catch {
+                case err: SQLException => {
+                    BadRequest(Validators.sqlException(err))
+                }
+            }
             // TODO: return total length (count) of list
             // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
             // TODO: return all data in Json response:
