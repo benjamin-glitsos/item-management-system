@@ -13,7 +13,7 @@ object Main extends IOApp with TextUtilities with EnvUtilities {
                     System.getenv("CONTROLLER_PORT").toInt,
                     System.getenv("DOCKER_LOCALHOST")
                 )
-                .withHttpApp(Routes.router)
+                .withHttpApp(Middleware.middleware(Routes.router)) // ReqContractValidationMiddle(Routes.router)
                 .serve
                 .compile
                 .drain

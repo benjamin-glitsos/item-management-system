@@ -27,7 +27,6 @@ CREATE VIEW records_list_view AS
 CREATE VIEW records_open_view AS
     SELECT
         records.id
-      , records.uuid
       , records.created_at
       , creators.username AS created_by
       , records.opens

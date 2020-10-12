@@ -4,6 +4,6 @@ import bundles.doobie.connection._
 
 object Routes {
     val router = Router(
-        "users" -> UsersRoutes.router
+        "users" -> UsersRoutes.endpoints
     ).orNotFound
 }

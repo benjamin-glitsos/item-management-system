@@ -27,10 +27,13 @@ Multitier Architecture:
 <!-- * Documentation Layer -->
 <!-- * View Layer -->
 <!-- * Seeding Layer -->
-
 <!-- Middleware Architecture: -->
 <!--  -->
 <!-- `Req` → Ensure HTTPS → Request Logging → OpenAPI Request Validation → Authorisation → Access Control → `Controller` → Prevent Caching → Error Formatting → `Res` -->
+
+**Angular (Typescript language).**
+
+Single-Page App (SPA) with industry-standard Angular architecture.
 
 ### Portal
 

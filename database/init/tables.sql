@@ -1,23 +1,5 @@
-CREATE TABLE objects (
-    id serial PRIMARY KEY
-  , key VARCHAR(125) UNIQUE NOT NULL
-  , name VARCHAR(125) UNIQUE NOT NULL
-  , description VARCHAR(255) NOT NULL
-  , is_in_main_menu BOOLEAN DEFAULT FALSE
-)
-
-CREATE TABLE actions (
-    id serial PRIMARY KEY
-  , key VARCHAR(75) UNIQUE NOT NULL
-  , name VARCHAR(75) UNIQUE NOT NULL
-  , description VARCHAR(255) NOT NULL
-  , colour HEX_COLOUR
-)
-
 CREATE TABLE meta (
     id SERIAL PRIMARY KEY
-  , object_key VARCHAR(75) UNIQUE NOT NULL
-  , uuid UUID UNIQUE NOT NULL
   , created_at TIMESTAMP DEFAULT NOW()
   , created_by_id SMALLINT NOT NULL
   , opens SMALLINT DEFAULT 0

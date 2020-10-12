@@ -1,0 +1,52 @@
+version: '3.1'
+services:
+  database:
+    build:
+      context: ./database/
+    image: database
+    container_name: database
+    volumes:
+      - ./database/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./database/init:/docker-entrypoint-initdb.d/init
+    restart: always
+    env_file: .env
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+  adminer:
+    build:
+      context: ./adminer/
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - ${ADMINER_PORT}:${ADMINER_PORT}
+  controller:
+    build:
+      context: ./controller/
+    image: controller
+    container_name: controller
+    volumes:
+      - ./controller/volumes/root:/root
+      - ./controller:/usr/src/app
+    env_file: .env
+    stdin_open: true
+    tty: true
+    ports:
+      - ${CONTROLLER_PORT}:80
+  # portal:
+  #   build:
+  #     context: ./portal/
+  #   image: portal
+  #   container_name: portal
+  #   env_file: .env
+  #   restart: always
+  #   stdin_open: true
+  #   ports:
+  #     - ${PORTAL_PORT}:${PORTAL_PORT}
+  #   command: >
+  #     /bin/sh -c
+  #     "envsubst '
+  #     $$ADMIN_PORT
+  #     '< /etc/nginx/nginx.conf.template
+  #     > /etc/nginx/nginx.conf
+  #     && nginx -g 'daemon off;'"

@@ -18,7 +18,6 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
-    // remove microservice names from env file
     // use kompose for converting docker compose to kubernetes
     // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
     // TODO: rename Records to Meta
@@ -33,7 +32,6 @@ object UsersRoutes extends ValidationUtilities {
     // * users_with_roles
     // * transactions_with_type
     // * records_with_users (json fields: username, avatar)
-    // TODO: make error codes all lowercase rather than all uppercase
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
     // TODO: use openapi4j and swagger ui for contracts
@@ -76,14 +74,22 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: add server redirect middleware http to https
     // TODO: add error formatting middleware that groups by id. But have an optional parameter to turn this off.
     // TODO: make a middleware folder
-    // TODO: change controller to port 80
     // TODO: remove NGINX from angular container
 
-    val router = HttpRoutes.of[IO] {
+    val endpoints = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
-            req *> (json => PartialContent(UsersServices.list(json.body.page_number, json.body.page_length).transact(xa).unsafeRunSync))
-            // TODO: since it is PartialContent it needs the proper header range parameters
-            // TODO: move these query params into the body
+            json <- req.as[Json]
+            try {
+                Ok(
+                    UsersServices.list(
+                        json.body.page_number, json.body.page_length
+                    ).transact(xa).unsafeRunSync
+                )
+            } catch {
+                case err: SQLException => {
+                    BadRequest(Validators.sqlException(err))
+                }
+            }
             // TODO: return total length (count) of list
             // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
             // TODO: return all data in Json response:
