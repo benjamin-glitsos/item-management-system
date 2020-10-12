@@ -18,7 +18,8 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
-    // use kompose for converting docker compose to kubernetes
+    // TODO: use apply method for objects like Routers and Seeders so that they can be used like Routers()
+    // TODO: use kompose for converting docker compose to kubernetes
     // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
     // TODO: rename Records to Meta
     // TODO: use .gitattributes to add SQL to the language statistics. Remove CSS?
