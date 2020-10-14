@@ -27,11 +27,7 @@ package bundles {
 
             import dc._
 
-            implicit val departmentsSchemaMeta = schemaMeta[Department]("departments")
-            implicit val personSchemaMeta = schemaMeta[Person]("people")
-            implicit val recordSchemaMeta = schemaMeta[Record]("records")
-            implicit val staffSchemaMeta = schemaMeta[Staff]("staff")
-            implicit val staffDepartmentsSchemaMeta = schemaMeta[StaffDepartment]("staff_departments")
+            implicit val metaSchemaMeta = schemaMeta[Meta]("meta")
             implicit val usersSchemaMeta = schemaMeta[User]("users")
         }
     }
