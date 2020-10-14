@@ -7,6 +7,7 @@ import io.circe.Json
 import org.http4s.circe._
 import org.http4s.circe.CirceEntityEncoder._
 import io.circe.generic.auto._
+import io.circe.optics.JsonPath._
 import doobie.implicits._
 import bundles.doobie.connection._
 import bundles.http4s._

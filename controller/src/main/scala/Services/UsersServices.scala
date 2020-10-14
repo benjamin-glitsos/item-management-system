@@ -2,8 +2,8 @@ import doobie._
 import cats.data.Validated.{Invalid, Valid}
 
 object UsersServices {
-    def list(pageNumber: Int, pageLength: Int): ConnectionIO[UsersList] = {
-        UsersDAO.list(Page(pageNumber, pageLength))
+    def list(pageNumber: Int, pageLength: Int): ConnectionIO[MetaListView] = {
+        UsersDAO.list(pageNumber: Int, pageLength: Int)
     }
 
     // def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {

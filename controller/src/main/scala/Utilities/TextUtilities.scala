@@ -1,10 +1,10 @@
 trait TextUtilities {
-    private def textHeading(size: Int, text: String): String = {
+    private def textHeading(size: Int, text: String): Unit = {
         val decoration = "#" * size
         println(s"${decoration} ${text} ${decoration}")
     }
 
-    def consoleHeading(text: String): String = textHeading(7, text)
+    def consoleHeading(text: String): Unit = textHeading(7, text)
 
     def naturalList(list: List[String]): String = {
         val length = list.length

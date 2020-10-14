@@ -4,25 +4,13 @@ import bundles.doobie.database.dc._
 import doobie._
 
 object UsersDAO {
-    def list(p: Page) = {
+    def list(pageNumber: Int, pageLength: Int) = {
         run(quote(
-            (for {
-                u <- query[User]
-                r <- query[Meta]
-                    .join(_.id == u.meta_id)
-                    .filter(_.deleted_at.isEmpty)
-                creator <- query[User].join(_.id == r.created_by)
-                editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
-            } yield (UserList(
-                    username = u.username,
-                    edited_at = r.edited_at,
-                    edited_by = editor.map(_.username),
-                    created_at = r.created_at,
-                    created_by = creator.username
-                )))
-                    .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
-                    .drop((lift(p.number) - 1) * lift(p.length))
-                    .take(lift(p.length))
+            query[MetaListView]
+                .filter(_.deleted_at.isEmpty)
+                .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
+                .drop((lift(pageNumber) - 1) * lift(pageLength))
+                .take(lift(pageLength))
         ))
     }
 
