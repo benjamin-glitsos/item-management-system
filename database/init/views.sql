@@ -3,46 +3,46 @@
 -- CREATE VIEW users_list_view
 -- CREATE VIEW stock_list_view
 -- CREATE VIEW transactions_list_view
--- CREATE VIEW records_open_view
+-- CREATE VIEW meta_open_view
 -- CREATE VIEW users_open_view
 -- CREATE VIEW stock_open_view
 -- CREATE VIEW transactions_open_view
 
-CREATE VIEW records_list_view AS
+CREATE VIEW meta_list_view AS
     SELECT
-        records.id
-      , records.created_at
+        meta.id
+      , meta.created_at
       , creators.username AS created_by
-      , records.opened_at
+      , meta.opened_at
       , openers.username AS opened_by
-      , records.edited_at
+      , meta.edited_at
       , editors.username AS edited_by
-      , records.deleted_at
-      , records.notes
-    FROM records
-    LEFT JOIN users creators ON records.created_by_id = creators.id
-    LEFT JOIN users openers ON records.opened_by_id = openers.id
-    LEFT JOIN users editors ON records.edited_by_id = editors.id
+      , meta.deleted_at
+      , meta.notes
+    FROM meta
+    LEFT JOIN users creators ON meta.created_by_id = creators.id
+    LEFT JOIN users openers ON meta.opened_by_id = openers.id
+    LEFT JOIN users editors ON meta.edited_by_id = editors.id
 
-CREATE VIEW records_open_view AS
+CREATE VIEW meta_open_view AS
     SELECT
-        records.id
-      , records.created_at
+        meta.id
+      , meta.created_at
       , creators.username AS created_by
-      , records.opens
-      , records.opened_at
+      , meta.opens
+      , meta.opened_at
       , openers.username AS opened_by
-      , records.edits
-      , records.edited_at
+      , meta.edits
+      , meta.edited_at
       , editors.username AS edited_by
-      , records.deleted_at
+      , meta.deleted_at
       , deletors.username AS deleted_by
-      , records.restored_at
+      , meta.restored_at
       , restorer.username AS restored_by
-      , records.notes
-    FROM records
-    LEFT JOIN users creators ON records.created_by_id = creators.id
-    LEFT JOIN users openers ON records.opened_by_id = openers.id
-    LEFT JOIN users editors ON records.edited_by_id = editors.id
-    LEFT JOIN users deletors ON records.deleted_by_id = deletors.id
-    LEFT JOIN users restorers ON records.restored_by_id = restorers.id;
+      , meta.notes
+    FROM meta
+    LEFT JOIN users creators ON meta.created_by_id = creators.id
+    LEFT JOIN users openers ON meta.opened_by_id = openers.id
+    LEFT JOIN users editors ON meta.edited_by_id = editors.id
+    LEFT JOIN users deletors ON meta.deleted_by_id = deletors.id
+    LEFT JOIN users restorers ON meta.restored_by_id = restorers.id;

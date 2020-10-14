@@ -35,7 +35,6 @@ CREATE TABLE stock (
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY
   , meta_id SMALLINT UNIQUE NOT NULL
-  , action_id SMALLINT UNIQUE NOT NULL
   , quantity INTEGER
   , price NUMERIC(2)
 );

@@ -10,11 +10,6 @@ CHECK (
     VALUE ~ '^\<.*\>.*\<.*\>$'
 );
 
-CREATE DOMAIN hex_colour AS text
-CHECK (
-    VALUE ~ '^#[0-9A-Z]{6}$'
-);
-
 CREATE DOMAIN sku AS text
 CHECK (
     VALUE ~ '^[-0-9A-Z]{1,20}$'
