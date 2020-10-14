@@ -12,7 +12,7 @@ Dockerised MVC architecture.
 
 **Scala (Java-platform language with Haskell-like type system).**
 
-Contract-first API, OpenAPI (Swagger, JSON Schema) Java Interop, Algebraic Data Types, Object-Oriented in the large, Functional Programming in the small, GRASP, SOLID, Type-safety, Functional purity, REST-like/CRUD API, Composition over inheritance, Separation of concerns, DRY.
+Framework-less, Contract-first API, OpenAPI (Swagger, JSON Schema) Java Interop, Algebraic Data Types, Object-Oriented in the large, Functional Programming in the small, GRASP, SOLID, Type-safety, Functional purity, REST-like/CRUD API, Composition over inheritance, Separation of concerns, DRY.
 
 Multitier Architecture:
 
