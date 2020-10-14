@@ -110,7 +110,7 @@ object UsersRoutes extends ValidationUtilities {
                         )
                     } catch {
                         case err: SQLException => {
-                            BadRequest(Validators.sqlException(err))
+                            BadRequest(Validators.databaseError(err))
                         }
                     }
                 }
