@@ -25,18 +25,18 @@ REFERENCES users (id);
 
 ALTER TABLE users
 ADD CONSTRAINT fk_meta
-FOREIGN KEY (record_id)
+FOREIGN KEY (meta_id)
 REFERENCES meta (id)
 ON DELETE CASCADE;
 
 ALTER TABLE stock
 ADD CONSTRAINT fk_meta
-FOREIGN KEY (record_id)
+FOREIGN KEY (meta_id)
 REFERENCES meta (id)
 ON DELETE CASCADE;
 
 ALTER TABLE transactions
 ADD CONSTRAINT fk_meta
-FOREIGN KEY (record_id)
+FOREIGN KEY (meta_id)
 REFERENCES meta (id)
 ON DELETE CASCADE;
