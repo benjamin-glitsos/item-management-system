@@ -19,6 +19,14 @@ import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
     // use kompose for converting docker compose to kubernetes
+    // TODO: use JSON Schema within Controller and later create an API that sends it to the Portal to be converted into OpenAPI format and combined with the OpenAPI YAML then used in an Angular component of the Swagger UI.
+    // TODO: try using built-in auth middleware. Middleware will be: https, auto-slash, auth. But later you will probably make your own auth middleware so that you can add the user roles to the JWT and then also check access control within the same middleware.
+    // TODO: try circe/circe-json-schema returning JSON with defaults within Valid() otherwise use everit-org/json-schema. But circe-json-schema is so small you can just copy most of the code
+    // TODO: Controller folder structure:
+    // src/main/scala/
+    // src/test/scala/
+    // TODO: use apply method for objects like Routers and Seeders so that they can be used like Routers()
+    // TODO: use kompose for converting docker compose to kubernetes
     // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
     // TODO: rename Records to Meta
     // TODO: use .gitattributes to add SQL to the language statistics. Remove CSS?

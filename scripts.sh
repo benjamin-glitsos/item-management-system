@@ -14,6 +14,9 @@ case "$1" in
         docker rm -f -v database
         docker-compose up $2
     ;;
+    "down" )
+        docker-compose down $2
+    ;;
     "bg" )
         docker-compose up -d $2
     ;;
