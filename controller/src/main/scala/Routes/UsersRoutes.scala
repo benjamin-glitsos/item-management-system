@@ -23,7 +23,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: try circe/circe-json-schema returning JSON with defaults within Valid() otherwise use everit-org/json-schema. But circe-json-schema is so small you can just copy most of the code
     // TODO: Controller folder structure:
     // src/main/scala/
-    // src/main/java/ (if needed for JSON Schema to Circe functionality)
     // src/test/scala/
     // TODO: use apply method for objects like Routers and Seeders so that they can be used like Routers()
     // TODO: use kompose for converting docker compose to kubernetes
