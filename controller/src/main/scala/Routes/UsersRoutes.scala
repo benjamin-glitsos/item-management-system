@@ -100,12 +100,12 @@ object UsersRoutes extends ValidationUtilities {
         // data: Json
         case req @ POST -> Root / "list" => {
             for {
-                json <- req.as[Json]
+                body <- req.as[Json]
                 res <- () => {
                     try {
                         Ok(
                             UsersServices.list(
-                                json.body.page_number, json.body.page_length
+                                body.body.page_number, body.body.page_length
                             ).transact(xa).unsafeRunSync
                         )
                     } catch {
