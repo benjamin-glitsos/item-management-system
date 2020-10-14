@@ -9,7 +9,7 @@ object UsersDAO {
             (for {
                 u <- query[User]
                 r <- query[Meta]
-                    .join(_.id == u.record_id)
+                    .join(_.id == u.meta_id)
                     .filter(_.deleted_at.isEmpty)
                 creator <- query[User].join(_.id == r.created_by)
                 editor <- query[User].leftJoin(x => r.edited_by.exists(_ == x.id))
