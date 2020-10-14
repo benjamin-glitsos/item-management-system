@@ -11,7 +11,7 @@ services:
     restart: always
     env_file: .env
     ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - ${POSTGRES_PORT}:5432
   adminer:
     build:
       context: ./adminer/
@@ -21,7 +21,7 @@ services:
     depends_on:
       - "database"
     ports:
-      - ${ADMINER_PORT}:${ADMINER_PORT}
+      - ${ADMINER_PORT}:8080
   controller:
     build:
       context: ./controller/
