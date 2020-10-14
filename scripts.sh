@@ -17,14 +17,14 @@ case "$1" in
     "down" )
         docker-compose down $2
     ;;
+    "stop" )
+        docker stop $(docker ps -a -q)
+    ;;
     "bg" )
         docker-compose up -d $2
     ;;
     "build" )
         docker-compose build $2
-    ;;
-    "stop" )
-        docker-compose stop
     ;;
     "exec" )
         docker-compose exec $2
