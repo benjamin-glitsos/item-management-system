@@ -24,7 +24,8 @@ libraryDependencies := Seq(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-generic" % circeVersion,
     "io.circe" %% "circe-optics" % circeVersion,
-    "com.devskiller" % "jfairy" % "0.6.0"
+    "com.devskiller" % "jfairy" % "0.6.0",
+    "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.1"
 )
 
 scalacOptions := Seq(
