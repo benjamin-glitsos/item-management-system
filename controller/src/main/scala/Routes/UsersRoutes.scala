@@ -102,8 +102,8 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
                     try {
                         Ok(
                             UsersServices.list(
-                                jsonGet[Int](root.page_number.int, body),
-                                jsonGet[Int](root.page_length.int, body)
+                                getter[Int](body, root.page_number.int),
+                                getter[Int](body, root.page_length.int)
                             ).transact(xa).unsafeRunSync
                         )
                     } catch {
