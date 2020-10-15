@@ -11,8 +11,8 @@ object UsersDAO {
             query[MetaListView]
                 .filter(_.deleted_at.isEmpty)
                 .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
-                .drop((lift(pageNumber) - 1) * lift(pageLength))
-                .take(lift(pageLength))
+                // .drop((lift(pageNumber) - 1) * lift(pageLength))
+                // .take(lift(pageLength))
         ))
     }
 
