@@ -93,20 +93,9 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: remove NGINX from angular container
 
     val endpoints = HttpRoutes.of[IO] {
-        // TODO: return total length (count) of list
-        // TODO: first query will tell angular the total count of list. Then angular calculates the allowable page length and page number, and this is verified by the validation by this route
-        // TODO: return all data in Json response:
-        // meta: {
-        //     total_length: Int,
-        //     page_length: Int,
-        //     page: Int,
-        //     total_pages: Int,
-        //     range_start: Int,
-        //     range_end: Int,
-        // },
-        // data: Json
         case req @ POST -> Root / "list" => {
             for {
+                // TODO: return: total_items, total_pages, range_start, range_end
                 body <- req.as[Json]
                 res <- () => {
                     try {

@@ -4,6 +4,7 @@ import bundles.doobie.database.dc._
 import doobie._
 
 object UsersDAO {
+    // TODO: make a separate DAO which is count. Then use count and list in the Service to calculate the page numbers
     def list(pageNumber: Int, pageLength: Int) = {
         run(quote(
             // TODO: this will eventually extend UsersListView which will extend the MetaListView class. And the SQL view will join the meta_list_view view.
