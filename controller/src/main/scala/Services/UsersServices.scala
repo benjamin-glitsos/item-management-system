@@ -2,7 +2,7 @@ import doobie._
 import cats.data.Validated.{Invalid, Valid}
 
 object UsersServices {
-    def list(pageNumber: Int, pageLength: Int): ConnectionIO[List[User]] = {
+    def list(pageNumber: Int, pageLength: Int): ConnectionIO[List[MetaListView]] = {
         // TODO: try building the result using JSON rather than a case class
         UsersDAO.list(pageNumber: Int, pageLength: Int)
     }
