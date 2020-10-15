@@ -8,9 +8,9 @@ object UsersDAO {
     def list(pageNumber: Int, pageLength: Int) = {
         run(quote(
             // TODO: this will eventually extend UsersListView which will extend the MetaListView class. And the SQL view will join the meta_list_view view.
-            query[MetaListView]
-                .filter(_.deleted_at.isEmpty)
-                .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
+            query[User]
+                // .filter(_.deleted_at.isEmpty)
+                // .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
                 // .drop((lift(pageNumber) - 1) * lift(pageLength))
                 // .take(lift(pageLength))
         ))

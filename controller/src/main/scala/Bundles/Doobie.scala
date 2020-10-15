@@ -29,6 +29,7 @@ package bundles {
 
             implicit val metaSchemaMeta = schemaMeta[Meta]("meta")
             implicit val usersSchemaMeta = schemaMeta[User]("users")
+            implicit val metaListViewSchemaMeta = schemaMeta[MetaListView]("meta_list_view")
         }
     }
 }
