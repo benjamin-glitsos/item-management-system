@@ -18,7 +18,8 @@ import cats.implicits._
 import cats.data.ValidatedNel
 import java.sql.SQLException
 
-object UsersRoutes extends ValidationUtilities {
+object UsersRoutes extends ValidationUtilities with JsonUtilities {
+    // TODO: consider making Error type have a non-empty chain of errors inside it instead of using field_id field to match errors. Fields will be: error_code, description, errors: NonEmptyChain[String]. Or use a recursive data structure where an Error can contain Errors?
     // TODO: new JSON req/res format:
     // {
     //     ...parameters,
@@ -101,8 +102,8 @@ object UsersRoutes extends ValidationUtilities {
                     try {
                         Ok(
                             UsersServices.list(
-                                root.page_number.int.getOption(body).get,
-                                root.page_length.int.getOption(body).get
+                                jsonGet[Int](root.page_number.int, body),
+                                jsonGet[Int](root.page_length.int, body)
                             ).transact(xa).unsafeRunSync
                         )
                     } catch {
