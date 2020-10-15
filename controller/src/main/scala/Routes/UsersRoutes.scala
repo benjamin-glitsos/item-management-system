@@ -98,7 +98,7 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
             for {
                 // TODO: return: total_items, total_pages, range_start, range_end
                 body <- req.as[Json]
-                res <- () => {
+                res <- {
                     try {
                         Ok(
                             UsersServices.list(
