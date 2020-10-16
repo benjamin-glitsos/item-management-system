@@ -4,22 +4,21 @@ import bundles.doobie.database.dc._
 import doobie._
 
 object UsersDAO {
-    // TODO: make a separate DAO which is count. Then use count and list in the Service to calculate the page numbers
     def count() = {
         run(quote(
             query[UsersList]
-                .filter(_.deleted_at.isEmpty) // TODO: can you use composition for these first two lines?
+                .filter(_.deleted_at.isEmpty)
                 .size
         ))
     }
 
-    def list(pageNumber: Int, pageLength: Int) = {
+    def list(offset: Int, length: Int) = {
         run(quote(
             query[UsersList]
                 .filter(_.deleted_at.isEmpty)
                 .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
-                // .drop((lift(pageNumber) - 1) * lift(pageLength))
-                // .take(lift(pageLength))
+                .drop(lift(offset))
+                .take(lift(length))
         ))
     }
 

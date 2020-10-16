@@ -4,25 +4,30 @@ import io.circe.generic.auto._, io.circe.syntax._
 import io.circe.Json
 
 object UsersServices {
-    def list(pageNumber: Int, pageLength: Int): ConnectionIO[Json] = {
+    def list(pageNumber: Int, pageLength: Int): ConnectionIO[Validation[Json]] = {
         for {
-            totalItems <- UsersDAO.count()
+            totalItems: Int <- UsersDAO.count().map(_.toInt)
 
             val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
-            val rangeStart: Int = 1 + (pageNumber - 1) * pageLength
+            val offset: Int = (pageNumber - 1) * pageLength
+            val rangeStart: Int = 1 + offset
             val rangeEnd: Int = rangeStart + pageLength - 1
-            val isValidRange: Boolean = rangeStart <= totalItems
 
-            data <- UsersDAO.list(pageNumber, pageLength)
+            data: UsersList <- UsersDAO.list(offset, pageLength)
 
-            val output = Map[String, Json](
-                "total_items" -> totalItems.asJson,
-                "total_pages" -> totalPages.asJson,
-                "range_start" -> rangeStart.asJson,
-                "range_end" -> rangeEnd.asJson,
-                "is_valid_range" -> isValidRange.asJson,
-                "data" -> data.asJson
-            ).asJson
+            val output = validatePageRange[Json](
+                rangeStart,
+                rangeEnd,
+                totalItems,
+                success = Map[String, Json](
+                    "total_items" -> totalItems.asJson,
+                    "total_pages" -> totalPages.asJson,
+                    "range_start" -> rangeStart.asJson,
+                    "range_end" -> rangeEnd.asJson,
+                    "data" -> data.asJson
+                ).asJson
+            )
+
         } yield (output)
     }
 

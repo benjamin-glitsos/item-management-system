@@ -99,16 +99,21 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
                 body <- req.as[Json]
                 res <- {
                     try {
-                        Ok(
-                            // TODO: validate page range using json schema
-                            UsersServices.list(
-                                // TODO: instead of getter, make getInt, getString, etc. Use dynamic (string) path method so it can take: (body, "page_number")
-                                getter[Int](body, root.page_number.int),
-                                getter[Int](body, root.page_length.int)
-                            ).transact(xa).unsafeRunSync
-                        )
+                        // TODO: validate page range using json schema
+                        // TODO: needs error handling especially of is_valid_range
+                        val x = UsersServices.list(
+                            // TODO: instead of getter, make getInt, getString, etc. Use dynamic (string) path method so it can take: (body, "page_number")
+                            getter[Int](body, root.page_number.int),
+                            getter[Int](body, root.page_length.int)
+                        ).transact(xa).unsafeRunSync
+
+                        x match {
+                            case Valid()
+                            case Invalid()
+                        }
                     } catch {
                         // TODO: fix this error which renders as: Invalid > e > error (in the json response)
+                        // TODO: generalise this to catch all errors - not just db errors?
                         case err: SQLException => {
                             BadRequest(Validators.databaseError(err))
                         }
