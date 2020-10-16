@@ -5,6 +5,14 @@ import doobie._
 
 object UsersDAO {
     // TODO: make a separate DAO which is count. Then use count and list in the Service to calculate the page numbers
+    def count() = {
+        run(quote(
+            query[UsersList]
+                .filter(_.deleted_at.isEmpty) // TODO: can you use composition for these first two lines?
+                .count
+        ))
+    }
+
     def list(pageNumber: Int, pageLength: Int) = {
         run(quote(
             query[UsersList]

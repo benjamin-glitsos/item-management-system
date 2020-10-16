@@ -2,8 +2,11 @@ import doobie._
 import cats.data.Validated.{Invalid, Valid}
 
 object UsersServices {
-    def list(pageNumber: Int, pageLength: Int): ConnectionIO[List[UsersList]] = {
-        UsersDAO.list(pageNumber: Int, pageLength: Int)
+    def list(pageNumber: Int, pageLength: Int): ConnectionIO[(Int, List[UsersList])] = {
+        for {
+            total_length <- UsersDAO.count()
+            data <- UsersDAO.list(pageNumber, pageLength)
+        } yield ((total_length, data))
     }
 
     // def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {
