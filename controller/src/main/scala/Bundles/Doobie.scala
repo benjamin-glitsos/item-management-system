@@ -27,9 +27,8 @@ package bundles {
 
             import dc._
 
-            implicit val metaSchemaMeta = schemaMeta[Meta]("meta")
-            implicit val usersSchemaMeta = schemaMeta[User]("users")
-            implicit val metaListViewSchemaMeta = schemaMeta[MetaListView]("meta_list_view")
+            implicit val usersListSchemaMeta = schemaMeta[UsersList]("users_list")
+            implicit val usersOpenSchemaMeta = schemaMeta[UsersOpen]("users_open")
         }
     }
 }
