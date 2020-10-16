@@ -1,12 +1,29 @@
 import doobie._
 import cats.data.Validated.{Invalid, Valid}
+import io.circe.generic.auto._, io.circe.syntax._
+import io.circe.Json
 
 object UsersServices {
-    def list(pageNumber: Int, pageLength: Int): ConnectionIO[(Int, List[UsersList])] = {
+    def list(pageNumber: Int, pageLength: Int): ConnectionIO[Json] = {
         for {
-            total_length <- UsersDAO.count()
+            totalItems <- UsersDAO.count()
+
+            val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
+            val rangeStart: Int = 1 + (pageNumber - 1) * pageLength
+            val rangeEnd: Int = rangeStart + pageLength - 1
+            val isValidRange: Boolean = rangeStart <= totalItems
+
             data <- UsersDAO.list(pageNumber, pageLength)
-        } yield ((total_length, data))
+
+            val output = Map[String, Json](
+                "total_items" -> totalItems.asJson,
+                "total_pages" -> totalPages.asJson,
+                "range_start" -> rangeStart.asJson,
+                "range_end" -> rangeEnd.asJson,
+                "is_valid_range" -> isValidRange.asJson,
+                "data" -> data.asJson
+            ).asJson
+        } yield (output)
     }
 
     // def create(user: User, user_username: String, notes: Option[String]): ConnectionIO[RecordResponse] = {

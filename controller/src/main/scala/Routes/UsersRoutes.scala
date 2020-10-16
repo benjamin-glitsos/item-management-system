@@ -96,11 +96,11 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
     val endpoints = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
             for {
-                // TODO: return: total_items, total_pages, range_start, range_end
                 body <- req.as[Json]
                 res <- {
                     try {
                         Ok(
+                            // TODO: validate page range using json schema
                             UsersServices.list(
                                 // TODO: instead of getter, make getInt, getString, etc. Use dynamic (string) path method so it can take: (body, "page_number")
                                 getter[Int](body, root.page_number.int),

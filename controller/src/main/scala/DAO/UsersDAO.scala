@@ -9,7 +9,7 @@ object UsersDAO {
         run(quote(
             query[UsersList]
                 .filter(_.deleted_at.isEmpty) // TODO: can you use composition for these first two lines?
-                .count
+                .size
         ))
     }
 
