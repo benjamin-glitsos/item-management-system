@@ -19,13 +19,13 @@ object UsersServices {
                 rangeStart,
                 rangeEnd,
                 totalItems,
-                success = Map[String, Json](
-                    "total_items" -> totalItems.asJson,
-                    "total_pages" -> totalPages.asJson,
-                    "range_start" -> rangeStart.asJson,
-                    "range_end" -> rangeEnd.asJson,
-                    "data" -> data.asJson
-                ).asJson
+                success = Json.object(
+                    "total_items" -> Json(totalItems).as[String],
+                    "total_pages" -> Json(totalPages).as[String],
+                    "range_start" -> Json(rangeStart).as[String],
+                    "range_end" -> Json(rangeEnd).as[String],
+                    "data" -> Json(data).as[Json]
+                )
             )
 
         } yield (output)
