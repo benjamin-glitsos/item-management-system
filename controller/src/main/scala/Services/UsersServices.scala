@@ -20,10 +20,10 @@ object UsersServices {
                 rangeEnd,
                 totalItems,
                 success = Json.object(
-                    "total_items" -> Json(totalItems).as[String],
-                    "total_pages" -> Json(totalPages).as[String],
-                    "range_start" -> Json(rangeStart).as[String],
-                    "range_end" -> Json(rangeEnd).as[String],
+                    "total_items" -> Json(totalItems).fromInt,
+                    "total_pages" -> Json(totalPages).fromInt,
+                    "range_start" -> Json(rangeStart).fromInt,
+                    "range_end" -> Json(rangeEnd).fromInt,
                     "data" -> Json(data).as[Json]
                 )
             )

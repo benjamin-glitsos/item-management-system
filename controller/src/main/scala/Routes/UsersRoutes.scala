@@ -19,6 +19,12 @@ import cats.data.ValidatedNel
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities with JsonUtilities {
+    // TODO: delete endpoint will take a "method" of soft, hard or restore.
+    // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
+    // TODO: re-add UUID to meta table. This will be used for the delete service
+    // TODO: add is_deleted column to meta table. Then the delete and restore fields will just hold data. The real functionality will be set by this boolean which will be toggled by the DAOs.
+    // TODO: create psql trigger to encrypt password using env file password as key. Create new file: triggers.sql or functions.sql?
+    // TODO: add json NotFound response: https://stackoverflow.com/questions/59518604/how-to-add-custom-error-responses-in-http4s. Or you can maybe just use orElseThen(NotFound(NotFoundError))
     // TODO: consider making Error type have a non-empty chain of errors inside it instead of using field_id field to match errors. Fields will be: error_code, description, errors: NonEmptyChain[String]. Or use a recursive data structure where an Error can contain Errors?
     // TODO: new JSON req/res format:
     // {
@@ -98,16 +104,19 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
             for {
                 body <- req.as[Json]
                 res <- {
+                    // TODO: make a validation function that handles this try catch block that is used on routes. It will match the following exceptions: SQLException, IOException, Exception.
                     try {
                         // TODO: validate page range using json schema
                         // TODO: needs error handling especially of is_valid_range
-                        val x = UsersServices.list(
-                            // TODO: instead of getter, make getInt, getString, etc. Use dynamic (string) path method so it can take: (body, "page_number")
+                        // TODO: service will return Validation[Json] and route will map that to Ok/BadRequest ?
+                        UsersServices.list(
+                            // TODO: use lenses to 'get' like this instead:
+                            // employee.lens(_.company.address.street.name)
+                            // Use this import if neccesary:
+                            // import monocle.macros.syntax.lens._
                             getter[Int](body, root.page_number.int),
                             getter[Int](body, root.page_length.int)
-                        ).transact(xa).unsafeRunSync
-
-                        x match {
+                        ).transact(xa).unsafeRunSync match {
                             case Valid()
                             case Invalid()
                         }
