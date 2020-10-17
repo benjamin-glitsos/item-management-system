@@ -7,7 +7,7 @@ CREATE VIEW meta_list AS
       , opener.username AS opened_by
       , meta.edited_at
       , editor.username AS edited_by
-      , meta.deleted_at
+      , meta.is_deleted
     FROM meta
     INNER JOIN users creator ON meta.created_by_id = creator.id
     INNER JOIN users opener ON meta.opened_by_id = opener.id
@@ -47,7 +47,7 @@ CREATE VIEW users_list AS
       , m.opened_by
       , m.edited_at
       , m.edited_by
-      , m.deleted_at
+      , m.is_deleted
     FROM users u
     INNER JOIN meta_list m ON u.meta_id = m.id;
 
