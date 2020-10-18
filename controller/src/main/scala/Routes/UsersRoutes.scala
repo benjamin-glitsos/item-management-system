@@ -20,6 +20,11 @@ import cats.data.ValidatedNel
 import java.io.IOException
 import java.sql.SQLException
 
+import org.everit.json.schema.Schema
+import org.everit.json.schema.loader.SchemaLoader
+import org.json.JSONObject
+import org.json.JSONTokener
+
 object UsersRoutes extends ValidationUtilities {
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
@@ -41,7 +46,6 @@ object UsersRoutes extends ValidationUtilities {
     // * records_with_users (json fields: username, avatar)
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
-    // TODO: use openapi4j and swagger ui for contracts
     // TODO: add additional information to the json schemas and then use that to generate the front-end forms automatically? Have an api parameter that requests the schema of an endpoint and it will return properties like description, bootstrap-column
     // TODO: make logging middleware that prints to console for now. A good simple middleware to create firstly
     // TODO: hash passwords asyncronously (use ZIO)
@@ -65,6 +69,11 @@ object UsersRoutes extends ValidationUtilities {
 
     val endpoints = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
+            try (InputStream inputStream = getClass().getResourceAsStream("/path/to/your/schema.json")) {
+                JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+                Schema schema = SchemaLoader.load(rawSchema);
+                schema.validate(new JSONObject("{\"hello\" : \"world\"}")); // throws a ValidationException if this object is invalid
+            }
             for {
                 body <- req.as[Json] map { jsonSchema(_) } // TODO: Json Schema
                 // TODO: maybe do something like: jsonSchema(body) *> handleResponse.
