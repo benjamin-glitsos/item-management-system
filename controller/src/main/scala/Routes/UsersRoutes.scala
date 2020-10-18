@@ -66,7 +66,7 @@ object UsersRoutes extends ValidationUtilities {
     val endpoints = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
             for {
-                body <- req.as[Json]
+                body <- req.as[Json] map { jsonSchema(_) } // TODO: Json Schema
                 res <- handleResponse(
                         UsersServices.list(
                             root.page_number.int.getOption(body).get,
@@ -88,11 +88,6 @@ object UsersRoutes extends ValidationUtilities {
         //     for {
         //         json <- body.as[Json]
         //
-        //         // TODO: nest the body of all requests into? (Even if they don't have any data, then still nest everything under head)
-        //         // {
-        //         //     params: {},
-        //         //     data: {}
-        //         // }
         //         val username = Validators.getRequiredField("username", json)
         //         val password = Validators.getRequiredField("password", json)
         //         val user_username = Validators.getRequiredField("user_username", json)
@@ -147,7 +142,6 @@ object UsersRoutes extends ValidationUtilities {
         //     //     },
         //     //     user_username: String
         //     // }
-        //     // TODO: for accessing the nested data, you'll need to make Validators.getRequiredField take a list of strings which will act as a path to the JSON data. And then it will join it with dots to pass to the error message e.g. data.notes. TODO: actually, should you use 'optics' for accessing this considering there are nested paths?
         //     Ok(UsersServices.edit(
         //         User(
         //             id = 2,
@@ -162,15 +156,12 @@ object UsersRoutes extends ValidationUtilities {
         // }
 
         // case body @ DELETE -> Root => {
-        //     // TODO: will need try catch for db errors like all endpoints
-        //     // TODO: rename 'action' to 'method'
         //     for {
         //         json <- body.as[Json] // TODO: xml <- body map { validateXML(parseXML(_)) }
         //
         //         val action = Validators.getRequiredField("action", json).andThen { action_ =>
         //             Validators.isDeleteActionSupported(x.action)
         //         }
-        //         // TODO: instead of getRequiredField function, try just using an optic and then using a function on the resulting Option. E.g. required and default functions just take an Option and return a Validated
         //         val user_username = Validators.getRequiredField("user_username", json)
         //         val username = Validators.getRequiredField("username", json)
         //         }
