@@ -1,18 +1,18 @@
 CREATE TABLE meta (
     id SERIAL PRIMARY KEY
-  , created_at TIMESTAMP DEFAULT NOW()
+  , created_at TIMESTAMP NOT NULL DEFAULT NOW()
   , created_by_id SMALLINT NOT NULL
-  , opens SMALLINT DEFAULT 0
+  , opens SMALLINT NOT NULL DEFAULT 0
   , opened_at TIMESTAMP
   , opened_by_id SMALLINT
-  , edits SMALLINT DEFAULT 0
+  , edits SMALLINT NOT NULL DEFAULT 0
   , edited_at TIMESTAMP
   , edited_by_id SMALLINT
   , deleted_at TIMESTAMP
   , deleted_by_id SMALLINT
   , restored_at TIMESTAMP
   , restored_by_id SMALLINT
-  , is_deleted BOOLEAN DEFAULT FALSE
+  , is_deleted BOOLEAN NOT NULL DEFAULT FALSE
   , notes HTML
 );
 

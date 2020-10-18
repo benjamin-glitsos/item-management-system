@@ -10,8 +10,8 @@ CREATE VIEW meta_list AS
       , meta.is_deleted
     FROM meta
     INNER JOIN users creator ON meta.created_by_id = creator.id
-    INNER JOIN users opener ON meta.opened_by_id = opener.id
-    INNER JOIN users editor ON meta.edited_by_id = editor.id;
+    LEFT JOIN users opener ON meta.opened_by_id = opener.id
+    LEFT JOIN users editor ON meta.edited_by_id = editor.id;
 
 CREATE VIEW meta_open AS
     SELECT
@@ -32,10 +32,10 @@ CREATE VIEW meta_open AS
       , meta.notes
     FROM meta
     INNER JOIN users creator ON meta.created_by_id = creator.id
-    INNER JOIN users opener ON meta.opened_by_id = opener.id
-    INNER JOIN users editor ON meta.edited_by_id = editor.id
-    INNER JOIN users deletor ON meta.deleted_by_id = deletor.id
-    INNER JOIN users restorer ON meta.restored_by_id = restorer.id;
+    LEFT JOIN users opener ON meta.opened_by_id = opener.id
+    LEFT JOIN users editor ON meta.edited_by_id = editor.id
+    LEFT JOIN users deletor ON meta.deleted_by_id = deletor.id
+    LEFT JOIN users restorer ON meta.restored_by_id = restorer.id;
 
 CREATE VIEW users_list AS
     SELECT

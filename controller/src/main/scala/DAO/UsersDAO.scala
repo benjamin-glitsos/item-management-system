@@ -7,7 +7,7 @@ object UsersDAO extends LogicUtilities {
     def count() = {
         run(quote(
             query[UsersList]
-                .filter(_.is_deleted.exists(_ == true))
+                .filter(!_.is_deleted.exists(_ == true))
                 .size
         ))
     }
@@ -15,7 +15,7 @@ object UsersDAO extends LogicUtilities {
     def list(offset: Int, length: Int) = {
         run(quote(
             query[UsersList]
-                .filter(_.is_deleted.exists(_ == true))
+                .filter(!_.is_deleted.exists(_ == true))
                 .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
                 .drop(lift(offset))
                 .take(lift(length))
