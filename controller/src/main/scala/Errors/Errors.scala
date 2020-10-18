@@ -26,4 +26,11 @@ object Errors {
         val field = None
         Error(code, message, field)
     }
+
+    def resourceNotFound(): Error = {
+        val code = "resource_not_found"
+        val message = "The page or other kind of resource that you have requested cannot be found at that URI."
+        val field = None
+        Error(code, message, field)
+    }
 }

@@ -24,7 +24,6 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
     // TODO: create psql trigger to encrypt password using env file password as key. Create new file: triggers.sql or functions.sql?
-    // TODO: add json NotFound response: https://stackoverflow.com/questions/59518604/how-to-add-custom-error-responses-in-http4s. Or you can maybe just use orElseThen(NotFound(NotFoundError))
     // TODO: use kompose for converting docker compose to kubernetes
     // TODO: use JSON Schema within Controller and later create an API that sends it to the Portal to be converted into OpenAPI format and combined with the OpenAPI YAML then used in an Angular component of the Swagger UI.
     // TODO: try using built-in auth middleware. Middleware will be: https, auto-slash, auth. But later you will probably make your own auth middleware so that you can add the user roles to the JWT and then also check access control within the same middleware.
@@ -76,6 +75,8 @@ object UsersRoutes extends ValidationUtilities {
                     )
             } yield (res)
         }
+
+        case _ => NotFound(Errors.resourceNotFound()).unsafeRunSync()
 
        // case GET -> Root / username => {
        //      // TODO: add user_username to the body
