@@ -116,9 +116,9 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
                             // import monocle.macros.syntax.lens._
                             getter[Int](body, root.page_number.int),
                             getter[Int](body, root.page_length.int)
-                        ).transact(xa).unsafeRunSync match {
-                            case Valid()
-                            case Invalid()
+                        ).transact(xa).unsafeRunSync match { // TODO: abstract this into its own function
+                            case Valid(res) => Ok(res)
+                            case Invalid(err) => BadRequest(err)
                         }
                     } catch {
                         // TODO: fix this error which renders as: Invalid > e > error (in the json response)

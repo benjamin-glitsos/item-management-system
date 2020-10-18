@@ -28,6 +28,7 @@ CREATE VIEW meta_open AS
       , deletor.username AS deleted_by
       , meta.restored_at
       , restorer.username AS restored_by
+      , meta.is_deleted
       , meta.notes
     FROM meta
     INNER JOIN users creator ON meta.created_by_id = creator.id
@@ -68,6 +69,7 @@ CREATE VIEW users_open AS
       , m.deleted_by
       , m.restored_at
       , m.restored_by
+      , m.is_deleted
       , m.notes
     FROM users u
     INNER JOIN meta_open m ON u.meta_id = m.id;

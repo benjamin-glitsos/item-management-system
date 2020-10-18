@@ -12,6 +12,7 @@ CREATE TABLE meta (
   , deleted_by_id SMALLINT
   , restored_at TIMESTAMP
   , restored_by_id SMALLINT
+  , is_deleted BOOLEAN DEFAULT FALSE
   , notes HTML
 );
 

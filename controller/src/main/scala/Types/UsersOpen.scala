@@ -16,5 +16,6 @@ case class UsersOpen(
     deleted_by: Option[String],
     restored_at: Option[LocalDateTime],
     restored_by: Option[String],
+    is_deleted: Option[Boolean],
     notes: Option[String]
 )

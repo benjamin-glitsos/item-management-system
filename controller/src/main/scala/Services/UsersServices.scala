@@ -6,12 +6,12 @@ import io.circe.Json
 object UsersServices {
     def list(pageNumber: Int, pageLength: Int): ConnectionIO[Validation[Json]] = {
         for {
-            totalItems: Int <- UsersDAO.count().map(_.toInt)
+            totalItems <- UsersDAO.count().map(_.toInt)
 
-            val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
-            val offset: Int = (pageNumber - 1) * pageLength
-            val rangeStart: Int = 1 + offset
-            val rangeEnd: Int = rangeStart + pageLength - 1
+            val totalPages = Math.ceil(totalItems.toFloat / pageLength).toInt
+            val offset = (pageNumber - 1) * pageLength
+            val rangeStart = 1 + offset
+            val rangeEnd = rangeStart + pageLength - 1
 
             data: UsersList <- UsersDAO.list(offset, pageLength)
 
@@ -19,7 +19,7 @@ object UsersServices {
                 rangeStart,
                 rangeEnd,
                 totalItems,
-                success = Json.object(
+                Json.object(
                     "total_items" -> Json(totalItems).fromInt,
                     "total_pages" -> Json(totalPages).fromInt,
                     "range_start" -> Json(rangeStart).fromInt,

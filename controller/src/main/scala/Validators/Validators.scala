@@ -15,7 +15,7 @@ object Validators extends ValidationUtilities with LogicUtilities with TextUtili
         Error(code, message, field).invalidNel
     }
 
-    def validatePageRange[A](rangeStart: Int, rangeEnd: Int, count: Int, success: A): Validation[A] = {
+    def validatePageRange[A](rangeStart: Int, rangeEnd: Int, count: Int, data: A): Validation[A] = {
         val code = "page_out_of_range"
         val message = s"The page of results that you have requested ($rangeStart - $rangeEnd) is out of range of the total count of results ($count)."
         val field = None

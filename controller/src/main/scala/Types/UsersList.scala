@@ -10,5 +10,5 @@ case class UsersList(
     opened_by: Option[String],
     edited_at: Option[LocalDateTime],
     edited_by: Option[String],
-    deleted_at: Option[LocalDateTime]
+    is_deleted: Option[Boolean]
 )
