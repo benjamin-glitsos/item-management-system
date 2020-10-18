@@ -67,6 +67,7 @@ object UsersRoutes extends ValidationUtilities {
         case req @ POST -> Root / "list" => {
             for {
                 body <- req.as[Json] map { jsonSchema(_) } // TODO: Json Schema
+                // TODO: maybe do something like: jsonSchema(body) *> handleResponse.
                 res <- handleResponse(
                         UsersServices.list(
                             root.page_number.int.getOption(body).get,
