@@ -1,6 +1,6 @@
 import cats.Applicative
 import cats.implicits._
-import cats.data.ValidatedNel
+import cats.data.ValidatedNec
 
 import io.circe.{Error => _, _}
 import io.circe.syntax._
@@ -11,9 +11,9 @@ object Validators extends ValidationUtilities with LogicUtilities with TextUtili
         val message = s"The page of results that you have requested (items $rangeStart - $rangeEnd) is out of range of the total count of results ($count)."
         val field = None
         if (all(List(rangeStart < count, rangeStart >= 1, count >= 0))) {
-            data.validNel
+            data.validNec
         } else {
-            Error(code, message, field).invalidNel
+            Error(code, message, field).invalidNec
         }
     }
 }

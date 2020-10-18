@@ -1,6 +1,6 @@
 import cats.Applicative
 import cats.implicits._
-import cats.data.ValidatedNel
+import cats.data.ValidatedNec
 import scala.util.matching.Regex
 import cats.effect.IO
 import org.http4s.Response
@@ -16,18 +16,18 @@ import java.io.IOException
 import java.sql.SQLException
 
 trait ValidationUtilities {
-    type Validation[A] = ValidatedNel[Error, A]
+    type Validation[A] = ValidatedNec[Error, A]
 
     def multipleValidations[A](value: A, validators: List[A => Validation[A]]) = {
         validators
             .map(f => f(value))
-            .fold(value.validNel)((a: Validation[A], b: Validation[A]) => a *> b)
+            .fold(value.validNec)((a: Validation[A], b: Validation[A]) => a *> b)
     }
 
     def doesStringContainPattern(string: String, pattern: Regex, error: Error): Validation[String] = {
         pattern.findFirstMatchIn(string) match {
-            case Some(_) => string.validNel
-            case None => error.invalidNel
+            case Some(_) => string.validNec
+            case None => error.invalidNec
         }
     }
 

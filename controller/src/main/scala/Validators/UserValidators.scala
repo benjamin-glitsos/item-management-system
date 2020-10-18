@@ -1,6 +1,6 @@
 import cats.Applicative
 import cats.implicits._
-import cats.data.ValidatedNel
+import cats.data.ValidatedNec
 import scala.util.matching.Regex
 
 object UserValidators extends ValidationUtilities with MathUtilities {
@@ -13,9 +13,9 @@ object UserValidators extends ValidationUtilities with MathUtilities {
             val code = "password_not_valid_length"
             val message = s"The password provided is ${aboveOrBelowTheLength} of ${passwordLengthBounds.max} characters in length. The provided password is ${password.size} characters in length."
             val field = Some("password")
-            Error(code, message, field).invalidNel
+            Error(code, message, field).invalidNec
         } else {
-            password.validNel
+            password.validNec
         }
     }
 
@@ -77,9 +77,9 @@ object UserValidators extends ValidationUtilities with MathUtilities {
             val code = "password_contains_overused_characters"
             val message = s"There ${areSingleOrMultipleChars} in this password that are overused. A character cannot represent more than ${passwordMaxCharUsageProportion.toString} of the entire password."
             val field = Some("password")
-            Error(code, message, field).invalidNel
+            Error(code, message, field).invalidNec
         } else {
-            password.validNel
+            password.validNec
         }
     }
 
@@ -99,6 +99,6 @@ object UserValidators extends ValidationUtilities with MathUtilities {
         val code = "user_cannot_delete_themselves"
         val message = s"A user cannot delete themselves. This error is thrown when the username of the user ('$username') and the username of the user they are attempting to delete ('$user_username') are the same."
         val field = None
-        Error(code, message, field).invalidNel
+        Error(code, message, field).invalidNec
     }
 }

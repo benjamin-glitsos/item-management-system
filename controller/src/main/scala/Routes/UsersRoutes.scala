@@ -34,7 +34,6 @@ object UsersRoutes extends ValidationUtilities {
     // src/test/scala/
     // TODO: use apply method for objects like Routers and Seeders so that they can be used like Routers()
     // TODO: use kompose for converting docker compose to kubernetes
-    // TODO: use NonEmptyChain for validation instead of NonEmptyList
     // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
     // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
     // TODO: Use database Views plus JSON to merge commonly-merged tables into one and then just use the Quill/Doobie to work with these Views. Multiple columns are merged into one JSON column. Have a new views.sql file for this. These Views will be:
