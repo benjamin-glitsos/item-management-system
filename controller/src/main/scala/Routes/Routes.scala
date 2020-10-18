@@ -28,8 +28,5 @@ import cats.data.ValidatedNel
 object Routes {
     val router = Router(
         "users" -> UsersRoutes.endpoints
-    ).mapF(_.getOrElse(
-            NotFound(Errors.resourceNotFound()).unsafeRunSync()
-        )
-    )
+    ).orNotFound
 }
