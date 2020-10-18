@@ -19,8 +19,8 @@ object Validators extends ValidationUtilities with LogicUtilities with TextUtili
         val code = "page_out_of_range"
         val message = s"The page of results that you have requested ($rangeStart - $rangeEnd) is out of range of the total count of results ($count)."
         val field = None
-        if (all(offset < count, offset >= 0, count >= 0)) {
-            success.validNel
+        if (all(List(rangeStart < count, rangeStart >= 0, count >= 0))) {
+            data.validNel
         } else {
             Error(code, message, field).invalidNel
         }

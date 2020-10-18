@@ -3,7 +3,7 @@ import cats.data.Validated.{Invalid, Valid}
 // import io.circe.generic.auto._, io.circe.syntax._
 import io.circe.Json
 
-object UsersServices {
+object UsersServices extends ValidationUtilities {
     def list(pageNumber: Int, pageLength: Int): ConnectionIO[Validation[Json]] = {
         for {
             totalItems <- UsersDAO.count().map(_.toInt)
@@ -13,13 +13,13 @@ object UsersServices {
             val rangeStart = 1 + offset
             val rangeEnd = rangeStart + pageLength - 1
 
-            data: UsersList <- UsersDAO.list(offset, pageLength)
+            data <- UsersDAO.list(offset, pageLength)
 
-            val output = validatePageRange[Json](
+            val output = Validators.validatePageRange[Json](
                 rangeStart,
                 rangeEnd,
                 totalItems,
-                Json.object(
+                Json.withObject(
                     "total_items" -> Json(totalItems).fromInt,
                     "total_pages" -> Json(totalPages).fromInt,
                     "range_start" -> Json(rangeStart).fromInt,
