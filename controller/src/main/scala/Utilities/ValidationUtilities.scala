@@ -38,9 +38,10 @@ trait ValidationUtilities {
                 case Invalid(err) => BadRequest(err)
             }
         } catch {
-            case err: SQLException => BadRequest(Errors.databaseException(err))
-            case err: IOException => BadRequest(Errors.ioException(err))
-            case err: Exception => BadRequest(Errors.generalException(err))
+            case err: SQLException => BadRequest(Errors.databaseException(err.getMessage))
+            case err: IOException => BadRequest(Errors.ioException(err.getMessage))
+            case err: Exception => BadRequest(Errors.generalException(err.getMessage))
+            case _: Throwable => BadRequest(Errors.unexpectedError())
         }
     }
 }

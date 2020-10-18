@@ -24,17 +24,8 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
     // TODO: re-add UUID to meta table. This will be used for the delete service
-    // TODO: add is_deleted column to meta table. Then the delete and restore fields will just hold data. The real functionality will be set by this boolean which will be toggled by the DAOs.
     // TODO: create psql trigger to encrypt password using env file password as key. Create new file: triggers.sql or functions.sql?
     // TODO: add json NotFound response: https://stackoverflow.com/questions/59518604/how-to-add-custom-error-responses-in-http4s. Or you can maybe just use orElseThen(NotFound(NotFoundError))
-    // TODO: consider making Error type have a non-empty chain of errors inside it instead of using field_id field to match errors. Fields will be: error_code, description, errors: NonEmptyChain[String]. Or use a recursive data structure where an Error can contain Errors?
-    // TODO: new JSON req/res format:
-    // {
-    //     ...parameters,
-    //     data: {
-    //         ...data
-    //     }
-    // }
     // TODO: use kompose for converting docker compose to kubernetes
     // TODO: use JSON Schema within Controller and later create an API that sends it to the Portal to be converted into OpenAPI format and combined with the OpenAPI YAML then used in an Angular component of the Swagger UI.
     // TODO: try using built-in auth middleware. Middleware will be: https, auto-slash, auth. But later you will probably make your own auth middleware so that you can add the user roles to the JWT and then also check access control within the same middleware.
@@ -44,15 +35,9 @@ object UsersRoutes extends ValidationUtilities {
     // src/test/scala/
     // TODO: use apply method for objects like Routers and Seeders so that they can be used like Routers()
     // TODO: use kompose for converting docker compose to kubernetes
-    // TODO: add object id to Meta table. Then make a Meta.redirect Service that will accept a UUID and return the front-end URL to redirect to. e.g. /{uuid} -> /api/redirect ({uuid}) -> { table_name: {object name}, business_key: {business key} }
-    // TODO: rename Records to Meta
-    // TODO: use .gitattributes to add SQL to the language statistics. Remove CSS?
     // TODO: use NonEmptyChain for validation instead of NonEmptyList
     // TODO: the XML will contain default values. Then it will return the XML tree-based data. Then you just directly get values from that tree. And you can use optional accessors for optional values and these will return Some/None. Therefore, all of this will now be handled by XSD.
     // TODO: instead of 'field' in Error case class, use mandatory 'id' String (don't use Option). Then use same id attribute on form fields on front-end. And these id attributes are determined in the XSD (by using id attribute)
-    // TODO: Add 'level' to Error. type Level = High | Medium | Low
-    // TODO: work by changing Staff DAO, services, seeder, etc. to Equipment. Just change fields and naming mainly
-    // TODO: Have two users that are created at startup: Super Admin (super_admin role) & Guest Admin (admin role)
     // TODO: Use database Views plus JSON to merge commonly-merged tables into one and then just use the Quill/Doobie to work with these Views. Multiple columns are merged into one JSON column. Have a new views.sql file for this. These Views will be:
     // * users_with_roles
     // * transactions_with_type
@@ -60,29 +45,9 @@ object UsersRoutes extends ValidationUtilities {
     // TODO: casbin error message will always be the same: "access_denied", "You do not have permission to '$action' this '$object' resource at this time."
     // TODO: casbin model will be ABAC with roles and superuser role
     // TODO: use openapi4j and swagger ui for contracts
-    // TODO: request and response format:
-    // {
-    //     head: {},
-    //     body: {}
-    // }
     // TODO: add additional information to the json schemas and then use that to generate the front-end forms automatically? Have an api parameter that requests the schema of an endpoint and it will return properties like description, bootstrap-column
     // TODO: make logging middleware that prints to console for now. A good simple middleware to create firstly
-    // TODO: after OAS validation, you can just use optics to get values directly out of Circe JSON. don't even use maybe. it's already within validated data type so already typesafe
-    // TODO: middleware after request will check response against the openapi, but only if testing parameter is set to true
     // TODO: hash passwords asyncronously (use ZIO)
-    // TODO: have a centre-aligned menu for front-end. Don't use a sidebar menu.
-    // TODO: new routing pattern:
-    // GET /api/options (Returns an array of the available actions that this user has access to perform. This call is made when the page first loads.)
-    // GET /api/{object}/{action}
-    // Where action:
-    //     open
-    //     save
-    //     create
-    //     delete (restore is a parameter)
-    //     hard delete
-    //     buy
-    //     sell
-    //     options (Returns an array of all of the objects from that table in the database. (Add an attribute to filter by only those in the menu (have a table field for this) and then use this API to map the menu items. Make sure to add this header: Allow: POST)
     // Overall routing structure is:
     // / => Front-end
     // /api/ => API
