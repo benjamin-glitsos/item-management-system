@@ -1,7 +1,8 @@
 import doobie._
 import cats.data.Validated.{Invalid, Valid}
-// import io.circe.generic.auto._, io.circe.syntax._
 import io.circe.Json
+import io.circe.generic.auto._
+import io.circe.syntax._
 
 object UsersServices extends ValidationUtilities {
     def list(pageNumber: Int, pageLength: Int): ConnectionIO[Validation[Json]] = {
@@ -19,12 +20,12 @@ object UsersServices extends ValidationUtilities {
                 rangeStart,
                 rangeEnd,
                 totalItems,
-                Json.withObject(
-                    "total_items" -> Json(totalItems).fromInt,
-                    "total_pages" -> Json(totalPages).fromInt,
-                    "range_start" -> Json(rangeStart).fromInt,
-                    "range_end" -> Json(rangeEnd).fromInt,
-                    "data" -> Json(data).as[Json]
+                Json.obj(
+                    "total_items" -> Json.fromInt(totalItems),
+                    "total_pages" -> Json.fromInt(totalPages),
+                    "range_start" -> Json.fromInt(rangeStart),
+                    "range_end" -> Json.fromInt(rangeEnd),
+                    "data" -> data.asJson
                 )
             )
 
