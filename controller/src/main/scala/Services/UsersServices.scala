@@ -4,6 +4,8 @@ import io.circe.Json
 import io.circe.generic.auto._
 import io.circe.syntax._
 
+import cats.data.ValidatedNel
+
 object UsersServices extends ValidationUtilities {
     def list(pageNumber: Int, pageLength: Int): ConnectionIO[Validation[Json]] = {
         for {
@@ -21,10 +23,10 @@ object UsersServices extends ValidationUtilities {
                 rangeEnd,
                 totalItems,
                 Json.obj(
-                    "total_items" -> Json.fromInt(totalItems),
-                    "total_pages" -> Json.fromInt(totalPages),
-                    "range_start" -> Json.fromInt(rangeStart),
-                    "range_end" -> Json.fromInt(rangeEnd),
+                    "total_items" -> totalItems.asJson,
+                    "total_pages" -> totalPages.asJson,
+                    "range_start" -> rangeStart.asJson,
+                    "range_end" -> rangeEnd.asJson,
                     "data" -> data.asJson
                 )
             )
