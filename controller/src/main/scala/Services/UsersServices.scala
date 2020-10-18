@@ -1,6 +1,6 @@
 import doobie._
 import cats.data.Validated.{Invalid, Valid}
-import io.circe.generic.auto._, io.circe.syntax._
+// import io.circe.generic.auto._, io.circe.syntax._
 import io.circe.Json
 
 object UsersServices {
