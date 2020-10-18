@@ -109,17 +109,14 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
                         // TODO: validate page range using json schema
                         // TODO: needs error handling especially of is_valid_range
                         // TODO: service will return Validation[Json] and route will map that to Ok/BadRequest ?
-                        UsersServices.list(
+                        validationJsonResponse(UsersServices.list(
                             // TODO: use lenses to 'get' like this instead:
                             // employee.lens(_.company.address.street.name)
                             // Use this import if neccesary:
                             // import monocle.macros.syntax.lens._
                             getter[Int](body, root.page_number.int),
                             getter[Int](body, root.page_length.int)
-                        ).transact(xa).unsafeRunSync match { // TODO: abstract this into its own function
-                            case Valid(res) => Ok(res)
-                            case Invalid(err) => BadRequest(err)
-                        }
+                        ).transact(xa).unsafeRunSync)
                     } catch {
                         // TODO: fix this error which renders as: Invalid > e > error (in the json response)
                         // TODO: generalise this to catch all errors - not just db errors?
