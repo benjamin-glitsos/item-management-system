@@ -16,6 +16,8 @@ import cats.data.Validated.{Invalid, Valid}
 import cats.Applicative
 import cats.implicits._
 import cats.data.ValidatedNel
+
+import java.io.IOException
 import java.sql.SQLException
 
 object UsersRoutes extends ValidationUtilities {
@@ -112,10 +114,9 @@ object UsersRoutes extends ValidationUtilities {
                         ).transact(xa).unsafeRunSync)
                     } catch {
                         // TODO: fix this error which renders as: Invalid > e > error (in the json response)
-                        // TODO: generalise this to catch all errors - not just db errors?
-                        case err: SQLException => {
-                            BadRequest(Validators.databaseError(err))
-                        }
+                        case err: SQLException => BadRequest(Errors.databaseException(err))
+                        case err: IOException => BadRequest(Errors.ioException(err))
+                        case err: Exception => BadRequest(Errors.generalException(err))
                     }
                 }
             } yield (res)
