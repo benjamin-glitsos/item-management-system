@@ -105,20 +105,12 @@ object UsersRoutes extends ValidationUtilities {
         case req @ POST -> Root / "list" => {
             for {
                 body <- req.as[Json]
-                res <- {
-                    // TODO: make a validation function that handles this try catch block that is used on routes. It will match the following exceptions: SQLException, IOException, Exception.
-                    try {
-                        validationJsonResponse(UsersServices.list(
+                res <- handleResponse(
+                        UsersServices.list(
                             root.page_number.int.getOption(body).get,
                             root.page_length.int.getOption(body).get
-                        ).transact(xa).unsafeRunSync)
-                    } catch {
-                        // TODO: fix this error which renders as: Invalid > e > error (in the json response)
-                        case err: SQLException => BadRequest(Errors.databaseException(err))
-                        case err: IOException => BadRequest(Errors.ioException(err))
-                        case err: Exception => BadRequest(Errors.generalException(err))
-                    }
-                }
+                        ).transact(xa).unsafeRunSync
+                    )
             } yield (res)
         }
 

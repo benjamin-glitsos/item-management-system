@@ -12,6 +12,9 @@ import org.http4s.circe._
 import org.http4s.circe.CirceEntityEncoder._
 import io.circe.generic.auto._
 
+import java.io.IOException
+import java.sql.SQLException
+
 trait ValidationUtilities {
     type Validation[A] = ValidatedNel[Error, A]
 
@@ -28,10 +31,16 @@ trait ValidationUtilities {
         }
     }
 
-    def validationJsonResponse(res: Validation[Json]): IO[Response[IO]] = {
-        res match {
-            case Valid(res) => Ok(res)
-            case Invalid(err) => BadRequest(err)
+    def handleResponse(res: Validation[Json]): IO[Response[IO]] = {
+        try {
+            res match {
+                case Valid(res) => Ok(res)
+                case Invalid(err) => BadRequest(err)
+            }
+        } catch {
+            case err: SQLException => BadRequest(Errors.databaseException(err))
+            case err: IOException => BadRequest(Errors.ioException(err))
+            case err: Exception => BadRequest(Errors.generalException(err))
         }
     }
 }
