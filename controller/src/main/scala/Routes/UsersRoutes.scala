@@ -18,7 +18,7 @@ import cats.implicits._
 import cats.data.ValidatedNel
 import java.sql.SQLException
 
-object UsersRoutes extends ValidationUtilities with JsonUtilities {
+object UsersRoutes extends ValidationUtilities {
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
     // TODO: re-add UUID to meta table. This will be used for the delete service
@@ -106,16 +106,9 @@ object UsersRoutes extends ValidationUtilities with JsonUtilities {
                 res <- {
                     // TODO: make a validation function that handles this try catch block that is used on routes. It will match the following exceptions: SQLException, IOException, Exception.
                     try {
-                        // TODO: validate page range using json schema
-                        // TODO: needs error handling especially of is_valid_range
-                        // TODO: service will return Validation[Json] and route will map that to Ok/BadRequest ?
                         validationJsonResponse(UsersServices.list(
-                            // TODO: use lenses to 'get' like this instead:
-                            // employee.lens(_.company.address.street.name)
-                            // Use this import if neccesary:
-                            // import monocle.macros.syntax.lens._
-                            getter[Int](body, root.page_number.int),
-                            getter[Int](body, root.page_length.int)
+                            root.page_number.int.getOption(body).get,
+                            root.page_length.int.getOption(body).get
                         ).transact(xa).unsafeRunSync)
                     } catch {
                         // TODO: fix this error which renders as: Invalid > e > error (in the json response)
