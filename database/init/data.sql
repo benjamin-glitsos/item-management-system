@@ -1,6 +1,6 @@
 WITH user_meta_insert AS (
-    INSERT INTO meta (created_by_id)
-    VALUES (1)
+    INSERT INTO meta (uuid, created_by_id)
+    VALUES (gen_random_uuid(), 1)
     RETURNING id
 )
 INSERT INTO users (meta_id, email_address, username, password) VALUES (
@@ -11,8 +11,8 @@ INSERT INTO users (meta_id, email_address, username, password) VALUES (
 );
 
 WITH user_meta_insert AS (
-    INSERT INTO meta (created_by_id)
-    VALUES (1)
+    INSERT INTO meta (uuid, created_by_id)
+    VALUES (gen_random_uuid(), 1)
     RETURNING id
 )
 INSERT INTO users (meta_id, email_address, username, password) VALUES (

@@ -1,6 +1,7 @@
 CREATE VIEW meta_list AS
     SELECT
         meta.id
+      , meta.uuid
       , meta.created_at
       , creator.username AS created_by
       , meta.opened_at
@@ -16,6 +17,7 @@ CREATE VIEW meta_list AS
 CREATE VIEW meta_open AS
     SELECT
         meta.id
+      , meta.uuid
       , meta.created_at
       , creator.username AS created_by
       , meta.opens
@@ -42,6 +44,7 @@ CREATE VIEW users_list AS
         u.email_address
       , u.username
       , u.password
+      , m.uuid
       , m.created_at
       , m.created_by
       , m.opened_at
@@ -57,6 +60,7 @@ CREATE VIEW users_open AS
         u.email_address
       , u.username
       , u.password
+      , m.uuid
       , m.created_at
       , m.created_by
       , m.opens

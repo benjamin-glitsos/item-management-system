@@ -1,9 +1,11 @@
 import java.time.LocalDateTime
+import java.util.UUID
 
 case class UsersList(
     email_address: Option[String],
     username: Option[String],
     password: Option[String],
+    uuid: UUID,
     created_at: Option[LocalDateTime],
     created_by: Option[String],
     opened_at: Option[LocalDateTime],

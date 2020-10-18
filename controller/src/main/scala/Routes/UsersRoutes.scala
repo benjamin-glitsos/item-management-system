@@ -23,7 +23,6 @@ import java.sql.SQLException
 object UsersRoutes extends ValidationUtilities {
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
-    // TODO: re-add UUID to meta table. This will be used for the delete service
     // TODO: create psql trigger to encrypt password using env file password as key. Create new file: triggers.sql or functions.sql?
     // TODO: add json NotFound response: https://stackoverflow.com/questions/59518604/how-to-add-custom-error-responses-in-http4s. Or you can maybe just use orElseThen(NotFound(NotFoundError))
     // TODO: use kompose for converting docker compose to kubernetes
