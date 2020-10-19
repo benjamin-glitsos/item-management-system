@@ -26,6 +26,7 @@ import org.json.JSONObject
 import org.json.JSONTokener
 
 object UsersRoutes extends ValidationUtilities {
+    // TODO: TRY AKKA HTTP
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
     // TODO: create psql trigger to encrypt password using env file password as key. Create new file: triggers.sql or functions.sql?
@@ -69,11 +70,11 @@ object UsersRoutes extends ValidationUtilities {
 
     val endpoints = HttpRoutes.of[IO] {
         case req @ POST -> Root / "list" => {
-            try (InputStream inputStream = getClass().getResourceAsStream("/path/to/your/schema.json")) {
-                JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
-                Schema schema = SchemaLoader.load(rawSchema);
-                schema.validate(new JSONObject("{\"hello\" : \"world\"}")); // throws a ValidationException if this object is invalid
-            }
+            // try (InputStream inputStream = getClass().getResourceAsStream("/path/to/your/schema.json")) {
+            //     JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+            //     Schema schema = SchemaLoader.load(rawSchema);
+            //     schema.validate(new JSONObject("{\"hello\" : \"world\"}")); // throws a ValidationException if this object is invalid
+            // }
             for {
                 body <- req.as[Json] map { jsonSchema(_) } // TODO: Json Schema
                 // TODO: maybe do something like: jsonSchema(body) *> handleResponse.
