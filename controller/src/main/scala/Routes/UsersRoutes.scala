@@ -26,7 +26,9 @@ import org.json.JSONObject
 import org.json.JSONTokener
 
 object UsersRoutes extends ValidationUtilities {
-    // TODO: TRY AKKA HTTP
+    // TODO: USE UJSON
+    // TODO: USE SCALATEST
+    // TODO: USE AKKA HTTP
     // TODO: delete endpoint will take a "method" of soft, hard or restore.
     // TODO: delete endpoint will take a list of UUIDs. The users delete service will actually be a passthrough that calls the meta delete service which actually contains the functionality.
     // TODO: create psql trigger to encrypt password using env file password as key. Create new file: triggers.sql or functions.sql?
