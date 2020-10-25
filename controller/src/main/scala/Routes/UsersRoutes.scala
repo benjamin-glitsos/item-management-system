@@ -34,8 +34,7 @@ object UsersRoutes extends ValidationUtilities {
             //     schema.validate(new JSONObject("{\"hello\" : \"world\"}")); // throws a ValidationException if this object is invalid
             // }
             for {
-                body <- req.as[Json] map { jsonSchema(_) } // TODO: Json Schema
-                // TODO: maybe do something like: jsonSchema(body) *> handleResponse.
+                body <- req.as[Json]
                 res <- handleResponse(
                         UsersServices.list(
                             root.page_number.int.getOption(body).get,
