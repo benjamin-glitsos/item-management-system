@@ -3,7 +3,7 @@ import org.http4s.server.Router
 import bundles.doobie.connection._
 
 object Routes {
-    val router = Router(
-        "users" -> UsersRoutes.endpoints
-    ).orNotFound
+  val router = Router(
+      "users" -> UsersRoutes.endpoints
+  ).orNotFound
 }

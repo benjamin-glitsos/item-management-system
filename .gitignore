@@ -1,8 +1,19 @@
+# General --------------------
+
 .env
-node_modules/
-dist/
+
+# Controller --------------------
+
 controller/target/
 controller/project/target/
 controller/project/project/
 controller/volumes/
 controller/dumps/
+controller/.metals/
+controller/.bloop/
+controller/project/metals.sbt
+
+# Portal --------------------
+
+portal/node_modules/
+portal/dist/
