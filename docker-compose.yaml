@@ -37,7 +37,7 @@ services:
       - "database"
     ports:
       - 80:${CONTROLLER_PORT}
-  # portal:
+  # admin:
   #   build:
   #     context: ./portal/
   #   image: portal

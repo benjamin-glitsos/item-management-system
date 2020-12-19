@@ -22,7 +22,4 @@ object Main extends IOApp with TextUtilities with EnvUtilities {
       IO.pure(ExitCode.Success)
     }
   }
-  def wow() {
-    a
-  }
 }
