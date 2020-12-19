@@ -7,6 +7,7 @@
 controller/target/
 controller/project/target/
 controller/project/project/
+controller/project/.bloop/
 controller/volumes/
 controller/dumps/
 controller/.metals/
