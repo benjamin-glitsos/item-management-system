@@ -39,10 +39,14 @@ object Main {
     var command_line = ""
     do {
       if (command_line != "" && command_line != "exit") {
-        println(s"The command '$command_line' does not exist.")
+        println(
+            s"${Console.RED} The command '$command_line' does not exist. ${Console.WHITE}"
+        )
       }
       command_line = StdIn
-        .readLine("Use 'exit' to shutdown the server... ")
+        .readLine(
+            s"${Console.GREEN} Use 'exit' to shutdown the server... ${Console.WHITE}"
+        )
         .stripMargin
         .stripLineEnd
     } while (command_line != "exit")
