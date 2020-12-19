@@ -16,23 +16,6 @@ libraryDependencies ++= Seq(
 ).map(_ % "0.9.0")
 
 libraryDependencies ++= Seq(
-    "org.http4s" %% "http4s-dsl",
-    "org.http4s" %% "http4s-blaze-server",
-    "org.http4s" %% "http4s-blaze-client",
-    "org.http4s" %% "http4s-circe"
-).map(_ % "0.21.6")
-
-libraryDependencies ++= Seq(
-  "io.circe" %% "circe-core",
-  "io.circe" %% "circe-generic",
-  "io.circe" %% "circe-parser",
-).map(_ % "0.12.3")
-
-libraryDependencies ++= Seq(
-    "io.circe" %% "circe-optics" % "0.12.0"
-)
-
-libraryDependencies ++= Seq(
     "com.devskiller" % "jfairy" % "0.6.0",
     "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.1"
 )
