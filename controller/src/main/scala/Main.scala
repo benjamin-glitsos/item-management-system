@@ -1,7 +1,3 @@
-/*
- * Copyright (C) 2020 Lightbend Inc. <https://www.lightbend.com>
- */
-
 package docs.http.scaladsl
 
 import akka.actor.typed.ActorSystem
@@ -11,12 +7,11 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import scala.io.StdIn
 
-object HttpServerRoutingMinimal {
+object Main {
 
   def main(args: Array[String]): Unit = {
 
-    implicit val system = ActorSystem(Behaviors.empty, "my-system")
-    // needed for the future flatMap/onComplete in the end
+    implicit val system           = ActorSystem(Behaviors.empty, "my-system")
     implicit val executionContext = system.executionContext
 
     val route =
@@ -31,12 +26,28 @@ object HttpServerRoutingMinimal {
         }
       }
 
-    val bindingFuture = Http().newServerAt("0.0.0.0", 3000).bind(route)
+    val bindingFuture =
+      Http()
+        .newServerAt(
+            System.getenv("DOCKER_LOCALHOST"),
+            System.getenv("CONTROLLER_PORT").toInt
+        )
+        .bind(route)
 
-    println(s"Server online at http://localhost:3000/\nPress RETURN to stop...")
-    StdIn.readLine() // let it run until user presses return
+    println("Server online at http://localhost/")
+
+    var command_line = ""
+    do {
+      if (command_line != "" && command_line != "exit") {
+        println(s"The command '$command_line' does not exist.")
+      }
+      command_line = StdIn
+        .readLine("Use 'exit' to shutdown the server... ")
+        .stripMargin
+        .stripLineEnd
+    } while (command_line != "exit")
     bindingFuture
-      .flatMap(_.unbind())                 // trigger unbinding from the port
-      .onComplete(_ => system.terminate()) // and shutdown when done
+      .flatMap(_.unbind())
+      .onComplete(_ => system.terminate())
   }
 }
