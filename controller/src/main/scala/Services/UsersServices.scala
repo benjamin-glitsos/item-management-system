@@ -47,10 +47,14 @@ object UsersServices {
       println(testInput.get("offset"))
     } catch {
       case e: ValidationException => {
-        val message = (e.getMessage() +:
-          e.getCausingExceptions().asScala.map(_.getMessage()).toIndexedSeq)
-          .mkString("\n")
-        println(message)
+        val validationIntro: String = e.getMessage()
+        val validationErrors: Seq[String] =
+          e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
+        val validationAll: Seq[String] =
+          validationIntro +: validationErrors
+        val messages: String =
+          validationAll.mkString("\n")
+        println(messages)
       }
       case e: Throwable => println(e)
     }
