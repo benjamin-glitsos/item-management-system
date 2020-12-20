@@ -29,8 +29,8 @@ object UsersRoutes {
               HttpEntity(
                   ContentTypes.`application/json`,
                   write(
-                      UsersDAO
-                        .list(offset = 0, length = 25)
+                      UsersServices
+                        .list(offset = 0, pageLength = 25)
                         .transact(xa)
                         .unsafeRunSync
                   )
@@ -38,7 +38,6 @@ object UsersRoutes {
           )
       )
   )
-  // TODO: make this into UsersService
 
   // post(complete("Posted")),
   // delete(complete("Deleted"))
