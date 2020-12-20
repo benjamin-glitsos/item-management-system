@@ -6,31 +6,19 @@ import upickle.default._
 import doobie.implicits._
 import bundles.doobie.connection._
 import akka.http.scaladsl.model._
+import doobie._
+
+// TODO: make this route/UsersService use the request JSON and validate it using the everit JSON Schema package.
+// TODO: make custom error response which is the same but using JSON. E.g. { errors: ["The requested object was not ..."] }
+// TODO: make sure this is async and nothing is blocking
 
 object UsersRoutes {
-  implicit val localDateTimeReadWrite: ReadWriter[LocalDateTime] =
-    readwriter[ujson.Value].bimap[LocalDateTime](
-        x => x.toString(),
-        json => {
-          val defaultFormat: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss.zzz");
-          LocalDateTime.parse(json.toString(), defaultFormat)
-        }
-    )
-
-  implicit val rw: ReadWriter[UsersList] = macroRW
-
   def apply(): Route = concat(
       get(
           complete(
               HttpEntity(
                   ContentTypes.`application/json`,
-                  write(
-                      UsersServices
-                        .list(offset = 0, pageLength = 25)
-                        .transact(xa)
-                        .unsafeRunSync
-                  )
+                  UsersServices.list()
               )
           )
       )
