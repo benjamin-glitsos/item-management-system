@@ -17,10 +17,13 @@ object UsersServices {
 
   implicit val rw: ReadWriter[UsersList] = macroRW
 
-  def list(s: String): String = {
+  def list(reqBody: String): String = {
+    val body: ujson.Value = ujson.read(entityBody)
+    val offset            = body("offset").num
+    val pageLength        = body("page_length").num
     write(
         UsersDAO
-          .list(offset = 0, pageLength = 25)
+          .list(offset, pageLength)
           .transact(xa)
           .unsafeRunSync
     )
