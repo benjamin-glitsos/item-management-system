@@ -6,9 +6,6 @@ import upickle.default._
 import doobie.implicits._
 import bundles.doobie.connection._
 import akka.http.scaladsl.model._
-import akka.http.scaladsl.model.ContentTypes._
-import akka.http.scaladsl.model.headers._
-import akka.http.scaladsl.model.HttpMethods._
 
 object UsersRoutes {
   implicit val localDateTimeReadWrite: ReadWriter[LocalDateTime] =
@@ -37,8 +34,7 @@ object UsersRoutes {
               )
           )
       )
+      // post(complete("Posted")),
+      // delete(complete("Deleted"))
   )
-
-  // post(complete("Posted")),
-  // delete(complete("Deleted"))
 }

@@ -23,7 +23,16 @@ object Server {
         )
         .bind(Routes())
 
-    println("Server is online at http://localhost/")
+    println(
+        ansi()
+          .a("\n")
+          .fg(BLUE)
+          .a("The server is online at ")
+          .bold()
+          .a("http://localhost/")
+          .reset()
+          .a("\n")
+    )
 
     // Graceful shutdown --------------------
 
