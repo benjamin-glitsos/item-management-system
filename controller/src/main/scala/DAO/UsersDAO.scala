@@ -1,17 +1,8 @@
-// import bundles.doobie.database._
-import bundles.doobie.database.dc._
-// import doobie._
+import io.getquill._
 
-object UsersDAO extends LogicUtilities {
-  def count() = {
-    run(
-        quote(
-            query[UsersList]
-              .filter(!_.is_deleted.exists(_ == true))
-              .size
-        )
-    )
-  }
+object UsersDAO {
+  val ctx = new SqlMirrorContext(MirrorSqlDialect, Literal)
+  import ctx._
 
   def list(offset: Int, length: Int) = {
     run(
