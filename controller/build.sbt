@@ -18,7 +18,8 @@ libraryDependencies ++= Seq(
 libraryDependencies ++= Seq(
     "com.devskiller" % "jfairy" % "0.6.0",
     "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.1",
-    "org.fusesource.jansi" % "jansi" % "2.1.1"
+    "org.fusesource.jansi" % "jansi" % "2.1.1",
+    "com.lihaoyi" %% "upickle" % "0.9.5"
 )
 
 val AkkaVersion = "2.6.8"
@@ -31,10 +32,11 @@ libraryDependencies ++= Seq(
 )
 
 scalacOptions := Seq(
-    "-Ymacro-annotations"
+    "-Ymacro-annotations",
+    "-Ywarn-unused:imports"
 )
 
-// "-Ywarn-unused:imports"
+// 
 // "-Wdead-code",
 // "-Wnumeric-widen",
 // "-Woctal-literal",
