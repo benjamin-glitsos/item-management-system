@@ -13,7 +13,7 @@ import doobie._
 // TODO: make sure this is async and nothing is blocking
 
 object UsersRoutes {
-  def apply(request: HttpRequest): Route = concat(
+  def apply(): Route = concat(
       get(
           complete(
               HttpEntity(

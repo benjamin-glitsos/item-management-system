@@ -6,11 +6,9 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.HttpResponse
 import akka.http.scaladsl.model.HttpEntity.Chunked
 
-object Routes {
+object Version1Routes {
   def apply(): Route =
-    redirectToTrailingSlashIfMissing(StatusCodes.MovedPermanently) {
-      concat(
-          pathPrefix("api")(ApiRoutes())
-      )
-    }
+    concat(
+        pathPrefix("users")(UsersRoutes())
+    )
 }
