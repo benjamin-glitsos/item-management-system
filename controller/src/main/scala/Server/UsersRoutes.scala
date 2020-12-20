@@ -5,6 +5,10 @@ import akka.http.scaladsl.server.Route
 import upickle.default._
 import doobie.implicits._
 import bundles.doobie.connection._
+import akka.http.scaladsl.model._
+import akka.http.scaladsl.model.ContentTypes._
+import akka.http.scaladsl.model.headers._
+import akka.http.scaladsl.model.HttpMethods._
 
 object UsersRoutes {
   implicit val localDateTimeReadWrite: ReadWriter[LocalDateTime] =
@@ -22,16 +26,20 @@ object UsersRoutes {
   def apply(): Route = concat(
       get(
           complete(
-              write(
-                  UsersDAO
-                    .list(offset = 0, length = 25)
-                    .transact(xa)
-                    .unsafeRunSync
+              HttpEntity(
+                  ContentTypes.`application/json`,
+                  write(
+                      UsersDAO
+                        .list(offset = 0, length = 25)
+                        .transact(xa)
+                        .unsafeRunSync
+                  )
               )
           )
       )
-
-      // post(complete("Posted")),
-      // delete(complete("Deleted"))
   )
+  // TODO: make this into UsersService
+
+  // post(complete("Posted")),
+  // delete(complete("Deleted"))
 }
