@@ -2,8 +2,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.model._
 
-// TODO: make custom error response which is the same but using JSON. E.g. { errors: ["The requested object was not ..."] }
-// TODO: make sure this is async and nothing is blocking
+// TODO: don't worry about error handling, async or test cases. Don't do non-functional things until later when you have more time. Just finish JSON validation then do the other 3 UsersRoutes then you will be onto front-end.
 
 object UsersRoutes {
   def apply(entity: String): Route =
@@ -18,5 +17,6 @@ object UsersRoutes {
         )
     )
 }
+// get & path(emailAddress)
 // post(complete("Posted")),
 // delete(complete("Deleted"))

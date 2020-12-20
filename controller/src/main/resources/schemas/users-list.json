@@ -12,7 +12,7 @@
         },
         "page_length": {
             "description": "lorem",
-            "type": "string",
+            "type": "integer",
             "enum": [10, 25, 50, 100],
             "default": 10
         }
