@@ -9,8 +9,10 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-object Routes {
+object UsersRoutes {
   def apply(): Route = concat(
-      pathPrefix("users")(UsersRoutes())
+      get(complete("Gotten")),
+      post(complete("Posted")),
+      delete(complete("Deleted"))
   )
 }

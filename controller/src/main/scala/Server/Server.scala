@@ -27,19 +27,19 @@ object Server {
 
     println("Server is online at http://localhost/")
 
-    // Graceful shutdown REPL --------------------
+    // Graceful shutdown --------------------
 
-    var command_line = ""
+    var terminal_input = ""
     do {
-      if (command_line != "" && command_line != "exit") {
+      if (terminal_input != "" && terminal_input != "exit") {
         println(
             ansi()
               .fg(RED)
-              .a(s"The command '$command_line' does not exist")
+              .a(s"The command '$terminal_input' does not exist")
               .reset()
         );
       }
-      command_line = StdIn
+      terminal_input = StdIn
         .readLine(
             ansi()
               .fg(GREEN)
@@ -49,9 +49,10 @@ object Server {
         )
         .stripMargin
         .stripLineEnd
-    } while (command_line != "exit")
+    } while (terminal_input != "exit")
     bindingFuture
       .flatMap(_.unbind())
       .onComplete(_ => system.terminate())
+    println("Server shutdown complete.")
   }
 }
