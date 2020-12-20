@@ -17,10 +17,10 @@ object UsersServices {
 
   implicit val rw: ReadWriter[UsersList] = macroRW
 
-  def list(reqBody: String): String = {
+  def list(entityBody: String): String = {
     val body: ujson.Value = ujson.read(entityBody)
-    val offset            = body("offset").num
-    val pageLength        = body("page_length").num
+    val offset            = body("offset").num.toInt
+    val pageLength        = body("page_length").num.toInt
     write(
         UsersDAO
           .list(offset, pageLength)
