@@ -21,7 +21,8 @@ object UsersServices {
 
   implicit val rw: ReadWriter[UsersList] = macroRW
 
-  def list(): String = {
+  def list(s: String): String = {
+    println(s)
     write(
         UsersDAO
           .list(offset = 0, pageLength = 25)
