@@ -6,12 +6,10 @@ import akka.http.scaladsl.server.Directive0
 object ApiRoutes {
   def apply(): Route =
     cachingProhibited {
-      RequiredContentTypeDirective {
-        extractStrictEntity(3.seconds) { entity =>
-          concat(
-              pathPrefix("v1")(Version1Routes(entity.data.utf8String))
-          )
-        }
+      extractStrictEntity(3.seconds) { entity =>
+        concat(
+            pathPrefix("v1")(Version1Routes(entity.data.utf8String))
+        )
       }
     }
 }
