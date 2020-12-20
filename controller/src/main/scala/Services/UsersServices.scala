@@ -23,6 +23,7 @@ object UsersServices {
   implicit val rw: ReadWriter[UsersList] = macroRW
 
   def list(entityBody: String): String = {
+    val entityObject: JSONObject = new JSONObject(entityBody)
 
     try {
       val schemaSource: Source = Source.fromResource("schemas/users-list.json")
@@ -42,18 +43,8 @@ object UsersServices {
           .build()
           .load()
           .build()
-      val entityObject: JSONObject = new JSONObject(entityBody)
       schema.validate(entityObject)
 
-      val body: ujson.Value = ujson.read(entityObject.toString())
-      val offset            = body("offset").num.toInt
-      val pageLength        = body("page_length").num.toInt
-      write(
-          UsersDAO
-            .list(offset, pageLength)
-            .transact(xa)
-            .unsafeRunSync
-      )
     } catch {
       case e: ValidationException => {
         val validationIntro: String = e.getMessage()
@@ -61,9 +52,22 @@ object UsersServices {
           e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
         val validationAll: Seq[String] =
           validationIntro +: validationErrors
-        println(validationAll.mkString("\n"))
+        val messages: String =
+          validationAll.mkString("\n")
+        println(messages)
       }
       case e: Throwable => println(e)
     }
+
+    val body: ujson.Value = ujson.read(entityObject.toString())
+    val offset            = body("offset").num.toInt
+    val pageLength        = body("page_length").num.toInt
+
+    write(
+        UsersDAO
+          .list(offset, pageLength)
+          .transact(xa)
+          .unsafeRunSync
+    )
   }
 }
