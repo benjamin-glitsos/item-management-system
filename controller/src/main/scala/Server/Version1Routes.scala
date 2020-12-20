@@ -2,8 +2,8 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 
 object Version1Routes {
-  def apply(entity: String): Route =
+  def apply(): Route =
     concat(
-        pathPrefix("users")(UsersRoutes(entity))
+        pathPrefix("users")(UsersRoutes())
     )
 }
