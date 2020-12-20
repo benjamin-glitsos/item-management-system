@@ -25,8 +25,8 @@ object UsersServices {
   def list(entityBody: String): String = {
 
     try {
-      val schemaSource = Source.fromResource("schemas/users-list.json")
-      val schemaString =
+      val schemaSource: Source = Source.fromResource("schemas/users-list.json")
+      val schemaString: String =
         try schemaSource.mkString
         finally schemaSource.close()
       val rawSchema: JSONObject =
@@ -42,9 +42,18 @@ object UsersServices {
           .build()
           .load()
           .build()
-      val testInput = new JSONObject("{}")
-      schema.validate(testInput)
-      println(testInput.get("offset"))
+      val entityObject: JSONObject = new JSONObject(entityBody)
+      schema.validate(entityObject)
+
+      val body: ujson.Value = ujson.read(entityObject.toString())
+      val offset            = body("offset").num.toInt
+      val pageLength        = body("page_length").num.toInt
+      write(
+          UsersDAO
+            .list(offset, pageLength)
+            .transact(xa)
+            .unsafeRunSync
+      )
     } catch {
       case e: ValidationException => {
         val validationIntro: String = e.getMessage()
@@ -52,23 +61,9 @@ object UsersServices {
           e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
         val validationAll: Seq[String] =
           validationIntro +: validationErrors
-        val messages: String =
-          validationAll.mkString("\n")
-        println(messages)
+        println(validationAll.mkString("\n"))
       }
       case e: Throwable => println(e)
     }
-
-    // TODO: pass the succesful validation (with default values) to ujson, reject unsuccessful with your standardised error format
-
-    val body: ujson.Value = ujson.read(entityBody)
-    val offset            = body("offset").num.toInt
-    val pageLength        = body("page_length").num.toInt
-    write(
-        UsersDAO
-          .list(offset, pageLength)
-          .transact(xa)
-          .unsafeRunSync
-    )
   }
 }

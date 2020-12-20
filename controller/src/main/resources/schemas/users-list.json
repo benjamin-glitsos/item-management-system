@@ -16,6 +16,5 @@
             "enum": [10, 25, 50, 100],
             "default": 10
         }
-    },
-    "required": ["offset", "page_length"]
+    }
 }
