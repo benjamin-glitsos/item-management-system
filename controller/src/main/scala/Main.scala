@@ -6,6 +6,9 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import scala.io.StdIn
+import org.fusesource.jansi.AnsiConsole
+import org.fusesource.jansi.Ansi._
+import org.fusesource.jansi.Ansi.Color._
 
 object Main {
 
@@ -13,6 +16,8 @@ object Main {
 
     implicit val system           = ActorSystem(Behaviors.empty, "my-system")
     implicit val executionContext = system.executionContext
+
+    AnsiConsole.systemInstall();
 
     val route = get {
       concat(
@@ -33,18 +38,25 @@ object Main {
         )
         .bind(route)
 
-    println("Server online at http://localhost/")
+    println("Server is online at http://localhost/")
 
     var command_line = ""
     do {
       if (command_line != "" && command_line != "exit") {
         println(
-            Console.RED + s"The command '$command_line' does not exist." + Console.WHITE
-        )
+            ansi()
+              .fg(RED)
+              .a(s"The command '$command_line' does not exist")
+              .reset()
+        );
       }
       command_line = StdIn
         .readLine(
-            Console.GREEN + "Use 'exit' to shutdown the server... " + Console.WHITE
+            ansi()
+              .fg(GREEN)
+              .a("Use 'exit' to shutdown the server... ")
+              .reset()
+              .toString()
         )
         .stripMargin
         .stripLineEnd
