@@ -1,4 +1,4 @@
-import io.getquill._
+import bundles.doobie.database.dc._
 
 object UsersDAO {
   def list(offset: Int, length: Int) = {
