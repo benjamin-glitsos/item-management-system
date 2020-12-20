@@ -1,9 +1,6 @@
 import io.getquill._
 
 object UsersDAO {
-  val ctx = new SqlMirrorContext(MirrorSqlDialect, Literal)
-  import ctx._
-
   def list(offset: Int, length: Int) = {
     run(
         quote(
