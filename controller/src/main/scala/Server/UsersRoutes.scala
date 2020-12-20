@@ -9,6 +9,7 @@ import akka.http.scaladsl.model._
 
 object UsersRoutes {
   def apply(entity: String): Route =
+    // TODO: first send entity (keeping it as a string) to the json validator. Then parse it using uPickle so that you can get the values out of it and pass them to UsersService
     concat(
         get(
             complete(
