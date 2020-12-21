@@ -1,4 +1,5 @@
 import org.everit.json.schema.{Schema, ValidationException}
+import org.everit.json.schema.loader.SchemaClient
 import akka.http.scaladsl.server._
 import org.everit.json.schema.loader.SchemaLoader
 import org.json.{JSONObject, JSONTokener}
@@ -30,6 +31,7 @@ object SchemaValidate {
             .builder()
             .schemaClient(SchemaClient.classPathAwareClient())
             .useDefaults(true)
+            .schemaClient(SchemaClient.classPathAwareClient())
             .schemaJson(rawSchema)
             .resolutionScope("classpath://schemas/")
             .draftV7Support()
@@ -43,15 +45,14 @@ object SchemaValidate {
           schema.validate(entityObject)
         } catch {
           case e: ValidationException => {
-            val validationSummary: String = e.getMessage()
+            val lineDelimitedErrors: String =
+              e.getCausingExceptions()
+                .asScala
+                .map(e => s"JSON: ${e.getMessage()}")
+                .toSeq
+                .mkString("\n")
 
-            val validationDetails: Seq[String] =
-              e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
-
-            val validationAll: Seq[String] =
-              validationSummary +: validationDetails
-
-            validationErrors = validationAll.mkString("\n")
+            validationErrors = lineDelimitedErrors
           }
         }
 
