@@ -37,12 +37,28 @@ object SchemaValidate {
             .load()
             .build()
 
-        val validate = Try(schema.validate(entityObject))
+        var validationErrors = ""
 
-        if (validate.isSuccess) {
+        try {
+          schema.validate(entityObject)
+        } catch {
+          case e: ValidationException => {
+            val validationSummary: String = e.getMessage()
+
+            val validationDetails: Seq[String] =
+              e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
+
+            val validationAll: Seq[String] =
+              validationSummary +: validationDetails
+
+            validationErrors = validationAll.mkString("\n")
+          }
+        }
+
+        if (validationErrors.isEmpty) {
           provide(entityObject.toString())
         } else {
-          reject(ValidationRejection("wow"))
+          reject(ValidationRejection(validationErrors))
         }
       })
 }
