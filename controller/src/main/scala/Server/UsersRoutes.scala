@@ -8,18 +8,18 @@ import akka.http.scaladsl.model._
 
 object UsersRoutes {
   def apply(): Route =
-    JsonSchemaValidate("users-list") { entity =>
-      concat(
-          get(
+    concat(
+        get(
+            SchemaValidate("users-list") { validatedBody =>
               complete(
                   HttpEntity(
                       ContentTypes.`application/json`,
-                      UsersServices.list("{}")
+                      UsersServices.list(validatedBody)
                   )
               )
-          )
-      )
-    }
+            }
+        )
+    )
 }
 // get & path(emailAddress)
 // post(complete("Posted")),
