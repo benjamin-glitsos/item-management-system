@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "page_number": {
+            "$id": "#page_number",
+            "description": "The page of items to return.",
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+        },
+        "page_length": {
+            "$id": "#page_length",
+            "description": "The number of items per page.",
+            "type": "integer",
+            "enum": [10, 25, 50, 100],
+            "default": 10
+        }
+    }
+}

@@ -32,6 +32,7 @@ object SchemaValidate {
             .builder()
             .useDefaults(true)
             .schemaJson(rawSchema)
+            .resolutionScope("classpath://schemas/")
             .draftV7Support()
             .build()
             .load()
