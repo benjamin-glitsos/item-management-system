@@ -4,7 +4,12 @@
     "description": "List the users who are registered to access this system.",
     "type": "object",
     "properties": {
-        "page_number": { "$ref": "pagination.json#/definitions/page_number" },
+        "page_number": {
+            "description": "The page of items to return.",
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+        },
         "page_length": {
             "description": "The number of items per page.",
             "type": "integer",

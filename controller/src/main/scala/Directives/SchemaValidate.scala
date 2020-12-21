@@ -6,8 +6,6 @@ import scala.io.Source
 import scala.jdk.CollectionConverters._
 import akka.http.scaladsl.server.Directives._
 import scala.concurrent.duration._
-import akka.http.scaladsl.model._
-import scala.util.{Try, Success, Failure}
 
 object SchemaValidate {
   def apply(schemaFilename: String): Directive1[String] =
