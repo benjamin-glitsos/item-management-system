@@ -15,7 +15,7 @@ object UsersServices {
         }
     )
   implicit val rwUsersList: ReadWriter[UsersList] = macroRW
-  implicit val rwUserView: ReadWriter[UserView]   = macroRW
+  implicit val rwUserOpen: ReadWriter[UserOpen]   = macroRW
 
   def list(entityBody: String): String = {
     val body: ujson.Value = ujson.read(entityBody)
@@ -47,9 +47,9 @@ object UsersServices {
       .unsafeRunSync
   }
 
-  def view(username: String) = {
+  def open(username: String) = {
     (for {
-      data <- UsersDAO.view(username)
+      data <- UsersDAO.open(username)
 
       val output = write(
           ujson.Obj(

@@ -24,7 +24,7 @@ object UsersRoutes {
                   complete(
                       HttpEntity(
                           ContentTypes.`application/json`,
-                          UsersServices.view(username)
+                          UsersServices.open(username)
                       )
                   )
               )

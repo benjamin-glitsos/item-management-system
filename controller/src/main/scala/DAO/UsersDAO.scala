@@ -23,10 +23,10 @@ object UsersDAO {
     )
   }
 
-  def view(username: String) = {
+  def open(username: String) = {
     run(
         quote(
-            query[UserView].filter(_.username == lift(username))
+            query[UserOpen].filter(_.username == lift(username))
         )
     ).map(_.head)
   }

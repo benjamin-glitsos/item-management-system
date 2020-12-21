@@ -1,10 +1,9 @@
 import java.time.LocalDateTime
 import java.util.UUID
 
-case class UserView(
+case class UserOpen(
     email_address: String,
     username: String,
-    password: String,
     uuid: UUID,
     created_at: LocalDateTime,
     created_by: String,
