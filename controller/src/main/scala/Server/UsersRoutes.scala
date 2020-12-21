@@ -10,7 +10,7 @@ object UsersRoutes {
   def apply(): Route =
     concat(
         get(
-            SchemaValidate("users-list") { validatedBody =>
+            SchemaValidate("list-users") { validatedBody =>
               complete(
                   HttpEntity(
                       ContentTypes.`application/json`,

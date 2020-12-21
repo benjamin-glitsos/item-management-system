@@ -50,7 +50,7 @@ object Server {
         .readLine(
             ansi()
               .fg(GREEN)
-              .a("Use 'exit' to shutdown the server... ")
+              .a("Use 'exit' to shutdown the server... \n")
               .reset()
               .toString()
         )
