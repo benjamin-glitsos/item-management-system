@@ -17,9 +17,18 @@ object UsersRoutes {
                   )
               )
             }
-        )
+        ),
+        path(Segment) { username: String =>
+          concat(
+              get(
+                  complete(
+                      HttpEntity(
+                          ContentTypes.`application/json`,
+                          UsersServices.view(username)
+                      )
+                  )
+              )
+          )
+        }
     )
 }
-// get & path(emailAddress)
-// post(complete("Posted")),
-// delete(complete("Deleted"))

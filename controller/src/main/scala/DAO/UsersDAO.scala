@@ -5,7 +5,7 @@ object UsersDAO {
     run(
         quote(
             query[UsersList]
-              .filter(!_.is_deleted.exists(_ == true))
+              .filter(!_.is_deleted)
               .size
         )
     )
@@ -15,11 +15,19 @@ object UsersDAO {
     run(
         quote(
             query[UsersList]
-              .filter(!_.is_deleted.exists(_ == true))
+              .filter(!_.is_deleted)
               .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
               .drop(lift(offset))
               .take(lift(pageLength))
         )
     )
+  }
+
+  def view(username: String) = {
+    run(
+        quote(
+            query[UserView].filter(_.username == lift(username))
+        )
+    ).map(_.head)
   }
 }

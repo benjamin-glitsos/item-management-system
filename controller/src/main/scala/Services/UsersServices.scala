@@ -5,7 +5,7 @@ import doobie.implicits._
 import bundles.doobie.connection._
 
 object UsersServices {
-  implicit val localDateTimeReadWrite: ReadWriter[LocalDateTime] =
+  implicit val rwLocalDateTime: ReadWriter[LocalDateTime] =
     readwriter[ujson.Value].bimap[LocalDateTime](
         x => x.toString(),
         json => {
@@ -14,8 +14,8 @@ object UsersServices {
           LocalDateTime.parse(json.toString(), defaultFormat)
         }
     )
-
-  implicit val rw: ReadWriter[UsersList] = macroRW
+  implicit val rwUsersList: ReadWriter[UsersList] = macroRW
+  implicit val rwUserView: ReadWriter[UserView]   = macroRW
 
   def list(entityBody: String): String = {
     val body: ujson.Value = ujson.read(entityBody)
@@ -39,6 +39,21 @@ object UsersServices {
               "range_start" -> ujson.Num(rangeStart),
               "range_end"   -> ujson.Num(rangeEnd),
               "data"        -> writeJs(data)
+          )
+      )
+
+    } yield (output))
+      .transact(xa)
+      .unsafeRunSync
+  }
+
+  def view(username: String) = {
+    (for {
+      data <- UsersDAO.view(username)
+
+      val output = write(
+          ujson.Obj(
+              "data" -> writeJs(data)
           )
       )
 
