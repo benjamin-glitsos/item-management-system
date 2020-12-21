@@ -28,6 +28,7 @@ object SchemaValidate {
         val schema: Schema =
           SchemaLoader
             .builder()
+            .schemaClient(SchemaClient.classPathAwareClient())
             .useDefaults(true)
             .schemaJson(rawSchema)
             .resolutionScope("classpath://schemas/")
