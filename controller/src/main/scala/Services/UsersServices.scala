@@ -19,12 +19,12 @@ object UsersServices {
 
   def list(entityBody: String): String = {
     val body: ujson.Value = ujson.read(entityBody)
-    val offset            = body("offset").num.toInt
+    val pageNumber        = body("page_number").num.toInt
     val pageLength        = body("page_length").num.toInt
 
     write(
         UsersDAO
-          .list(offset, pageLength)
+          .list(pageNumber, pageLength)
           .transact(xa)
           .unsafeRunSync
     )
