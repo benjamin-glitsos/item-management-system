@@ -1,4 +1,5 @@
 import org.everit.json.schema.{Schema, ValidationException}
+import org.everit.json.schema.loader.SchemaClient
 import akka.http.scaladsl.server._
 import org.everit.json.schema.loader.SchemaLoader
 import org.json.{JSONObject, JSONTokener}
@@ -6,8 +7,6 @@ import scala.io.Source
 import scala.jdk.CollectionConverters._
 import akka.http.scaladsl.server.Directives._
 import scala.concurrent.duration._
-import akka.http.scaladsl.model._
-import scala.util.{Try, Success, Failure}
 
 object SchemaValidate {
   def apply(schemaFilename: String): Directive1[String] =
@@ -31,6 +30,7 @@ object SchemaValidate {
           SchemaLoader
             .builder()
             .useDefaults(true)
+            .schemaClient(SchemaClient.classPathAwareClient())
             .schemaJson(rawSchema)
             .resolutionScope("classpath://schemas/")
             .draftV7Support()
@@ -44,15 +44,14 @@ object SchemaValidate {
           schema.validate(entityObject)
         } catch {
           case e: ValidationException => {
-            val validationSummary: String = e.getMessage()
+            val lineDelimitedErrors: String =
+              e.getCausingExceptions()
+                .asScala
+                .map(e => s"JSON Validation: ${e.getMessage()}")
+                .toSeq
+                .mkString("\n")
 
-            val validationDetails: Seq[String] =
-              e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
-
-            val validationAll: Seq[String] =
-              validationSummary +: validationDetails
-
-            validationErrors = validationAll.mkString("\n")
+            validationErrors = lineDelimitedErrors
           }
         }
 

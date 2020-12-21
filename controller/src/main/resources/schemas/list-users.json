@@ -1,15 +1,15 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "List Users",
-    "description": "List the users who are registered to access this system.",
+    "description": "Lists users who are registered to access this system.",
     "type": "object",
     "properties": {
-        "page_number": { "$ref": "pagination.json#/definitions/page_number" },
+        "page_number": {
+            "$ref": "definitions/pagination.json#/definitions/page_number"
+        },
         "page_length": {
-            "description": "The number of items per page.",
-            "type": "integer",
-            "enum": [10, 25, 50, 100],
-            "default": 10
+            "$ref": "definitions/pagination.json#/definitions/page_length"
         }
-    }
+    },
+    "required": ["page_number", "page_length"]
 }
