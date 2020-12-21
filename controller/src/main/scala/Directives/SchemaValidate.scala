@@ -35,21 +35,20 @@ object SchemaValidate {
           .load()
           .build()
 
-      Try(schema.validate(entityObject)) match {
-        case Success(_) => pass
-        case Failure(e) => {
-          // val validationIntro: String = e.getMessage()
-          //
-          // val validationErrors: Seq[String] =
-          //   e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
-          //
-          // val validationAll: Seq[String] =
-          //   validationIntro +: validationErrors
-          //
-          // reject(ValidationRejection(validationAll.mkString("\n")))
-          println(e.getMessage())
-          e
-        }
+      val validation: Try[Unit] = Try(schema.validate(entityObject))
+
+      if (validation.isSuccess()) {
+        pass
+      } else {
+        val validationIntro: String = e.getMessage()
+
+        val validationErrors: Seq[String] =
+          e.getCausingExceptions().asScala.map(_.getMessage()).toSeq
+
+        val validationAll: Seq[String] =
+          validationIntro +: validationErrors
+
+        reject(ValidationRejection(validationAll.mkString("\n")))
       }
 
       entityObject.toString()
