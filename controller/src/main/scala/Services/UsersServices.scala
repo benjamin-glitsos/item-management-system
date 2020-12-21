@@ -17,8 +17,8 @@ object UsersServices {
   implicit val rwUsersList: ReadWriter[UsersList] = macroRW
   implicit val rwUserOpen: ReadWriter[UsersOpen]  = macroRW
 
-  def list(entityBody: String): String = {
-    val body: ujson.Value = ujson.read(entityBody)
+  def list(entityJson: String): String = {
+    val body: ujson.Value = ujson.read(entityJson)
     val pageNumber        = body("page_number").num.toInt
     val pageLength        = body("page_length").num.toInt
 
@@ -60,5 +60,13 @@ object UsersServices {
     } yield (output))
       .transact(xa)
       .unsafeRunSync
+  }
+
+  def delete(entityJson: String) = {
+    val body: ujson.Value = ujson.read(entityJson)
+    val method            = body("method").str
+    val usernames         = read[Seq[String]](body("usernames"))
+    // TODO: now use a match expression on the method for soft/hard/restore.
+    write(usernames)
   }
 }

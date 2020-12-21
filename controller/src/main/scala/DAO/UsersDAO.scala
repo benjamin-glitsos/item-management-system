@@ -31,4 +31,14 @@ object UsersDAO {
     )
       .map(_.head)
   }
+
+  def softDelete(username: String) = {
+    run(
+        quote(
+            query[UsersOpen]
+              .filter(_.username == lift(username))
+              .update(_.is_deleted -> lift(true))
+        )
+    )
+  }
 }

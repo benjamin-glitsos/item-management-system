@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Delete and Restore Users",
+    "description": "Deletes specified users who are or have been registered to access this system, or can restore users who have been soft-deleted.",
+    "type": "object",
+    "properties": {
+        "method": {
+            "type": "string",
+            "enum": ["soft", "hard", "restore"]
+        },
+        "usernames": {
+            "description": "The usernames of the users who should be deleted/restored.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        }
+    },
+    "required": ["method", "usernames"]
+}

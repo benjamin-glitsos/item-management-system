@@ -2,13 +2,12 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.model._
 
-// TODO: the users list service will need to return the 'total_pages' and 'total_results' and 'range_start' and 'range_end' and hence will need to nest the results within 'data'. The total_pages is needed for the front-end.
 // TODO: don't worry about error handling, async or test cases. Don't do non-functional things until later when you have more time. Just finish JSON validation then do the other 3 UsersRoutes then you will be onto front-end.
 
 object UsersRoutes {
   def apply(): Route =
     concat(
-        pathPrefix(Segment) { username =>
+        pathPrefix(Segment) { username: String =>
           concat(
               get(
                   complete(
@@ -21,12 +20,19 @@ object UsersRoutes {
           )
         },
         get(
-            SchemaValidate("list-users") { validatedBody =>
+            SchemaValidate("list-users") { validatedJson: String =>
               complete(
                   HttpEntity(
                       ContentTypes.`application/json`,
-                      UsersServices.list(validatedBody)
+                      UsersServices.list(validatedJson)
                   )
+              )
+            }
+        ),
+        delete(
+            SchemaValidate("delete-users") { validatedJson: String =>
+              complete(
+                  UsersServices.delete(validatedJson)
               )
             }
         )
