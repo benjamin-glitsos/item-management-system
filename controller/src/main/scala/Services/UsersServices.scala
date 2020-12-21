@@ -30,7 +30,7 @@ object UsersServices {
       val rangeStart = 1 + offset
       val rangeEnd   = rangeStart + pageLength - 1
 
-      data <- UsersDAO.list(pageNumber, pageLength)
+      data <- UsersDAO.list(offset, pageLength)
 
       val output = write(
           ujson.Obj(

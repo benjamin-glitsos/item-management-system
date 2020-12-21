@@ -6,7 +6,7 @@
         "page_number": {
             "description": "The page of items to return.",
             "type": "integer",
-            "minimum": 0
+            "minimum": 1
         },
         "page_length": {
             "description": "The number of items per page.",
