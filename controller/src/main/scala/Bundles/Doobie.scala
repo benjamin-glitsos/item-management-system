@@ -29,6 +29,7 @@ package bundles {
       import dc._
 
       implicit val usersListSchemaMeta = schemaMeta[UsersList]("users_list")
+      implicit val usersOpenSchemaMeta = schemaMeta[UsersOpen]("users_open")
     }
   }
 }

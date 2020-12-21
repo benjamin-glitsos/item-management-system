@@ -26,8 +26,9 @@ object UsersDAO {
   def open(username: String) = {
     run(
         quote(
-            query[UserOpen].filter(_.username == lift(username))
+            query[UsersOpen].filter(_.username == lift(username))
         )
-    ).map(_.head)
+    )
+      .map(_.head)
   }
 }

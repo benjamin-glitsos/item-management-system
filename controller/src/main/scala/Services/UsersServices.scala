@@ -15,7 +15,7 @@ object UsersServices {
         }
     )
   implicit val rwUsersList: ReadWriter[UsersList] = macroRW
-  implicit val rwUserOpen: ReadWriter[UserOpen]   = macroRW
+  implicit val rwUserOpen: ReadWriter[UsersOpen]  = macroRW
 
   def list(entityBody: String): String = {
     val body: ujson.Value = ujson.read(entityBody)

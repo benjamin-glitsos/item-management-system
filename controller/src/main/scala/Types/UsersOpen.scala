@@ -1,7 +1,7 @@
 import java.time.LocalDateTime
 import java.util.UUID
 
-case class UserOpen(
+case class UsersOpen(
     email_address: String,
     username: String,
     uuid: UUID,

@@ -8,17 +8,7 @@ import akka.http.scaladsl.model._
 object UsersRoutes {
   def apply(): Route =
     concat(
-        get(
-            SchemaValidate("list-users") { validatedBody =>
-              complete(
-                  HttpEntity(
-                      ContentTypes.`application/json`,
-                      UsersServices.list(validatedBody)
-                  )
-              )
-            }
-        ),
-        path(Segment) { username: String =>
+        pathPrefix(Segment) { username =>
           concat(
               get(
                   complete(
@@ -29,6 +19,16 @@ object UsersRoutes {
                   )
               )
           )
-        }
+        },
+        get(
+            SchemaValidate("list-users") { validatedBody =>
+              complete(
+                  HttpEntity(
+                      ContentTypes.`application/json`,
+                      UsersServices.list(validatedBody)
+                  )
+              )
+            }
+        )
     )
 }
