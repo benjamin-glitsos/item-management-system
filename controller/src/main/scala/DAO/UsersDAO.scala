@@ -1,6 +1,16 @@
 import bundles.doobie.database.dc._
 
 object UsersDAO {
+  def count() = {
+    run(
+        quote(
+            query[UsersList]
+              .filter(!_.is_deleted.exists(_ == true))
+              .size
+        )
+    )
+  }
+
   def list(pageNumber: Int, pageLength: Int) = {
     run(
         quote(

@@ -22,11 +22,28 @@ object UsersServices {
     val pageNumber        = body("page_number").num.toInt
     val pageLength        = body("page_length").num.toInt
 
-    write(
-        UsersDAO
-          .list(pageNumber, pageLength)
-          .transact(xa)
-          .unsafeRunSync
-    )
+    (for {
+      totalItems <- UsersDAO.count().map(_.toInt)
+
+      val offset     = (pageNumber - 1) * pageLength
+      val totalPages = Math.ceil(totalItems.toFloat / pageLength).toInt
+      val rangeStart = 1 + offset
+      val rangeEnd   = rangeStart + pageLength - 1
+
+      data <- UsersDAO.list(pageNumber, pageLength)
+
+      val output = write(
+          ujson.Obj(
+              "total_items" -> ujson.Num(totalItems),
+              "total_pages" -> ujson.Num(totalPages),
+              "range_start" -> ujson.Num(rangeStart),
+              "range_end"   -> ujson.Num(rangeEnd),
+              "data"        -> writeJs(data)
+          )
+      )
+
+    } yield (output))
+      .transact(xa)
+      .unsafeRunSync
   }
 }
