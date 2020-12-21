@@ -10,7 +10,8 @@ import scala.concurrent.duration._
 object SchemaValidate {
   def apply(schemaFilename: String): Directive1[String] =
     extractStrictEntity(3.seconds).map(entity => {
-      val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
+      val entityObject: JSONObject = new JSONObject("{ \"wow\": \"ok\" }")
+      var entityBody: String       = ""
 
       try {
         val schemaSource: Source =
@@ -36,6 +37,8 @@ object SchemaValidate {
             .build()
 
         schema.validate(entityObject)
+        entityBody = entityObject.toString()
+        println(entityBody)
         pass
 
       } catch {
@@ -52,6 +55,8 @@ object SchemaValidate {
         }
         case e: Throwable => reject(ValidationRejection(e.toString()))
       }
+
+      entityBody
     })
   // TODO: in successful case, stringify the entityObject and update the body content to be that
 }
