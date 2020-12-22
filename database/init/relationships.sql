@@ -32,8 +32,3 @@ ALTER TABLE stock
 ADD CONSTRAINT fk_meta
 FOREIGN KEY (meta_id)
 REFERENCES meta (id);
-
-ALTER TABLE transactions
-ADD CONSTRAINT fk_meta
-FOREIGN KEY (meta_id)
-REFERENCES meta (id);

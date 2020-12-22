@@ -33,10 +33,3 @@ CREATE TABLE stock (
   , break_even_price NUMERIC(2) NOT NULL
   , quantity_capacity INTEGER NOT NULL
 );
-
-CREATE TABLE transactions (
-    id SERIAL PRIMARY KEY
-  , meta_id SMALLINT UNIQUE NOT NULL
-  , quantity INTEGER
-  , price NUMERIC(2)
-);
