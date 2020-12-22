@@ -16,5 +16,5 @@ $(cat $PSQL_SCRIPTS/relationships.sql)
 
 $(cat $PSQL_SCRIPTS/views.sql)
 
-$(cat $PSQL_SCRIPTS/triggers.sql)
+$(cat $PSQL_SCRIPTS/users-with-meta-triggers.sql)
 PSQL
