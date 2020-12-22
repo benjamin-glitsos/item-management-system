@@ -41,5 +41,3 @@ CREATE TRIGGER users_with_meta_modifiable_view_trigger
     FOR EACH ROW EXECUTE PROCEDURE users_with_meta_modifiable_view();
 
 -- TODO: make INSERT condition in this trigger
-
--- update users_with_meta set deleted_at=NOW() where username='bengyup'
