@@ -14,8 +14,7 @@ object UsersServices {
           LocalDateTime.parse(json.toString(), defaultFormat)
         }
     )
-  implicit val rwUsersList: ReadWriter[UsersList] = macroRW
-  implicit val rwUserOpen: ReadWriter[UsersOpen]  = macroRW
+  implicit val rwUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
 
   def list(entityJson: String): String = {
     val body: ujson.Value = ujson.read(entityJson)
