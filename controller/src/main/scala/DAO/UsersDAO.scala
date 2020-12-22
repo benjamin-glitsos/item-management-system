@@ -1,4 +1,5 @@
 import bundles.doobie.database.dc._
+import java.time.LocalDateTime
 
 object UsersDAO {
   def count() = {
@@ -16,10 +17,10 @@ object UsersDAO {
         quote(
             query[UsersWithMeta]
               .filter(_.deleted_at.isEmpty)
+              .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
               .map(x =>
                 (x.username, x.email_address, x.created_at, x.edited_at)
               )
-              // .sortBy(x => (x.edited_at, x.created_at))(Ord.descNullsLast)
               .drop(lift(offset))
               .take(lift(pageLength))
         )
@@ -41,6 +42,16 @@ object UsersDAO {
             query[UsersWithMeta]
               .filter(x => liftQuery(usernames.toSet).contains(x.username))
               .delete
+        )
+    )
+  }
+
+  def restoreSoftDelete(usernames: List[String]) = {
+    run(
+        quote(
+            query[UsersWithMeta]
+              .filter(x => liftQuery(usernames.toSet).contains(x.username))
+              .update(_.deleted_at -> lift(Option(LocalDateTime.now())))
         )
     )
   }

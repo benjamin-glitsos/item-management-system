@@ -72,6 +72,11 @@ object UsersServices {
           .softDelete(usernames)
           .transact(xa)
           .unsafeRunSync
+      case "restore" =>
+        UsersDAO
+          .restoreSoftDelete(usernames)
+          .transact(xa)
+          .unsafeRunSync
     }
 
     new String
