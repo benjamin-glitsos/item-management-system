@@ -65,8 +65,16 @@ object UsersServices {
   def delete(entityJson: String) = {
     val body: ujson.Value = ujson.read(entityJson)
     val method            = body("method").str
-    val usernames         = read[Seq[String]](body("usernames"))
-    // TODO: now use a match expression on the method for soft/hard/restore.
-    write(usernames)
+    val usernames         = read[List[String]](body("usernames"))
+
+    method match {
+      case "soft" =>
+        UsersDAO
+          .softDelete(usernames)
+          .transact(xa)
+          .unsafeRunSync
+    }
+
+    new String
   }
 }

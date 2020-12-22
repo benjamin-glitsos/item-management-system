@@ -32,12 +32,15 @@ object UsersDAO {
       .map(_.head)
   }
 
-  def softDelete(username: String) = {
+  def softDelete(usernames: List[String]) = {
     run(
         quote(
             query[UsersOpen]
-              .filter(_.username == lift(username))
+              .filter(x => liftQuery(usernames.toSet).contains(x.username))
               .update(_.is_deleted -> lift(true))
+            // TODO: doesnt work because postgres view isn't updatable since it references more than one table. Solution is:
+            // https://vibhorkumar.wordpress.com/2011/10/28/instead-of-trigger/
+            // TODO: set deleted_by_id and deleted_at
         )
     )
   }
