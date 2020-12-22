@@ -1,8 +1,10 @@
 CREATE TABLE meta (
     id SERIAL PRIMARY KEY
+  , uuid UUID UNIQUE NOT NULL DEFAULT gen_random_uuid()
   , created_at TIMESTAMP NOT NULL DEFAULT NOW()
   , edited_at TIMESTAMP
   , deleted_at TIMESTAMP
+  , notes TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE users (
