@@ -10,14 +10,26 @@ BEGIN
             RETURNING meta_id
         )
         UPDATE meta
-        SET edited_at=NOW(), deleted_at=NEW.deleted_at, notes=NEW.notes
+        SET edited_at=NOW(), notes=NEW.notes
         WHERE id=(SELECT meta_id FROM users_insert);
-        RETURN NEW;
+        RETURN NEW; -- TODO: make it RETURN NULL ?
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE meta SET deleted_at=NOW()
+        WHERE id=(
+            SELECT meta_id
+            FROM users
+            WHERE username=OLD.username
+        );
+        RETURN NULL;
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS users_with_meta_modifiable_view_trigger
+    ON public.users_with_meta;
 CREATE TRIGGER users_with_meta_modifiable_view_trigger
-    INSTEAD OF UPDATE ON users_with_meta
+    INSTEAD OF INSERT OR UPDATE OR DELETE ON users_with_meta
     FOR EACH ROW EXECUTE PROCEDURE users_with_meta_modifiable_view();
+
+-- delete from users_with_meta where username='bengyup'
