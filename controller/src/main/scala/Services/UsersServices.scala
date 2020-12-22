@@ -40,7 +40,6 @@ object UsersServices {
               "data"        -> writeJs(data)
           )
       )
-
     } yield (output))
       .transact(xa)
       .unsafeRunSync
@@ -55,7 +54,6 @@ object UsersServices {
               "data" -> writeJs(data)
           )
       )
-
     } yield (output))
       .transact(xa)
       .unsafeRunSync
@@ -74,7 +72,12 @@ object UsersServices {
           .unsafeRunSync
       case "restore" =>
         UsersDAO
-          .restoreSoftDelete(usernames)
+          .restoreDelete(usernames)
+          .transact(xa)
+          .unsafeRunSync
+      case "hard" =>
+        UsersDAO
+          .hardDelete(usernames)
           .transact(xa)
           .unsafeRunSync
     }
