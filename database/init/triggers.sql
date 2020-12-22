@@ -16,6 +16,7 @@ CREATE TRIGGER users_open_modifiable_view_trigger
     FOR EACH ROW EXECUTE PROCEDURE users_open_modifiable_view();
 
 -- TODO: simplify the meta table to: created at, updated at, deleted at then delete the two meta views which are joined into the users views
+-- TODO: then instead of users_open and users_list views, just have one view called users_with_meta
 
 -- TODO: test
 -- update users_open set opens = 1 where username = 'bengyup';
