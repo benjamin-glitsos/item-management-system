@@ -41,6 +41,7 @@ object UsersDAO {
             // TODO: doesnt work because postgres view isn't updatable since it references more than one table. Solution is:
             // https://vibhorkumar.wordpress.com/2011/10/28/instead-of-trigger/
             // TODO: set deleted_by_id and deleted_at
+            // TODO: move the properties from delete-users.json to definitions/deletion.json. Name them 'method' and 'keysOfItems'
         )
     )
   }
