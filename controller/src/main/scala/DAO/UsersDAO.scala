@@ -32,8 +32,7 @@ object UsersDAO {
         quote(
             query[UsersWithMeta].filter(_.username == lift(username))
         )
-    )
-      .map(_.head)
+    ).map(_.head)
   }
 
   def softDelete(usernames: List[String]) = {
