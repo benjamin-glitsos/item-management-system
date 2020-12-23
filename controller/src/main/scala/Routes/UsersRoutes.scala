@@ -31,6 +31,16 @@ object UsersRoutes {
           )
         }
       ),
+      post(
+        SchemaValidate("create-user") { validatedJson: String =>
+          complete(
+            HttpEntity(
+              ContentTypes.`application/json`,
+              UsersServices.create(validatedJson)
+            )
+          )
+        }
+      ),
       delete(
         SchemaValidate("delete-users") { validatedJson: String =>
           complete(
