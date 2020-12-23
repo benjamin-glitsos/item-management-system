@@ -6,7 +6,7 @@ import doobie_bundle.connection._
 import upickle_bundle.implicits._
 
 trait UsersServicesCreate {
-  def apply(entityJson: String) = {
+  def create(entityJson: String) = {
     val body: ujson.Value = ujson.read(entityJson)
     val username          = body("username").str
     val password          = body("password").str
