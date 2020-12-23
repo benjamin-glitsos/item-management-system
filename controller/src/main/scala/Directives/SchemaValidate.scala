@@ -48,7 +48,7 @@ object SchemaValidate {
             val lineDelimitedErrors: String =
               e.getCausingExceptions()
                 .asScala
-                .map(e => s"JSON: ${e.getMessage()}")
+                .map(e => s"Invalid input: ${e.getMessage()}")
                 .toSeq
                 .mkString("\n")
 
