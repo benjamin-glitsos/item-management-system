@@ -1,25 +1,29 @@
 import doobie_bundle.database.dc._
-import java.time.LocalDateTime
 
 trait UsersDAOEdit {
   def edit(
       oldUsername: String,
-      newUsername: String,
-      password: String,
-      emailAddress: String,
-      notes: String
+      newUsername: Option[String],
+      password: Option[String],
+      emailAddress: Option[String],
+      notes: Option[String]
   ) = {
     run(
       quote(
-        query[UsersWithMeta]
-          .filter(_.username == lift(oldUsername))
+        dynamicQuery[UsersWithMeta]
+          .filter(_.username == oldUsername)
           .update(
-            _.username      -> lift(newUsername),
-            _.password      -> lift(password),
-            _.email_address -> lift(emailAddress),
-            _.notes         -> lift(notes)
+            setOpt(_.username, Some("test-setOpt"))
           )
       )
     )
   }
 }
+// _.username,
+// username,
+// _.password,
+// password,
+// _.email_address,
+// email_address,
+// _.notes,
+// notes
