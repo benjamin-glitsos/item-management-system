@@ -1,4 +1,4 @@
-import bundles.doobie.database.dc._
+import doobie_bundle.database.dc._
 
 trait UsersDAOList {
   def list(offset: Int, pageLength: Int) = {
