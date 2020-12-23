@@ -4,6 +4,7 @@ import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
 import upickle_bundle.implicits._
+import scala.util.{Try}
 
 trait UsersServicesCreate {
   def create(entityJson: String) = {
@@ -11,10 +12,10 @@ trait UsersServicesCreate {
     val username          = body("username").str
     val password          = body("password").str
     val emailAddress      = body("email_address").str
-    val notes             = body("notes").str
+    val notes             = Try(body("notes").str).getOrElse("")
 
     UsersDAO
-      .create(username, password, emailAddress, notes)
+      .create(username, password, emailAddress, "")
       .transact(xa)
       .unsafeRunSync
 
