@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Edit User",
+    "description": "Edits one of the users who is able to access the system.",
+    "type": "object",
+    "properties": {
+        "username": {
+            "description": "The username of the user.",
+            "type": "string"
+        },
+        "password": {
+            "description": "The password of the user.",
+            "type": "string"
+        },
+        "email_address": {
+            "description": "The email address of the user.",
+            "type": "string"
+        },
+        "notes": {
+            "description": "Miscellaneous notes that can be added to this item.",
+            "type": "string"
+        }
+    },
+    "anyOf": [
+        { "required": ["username"] },
+        { "required": ["password"] },
+        { "required": ["email_address"] },
+        { "required": ["notes"] }
+    ]
+}
