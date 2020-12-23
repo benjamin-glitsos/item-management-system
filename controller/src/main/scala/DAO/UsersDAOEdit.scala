@@ -1,4 +1,8 @@
 import doobie_bundle.database.dc._
+import doobie.Fragments
+import doobie.Fragments.{setOpt}
+
+// TODO: https://javadoc.io/doc/org.tpolecat/doobie-core_2.12/latest/doobie/util/fragments$.html
 
 trait UsersDAOEdit {
   def edit(
@@ -8,15 +12,8 @@ trait UsersDAOEdit {
       emailAddress: Option[String],
       notes: Option[String]
   ) = {
-    run(
-      quote(
-        dynamicQuery[UsersWithMeta]
-          .filter(_.username == oldUsername)
-          .update(
-            setOpt(_.username, Some("test-setOpt"))
-          )
-      )
-    )
+    val usernameFr: Fragment = newUsername.map(s => fr"username == $s")
+    sql"UPDATE users_with_meta ${setOpt(usernameFr)} WHERE username = '$oldUsername'".update
   }
 }
 // _.username,
