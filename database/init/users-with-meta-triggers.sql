@@ -18,9 +18,9 @@ BEGIN
         );
         RETURN NULL;
 
-    -- Soft Delete --
-    ElSIF TG_OP = 'UPDATE' AND NEW.deleted_at IS NOT NULL THEN
-        UPDATE meta SET deleted_at=NOW()
+    -- Restore Delete --
+    ELSIF TG_OP = 'UPDATE' AND NEW.restored_at IS NOT NULL THEN
+        UPDATE meta SET deleted_at=NULL, restored_at=NOW()
         WHERE id=(
             SELECT meta_id
             FROM users
@@ -28,9 +28,9 @@ BEGIN
         );
         RETURN NULL;
 
-    -- Restore Delete --
-    ELSIF TG_OP = 'UPDATE' AND NEW.restored_at IS NOT NULL THEN
-        UPDATE meta SET deleted_at=NULL, restored_at=NOW()
+    -- Soft Delete --
+    ElSIF TG_OP = 'UPDATE' AND NEW.deleted_at IS NOT NULL THEN
+        UPDATE meta SET deleted_at=NOW()
         WHERE id=(
             SELECT meta_id
             FROM users
