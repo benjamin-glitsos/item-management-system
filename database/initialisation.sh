@@ -10,8 +10,6 @@ $(cat_sql "domains")
 
 $(cat_sql "tables")
 
-$(cat_sql "query-functions")
-
 $(eval "cat << PRE_INTERPOLATED_PSQL
 $(cat_sql "data")
 PRE_INTERPOLATED_PSQL
