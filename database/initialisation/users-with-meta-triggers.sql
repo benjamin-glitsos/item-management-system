@@ -1,6 +1,5 @@
-CREATE OR REPLACE FUNCTION users_with_meta_modifiable_view()
-RETURNS TRIGGER AS
-$$
+CREATE FUNCTION users_with_meta_modifiable_view()
+RETURNS TRIGGER AS $$
 BEGIN
     -- Insert --
     IF TG_OP = 'INSERT' THEN
