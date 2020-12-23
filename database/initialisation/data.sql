@@ -1,5 +1,5 @@
-WITH meta_insert_1 AS (INSERT INTO meta DEFAULT VALUES RETURNING id)
-   , meta_insert_2 AS (INSERT INTO meta DEFAULT VALUES RETURNING id)
+WITH meta_insert_1 AS (SELECT insert_default_meta() AS id)
+   , meta_insert_2 AS (SELECT insert_default_meta() AS id)
 INSERT INTO users (meta_id, email_address, username, password) VALUES (
     (SELECT id FROM meta_insert_1)
   , '$SUPER_ADMIN_EMAIL_ADDRESS'
