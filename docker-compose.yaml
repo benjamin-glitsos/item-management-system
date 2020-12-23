@@ -6,8 +6,8 @@ services:
     image: database
     container_name: database
     volumes:
-      - ./database/init.sh:/docker-entrypoint-initdb.d/init.sh
-      - ./database/init:/docker-entrypoint-initdb.d/init
+      - ./database/initialisation.sh:/docker-entrypoint-initdb.d/initialisation.sh
+      - ./database/initialisation:/docker-entrypoint-initdb.d/initialisation
     restart: always
     env_file: .env
     ports:

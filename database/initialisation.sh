@@ -1,22 +1,25 @@
 #!/bin/bash
 
-PSQL_INIT="/docker-entrypoint-initdb.d/initialisation"
+cat_sql() {
+    local filename=${1}
+    cat /docker-entrypoint-initdb.d/initialisation/$filename.sql
+}
 
 psql << PSQL
-$(cat $PSQL_INIT/domains.sql)
+$(cat_sql "domains")
 
-$(cat $PSQL_INIT/query-functions.sql)
+$(cat_sql "tables")
 
-$(cat $PSQL_INIT/tables.sql)
+$(cat_sql "query-functions")
 
 $(eval "cat << PRE_INTERPOLATED_PSQL
-$(cat $PSQL_INIT/data.sql)
+$(cat_sql "data")
 PRE_INTERPOLATED_PSQL
 " 2> /dev/null)
 
-$(cat $PSQL_INIT/relationships.sql)
+$(cat_sql "relationships")
 
-$(cat $PSQL_INIT/views.sql)
+$(cat_sql "views")
 
-$(cat $PSQL_INIT/users-with-meta-triggers.sql)
+$(cat_sql "users-with-meta-triggers")
 PSQL

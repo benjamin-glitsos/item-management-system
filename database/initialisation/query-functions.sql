@@ -1,7 +1,6 @@
-CREATE FUNCTION insert_default_meta()
-RETURNS integer AS $$
+CREATE OR REPLACE FUNCTION insert_default_meta()
+RETURNS TABLE(id smallint) AS $$
 BEGIN
-    INSERT INTO meta DEFAULT VALUES RETURNING id
-    RETURN id
+    RETURN QUERY(INSERT INTO meta DEFAULT VALUES RETURNING id);
 END;
 $$ LANGUAGE plpgsql;
