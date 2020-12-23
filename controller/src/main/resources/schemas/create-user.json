@@ -5,20 +5,16 @@
     "type": "object",
     "properties": {
         "username": {
-            "description": "The username of the user.",
-            "type": "string"
+            "$ref": "definitions/users.json#/definitions/username"
         },
         "password": {
-            "description": "The password of the user.",
-            "type": "string"
+            "$ref": "definitions/users.json#/definitions/password"
         },
         "email_address": {
-            "description": "The email address of the user.",
-            "type": "string"
+            "$ref": "definitions/users.json#/definitions/email_address"
         },
         "notes": {
-            "description": "Miscellaneous notes that can be added to this item.",
-            "type": "string"
+            "$ref": "definitions/meta.json#/definitions/notes"
         }
     },
     "required": ["username", "password", "email_address"]

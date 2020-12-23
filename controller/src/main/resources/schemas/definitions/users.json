@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "User Definitions",
+    "description": "Definitions that relate to the 'users' database table and accompanying API endpoints.",
+    "definitions": {
+        "username": {
+            "description": "The username of the user.",
+            "type": "string"
+        },
+        "password": {
+            "description": "The password of the user.",
+            "type": "string"
+        },
+        "email_address": {
+            "description": "The email address of the user.",
+            "type": "string"
+        }
+    }
+}
