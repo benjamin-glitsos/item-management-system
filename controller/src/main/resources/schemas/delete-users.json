@@ -5,17 +5,10 @@
     "type": "object",
     "properties": {
         "method": {
-            "type": "string",
-            "enum": ["soft", "hard", "restore"]
+            "$ref": "definitions/deletion.json#/definitions/method"
         },
         "usernames": {
-            "description": "The usernames of the users who should be deleted/restored.",
-            "type": "array",
-            "items": {
-                "type": "string"
-            },
-            "minItems": 1,
-            "uniqueItems": true
+            "$ref": "definitions/deletion.json#/definitions/keys"
         }
     },
     "required": ["method", "usernames"]

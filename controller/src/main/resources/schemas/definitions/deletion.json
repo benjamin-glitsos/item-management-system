@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Deletion Definitions",
+    "description": "Definitions for use in the deletion of items.",
+    "definitions": {
+        "method": {
+            "description": "The method of deletion or restoration to use.",
+            "type": "string",
+            "enum": ["soft", "hard", "restore"]
+        },
+        "keys": {
+            "description": "The identifier keys of the items that should be deleted/restored.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        }
+    }
+}
