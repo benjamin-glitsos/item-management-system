@@ -1,20 +1,25 @@
-CREATE FUNCTION users_with_meta_modifiable_view()
+CREATE OR REPLACE FUNCTION users_with_meta_modifiable_view()
 RETURNS TRIGGER AS
 $$
 BEGIN
-    -- Insert --------------------
+    -- Insert --
     IF TG_OP = 'INSERT' THEN
-        WITH insert_users AS (
-            INSERT INTO users (email_address, password)
-            VALUES (NEW.email_address, NEW.password)
-            RETURNING meta_id
+        WITH insert_meta AS (
+            INSERT INTO meta (notes)
+            VALUES (NEW.notes)
+            RETURNING id
         )
-        INSERT INTO meta (edited_at, notes)
-        VALUES (NOW(), NEW.notes);
+        INSERT INTO users (meta_id, email_address, username, password)
+        VALUES (
+            (SELECT id FROM insert_meta)
+          , NEW.email_address
+          , NEW.username
+          , NEW.password
+        );
         RETURN NULL;
 
-    -- Soft Delete --------------------
-    IF TG_OP = 'UPDATE' AND NEW.deleted_at IS NOT NULL THEN
+    -- Soft Delete --
+    ElSIF TG_OP = 'UPDATE' AND NEW.deleted_at IS NOT NULL THEN
         UPDATE meta SET deleted_at=NOW()
         WHERE id=(
             SELECT meta_id
@@ -23,7 +28,7 @@ BEGIN
         );
         RETURN NULL;
 
-    -- Restore Delete --------------------
+    -- Restore Delete --
     ELSIF TG_OP = 'UPDATE' AND NEW.restored_at IS NOT NULL THEN
         UPDATE meta SET deleted_at=NULL, restored_at=NOW()
         WHERE id=(
@@ -33,7 +38,7 @@ BEGIN
         );
         RETURN NULL;
 
-    -- Hard Delete --------------------
+    -- Hard Delete --
     ELSIF TG_OP = 'DELETE' THEN
         WITH delete_users AS (
             DELETE FROM users
@@ -48,7 +53,7 @@ BEGIN
         );
         RETURN NULL;
 
-    -- Update --------------------
+    -- Update --
     ELSIF TG_OP = 'UPDATE' THEN
         WITH users_update AS (
             UPDATE users
@@ -62,7 +67,7 @@ BEGIN
         RETURN NEW;
 
     END IF;
-    RETURN NULL;
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 

@@ -2,9 +2,9 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 case class UsersWithMeta(
-    email_address: String,
     username: String,
     password: String,
+    email_address: String,
     uuid: UUID,
     created_at: LocalDateTime,
     edited_at: Option[LocalDateTime],
