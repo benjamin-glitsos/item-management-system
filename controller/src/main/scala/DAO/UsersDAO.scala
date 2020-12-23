@@ -3,4 +3,5 @@ object UsersDAO
     with UsersDAOList
     with UsersDAOOpen
     with UsersDAOCreate
+    with UsersDAOEdit
     with UsersDAODelete {}
