@@ -19,7 +19,7 @@ BEGIN
 
     -- Restore Delete --
     ELSIF TG_OP = 'UPDATE' AND NEW.restored_at IS NOT NULL THEN
-        UPDATE meta SET deleted_at=NULL, restored_at=NOW()
+        UPDATE meta SET restored_at=NOW()
         WHERE id=(
             SELECT meta_id
             FROM users
