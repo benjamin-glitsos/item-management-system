@@ -1,6 +1,6 @@
 import doobie_bundle.database.dc._
 import doobie.Fragment
-import doobie.Fragments.{setOpt}
+import doobie.Fragments.{setOpt, whereAnd}
 import doobie._
 import doobie.implicits._
 import doobie.util.ExecutionContexts
@@ -19,9 +19,14 @@ trait UsersDAOEdit {
       emailAddress: Option[String],
       notes: Option[String]
   ) = {
-    // val usernameFr: Fragment = newUsername.map(s => fr"username == $s")
+    // val setOptUsername: Option[Fragment] =
+    //   newUsername.map(s => fr"username = $s")
     // sql"UPDATE users_with_meta ${setOpt(usernameFr)} WHERE username = '$oldUsername'".update
-    // sql"UPDATE users_with_meta SET password = 'edited-password', username = 'edited-username', notes = 'Edited notes.', email_address = 'edited@email.com' WHERE username = 'demo_admin'".update.run
-    sql"UPDATE users_with_meta SET password = 'edited-password-2' WHERE username = $oldUsername".update.run
+    val updateFr: Fragment =
+      fr"UPDATE users_with_meta SET password = $password"
+    val whereFr: Fragment = whereAnd(fr"username = $oldUsername")
+    // sql"UPDATE users_with_meta SET password = 'edited-password-2' WHERE username = $oldUsername".update.run
+    val q = updateFr ++ whereFr
+    q.update.run
   }
 }
