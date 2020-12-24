@@ -2,7 +2,6 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 
 // TODO: write the test cases after you set up your deployment pipeline so you make sure you can integrate the testing into that
-// TODO: try to find any values or methods that should be private
 // TODO: optionally, make all of the error handlers use json by using a directive on the ApiRoutes: { errors: [{ code: "example_error", message: "Example error message." }] }
 
 object UsersRoutes {

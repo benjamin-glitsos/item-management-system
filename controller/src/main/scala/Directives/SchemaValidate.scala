@@ -23,7 +23,7 @@ object SchemaValidate {
 
         val rawSchema: JSONObject =
           new JSONObject(
-              new JSONTokener(schemaString)
+            new JSONTokener(schemaString)
           )
 
         val schema: Schema =
