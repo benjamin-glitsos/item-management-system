@@ -63,7 +63,7 @@ BEGIN
             RETURNING meta_id
         )
         UPDATE meta
-        SET edited_at=NOW(), notes=NEW.notes
+        SET edits=edits + 1, edited_at=NOW(), notes=NEW.notes
         WHERE id=(SELECT meta_id FROM users_update);
         RETURN NEW;
 

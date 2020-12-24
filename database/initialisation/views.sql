@@ -4,6 +4,7 @@ CREATE VIEW users_with_meta AS
       , u.email_address
       , u.password
       , m.uuid
+      , m.edits
       , m.created_at
       , m.edited_at
       , m.deleted_at
