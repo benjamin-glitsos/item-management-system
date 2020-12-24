@@ -9,8 +9,6 @@ import cats.data._
 import cats.effect._
 import cats.implicits._
 
-// TODO: https://javadoc.io/doc/org.tpolecat/doobie-core_2.12/latest/doobie/util/fragments$.html
-
 trait UsersDAOEdit {
   def edit(
       oldUsername: String,
@@ -19,14 +17,20 @@ trait UsersDAOEdit {
       emailAddress: Option[String],
       notes: Option[String]
   ) = {
-    // val setOptUsername: Option[Fragment] =
-    //   newUsername.map(s => fr"username = $s")
-    // sql"UPDATE users_with_meta ${setOpt(usernameFr)} WHERE username = '$oldUsername'".update
     val updateFr: Fragment =
-      fr"UPDATE users_with_meta SET password = $password"
+      fr"UPDATE users_with_meta"
+
+    val setFr: Fragment = setOpt(
+      newUsername.map(s => fr"username = $s"),
+      password.map(s => fr"password = $s"),
+      emailAddress.map(s => fr"email_address = $s"),
+      notes.map(s => fr"notes = $s")
+    )
+
     val whereFr: Fragment = whereAnd(fr"username = $oldUsername")
-    // sql"UPDATE users_with_meta SET password = 'edited-password-2' WHERE username = $oldUsername".update.run
-    val q = updateFr ++ whereFr
-    q.update.run
+
+    val queryFr = updateFr ++ setFr ++ whereFr
+
+    queryFr.update.run
   }
 }
