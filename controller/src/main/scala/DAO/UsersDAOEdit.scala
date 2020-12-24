@@ -12,20 +12,20 @@ trait UsersDAOEdit {
       emailAddress: Option[String],
       notes: Option[String]
   ) = {
-    val updateFr: Fragment =
+    val update: Fragment =
       fr"UPDATE users_with_meta"
 
-    val setFr: Fragment = setOpt(
+    val set: Fragment = setOpt(
       newUsername.map(s => fr"username = $s"),
       password.map(s => fr"password = $s"),
       emailAddress.map(s => fr"email_address = $s"),
       notes.map(s => fr"notes = $s")
     )
 
-    val whereFr: Fragment = whereAnd(fr"username = $oldUsername")
+    val where: Fragment = whereAnd(fr"username = $oldUsername")
 
-    val queryFr = updateFr ++ setFr ++ whereFr
+    val query: Fragment = update ++ set ++ where
 
-    queryFr.update.run
+    query.update.run
   }
 }
