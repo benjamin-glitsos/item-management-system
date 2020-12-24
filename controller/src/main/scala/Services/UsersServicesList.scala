@@ -1,5 +1,3 @@
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
@@ -22,13 +20,13 @@ trait UsersServicesList {
       data <- UsersDAO.list(offset, pageLength)
 
       val output = write(
-          ujson.Obj(
-              "total_items" -> ujson.Num(totalItems),
-              "total_pages" -> ujson.Num(totalPages),
-              "range_start" -> ujson.Num(rangeStart),
-              "range_end"   -> ujson.Num(rangeEnd),
-              "data"        -> writeJs(data)
-          )
+        ujson.Obj(
+          "total_items" -> ujson.Num(totalItems),
+          "total_pages" -> ujson.Num(totalPages),
+          "range_start" -> ujson.Num(rangeStart),
+          "range_end"   -> ujson.Num(rangeEnd),
+          "data"        -> writeJs(data)
+        )
       )
     } yield (output))
       .transact(xa)

@@ -1,5 +1,4 @@
 import doobie_bundle.database.dc._
-import java.time.LocalDateTime
 
 trait UsersDAOCreate {
   def create(

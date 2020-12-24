@@ -1,7 +1,5 @@
-import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
-import upickle_bundle.implicits._
 import scala.util.{Try}
 
 trait UsersServicesEdit {
