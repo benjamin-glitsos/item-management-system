@@ -4,9 +4,9 @@ import doobie_bundle.connection._
 
 trait UsersServicesDelete {
   def delete(entityJson: String) = {
-    val body: ujson.Value = ujson.read(entityJson)
-    val method            = body("method").str
-    val usernames         = read[List[String]](body("usernames"))
+    val body: ujson.Value       = ujson.read(entityJson)
+    val method: String          = body("method").str
+    val usernames: List[String] = read[List[String]](body("usernames"))
 
     method match {
       case "soft" =>

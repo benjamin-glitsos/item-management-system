@@ -4,14 +4,14 @@ import scala.util.{Try}
 
 trait UsersServicesCreate {
   def create(entityJson: String) = {
-    val body: ujson.Value = ujson.read(entityJson)
-    val username          = body("username").str
-    val password          = body("password").str
-    val emailAddress      = body("email_address").str
-    val notes             = Try(body("notes").str).getOrElse("")
+    val body: ujson.Value    = ujson.read(entityJson)
+    val username: String     = body("username").str
+    val password: String     = body("password").str
+    val emailAddress: String = body("email_address").str
+    val notes: String        = Try(body("notes").str).getOrElse("")
 
     UsersDAO
-      .create(username, password, emailAddress, "")
+      .create(username, password, emailAddress, notes)
       .transact(xa)
       .unsafeRunSync
 
