@@ -6,20 +6,20 @@ import upickle_bundle.implicits._
 trait UsersServicesList {
   def list(entityJson: String): String = {
     val body: ujson.Value = ujson.read(entityJson)
-    val pageNumber        = body("page_number").num.toInt
-    val pageLength        = body("page_length").num.toInt
+    val pageNumber: Int   = body("page_number").num.toInt
+    val pageLength: Int   = body("page_length").num.toInt
 
     (for {
       totalItems <- UsersDAO.count().map(_.toInt)
 
-      val offset     = (pageNumber - 1) * pageLength
-      val totalPages = Math.ceil(totalItems.toFloat / pageLength).toInt
-      val rangeStart = 1 + offset
-      val rangeEnd   = rangeStart + pageLength - 1
+      val offset: Int     = (pageNumber - 1) * pageLength
+      val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
+      val rangeStart: Int = 1 + offset
+      val rangeEnd: Int   = rangeStart + pageLength - 1
 
       data <- UsersDAO.list(offset, pageLength)
 
-      val output = write(
+      val output: String = write(
         ujson.Obj(
           "total_items" -> ujson.Num(totalItems),
           "total_pages" -> ujson.Num(totalPages),

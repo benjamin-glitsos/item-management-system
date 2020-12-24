@@ -3,7 +3,7 @@ import doobie_bundle.connection._
 import scala.util.{Try}
 
 trait UsersServicesCreate {
-  def create(entityJson: String) = {
+  def create(entityJson: String): String = {
     val body: ujson.Value    = ujson.read(entityJson)
     val username: String     = body("username").str
     val password: String     = body("password").str

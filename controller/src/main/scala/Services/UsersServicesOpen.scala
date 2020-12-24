@@ -4,13 +4,13 @@ import doobie_bundle.connection._
 import upickle_bundle.implicits._
 
 trait UsersServicesOpen {
-  def open(username: String) = {
+  def open(username: String): String = {
     (for {
       _ <- UsersDAO.incrementOpens(username)
 
       data <- UsersDAO.open(username)
 
-      val output = write(
+      val output: String = write(
         ujson.Obj(
           "data" -> writeJs(data)
         )

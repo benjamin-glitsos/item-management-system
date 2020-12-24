@@ -3,7 +3,7 @@ import doobie.implicits._
 import doobie_bundle.connection._
 
 trait UsersServicesDelete {
-  def delete(entityJson: String) = {
+  def delete(entityJson: String): String = {
     val body: ujson.Value       = ujson.read(entityJson)
     val method: String          = body("method").str
     val usernames: List[String] = read[List[String]](body("usernames"))

@@ -2,6 +2,11 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 
 // TODO: write the test cases after you set up your deployment pipeline so you make sure you can integrate the testing into that
+// TODO: continue adding type signatures to all values and methods, including implicit values. Needed on:
+// - Server.scala
+// - SchemaValidate.scala
+// - Complete.scala
+// - DoobieBundle.scala
 // TODO: optionally, make all of the error handlers use json by using a directive on the ApiRoutes: { errors: [{ code: "example_error", message: "Example error message." }] }
 
 object UsersRoutes {

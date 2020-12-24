@@ -3,7 +3,7 @@ import doobie_bundle.connection._
 import scala.util.{Try}
 
 trait UsersServicesEdit {
-  def edit(oldUsername: String, entityJson: String) = {
+  def edit(oldUsername: String, entityJson: String): String = {
     val body: ujson.Value            = ujson.read(entityJson)
     val newUsername: Option[String]  = Try(body("username").str).toOption
     val password: Option[String]     = Try(body("password").str).toOption
