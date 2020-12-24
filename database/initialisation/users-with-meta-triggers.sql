@@ -56,7 +56,9 @@ BEGIN
     ELSIF TG_OP = 'UPDATE' THEN
         WITH users_update AS (
             UPDATE users
-            SET email_address=NEW.email_address, password=NEW.password
+            SET username=NEW.username
+              , email_address=NEW.email_address
+              , password=NEW.password
             WHERE username=OLD.username
             RETURNING meta_id
         )
