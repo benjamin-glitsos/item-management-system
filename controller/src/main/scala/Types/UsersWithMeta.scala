@@ -6,6 +6,7 @@ case class UsersWithMeta(
     password: String,
     email_address: String,
     uuid: UUID,
+    opens: Int,
     edits: Int,
     created_at: LocalDateTime,
     edited_at: Option[LocalDateTime],

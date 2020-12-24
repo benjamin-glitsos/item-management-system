@@ -8,12 +8,14 @@ import upickle_bundle.implicits._
 trait UsersServicesOpen {
   def open(username: String) = {
     (for {
+      _ <- UsersDAO.incrementOpens(username)
+
       data <- UsersDAO.open(username)
 
       val output = write(
-          ujson.Obj(
-              "data" -> writeJs(data)
-          )
+        ujson.Obj(
+          "data" -> writeJs(data)
+        )
       )
     } yield (output))
       .transact(xa)

@@ -17,6 +17,16 @@ BEGIN
         );
         RETURN NULL;
 
+    -- Open --
+    ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
+        UPDATE meta SET opens=OLD.opens + 1
+        WHERE id=(
+            SELECT meta_id
+            FROM users
+            WHERE username=OLD.username
+        );
+        RETURN NULL;
+
     -- Restore Delete --
     ELSIF TG_OP = 'UPDATE' AND NEW.restored_at IS NOT NULL THEN
         UPDATE meta SET restored_at=NOW()
