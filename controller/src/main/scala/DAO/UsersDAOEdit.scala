@@ -21,6 +21,6 @@ trait UsersDAOEdit {
   ) = {
     // val usernameFr: Fragment = newUsername.map(s => fr"username == $s")
     // sql"UPDATE users_with_meta ${setOpt(usernameFr)} WHERE username = '$oldUsername'".update
-    sql"UPDATE users_with_meta SET password = 'edited-password' WHERE username = 'demo_admin'".update
+    sql"UPDATE users_with_meta SET password = 'edited-password' WHERE username = 'demo_admin'".update.run
   }
 }
