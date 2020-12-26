@@ -12,6 +12,8 @@ cat_interpolated_sql() {
 
 psql << SQL
 
+$(cat_sql "extensions")
+
 $(cat_sql "domains")
 
 $(cat_sql "tables")
