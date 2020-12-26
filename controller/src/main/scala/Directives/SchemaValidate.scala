@@ -7,11 +7,12 @@ import scala.io.Source
 import scala.jdk.CollectionConverters._
 import akka.http.scaladsl.server.Directives._
 import scala.concurrent.duration._
+import akka.http.scaladsl.model.HttpEntity
 
 object SchemaValidate {
   def apply(schemaFilename: String): Directive1[String] =
     extractStrictEntity(3.seconds)
-      .flatMap(entity => {
+      .flatMap((entity: HttpEntity.Strict) => {
         val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
 
         val schemaSource: Source =

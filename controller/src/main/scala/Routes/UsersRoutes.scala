@@ -4,7 +4,6 @@ import akka.http.scaladsl.server.Route
 // TODO: write the test cases after you set up your deployment pipeline so you make sure you can integrate the testing into that
 // TODO: also, do the seeding after deployment as well so that you know how to structure the code. The Seeder() will be put in Main.scala above the Server() call. The Seeder object will reference other individual seeder objects but will call them a number of repeated times e.g. UsersWithMetaSeeder.repeat(absolute(15 * Sys.getEnvOrElse("SEEDING_FACTOR", 1))). The SEEDING_FACTOR is an env variable that can be used to multiply the number that gets seeded by more or less.
 // TODO: continue adding type signatures to all values and methods, including implicit values. Needed on:
-// - SchemaValidate.scala
 // - Complete.scala
 // - DoobieBundle.scala
 // - All DAO objects (need annotation after their method definition)
