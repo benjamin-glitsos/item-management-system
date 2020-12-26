@@ -39,7 +39,7 @@ object SchemaValidate {
             .load()
             .build()
 
-        var validationErrors = ""
+        var validationErrors: String = ""
 
         try {
           schema.validate(entityObject)
