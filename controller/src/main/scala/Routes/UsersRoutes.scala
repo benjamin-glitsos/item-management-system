@@ -9,7 +9,6 @@ import akka.http.scaladsl.server.Route
 // - Complete.scala
 // - DoobieBundle.scala
 // - All DAO objects (need annotation after their method definition)
-// TODO: pull the pathPrefix into the usernameRoutes() and also create a private def routes() so that apply() will just contain the two function calls inside its concat.
 // TODO: add an is_deleted column (to the right of 'edits') and use that as the source of truth for the query filters and trigger to use. It should solve the issue with the restore trigger allowing the user to restore a file that wasn't deleted.
 // TODO: create a trigger on the users table for encrypting the passwords using pgcrypto postgres extension. Then that same extension will be used to decrypt passwords. And you will need https eventually. Use letsencrypt inside the docker container for https?
 // TODO: consider accepting command-line flags which will override values specified in env file. These flags can be used by your CI/CD pipeline e.g. --testing=true --admin=false --seeding-factor=2. This will need to be overwrite-merged into the env variables at the bash level in the docker container, so maybe you can install a bash tool using the dockerfile that can do this merging and flag handling.
@@ -28,21 +27,7 @@ import akka.http.scaladsl.server.Route
 // * Each Service will return Valid[JsValue]. This allows services to throw their own errors in the Invalid case, but no services need this currently. A custom marshaller will be required to implicitly marshall Valid[JsValue] to the response body. Marshalling JsValue to the response body should automatically make the content-type of the response be application/json, so this removes the need for your Complete directive.
 
 object UsersRoutes {
-  private def usernameRoutes(username: String): Route = concat(
-    get(
-      Complete.json(UsersServices.open(username))
-    ),
-    patch(
-      SchemaValidate("edit-user") { validatedJson: String =>
-        Complete.text(
-          UsersServices.edit(username, validatedJson)
-        )
-      }
-    )
-  )
-
-  def apply(): Route = concat(
-    pathPrefix(Segment) { username: String => usernameRoutes(username) },
+  private def rootRoutes(): Route = concat(
     get(
       SchemaValidate("list-users") { validatedJson: String =>
         Complete.json(UsersServices.list(validatedJson))
@@ -62,5 +47,26 @@ object UsersRoutes {
         )
       }
     )
+  )
+
+  private def usernameRoutes(): Route = pathPrefix(Segment) {
+    username: String =>
+      concat(
+        get(
+          Complete.json(UsersServices.open(username))
+        ),
+        patch(
+          SchemaValidate("edit-user") { validatedJson: String =>
+            Complete.text(
+              UsersServices.edit(username, validatedJson)
+            )
+          }
+        )
+      )
+  }
+
+  def apply(): Route = concat(
+    usernameRoutes(),
+    rootRoutes()
   )
 }
