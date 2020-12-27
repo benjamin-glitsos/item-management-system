@@ -12,18 +12,19 @@ package doobie_bundle {
       IO.contextShift(ExecutionContext.global)
 
     val xa = Transactor.fromDriverManager[IO](
-        "org.postgresql.Driver",
-        s"jdbc:postgresql://database/${System.getenv("POSTGRES_DATABASE")}",
-        System.getenv("POSTGRES_USER"),
-        System.getenv("POSTGRES_PASSWORD"),
-        Blocker.liftExecutionContext(ExecutionContexts.synchronous)
+      "org.postgresql.Driver",
+      s"jdbc:postgresql://database/${System.getenv("POSTGRES_DATABASE")}",
+      System.getenv("POSTGRES_USER"),
+      System.getenv("POSTGRES_PASSWORD"),
+      Blocker.liftExecutionContext(ExecutionContexts.synchronous)
     )
   }
 
   object database {
     val dc = new DoobieContext.Postgres(SnakeCase)
 
-    implicit val cs = IO.contextShift(ExecutionContexts.synchronous)
+    implicit val cs: ContextShift[IO] =
+      IO.contextShift(ExecutionContexts.synchronous)
 
     import dc._
 
