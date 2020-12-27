@@ -1,22 +1,13 @@
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
-import scala.math.round
 import scala.util.Random
 import upickle.default._
 
-object UsersSeeder {
-  implicit def times(n: Int) = new {
-    def times(fn: => Unit) = {
-      val seedFactor: Double = System.getenv("SEED_FACTOR").toDouble
-      val count: Int         = round(n * seedFactor).toInt
-      for (i <- 1 to count) fn
-    }
-  }
+object UsersSeeder extends SeederTrait {
+  override val count: Int = 15
 
-  private def count: Int = 15
-
-  private def clearData(): Unit = {
+  override def clearData(): Unit = {
     UsersServices.delete(
       write(
         ujson.Obj(
@@ -27,7 +18,7 @@ object UsersSeeder {
     )
   }
 
-  private def predefinedData(): Unit = {
+  override def predefinedData(): Unit = {
     UsersServices.create(
       write(
         ujson.Obj(
@@ -48,7 +39,7 @@ object UsersSeeder {
     )
   }
 
-  private def seed(): Unit = {
+  override def seed(): Unit = {
     def seedRow(): Unit = {
       val fairy: Fairy       = Fairy.create();
       val person: Person     = fairy.person();
@@ -74,7 +65,7 @@ object UsersSeeder {
     count times seedRow()
   }
 
-  def apply(): Unit = {
+  override def apply(): Unit = {
     clearData()
     predefinedData()
     seed()
