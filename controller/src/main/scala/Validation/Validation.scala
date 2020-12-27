@@ -51,8 +51,11 @@ object Validation extends ValidationTrait {
       case Success(_) => {
         ujson.read(entityObject.toString()).validNec
       }
-      case Failure(e) =>
-        JsonSchemaError("TODO").invalidNec
+      case Failure(e: ValidationException) =>
+        e.getCausingExceptions()
+          .asScala
+          .map(e => JsonSchemaError(e.getMessage()).invalidNec)
+          .fold(ujsonEmptyValue.validNec) { (a, b) => a *> b }
     }
   }
 
@@ -60,7 +63,7 @@ object Validation extends ValidationTrait {
     extractStrictEntity(3.seconds)
       .flatMap((entity: HttpEntity.Strict) => {
         if (staticEndpoints contains endpointName) {
-          provide(ujson.read("{}"))
+          provide(ujsonEmptyValue)
         } else {
           val entityText = entity.data.utf8String
 
@@ -68,7 +71,7 @@ object Validation extends ValidationTrait {
             case Valid(v) => provide(v)
             case Invalid(e) =>
               reject(
-                ValidationRejection("")
+                ValidationRejection(formatErrorJson(e).toString())
               )
           }
         }

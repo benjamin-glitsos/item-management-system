@@ -4,6 +4,7 @@ import upickle.default._
 import upickle_bundle.implicits._
 
 // TODO: look for any flatMap or map that can be converted to >>= or <*> or any other Haskell symbols
+// TODO: add 'final' keyword to most methods?
 
 // TODO: Error Handling
 // https://blog.ssanj.net/posts/2019-08-18-using-validated-for-error-accumulation-in-scala-with-cats.html
