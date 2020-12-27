@@ -13,7 +13,7 @@ object UsersSeeder {
     val username: String     = person.getUsername()
     val password: String     = person.getPassword()
     val emailAddress: String = person.getEmail()
-    val notes: String        = text.latinSentence(Random.between(0, 1))
+    val notes: String        = text.latinSentence(Random.between(1, 3))
 
     val entityJson: String = write(
       ujson.Obj(
