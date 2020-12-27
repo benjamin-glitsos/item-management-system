@@ -4,7 +4,7 @@ import doobie_bundle.connection._
 import upickle_bundle.implicits._
 
 trait UsersServicesOpen {
-  def open(username: String): String = {
+  def open(username: String): ujson.Value = {
     (for {
       _ <- UsersDAO.incrementOpens(username)
 

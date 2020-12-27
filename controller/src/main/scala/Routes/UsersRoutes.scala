@@ -1,6 +1,7 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle.default._
+import upickle_bundle.implicits._
 
 // TODO: Error Handling
 // ## Refer to: ##
@@ -17,6 +18,7 @@ import upickle.default._
 // * Each Service will return Valid[JsValue]. This allows services to throw their own errors in the Invalid case, but no services need this currently. A custom marshaller will be required to implicitly marshall Valid[JsValue] to the response body. Marshalling JsValue to the response body should automatically make the content-type of the response be application/json, so this removes the need for your Complete directive.
 // (Tidy up the seeding of the two default users within UsersSeeder after you make the Services accept values rather than a json string)
 // (Delete the Directives directory after this.)
+// (Write a Marshaller that handles ujson.Value then use that as the lingua franca)
 
 object UsersRoutes extends ValidationTrait {
   private def rootRoutes(): Route = concat(
@@ -39,15 +41,12 @@ object UsersRoutes extends ValidationTrait {
       }
     ),
     delete(
-      SchemaValidate("delete-users") { validatedBody: String =>
+      Validation("delete-users") { body: ujson.Value =>
         {
-          val body: ujson.Value       = ujson.read(validatedBody)
           val method: String          = body("method").str
           val usernames: List[String] = read[List[String]](body("usernames"))
 
-          Complete.text(
-            UsersServices.delete(method, usernames)
-          )
+          complete(ujson.read(UsersServices.delete(method, usernames)))
         }
       }
     )
@@ -57,8 +56,9 @@ object UsersRoutes extends ValidationTrait {
     username: String =>
       concat(
         get(
-          Validation("open-user") { validatedBody: Validated[ujson.Value] =>
-            Complete.json(UsersServices.open(username))
+          Validation("open-user") { body: ujson.Value =>
+            // Complete.json(UsersServices.open(username))
+            Complete.json("{}")
           }
         ),
         patch(

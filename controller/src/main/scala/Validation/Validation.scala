@@ -14,13 +14,13 @@ import cats.data.ValidatedNec
 import scala.util.{Try, Success, Failure}
 
 object Validation extends ValidationTrait {
-  def apply(endpointName: String): Directive1[Validated[ujson.Value]] =
+  def apply(endpointName: String): Directive1[ujson.Value] =
     extractStrictEntity(3.seconds)
       .flatMap((entity: HttpEntity.Strict) => {
         val staticEndpoints = List("open-user")
 
         if (staticEndpoints contains endpointName) {
-          provide(ujson.read("{}").validNec)
+          provide(ujson.read("{}"))
         } else {
           val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
 
@@ -49,8 +49,11 @@ object Validation extends ValidationTrait {
               .build()
 
           Try(schema.validate(entityObject)) match {
-            case Success(_) =>
-              provide(ujson.read(entityObject.toString()).validNec)
+            case Success(_) => {
+              val validatedJson: ujson.Value =
+                ujson.read(entityObject.toString())
+              provide(validatedJson)
+            }
             case Failure(e) =>
               reject(
                 ValidationRejection("")
