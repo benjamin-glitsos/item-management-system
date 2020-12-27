@@ -26,5 +26,7 @@ package upickle_bundle {
         HttpEntity(`application/json`, ujson.write(a))
       }
     }
+
+    val ujsonEmptyValue: ujson.Value = ujson.write(ujson.Obj())
   }
 }

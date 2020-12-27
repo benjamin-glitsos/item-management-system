@@ -3,6 +3,10 @@ import akka.http.scaladsl.server.Route
 import upickle.default._
 import upickle_bundle.implicits._
 
+// TODO: make formatErrorJson return a ujson.Value array of errors, and then make the handler wrap it in { errors: [] }.
+// TODO: formatErrorJson code could be improved with implicits to handle Error type and also NonEmptyList type
+// TODO: test that multiple validation errors get accumulated into a list.
+
 // TODO: look for any flatMap or map that can be converted to >>= or <*> or any other Haskell symbols
 // TODO: add 'final' keyword to most methods?
 
