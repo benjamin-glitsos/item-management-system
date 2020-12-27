@@ -18,6 +18,7 @@ import akka.http.scaladsl.server.Route
 //     * Uses custom validations if any are found (the name is matched by a case expression to various custom validation objects), returning Valid[JsValue].
 // (Also note that you may want to extract the values from the json data type and pass them to the services in the UsersRoutes object, rather than inside the individual services. This is just for DRYness so that each individual service doesn't need to handle the conversions.)
 // * Each Service will return Valid[JsValue]. This allows services to throw their own errors in the Invalid case, but no services need this currently. A custom marshaller will be required to implicitly marshall Valid[JsValue] to the response body. Marshalling JsValue to the response body should automatically make the content-type of the response be application/json, so this removes the need for your Complete directive.
+// (Tidy up the seeding of the two default users within UsersSeeder after you make the Services accept values rather than a json string)
 
 object UsersRoutes {
   private def rootRoutes(): Route = concat(
