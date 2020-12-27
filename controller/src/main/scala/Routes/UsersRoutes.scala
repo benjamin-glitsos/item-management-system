@@ -5,6 +5,7 @@ import akka.http.scaladsl.server.Route
 // TODO: consider accepting command-line flags which will override values specified in env file. These flags can be used by your CI/CD pipeline e.g. --testing=true --admin=false --seeding-factor=2. This will need to be overwrite-merged into the env variables at the bash level in the docker container, so maybe you can install a bash tool using the dockerfile that can do this merging and flag handling.
 // TODO: tidy the imports by nesting them like this {One, Two} and using specific imports rather than the underscore for all imports.
 // TODO: convert the Users List endpoint to doobie sql and then make the columns be dynamic (accepting an array but with a default array defined by the schema json), and also the ordering (accepting a tuple of (column name, asc/desc)), and the where clauses (a list of 3-tuples (column name, operator, data)) and the where clauses defaults to [("is_deleted", "equals", "false")].
+// TODO: add the probabalistic functions to the SeederTrait. TODO: randomly generate markdown for the notes column.
 //
 // TODO: Error Handling
 // ## Refer to: ##
