@@ -1,7 +1,6 @@
 import org.everit.json.schema.{Schema, ValidationException}
-import org.everit.json.schema.loader.SchemaClient
+import org.everit.json.schema.loader.{SchemaClient, SchemaLoader}
 import akka.http.scaladsl.server._
-import org.everit.json.schema.loader.SchemaLoader
 import org.json.{JSONObject, JSONTokener}
 import scala.io.Source
 import scala.jdk.CollectionConverters._

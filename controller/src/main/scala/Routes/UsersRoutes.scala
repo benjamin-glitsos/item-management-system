@@ -1,8 +1,6 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 
-// TODO: tidy the imports by nesting them like this {One, Two} and using specific imports rather than the underscore for all imports.
-//
 // TODO: Error Handling
 // ## Refer to: ##
 // https://www.gregbeech.com/2018/08/12/akka-http-entity-validation/

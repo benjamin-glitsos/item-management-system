@@ -4,7 +4,6 @@ import doobie.{Meta => _, _}
 import doobie.util.ExecutionContexts
 import io.getquill.{idiom => _, _}
 import doobie.quill.DoobieContext
-import io.getquill.{idiom => _, _}
 
 package doobie_bundle {
   object connection {
