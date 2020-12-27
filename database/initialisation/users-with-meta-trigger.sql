@@ -68,7 +68,7 @@ BEGIN
             UPDATE users
             SET username=NEW.username
               , email_address=NEW.email_address
-              , password=NEW.password
+              , password=sha1_encrypt(NEW.password)
             WHERE username=OLD.username
             RETURNING meta_id
         )

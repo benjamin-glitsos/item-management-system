@@ -10,74 +10,67 @@ import akka.http.scaladsl.model.HttpEntity
 import upickle.default._
 import cats.Applicative
 import cats.implicits._
+import cats.data.Validated.{Valid, Invalid}
 import cats.data.ValidatedNec
 import scala.util.{Try, Success, Failure}
 
 object Validation extends ValidationTrait {
+  private val staticEndpoints = List("open-user")
+
+  private def validateJsonSchema(
+      endpointName: String,
+      entityText: String
+  ): Validated[ujson.Value] = {
+    val entityObject: JSONObject = new JSONObject(entityText)
+
+    val schemaSource: Source =
+      Source.fromResource(s"schemas/$endpointName.json")
+
+    val schemaString: String =
+      try schemaSource.mkString
+      finally schemaSource.close()
+
+    val rawSchema: JSONObject =
+      new JSONObject(
+        new JSONTokener(schemaString)
+      )
+
+    val schema: Schema =
+      SchemaLoader
+        .builder()
+        .schemaClient(SchemaClient.classPathAwareClient())
+        .useDefaults(true)
+        .schemaJson(rawSchema)
+        .resolutionScope("classpath://schemas/")
+        .draftV7Support()
+        .build()
+        .load()
+        .build()
+
+    Try(schema.validate(entityObject)) match {
+      case Success(_) => {
+        ujson.read(entityObject.toString()).validNec
+      }
+      case Failure(e) =>
+        JsonSchemaError("TODO").invalidNec
+    }
+  }
+
   def apply(endpointName: String): Directive1[ujson.Value] =
     extractStrictEntity(3.seconds)
       .flatMap((entity: HttpEntity.Strict) => {
-        val staticEndpoints = List("open-user")
-
         if (staticEndpoints contains endpointName) {
           provide(ujson.read("{}"))
         } else {
-          val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
+          val entityText = entity.data.utf8String
 
-          val schemaSource: Source =
-            Source.fromResource(s"schemas/$endpointName.json")
-
-          val schemaString: String =
-            try schemaSource.mkString
-            finally schemaSource.close()
-
-          val rawSchema: JSONObject =
-            new JSONObject(
-              new JSONTokener(schemaString)
-            )
-
-          val schema: Schema =
-            SchemaLoader
-              .builder()
-              .schemaClient(SchemaClient.classPathAwareClient())
-              .useDefaults(true)
-              .schemaJson(rawSchema)
-              .resolutionScope("classpath://schemas/")
-              .draftV7Support()
-              .build()
-              .load()
-              .build()
-
-          Try(schema.validate(entityObject)) match {
-            case Success(_) => {
-              val validatedJson: ujson.Value =
-                ujson.read(entityObject.toString())
-              provide(validatedJson)
-            }
-            case Failure(e) =>
+          validateJsonSchema(endpointName, entityText) match {
+            case Valid(v) => provide(v)
+            case Invalid(e) =>
               reject(
                 ValidationRejection("")
               )
           }
-
-          // try {} catch {
-          //   case e: ValidationException =>
-          //     e.getCausingExceptions()
-          //       .asScala
-          //       .map(_.getMessage())
-          //       .foreach(validationErrors :+ JsonSchemaError(_))
-          // }
-          //
-          // val entityJson: ujson.Value =
-          //   ujson.read(entityObject.toString())
-          //
-          // if (validationErrors.isEmpty) {
-          //   provide(entityJson.validNec)
-          // } else {
-          //   reject(
-          //     ValidationRejection(validationErrors)
-          //   )
-          // }
         }
       })
 }
