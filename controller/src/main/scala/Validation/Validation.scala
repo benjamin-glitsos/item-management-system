@@ -11,6 +11,7 @@ import upickle.default._
 import cats.Applicative
 import cats.implicits._
 import cats.data.ValidatedNec
+import scala.util.{Try, Success, Failure}
 
 object Validation extends ValidationTrait {
   def apply(endpointName: String): Directive1[Validated[ujson.Value]] =
@@ -47,31 +48,34 @@ object Validation extends ValidationTrait {
               .load()
               .build()
 
-          var validationErrors: String = ""
-
-          try {
-            schema.validate(entityObject)
-          } catch {
-            case e: ValidationException => {
-              val lineDelimitedErrors: String =
-                e.getCausingExceptions()
-                  .asScala
-                  .map(e => s"Invalid input: ${e.getMessage()}")
-                  .toSeq
-                  .mkString("\n")
-
-              validationErrors = lineDelimitedErrors
-            }
+          Try(schema.validate(entityObject)) match {
+            case Success(_) =>
+              provide(ujson.read(entityObject.toString()).validNec)
+            case Failure(e) =>
+              reject(
+                ValidationRejection("")
+              )
           }
 
-          val entityJson: ujson.Value =
-            ujson.read(entityObject.toString())
-
-          if (validationErrors.isEmpty) {
-            provide(entityJson.validNec)
-          } else {
-            reject(ValidationRejection(validationErrors))
-          }
+          // try {} catch {
+          //   case e: ValidationException =>
+          //     e.getCausingExceptions()
+          //       .asScala
+          //       .map(_.getMessage())
+          //       .foreach(validationErrors :+ JsonSchemaError(_))
+          //   // TODO: no! map Try to Validated then match on Valid and Invalid to do this instead!
+          // }
+          //
+          // val entityJson: ujson.Value =
+          //   ujson.read(entityObject.toString())
+          //
+          // if (validationErrors.isEmpty) {
+          //   provide(entityJson.validNec)
+          // } else {
+          //   reject(
+          //     ValidationRejection(validationErrors)
+          //   )
+          // }
         }
       })
 }
