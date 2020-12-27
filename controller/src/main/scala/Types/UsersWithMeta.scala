@@ -8,6 +8,7 @@ case class UsersWithMeta(
     uuid: UUID,
     opens: Int,
     edits: Int,
+    is_deleted: Boolean,
     created_at: LocalDateTime,
     edited_at: Option[LocalDateTime],
     deleted_at: Option[LocalDateTime],

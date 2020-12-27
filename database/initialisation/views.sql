@@ -6,6 +6,7 @@ CREATE VIEW users_with_meta AS
       , m.uuid
       , m.opens
       , m.edits
+      , m.is_deleted
       , m.created_at
       , m.edited_at
       , m.deleted_at

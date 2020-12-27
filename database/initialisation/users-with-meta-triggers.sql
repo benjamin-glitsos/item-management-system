@@ -15,7 +15,7 @@ BEGIN
           , NEW.username
           , NEW.password
         );
-        RETURN NULL;
+        RETURN null;
 
     -- Open --
     ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
@@ -25,27 +25,27 @@ BEGIN
             FROM users
             WHERE username=OLD.username
         );
-        RETURN NULL;
-
-    -- Restore Delete --
-    ELSIF TG_OP = 'UPDATE' AND NEW.restored_at IS NOT NULL THEN
-        UPDATE meta SET restored_at=NOW()
-        WHERE id=(
-            SELECT meta_id
-            FROM users
-            WHERE username=OLD.username
-        );
-        RETURN NULL;
+        RETURN null;
 
     -- Soft Delete --
-    ElSIF TG_OP = 'UPDATE' AND NEW.deleted_at IS NOT NULL THEN
-        UPDATE meta SET deleted_at=NOW()
+    ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted=true AND OLD.is_deleted=false THEN
+        UPDATE meta SET is_deleted=true, deleted_at=NOW()
         WHERE id=(
             SELECT meta_id
             FROM users
             WHERE username=OLD.username
         );
-        RETURN NULL;
+        RETURN null;
+
+    -- Restore Delete --
+    ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted=false AND OLD.is_deleted=true THEN
+        UPDATE meta SET is_deleted=false, restored_at=NOW()
+        WHERE id=(
+            SELECT meta_id
+            FROM users
+            WHERE username=OLD.username
+        );
+        RETURN null;
 
     -- Hard Delete --
     ELSIF TG_OP = 'DELETE' THEN
@@ -60,10 +60,10 @@ BEGIN
             FROM users
             WHERE username=OLD.username
         );
-        RETURN NULL;
+        RETURN null;
 
     -- Update --
-    ELSIF TG_OP = 'UPDATE' THEN
+    ELSIF TG_OP = 'UPDATE' AND NEW.* IS DISTINCT FROM OLD.* THEN
         WITH users_update AS (
             UPDATE users
             SET username=NEW.username
