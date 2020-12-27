@@ -4,6 +4,10 @@ import upickle.default._
 import upickle_bundle.implicits._
 
 // TODO: Error Handling
+// * Change the marshaller so that it handles Validated[ujson.Value] types. It provides or rejects them. It writes the value to a string, and also the errors list to a json object then to a string.
+// * Extract the SchemaValidation into a separate object that returns Validated[ujson.Value]. Then the Validation object will sequence and aggregate the separate validators.
+
+// TODO: Error Handling
 // ## Refer to: ##
 // https://www.gregbeech.com/2018/08/12/akka-http-entity-validation/
 // https://doc.akka.io/docs/akka-http/current/routing-dsl/directives/marshalling-directives/entity.html

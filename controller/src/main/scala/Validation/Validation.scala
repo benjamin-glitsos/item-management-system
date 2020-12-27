@@ -66,7 +66,6 @@ object Validation extends ValidationTrait {
           //       .asScala
           //       .map(_.getMessage())
           //       .foreach(validationErrors :+ JsonSchemaError(_))
-          //   // TODO: no! map Try to Validated then match on Valid and Invalid to do this instead!
           // }
           //
           // val entityJson: ujson.Value =
