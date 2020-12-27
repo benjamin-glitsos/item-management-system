@@ -55,7 +55,7 @@ object Validation extends ValidationTrait {
         e.getCausingExceptions()
           .asScala
           .map(e => JsonSchemaError(e.getMessage()).invalidNec)
-          .fold(ujsonEmptyValue.validNec) { (a, b) => a *> b }
+          .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
     }
   }
 
