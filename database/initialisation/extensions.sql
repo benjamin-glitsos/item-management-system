@@ -1,1 +1,2 @@
 CREATE EXTENSION citext;
+CREATE EXTENSION pgcrypto; 

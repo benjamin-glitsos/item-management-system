@@ -1,4 +1,4 @@
-CREATE FUNCTION users_with_meta_modifiable_view()
+CREATE FUNCTION users_with_meta_trigger()
 RETURNS TRIGGER AS $$
 BEGIN
     -- Insert --
@@ -13,7 +13,7 @@ BEGIN
             (SELECT id FROM insert_meta)
           , NEW.email_address
           , NEW.username
-          , NEW.password
+          , sha1_encrypt(NEW.password)
         );
         RETURN null;
 
@@ -82,6 +82,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER users_with_meta_modifiable_view_trigger
+CREATE TRIGGER users_with_meta
     INSTEAD OF INSERT OR UPDATE OR DELETE ON users_with_meta
-    FOR EACH ROW EXECUTE PROCEDURE users_with_meta_modifiable_view();
+    FOR EACH ROW EXECUTE PROCEDURE users_with_meta_trigger();

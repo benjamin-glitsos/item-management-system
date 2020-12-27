@@ -18,14 +18,12 @@ $(cat_sql "domains")
 
 $(cat_sql "tables")
 
-$(cat_sql "functions")
-
-$(cat_interpolated_sql "data")
+$(cat_sql "sha1-encrypt")
 
 $(cat_sql "relationships")
 
 $(cat_sql "views")
 
-$(cat_sql "users-with-meta-triggers")
+$(cat_sql "users-with-meta-trigger")
 
 SQL
