@@ -15,7 +15,7 @@ trait UsersServicesList {
 
       data <- UsersDAO.list(offset, pageLength)
 
-      val output: String = write(
+      val output: String = ujson.write(
         ujson.Obj(
           "total_items" -> ujson.Num(totalItems),
           "total_pages" -> ujson.Num(totalPages),

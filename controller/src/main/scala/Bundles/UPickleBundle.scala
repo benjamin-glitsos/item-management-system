@@ -23,7 +23,7 @@ package upickle_bundle {
 
     implicit def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {
       Marshaller.withFixedContentType(`application/json`) { a =>
-        HttpEntity(`application/json`, write(a))
+        HttpEntity(`application/json`, ujson.write(a))
       }
     }
   }

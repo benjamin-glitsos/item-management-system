@@ -5,18 +5,20 @@ import upickle_bundle.implicits._
 
 trait UsersServicesOpen {
   def open(username: String): ujson.Value = {
-    (for {
-      _ <- UsersDAO.incrementOpens(username)
+    ujson.read(
+      (for {
+        _ <- UsersDAO.incrementOpens(username)
 
-      data <- UsersDAO.open(username)
+        data <- UsersDAO.open(username)
 
-      val output: String = write(
-        ujson.Obj(
-          "data" -> writeJs(data)
+        val output: String = ujson.write(
+          ujson.Obj(
+            "data" -> writeJs(data)
+          )
         )
-      )
-    } yield (output))
-      .transact(xa)
-      .unsafeRunSync
+      } yield (output))
+        .transact(xa)
+        .unsafeRunSync
+    )
   }
 }

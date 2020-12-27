@@ -13,7 +13,7 @@ object UsersSeeder extends SeederTrait {
 
   override def predefinedData(): Unit = {
     UsersServices.create(
-      write(
+      ujson.write(
         ujson.Obj(
           "username"      -> System.getenv("SUPER_ADMIN_USERNAME"),
           "password"      -> System.getenv("SUPER_ADMIN_PASSWORD"),
@@ -22,7 +22,7 @@ object UsersSeeder extends SeederTrait {
       )
     )
     UsersServices.create(
-      write(
+      ujson.write(
         ujson.Obj(
           "username"      -> System.getenv("DEMO_ADMIN_USERNAME"),
           "password"      -> System.getenv("DEMO_ADMIN_PASSWORD"),
@@ -48,7 +48,7 @@ object UsersSeeder extends SeederTrait {
           ""
         }
 
-      val entityJson: String = write(
+      val entityJson: String = ujson.write(
         ujson.Obj(
           "username"      -> username,
           "password"      -> password,
