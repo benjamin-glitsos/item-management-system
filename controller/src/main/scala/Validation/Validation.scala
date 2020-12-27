@@ -8,15 +8,18 @@ import akka.http.scaladsl.server.Directives._
 import scala.concurrent.duration._
 import akka.http.scaladsl.model.HttpEntity
 import upickle.default._
+import cats.Applicative
+import cats.implicits._
+import cats.data.ValidatedNec
 
-object Validator {
-  def apply(endpointName: String): Directive1[ujson.Value] =
+object Validation extends ValidationTrait {
+  def apply(endpointName: String): Directive1[Validated[ujson.Value]] =
     extractStrictEntity(3.seconds)
       .flatMap((entity: HttpEntity.Strict) => {
         val staticEndpoints = List("open-user")
 
         if (staticEndpoints contains endpointName) {
-          provide(ujson.Obj())
+          provide(ujson.read("{}").validNec)
         } else {
           val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
 
@@ -37,7 +40,6 @@ object Validator {
               .builder()
               .schemaClient(SchemaClient.classPathAwareClient())
               .useDefaults(true)
-              .schemaClient(SchemaClient.classPathAwareClient())
               .schemaJson(rawSchema)
               .resolutionScope("classpath://schemas/")
               .draftV7Support()
@@ -66,7 +68,7 @@ object Validator {
             ujson.read(entityObject.toString())
 
           if (validationErrors.isEmpty) {
-            provide(entityJson)
+            provide(entityJson.validNec)
           } else {
             reject(ValidationRejection(validationErrors))
           }
