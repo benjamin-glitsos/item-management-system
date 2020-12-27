@@ -18,7 +18,6 @@ import upickle_bundle.implicits._
 // * Each Service will return Valid[JsValue]. This allows services to throw their own errors in the Invalid case, but no services need this currently. A custom marshaller will be required to implicitly marshall Valid[JsValue] to the response body. Marshalling JsValue to the response body should automatically make the content-type of the response be application/json, so this removes the need for your Complete directive.
 // (Tidy up the seeding of the two default users within UsersSeeder after you make the Services accept values rather than a json string)
 // (Delete the Directives directory after this.)
-// (Write a Marshaller that handles ujson.Value then use that as the lingua franca)
 
 object UsersRoutes extends ValidationTrait {
   private def rootRoutes(): Route = concat(
@@ -57,8 +56,7 @@ object UsersRoutes extends ValidationTrait {
       concat(
         get(
           Validation("open-user") { body: ujson.Value =>
-            // Complete.json(UsersServices.open(username))
-            Complete.json("{}")
+            complete(UsersServices.open(username))
           }
         ),
         patch(

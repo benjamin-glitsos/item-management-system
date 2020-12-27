@@ -2,6 +2,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import upickle.default._
 
+import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
+import akka.http.scaladsl.model.{ContentTypeRange, HttpEntity}
+import akka.http.scaladsl.model.MediaTypes.`application/json`
+import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
+
 package upickle_bundle {
   object implicits {
     implicit val rwLocalDateTime: ReadWriter[LocalDateTime] =
@@ -15,5 +20,11 @@ package upickle_bundle {
       )
 
     implicit val rwUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
+
+    implicit def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {
+      Marshaller.withFixedContentType(`application/json`) { a =>
+        HttpEntity(`application/json`, write(a))
+      }
+    }
   }
 }
