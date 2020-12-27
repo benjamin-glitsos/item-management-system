@@ -4,11 +4,7 @@ import doobie_bundle.connection._
 import upickle_bundle.implicits._
 
 trait UsersServicesList {
-  def list(entityJson: String): String = {
-    val body: ujson.Value = ujson.read(entityJson)
-    val pageNumber: Int   = body("page_number").num.toInt
-    val pageLength: Int   = body("page_length").num.toInt
-
+  def list(pageNumber: Int, pageLength: Int): String = {
     (for {
       totalItems <- UsersDAO.count().map(_.toInt)
 

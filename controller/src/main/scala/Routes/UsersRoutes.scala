@@ -1,5 +1,6 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import upickle.default._
 
 // TODO: Error Handling
 // ## Refer to: ##
@@ -9,6 +10,7 @@ import akka.http.scaladsl.server.Route
 // * The ApiRoutes will be wrapped in a handleExceptions directive which takes an Invalid[Error] data type and converts it to an error containing JsValue: { errors: [{ code: "example_error", message: "Example error message." }] }. The Error case class will be Error(code, message). Hence the routes that you make will return Validated[JsValue, Error] which means Valid[JsValue] and Invalid[Error].
 // * Each endpoint will be wrapped in ValidateRequest(name) instead of SchemaValidate. This takes a unique name such as "open-user" for each endpoint. ValidateRequest first matches name against a list of names which don't require a body and returns Valid(new JsValue) for them immediately. For the rest, it then extracts the request body and optionally the content-type header and goes through the following validation steps which each accumulate the list of validation errors within their own steps (but not of other steps). (Hopefully it is possible to throw the HTTP status code along with the error, as then you can customise it e.g. 409 Duplicate Content or 400 Bad Request.):
 //     * Converts request body to JsValue and optionally, checks if the content-type is application/json, returning Valid[JsValue] using the Cats Validate data type.
+//     NOTE: everit schema doesnt use JsValue. It uses a different AST. Ok that changes this... Now the lingua franca type should be String.
 //     * Uses schema validation (the name is the filename of the schema json file), returning Valid[JsValue].
 //     * Uses custom validations if any are found (the name is matched by a case expression to various custom validation objects), returning Valid[JsValue].
 // (Also note that you may want to extract the values from the json data type and pass them to the services in the UsersRoutes object, rather than inside the individual services. This is just for DRYness so that each individual service doesn't need to handle the conversions.)
@@ -19,7 +21,13 @@ object UsersRoutes {
   private def rootRoutes(): Route = concat(
     get(
       SchemaValidate("list-users") { validatedJson: String =>
-        Complete.json(UsersServices.list(validatedJson))
+        {
+          val body: ujson.Value = ujson.read(validatedJson)
+          val pageNumber: Int   = body("page_number").num.toInt
+          val pageLength: Int   = body("page_length").num.toInt
+
+          Complete.json(UsersServices.list(pageNumber, pageLength))
+        }
       }
     ),
     post(
@@ -31,9 +39,15 @@ object UsersRoutes {
     ),
     delete(
       SchemaValidate("delete-users") { validatedJson: String =>
-        Complete.text(
-          UsersServices.delete(validatedJson)
-        )
+        {
+          val body: ujson.Value       = ujson.read(validatedJson)
+          val method: String          = body("method").str
+          val usernames: List[String] = read[List[String]](body("usernames"))
+
+          Complete.text(
+            UsersServices.delete(method, usernames)
+          )
+        }
       }
     )
   )
