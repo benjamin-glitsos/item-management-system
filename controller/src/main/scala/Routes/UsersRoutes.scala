@@ -20,9 +20,9 @@ import upickle.default._
 object UsersRoutes {
   private def rootRoutes(): Route = concat(
     get(
-      SchemaValidate("list-users") { validatedJson: String =>
+      SchemaValidate("list-users") { validatedBody: String =>
         {
-          val body: ujson.Value = ujson.read(validatedJson)
+          val body: ujson.Value = ujson.read(validatedBody)
           val pageNumber: Int   = body("page_number").num.toInt
           val pageLength: Int   = body("page_length").num.toInt
 
@@ -31,16 +31,16 @@ object UsersRoutes {
       }
     ),
     post(
-      SchemaValidate("create-user") { validatedJson: String =>
+      SchemaValidate("create-user") { validatedBody: String =>
         Complete.text(
-          UsersServices.create(validatedJson)
+          UsersServices.create(validatedBody)
         )
       }
     ),
     delete(
-      SchemaValidate("delete-users") { validatedJson: String =>
+      SchemaValidate("delete-users") { validatedBody: String =>
         {
-          val body: ujson.Value       = ujson.read(validatedJson)
+          val body: ujson.Value       = ujson.read(validatedBody)
           val method: String          = body("method").str
           val usernames: List[String] = read[List[String]](body("usernames"))
 
@@ -56,12 +56,14 @@ object UsersRoutes {
     username: String =>
       concat(
         get(
-          Complete.json(UsersServices.open(username))
+          Validator("open-user") { validatedBody: ujson.Value =>
+            Complete.json(UsersServices.open(username))
+          }
         ),
         patch(
-          SchemaValidate("edit-user") { validatedJson: String =>
+          SchemaValidate("edit-user") { validatedBody: String =>
             Complete.text(
-              UsersServices.edit(username, validatedJson)
+              UsersServices.edit(username, validatedBody)
             )
           }
         )
