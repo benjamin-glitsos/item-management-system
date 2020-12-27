@@ -1,4 +1,5 @@
-import scala.math.round
+import scala.math.{round, pow}
+import scala.util.Random
 
 trait SeederTrait {
   implicit def times(n: Int) = new {
@@ -7,6 +8,16 @@ trait SeederTrait {
       val count: Int         = round(n * seedFactor).toInt
       for (i <- 1 to count) fn
     }
+  }
+
+  private def powerOfTen(p: Int): Long = {
+    pow(10, p).toLong
+  }
+
+  def biasedCoinFlip(probability: Double): Boolean = {
+    val precision = powerOfTen(2).toInt
+    val flip      = Random.between(1, precision).toDouble / precision
+    probability >= flip
   }
 
   protected val count: Int = 0

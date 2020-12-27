@@ -48,7 +48,12 @@ object UsersSeeder extends SeederTrait {
       val username: String     = person.getUsername()
       val password: String     = person.getPassword()
       val emailAddress: String = person.getEmail()
-      val notes: String        = text.latinSentence(Random.between(1, 3))
+      val notes: String =
+        if (biasedCoinFlip(0.75)) {
+          text.latinSentence(Random.between(1, 5))
+        } else {
+          ""
+        }
 
       val entityJson: String = write(
         ujson.Obj(
