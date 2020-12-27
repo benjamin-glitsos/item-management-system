@@ -18,58 +18,58 @@ object Validator {
         if (staticEndpoints contains endpointName) {
           provide(ujson.Obj())
         } else {
-          provide(ujson.read(entity.data.utf8String))
+          val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
+
+          val schemaSource: Source =
+            Source.fromResource(s"schemas/$endpointName.json")
+
+          val schemaString: String =
+            try schemaSource.mkString
+            finally schemaSource.close()
+
+          val rawSchema: JSONObject =
+            new JSONObject(
+              new JSONTokener(schemaString)
+            )
+
+          val schema: Schema =
+            SchemaLoader
+              .builder()
+              .schemaClient(SchemaClient.classPathAwareClient())
+              .useDefaults(true)
+              .schemaClient(SchemaClient.classPathAwareClient())
+              .schemaJson(rawSchema)
+              .resolutionScope("classpath://schemas/")
+              .draftV7Support()
+              .build()
+              .load()
+              .build()
+
+          var validationErrors: String = ""
+
+          try {
+            schema.validate(entityObject)
+          } catch {
+            case e: ValidationException => {
+              val lineDelimitedErrors: String =
+                e.getCausingExceptions()
+                  .asScala
+                  .map(e => s"Invalid input: ${e.getMessage()}")
+                  .toSeq
+                  .mkString("\n")
+
+              validationErrors = lineDelimitedErrors
+            }
+          }
+
+          val entityJson: ujson.Value =
+            ujson.read(entityObject.toString())
+
+          if (validationErrors.isEmpty) {
+            provide(entityJson)
+          } else {
+            reject(ValidationRejection(validationErrors))
+          }
         }
       })
 }
-
-//   val entityObject: JSONObject = new JSONObject(entity.data.utf8String)
-//
-//   val schemaSource: Source =
-//     Source.fromResource(s"schemas/$schemaFilename.json")
-//
-//   val schemaString: String =
-//     try schemaSource.mkString
-//     finally schemaSource.close()
-//
-//   val rawSchema: JSONObject =
-//     new JSONObject(
-//       new JSONTokener(schemaString)
-//     )
-//
-//   val schema: Schema =
-//     SchemaLoader
-//       .builder()
-//       .schemaClient(SchemaClient.classPathAwareClient())
-//       .useDefaults(true)
-//       .schemaClient(SchemaClient.classPathAwareClient())
-//       .schemaJson(rawSchema)
-//       .resolutionScope("classpath://schemas/")
-//       .draftV7Support()
-//       .build()
-//       .load()
-//       .build()
-//
-//   var validationErrors: String = ""
-//
-//   try {
-//     schema.validate(entityObject)
-//   } catch {
-//     case e: ValidationException => {
-//       val lineDelimitedErrors: String =
-//         e.getCausingExceptions()
-//           .asScala
-//           .map(e => s"Invalid input: ${e.getMessage()}")
-//           .toSeq
-//           .mkString("\n")
-//
-//       validationErrors = lineDelimitedErrors
-//     }
-//   }
-//
-//   if (validationErrors.isEmpty) {
-//     provide(entityObject.toString())
-//   } else {
-//     reject(ValidationRejection(validationErrors))
-//   }
-// })
