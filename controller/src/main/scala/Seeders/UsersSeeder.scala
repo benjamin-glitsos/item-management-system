@@ -46,10 +46,10 @@ object UsersSeeder extends SeederTrait {
       val text: TextProducer = fairy.textProducer();
 
       val username: String     = person.getUsername()
-      val password: String     = person.getPassword()
+      val password: String     = generatePassword(length = 15)
       val emailAddress: String = person.getEmail()
       val notes: String =
-        if (biasedCoinFlip(0.75)) {
+        if (biasedCoinFlip(probability = 0.75)) {
           text.latinSentence(Random.between(1, 5))
         } else {
           ""

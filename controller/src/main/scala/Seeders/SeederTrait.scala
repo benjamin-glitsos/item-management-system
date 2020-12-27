@@ -20,6 +20,10 @@ trait SeederTrait {
     probability >= flip
   }
 
+  def generatePassword(length: Int): String = {
+    Seq.fill(length)(Random.nextPrintableChar()).mkString("")
+  }
+
   protected val count: Int = 0
   protected def clearData(): Unit = {}
   protected def predefinedData(): Unit = {}
