@@ -59,7 +59,7 @@ object UsersRoutes {
           val method: String          = body("method").str
           val usernames: List[String] = read[List[String]](body("usernames"))
 
-          complete(ujson.read(UsersServices.delete(method, usernames)))
+          complete(UsersServices.delete(method, usernames))
         }
       }
     )
