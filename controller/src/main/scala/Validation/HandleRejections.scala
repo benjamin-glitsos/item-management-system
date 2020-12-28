@@ -24,10 +24,10 @@ object HandleRejections {
       .handle {
         case MissingCookieRejection(cookieName) =>
           complete(BadRequest, "No cookies, no service!!!")
-        case ValidationRejection(message, _) =>
+        case ValidationRejection(serialisedErrors, _) =>
           complete(
             InternalServerError,
-            write(ValidationError(message))
+            SerialisedErrors(serialisedErrors)
           )
       }
       .handleAll[MethodRejection] { methodRejections =>

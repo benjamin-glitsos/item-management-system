@@ -72,7 +72,7 @@ object Validation extends ValidationTrait {
             case Valid(v) => provide(v)
             case Invalid(e) =>
               reject(
-                ValidationRejection(formatErrorJson(e).toString())
+                ValidationRejection(serialiseErrors(e).toString())
               )
           }
         }

@@ -24,16 +24,22 @@ package upickle_bundle {
     implicit val upickleError: ReadWriter[Error] = macroRW
 
     implicit def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {
-      Marshaller.withFixedContentType(`application/json`) { a =>
-        HttpEntity(`application/json`, write(a))
+      Marshaller.withFixedContentType(`application/json`) { json =>
+        HttpEntity(`application/json`, write(json))
       }
     }
 
-    // implicit def errorMarshaller: ToEntityMarshaller[Error] = {
-    //   Marshaller.withFixedContentType(`application/json`) { a =>
-    //     HttpEntity(`application/json`, write(a))
-    //   }
-    // }
+    implicit def serialisedErrorsMarshaller
+        : ToEntityMarshaller[SerialisedErrors] = {
+      Marshaller.withFixedContentType(`application/json`) { serialisedErrors =>
+        HttpEntity(
+          `application/json`,
+          write(
+            ujson.Obj("errors" -> read[ujson.Value](serialisedErrors.errors))
+          )
+        )
+      }
+    }
 
     val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
   }
