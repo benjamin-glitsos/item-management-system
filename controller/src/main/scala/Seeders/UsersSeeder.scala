@@ -17,14 +17,14 @@ object UsersSeeder extends SeederTrait {
       username = System.getenv("SUPER_ADMIN_USERNAME"),
       password = System.getenv("SUPER_ADMIN_PASSWORD"),
       emailAddress = System.getenv("SUPER_ADMIN_EMAIL_ADDRESS"),
-      notes = generateMarkdownIpsum(text)
+      notes = MarkdownIpsum(text)
     )
 
     UsersServices.create(
       username = System.getenv("DEMO_ADMIN_USERNAME"),
       password = System.getenv("DEMO_ADMIN_PASSWORD"),
       emailAddress = System.getenv("DEMO_ADMIN_EMAIL_ADDRESS"),
-      notes = generateMarkdownIpsum(text)
+      notes = MarkdownIpsum(text)
     )
   }
 
@@ -37,7 +37,7 @@ object UsersSeeder extends SeederTrait {
       val username: String     = person.getUsername()
       val password: String     = generatePassword(length = 15)
       val emailAddress: String = person.getEmail()
-      val notes: String        = generateMarkdownIpsum(text)
+      val notes: String        = MarkdownIpsum(text)
 
       UsersServices.create(username, password, emailAddress, notes)
     }

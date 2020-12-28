@@ -1,6 +1,5 @@
 import scala.math.{round, pow}
 import scala.util.Random
-import com.devskiller.jfairy.producer.text.TextProducer
 
 trait SeederTrait {
   implicit final def times(n: Int) = new {
@@ -23,14 +22,6 @@ trait SeederTrait {
 
   final def generatePassword(length: Int): String = {
     Seq.fill(length)(Random.nextPrintableChar()).mkString("")
-  }
-
-  final def generateMarkdownIpsum(textProducer: TextProducer): String = {
-    if (biasedCoinFlip(probability = 0.75)) {
-      textProducer.latinSentence(Random.between(1, 5))
-    } else {
-      ""
-    }
   }
 
   protected val count: Int = 0
