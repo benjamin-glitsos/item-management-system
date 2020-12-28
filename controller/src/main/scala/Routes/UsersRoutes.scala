@@ -12,7 +12,6 @@ import scala.util.{Try}
 
 // TODO: put password validation handling inside UsersRoutes. Then make the generatePassword method return a valid password every time.
 
-// TODO: look for any flatMap or map that can be converted to >>= or <*> or any other Haskell symbols
 // TODO: add 'final' keyword to most methods?
 
 object UsersRoutes {
