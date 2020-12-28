@@ -15,7 +15,7 @@ import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 import cats.data.ValidatedNec
 import cats.data.NonEmptyChain
-import upickle_bundle.implicits._
+import upickle_bundle.general._
 
 object HandleRejections {
   def apply(): Directive0 = handleRejections(

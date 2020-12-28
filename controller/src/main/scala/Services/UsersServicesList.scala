@@ -1,7 +1,7 @@
 import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
-import upickle_bundle.implicits._
+import upickle_bundle.general._
 
 trait UsersServicesList {
   def list(pageNumber: Int, pageLength: Int): String = {

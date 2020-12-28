@@ -1,7 +1,7 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle.default._
-import upickle_bundle.implicits._
+import upickle_bundle.general._
 
 // TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
 //

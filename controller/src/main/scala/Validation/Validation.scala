@@ -13,7 +13,7 @@ import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 import cats.data.ValidatedNec
 import scala.util.{Try, Success, Failure}
-import upickle_bundle.implicits._
+import upickle_bundle.general._
 
 object Validation extends ValidationTrait {
   private val staticEndpoints = List("open-user")

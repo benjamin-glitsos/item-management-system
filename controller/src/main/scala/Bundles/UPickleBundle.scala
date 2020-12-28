@@ -8,7 +8,7 @@ import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import cats.data.NonEmptyChain
 
 package upickle_bundle {
-  object implicits {
+  object general {
     implicit val upickleLocalDateTime: ReadWriter[LocalDateTime] =
       readwriter[ujson.Value].bimap[LocalDateTime](
         x => x.toString(),
@@ -29,7 +29,7 @@ package upickle_bundle {
       }
     }
 
-    implicit def serialisedErrorsMarshaller
+    implicit def serialisedErrorsUpickleMarshaller
         : ToEntityMarshaller[SerialisedErrors] = {
       Marshaller.withFixedContentType(`application/json`) { serialisedErrors =>
         HttpEntity(
