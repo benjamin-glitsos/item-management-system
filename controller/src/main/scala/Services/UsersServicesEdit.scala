@@ -1,10 +1,11 @@
 import doobie.implicits._
 import doobie_bundle.connection._
 import scala.util.{Try}
+import upickle.default._
 
 trait UsersServicesEdit {
   def edit(oldUsername: String, entityJson: String): String = {
-    val body: ujson.Value            = ujson.read(entityJson)
+    val body: ujson.Value            = read[ujson.Value](entityJson)
     val newUsername: Option[String]  = Try(body("username").str).toOption
     val password: Option[String]     = Try(body("password").str).toOption
     val emailAddress: Option[String] = Try(body("email_address").str).toOption

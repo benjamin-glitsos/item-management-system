@@ -51,7 +51,7 @@ object UsersRoutes {
     get(
       SchemaValidate("list-users") { validatedBody: String =>
         {
-          val body: ujson.Value = ujson.read(validatedBody)
+          val body: ujson.Value = read[ujson.Value](validatedBody)
           val pageNumber: Int   = body("page_number").num.toInt
           val pageLength: Int   = body("page_length").num.toInt
 

@@ -25,16 +25,16 @@ package upickle_bundle {
 
     implicit def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {
       Marshaller.withFixedContentType(`application/json`) { a =>
-        HttpEntity(`application/json`, ujson.write(a))
+        HttpEntity(`application/json`, write(a))
       }
     }
 
     // implicit def errorMarshaller: ToEntityMarshaller[Error] = {
     //   Marshaller.withFixedContentType(`application/json`) { a =>
-    //     HttpEntity(`application/json`, ujson.write(a))
+    //     HttpEntity(`application/json`, write(a))
     //   }
     // }
 
-    val ujsonEmptyValue: ujson.Value = ujson.write(ujson.Obj())
+    val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
   }
 }

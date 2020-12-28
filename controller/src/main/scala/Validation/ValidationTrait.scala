@@ -4,13 +4,12 @@ import cats.data.NonEmptyChain
 import upickle_bundle.implicits._
 
 trait ValidationTrait {
-  implicit val upickleError: ReadWriter[Error] = macroRW
   type Validated[A] = ValidatedNec[Error, A]
 
   def formatErrorJson(errors: NonEmptyChain[Error]): ujson.Value = {
-    ujson.write(
+    write(
       errors
-        .map((e: Error) => ujson.write(ujsonEmptyValue))
+        .map(write(_))
         .toChain
         .toList
     )
