@@ -30,7 +30,7 @@ object MarkdownIpsum extends SeederTrait {
         val sentenceLength: Int = tokenisedSentence.length
         val replacedLength: Int = Random.between(1, min(3, sentenceLength))
         val replacedIndex: Int =
-          Random.between(1, sentenceLength - replacedLength + 1)
+          Random.between(1, sentenceLength - replacedLength)
 
         def emphasiseTokens(tokens: List[String]): List[String] = List(
           addEmphasis(tokens.mkString(" "))
@@ -53,12 +53,16 @@ object MarkdownIpsum extends SeederTrait {
 
   final def apply(textProducer: TextProducer): String = {
     if (hasContent()) {
+      val hasHeadings: Boolean = hasHeading()
+
       (1 to numberOfParagraphs)
         .map(paragraph => {
           val heading: Option[String] = Option
-            .when(hasHeading()) { s"## ${textProducer.latinSentence(1)}" }
+            .when(hasHeadings) { s"## ${textProducer.latinSentence(1)}" }
+
           val content: String =
             emphasiseSentence(textProducer.latinSentence(numberOfSentences()))
+
           heading ++ List(content)
         })
         .flatten

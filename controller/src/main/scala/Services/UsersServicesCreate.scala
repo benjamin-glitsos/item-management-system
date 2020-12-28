@@ -8,10 +8,16 @@ trait UsersServicesCreate {
       emailAddress: String,
       notes: String
   ): String = {
-    UsersDAO
-      .create(username, password, emailAddress, notes)
-      .transact(xa)
-      .unsafeRunSync
+    try {
+      UsersDAO
+        .create(username, password, emailAddress, notes)
+        .transact(xa)
+        .unsafeRunSync
+    } catch {
+      case e: java.sql.SQLException =>
+        System.err.println(e.getMessage)
+        System.err.println(e.getSQLState)
+    }
 
     new String
   }

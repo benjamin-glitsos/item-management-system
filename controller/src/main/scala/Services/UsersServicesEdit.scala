@@ -9,10 +9,16 @@ trait UsersServicesEdit {
       emailAddress: Option[String],
       notes: Option[String]
   ): String = {
-    UsersDAO
-      .edit(oldUsername, newUsername, password, emailAddress, notes)
-      .transact(xa)
-      .unsafeRunSync
+    try {
+      UsersDAO
+        .edit(oldUsername, newUsername, password, emailAddress, notes)
+        .transact(xa)
+        .unsafeRunSync
+    } catch {
+      case e: java.sql.SQLException =>
+        System.err.println(e.getMessage)
+        System.err.println(e.getSQLState)
+    }
 
     new String
   }

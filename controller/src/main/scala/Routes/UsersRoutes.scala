@@ -4,6 +4,8 @@ import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
 
+// TODO: surround all DAO calls in a try {} block with a catch like in https://tpolecat.github.io/doobie/docs/09-Error-Handling.html
+//
 // TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
 
 object UsersRoutes {
