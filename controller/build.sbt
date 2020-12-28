@@ -33,5 +33,5 @@ libraryDependencies ++= Seq(
 
 scalacOptions := Seq(
     "-Ymacro-annotations",
-    // "-Ywarn-unused:imports"
+    "-Ywarn-unused:imports"
 )

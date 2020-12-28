@@ -1,6 +1,5 @@
 import doobie.implicits._
 import doobie_bundle.connection._
-import upickle.default._
 
 trait UsersServicesCreate {
   final def create(

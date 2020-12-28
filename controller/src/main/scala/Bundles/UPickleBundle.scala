@@ -2,10 +2,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import upickle.default._
 import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
-import akka.http.scaladsl.model.{ContentTypeRange, HttpEntity}
+import akka.http.scaladsl.model.{HttpEntity}
 import akka.http.scaladsl.model.MediaTypes.`application/json`
-import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
-import cats.data.NonEmptyChain
 
 package upickle_bundle {
   object general {

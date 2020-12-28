@@ -8,10 +8,8 @@ import akka.http.scaladsl.server.Directives._
 import scala.concurrent.duration._
 import akka.http.scaladsl.model.HttpEntity
 import upickle.default._
-import cats.Applicative
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
-import cats.data.ValidatedNec
 import scala.util.{Try, Success, Failure}
 import upickle_bundle.general._
 
