@@ -29,11 +29,11 @@ package upickle_bundle {
       }
     }
 
-    implicit def errorMarshaller: ToEntityMarshaller[Error] = {
-      Marshaller.withFixedContentType(`application/json`) { a =>
-        HttpEntity(`application/json`, ujson.write(a))
-      }
-    }
+    // implicit def errorMarshaller: ToEntityMarshaller[Error] = {
+    //   Marshaller.withFixedContentType(`application/json`) { a =>
+    //     HttpEntity(`application/json`, ujson.write(a))
+    //   }
+    // }
 
     val ujsonEmptyValue: ujson.Value = ujson.write(ujson.Obj())
   }

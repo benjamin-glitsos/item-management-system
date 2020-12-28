@@ -18,23 +18,12 @@ import cats.data.NonEmptyChain
 import upickle_bundle.implicits._
 
 object HandleRejections {
-  private val rejectionHandlers = RejectionHandler
-    .newBuilder()
-    .handle {
-      // case MissingCookieRejection(cookieName) =>
-      //   complete(BadRequest, "No cookies, no service!!!")
-      case ValidationRejection(message, _) =>
-        complete(InternalServerError, ujson.write(ValidationError(message)))
-    }
-    // .handleAll[MethodRejection] { methodRejections =>
-    //   val names = methodRejections.map(_.supported.name)
-    //   complete(
-    //     MethodNotAllowed,
-    //     s"Can't do that! Supported: ${names mkString " or "}!"
-    //   )
-    // }
-    // .handleNotFound { complete((NotFound, "Not here!")) }
-    .result()
-
-  def apply(): Directive0 = handleRejections(rejectionHandlers)
+  def apply(): Directive0 = handleRejections(
+    RejectionHandler
+      .newBuilder()
+      .handle { case MissingCookieRejection(cookieName) =>
+        complete(BadRequest, "No cookies, no service!!!")
+      }
+      .result()
+  )
 }

@@ -3,7 +3,9 @@ import akka.http.scaladsl.server.Route
 import upickle.default._
 import upickle_bundle.implicits._
 
-// TODO: uninstall the admin theme package and then reinstall so that you have the latest version.
+// TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
+//
+// TODO: create a markdownIpsum() function that generates markdown probabalistically using the following randomised components: numberOfParagraphs, numberOfSentences, hasHeading, hasSubheading, italicSentence, boldSentence, paragraphType (normal, blockquote, list).
 
 // TODO: If you can't detect psql errors and handle them in a better way (using just the one API call), create an apply method in DAOCheckUnique which takes (tableName, columnName, value) and returns true or false for if the value is unique or not.
 
