@@ -2,7 +2,7 @@ import doobie.implicits._
 import doobie_bundle.connection._
 
 trait UsersServicesDelete {
-  def delete(method: String, usernames: List[String]): String = {
+  final def delete(method: String, usernames: List[String]): String = {
     method match {
       case "soft" =>
         UsersDAO

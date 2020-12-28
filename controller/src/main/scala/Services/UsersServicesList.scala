@@ -5,7 +5,7 @@ import upickle.default._
 import upickle_bundle.general._
 
 trait UsersServicesList {
-  def list(pageNumber: Int, pageLength: Int): ujson.Value = {
+  final def list(pageNumber: Int, pageLength: Int): ujson.Value = {
     read[ujson.Value](
       (for {
         totalItems <- UsersDAO.count().map(_.toInt)

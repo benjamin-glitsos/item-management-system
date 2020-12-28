@@ -1,5 +1,5 @@
 object AuthorisationFailedError {
-  def apply(): Error = {
+  final def apply(): Error = {
     Error("authorisation_failed", "Authorisation failed.")
   }
 }

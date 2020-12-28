@@ -3,7 +3,7 @@ import scala.util.Random
 import com.devskiller.jfairy.producer.text.TextProducer
 
 trait SeederTrait {
-  implicit def times(n: Int) = new {
+  implicit final def times(n: Int) = new {
     def times(fn: => Unit) = {
       val seedFactor: Double = System.getenv("SEED_FACTOR").toDouble
       val count: Int         = round(n * seedFactor).toInt
@@ -11,21 +11,21 @@ trait SeederTrait {
     }
   }
 
-  private def powerOfTen(p: Int): Long = {
+  private final def powerOfTen(p: Int): Long = {
     pow(10, p).toLong
   }
 
-  def biasedCoinFlip(probability: Double): Boolean = {
+  final def biasedCoinFlip(probability: Double): Boolean = {
     val precision = powerOfTen(2).toInt
     val flip      = Random.between(1, precision).toDouble / precision
     probability >= flip
   }
 
-  def generatePassword(length: Int): String = {
+  final def generatePassword(length: Int): String = {
     Seq.fill(length)(Random.nextPrintableChar()).mkString("")
   }
 
-  def generateMarkdownIpsum(textProducer: TextProducer): String = {
+  final def generateMarkdownIpsum(textProducer: TextProducer): String = {
     if (biasedCoinFlip(probability = 0.75)) {
       textProducer.latinSentence(Random.between(1, 5))
     } else {

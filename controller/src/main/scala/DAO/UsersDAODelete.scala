@@ -1,7 +1,7 @@
 import doobie_bundle.database.dc._
 
 trait UsersDAODelete {
-  def softDelete(usernames: List[String]) = {
+  final def softDelete(usernames: List[String]) = {
     run(
       quote(
         query[UsersWithMeta]
@@ -11,7 +11,7 @@ trait UsersDAODelete {
     )
   }
 
-  def restoreDelete(usernames: List[String]) = {
+  final def restoreDelete(usernames: List[String]) = {
     run(
       quote(
         query[UsersWithMeta]
@@ -21,7 +21,7 @@ trait UsersDAODelete {
     )
   }
 
-  def hardDelete(usernames: List[String]) = {
+  final def hardDelete(usernames: List[String]) = {
     run(
       quote(
         query[UsersWithMeta]
@@ -31,7 +31,7 @@ trait UsersDAODelete {
     )
   }
 
-  def hardDeleteAllRows() = {
+  final def hardDeleteAllRows() = {
     run(
       quote(
         query[UsersWithMeta].delete

@@ -7,10 +7,10 @@ import doobie.quill.DoobieContext
 
 package doobie_bundle {
   object connection {
-    implicit val contextShift: ContextShift[IO] =
+    implicit final val contextShift: ContextShift[IO] =
       IO.contextShift(ExecutionContext.global)
 
-    val xa = Transactor.fromDriverManager[IO](
+    final val xa = Transactor.fromDriverManager[IO](
       "org.postgresql.Driver",
       s"jdbc:postgresql://database/${System.getenv("POSTGRES_DATABASE")}",
       System.getenv("POSTGRES_USER"),
@@ -20,14 +20,14 @@ package doobie_bundle {
   }
 
   object database {
-    val dc = new DoobieContext.Postgres(SnakeCase)
+    final val dc = new DoobieContext.Postgres(SnakeCase)
 
-    implicit val cs: ContextShift[IO] =
+    implicit final val cs: ContextShift[IO] =
       IO.contextShift(ExecutionContexts.synchronous)
 
     import dc._
 
-    implicit val usersWithMetaSchema =
+    implicit final val usersWithMetaSchema =
       schemaMeta[UsersWithMeta]("users_with_meta")
   }
 }

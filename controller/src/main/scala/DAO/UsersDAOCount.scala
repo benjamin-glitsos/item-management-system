@@ -1,7 +1,7 @@
 import doobie_bundle.database.dc._
 
 trait UsersDAOCount {
-  def count() = {
+  final def count() = {
     run(
       quote(
         query[UsersWithMeta]

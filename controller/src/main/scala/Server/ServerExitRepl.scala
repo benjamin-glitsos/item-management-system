@@ -6,7 +6,7 @@ import org.fusesource.jansi.Ansi.Color._
 object ServerExitRepl {
   AnsiConsole.systemInstall();
 
-  def apply(): Unit = {
+  final def apply(): Unit = {
     println(
       ansi()
         .a("\n")

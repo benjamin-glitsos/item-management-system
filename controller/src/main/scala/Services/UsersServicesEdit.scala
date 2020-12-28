@@ -3,7 +3,7 @@ import doobie_bundle.connection._
 import upickle.default._
 
 trait UsersServicesEdit {
-  def edit(
+  final def edit(
       oldUsername: String,
       newUsername: Option[String],
       password: Option[String],

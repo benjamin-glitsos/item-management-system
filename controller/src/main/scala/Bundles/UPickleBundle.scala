@@ -9,7 +9,7 @@ import cats.data.NonEmptyChain
 
 package upickle_bundle {
   object general {
-    implicit val upickleLocalDateTime: ReadWriter[LocalDateTime] =
+    implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
       readwriter[ujson.Value].bimap[LocalDateTime](
         x => x.toString(),
         json => {
@@ -19,17 +19,17 @@ package upickle_bundle {
         }
       )
 
-    implicit val upickleUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
+    implicit final val upickleUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
 
-    implicit val upickleError: ReadWriter[Error] = macroRW
+    implicit final val upickleError: ReadWriter[Error] = macroRW
 
-    implicit def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {
+    implicit final def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {
       Marshaller.withFixedContentType(`application/json`) { json =>
         HttpEntity(`application/json`, write(json))
       }
     }
 
-    implicit def serialisedErrorsUpickleMarshaller
+    implicit final def serialisedErrorsUpickleMarshaller
         : ToEntityMarshaller[SerialisedErrors] = {
       Marshaller.withFixedContentType(`application/json`) { serialisedErrors =>
         HttpEntity(
@@ -41,6 +41,6 @@ package upickle_bundle {
       }
     }
 
-    val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
+    final val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
   }
 }

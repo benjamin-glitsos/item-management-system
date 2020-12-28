@@ -3,7 +3,7 @@ import doobie_bundle.connection._
 import upickle.default._
 
 trait UsersServicesCreate {
-  def create(
+  final def create(
       username: String,
       password: String,
       emailAddress: String,

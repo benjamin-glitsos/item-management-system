@@ -1,7 +1,7 @@
 import doobie_bundle.database.dc._
 
 trait UsersDAOOpen {
-  def open(username: String) = {
+  final def open(username: String) = {
     run(
       quote(
         query[UsersWithMeta].filter(_.username == lift(username))
@@ -9,7 +9,7 @@ trait UsersDAOOpen {
     ).map(_.head)
   }
 
-  def incrementOpens(username: String) = {
+  final def incrementOpens(username: String) = {
     run(
       quote(
         query[UsersWithMeta]

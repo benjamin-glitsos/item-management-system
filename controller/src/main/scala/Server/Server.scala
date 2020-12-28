@@ -6,7 +6,7 @@ import scala.concurrent.{Future, ExecutionContext}
 import akka.http.scaladsl.Http.ServerBinding
 
 object Server {
-  def apply(): Unit = {
+  final def apply(): Unit = {
     implicit val system                             = ActorSystem(Behaviors.empty, "actor-system")
     implicit val executionContext: ExecutionContext = system.executionContext
 

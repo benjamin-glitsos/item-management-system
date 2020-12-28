@@ -4,7 +4,7 @@ import upickle.default._
 import upickle_bundle.general._
 
 trait UsersServicesOpen {
-  def open(username: String): ujson.Value = {
+  final def open(username: String): ujson.Value = {
     read[ujson.Value](
       (for {
         _ <- UsersDAO.incrementOpens(username)

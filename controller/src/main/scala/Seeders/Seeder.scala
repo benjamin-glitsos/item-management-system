@@ -1,5 +1,5 @@
 object Seeder {
-  def apply() = {
+  final def apply() = {
     UsersSeeder()
   }
 }

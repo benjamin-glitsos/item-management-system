@@ -1,7 +1,7 @@
 import doobie_bundle.database.dc._
 
 trait UsersDAOList {
-  def list(offset: Int, pageLength: Int) = {
+  final def list(offset: Int, pageLength: Int) = {
     run(
       quote(
         query[UsersWithMeta]

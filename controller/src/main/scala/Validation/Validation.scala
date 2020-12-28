@@ -16,9 +16,9 @@ import scala.util.{Try, Success, Failure}
 import upickle_bundle.general._
 
 object Validation extends ValidationTrait {
-  private val staticEndpoints = List("open-user")
+  private final val staticEndpoints = List("open-user")
 
-  private def validateJsonSchema(
+  private final def validateJsonSchema(
       endpointName: String,
       entityText: String
   ): Validated[ujson.Value] = {
@@ -60,7 +60,7 @@ object Validation extends ValidationTrait {
     }
   }
 
-  def apply(endpointName: String): Directive1[ujson.Value] =
+  final def apply(endpointName: String): Directive1[ujson.Value] =
     extractStrictEntity(3.seconds)
       .flatMap((entity: HttpEntity.Strict) => {
         if (staticEndpoints contains endpointName) {

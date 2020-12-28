@@ -5,7 +5,7 @@ import doobie._
 import doobie.implicits._
 
 trait UsersDAOEdit {
-  def edit(
+  final def edit(
       oldUsername: String,
       newUsername: Option[String],
       password: Option[String],

@@ -4,18 +4,14 @@ import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
 
-// TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
-//
 // TODO: create a markdownIpsum() function that generates markdown probabalistically using the following randomised components: numberOfParagraphs, numberOfSentences, hasHeading, hasSubheading, italicSentence, boldSentence, paragraphType (normal, blockquote, list).
-
-// TODO: If you can't detect psql errors and handle them in a better way (using just the one API call), create an apply method in DAOCheckUnique which takes (tableName, columnName, value) and returns true or false for if the value is unique or not.
-
 // TODO: put password validation handling inside UsersRoutes. Then make the generatePassword method return a valid password every time.
 
-// TODO: add 'final' keyword to most methods?
+// TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
+// TODO: If you can't detect psql errors and handle them in a better way (using just the one API call), create an apply method in DAOCheckUnique which takes (tableName, columnName, value) and returns true or false for if the value is unique or not.
 
 object UsersRoutes {
-  private def rootRoutes(): Route = concat(
+  private final def rootRoutes(): Route = concat(
     get(
       Validation("list-users") { body: ujson.Value =>
         {
@@ -48,7 +44,7 @@ object UsersRoutes {
     )
   )
 
-  private def usernameRoutes(): Route = pathPrefix(Segment) {
+  private final def usernameRoutes(): Route = pathPrefix(Segment) {
     username: String =>
       concat(
         get(
@@ -81,7 +77,7 @@ object UsersRoutes {
       )
   }
 
-  def apply(): Route = concat(
+  final def apply(): Route = concat(
     usernameRoutes(),
     rootRoutes()
   )

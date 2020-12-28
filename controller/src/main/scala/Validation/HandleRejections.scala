@@ -18,7 +18,7 @@ import cats.data.NonEmptyChain
 import upickle_bundle.general._
 
 object HandleRejections extends ValidationTrait {
-  def apply(): Directive0 = handleRejections(
+  final def apply(): Directive0 = handleRejections(
     RejectionHandler
       .newBuilder()
       .handle {
