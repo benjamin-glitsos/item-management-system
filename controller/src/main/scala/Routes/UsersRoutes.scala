@@ -2,6 +2,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle.default._
 import upickle_bundle.general._
+import scala.util.{Try}
 
 // TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
 //
@@ -14,27 +15,28 @@ import upickle_bundle.general._
 // TODO: look for any flatMap or map that can be converted to >>= or <*> or any other Haskell symbols
 // TODO: add 'final' keyword to most methods?
 //
-// (Tidy up the seeding of the two default users within UsersSeeder after you make the Services accept values rather than a json string)
 // (Delete the Directives directory after this.)
 
 object UsersRoutes {
   private def rootRoutes(): Route = concat(
     get(
-      SchemaValidate("list-users") { validatedBody: String =>
+      Validation("list-users") { body: ujson.Value =>
         {
-          val body: ujson.Value = read[ujson.Value](validatedBody)
-          val pageNumber: Int   = body("page_number").num.toInt
-          val pageLength: Int   = body("page_length").num.toInt
+          val pageNumber: Int = body("page_number").num.toInt
+          val pageLength: Int = body("page_length").num.toInt
 
-          Complete.json(UsersServices.list(pageNumber, pageLength))
+          complete(UsersServices.list(pageNumber, pageLength))
         }
       }
     ),
     post(
-      SchemaValidate("create-user") { validatedBody: String =>
-        Complete.text(
-          UsersServices.create(validatedBody)
-        )
+      Validation("create-user") { body: ujson.Value =>
+        val username: String     = body("username").str
+        val password: String     = body("password").str
+        val emailAddress: String = body("email_address").str
+        val notes: String        = Try(body("notes").str).getOrElse("")
+
+        complete(UsersServices.create(username, password, emailAddress, notes))
       }
     ),
     delete(

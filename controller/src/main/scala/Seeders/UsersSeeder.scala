@@ -12,23 +12,21 @@ object UsersSeeder extends SeederTrait {
   }
 
   override def predefinedData(): Unit = {
+    val fairy: Fairy       = Fairy.create();
+    val text: TextProducer = fairy.textProducer();
+
     UsersServices.create(
-      write(
-        ujson.Obj(
-          "username"      -> System.getenv("SUPER_ADMIN_USERNAME"),
-          "password"      -> System.getenv("SUPER_ADMIN_PASSWORD"),
-          "email_address" -> System.getenv("SUPER_ADMIN_EMAIL_ADDRESS")
-        )
-      )
+      username = System.getenv("SUPER_ADMIN_USERNAME"),
+      password = System.getenv("SUPER_ADMIN_PASSWORD"),
+      emailAddress = System.getenv("SUPER_ADMIN_EMAIL_ADDRESS"),
+      notes = generateMarkdownIpsum(text)
     )
+
     UsersServices.create(
-      write(
-        ujson.Obj(
-          "username"      -> System.getenv("DEMO_ADMIN_USERNAME"),
-          "password"      -> System.getenv("DEMO_ADMIN_PASSWORD"),
-          "email_address" -> System.getenv("DEMO_ADMIN_EMAIL_ADDRESS")
-        )
-      )
+      username = System.getenv("DEMO_ADMIN_USERNAME"),
+      password = System.getenv("DEMO_ADMIN_PASSWORD"),
+      emailAddress = System.getenv("DEMO_ADMIN_EMAIL_ADDRESS"),
+      notes = generateMarkdownIpsum(text)
     )
   }
 
@@ -41,23 +39,9 @@ object UsersSeeder extends SeederTrait {
       val username: String     = person.getUsername()
       val password: String     = generatePassword(length = 15)
       val emailAddress: String = person.getEmail()
-      val notes: String =
-        if (biasedCoinFlip(probability = 0.75)) {
-          text.latinSentence(Random.between(1, 5))
-        } else {
-          ""
-        }
+      val notes: String        = generateMarkdownIpsum(text)
 
-      val entityJson: String = write(
-        ujson.Obj(
-          "username"      -> username,
-          "password"      -> password,
-          "email_address" -> emailAddress,
-          "notes"         -> notes
-        )
-      )
-
-      UsersServices.create(entityJson)
+      UsersServices.create(username, password, emailAddress, notes)
     }
 
     count times seedRow()
