@@ -4,11 +4,11 @@ import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
 
+// TODO: move SchemaValidation into its own file. Use that as a function within Validation.
 // TODO: create a simple markdownIpsum() function that generates markdown probabalistically using the following randomised components: numberOfParagraphs(1-2), numberOfSentences(1-3), hasHeading. Potentially add some randomised bold and italic words to the paragraphs.
-// TODO: put password validation handling inside UsersRoutes. Then make the generatePassword method return a valid password every time.
+// TODO: surround all DAO calls in a try {} block with a catch like in https://tpolecat.github.io/doobie/docs/09-Error-Handling.html
 
 // TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
-// TODO: If you can't detect psql errors and handle them in a better way (using just the one API call), create an apply method in DAOCheckUnique which takes (tableName, columnName, value) and returns true or false for if the value is unique or not.
 
 object UsersRoutes {
   private final def rootRoutes(): Route = concat(
