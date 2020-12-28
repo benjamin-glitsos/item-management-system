@@ -3,6 +3,12 @@ import akka.http.scaladsl.server.Route
 import upickle.default._
 import upickle_bundle.implicits._
 
+// TODO: uninstall the admin theme package and then reinstall so that you have the latest version.
+
+// TODO: If you can't detect psql errors and handle them in a better way (using just the one API call), create an apply method in DAOCheckUnique which takes (tableName, columnName, value) and returns true or false for if the value is unique or not.
+
+// TODO: put password validation handling inside UsersRoutes. Then make the generatePassword method return a valid password every time.
+
 // TODO: make formatErrorJson return a ujson.Value array of errors, and then make the handler wrap it in { errors: [] }.
 // TODO: formatErrorJson code could be improved with implicits to handle Error type and also NonEmptyList type
 // TODO: test that multiple validation errors get accumulated into a list.
