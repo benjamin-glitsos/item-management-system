@@ -6,12 +6,9 @@ import upickle_bundle.implicits._
 trait ValidationTrait {
   type Validated[A] = ValidatedNec[Error, A]
 
-  def serialiseErrors(errors: NonEmptyChain[Error]): ujson.Value = {
+  def serialiseErrors(errors: NonEmptyChain[Error]): String = {
     write(
-      errors
-        .map(write(_))
-        .toChain
-        .toList
+      errors.toChain.toList
     )
   }
 }
