@@ -8,12 +8,7 @@ trait ValidationTrait {
   def formatErrorJson(errors: NonEmptyChain[Error]): ujson.Value = {
     ujson.write(
       errors
-        .map(error =>
-          ujson.Obj(
-            "code"    -> error.code,
-            "message" -> error.message
-          )
-        )
+        .map(ujson.write(_))
         .toChain
         .toList
     )

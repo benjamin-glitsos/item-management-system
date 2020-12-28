@@ -13,6 +13,7 @@ import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 import cats.data.ValidatedNec
 import scala.util.{Try, Success, Failure}
+import upickle_bundle.implicits._
 
 object Validation extends ValidationTrait {
   private val staticEndpoints = List("open-user")
@@ -54,7 +55,7 @@ object Validation extends ValidationTrait {
       case Failure(e: ValidationException) =>
         e.getCausingExceptions()
           .asScala
-          .map(e => JsonSchemaError(e.getMessage()).invalidNec)
+          .map(e => ValidationError(e.getMessage()).invalidNec)
           .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
     }
   }
