@@ -22,28 +22,25 @@ object HandleRejections extends ValidationTrait {
     RejectionHandler
       .newBuilder()
       .handle {
-        case MissingCookieRejection(se) =>
-          complete(BadRequest, SerialisedErrors(se))
         case ValidationRejection(se, _) =>
           complete(
             InternalServerError,
             SerialisedErrors(se)
           )
-        case AuthorizationFailedRejection => {
-          val se = serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
-            .toString()
-          complete(Forbidden, SerialisedErrors(se))
-        }
-
+        case AuthorizationFailedRejection =>
+          complete(
+            Forbidden,
+            SerialisedErrors(
+              serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
+            )
+          )
       }
-      .handleAll[MethodRejection] { methodRejections =>
-        val names = methodRejections.map(_.supported.name)
+      .handleNotFound {
         complete(
-          MethodNotAllowed,
-          s"Can't do that! Supported: ${names mkString " or "}!"
+          NotFound,
+          SerialisedErrors(serialiseErrors(NonEmptyChain(NotFoundError())))
         )
       }
-      .handleNotFound { complete((NotFound, "Not here!")) }
       .result()
   )
 }

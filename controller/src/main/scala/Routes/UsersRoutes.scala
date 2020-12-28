@@ -11,9 +11,6 @@ import upickle_bundle.general._
 
 // TODO: put password validation handling inside UsersRoutes. Then make the generatePassword method return a valid password every time.
 
-// TODO: make formatErrorJson return a ujson.Value array of errors, and then make the handler wrap it in { errors: [] }.
-// TODO: test that multiple validation errors get accumulated into a list.
-
 // TODO: look for any flatMap or map that can be converted to >>= or <*> or any other Haskell symbols
 // TODO: add 'final' keyword to most methods?
 
