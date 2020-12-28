@@ -11,19 +11,11 @@ cat_interpolated_sql() {
 }
 
 psql << SQL
-
 $(cat_sql "extensions")
-
 $(cat_sql "domains")
-
-$(cat_sql "tables")
-
+$(cat_sql "meta-table")
+$(cat_sql "users-table")
 $(cat_sql "sha1-encrypt")
-
-$(cat_sql "relationships")
-
-$(cat_sql "views")
-
+$(cat_sql "users-with-meta-view")
 $(cat_sql "users-with-meta-trigger")
-
 SQL

@@ -1,4 +1,0 @@
-ALTER TABLE users
-ADD CONSTRAINT fk_meta
-FOREIGN KEY (meta_id)
-REFERENCES meta (id);

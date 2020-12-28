@@ -10,11 +10,3 @@ CREATE TABLE meta (
   , restored_at TIMESTAMP
   , notes TEXT NOT null DEFAULT ''
 );
-
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY
-  , meta_id SMALLINT UNIQUE NOT null
-  , username VARCHAR(20) UNIQUE NOT null
-  , password SHA1 NOT null
-  , email_address EMAIL_ADDRESS NOT null
-);
