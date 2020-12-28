@@ -14,8 +14,6 @@ import scala.util.{Try}
 
 // TODO: look for any flatMap or map that can be converted to >>= or <*> or any other Haskell symbols
 // TODO: add 'final' keyword to most methods?
-//
-// (Delete the Directives directory after this.)
 
 object UsersRoutes {
   private def rootRoutes(): Route = concat(
@@ -60,10 +58,25 @@ object UsersRoutes {
           }
         ),
         patch(
-          SchemaValidate("edit-user") { validatedBody: String =>
-            Complete.text(
-              UsersServices.edit(username, validatedBody)
-            )
+          Validation("edit-user") { body: ujson.Value =>
+            {
+              val newUsername: Option[String] =
+                Try(body("username").str).toOption
+              val password: Option[String] = Try(body("password").str).toOption
+              val emailAddress: Option[String] =
+                Try(body("email_address").str).toOption
+              val notes: Option[String] = Try(body("notes").str).toOption
+
+              complete(
+                UsersServices.edit(
+                  username,
+                  newUsername,
+                  password,
+                  emailAddress,
+                  notes
+                )
+              )
+            }
           }
         )
       )
