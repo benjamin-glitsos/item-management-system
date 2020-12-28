@@ -4,8 +4,6 @@ import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
 
-// TODO: create a simple markdownIpsum() function that generates markdown probabalistically using the following randomised components: numberOfParagraphs(1-2), numberOfSentences(1-3), hasHeading. Potentially add some randomised bold and italic words to the paragraphs.
-
 // TODO: uninstall the angular admin theme package and then reinstall so that you have the latest version.
 
 object UsersRoutes {
