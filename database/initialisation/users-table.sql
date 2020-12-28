@@ -4,8 +4,5 @@ CREATE TABLE users (
     , username VARCHAR(20) UNIQUE NOT null
     , password SHA1 NOT null
     , email_address EMAIL_ADDRESS NOT null
-
-    CONSTRAINT fk_meta
-        FOREIGN KEY(meta_id)
-        REFERENCES meta(id)
+    , CONSTRAINT fk_meta FOREIGN KEY(meta_id) REFERENCES meta(id)
 );
