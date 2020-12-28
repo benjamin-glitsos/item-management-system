@@ -17,18 +17,24 @@ import cats.data.ValidatedNec
 import cats.data.NonEmptyChain
 import upickle_bundle.general._
 
-object HandleRejections {
+object HandleRejections extends ValidationTrait {
   def apply(): Directive0 = handleRejections(
     RejectionHandler
       .newBuilder()
       .handle {
-        case MissingCookieRejection(cookieName) =>
-          complete(BadRequest, "No cookies, no service!!!")
-        case ValidationRejection(serialisedErrors, _) =>
+        case MissingCookieRejection(se) =>
+          complete(BadRequest, SerialisedErrors(se))
+        case ValidationRejection(se, _) =>
           complete(
             InternalServerError,
-            SerialisedErrors(serialisedErrors)
+            SerialisedErrors(se)
           )
+        case AuthorizationFailedRejection => {
+          val se = serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
+            .toString()
+          complete(Forbidden, SerialisedErrors(se))
+        }
+
       }
       .handleAll[MethodRejection] { methodRejections =>
         val names = methodRejections.map(_.supported.name)
