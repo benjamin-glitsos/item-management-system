@@ -12,13 +12,15 @@ Dockerised Model-View-Controller architecture.
 
 **Scala (a Java Virtual Machine language).**
 
-Framework-less, layered architecture, RESTful API, JSON Schema validation, Type-safety using Algebraic Data Types, Java Interop, GRASP, SOLID, DRY, “Object-Oriented in the large and Functional Programming in the small”.
-
-<!-- ### Admin -->
-<!--  -->
-<!-- **Angular (Typescript).** -->
-<!--  -->
-<!-- Single-Page App (SPA) with standard Angular architecture. -->
+* Framework-less
+* RESTful API
+* JSON Schema validation
+* Type-safety using Algebraic Data Types
+* Java Interop
+* GRASP
+* SOLID
+* DRY
+* “Object-Oriented in the large, Functional Programming in the small”
 
 ### Database
 
