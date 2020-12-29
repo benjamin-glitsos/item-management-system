@@ -14,7 +14,7 @@ Dockerised Model-View-Controller architecture.
 
 Framework-less, layered architecture, RESTful API, JSON Schema validation, Type-safety using Algebraic Data Types, Java Interop, GRASP, SOLID, DRY, “Object-Oriented in the large and Functional Programming in the small”.
 
-### Portal
+### Admin
 
 **Angular (Typescript).**
 
