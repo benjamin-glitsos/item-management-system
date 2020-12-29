@@ -1,4 +1,4 @@
-CREATE FUNCTION gen_random_metakey()
+CREATE FUNCTION gen_random_metakey(table_name)
 RETURNS text AS $$
 DECLARE
 BEGIN
