@@ -1,39 +1,27 @@
 # Inventory Management System
 
-A toy inventory management system that is built with enterprise-grade architecture and principles. It is deliberately over-engineered to resemble real-world systems used in Finance, Government, Medicine, Retail, Agriculture, et al.
+A toy inventory management system built with enterprise-grade architecture and principles.
 
 **This is a work-in-progress, but the current state of the project is as follows.**
 
 ## Microservice Architecture
 
-Dockerised MVC architecture.
+Dockerised Model-View-Controller architecture.
 
 ### Controller
 
-**Scala (a Java language with Algebraic Data Types).**
+**Scala (a Java Virtual Machine language).**
 
-Framework-less, Contract-first API, OpenAPI (Swagger, JSON Schema) Java Interop, Object-Oriented in the large, Functional Programming in the small, GRASP, SOLID, Type-safety, Functional purity, RESTful API, Composition over inheritance, Separation of concerns, DRY.
-
-Multitier Architecture:
-
-* Contracts Layer
-* Routing Layer
-* Validation Layer
-* Service Layer
-* DAO/ORM Layer
-
-**Angular (Typescript language).**
-
-Single-Page App (SPA) with industry-standard Angular architecture.
+Framework-less, layered architecture, RESTful API, JSON Schema validation, Type-safety using Algebraic Data Types, Java Interop, GRASP, SOLID, DRY, “Object-Oriented in the large and Functional Programming in the small”.
 
 ### Portal
 
-**Angular (Typescript language).**
+**Angular (Typescript).**
 
-Single-Page App (SPA) with industry-standard Angular architecture.
+Single-Page App (SPA) with standard Angular architecture.
 
 ### Database
 
 **PostgreSQL.**
 
-The schema utilises a metadata table and business keys. 3NF database normalisation.
+Fourth normal form.
