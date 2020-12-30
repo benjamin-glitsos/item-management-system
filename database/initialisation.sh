@@ -13,6 +13,7 @@ cat_interpolated_sql() {
 psql << SQL
 $(cat_sql "extensions")
 $(cat_sql "domains")
+$(cat_sql "gen-random-metakey")
 $(cat_sql "meta-table")
 $(cat_sql "users-table")
 $(cat_sql "sha1-encrypt")
