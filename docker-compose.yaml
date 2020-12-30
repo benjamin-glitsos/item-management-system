@@ -37,6 +37,7 @@ services:
       - "database"
     ports:
       - 80:${CONTROLLER_PORT}
+  # TODO: find a better-looking admin panel than ngx-admin !?
   # admin_angular:
   #   build:
   #     context: ./admin-angular/
