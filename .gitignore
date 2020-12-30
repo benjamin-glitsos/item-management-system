@@ -2,19 +2,19 @@
 
 .env
 
-# Controller --------------------
+# Controller Scala --------------------
 
-controller/target/
-controller/project/target/
-controller/project/project/
-controller/project/.bloop/
-controller/volumes/
-controller/dumps/
-controller/.metals/
-controller/.bloop/
-controller/project/metals.sbt
+controller-scala/target/
+controller-scala/project/target/
+controller-scala/project/project/
+controller-scala/project/.bloop/
+controller-scala/volumes/
+controller-scala/dumps/
+controller-scala/.metals/
+controller-scala/.bloop/
+controller-scala/project/metals.sbt
 
-# Portal --------------------
+# Admin Angular --------------------
 
-admin/node_modules/
-admin/dist/
+admin-angular/node_modules/
+admin-angular/dist/

@@ -1,6 +1,6 @@
 version: '3.1'
 services:
-  database:
+  database_postgresql:
     build:
       context: ./database/
     image: database
@@ -12,7 +12,7 @@ services:
     env_file: .env
     ports:
       - 5432:5432
-  adminer:
+  database_adminer:
     build:
       context: ./adminer/
     image: adminer
@@ -22,7 +22,7 @@ services:
       - "database"
     ports:
       - ${ADMINER_PORT}:8080
-  controller:
+  controller_scala:
     build:
       context: ./controller/
     image: controller
@@ -37,11 +37,11 @@ services:
       - "database"
     ports:
       - 80:${CONTROLLER_PORT}
-  # admin:
+  # admin_angular:
   #   build:
-  #     context: ./portal/
-  #   image: portal
-  #   container_name: portal
+  #     context: ./admin-angular/
+  #   image: admin-angular
+  #   container_name: admin-angular
   #   env_file: .env
   #   restart: always
   #   stdin_open: true
