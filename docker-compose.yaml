@@ -19,7 +19,7 @@ services:
     container_name: database-adminer
     restart: always
     depends_on:
-      - "database"
+      - "database_postgresql"
     ports:
       - ${ADMINER_PORT}:8080
   controller_scala:
@@ -34,7 +34,7 @@ services:
     stdin_open: true
     tty: true
     depends_on:
-      - "database"
+      - "database_postgresql"
     ports:
       - 80:${CONTROLLER_PORT}
   # TODO: find a better-looking admin panel than ngx-admin !?

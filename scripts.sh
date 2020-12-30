@@ -30,7 +30,7 @@ case "$1" in
         docker-compose exec $2
     ;;
     "repl" | "r" )
-        docker-compose exec controller bash sbt
+        docker-compose exec controller_scala bash sbt
     ;;
     "inspect" )
         docker inspect $2 | less
