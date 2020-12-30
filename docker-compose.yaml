@@ -38,6 +38,7 @@ services:
     ports:
       - 80:${CONTROLLER_PORT}
   # TODO: find a better-looking admin panel than ngx-admin !?
+  # TODO: add dash and underscore characters to metakey to make it base 64 then make separator a colon
   # admin_angular:
   #   build:
   #     context: ./admin-angular/
