@@ -4,8 +4,8 @@ BEGIN
     -- Insert --
     IF TG_OP = 'INSERT' THEN
         WITH insert_meta AS (
-            INSERT INTO meta (notes)
-            VALUES (NEW.notes)
+            INSERT INTO meta (metakey, notes)
+            VALUES (gen_random_metakey('users'), NEW.notes)
             RETURNING id
         )
         INSERT INTO users (meta_id, email_address, username, password)

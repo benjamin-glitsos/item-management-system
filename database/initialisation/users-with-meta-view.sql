@@ -3,7 +3,7 @@ CREATE VIEW users_with_meta AS
         u.username
       , u.email_address
       , u.password
-      , m.uuid
+      , m.metakey
       , m.opens
       , m.edits
       , m.is_deleted

@@ -1,6 +1,6 @@
 CREATE TABLE meta (
     id SERIAL PRIMARY KEY
-  , metakey METAKEY UNIQUE NOT null DEFAULT gen_random_metakey()
+  , metakey METAKEY UNIQUE NOT null DEFAULT gen_random_metakey('')
   , opens INTEGER NOT null DEFAULT 0
   , edits INTEGER NOT null DEFAULT 0
   , is_deleted BOOLEAN NOT null DEFAULT false

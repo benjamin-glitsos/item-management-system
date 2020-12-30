@@ -6,4 +6,6 @@ CHECK (
 CREATE DOMAIN sha1 AS VARCHAR(40);
 
 CREATE DOMAIN metakey AS VARCHAR(14)
-CHECK ();
+CHECK (
+    VALUE ~ '^\c{1}\c{10}$'
+);
