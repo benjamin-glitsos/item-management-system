@@ -2,21 +2,21 @@ version: '3.1'
 services:
   database_postgresql:
     build:
-      context: ./database/
-    image: database
-    container_name: database
+      context: ./database-postgresql/
+    image: database-postgresql
+    container_name: database-postgresql
     volumes:
-      - ./database/initialisation.sh:/docker-entrypoint-initdb.d/initialisation.sh
-      - ./database/initialisation:/docker-entrypoint-initdb.d/initialisation
+      - ./database-postgresql/initialisation.sh:/docker-entrypoint-initdb.d/initialisation.sh
+      - ./database-postgresql/initialisation:/docker-entrypoint-initdb.d/initialisation
     restart: always
     env_file: .env
     ports:
       - 5432:5432
   database_adminer:
     build:
-      context: ./adminer/
-    image: adminer
-    container_name: adminer
+      context: ./database-adminer/
+    image: database-adminer
+    container_name: database-adminer
     restart: always
     depends_on:
       - "database"
@@ -24,12 +24,12 @@ services:
       - ${ADMINER_PORT}:8080
   controller_scala:
     build:
-      context: ./controller/
-    image: controller
-    container_name: controller
+      context: ./controller-scala/
+    image: controller-scala
+    container_name: controller-scala
     volumes:
-      - ./controller/volumes/root:/root
-      - ./controller:/usr/src/app
+      - ./controller-scala/volumes/root:/root
+      - ./controller-scala:/usr/src/app
     env_file: .env
     stdin_open: true
     tty: true
