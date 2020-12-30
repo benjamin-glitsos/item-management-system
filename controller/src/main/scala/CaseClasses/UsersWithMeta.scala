@@ -1,11 +1,10 @@
 import java.time.LocalDateTime
-import java.util.UUID
 
 case class UsersWithMeta(
     username: String,
     password: String,
     email_address: String,
-    uuid: UUID,
+    metakey: String,
     opens: Int,
     edits: Int,
     is_deleted: Boolean,
