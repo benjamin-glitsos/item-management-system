@@ -11,7 +11,7 @@ case "$1" in
     ;;
     "up" )
         echo "Deleting database volume:"
-        docker rm -f -v database
+        docker rm -f -v database-postgresql
         docker-compose up $2
     ;;
     "down" )

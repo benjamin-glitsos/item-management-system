@@ -7,5 +7,5 @@ CREATE DOMAIN sha1 AS VARCHAR(40);
 
 CREATE DOMAIN metakey AS VARCHAR(14)
 CHECK (
-    VALUE ~ '^\w{1}:\w{10}$'
+    VALUE ~ '^[-_a-zA-Z0-9]{1}:[-_a-zA-Z0-9]{10}$'
 );
