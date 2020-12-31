@@ -20,7 +20,6 @@ import {
     NbToastrModule,
     NbWindowModule
 } from "@nebular/theme";
-import { AgGridModule } from "ag-grid-angular";
 
 @NgModule({
     declarations: [AppComponent],
@@ -40,8 +39,7 @@ import { AgGridModule } from "ag-grid-angular";
         }),
         CoreModule.forRoot(),
         ThemeModule.forRoot(),
-        BrowserModule,
-        AgGridModule.withComponents([])
+        BrowserModule
     ],
     bootstrap: [AppComponent]
 })

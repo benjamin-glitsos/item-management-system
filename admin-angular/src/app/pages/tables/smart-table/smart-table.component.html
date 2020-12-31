@@ -4,6 +4,13 @@
   </nb-card-header>
 
   <nb-card-body>
+    <ag-grid-angular 
+        style="width: 500px; height: 500px;" 
+        class="ag-theme-balham"
+        [rowData]="rowData" 
+        [columnDefs]="columnDefs"
+        >
+    </ag-grid-angular>
     <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
