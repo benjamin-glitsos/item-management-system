@@ -10,6 +10,11 @@ const routes: Routes = [
         component: PagesComponent,
         children: [
             {
+                path: "users",
+                loadChildren: () =>
+                    import("./users/users-list.module").then(m => m.FormsModule)
+            },
+            {
                 path: "forms",
                 loadChildren: () =>
                     import("./forms/forms.module").then(m => m.FormsModule)
@@ -28,7 +33,7 @@ const routes: Routes = [
             },
             {
                 path: "",
-                redirectTo: "forms",
+                redirectTo: "users",
                 pathMatch: "full"
             },
             {
