@@ -4,7 +4,7 @@ import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
 
-object UsersRoutes {
+object UsersRoutes extends ErrorTrait {
   private final def rootRoutes(): Route = concat(
     get(
       Validation("list-users") { body: ujson.Value =>

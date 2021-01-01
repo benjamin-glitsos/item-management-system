@@ -1,5 +1,5 @@
-object ValidationError {
+object ValidationError extends ErrorTrait {
   final def apply(message: String): Error = {
-    Error("validation_failed", message)
+    error("validation_failed", message)
   }
 }

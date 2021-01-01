@@ -1,4 +1,6 @@
+import org.typelevel.ci.CIString
+
 case class Error(
-    code: String,
+    code: CIString,
     message: String
 )

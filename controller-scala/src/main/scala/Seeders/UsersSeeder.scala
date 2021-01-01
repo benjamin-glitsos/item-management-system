@@ -3,13 +3,13 @@ import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 
 object UsersSeeder extends SeederTrait {
-  override val count: Int = 15
+  override final val count: Int = 15
 
-  override def clearData(): Unit = {
+  override final def clearData(): Unit = {
     UsersServices.delete(method = "hard-delete-all-rows", usernames = List())
   }
 
-  override def predefinedData(): Unit = {
+  override final def predefinedData(): Unit = {
     val fairy: Fairy       = Fairy.create();
     val text: TextProducer = fairy.textProducer();
 
@@ -28,7 +28,7 @@ object UsersSeeder extends SeederTrait {
     )
   }
 
-  override def seed(): Unit = {
+  override final def seed(): Unit = {
     def seedRow(): Unit = {
       val fairy: Fairy       = Fairy.create();
       val person: Person     = fairy.person();
@@ -45,7 +45,7 @@ object UsersSeeder extends SeederTrait {
     count times seedRow()
   }
 
-  override def apply(): Unit = {
+  override final def apply(): Unit = {
     clearData()
     predefinedData()
     seed()
