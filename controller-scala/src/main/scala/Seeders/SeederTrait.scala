@@ -21,7 +21,7 @@ trait SeederTrait {
   }
 
   final def generatePassword(length: Int): String = {
-    Seq.fill(length)(Random.nextPrintableChar()).mkString("")
+    Seq.fill(length)(Random.nextPrintableChar()).mkString(new String)
   }
 
   protected val count: Int = 0

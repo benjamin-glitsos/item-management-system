@@ -18,9 +18,9 @@ object ServerExitRepl {
         .a("\n")
     )
 
-    var terminal_input: String = ""
+    var terminal_input: String = new String
     do {
-      if (terminal_input != "" && terminal_input != "exit") {
+      if (terminal_input != new String && terminal_input != "exit") {
         println(
           ansi()
             .fg(RED)

@@ -4,7 +4,7 @@ import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
 
-object UsersRoutes extends ErrorTrait {
+object UsersRoutes extends ValidationTrait with ErrorTrait {
   private final def rootRoutes(): Route = concat(
     get(
       Validation("list-users") { body: ujson.Value =>
@@ -21,7 +21,7 @@ object UsersRoutes extends ErrorTrait {
         val username: String     = body("username").str
         val password: String     = body("password").str
         val emailAddress: String = body("email_address").str
-        val notes: String        = Try(body("notes").str).getOrElse("")
+        val notes: String        = Try(body("notes").str).getOrElse(new String)
 
         complete(UsersServices.create(username, password, emailAddress, notes))
       }
