@@ -1,7 +1,7 @@
-import org.typelevel.ci.CIString
+import org.typelevel.ci.{CIString => CaseInsensitiveString}
 
 trait ErrorTrait {
   final def error(code: String, message: String): Error = {
-    Error(CIString(code), message)
+    Error(CaseInsensitiveString(code), message)
   }
 }

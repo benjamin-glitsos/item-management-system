@@ -1,6 +1,6 @@
-import org.typelevel.ci.CIString
+import org.typelevel.ci.{CIString => CaseInsensitiveString}
 
 case class Error(
-    code: CIString,
+    code: CaseInsensitiveString,
     message: String
 )
