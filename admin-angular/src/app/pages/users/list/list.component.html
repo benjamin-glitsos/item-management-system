@@ -1,17 +1,18 @@
 <nb-card>
   <nb-card-header>
-    Users
+    <span>Users</span>
+    <nb-actions size="small">
+      <nb-action icon="nb-search">Create New</nb-action>
+      <nb-action icon="nb-power-circled"></nb-action>
+      <nb-action icon="nb-person"></nb-action>
+    </nb-actions>
   </nb-card-header>
 
   <nb-card-body>
-    <ag-grid-angular 
-        id="ag_grid"
-        class="ag-theme-balham"
-        [pagination]="true"
-        [defaultColDef]="defaultColDef"
-        [columnDefs]="columnDefs"
-        [rowData]="rowData" 
-        >
-    </ag-grid-angular>
+      <ng2-smart-table
+          [settings]="settings"
+          [source]="source"
+          (deleteConfirm)="onDeleteConfirm($event)">
+      </ng2-smart-table>
   </nb-card-body>
 </nb-card>

@@ -3,7 +3,7 @@ import { NbCardModule, NbIconModule, NbInputModule } from "@nebular/theme";
 
 import { ThemeModule } from "../../@theme/theme.module";
 import { UsersRoutingModule, routedComponents } from "./users-routing.module";
-import { AgGridModule } from "ag-grid-angular";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 
 @NgModule({
     imports: [
@@ -12,7 +12,7 @@ import { AgGridModule } from "ag-grid-angular";
         NbInputModule,
         ThemeModule,
         UsersRoutingModule,
-        AgGridModule.withComponents([])
+        Ng2SmartTableModule
     ],
     declarations: [...routedComponents]
 })

@@ -36,23 +36,18 @@ services:
     depends_on:
       - "database_postgresql"
     ports:
-      - 80:${CONTROLLER_PORT}
-  # TODO: database_postgresql isnt updating inside the container anymore? a shared volume issue?
-  # TODO: find a better-looking admin panel than ngx-admin !?
-  # admin_angular:
-  #   build:
-  #     context: ./admin-angular/
-  #   image: admin-angular
-  #   container_name: admin-angular
-  #   env_file: .env
-  #   restart: always
-  #   stdin_open: true
-  #   ports:
-  #     - ${PORTAL_PORT}:${PORTAL_PORT}
-  #   command: >
-  #     /bin/sh -c
-  #     "envsubst '
-  #     $$ADMIN_PORT
-  #     '< /etc/nginx/nginx.conf.template
-  #     > /etc/nginx/nginx.conf
-  #     && nginx -g 'daemon off;'"
+      - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
+  admin_angular:
+    build:
+      context: ./admin-angular/
+    image: admin-angular
+    container_name: admin-angular
+    volumes:
+      - ./admin-angular/:/root
+    env_file: .env
+    restart: always
+    stdin_open: true
+    depends_on:
+      - "controller_scala"
+    ports:
+      - 80:4200
