@@ -8,7 +8,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     {
         title: "Users",
         icon: "people-outline",
-        link: "/pages/users",
+        link: "/pages/tables/smart-table",
         home: true
     },
     {
@@ -30,20 +30,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
             {
                 title: "Datepicker",
                 link: "/pages/forms/datepicker"
-            }
-        ]
-    },
-    {
-        title: "Tables & Data",
-        icon: "grid-outline",
-        children: [
-            {
-                title: "Smart Table",
-                link: "/pages/tables/smart-table"
-            },
-            {
-                title: "Tree Grid",
-                link: "/pages/tables/tree-grid"
             }
         ]
     },

@@ -1,21 +1,14 @@
 import { NgModule } from "@angular/core";
-import {
-    NbCardModule,
-    NbIconModule,
-    NbInputModule,
-    NbTreeGridModule
-} from "@nebular/theme";
+import { NbCardModule, NbIconModule, NbInputModule } from "@nebular/theme";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 
 import { ThemeModule } from "../../@theme/theme.module";
 import { TablesRoutingModule, routedComponents } from "./tables-routing.module";
-import { FsIconComponent } from "./tree-grid/tree-grid.component";
 import { AgGridModule } from "ag-grid-angular";
 
 @NgModule({
     imports: [
         NbCardModule,
-        NbTreeGridModule,
         NbIconModule,
         NbInputModule,
         ThemeModule,
@@ -23,6 +16,6 @@ import { AgGridModule } from "ag-grid-angular";
         Ng2SmartTableModule,
         AgGridModule.withComponents([])
     ],
-    declarations: [...routedComponents, FsIconComponent]
+    declarations: [...routedComponents]
 })
 export class TablesModule {}
