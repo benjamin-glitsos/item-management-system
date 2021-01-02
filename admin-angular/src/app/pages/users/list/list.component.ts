@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: "ngx-users-list",
-    templateUrl: "./users-list.component.html",
-    styleUrls: ["./users-list.component.scss"]
+    templateUrl: "./list.component.html",
+    styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
     columnDefs = [
