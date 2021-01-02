@@ -15,9 +15,9 @@ const routes: Routes = [
                     import("./forms/forms.module").then(m => m.FormsModule)
             },
             {
-                path: "tables",
+                path: "users",
                 loadChildren: () =>
-                    import("./tables/tables.module").then(m => m.TablesModule)
+                    import("./users/users.module").then(m => m.UsersModule)
             },
             {
                 path: "miscellaneous",
@@ -28,7 +28,7 @@ const routes: Routes = [
             },
             {
                 path: "",
-                redirectTo: "tables",
+                redirectTo: "users",
                 pathMatch: "full"
             },
             {

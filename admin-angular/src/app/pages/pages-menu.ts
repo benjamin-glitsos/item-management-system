@@ -8,7 +8,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     {
         title: "Users",
         icon: "people-outline",
-        link: "/pages/tables/smart-table",
+        link: "/pages/users",
         home: true
     },
     {
