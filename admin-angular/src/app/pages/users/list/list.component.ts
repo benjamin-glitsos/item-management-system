@@ -6,15 +6,21 @@ import { Component } from "@angular/core";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
+    defaultColDef = { type: "nonEditableColumn" };
+
     columnDefs = [
-        { headerName: "Make", field: "make" },
-        { headerName: "Model", field: "model" },
-        { headerName: "Price", field: "price" }
+        { headerName: "Username", field: "username" },
+        { headerName: "Email Address", field: "email_address" },
+        { headerName: "Edited At", field: "edited_at" },
+        { headerName: "Actions", field: "actions" }
     ];
 
     rowData = [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxter", price: 72000 }
+        {
+            username: "Toyota",
+            email_address: "Celica",
+            edited_at: 35000,
+            actions: "..."
+        }
     ];
 }

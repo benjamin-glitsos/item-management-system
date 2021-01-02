@@ -1,7 +1,10 @@
-@import '../../../@theme/styles/themes';
+@import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
-  nb-card {
-    transform: translate3d(0, 0, 0);
-  }
+    nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+    #ag_grid {
+        height: calc(100vh - 220px);
+    }
 }

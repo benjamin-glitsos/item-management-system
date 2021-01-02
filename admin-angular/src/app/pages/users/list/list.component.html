@@ -5,10 +5,11 @@
 
   <nb-card-body>
     <ag-grid-angular 
-        style="width: 500px; height: 500px;" 
+        id="ag_grid"
         class="ag-theme-balham"
-        [rowData]="rowData" 
+        [defaultColDef]="defaultColDef"
         [columnDefs]="columnDefs"
+        [rowData]="rowData" 
         >
     </ag-grid-angular>
   </nb-card-body>
