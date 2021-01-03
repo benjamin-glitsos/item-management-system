@@ -4,6 +4,11 @@
     nb-card {
         transform: translate3d(0, 0, 0);
     }
+    nb-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     #ag_grid {
         height: calc(100vh - 220px);
     }
