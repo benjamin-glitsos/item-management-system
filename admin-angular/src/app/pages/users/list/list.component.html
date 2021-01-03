@@ -26,6 +26,14 @@
                 [selectAllMode]="allMode"
                 mode="multiple"
             ></dxo-selection>
+            <dxo-paging
+                [pageSize]="5"
+            ></dxo-paging>
+            <dxo-pager 
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5, 10, 20]"
+                [showInfo]="true">
+            </dxo-pager>
             <dxi-column dataField="CompanyName"></dxi-column>
             <dxi-column dataField="City"></dxi-column>
             <dxi-column dataField="State"></dxi-column>
