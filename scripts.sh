@@ -32,6 +32,9 @@ case "$1" in
     "repl" | "r" )
         docker-compose exec controller_scala bash sbt
     ;;
+    "angular" | "ng" | "a" )
+        docker-compose exec admin_angular sh
+    ;;
     "inspect" )
         docker inspect $2 | less
     ;;

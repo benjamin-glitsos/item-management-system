@@ -19,3 +19,5 @@ controller-scala/project/metals.sbt
 
 admin-angular/node_modules/
 admin-angular/dist/
+admin-angular/.npm/
+admin-angular/.ash_history
