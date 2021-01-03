@@ -4,7 +4,7 @@ import { NbCardModule, NbIconModule, NbInputModule } from "@nebular/theme";
 import { ThemeModule } from "../../@theme/theme.module";
 import { UsersRoutingModule, routedComponents } from "./users-routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
-import { DxDropDownButtonModule } from "devextreme-angular";
+import { DxDropDownButtonModule, DxMenuModule } from "devextreme-angular";
 
 @NgModule({
     imports: [
@@ -14,6 +14,7 @@ import { DxDropDownButtonModule } from "devextreme-angular";
         ThemeModule,
         UsersRoutingModule,
         Ng2SmartTableModule,
+        DxMenuModule,
         DxDropDownButtonModule
     ],
     declarations: [...routedComponents]
