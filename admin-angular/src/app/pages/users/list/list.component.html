@@ -13,15 +13,6 @@
             (onItemClick)="itemClick($event)"
         >
         </dx-menu>
-        <dx-drop-down-button
-            text="Create New"
-            icon="user"
-            [items]="actions"
-            keyExpr="id"
-            (onItemClick)="logAction($event)"
-            [splitButton]="true"
-            (onButtonClick)="logButtonClick()">
-        </dx-drop-down-button>
     </span>
   </nb-card-header>
 
