@@ -34,6 +34,10 @@ export class UsersListComponent {
         { text: "Hard delete", icon: "trash" }
     ];
 
+    deleteActions: Array<{ text: String; icon: String }> = [
+        { text: "Hard delete", icon: "trash" }
+    ];
+
     customers: Customer[] = [
         {
             ID: 1,

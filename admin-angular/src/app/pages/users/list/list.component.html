@@ -2,16 +2,21 @@
     <nb-card-header>
         <span>Users</span>
         <span>
-            <dx-menu
-                #menu
-                [dataSource]="products"
-                displayExpr="name"
-                [showFirstSubmenuMode]="showFirstSubmenuModes"
-                orientation="horizontal"
-                submenuDirection="auto"
-                [hideSubmenuOnMouseLeave]="false"
-                (onItemClick)="itemClick($event)"
-            ></dx-menu>
+            <dx-drop-down-button
+                text="Delete"
+                icon="trash"
+                disabled="true"
+                stylingMode="text"
+                [items]="deleteActions"
+                keyExpr="id"
+                [splitButton]="true"
+            ></dx-drop-down-button>
+            <dx-button
+                text="Create new"
+                icon="plus"
+                stylingMode="text"
+                type="normal"
+            ></dx-button>
         </span>
     </nb-card-header>
 
@@ -46,6 +51,7 @@
                 <dx-drop-down-button
                     text="Open"
                     icon="edit"
+                    stylingMode="text"
                     [items]="actions"
                     keyExpr="id"
                     [splitButton]="true"

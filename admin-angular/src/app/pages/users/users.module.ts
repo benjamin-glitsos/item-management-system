@@ -6,7 +6,7 @@ import { UsersRoutingModule, routedComponents } from "./users-routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import {
     DxDropDownButtonModule,
-    DxMenuModule,
+    DxButtonModule,
     DxDataGridModule
 } from "devextreme-angular";
 
@@ -18,7 +18,7 @@ import {
         ThemeModule,
         UsersRoutingModule,
         Ng2SmartTableModule,
-        DxMenuModule,
+        DxButtonModule,
         DxDropDownButtonModule,
         DxDataGridModule
     ],
