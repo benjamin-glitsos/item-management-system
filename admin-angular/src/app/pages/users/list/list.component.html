@@ -11,8 +11,7 @@
                 submenuDirection="auto"
                 [hideSubmenuOnMouseLeave]="false"
                 (onItemClick)="itemClick($event)"
-                >
-            </dx-menu>
+            ></dx-menu>
         </span>
     </nb-card-header>
 
@@ -39,6 +38,19 @@
             <dxi-column dataField="State"></dxi-column>
             <dxi-column dataField="Phone"></dxi-column>
             <dxi-column dataField="Fax"></dxi-column>
+            <dxi-column
+                cellTemplate="actionsCellTemplate"
+                [width]="125"
+            ></dxi-column>
+            <div *dxTemplate="let d of 'actionsCellTemplate'">
+                <dx-drop-down-button
+                    text="Open"
+                    icon="edit"
+                    [items]="actions"
+                    keyExpr="id"
+                    [splitButton]="true"
+                ></dx-drop-down-button>
+            </div>
         </dx-data-grid>
     </nb-card-body>
 </nb-card>

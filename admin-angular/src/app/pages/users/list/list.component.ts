@@ -18,20 +18,21 @@ export class UsersListComponent {
             icon: "trash",
             items: [
                 {
-                    id: "2_1",
                     name: "Delete",
-                    icon: "trash",
-                    price: 1200
+                    icon: "trash"
                 },
                 {
-                    id: "2_2",
-                    name: "Hard Delete",
-                    icon: "trash",
-                    price: 1450
+                    name: "Hard delete",
+                    icon: "trash"
                 }
             ]
         }
     ].reverse();
+
+    actions: Array<{ text: String; icon: String }> = [
+        { text: "Delete", icon: "trash" },
+        { text: "Hard delete", icon: "trash" }
+    ];
 
     customers: Customer[] = [
         {
