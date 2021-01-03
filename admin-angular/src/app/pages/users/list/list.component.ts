@@ -8,7 +8,7 @@ import { SmartTableData } from "../../../@core/data/smart-table";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
-    products: Product[] = [
+    products = [
         {
             name: "Create new",
             icon: "plus"
@@ -38,7 +38,7 @@ export class UsersListComponent {
         { text: "Hard delete", icon: "trash" }
     ];
 
-    customers: Customer[] = [
+    customers = [
         {
             ID: 1,
             CompanyName: "Super Mart of the West",
