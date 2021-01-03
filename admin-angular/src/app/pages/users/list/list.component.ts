@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { SmartTableData } from "../../../@core/data/smart-table";
-import { LocalDataSource } from "ng2-smart-table";
 
 @Component({
     selector: "ngx-users-list",
@@ -9,97 +8,6 @@ import { LocalDataSource } from "ng2-smart-table";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
-    settings = {
-        hideSubHeader: true,
-        actions: {
-            position: "right"
-        },
-        selectMode: "multi",
-        add: {
-            addButtonContent: '<i class="nb-plus"></i>',
-            createButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>'
-        },
-        edit: {
-            editButtonContent: '<i class="nb-edit"></i>',
-            saveButtonContent: '<i class="nb-checkmark"></i>',
-            cancelButtonContent: '<i class="nb-close"></i>'
-        },
-        delete: {
-            deleteButtonContent: '<i class="nb-trash"></i>',
-            confirmDelete: true
-        },
-        columns: {
-            id: {
-                title: "ID",
-                type: "number"
-            },
-            firstName: {
-                title: "First Name",
-                type: "string"
-            },
-            lastName: {
-                title: "Last Name",
-                type: "string"
-            },
-            username: {
-                title: "Username",
-                type: "string"
-            },
-            email: {
-                title: "E-mail",
-                type: "string"
-            },
-            age: {
-                title: "Age",
-                type: "number"
-            }
-        }
-    };
-
-    source: LocalDataSource = new LocalDataSource();
-
-    constructor(private service: SmartTableData) {
-        const data = this.service.getData();
-        this.source.load(data);
-    }
-
-    onDeleteConfirm(event): void {
-        if (window.confirm("Are you sure you want to delete?")) {
-            event.confirm.resolve();
-        } else {
-            event.confirm.reject();
-        }
-    }
-
-    defaultColDef = { editable: false, flex: 1, minWidth: 100 };
-
-    columnDefs = [
-        { headerName: "Username", field: "username" },
-        { headerName: "Email Address", field: "email_address" },
-        {
-            headerName: "Created At",
-            field: "created_at",
-            filter: "agDateColumnFilter"
-        },
-        {
-            headerName: "Edited At",
-            field: "edited_at",
-            filter: "agDateColumnFilter"
-        },
-        { headerName: "Actions", field: "actions", maxWidth: 200 }
-    ];
-
-    rowData = [
-        {
-            username: "Toyota",
-            email_address: "Celica",
-            created_at: 34000,
-            edited_at: 35000,
-            actions: "..."
-        }
-    ];
-
     products: Product[] = [
         {
             name: "Create new",
@@ -125,9 +33,72 @@ export class UsersListComponent {
         }
     ].reverse();
 
-    // onGridReady(params) {
-    //     this.http.get("http://localhost:${process.env.CONTROLLER_PORT}/api/v1/users/").subscribe(data => {
-    //         this.rowData = data.data;
-    //     });
-    // }
+    customers: Customer[] = [
+        {
+            ID: 1,
+            CompanyName: "Super Mart of the West",
+            Address: "702 SW 8th Street",
+            City: "Bentonville",
+            State: "Arkansas",
+            Zipcode: 72716,
+            Phone: "(800) 555-2797",
+            Fax: "(800) 555-2171",
+            Website: "http://www.nowebsitesupermart.com"
+        },
+        {
+            ID: 2,
+            CompanyName: "Electronics Depot",
+            Address: "2455 Paces Ferry Road NW",
+            City: "Atlanta",
+            State: "Georgia",
+            Zipcode: 30339,
+            Phone: "(800) 595-3232",
+            Fax: "(800) 595-3231",
+            Website: "http://www.nowebsitedepot.com"
+        },
+        {
+            ID: 3,
+            CompanyName: "K&S Music",
+            Address: "1000 Nicllet Mall",
+            City: "Minneapolis",
+            State: "Minnesota",
+            Zipcode: 55403,
+            Phone: "(612) 304-6073",
+            Fax: "(612) 304-6074",
+            Website: "http://www.nowebsitemusic.com"
+        },
+        {
+            ID: 4,
+            CompanyName: "Tom's Club",
+            Address: "999 Lake Drive",
+            City: "Issaquah",
+            State: "Washington",
+            Zipcode: 98027,
+            Phone: "(800) 955-2292",
+            Fax: "(800) 955-2293",
+            Website: "http://www.nowebsitetomsclub.com"
+        },
+        {
+            ID: 5,
+            CompanyName: "E-Mart",
+            Address: "3333 Beverly Rd",
+            City: "Hoffman Estates",
+            State: "Illinois",
+            Zipcode: 60179,
+            Phone: "(847) 286-2500",
+            Fax: "(847) 286-2501",
+            Website: "http://www.nowebsiteemart.com"
+        },
+        {
+            ID: 6,
+            CompanyName: "Walters",
+            Address: "200 Wilmot Rd",
+            City: "Deerfield",
+            State: "Illinois",
+            Zipcode: 60015,
+            Phone: "(847) 940-2500",
+            Fax: "(847) 940-2501",
+            Website: "http://www.nowebsitewalters.com"
+        }
+    ];
 }
