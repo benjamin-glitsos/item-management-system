@@ -1,10 +1,5 @@
 import { NgModule } from "@angular/core";
-import {
-    NbCardModule,
-    NbIconModule,
-    NbInputModule,
-    NbActionsModule
-} from "@nebular/theme";
+import { NbCardModule, NbIconModule, NbInputModule } from "@nebular/theme";
 
 import { ThemeModule } from "../../@theme/theme.module";
 import { UsersRoutingModule, routedComponents } from "./users-routing.module";
@@ -17,8 +12,7 @@ import { Ng2SmartTableModule } from "ng2-smart-table";
         NbInputModule,
         ThemeModule,
         UsersRoutingModule,
-        Ng2SmartTableModule,
-        NbActionsModule
+        Ng2SmartTableModule
     ],
     declarations: [...routedComponents]
 })

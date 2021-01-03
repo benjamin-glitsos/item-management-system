@@ -14,6 +14,7 @@ export class UsersListComponent {
         actions: {
             position: "right"
         },
+        selectMode: "multi",
         add: {
             addButtonContent: '<i class="nb-plus"></i>',
             createButtonContent: '<i class="nb-checkmark"></i>',
