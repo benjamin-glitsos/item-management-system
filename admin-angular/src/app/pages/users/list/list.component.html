@@ -2,8 +2,17 @@
   <nb-card-header>
     <span>Users</span>
     <span>
-        <nb-icon icon="plus-circle-outline"></nb-icon>
-        <span>Create New</span>
+        <!-- <nb&#45;icon icon="plus&#45;circle&#45;outline"></nb&#45;icon> -->
+        <!-- <span>Create New</span> -->
+        <dx-drop-down-button
+            text="Create New"
+            icon="user"
+            [items]="actions"
+            keyExpr="id"
+            (onItemClick)="logAction($event)"
+            [splitButton]="true"
+            (onButtonClick)="logButtonClick()">
+        </dx-drop-down-button>
     </span>
   </nb-card-header>
 

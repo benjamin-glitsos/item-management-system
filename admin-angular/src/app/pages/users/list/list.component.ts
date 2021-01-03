@@ -100,6 +100,21 @@ export class UsersListComponent {
         }
     ];
 
+    actions: Array<{ id: Number; text: String; icon: String }> = [
+        { id: 1, text: "My profile", icon: "user" },
+        { id: 2, text: "Messages", icon: "email" },
+        { id: 3, text: "Contacts", icon: "group" },
+        { id: 4, text: "Log out", icon: "runner" }
+    ];
+
+    logAction(e) {
+        console.log(e.itemData.text + " was clicked");
+    }
+
+    logButtonClick() {
+        console.log("Main button was clicked");
+    }
+
     // onGridReady(params) {
     //     this.http.get("http://localhost:${process.env.CONTROLLER_PORT}/api/v1/users/").subscribe(data => {
     //         this.rowData = data.data;

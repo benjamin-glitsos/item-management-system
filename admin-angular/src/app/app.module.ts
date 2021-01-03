@@ -20,6 +20,7 @@ import {
     NbToastrModule,
     NbWindowModule
 } from "@nebular/theme";
+import { DxDropDownButtonModule } from "devextreme-angular";
 
 @NgModule({
     declarations: [AppComponent],
@@ -39,7 +40,8 @@ import {
         }),
         CoreModule.forRoot(),
         ThemeModule.forRoot(),
-        BrowserModule
+        BrowserModule,
+        DxDropDownButtonModule
     ],
     bootstrap: [AppComponent]
 })
