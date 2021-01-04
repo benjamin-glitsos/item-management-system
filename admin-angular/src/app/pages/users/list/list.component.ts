@@ -15,8 +15,14 @@ export class UsersListComponent {
 
     ngOnInit() {
         this.http
-            .request("REPORT", "http://localhost:4073/api/v1/users/bengyup/", {
-                body: { wow: "cool" }
+            .request("REPORT", "http://localhost:4073/api/v1/users/", {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                }),
+                body: {
+                    page_number: 1,
+                    page_length: 25
+                }
             })
             .subscribe(data$ => {
                 console.log(data$);
