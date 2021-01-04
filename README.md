@@ -12,7 +12,6 @@ Dockerised Model-View-Controller architecture.
 
 **Scala (a Java Virtual Machine language).**
 
-* Framework-less
 * RESTful API
 * JSON Schema validation
 * Type-safety using Algebraic Data Types
