@@ -9,21 +9,13 @@ import { SmartTableData } from "../../../@core/data/smart-table";
 })
 export class UsersListComponent {
     // username, email_address, created_at, edited_at
-    data = [];
+    data;
 
     constructor(private http: HttpClient) {}
 
     ngOnInit() {
         this.http
-            .request("GET", "http://localhost:4073/api/v1/users/", {
-                headers: new HttpHeaders({
-                    "Content-Type": "application/json"
-                }),
-                body: {
-                    page_number: 1,
-                    page_length: 25
-                }
-            })
+            .request("GET", "http://localhost:4073/api/v1/users/bengyup/")
             .subscribe(data$ => {
                 console.log(data$);
                 this.data = data$;
