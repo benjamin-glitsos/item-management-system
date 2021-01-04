@@ -17,7 +17,7 @@ object Server {
     val port: Integer = System.getenv("CONTROLLER_PORT").toInt
 
     val parserSettings =
-      ParserSettings.forServer(system).withCustomMethods(CustomMethods.REPORT)
+      ParserSettings.forServer(system).withCustomMethods(CustomMethods())
     val serverSettings =
       ServerSettings(system).withParserSettings(parserSettings)
 
