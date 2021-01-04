@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SmartTableData } from "../../../@core/data/smart-table";
 
+const fetch = require("node-fetch");
+
 @Component({
     selector: "ngx-users-list",
     templateUrl: "./list.component.html",
@@ -14,6 +16,13 @@ export class UsersListComponent {
     constructor(private http: HttpClient) {}
 
     ngOnInit() {
+        fetch("http://localhost:4073/api/v1/users/bengyup/", {
+            method: "GET"
+        }).then(res => {
+            data = res.json();
+            console.log(data);
+        });
+
         this.http
             .request("GET", "http://localhost:4073/api/v1/users/bengyup/")
             .subscribe(data$ => {
