@@ -8,6 +8,20 @@ import { SmartTableData } from "../../../@core/data/smart-table";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
+    totalAngularPackages;
+
+    constructor(private http: HttpClient) {}
+
+    ngOnInit() {
+        this.http
+            .request("GET", "https://api.npms.io/v2/search?q=scope:angular", {
+                body: "THIS IS A TEST!!!!!"
+            })
+            .subscribe(data => {
+                this.totalAngularPackages = data.total;
+            });
+    }
+
     products = [
         {
             name: "Create new",
