@@ -6,7 +6,7 @@ import scala.util.{Try}
 
 object UsersRoutes {
   private final def rootRoutes(): Route = concat(
-    report(
+    get( // report
       Validation("list-users") { body: ujson.Value =>
         {
           val pageNumber: Int = body("page_number").num.toInt

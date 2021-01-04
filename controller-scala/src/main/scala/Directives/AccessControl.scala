@@ -4,6 +4,6 @@ import akka.http.scaladsl.model.headers.RawHeader
 
 object AccessControl {
   def apply(): Directive0 = respondWithDefaultHeader(
-    RawHeader("Access-Control-Allow-Origin", "*")
+    RawHeader("Access-Control-Allow-Origin", "http://localhost/")
   )
 }
