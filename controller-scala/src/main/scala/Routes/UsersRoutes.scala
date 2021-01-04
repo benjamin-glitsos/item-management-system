@@ -3,10 +3,11 @@ import akka.http.scaladsl.server.Route
 import upickle.default._
 import upickle_bundle.general._
 import scala.util.{Try}
+import CustomMethodDirectives._
 
 object UsersRoutes {
   private final def rootRoutes(): Route = concat(
-    get( // report
+    report(
       Validation("list-users") { body: ujson.Value =>
         {
           val pageNumber: Int = body("page_number").num.toInt
