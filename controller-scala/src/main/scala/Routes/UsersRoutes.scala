@@ -6,7 +6,7 @@ import scala.util.{Try}
 
 object UsersRoutes {
   private final def rootRoutes(): Route = concat(
-    path("list")(
+    report(
       Validation("list-users") { body: ujson.Value =>
         {
           val pageNumber: Int = body("page_number").num.toInt
@@ -16,7 +16,7 @@ object UsersRoutes {
         }
       }
     ),
-    path("create")(
+    post(
       Validation("create-user") { body: ujson.Value =>
         val username: String     = body("username").str
         val password: String     = body("password").str
@@ -26,7 +26,7 @@ object UsersRoutes {
         complete(UsersServices.create(username, password, emailAddress, notes))
       }
     ),
-    path("delete")(
+    delete(
       Validation("delete-users") { body: ujson.Value =>
         {
           val method: String          = body("method").str
@@ -41,12 +41,12 @@ object UsersRoutes {
   private final def usernameRoutes(): Route = pathPrefix(Segment) {
     username: String =>
       concat(
-        path("open")(
+        get(
           Validation("open-user") { body: ujson.Value =>
             complete(UsersServices.open(username))
           }
         ),
-        path("edit")(
+        patch(
           Validation("edit-user") { body: ujson.Value =>
             {
               val newUsername: Option[String] =

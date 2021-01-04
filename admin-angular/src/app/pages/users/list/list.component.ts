@@ -13,7 +13,16 @@ export class UsersListComponent {
 
     constructor(private http: HttpClient) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.http
+            .request("REPORT", "http://localhost:4073/api/v1/users/bengyup/", {
+                body: { wow: "cool" }
+            })
+            .subscribe(data$ => {
+                console.log(data$);
+                this.data = data$;
+            });
+    }
 
     products = [
         {
