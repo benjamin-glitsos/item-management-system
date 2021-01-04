@@ -38,6 +38,7 @@ export class UsersListComponent {
         { text: "Hard delete", icon: "trash" }
     ];
 
+    // username, email_address, created_at, edited_at
     customers = [
         {
             ID: 1,
