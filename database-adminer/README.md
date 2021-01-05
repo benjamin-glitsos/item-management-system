@@ -1,0 +1,3 @@
+# Adminer
+
+Database management software.
