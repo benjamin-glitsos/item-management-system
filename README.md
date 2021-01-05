@@ -21,6 +21,12 @@ Dockerised Model-View-Controller architecture.
 * DRY
 * “Object-Oriented in the large, Functional Programming in the small”
 
+### Admin
+
+**Angular (Typescript)**
+
+Object-oriented Angular architecture.
+
 ### Database
 
 **PostgreSQL.**
