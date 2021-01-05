@@ -6,7 +6,7 @@ A full-stack toy inventory management system built with enterprise-grade archite
 
 ## Microservice Architecture
 
-Dockerised Model-View-Controller architecture.
+Dockerised Model-View-Controller (MVC) architecture.
 
 ### Controller
 
@@ -31,4 +31,4 @@ Angular MVVM architecture.
 
 **PostgreSQL.**
 
-Fourth normal form.
+Fourth normal form (4NF).
