@@ -8,8 +8,31 @@ import { SmartTableData } from "../../../@core/data/smart-table";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
-    // username, email_address, created_at, edited_at
-    data;
+    headers = ["username", "email_address", "created_at", "edited_at"];
+
+    zipIntoObj = (xs, ys) => {
+        var obj = {};
+        xs.forEach((key, i) => (obj[key] = ys[i]));
+        return obj;
+    };
+
+    evolve = (transformations, object) => {
+        var result = {};
+        var transformation, key, type;
+        for (key in object) {
+            transformation = transformations[key];
+            type = typeof transformation;
+            result[key] =
+                type === "function"
+                    ? transformation(object[key])
+                    : transformation && type === "object"
+                    ? evolve(transformation, object[key])
+                    : object[key];
+        }
+        return result;
+    };
+
+    data = [];
 
     constructor(private http: HttpClient) {}
 
@@ -22,8 +45,10 @@ export class UsersListComponent {
                 }
             })
             .subscribe(data$ => {
-                console.log(data$);
-                this.data = data$;
+                this.data = data$.data.map(data =>
+                    this.zipIntoObj(this.headers, data)
+                );
+                console.log(this.data);
             });
     }
 
