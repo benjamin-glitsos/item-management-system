@@ -23,9 +23,9 @@ Dockerised Model-View-Controller architecture.
 
 ### Admin
 
-**Angular (Typescript)**
+**Angular (Typescript).**
 
-Object-oriented Angular architecture.
+Angular MVVM architecture.
 
 ### Database
 
