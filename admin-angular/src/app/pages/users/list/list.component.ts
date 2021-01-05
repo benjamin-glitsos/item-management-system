@@ -45,9 +45,9 @@ export class UsersListComponent {
                 }
             })
             .subscribe(data$ => {
-                this.data = data$.data.map(data =>
-                    this.zipIntoObj(this.headers, data)
-                );
+                this.data = data$.data
+                    .map(data => this.zipIntoObj(this.headers, data))
+                    .map(data => this.evolve({ edited_at: x => null }, data));
                 console.log(this.data);
             });
     }
