@@ -9,5 +9,5 @@ object CustomMethods {
     requestEntityAcceptance = Expected
   )
 
-  final def apply(): List[HttpMethod] = List[REPORT]
+  final def apply(): List[HttpMethod] = List(REPORT)
 }
