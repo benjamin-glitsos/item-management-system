@@ -17,6 +17,7 @@ export class UsersListComponent {
     };
 
     evolve = (transformations, object) => {
+        // TODO: check if this is the latest version of function from Ramda source code
         var result = {};
         var transformation, key, type;
         for (key in object) {
