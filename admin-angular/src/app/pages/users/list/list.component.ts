@@ -11,6 +11,7 @@ export class UsersListComponent {
     headers = ["username", "email_address", "created_at", "edited_at"];
 
     zipIntoObj = (xs, ys) => {
+        // TODO: check Ramda source code for their version of this function
         var obj = {};
         xs.forEach((key, i) => (obj[key] = ys[i]));
         return obj;
