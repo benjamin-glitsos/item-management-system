@@ -1,7 +1,14 @@
-import { Component, ViewChild } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Component, Inject } from "@angular/core";
+import {
+    HttpClient,
+    HttpHeaders,
+    HttpClientModule,
+    HttpParams
+} from "@angular/common/http";
 import { SmartTableData } from "../../../@core/data/smart-table";
 import { DxDataGridComponent } from "devextreme-angular";
+import DataSource from "devextreme/data/data_source";
+import "rxjs/add/operator/toPromise";
 
 @Component({
     selector: "ngx-users-list",
@@ -9,13 +16,41 @@ import { DxDataGridComponent } from "devextreme-angular";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
-    @ViewChild("listDataGrid", { static: false }) dataGrid: DxDataGridComponent;
-
-    refreshDataGrid() {
-        this.dataGrid.instance
-            .refresh()
-            .then(function () {})
-            .catch(function (error) {});
+    gridDataSource: any = {};
+    constructor(@Inject(HttpClient) httpClient: HttpClient) {
+        this.gridDataSource = new DataSource({
+            key: "psuedo_id",
+            load: loadOptions => {
+                return httpClient
+                    .request("REPORT", "http://localhost:4073/api/v1/users/", {
+                        body: {
+                            page_number: 1,
+                            page_length: 25
+                        }
+                    })
+                    .toPromise()
+                    .then(result => {
+                        return {
+                            totalCount: result.total_items,
+                            data: result.data
+                                .map(data =>
+                                    this.zipIntoObj(this.headers, data)
+                                )
+                                .map(data =>
+                                    this.evolve({ edited_at: ([d]) => d }, data)
+                                )
+                                .map((data, i) => ({
+                                    psuedo_id: i + 1,
+                                    ...data
+                                }))
+                                .map(data => {
+                                    console.log(data);
+                                    return data;
+                                })
+                        };
+                    });
+            }
+        });
     }
 
     headers = ["username", "email_address", "created_at", "edited_at"];
@@ -43,31 +78,6 @@ export class UsersListComponent {
         }
         return result;
     };
-
-    data = [];
-
-    constructor(private http: HttpClient) {}
-
-    ngOnInit() {
-        this.http
-            .request("REPORT", "http://localhost:4073/api/v1/users/", {
-                body: {
-                    page_number: 1,
-                    page_length: 25
-                }
-            })
-            .subscribe(data$ => {
-                this.data = data$.data
-                    .map(data => this.zipIntoObj(this.headers, data))
-                    .map(data => this.evolve({ edited_at: ([d]) => d }, data))
-                    .map((data, i) => ({
-                        id: i + 1,
-                        ...data
-                    }));
-                console.log(this.data);
-                this.refreshDataGrid();
-            });
-    }
 
     products = [
         {
