@@ -16,11 +16,17 @@ import "rxjs/add/operator/toPromise";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
+    headers = ["username"];
+
     gridDataSource: any = {};
     constructor(@Inject(HttpClient) httpClient: HttpClient) {
         this.gridDataSource = new DataSource({
-            key: "psuedo_id",
+            key: "id",
             load: loadOptions => {
+                ["requireTotalCount"].forEach(function (i) {
+                    if (i in loadOptions && isNotEmpty(loadOptions[i]))
+                        params = params.set(i, JSON.stringify(loadOptions[i]));
+                });
                 return httpClient
                     .request("REPORT", "http://localhost:4073/api/v1/users/", {
                         body: {
@@ -30,17 +36,19 @@ export class UsersListComponent {
                     })
                     .toPromise()
                     .then(result => {
+                        console.log(result);
                         return {
                             totalCount: result.total_items,
                             data: result.data
                                 .map(data =>
                                     this.zipIntoObj(this.headers, data)
                                 )
-                                .map(data =>
-                                    this.evolve({ edited_at: ([d]) => d }, data)
-                                )
+                                // .map(data =>
+                                //     this.evolve({ edited_at: ([d]) => d }, data)
+                                // )
+                                .map(data => ({ username: data.username }))
                                 .map((data, i) => ({
-                                    psuedo_id: i + 1,
+                                    id: i + 1,
                                     ...data
                                 }))
                                 .map(data => {
@@ -52,8 +60,6 @@ export class UsersListComponent {
             }
         });
     }
-
-    headers = ["username", "email_address", "created_at", "edited_at"];
 
     zipIntoObj = (xs, ys) => {
         // TODO: check Ramda source code for their version of this function
