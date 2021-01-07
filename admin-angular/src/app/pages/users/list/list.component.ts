@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SmartTableData } from "../../../@core/data/smart-table";
+import { DxDataGridComponent } from "devextreme-angular";
 
 @Component({
     selector: "ngx-users-list",
@@ -8,6 +9,15 @@ import { SmartTableData } from "../../../@core/data/smart-table";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
+    @ViewChild("listDataGrid", { static: false }) dataGrid: DxDataGridComponent;
+
+    refreshDataGrid() {
+        this.dataGrid.instance
+            .refresh()
+            .then(function () {})
+            .catch(function (error) {});
+    }
+
     headers = ["username", "email_address", "created_at", "edited_at"];
 
     zipIntoObj = (xs, ys) => {
@@ -28,7 +38,7 @@ export class UsersListComponent {
                 type === "function"
                     ? transformation(object[key])
                     : transformation && type === "object"
-                    ? evolve(transformation, object[key])
+                    ? this.evolve(transformation, object[key])
                     : object[key];
         }
         return result;
@@ -49,8 +59,13 @@ export class UsersListComponent {
             .subscribe(data$ => {
                 this.data = data$.data
                     .map(data => this.zipIntoObj(this.headers, data))
-                    .map(data => this.evolve({ edited_at: x => null }, data));
+                    .map(data => this.evolve({ edited_at: ([d]) => d }, data))
+                    .map((data, i) => ({
+                        id: i + 1,
+                        ...data
+                    }));
                 console.log(this.data);
+                this.refreshDataGrid();
             });
     }
 
