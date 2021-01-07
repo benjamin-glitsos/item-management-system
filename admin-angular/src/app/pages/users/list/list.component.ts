@@ -16,7 +16,7 @@ import "rxjs/add/operator/toPromise";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
-    headers = ["username"];
+    headers = ["username", "email_address", "created_at", "edited_at"];
 
     gridDataSource: any = {};
     constructor(@Inject(HttpClient) httpClient: HttpClient) {
@@ -43,10 +43,9 @@ export class UsersListComponent {
                                 .map(data =>
                                     this.zipIntoObj(this.headers, data)
                                 )
-                                // .map(data =>
-                                //     this.evolve({ edited_at: ([d]) => d }, data)
-                                // )
-                                .map(data => ({ username: data.username }))
+                                .map(data =>
+                                    this.evolve({ edited_at: ([d]) => d }, data)
+                                )
                                 .map((data, i) => ({
                                     id: i + 1,
                                     ...data

@@ -35,24 +35,24 @@
             <!--     [showInfo]="true"> -->
             <!-- </dxo&#45;pager> -->
             <dxi-column dataField="username"></dxi-column>
-            <!-- <dxi&#45;column dataField="Email Address"></dxi&#45;column> -->
-            <!-- <dxi&#45;column dataField="Created At"></dxi&#45;column> -->
-            <!-- <dxi&#45;column dataField="Edited At"></dxi&#45;column> -->
-            <!-- <dxi&#45;column -->
-            <!--     cellTemplate="actionsCellTemplate" -->
-            <!--     alignment="center" -->
-            <!--     [width]="125" -->
-            <!-- ></dxi&#45;column> -->
-            <!-- <div *dxTemplate="let d of 'actionsCellTemplate'"> -->
-            <!--     <dx&#45;drop&#45;down&#45;button -->
-            <!--         text="Open" -->
-            <!--         icon="chevrondoubleright" -->
-            <!--         stylingMode="text" -->
-            <!--         [items]="actions" -->
-            <!--         keyExpr="id" -->
-            <!--         [splitButton]="true" -->
-            <!--     ></dx&#45;drop&#45;down&#45;button> -->
-            <!-- </div> -->
+            <dxi-column dataField="email_address"></dxi-column>
+            <dxi-column dataField="created_at"></dxi-column>
+            <dxi-column dataField="edited_at"></dxi-column>
+            <dxi-column
+                cellTemplate="actionsCellTemplate"
+                alignment="center"
+                [width]="125"
+            ></dxi-column>
+            <div *dxTemplate="let d of 'actionsCellTemplate'">
+                <dx-drop-down-button
+                    text="Open"
+                    icon="chevrondoubleright"
+                    stylingMode="text"
+                    [items]="actions"
+                    keyExpr="id"
+                    [splitButton]="true"
+                ></dx-drop-down-button>
+            </div>
         </dx-data-grid>
     </nb-card-body>
 </nb-card>
