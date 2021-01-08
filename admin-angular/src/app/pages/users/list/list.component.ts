@@ -15,6 +15,61 @@ import "rxjs/add/operator/toPromise";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
+    // TODO: https://js.devexpress.com/Documentation/ApiReference/Data_Layer/CustomStore/
+    gridDataSource: any = {};
+    constructor(@Inject(HttpClient) httpClient: HttpClient) {
+        this.gridDataSource = new DataSource({
+            key: "grid_id",
+            load: loadOptions => {
+                console.log(loadOptions);
+                return httpClient
+                    .request("REPORT", "http://localhost:4073/api/v1/users/", {
+                        body: {
+                            page_number: 1,
+                            page_length: loadOptions.take
+                        }
+                    })
+                    .toPromise()
+                    .then(result => {
+                        console.log(result);
+                        // TODO: SET SEED FACTOR TO 10 OR MORE THEN TRY USING PAGINATION
+                        // !!!!!!!!!
+                        // !!!!!!!!!
+                        return {
+                            totalCount: 100, // TODO: result.total_items
+                            data: result.data
+                                .map(data =>
+                                    this.zipIntoObj(this.headers, data)
+                                )
+                                .map(data =>
+                                    this.evolve(
+                                        {
+                                            edited_at: ([d]) => {
+                                                if (d) {
+                                                    return d;
+                                                } else {
+                                                    return "-";
+                                                }
+                                            }
+                                        },
+                                        data
+                                    )
+                                )
+                                .map((data, i) => ({
+                                    grid_id: i + 1,
+                                    ...data
+                                }))
+                                .map(data => {
+                                    console.log(data);
+                                    return data;
+                                })
+                        };
+                    });
+                // TODO: .catch method which catches errors and will send a devextreme toaster popup to the screen conaining the server error
+            }
+        });
+    }
+
     headers = ["username", "email_address", "created_at", "edited_at"];
 
     zipIntoObj = (xs, ys) => {
@@ -70,59 +125,4 @@ export class UsersListComponent {
     deleteActions: Array<{ text: String; icon: String }> = [
         { text: "Hard delete", icon: "trash" }
     ];
-
-    // TODO: https://js.devexpress.com/Documentation/ApiReference/Data_Layer/CustomStore/
-    gridDataSource: any = {};
-    constructor(@Inject(HttpClient) httpClient: HttpClient) {
-        this.gridDataSource = new DataSource({
-            key: "grid_id",
-            load: loadOptions => {
-                console.log(loadOptions);
-                return httpClient
-                    .request("REPORT", "http://localhost:4073/api/v1/users/", {
-                        body: {
-                            page_number: 1,
-                            page_length: loadOptions.take
-                        }
-                    })
-                    .toPromise()
-                    .then(result => {
-                        console.log(result);
-                        // TODO: SET SEED FACTOR TO 10 OR MORE THEN TRY USING PAGINATION
-                        // !!!!!!!!!
-                        // !!!!!!!!!
-                        return {
-                            totalCount: 100, // TODO: result.total_items
-                            data: result.data
-                                .map(data =>
-                                    this.zipIntoObj(this.headers, data)
-                                )
-                                .map(data =>
-                                    this.evolve(
-                                        {
-                                            edited_at: ([d]) => {
-                                                if (d) {
-                                                    return d;
-                                                } else {
-                                                    return "-";
-                                                }
-                                            }
-                                        },
-                                        data
-                                    )
-                                )
-                                .map((data, i) => ({
-                                    grid_id: i + 1,
-                                    ...data
-                                }))
-                                .map(data => {
-                                    console.log(data);
-                                    return data;
-                                })
-                        };
-                    });
-                // TODO: .catch method which catches errors and will send a devextreme toaster popup to the screen conaining the server error
-            }
-        });
-    }
 }
