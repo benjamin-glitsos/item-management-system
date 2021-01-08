@@ -45,13 +45,7 @@ export class UsersListComponent {
                                 .map(data =>
                                     this.evolve(
                                         {
-                                            edited_at: ([d]) => {
-                                                if (d) {
-                                                    return d;
-                                                } else {
-                                                    return "-";
-                                                }
-                                            }
+                                            edited_at: ([d]) => d ? d : "-"
                                         },
                                         data
                                     )
