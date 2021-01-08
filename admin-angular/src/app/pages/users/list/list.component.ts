@@ -4,8 +4,8 @@ import {
     HttpHeaders,
     HttpClientModule
 } from "@angular/common/http";
-import { SmartTableData } from "../../../@core/data/smart-table";
 import { DxDataGridComponent } from "devextreme-angular";
+import CustomStore from "devextreme/data/custom_store";
 import DataSource from "devextreme/data/data_source";
 import "rxjs/add/operator/toPromise";
 
@@ -16,17 +16,18 @@ import "rxjs/add/operator/toPromise";
 })
 export class UsersListComponent {
     // TODO: https://js.devexpress.com/Documentation/ApiReference/Data_Layer/CustomStore/
-    gridDataSource: any = {};
+    store: CustomStore;
+    dataSource: DataSource;
     constructor(@Inject(HttpClient) httpClient: HttpClient) {
-        this.gridDataSource = new DataSource({
+        this.store = new CustomStore({
             key: "grid_id",
-            load: loadOptions => {
-                console.log(loadOptions);
+            load: options => {
+                console.log(options);
                 return httpClient
                     .request("REPORT", "http://localhost:4073/api/v1/users/", {
                         body: {
                             page_number: 1,
-                            page_length: loadOptions.take
+                            page_length: options.take
                         }
                     })
                     .toPromise()
@@ -65,8 +66,18 @@ export class UsersListComponent {
                                 })
                         };
                     });
-                // TODO: .catch method which catches errors and will send a devextreme toaster popup to the screen conaining the server error
             }
+            remove: key => {
+                key
+            }
+            errorHandler: function (error) {
+                // TODO: handle errors using the devextreme toaster popup
+                console.log(error.message);
+            }
+        });
+
+        this.dataSource = new DataSource({
+            key: "grid_id"
         });
     }
 
