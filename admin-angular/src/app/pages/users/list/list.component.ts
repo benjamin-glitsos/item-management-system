@@ -20,7 +20,7 @@ export class UsersListComponent {
     dataSource: DataSource;
     constructor(@Inject(HttpClient) httpClient: HttpClient) {
         this.store = new CustomStore({
-            key: "grid_id",
+            key: "username",
             load: options => {
                 console.log(options);
                 return httpClient
@@ -56,10 +56,6 @@ export class UsersListComponent {
                                         data
                                     )
                                 )
-                                .map((data, i) => ({
-                                    grid_id: i + 1,
-                                    ...data
-                                }))
                                 .map(data => {
                                     console.log(data);
                                     return data;
