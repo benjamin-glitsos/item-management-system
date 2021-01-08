@@ -88,6 +88,9 @@ export class UsersListComponent {
                     .toPromise()
                     .then(result => {
                         console.log(result);
+                        // TODO: SET SEED FACTOR TO 10 OR MORE THEN TRY USING PAGINATION
+                        // !!!!!!!!!
+                        // !!!!!!!!!
                         return {
                             totalCount: 100, // TODO: result.total_items
                             data: result.data
@@ -118,6 +121,7 @@ export class UsersListComponent {
                                 })
                         };
                     });
+                // TODO: .catch method which catches errors and will send a devextreme toaster popup to the screen conaining the server error
             }
         });
     }
