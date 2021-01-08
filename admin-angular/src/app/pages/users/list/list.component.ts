@@ -2,8 +2,7 @@ import { Component, Inject } from "@angular/core";
 import {
     HttpClient,
     HttpHeaders,
-    HttpClientModule,
-    HttpParams
+    HttpClientModule
 } from "@angular/common/http";
 import { SmartTableData } from "../../../@core/data/smart-table";
 import { DxDataGridComponent } from "devextreme-angular";
@@ -17,48 +16,6 @@ import "rxjs/add/operator/toPromise";
 })
 export class UsersListComponent {
     headers = ["username", "email_address", "created_at", "edited_at"];
-
-    gridDataSource: any = {};
-    constructor(@Inject(HttpClient) httpClient: HttpClient) {
-        this.gridDataSource = new DataSource({
-            key: "id",
-            load: loadOptions => {
-                ["requireTotalCount"].forEach(function (i) {
-                    if (i in loadOptions && isNotEmpty(loadOptions[i]))
-                        params = params.set(i, JSON.stringify(loadOptions[i]));
-                });
-                return httpClient
-                    .request("REPORT", "http://localhost:4073/api/v1/users/", {
-                        body: {
-                            page_number: 1,
-                            page_length: 25
-                        }
-                    })
-                    .toPromise()
-                    .then(result => {
-                        console.log(result);
-                        return {
-                            totalCount: result.total_items,
-                            data: result.data
-                                .map(data =>
-                                    this.zipIntoObj(this.headers, data)
-                                )
-                                .map(data =>
-                                    this.evolve({ edited_at: ([d]) => d }, data)
-                                )
-                                .map((data, i) => ({
-                                    id: i + 1,
-                                    ...data
-                                }))
-                                .map(data => {
-                                    console.log(data);
-                                    return data;
-                                })
-                        };
-                    });
-            }
-        });
-    }
 
     zipIntoObj = (xs, ys) => {
         // TODO: check Ramda source code for their version of this function
@@ -113,4 +70,55 @@ export class UsersListComponent {
     deleteActions: Array<{ text: String; icon: String }> = [
         { text: "Hard delete", icon: "trash" }
     ];
+
+    // TODO: https://js.devexpress.com/Documentation/ApiReference/Data_Layer/CustomStore/
+    gridDataSource: any = {};
+    constructor(@Inject(HttpClient) httpClient: HttpClient) {
+        this.gridDataSource = new DataSource({
+            key: "grid_id",
+            load: loadOptions => {
+                console.log(loadOptions);
+                return httpClient
+                    .request("REPORT", "http://localhost:4073/api/v1/users/", {
+                        body: {
+                            page_number: 1,
+                            page_length: loadOptions.take
+                        }
+                    })
+                    .toPromise()
+                    .then(result => {
+                        console.log(result);
+                        return {
+                            totalCount: 100, // TODO: result.total_items
+                            data: result.data
+                                .map(data =>
+                                    this.zipIntoObj(this.headers, data)
+                                )
+                                .map(data =>
+                                    this.evolve(
+                                        {
+                                            edited_at: ([d]) => {
+                                                if (d) {
+                                                    return d;
+                                                } else {
+                                                    return "-";
+                                                }
+                                            }
+                                        },
+                                        data
+                                    )
+                                )
+                                .map((data, i) => ({
+                                    grid_id: i + 1,
+                                    ...data
+                                }))
+                                .map(data => {
+                                    console.log(data);
+                                    return data;
+                                })
+                        };
+                    });
+            }
+        });
+    }
 }

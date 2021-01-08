@@ -26,18 +26,22 @@
             id="gridContainer"
             [dataSource]="gridDataSource"
             [columns]="headers"
-            [showBorders]="true">
-            <!-- <dxo&#45;selection mode="multiple"></dxo&#45;selection> -->
-            <!-- <dxo&#45;paging [pageSize]="5"></dxo&#45;paging> -->
-            <!-- <dxo&#45;pager  -->
-            <!--     [showPageSizeSelector]="true" -->
-            <!--     [allowedPageSizes]="[5, 10, 20]" -->
-            <!--     [showInfo]="true"> -->
-            <!-- </dxo&#45;pager> -->
-            <dxi-column dataField="username"></dxi-column>
-            <dxi-column dataField="email_address"></dxi-column>
-            <dxi-column dataField="created_at"></dxi-column>
-            <dxi-column dataField="edited_at"></dxi-column>
+            [showBorders]="true"
+            [remoteOperations]="true"
+            >
+            <dxo-selection mode="multiple"></dxo-selection>
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-pager 
+                [showPageSizeSelector]="true"
+                [showNavigationButtons]="true"
+                [allowedPageSizes]="[10, 25, 50, 100]"
+                [showInfo]="true"
+                [visible]="true"
+            ></dxo-pager>
+            <dxi-column dataField="username" dataType="string"></dxi-column>
+            <dxi-column dataField="email_address" dataType="string"></dxi-column>
+            <dxi-column dataField="created_at" dataType="datetime"></dxi-column>
+            <dxi-column dataField="edited_at" dataType="datetime"></dxi-column>
             <dxi-column
                 cellTemplate="actionsCellTemplate"
                 alignment="center"
