@@ -15,11 +15,8 @@ import "rxjs/add/operator/toPromise";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
-    // TODO: https://js.devexpress.com/Documentation/ApiReference/Data_Layer/CustomStore/
-    store: CustomStore;
-    dataSource: DataSource;
     constructor(@Inject(HttpClient) httpClient: HttpClient) {
-        this.store = new CustomStore({
+        dataSource: DataSource = new CustomStore({
             key: "username",
             load: options => {
                 console.log(options);
@@ -65,10 +62,7 @@ export class UsersListComponent {
                 console.log(error.message);
             }
         });
-
-        this.dataSource = new DataSource({
-            key: "grid_id"
-        });
+        // TODO: move all of the config options into the javascript object like in this example, then you can reuse them: https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/WebAPIService/AngularJS/Light/
     }
 
     headers = ["username", "email_address", "created_at", "edited_at"];
