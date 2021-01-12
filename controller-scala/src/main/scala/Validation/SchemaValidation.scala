@@ -51,7 +51,7 @@ object SchemaValidation extends ValidationTrait {
       case Failure(e: ValidationException) =>
         e.getCausingExceptions()
           .asScala
-          .map(e => ValidationError(e.getMessage()).invalidNec)
+          .map(e => InvalidInputError(e.getMessage()).invalidNec)
           .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
     }
   }

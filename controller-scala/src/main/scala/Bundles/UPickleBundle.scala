@@ -18,7 +18,7 @@ package upickle_bundle {
         }
       )
 
-    implicit final val upickleCaseInsensitiveString: ReadWriter[CIString] =
+    implicit final val upickleCaseInsensitive: ReadWriter[CIString] =
       readwriter[ujson.Value].bimap[CIString](
         cistring => cistring.toString.toLowerCase,
         json => CIString(json.toString())

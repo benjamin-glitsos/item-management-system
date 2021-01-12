@@ -1,5 +1,5 @@
-object AuthorisationFailedError extends ErrorTrait {
+object AuthorisationFailedError {
   final def apply(): Error = {
-    error("authorisation_failed", "Authorisation failed.")
+    Error(ErrorCodes.AUTHORISATION_FAILED, "Authorisation failed.")
   }
 }

@@ -1,5 +1,5 @@
-object NotFoundError extends ErrorTrait {
+object NotFoundError {
   final def apply(): Error = {
-    error("not_found", "The requested resource was not found.")
+    Error(ErrorCodes.NOT_FOUND, "The requested resource was not found.")
   }
 }
