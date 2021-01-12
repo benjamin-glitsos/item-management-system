@@ -25,7 +25,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 **Angular (Typescript).**
 
-Angular MVVM architecture.
+Model-View-ViewModel (MVVM) architecture with Dependency Injection.
 
 ### Database
 
