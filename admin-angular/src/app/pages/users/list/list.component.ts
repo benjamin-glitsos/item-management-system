@@ -15,6 +15,7 @@ import "rxjs/add/operator/toPromise";
     styleUrls: ["./list.component.scss"]
 })
 export class UsersListComponent {
+    // TODO: start using dependency injection
     constructor(@Inject(HttpClient) httpClient: HttpClient) {
         dataSource: DataSource = new CustomStore({
             key: "username",
