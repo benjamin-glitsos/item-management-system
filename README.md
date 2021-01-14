@@ -23,7 +23,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ### Admin
 
-**Framework: Angular (Typescript).**
+**Framework: Angular. Language: Typescript.**
 
 Model-View-ViewModel (MVVM) architecture with Dependency Injection.
 
