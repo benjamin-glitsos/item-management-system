@@ -10,7 +10,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ### Controller
 
-**Scala (a Java Virtual Machine language).**
+**Scala (a Java-derived language).**
 
 * RESTful API
 * JSON Schema validation
