@@ -10,7 +10,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ### Controller
 
-**Scala (a Java-derived language).**
+**Language: Scala (a Java-derived language).**
 
 * RESTful API
 * JSON Schema validation
@@ -23,12 +23,12 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ### Admin
 
-**Angular (Typescript).**
+**Framework: Angular (Typescript).**
 
 Model-View-ViewModel (MVVM) architecture with Dependency Injection.
 
 ### Database
 
-**PostgreSQL.**
+**Platform: PostgreSQL.**
 
 Fourth normal form (4NF).
