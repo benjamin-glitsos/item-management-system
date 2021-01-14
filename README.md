@@ -1,6 +1,6 @@
 # Inventory Management System
 
-A full-stack toy inventory management system built with enterprise-grade architecture and principles.
+A toy inventory management system built with enterprise-grade full-stack architecture and principles.
 
 **This is a work-in-progress, but the current state of the project is as follows.**
 
