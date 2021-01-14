@@ -19,7 +19,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 * GRASP
 * SOLID
 * DRY
-* “Object-Oriented in the large, Functional Programming in the small”
+* “Object-Oriented in the large; Functional Programming in the small”
 
 ### Admin
 
