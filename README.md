@@ -14,12 +14,14 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 * RESTful API
 * JSON Schema validation
-* Type-safety using Algebraic Data Types
+* Type-safety
+* Algebraic Data Types incl. Monads
+* SQL Query Builder
 * Java Interop
 * GRASP
 * SOLID
 * DRY
-* “Object-Oriented in the large; Functional Programming in the small”
+* Object-Oriented in the large; Functional Programming in the small
 
 ### Admin
 
