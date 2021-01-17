@@ -16,7 +16,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 * JSON Schema validation
 * Type-safety
 * Algebraic Data Types incl. Monads
-* SQL Query Builder
+* SQL query builder
 * Java Interop
 * GRASP
 * SOLID
