@@ -2,6 +2,6 @@
 
 set -e
 
-if [[ "$1" == "yes" ]]; then
+if [[ "$CONTROLLER_RUN" == "yes" ]]; then
     sbt run
 fi
