@@ -1,4 +1,3 @@
-ARG ADMIN_RUN=yes
 FROM node:current-alpine3.10
 WORKDIR /usr/src/app
 COPY . .
