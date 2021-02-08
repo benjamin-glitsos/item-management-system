@@ -7,4 +7,4 @@ RUN apk add --no-cache curl \
 WORKDIR /usr/src/app
 COPY . .
 RUN sbt compile
-ENTRYPOINT docker-entrypoint.sh "$CONTROLLER_RUN"
+ENTRYPOINT ./docker-entrypoint.sh "$CONTROLLER_RUN"
