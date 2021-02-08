@@ -7,7 +7,4 @@ RUN apk add --no-cache curl \
 WORKDIR /usr/src/app
 COPY . .
 RUN sbt compile
-RUN if [[ "$CONTROLLER_RUN" == "yes" ]]; \
-    then sbt run; \
-    fi
-CMD bash
+ENTRYPOINT docker-entrypoint.sh "$CONTROLLER_RUN"
