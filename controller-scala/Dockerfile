@@ -1,5 +1,5 @@
-FROM adoptopenjdk/openjdk11:alpine
 ARG CONTROLLER_RUN=yes
+FROM adoptopenjdk/openjdk11:alpine
 RUN apk add --no-cache curl \
 &&  apk add --no-cache bash \
 &&  apk add --no-cache vim \
