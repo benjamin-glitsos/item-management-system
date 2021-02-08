@@ -21,7 +21,7 @@ services:
     depends_on:
       - "database_postgresql"
     ports:
-      - ${ADMINER_PORT}:8080
+      - ${DBADMIN_PORT}:8080
   controller_scala:
     build:
       context: ./controller-scala/

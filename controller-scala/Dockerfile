@@ -1,4 +1,5 @@
 FROM adoptopenjdk/openjdk11:alpine
+ARG CONTROLLER_RUN=yes
 RUN apk add --no-cache curl \
 &&  apk add --no-cache bash \
 &&  apk add --no-cache vim \
@@ -6,4 +7,7 @@ RUN apk add --no-cache curl \
 &&  chmod 0755 /usr/local/bin/sbt
 WORKDIR /usr/src/app
 COPY . .
+RUN if [[ "$CONTROLLER_RUN" == "yes" ]]; \
+    then sbt run; \
+    fi
 CMD bash
