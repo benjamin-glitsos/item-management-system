@@ -1,3 +1,6 @@
 FROM node:current-alpine3.10
-RUN npm install -g @angular/cli && npm install 
+WORKDIR /usr/src/app
+COPY . .
+RUN npm install -g @angular/cli \
+&&  npm install 
 CMD sh

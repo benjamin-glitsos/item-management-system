@@ -43,7 +43,7 @@ export class UsersListComponent {
                                 .map(data =>
                                     this.evolve(
                                         {
-                                            edited_at: ([d]) => d ? d : "-"
+                                            edited_at: ([d]) => (d ? d : "-")
                                         },
                                         data
                                     )
@@ -54,10 +54,10 @@ export class UsersListComponent {
                                 })
                         };
                     });
-            }
+            },
             remove: key => {
-                key
-            }
+                key;
+            },
             errorHandler: function (error) {
                 // TODO: handle errors using the devextreme toaster popup
                 console.log(error.message);
