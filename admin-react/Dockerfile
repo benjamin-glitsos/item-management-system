@@ -3,4 +3,4 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY . .
 RUN npm install
-ENTRYPOINT ./docker-entrypoint.sh
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
