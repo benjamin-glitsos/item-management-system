@@ -37,17 +37,17 @@ services:
       - "database_postgresql"
     ports:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
-  admin_angular:
+  admin_react:
     build:
-      context: ./admin-angular/
-    image: admin-angular
-    container_name: admin-angular
+      context: ./admin-react/
+    image: admin-react
+    container_name: admin-react
     volumes:
-      - ./admin-angular/:/root
+      - ./admin-react/:/root
     env_file: .env
     restart: on-failure
     stdin_open: true
     depends_on:
       - "controller_scala"
     ports:
-      - 80:4200
+      - 80:3000

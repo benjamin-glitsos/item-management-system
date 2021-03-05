@@ -4,10 +4,7 @@
     "description": "Get your ADG3 on with this sample project using Atlaskit React components",
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject",
-        "surge": "bash surge_login.sh && surge --project ./build/ --domain atlaskit-starter.surge.sh"
+        "build": "react-scripts build"
     },
     "keywords": [],
     "author": "Atlassian",
