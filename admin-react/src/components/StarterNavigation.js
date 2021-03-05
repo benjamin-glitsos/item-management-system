@@ -10,6 +10,7 @@ import {
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import DashboardIcon from "@atlaskit/icon/glyph/dashboard";
 import logo from "../images/logo.svg";
+import styled from "styled-components";
 
 export default class StarterNavigation extends Component {
     state = {
@@ -35,7 +36,7 @@ export default class StarterNavigation extends Component {
                     <NavigationHeader>
                         <Header
                             iconBefore={
-                                <img
+                                <AppLogo
                                     src={logo}
                                     alt={`${process.env.PROJECT_NAME} logo`}
                                 />
@@ -66,3 +67,7 @@ export default class StarterNavigation extends Component {
         );
     }
 }
+
+const AppLogo = styled.img`
+    width: 100%;
+`;

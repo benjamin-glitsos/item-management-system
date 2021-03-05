@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Flag, { FlagGroup } from "@atlaskit/flag";
 import Modal from "@atlaskit/modal-dialog";
 import Page from "@atlaskit/page";
 import "@atlaskit/css-reset";
-
 import StarterNavigation from "../components/StarterNavigation";
+import styled from "styled-components";
 
 export default class App extends Component {
     state = {
@@ -55,14 +55,14 @@ export default class App extends Component {
 
     render() {
         return (
-            <div>
+            <PageWrapper>
                 <Page
                     navigationWidth={this.context.navOpenState.width}
                     navigation={<StarterNavigation />}
                 >
                     {this.props.children}
                 </Page>
-                <div>
+                <Fragment>
                     <FlagGroup onDismissed={this.onFlagDismissed}>
                         {this.state.flags.map(flag => (
                             <Flag
@@ -92,8 +92,12 @@ export default class App extends Component {
                             </p>
                         </Modal>
                     )}
-                </div>
-            </div>
+                </Fragment>
+            </PageWrapper>
         );
     }
 }
+
+const PageWrapper = styled.div`
+    height: 100vh;
+`;
