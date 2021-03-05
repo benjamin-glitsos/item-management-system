@@ -12,7 +12,6 @@ import PeopleIcon from "@atlaskit/icon/glyph/people";
 import DashboardIcon from "@atlaskit/icon/glyph/dashboard";
 import logo from "../images/logo.svg";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export default class StarterNavigation extends Component {
     state = {
@@ -32,6 +31,7 @@ export default class StarterNavigation extends Component {
     }
 
     render() {
+        console.log(process.env);
         return (
             <SideNavigation label="Main Navigation">
                 <NavigationContent>
@@ -41,12 +41,12 @@ export default class StarterNavigation extends Component {
                                 iconBefore={
                                     <AppLogo
                                         src={logo}
-                                        alt={`${process.env.PROJECT_NAME} logo`}
+                                        alt={`${process.env.REACT_APP_PROJECT_NAME} logo`}
                                     />
                                 }
-                                description={process.env.PROJECT_NAME}
+                                description={process.env.REACT_APP_PROJECT_NAME}
                             >
-                                {process.env.PROJECT_ABBREV}
+                                {process.env.REACT_APP_PROJECT_ABBREV}
                             </Header>
                         </LinkItem>
                     </NavigationHeader>

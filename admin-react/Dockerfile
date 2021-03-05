@@ -1,6 +1,10 @@
 FROM node:current-alpine3.10
+ARG PROJECT_NAME
+ARG PROJECT_ABBREV
+ENV PATH=/app/node_modules/.bin:$PATH
+ENV REACT_APP_PROJECT_NAME=$PROJECT_NAME
+ENV REACT_APP_PROJECT_ABBREV=$PROJECT_ABBREV
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
 COPY . .
 RUN npm install
 ENTRYPOINT ["sh", "./docker-entrypoint.sh"]

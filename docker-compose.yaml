@@ -43,7 +43,7 @@ services:
     image: admin-react
     container_name: admin-react
     volumes:
-      - ./admin-react/:/root
+      - ./admin-react:/app
     env_file: .env
     restart: on-failure
     stdin_open: true
