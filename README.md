@@ -23,9 +23,10 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ### Admin
 
-**Angular (Typescript).**
+**React (Javascript).**
 
-Angular MVVM architecture.
+* Flux architecture
+* Separation of concerns
 
 ### Database
 

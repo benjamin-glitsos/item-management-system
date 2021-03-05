@@ -21,3 +21,13 @@ admin-angular/node_modules/
 admin-angular/dist/
 admin-angular/.npm/
 admin-angular/.ash_history
+
+# Admin React --------------------
+
+admin-react/node_modules
+admin-react/static/bundle.js
+admin-react/build/
+admin-react/npm-debug.log
+admin-react/.idea
+admin-react/*.iml
+admin-react/*.DS_Store
