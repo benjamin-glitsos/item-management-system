@@ -36,17 +36,19 @@ export default class StarterNavigation extends Component {
             <SideNavigation label="Main Navigation">
                 <NavigationContent>
                     <NavigationHeader>
-                        <Header
-                            iconBefore={
-                                <AppLogo
-                                    src={logo}
-                                    alt={`${process.env.PROJECT_NAME} logo`}
-                                />
-                            }
-                            description={process.env.PROJECT_NAME}
-                        >
-                            {process.env.PROJECT_ABBREV}
-                        </Header>
+                        <LinkItem href="/">
+                            <Header
+                                iconBefore={
+                                    <AppLogo
+                                        src={logo}
+                                        alt={`${process.env.PROJECT_NAME} logo`}
+                                    />
+                                }
+                                description={process.env.PROJECT_NAME}
+                            >
+                                {process.env.PROJECT_ABBREV}
+                            </Header>
+                        </LinkItem>
                     </NavigationHeader>
                     {Object.entries(this.state.nav).map(
                         ([section, links], i) => {
