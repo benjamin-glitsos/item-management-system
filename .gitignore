@@ -25,6 +25,7 @@ admin-angular/.ash_history
 # Admin React --------------------
 
 admin-react/node_modules
+admin-react/.npm/
 admin-react/static/bundle.js
 admin-react/build/
 admin-react/npm-debug.log

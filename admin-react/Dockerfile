@@ -1,5 +1,6 @@
 FROM node:current-alpine3.10
-WORKDIR /usr/src/app
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
 COPY . .
-RUN npm install 
+RUN npm install
 ENTRYPOINT ./docker-entrypoint.sh
