@@ -3,21 +3,23 @@ import React, { Component } from "react";
 import {
     SideNavigation,
     NavigationContent,
-    ButtonItem,
     NavigationHeader,
-    Header
+    Header,
+    LinkItem,
+    Section
 } from "@atlaskit/side-navigation";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import DashboardIcon from "@atlaskit/icon/glyph/dashboard";
 import logo from "../images/logo.svg";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default class StarterNavigation extends Component {
     state = {
-        navLinks: [
-            ["/", "Dashboard", DashboardIcon],
-            ["/users", "Users", PeopleIcon]
-        ]
+        nav: {
+            home: [["Dashboard", "/", DashboardIcon]],
+            system: [["Users", "/users", PeopleIcon]]
+        }
     };
 
     static contextTypes = {
@@ -46,22 +48,34 @@ export default class StarterNavigation extends Component {
                             {process.env.PROJECT_ABBREV}
                         </Header>
                     </NavigationHeader>
-                    {this.state.navLinks.map(([url, title, Icon], i) => {
-                        return (
-                            <ButtonItem
-                                key={`${i}-${title}`}
-                                iconBefore={
-                                    <Icon label={title} size="medium" />
-                                }
-                                isSelected={this.context.router.isActive(
-                                    url,
-                                    true
-                                )}
-                            >
-                                {title}
-                            </ButtonItem>
-                        );
-                    }, this)}
+                    {Object.entries(this.state.nav).map(
+                        ([section, links], i) => {
+                            return (
+                                <Section key={`{i}-${section}`} title={section}>
+                                    {links.map(([title, url, Icon], i) => {
+                                        return (
+                                            <LinkItem
+                                                key={`${i}-${title}`}
+                                                iconBefore={
+                                                    <Icon
+                                                        label={title}
+                                                        size="medium"
+                                                    />
+                                                }
+                                                isSelected={this.context.router.isActive(
+                                                    url,
+                                                    true
+                                                )}
+                                                href={url}
+                                            >
+                                                {title}
+                                            </LinkItem>
+                                        );
+                                    })}
+                                </Section>
+                            );
+                        }
+                    )}
                 </NavigationContent>
             </SideNavigation>
         );
