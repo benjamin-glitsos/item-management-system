@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import PageMargins from "../components/PageMargins";
 import BreadcrumbBar from "../components/BreadcrumbBar";
 import TableActionsMenu from "../components/TableActionsMenu";
+import NoData from "../components/NoData";
 import ActionsBar from "../components/ActionsBar";
+import friendlyDate from "../utilities/friendlyDate";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import axios from "axios";
@@ -55,14 +57,15 @@ export default () => {
         ]
     };
 
+    // TODO: add onClick to row for left and right-mouse buttons. Left = Edit, Right = Dropdown.
     const rows = data.data.map((row, i) => ({
         key: `${i}-row`,
         cells: row
             .map(([username, emailAddress, createdAt, editedAt]) => [
                 username,
                 emailAddress,
-                createdAt, // TODO: format the dates
-                editedAt,
+                friendlyDate(createdAt),
+                friendlyDate(editedAt),
                 <TableActionsMenu /> // TODO: this will accept a 'key' attribute (in this case username) so that it can use it for the edit and delete functions
             ])
             .map((cell, i) => ({
@@ -70,6 +73,7 @@ export default () => {
                 content: cell
             }))
     }));
+    console.log(rows);
 
     return (
         <PageMargins>
@@ -97,7 +101,7 @@ export default () => {
                 defaultSortKey="term"
                 defaultSortOrder="ASC"
                 onSetPage={() => {}}
-                emptyView={"There is no data to display."}
+                emptyView={<NoData />}
             />
         </PageMargins>
     );
