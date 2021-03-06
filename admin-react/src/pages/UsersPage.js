@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PageMargins from "../components/PageMargins";
 import BreadcrumbBar from "../components/BreadcrumbBar";
 import TableActionsMenu from "../components/TableActionsMenu";
@@ -48,38 +49,27 @@ export default () => {
             {
                 key: "actions",
                 content: null,
-                isSortable: false
+                isSortable: false,
+                width: 15
             }
         ]
     };
 
-    const rows = [
-        {
-            key: "1",
-            cells: [
-                {
-                    key: "1",
-                    content: "Bob"
-                },
-                {
-                    key: "2",
-                    content: "Dole"
-                },
-                {
-                    key: "3",
-                    content: "Dole"
-                },
-                {
-                    key: "4",
-                    content: "Dole"
-                },
-                {
-                    key: "5",
-                    content: TableActionsMenu
-                }
-            ]
-        }
-    ];
+    const rows = data.data.map((row, i) => ({
+        key: `${i}-row`,
+        cells: row
+            .map(([username, emailAddress, createdAt, editedAt]) => [
+                username,
+                emailAddress,
+                createdAt, // TODO: format the dates
+                editedAt,
+                TableActionsMenu()
+            ])
+            .map((cell, i) => ({
+                key: `${i}-cell`,
+                content: cell
+            }))
+    }));
 
     return (
         <PageMargins>
@@ -92,7 +82,7 @@ export default () => {
                         ]}
                     />
                 }
-                actions={ActionsBar}
+                actions={ActionsBar()}
             >
                 Users
             </PageHeader>
@@ -106,7 +96,8 @@ export default () => {
                 isFixedSize
                 defaultSortKey="term"
                 defaultSortOrder="ASC"
-                onSetPage={() => console.log("onSetPage")}
+                onSetPage={() => {}}
+                emptyView={"There is no data to display."}
             />
         </PageMargins>
     );
