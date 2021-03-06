@@ -38,8 +38,8 @@ export default class MainRouter extends Component {
             <Router history={createBrowserHistory()}>
                 <App onNavResize={this.onNavResize}>
                     <Switch>
-                        <Route path="/" component={ReadmePage} />
                         <Route path="/users" component={UsersPage} />
+                        <Route path="/" component={ReadmePage} />
                     </Switch>
                 </App>
             </Router>
