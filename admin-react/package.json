@@ -4,6 +4,8 @@
     "private": true,
     "dependencies": {
         "@atlaskit/css-reset": "^6.0.5",
+        "@atlaskit/dropdown-menu": "^10.1.2",
+        "@atlaskit/dynamic-table": "^14.2.0",
         "@atlaskit/flag": "^14.2.1",
         "@atlaskit/icon": "^21.3.0",
         "@atlaskit/modal-dialog": "^11.2.7",

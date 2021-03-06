@@ -23,10 +23,6 @@ export default class MainRouter extends Component {
         };
     }
 
-    // appWithPersistentNav = () => props => (
-    //     <App onNavResize={this.onNavResize} {...props} />
-    // );
-
     onNavResize = navOpenState => {
         this.setState({
             navOpenState
