@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { Router, Route } from "react-router";
+import { Router, Route, Switch } from "react-router";
 import createBrowserHistory from "history/createBrowserHistory";
 import App from "./App";
 import HomePage from "../pages/HomePage";
@@ -23,9 +23,9 @@ export default class MainRouter extends Component {
         };
     }
 
-    appWithPersistentNav = () => props => (
-        <App onNavResize={this.onNavResize} {...props} />
-    );
+    // appWithPersistentNav = () => props => (
+    //     <App onNavResize={this.onNavResize} {...props} />
+    // );
 
     onNavResize = navOpenState => {
         this.setState({
@@ -36,10 +36,12 @@ export default class MainRouter extends Component {
     render() {
         return (
             <Router history={createBrowserHistory()}>
-                <Route component={this.appWithPersistentNav()}>
-                    <Route path="/" component={HomePage} />
-                    <Route path="/users" component={UsersPage} />
-                </Route>
+                <App onNavResize={this.onNavResize}>
+                    <Switch>
+                        <Route path="/" component={HomePage} />
+                        <Route path="/users" component={UsersPage} />
+                    </Switch>
+                </App>
             </Router>
         );
     }

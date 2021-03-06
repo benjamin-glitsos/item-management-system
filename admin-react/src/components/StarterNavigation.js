@@ -12,7 +12,10 @@ import PeopleIcon from "@atlaskit/icon/glyph/people";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import logo from "../assets/logo.svg";
 import styled from "styled-components";
+import { matchPath } from "react-router";
+import { useLocation } from "react-router-dom";
 
+// TODO: make matchPath work. You need to convert this to function component to use the useLocation hook. Just convert everything to function components.
 // TODO: you dont need redux until you handle the login JWT. Just use hooks. You don't need saga either.
 // TODO: make the object of page links (below) be relocated to a separate file (a 'data' folder?) and then used in: this, react router (map over it), and the eventual breadcrumb bar.
 // TODO: use a normal dropdown (not split button) on the right side of the data table which will be labelled 'Action'. Use atlaskit's table component instead of devextreme.
@@ -84,11 +87,8 @@ export default class StarterNavigation extends Component {
                                                         size="medium"
                                                     />
                                                 }
-                                                isSelected={this.context.router.isActive(
-                                                    url,
-                                                    true
-                                                )}
                                                 href={url}
+                                                isSelected={matchPath("", url)}
                                             >
                                                 {title}
                                             </LinkItem>
