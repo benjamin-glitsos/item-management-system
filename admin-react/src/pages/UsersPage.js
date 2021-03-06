@@ -1,33 +1,48 @@
 import PageMargins from "../components/PageMargins";
 import BreadcrumbBar from "../components/BreadcrumbBar";
+import TableActionsMenu from "../components/TableActionsMenu";
+import ActionsBar from "../components/ActionsBar";
 import DynamicTable from "@atlaskit/dynamic-table";
-import DropdownMenu, {
-    DropdownItem,
-    DropdownItemGroup
-} from "@atlaskit/dropdown-menu";
-import Breadcrumbs, { BreadcrumbsItem } from "@atlaskit/breadcrumbs";
 import PageHeader from "@atlaskit/page-header";
-import ButtonGroup from "@atlaskit/button/button-group";
-import Button from "@atlaskit/button/standard-button";
+import axios from "axios";
 
 export default () => {
-    const actionsBar = (
-        <ButtonGroup>
-            <Button appearance="primary">Create New</Button>
-            <Button>Delete</Button>
-        </ButtonGroup>
-    );
+    const [data, setData] = useState({ data: [] });
+
+    useEffect(async () => {
+        const result = await axios({
+            method: "REPORT",
+            url: "http://localhost:4073/api/v1/users/",
+            data: {
+                page_number: 1,
+                page_length: 10
+            }
+        });
+
+        setData(result.data);
+        console.log(data);
+    });
 
     const head = {
         cells: [
             {
-                key: "firstName",
-                content: "First Name",
+                key: "username",
+                content: "Username",
                 isSortable: false
             },
             {
-                key: "lastName",
-                content: "Last Name",
+                key: "emailAddress",
+                content: "Email Address",
+                isSortable: false
+            },
+            {
+                key: "createdAt",
+                content: "Created At",
+                isSortable: false
+            },
+            {
+                key: "editedAt",
+                content: "Edited At",
                 isSortable: false
             },
             {
@@ -52,18 +67,15 @@ export default () => {
                 },
                 {
                     key: "3",
-                    content: (
-                        <DropdownMenu trigger="Actions" triggerType="button">
-                            <DropdownItemGroup>
-                                <DropdownItem>Edit</DropdownItem>
-                                <DropdownItem>Share</DropdownItem>
-                                <DropdownItem>Move</DropdownItem>
-                                <DropdownItem>Clone</DropdownItem>
-                                <DropdownItem>Delete</DropdownItem>
-                                <DropdownItem>Report</DropdownItem>
-                            </DropdownItemGroup>
-                        </DropdownMenu>
-                    )
+                    content: "Dole"
+                },
+                {
+                    key: "4",
+                    content: "Dole"
+                },
+                {
+                    key: "5",
+                    content: TableActionsMenu
                 }
             ]
         }
@@ -80,7 +92,7 @@ export default () => {
                         ]}
                     />
                 }
-                actions={actionsBar}
+                actions={ActionsBar}
             >
                 Users
             </PageHeader>

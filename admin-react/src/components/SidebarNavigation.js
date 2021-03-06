@@ -14,12 +14,6 @@ import { useLocation } from "react-router-dom";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 
-// TODO: make matchPath work. You need to convert this to function component to use the useLocation hook. Just convert everything to function components.
-// TODO: you dont need redux until you handle the login JWT. Just use hooks. You don't need saga either.
-// TODO: make the object of page links (below) be relocated to a separate file (a 'data' folder?) and then used in: this, react router (map over it), and the eventual breadcrumb bar.
-// TODO: use a normal dropdown (not split button) on the right side of the data table which will be labelled 'Action'. Use atlaskit's table component instead of devextreme.
-// TODO: make the 'create new' and 'edit' pages use the same page component, just with different state so that the 'new' page doesnt show the meta tab or any tab bar at all.
-
 export default () => {
     const pagesData = {
         home: [["Readme", "/", MediaServicesDocumentIcon]],
