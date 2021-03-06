@@ -6,8 +6,26 @@ import DropdownMenu, {
     DropdownItem,
     DropdownItemGroup
 } from "@atlaskit/dropdown-menu";
+import Breadcrumbs, { BreadcrumbsItem } from "@atlaskit/breadcrumbs";
+import PageHeader from "@atlaskit/page-header";
+import ButtonGroup from "@atlaskit/button/button-group";
+import Button from "@atlaskit/button/standard-button";
 
 export default function UsersPage(props) {
+    const breadcrumbs = (
+        <Breadcrumbs onExpand={() => {}}>
+            <BreadcrumbsItem text="Some project" key="Some project" />
+            <BreadcrumbsItem text="Parent page" key="Parent page" />
+        </Breadcrumbs>
+    );
+
+    const actionsBar = (
+        <ButtonGroup>
+            <Button appearance="primary">Create New</Button>
+            <Button>Delete</Button>
+        </ButtonGroup>
+    );
+
     const head = {
         cells: [
             {
@@ -60,7 +78,9 @@ export default function UsersPage(props) {
     ];
     return (
         <ContentWrapper>
-            <PageTitle>Users</PageTitle>
+            <PageHeader breadcrumbs={breadcrumbs} actions={actionsBar}>
+                Users
+            </PageHeader>
             <DynamicTable
                 head={head}
                 rows={rows}
