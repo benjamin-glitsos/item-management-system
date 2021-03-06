@@ -1,4 +1,5 @@
 import PageMargins from "../components/PageMargins";
+import BreadcrumbBar from "../components/BreadcrumbBar";
 import DynamicTable from "@atlaskit/dynamic-table";
 import DropdownMenu, {
     DropdownItem,
@@ -10,13 +11,6 @@ import ButtonGroup from "@atlaskit/button/button-group";
 import Button from "@atlaskit/button/standard-button";
 
 export default () => {
-    const breadcrumbs = (
-        <Breadcrumbs onExpand={() => {}}>
-            <BreadcrumbsItem text="Some project" key="Some project" />
-            <BreadcrumbsItem text="Parent page" key="Parent page" />
-        </Breadcrumbs>
-    );
-
     const actionsBar = (
         <ButtonGroup>
             <Button appearance="primary">Create New</Button>
@@ -77,7 +71,17 @@ export default () => {
 
     return (
         <PageMargins>
-            <PageHeader breadcrumbs={breadcrumbs} actions={actionsBar}>
+            <PageHeader
+                breadcrumbs={
+                    <BreadcrumbBar
+                        breadcrumbs={[
+                            ["Home", "/"],
+                            ["Users", ""]
+                        ]}
+                    />
+                }
+                actions={actionsBar}
+            >
                 Users
             </PageHeader>
             <DynamicTable

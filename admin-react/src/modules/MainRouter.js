@@ -1,24 +1,15 @@
-import { lazy, Suspense } from "react";
 import { Router, Route, Switch } from "react-router";
 import createBrowserHistory from "history/createBrowserHistory";
 import App from "./App";
-import pages from "../data/pages";
-
-const dynamicPage = () => (
-    <Suspense fallback={<div>Loading...</div>}>
-        {lazy(() => import("../pages/UsersPage"))}
-    </Suspense>
-);
+import ReadmePage from "../pages/ReadmePage";
+import UsersPage from "../pages/UsersPage";
 
 export default () => (
     <Router history={createBrowserHistory()}>
         <App>
             <Switch>
-                {Object.values(pages)
-                    .flat()
-                    .map(([title, path, Icon, page]) => (
-                        <Route path={path} component={dynamicPage} />
-                    ))}
+                <Route path="/users" component={UsersPage} />
+                <Route path="/" component={ReadmePage} />
             </Switch>
         </App>
     </Router>
