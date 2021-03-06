@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Router, Route, Switch } from "react-router";
 import createBrowserHistory from "history/createBrowserHistory";
 import App from "./App";
-import HomePage from "../pages/HomePage";
+import ReadmePage from "../pages/ReadmePage";
 import UsersPage from "../pages/UsersPage";
 
 export default class MainRouter extends Component {
@@ -38,7 +38,7 @@ export default class MainRouter extends Component {
             <Router history={createBrowserHistory()}>
                 <App onNavResize={this.onNavResize}>
                     <Switch>
-                        <Route path="/" component={HomePage} />
+                        <Route path="/" component={ReadmePage} />
                         <Route path="/users" component={UsersPage} />
                     </Switch>
                 </App>

@@ -5,7 +5,7 @@ import PageTitle from "../components/PageTitle";
 import ReactMarkdown from "react-markdown";
 import readme from "../assets/README.md";
 
-export default class HomePage extends Component {
+export default class ReadmePage extends Component {
     static contextTypes = {
         showModal: PropTypes.func,
         addFlag: PropTypes.func,
@@ -17,7 +17,7 @@ export default class HomePage extends Component {
     render() {
         return (
             <ContentWrapper>
-                <PageTitle>Home</PageTitle>
+                <PageTitle>Readme</PageTitle>
                 <ReactMarkdown>{readme}</ReactMarkdown>
             </ContentWrapper>
         );
