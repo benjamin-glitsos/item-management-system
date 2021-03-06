@@ -63,7 +63,7 @@ export default () => {
                 emailAddress,
                 createdAt, // TODO: format the dates
                 editedAt,
-                TableActionsMenu()
+                <TableActionsMenu /> // TODO: this will accept a 'key' attribute (in this case username) so that it can use it for the edit and delete functions
             ])
             .map((cell, i) => ({
                 key: `${i}-cell`,
@@ -82,7 +82,7 @@ export default () => {
                         ]}
                     />
                 }
-                actions={ActionsBar()}
+                actions={<ActionsBar />}
             >
                 Users
             </PageHeader>
