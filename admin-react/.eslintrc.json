@@ -1,9 +1,0 @@
-{
-    "extends": "react-app",
-    "rules": {
-        "indent": ["warn", 2],
-        "react/jsx-indent": ["warn", 2],
-        "import/no-webpack-loader-syntax": "off",
-        "eslint-disable-next-line": "no-undef"
-    }
-}
