@@ -7,96 +7,11 @@ import "@atlaskit/css-reset";
 import SidebarNavigation from "../components/SidebarNavigation";
 import styled from "styled-components";
 
-export default class App extends Component {
-    state = {
-        flags: [],
-        isModalOpen: false
-    };
-
-    static contextTypes = {
-        navOpenState: PropTypes.object,
-        router: PropTypes.object
-    };
-
-    static propTypes = {
-        navOpenState: PropTypes.object,
-        onNavResize: PropTypes.func
-    };
-
-    static childContextTypes = {
-        showModal: PropTypes.func,
-        addFlag: PropTypes.func
-    };
-
-    getChildContext() {
-        return {
-            showModal: this.showModal,
-            addFlag: this.addFlag
-        };
-    }
-
-    showModal = () => {
-        this.setState({ isModalOpen: true });
-    };
-
-    hideModal = () => {
-        this.setState({ isModalOpen: false });
-    };
-
-    addFlag = () => {
-        this.setState({ flags: [{ id: Date.now() }].concat(this.state.flags) });
-    };
-
-    onFlagDismissed = dismissedFlagId => {
-        this.setState({
-            flags: this.state.flags.filter(flag => flag.id !== dismissedFlagId)
-        });
-    };
-
-    render() {
-        return (
-            <PageWrapper>
-                <Page
-                    navigationWidth={this.context.navOpenState.width}
-                    navigation={<SidebarNavigation />}
-                >
-                    {this.props.children}
-                </Page>
-                <Fragment>
-                    <FlagGroup onDismissed={this.onFlagDismissed}>
-                        {this.state.flags.map(flag => (
-                            <Flag
-                                id={flag.id}
-                                key={flag.id}
-                                title="Flag Title"
-                                description="Flag description"
-                            />
-                        ))}
-                    </FlagGroup>
-                    {this.state.isModalOpen && (
-                        <Modal
-                            heading="Candy bar"
-                            actions={[
-                                {
-                                    text: "Exit candy bar",
-                                    onClick: this.hideModal
-                                }
-                            ]}
-                            onClose={this.hideModal}
-                        >
-                            <p style={{ textAlign: "center" }}>
-                                <img
-                                    src="http://i.giphy.com/yidUztgRB2w2gtDwL6.gif"
-                                    alt="Moar cupcakes"
-                                />
-                            </p>
-                        </Modal>
-                    )}
-                </Fragment>
-            </PageWrapper>
-        );
-    }
-}
+export default ({ children }) => (
+    <PageWrapper>
+        <Page navigation={<SidebarNavigation />}>{children}</Page>
+    </PageWrapper>
+);
 
 const PageWrapper = styled.div`
     height: 100vh;

@@ -1,6 +1,5 @@
 import React from "react";
 import ContentWrapper from "../components/ContentWrapper";
-import PageTitle from "../components/PageTitle";
 import DynamicTable from "@atlaskit/dynamic-table";
 import DropdownMenu, {
     DropdownItem,
@@ -11,7 +10,7 @@ import PageHeader from "@atlaskit/page-header";
 import ButtonGroup from "@atlaskit/button/button-group";
 import Button from "@atlaskit/button/standard-button";
 
-export default function UsersPage(props) {
+export default () => {
     const breadcrumbs = (
         <Breadcrumbs onExpand={() => {}}>
             <BreadcrumbsItem text="Some project" key="Some project" />
@@ -95,4 +94,4 @@ export default function UsersPage(props) {
             />
         </ContentWrapper>
     );
-}
+};

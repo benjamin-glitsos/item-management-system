@@ -20,7 +20,7 @@ import { useLocation } from "react-router-dom";
 // TODO: use a normal dropdown (not split button) on the right side of the data table which will be labelled 'Action'. Use atlaskit's table component instead of devextreme.
 // TODO: make the 'create new' and 'edit' pages use the same page component, just with different state so that the 'new' page doesnt show the meta tab or any tab bar at all.
 
-export default function SidebarNavigation(props) {
+export default () => {
     const state = {
         nav: {
             home: [["Readme", "/", MediaServicesDocumentIcon]],
@@ -36,7 +36,9 @@ export default function SidebarNavigation(props) {
         );
     };
 
-    const mode = process.env.REACT_APP_PROJECT_MODE;
+    console.log(process.env);
+
+    const mode = process.env.REACT_APP_PROJECT_MODE || process.env.NODE_ENV;
 
     const modeIndicator = mode === "production" ? "" : ` (${mode})`;
 
@@ -51,12 +53,19 @@ export default function SidebarNavigation(props) {
                         iconBefore={
                             <AppLogo
                                 src={logo}
-                                alt={`${process.env.REACT_APP_PROJECT_NAME} logo`}
+                                alt={`${
+                                    process.env.REACT_APP_PROJECT_NAME ||
+                                    "Item Management System"
+                                } logo`}
                             />
                         }
-                        description={process.env.REACT_APP_PROJECT_NAME}
+                        description={
+                            process.env.REACT_APP_PROJECT_NAME ||
+                            "Item Management System"
+                        }
                     >
-                        {process.env.REACT_APP_PROJECT_ABBREV + modeIndicator}
+                        {(process.env.REACT_APP_PROJECT_ABBREV || "IMS") +
+                            modeIndicator}
                     </Header>
                 </NavigationHeader>
                 {Object.entries(state.nav).map(([section, links], i) => {
@@ -88,7 +97,7 @@ export default function SidebarNavigation(props) {
             </NavigationContent>
         </SideNavigation>
     );
-}
+};
 
 const AppLogo = styled.img`
     width: 100%;
