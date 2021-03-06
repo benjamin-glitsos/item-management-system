@@ -1,4 +1,4 @@
-# Inventory Management System
+# Item Management System
 
 A full-stack toy inventory management system built with enterprise-grade architecture and principles.
 
@@ -25,7 +25,6 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 **React (Javascript).**
 
-* Flux architecture
 * Separation of concerns
 
 ### Database
