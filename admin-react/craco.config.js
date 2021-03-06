@@ -9,5 +9,8 @@ module.exports = {
                 test: /\.md$/
             }
         }
-    ]
+    ],
+    eslint: {
+        enabled: false
+    }
 };

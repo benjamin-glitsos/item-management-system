@@ -1,9 +1,9 @@
-import ContentWrapper from "../components/ContentWrapper";
+import PageMargins from "../components/PageMargins";
 import ReactMarkdown from "react-markdown";
 import readme from "../assets/README.md";
 
 export default () => (
-    <ContentWrapper>
+    <PageMargins>
         <ReactMarkdown>{readme}</ReactMarkdown>
-    </ContentWrapper>
+    </PageMargins>
 );

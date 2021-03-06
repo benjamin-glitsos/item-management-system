@@ -7,12 +7,11 @@ import {
     LinkItem,
     Section
 } from "@atlaskit/side-navigation";
-import PeopleIcon from "@atlaskit/icon/glyph/people";
-import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import logo from "../assets/logo.svg";
 import styled from "styled-components";
 import { matchPath } from "react-router";
 import { useLocation } from "react-router-dom";
+import pages from "../data/pages";
 
 // TODO: make matchPath work. You need to convert this to function component to use the useLocation hook. Just convert everything to function components.
 // TODO: you dont need redux until you handle the login JWT. Just use hooks. You don't need saga either.
@@ -21,13 +20,6 @@ import { useLocation } from "react-router-dom";
 // TODO: make the 'create new' and 'edit' pages use the same page component, just with different state so that the 'new' page doesnt show the meta tab or any tab bar at all.
 
 export default () => {
-    const state = {
-        nav: {
-            home: [["Readme", "/", MediaServicesDocumentIcon]],
-            system: [["Users", "/users", PeopleIcon]]
-        }
-    };
-
     const HeaderLink = ({ children, ...props }) => {
         return (
             <LinkItem href="/" {...props}>
@@ -35,8 +27,6 @@ export default () => {
             </LinkItem>
         );
     };
-
-    console.log(process.env);
 
     const mode = process.env.REACT_APP_PROJECT_MODE || process.env.NODE_ENV;
 
@@ -68,21 +58,21 @@ export default () => {
                             modeIndicator}
                     </Header>
                 </NavigationHeader>
-                {Object.entries(state.nav).map(([section, links], i) => {
+                {Object.entries(pages).map(([section, links], i) => {
                     return (
                         <Section key={`{i}-${section}`} title={section}>
-                            {links.map(([title, url, Icon], i) => {
+                            {links.map(([title, path, Icon, Page], i) => {
                                 return (
                                     <LinkItem
                                         key={`${i}-${title}`}
                                         iconBefore={
                                             <Icon label={title} size="medium" />
                                         }
-                                        href={url}
+                                        href={path}
                                         isSelected={matchPath(
                                             location.pathname,
                                             {
-                                                path: url,
+                                                path: path,
                                                 exact: true
                                             }
                                         )}

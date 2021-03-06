@@ -1,5 +1,4 @@
-import React from "react";
-import ContentWrapper from "../components/ContentWrapper";
+import PageMargins from "../components/PageMargins";
 import DynamicTable from "@atlaskit/dynamic-table";
 import DropdownMenu, {
     DropdownItem,
@@ -75,8 +74,9 @@ export default () => {
             ]
         }
     ];
+
     return (
-        <ContentWrapper>
+        <PageMargins>
             <PageHeader breadcrumbs={breadcrumbs} actions={actionsBar}>
                 Users
             </PageHeader>
@@ -92,6 +92,6 @@ export default () => {
                 defaultSortOrder="ASC"
                 onSetPage={() => console.log("onSetPage")}
             />
-        </ContentWrapper>
+        </PageMargins>
     );
 };
