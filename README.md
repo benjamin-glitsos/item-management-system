@@ -1,14 +1,8 @@
 # Item Management System
 
-A full-stack toy inventory management system built with enterprise-grade architecture and principles.
-
-**This is a work-in-progress, but the current state of the project is as follows.**
-
-## Microservice Architecture
-
 Dockerised Model-View-Controller (MVC) architecture.
 
-### Controller
+## Controller
 
 **Scala (a Java Virtual Machine language).**
 
@@ -21,13 +15,13 @@ Dockerised Model-View-Controller (MVC) architecture.
 * DRY
 * “Object-Oriented in the large, Functional Programming in the small”
 
-### Admin
+## Admin
 
 **React (Javascript).**
 
-* Separation of concerns
+* Separation of concerns (MVC)
 
-### Database
+## Database
 
 **PostgreSQL.**
 
