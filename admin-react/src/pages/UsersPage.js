@@ -11,6 +11,7 @@ import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import { Checkbox } from "@atlaskit/checkbox";
 import axios from "axios";
+import { pipeline, pipe } from "ts-pipe-compose";
 
 export default () => {
     const [data, setData] = useState({ data: [] });
@@ -42,6 +43,11 @@ export default () => {
                 isSortable: false
             },
             {
+                key: "name",
+                content: "Name",
+                isSortable: false
+            },
+            {
                 key: "emailAddress",
                 content: "Email Address",
                 isSortable: false
@@ -67,7 +73,7 @@ export default () => {
 
     const toCell = (x, i) => ({
         key: `UsersPage/Table/Cell/${i}`,
-        content: cell
+        content: x
     });
 
     const rowActions = row => [<Checkbox />, ...row, <TableActionsMenu />];
@@ -75,16 +81,29 @@ export default () => {
     // TODO: add onClick to row for left and right-mouse buttons. Left = Edit, Right = Dropdown.
     const rows = data.data.map((row, i) => ({
         key: `UsersPage/Table/Row/${i}`,
-        cells: [row]
-            .flatMap(([username, emailAddress, createdAt, editedAt]) => [
+        cells: pipeline(
+            ([
                 username,
+                emailAddress,
+                firstName,
+                lastName,
+                otherNames,
+                createdAt,
+                editedAt
+            ]) => [
+                username,
+                `${firstName} ${lastName}`,
                 emailAddress,
                 friendlyDate(createdAt),
                 friendlyDate(fromMaybe(editedAt))
-            ])
-            .map(rowActions)
-            .map(toCell)
+            ],
+            rowActions,
+            x => x.map(toCell)
+        )(row)
+        // rowActions
+        // (row).map(toCell)
     }));
+    console.log(rows);
 
     return (
         <PageMargins>

@@ -20,11 +20,25 @@ object UsersRoutes {
     post(
       Validation("create-user") { body: ujson.Value =>
         val username: String     = body("username").str
-        val password: String     = body("password").str
         val emailAddress: String = body("email_address").str
-        val notes: String        = Try(body("notes").str).getOrElse(new String)
+        val firstName: String    = body("first_name").str
+        val lastName: String     = body("last_name").str
+        val otherNames: String =
+          Try(body("other_names").str).getOrElse(new String)
+        val password: String = body("password").str
+        val notes: String    = Try(body("notes").str).getOrElse(new String)
 
-        complete(UsersServices.create(username, password, emailAddress, notes))
+        complete(
+          UsersServices.create(
+            username,
+            emailAddress,
+            firstName,
+            lastName,
+            otherNames,
+            password,
+            notes
+          )
+        )
       }
     ),
     delete(
@@ -52,17 +66,26 @@ object UsersRoutes {
             {
               val newUsername: Option[String] =
                 Try(body("username").str).toOption
-              val password: Option[String] = Try(body("password").str).toOption
               val emailAddress: Option[String] =
                 Try(body("email_address").str).toOption
-              val notes: Option[String] = Try(body("notes").str).toOption
+              val firstName: Option[String] =
+                Try(body("first_name").str).toOption
+              val lastName: Option[String] =
+                Try(body("last_name").str).toOption
+              val otherNames: Option[String] =
+                Try(body("other_names").str).toOption
+              val password: Option[String] = Try(body("password").str).toOption
+              val notes: Option[String]    = Try(body("notes").str).toOption
 
               complete(
                 UsersServices.edit(
                   username,
                   newUsername,
-                  password,
                   emailAddress,
+                  firstName,
+                  lastName,
+                  otherNames,
+                  password,
                   notes
                 )
               )

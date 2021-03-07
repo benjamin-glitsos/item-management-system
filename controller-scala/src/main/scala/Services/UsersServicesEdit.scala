@@ -5,13 +5,25 @@ trait UsersServicesEdit {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],
-      password: Option[String],
       emailAddress: Option[String],
+      firstName: Option[String],
+      lastName: Option[String],
+      otherNames: Option[String],
+      password: Option[String],
       notes: Option[String]
   ): String = {
     try {
       UsersDAO
-        .edit(oldUsername, newUsername, password, emailAddress, notes)
+        .edit(
+          oldUsername,
+          newUsername,
+          firstName,
+          lastName,
+          otherNames,
+          emailAddress,
+          password,
+          notes
+        )
         .transact(xa)
         .unsafeRunSync
     } catch {

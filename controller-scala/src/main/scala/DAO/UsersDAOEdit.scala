@@ -8,8 +8,11 @@ trait UsersDAOEdit {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],
-      password: Option[String],
       emailAddress: Option[String],
+      firstName: Option[String],
+      lastName: Option[String],
+      otherNames: Option[String],
+      password: Option[String],
       notes: Option[String]
   ) = {
     val update: Fragment =
@@ -17,8 +20,11 @@ trait UsersDAOEdit {
 
     val set: Fragment = setOpt(
       newUsername.map(s => fr"username=$s"),
-      password.map(s => fr"password=$s"),
       emailAddress.map(s => fr"email_address=$s"),
+      firstName.map(s => fr"first_name=$s"),
+      lastName.map(s => fr"last_name=$s"),
+      otherNames.map(s => fr"other_names=$s"),
+      password.map(s => fr"password=$s"),
       notes.map(s => fr"notes=$s")
     )
 

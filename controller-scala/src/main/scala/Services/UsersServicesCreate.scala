@@ -7,7 +7,7 @@ trait UsersServicesCreate {
       emailAddress: String,
       firstName: String,
       lastName: String,
-      otherNames: Option[String],
+      otherNames: String,
       password: String,
       notes: String
   ): String = {

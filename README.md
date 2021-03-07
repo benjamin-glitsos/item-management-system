@@ -19,7 +19,8 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 **React (Node.js).**
 
-* Separation of concerns (MVC).
+* Container/Presenter pattern
+* React Hooks composition
 
 ## Database
 

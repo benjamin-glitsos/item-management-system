@@ -10,7 +10,8 @@ if [[ "$ADMIN_RUN" == "yes" ]]; then
     cd /app
     case "$PROJECT_MODE" in
         "development" )
-            npm start
+            FORCE_COLOR=true
+            npm start | cat
         ;;
         "production" )
             npm build

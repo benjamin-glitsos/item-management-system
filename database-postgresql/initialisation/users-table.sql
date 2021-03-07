@@ -7,5 +7,5 @@ CREATE TABLE users (
     , other_names VARCHAR(120) NOT null
     , password SHA1 NOT null
     , meta_id SMALLINT UNIQUE NOT null
-    CONSTRAINT fk_meta FOREIGN KEY(meta_id) REFERENCES meta(id)
+    , CONSTRAINT fk_meta FOREIGN KEY(meta_id) REFERENCES meta(id)
 );
