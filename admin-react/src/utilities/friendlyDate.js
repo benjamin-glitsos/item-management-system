@@ -7,9 +7,13 @@ export default dateTimeStr => {
     const date = new Date(dateTimeStr);
     const oneDay = 1000 * 60 * 60 * 24;
     const isLessThanOneDayAgo = date > now - oneDay;
-    if (isLessThanOneDayAgo) {
-        return capitalise(timeAgo(date));
+    if (!dateTimeStr) {
+        return "Never";
     } else {
-        return dateFormat(date, "mmmm dS, yyyy at h:MM:ss TT");
+        if (isLessThanOneDayAgo) {
+            return capitalise(timeAgo(date));
+        } else {
+            return dateFormat(now, "mmmm dS, yyyy at h:MM:ss TT");
+        }
     }
 };

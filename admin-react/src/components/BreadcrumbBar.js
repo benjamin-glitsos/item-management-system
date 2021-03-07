@@ -5,7 +5,7 @@ export default ({ breadcrumbs }) => (
         {breadcrumbs.map(([title, path], i) => (
             <BreadcrumbsItem
                 text={title}
-                key={`${i}-${title}-breadcrumb`}
+                key={`BreadcrumbBar/${i}-${title}`}
                 href={path}
                 isDisabled={i + 1 === breadcrumbs.length}
             />

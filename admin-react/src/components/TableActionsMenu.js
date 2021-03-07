@@ -15,7 +15,4 @@ export default () => (
     </RightAligned>
 );
 
-const RightAligned = styled.div`
-    text-align: right;
-    margin-right: 0.5em;
-`;
+const RightAligned = styled.div``;

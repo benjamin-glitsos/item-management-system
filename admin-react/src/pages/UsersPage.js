@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import PageMargins from "../components/PageMargins";
 import BreadcrumbBar from "../components/BreadcrumbBar";
 import TableActionsMenu from "../components/TableActionsMenu";
+import TableStatusBar from "../components/TableStatusBar";
 import NoData from "../components/NoData";
 import ActionsBar from "../components/ActionsBar";
 import friendlyDate from "../utilities/friendlyDate";
+import fromMaybe from "../utilities/fromMaybe";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
+import { Checkbox } from "@atlaskit/checkbox";
 import axios from "axios";
 
 export default () => {
@@ -23,11 +26,16 @@ export default () => {
         });
 
         setData(result.data);
-        console.log(data);
-    });
+    }, []);
 
     const head = {
         cells: [
+            {
+                key: "isSelected",
+                content: null,
+                isSortable: false,
+                width: 3
+            },
             {
                 key: "username",
                 content: "Username",
@@ -59,21 +67,19 @@ export default () => {
 
     // TODO: add onClick to row for left and right-mouse buttons. Left = Edit, Right = Dropdown.
     const rows = data.data.map((row, i) => ({
-        key: `${i}-row`,
-        cells: row
-            .map(([username, emailAddress, createdAt, editedAt]) => [
-                username,
-                emailAddress,
-                friendlyDate(createdAt),
-                friendlyDate(editedAt),
-                <TableActionsMenu /> // TODO: this will accept a 'key' attribute (in this case username) so that it can use it for the edit and delete functions
-            ])
-            .map((cell, i) => ({
-                key: `${i}-cell`,
-                content: cell
-            }))
+        key: `UsersPage/Table/Row/${i}`,
+        cells: (([username, emailAddress, createdAt, editedAt]) => [
+            <Checkbox />,
+            username,
+            emailAddress,
+            friendlyDate(createdAt),
+            friendlyDate(fromMaybe(editedAt)),
+            <TableActionsMenu />
+        ])(row).map((cell, i) => ({
+            key: `UsersPage/Table/Cell/${i}`,
+            content: cell
+        }))
     }));
-    console.log(rows);
 
     return (
         <PageMargins>
@@ -87,6 +93,14 @@ export default () => {
                     />
                 }
                 actions={<ActionsBar />}
+                bottomBar={
+                    <TableStatusBar
+                        placeholder={
+                            "A list of users who have access to login to this system."
+                        }
+                        numberOfSelected={0}
+                    />
+                }
             >
                 Users
             </PageHeader>

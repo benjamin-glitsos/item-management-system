@@ -61,13 +61,13 @@ export default () => {
                 {Object.entries(pagesData).map(([section, links], i) => {
                     return (
                         <Section
-                            key={`${i}-${section}-navigation`}
+                            key={`SideNavigation/Section/${i}-${section}`}
                             title={section}
                         >
                             {links.map(([title, path, Icon, Page], i) => {
                                 return (
                                     <LinkItem
-                                        key={`${i}-${title}`}
+                                        key={`SideNavigation/LinkItem/${i}-${title}`}
                                         iconBefore={
                                             <Icon label={title} size="medium" />
                                         }
