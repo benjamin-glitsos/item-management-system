@@ -16,6 +16,8 @@ import PeopleIcon from "@atlaskit/icon/glyph/people";
 import UserAvatarCircleIcon from "@atlaskit/icon/glyph/user-avatar-circle";
 
 export default () => {
+    const location = useLocation();
+
     const HeaderLink = ({ children, ...props }) => {
         return (
             <LinkItem href="/" {...props}>
@@ -28,7 +30,8 @@ export default () => {
 
     const modeIndicator = mode === "production" ? "" : ` (${mode})`;
 
-    const location = useLocation();
+    const doesMatchLocation = path =>
+        matchPath(location.pathname, { path, exact: true });
 
     return (
         <SideNavigation label="Main Navigation">
@@ -59,10 +62,7 @@ export default () => {
                         key="SideNavigation/LinkItem/Readme"
                         iconBefore={<MediaServicesDocumentIcon size="medium" />}
                         href="/"
-                        isSelected={matchPath(location.pathname, {
-                            path: "/",
-                            exact: true
-                        })}
+                        isSelected={doesMatchLocation("/")}
                     >
                         Readme
                     </LinkItem>
@@ -72,10 +72,7 @@ export default () => {
                         key="SideNavigation/LinkItem/Users"
                         iconBefore={<PeopleIcon size="medium" />}
                         href="/users"
-                        isSelected={matchPath(location.pathname, {
-                            path: "/users",
-                            exact: true
-                        })}
+                        isSelected={doesMatchLocation("/users")}
                     >
                         Users
                     </LinkItem>
@@ -88,10 +85,7 @@ export default () => {
                         key="SideNavigation/LinkItem/YourProfile"
                         iconBefore={<UserAvatarCircleIcon size="medium" />}
                         href="/users/username"
-                        isSelected={matchPath(location.pathname, {
-                            path: "/users/username",
-                            exact: true
-                        })}
+                        isSelected={doesMatchLocation("/users/username")}
                         description="You are logged in as username."
                     >
                         Bob Dole
