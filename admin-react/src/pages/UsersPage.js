@@ -88,7 +88,7 @@ export default () => {
                     <BreadcrumbBar
                         breadcrumbs={[
                             ["Home", "/"],
-                            ["Users", ""]
+                            ["Users", "/users"]
                         ]}
                     />
                 }
