@@ -2,6 +2,9 @@ CREATE VIEW users_with_meta AS
     SELECT
         u.username
       , u.email_address
+      , u.first_name
+      , u.last_name
+      , u.other_names
       , u.password
       , m.metakey
       , m.opens

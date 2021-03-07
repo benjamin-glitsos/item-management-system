@@ -2,8 +2,11 @@ import java.time.LocalDateTime
 
 case class UsersWithMeta(
     username: String,
-    password: String,
     email_address: String,
+    first_name: String,
+    last_name: String,
+    other_names: Option[String],
+    password: String,
     metakey: String,
     opens: Int,
     edits: Int,

@@ -8,12 +8,23 @@ BEGIN
             VALUES (gen_random_metakey('users'), NEW.notes)
             RETURNING id
         )
-        INSERT INTO users (meta_id, email_address, username, password)
+        INSERT INTO users (
+            username
+          , email_address
+          , first_name
+          , last_name
+          , other_names
+          , password
+          , meta_id
+        )
         VALUES (
-            (SELECT id FROM insert_meta)
+            NEW.username
           , NEW.email_address
-          , NEW.username
+          , NEW.first_name
+          , NEW.last_name
+          , NEW.other_names
           , sha1_encrypt(NEW.password)
+          , (SELECT id FROM insert_meta)
         );
         RETURN null;
 
@@ -68,6 +79,9 @@ BEGIN
             UPDATE users
             SET username=NEW.username
               , email_address=NEW.email_address
+              , first_name=NEW.first_name
+              , last_name=NEW.last_name
+              , other_names=NEW.other_names
               , password=sha1_encrypt(NEW.password)
             WHERE username=OLD.username
             RETURNING meta_id

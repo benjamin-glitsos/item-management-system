@@ -7,11 +7,11 @@
         "username": {
             "$ref": "definitions/users.json#/definitions/username"
         },
-        "password": {
-            "$ref": "definitions/users.json#/definitions/password"
-        },
         "email_address": {
             "$ref": "definitions/users.json#/definitions/email_address"
+        },
+        "password": {
+            "$ref": "definitions/users.json#/definitions/password"
         },
         "notes": {
             "$ref": "definitions/meta.json#/definitions/notes"

@@ -86,9 +86,9 @@ export default () => {
                         iconBefore={<UserAvatarCircleIcon size="medium" />}
                         href="/users/username"
                         isSelected={doesMatchLocation("/users/username")}
-                        description="You are logged in as username."
+                        description="You are logged."
                     >
-                        Bob Dole
+                        Username
                     </LinkItem>
                 </Section>
             </NavigationContent>
