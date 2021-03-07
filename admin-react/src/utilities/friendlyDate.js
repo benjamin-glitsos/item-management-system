@@ -8,8 +8,8 @@ export default dateTimeStr => {
     const oneDay = 1000 * 60 * 60 * 24;
     const isLessThanOneDayAgo = date > now - oneDay;
     if (isLessThanOneDayAgo) {
-        capitalise(timeAgo(date));
+        return capitalise(timeAgo(date));
     } else {
-        dateFormat(date, "mmmm dS, yyyy at h:MM:ss TT");
+        return dateFormat(date, "mmmm dS, yyyy at h:MM:ss TT");
     }
 };
