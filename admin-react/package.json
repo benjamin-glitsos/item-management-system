@@ -19,6 +19,7 @@
         "axios": "^0.21.1",
         "dateformat": "^4.5.1",
         "node-time-ago": "^1.0.0",
+        "number-to-words": "^1.2.4",
         "prop-types": "^15.7.2",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
