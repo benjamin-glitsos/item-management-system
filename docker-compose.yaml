@@ -38,7 +38,6 @@ services:
     env_file: .env
     restart: on-failure
     stdin_open: true
-    depends_on:
-      - "controller_scala"
+    tty: true
     ports:
       - 80:3000
