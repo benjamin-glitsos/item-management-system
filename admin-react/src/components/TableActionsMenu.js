@@ -15,4 +15,15 @@ export default () => (
     </RightAligned>
 );
 
-const RightAligned = styled.div``;
+const RightAligned = styled.div`
+    text-align: right;
+    margin-right: 0.5em;
+
+    span {
+        text-align: left;
+    }
+
+    [role="menuitem"] {
+        min-width: 110px;
+    }
+`;

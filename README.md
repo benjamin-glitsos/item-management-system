@@ -25,4 +25,4 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 **PostgreSQL.**
 
-Fourth normal form (4NF).
+* Fourth normal form (4NF).
