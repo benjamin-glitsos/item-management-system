@@ -6,6 +6,7 @@ import TableStatusBar from "../components/TableStatusBar";
 import NoData from "../components/NoData";
 import ActionsBar from "../components/ActionsBar";
 import friendlyDate from "../utilities/friendlyDate";
+import friendlyName from "../utilities/friendlyName";
 import fromMaybe from "../utilities/fromMaybe";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
@@ -92,7 +93,7 @@ export default () => {
                 editedAt
             ]) => [
                 username,
-                `${firstName} ${lastName}`,
+                friendlyName(firstName, lastName, otherNames),
                 emailAddress,
                 friendlyDate(createdAt),
                 friendlyDate(fromMaybe(editedAt))
