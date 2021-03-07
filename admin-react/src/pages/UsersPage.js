@@ -65,20 +65,25 @@ export default () => {
         ]
     };
 
+    const toCell = (x, i) => ({
+        key: `UsersPage/Table/Cell/${i}`,
+        content: cell
+    });
+
+    const rowActions = row => [<Checkbox />, ...row, <TableActionsMenu />];
+
     // TODO: add onClick to row for left and right-mouse buttons. Left = Edit, Right = Dropdown.
     const rows = data.data.map((row, i) => ({
         key: `UsersPage/Table/Row/${i}`,
-        cells: (([username, emailAddress, createdAt, editedAt]) => [
-            <Checkbox />,
-            username,
-            emailAddress,
-            friendlyDate(createdAt),
-            friendlyDate(fromMaybe(editedAt)),
-            <TableActionsMenu />
-        ])(row).map((cell, i) => ({
-            key: `UsersPage/Table/Cell/${i}`,
-            content: cell
-        }))
+        cells: [row]
+            .flatMap(([username, emailAddress, createdAt, editedAt]) => [
+                username,
+                emailAddress,
+                friendlyDate(createdAt),
+                friendlyDate(fromMaybe(editedAt))
+            ])
+            .map(rowActions)
+            .map(toCell)
     }));
 
     return (

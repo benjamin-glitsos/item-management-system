@@ -88,7 +88,7 @@ export default () => {
                         isSelected={doesMatchLocation("/users/username")}
                         description="You are logged."
                     >
-                        Username
+                        Firstname Lastname
                     </LinkItem>
                 </Section>
             </NavigationContent>
