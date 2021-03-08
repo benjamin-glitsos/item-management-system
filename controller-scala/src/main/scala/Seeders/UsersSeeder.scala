@@ -46,7 +46,7 @@ object UsersSeeder extends SeederTrait {
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
       val otherNames: String = repeatedRunArray[String](
-        randomGaussianDiscrete(min = 0, max = 2, mean = 0.5),
+        randomGaussianDiscrete(min = 0, max = 2),
         person.getMiddleName
       ).mkString(" ")
       val password: String = generatePassword(length = 15)

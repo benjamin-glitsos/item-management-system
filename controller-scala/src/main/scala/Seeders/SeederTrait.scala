@@ -31,7 +31,7 @@ trait SeederTrait {
   final def randomGaussianDiscrete(
       min: Int,
       max: Int,
-      mean: Double,
+      mean: Double = 1,
       sd: Double = 1
   ) = {
     def sample(i: Int): Double = {
@@ -41,8 +41,8 @@ trait SeederTrait {
         var halfNormalSample: Double = if (normalSample <= mean) {
           normalSample
         } else {
-          var deviation: Double = normalSample - mean
-          normalSample + deviation
+          var d: Double = normalSample - mean
+          normalSample + d
         }
 
         var discreteHalfNormalSample: Int = round(halfNormalSample).toInt
