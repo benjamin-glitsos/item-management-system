@@ -28,18 +28,23 @@ trait SeederTrait {
     (1 to n).map(_ => fn()).toList
   }
 
-  final def gaussianRandomBetween(a: Int, b: Int): Int = {
-    round((b - a) * Random.nextGaussian()).toInt
-  }
+  final def gaussianRandom(
+      min: Int,
+      max: Int,
+      skew: Int,
+      bias: Int
+  ): Int = {
+    val range: Int             = max - min
+    val mid: Double            = min + range / 2
+    val gaussianRandom: Double = Random.nextGaussian()
+    val biasFactor: Double     = Math.exp(bias)
 
-  // static public double nextSkewedBoundedDouble(double min, double max, double skew, double bias) {
-  //     double range = max - min;
-  //     double mid = min + range / 2.0;
-  //     double unitGaussian = RANDOM.nextGaussian();
-  //     double biasFactor = Math.exp(bias);
-  //     double retval = mid+(range*(biasFactor/(biasFactor+Math.exp(-unitGaussian/skew))-0.5));
-  //     return retval;
-  // }
+    round(
+      mid + (range * (biasFactor / (biasFactor + Math.exp(
+        -gaussianRandom / skew
+      )) - 0.5))
+    ).toInt
+  }
 
   protected val count: Int = 0
   protected def clearData(): Unit = {}
