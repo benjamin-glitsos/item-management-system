@@ -24,6 +24,23 @@ trait SeederTrait {
     Seq.fill(length)(Random.nextPrintableChar()).mkString(new String)
   }
 
+  final def repeatedRunArray[A](n: Int, fn: () => A): List[A] = {
+    (1 to n).map(_ => fn()).toList
+  }
+
+  final def gaussianRandomBetween(a: Int, b: Int): Int = {
+    round((b - a) * Random.nextGaussian()).toInt
+  }
+
+  // static public double nextSkewedBoundedDouble(double min, double max, double skew, double bias) {
+  //     double range = max - min;
+  //     double mid = min + range / 2.0;
+  //     double unitGaussian = RANDOM.nextGaussian();
+  //     double biasFactor = Math.exp(bias);
+  //     double retval = mid+(range*(biasFactor/(biasFactor+Math.exp(-unitGaussian/skew))-0.5));
+  //     return retval;
+  // }
+
   protected val count: Int = 0
   protected def clearData(): Unit = {}
   protected def predefinedData(): Unit = {}

@@ -1,7 +1,13 @@
+import fromMaybe from "./fromMaybe";
+
 export default (firstName, lastName, otherNames) => {
+    const optionalOtherNames = fromMaybe(otherNames);
+
     const otherNameInitials =
-        otherNames &&
-        otherNames.split(/\s*/).map(name => name.charAt(0).toUppercase() + ".");
+        optionalOtherNames &&
+        optionalOtherNames
+            .split(/\s+/)
+            .map(name => name[0].toUpperCase() + ".");
 
     return [firstName, ...otherNameInitials, lastName]
         .filter(x => !!x)

@@ -45,9 +45,13 @@ object UsersSeeder extends SeederTrait {
       val emailAddress: String = person.getEmail()
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
-      val otherNames: String =
-        person
-          .getMiddleName() // TODO: make utilities to improve this: biasedCoinFlipMaybe and a function to run the function twice or three times sometimes and then concat them
+      // TODO: make markdownIpsum work and use the gaussian function in it
+      val otherNames: String = "Test"
+      // repeatedRunArray[String](
+      //   gaussianRandomBetween(0, 2),
+      //   person.getMiddleName
+      // )
+      //   .mkString(" ")
       val password: String = generatePassword(length = 15)
       val notes: String    = MarkdownIpsum(text)
 
