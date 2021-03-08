@@ -47,8 +47,11 @@ object UsersSeeder extends SeederTrait {
       val lastName: String     = person.getLastName()
       val otherNames: String = repeatedRunArray[String](
         randomGaussianDiscrete(min = 0, max = 2),
-        person.getMiddleName
-      ).mkString(" ")
+        () => {
+          val person: Person = fairy.person()
+          person.getMiddleName
+        }
+      ).mkString(" ").trim()
       val password: String = generatePassword(length = 15)
       val notes: String    = MarkdownIpsum(text)
 
