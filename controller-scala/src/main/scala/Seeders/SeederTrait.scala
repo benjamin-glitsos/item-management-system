@@ -28,22 +28,8 @@ trait SeederTrait {
     (1 to n).map(_ => fn()).toList
   }
 
-  final def gaussianRandom(
-      min: Double,
-      max: Double,
-      skew: Double,
-      bias: Double
-  ): Int = {
-    val range: Double          = max - min
-    val mid: Double            = min + range / 2
-    val gaussianRandom: Double = Random.nextGaussian()
-    val biasFactor: Double     = Math.exp(bias)
-
-    round(
-      mid + (range * (biasFactor / (biasFactor + Math.exp(
-        -gaussianRandom / skew
-      )) - 0.5))
-    ).toInt
+  final def randomDiscreteSlopedUniform(min: Int, max: Int): Int = {
+    Random.between(min, max)
   }
 
   protected val count: Int = 0

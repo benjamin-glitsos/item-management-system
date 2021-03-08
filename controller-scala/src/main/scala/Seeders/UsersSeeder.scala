@@ -45,9 +45,8 @@ object UsersSeeder extends SeederTrait {
       val emailAddress: String = person.getEmail()
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
-      // TODO: make markdownIpsum work and use the gaussian function in it
       val otherNames: String = repeatedRunArray[String](
-        gaussianRandom(min = 0, max = 2, skew = 0, bias = 0),
+        randomBetween(min = 0, max = 2),
         person.getMiddleName
       ).mkString(" ")
       val password: String = generatePassword(length = 15)

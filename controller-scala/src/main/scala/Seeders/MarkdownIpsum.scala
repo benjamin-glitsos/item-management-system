@@ -1,11 +1,10 @@
-import scala.util.Random
 import scala.math.{min}
 import com.devskiller.jfairy.producer.text.TextProducer
 
 object MarkdownIpsum extends SeederTrait {
   private final def hasContent(): Boolean     = biasedCoinFlip(probability = 0.75)
-  private final def numberOfParagraphs(): Int = Random.between(1, 3)
-  private final def numberOfSentences(): Int  = Random.between(1, 7)
+  private final def numberOfParagraphs(): Int = randomBetween(1, 3)
+  private final def numberOfSentences(): Int  = randomBetween(1, 7)
   private final def hasHeading(): Boolean     = biasedCoinFlip(probability = 0.5)
   private final def hasEmphasis(): Boolean =
     biasedCoinFlip(probability = 0.33)
@@ -28,9 +27,9 @@ object MarkdownIpsum extends SeederTrait {
 
       val emphasisedSentence: List[String] = {
         val sentenceLength: Int = tokenisedSentence.length
-        val replacedLength: Int = Random.between(1, min(3, sentenceLength))
+        val replacedLength: Int = randomBetween(1, min(3, sentenceLength))
         val replacedIndex: Int =
-          Random.between(1, sentenceLength - replacedLength)
+          randomBetween(1, sentenceLength - replacedLength)
 
         def emphasiseTokens(tokens: List[String]): List[String] = List(
           addEmphasis(tokens.mkString(" "))
