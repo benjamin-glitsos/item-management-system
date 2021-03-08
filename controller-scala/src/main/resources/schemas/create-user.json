@@ -10,6 +10,15 @@
         "email_address": {
             "$ref": "definitions/users.json#/definitions/email_address"
         },
+        "first_name": {
+            "$ref": "definitions/users.json#/definitions/first_name"
+        },
+        "last_name": {
+            "$ref": "definitions/users.json#/definitions/last_name"
+        },
+        "other_names": {
+            "$ref": "definitions/users.json#/definitions/other_names"
+        },
         "password": {
             "$ref": "definitions/users.json#/definitions/password"
         },
@@ -17,5 +26,12 @@
             "$ref": "definitions/meta.json#/definitions/notes"
         }
     },
-    "required": ["username", "password", "email_address"]
+    "required": [
+        "username",
+        "email_address",
+        "first_name",
+        "last_name",
+        "other_names",
+        "password"
+    ]
 }
