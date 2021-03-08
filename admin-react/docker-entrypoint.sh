@@ -16,5 +16,8 @@ if [[ "$ADMIN_RUN" == "yes" ]]; then
         "production" )
             npm build
         ;;
+        * )
+            echo "Project mode is not recognised."
+        ;;
     esac
 fi

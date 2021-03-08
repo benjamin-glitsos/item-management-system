@@ -15,13 +15,6 @@ controller-scala/.metals/
 controller-scala/.bloop/
 controller-scala/project/metals.sbt
 
-# Admin Angular --------------------
-
-admin-angular/node_modules/
-admin-angular/dist/
-admin-angular/.npm/
-admin-angular/.ash_history
-
 # Admin React --------------------
 
 admin-react/node_modules/

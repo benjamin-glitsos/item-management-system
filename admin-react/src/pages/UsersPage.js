@@ -79,30 +79,32 @@ export default () => {
 
     const rowActions = row => [<Checkbox />, ...row, <TableActionsMenu />];
 
+    const columnTransformations = ([
+        username,
+        emailAddress,
+        firstName,
+        lastName,
+        otherNames,
+        createdAt,
+        editedAt
+    ]) => [
+        username,
+        friendlyName(firstName, lastName, otherNames),
+        emailAddress,
+        friendlyDate(createdAt),
+        friendlyDate(fromMaybe(editedAt))
+    ];
+
+    // TODO: The Page component will compose Container with header and table wrapped in page margin. Hence the Presenter is these three parts combined.
+    // TODO: see the TODO inside the controller about handling the otherNames' Maybe value better there.
     // TODO: add onClick to row for left and right-mouse buttons. Left = Edit, Right = Dropdown.
+    // TODO: remove the excessive page margin for this table page
+    // TODO: add styling to BreadcrumbBar to make the cursor not become a cross icon when mousing over the disabled segment of the path
     const rows = data.data.map((row, i) => ({
         key: `UsersPage/Table/Row/${i}`,
-        cells: pipeline(
-            ([
-                username,
-                emailAddress,
-                firstName,
-                lastName,
-                otherNames,
-                createdAt,
-                editedAt
-            ]) => [
-                username,
-                friendlyName(firstName, lastName, otherNames),
-                emailAddress,
-                friendlyDate(createdAt),
-                friendlyDate(fromMaybe(editedAt))
-            ],
-            rowActions,
-            x => x.map(toCell)
-        )(row)
-        // rowActions
-        // (row).map(toCell)
+        cells: pipeline(columnTransformations, rowActions, x => x.map(toCell))(
+            row
+        )
     }));
     console.log(rows);
 
@@ -121,7 +123,7 @@ export default () => {
                 bottomBar={
                     <TableStatusBar
                         placeholder={
-                            "A list of users who have access to login to this system."
+                            "A list of users who have access to log in to this system."
                         }
                         numberOfSelected={0}
                     />
