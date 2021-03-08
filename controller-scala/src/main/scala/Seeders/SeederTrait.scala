@@ -33,8 +33,8 @@ trait SeederTrait {
       max: Int,
       mean: Double = 1,
       sd: Double = 1
-  ) = {
-    def sample(i: Int): Double = {
+  ): Int = {
+    def sample(i: Int): Int = {
       if (i <= 3) {
         var normalSample: Double = Random.nextGaussian() * sd + mean
 
@@ -53,7 +53,7 @@ trait SeederTrait {
           sample(i + 1)
         }
       } else {
-        Random.between(min, max)
+        min
       }
     }
 
