@@ -36,14 +36,19 @@ trait SeederTrait {
   ) = {
     def sample(i: Int): Double = {
       if (i <= 3) {
-        var x: Double = Random.nextGaussian() * sd + mean
-        if (min to max contains x) {
-          if (x <= mean) {
-            x
-          } else {
-            var deviation: Double = x - mean
-            x + deviation
-          }
+        var normalSample: Double = Random.nextGaussian() * sd + mean
+
+        var halfNormalSample: Double = if (normalSample <= mean) {
+          normalSample
+        } else {
+          var deviation: Double = normalSample - mean
+          normalSample + deviation
+        }
+
+        var discreteHalfNormalSample: Int = round(halfNormalSample).toInt
+
+        if (min to max contains discreteHalfNormalSample) {
+          discreteHalfNormalSample
         } else {
           sample(i + 1)
         }
@@ -52,7 +57,7 @@ trait SeederTrait {
       }
     }
 
-    round(sample(1)).toInt
+    sample(1)
   }
 
   protected val count: Int = 0
