@@ -28,8 +28,31 @@ trait SeederTrait {
     (1 to n).map(_ => fn()).toList
   }
 
-  final def randomDiscreteSlopedUniform(min: Int, max: Int): Int = {
-    Random.between(min, max)
+  final def randomGaussianDiscrete(
+      min: Int,
+      max: Int,
+      mean: Double,
+      sd: Double = 1
+  ) = {
+    def sample(i: Int): Double = {
+      if (i <= 3) {
+        var x: Double = Random.nextGaussian() * sd + mean
+        if (min to max contains x) {
+          if (x <= mean) {
+            x
+          } else {
+            var deviation: Double = x - mean
+            x + deviation
+          }
+        } else {
+          sample(i + 1)
+        }
+      } else {
+        Random.between(min, max)
+      }
+    }
+
+    round(sample(1)).toInt
   }
 
   protected val count: Int = 0
