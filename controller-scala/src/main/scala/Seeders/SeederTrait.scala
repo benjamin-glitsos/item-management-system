@@ -29,12 +29,12 @@ trait SeederTrait {
   }
 
   final def gaussianRandom(
-      min: Int,
-      max: Int,
-      skew: Int,
-      bias: Int
+      min: Double,
+      max: Double,
+      skew: Double,
+      bias: Double
   ): Int = {
-    val range: Int             = max - min
+    val range: Double          = max - min
     val mid: Double            = min + range / 2
     val gaussianRandom: Double = Random.nextGaussian()
     val biasFactor: Double     = Math.exp(bias)
