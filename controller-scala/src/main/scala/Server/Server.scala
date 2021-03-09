@@ -13,7 +13,7 @@ object Server {
 
     AnsiConsole.systemInstall();
 
-    val host: String  = System.getenv("DOCKER_LOCALHOST")
+    val host: String  = "controller_scala"
     val port: Integer = System.getenv("CONTROLLER_PORT").toInt
 
     val parserSettings =
