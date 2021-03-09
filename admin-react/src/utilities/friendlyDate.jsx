@@ -10,6 +10,6 @@ export default (dateTimeStr = "Never") => {
     if (isLessThanOneDayAgo) {
         return capitalise(timeAgo(date));
     } else {
-        return dateFormat(now, `mmmm dS, yyyy "at" h:MM:ss TT`);
+        return dateFormat(now, `mmmm dS, yyyy "at" h:MMtt`);
     }
 };
