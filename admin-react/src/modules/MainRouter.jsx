@@ -8,8 +8,8 @@ export default () => (
     <Router history={createBrowserHistory()}>
         <App>
             <Switch>
+                <Route exact path="/" component={ReadmePage} />
                 <Route path="/users" component={UsersPage} />
-                <Route path="/" component={ReadmePage} />
             </Switch>
         </App>
     </Router>
