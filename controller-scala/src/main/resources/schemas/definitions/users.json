@@ -1,30 +1,29 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "User Definitions",
-    "description": "Definitions that relate to the 'users' database table and accompanying API endpoints.",
     "definitions": {
         "username": {
-            "description": "The username of the user.",
+            "description": "E.g. bdole43",
             "type": "string"
         },
         "email_address": {
-            "description": "The email address of the user.",
+            "description": "E.g. bdole@example.com",
             "type": "string"
         },
         "first_name": {
-            "description": "The first name of the user.",
+            "description": "E.g. Bob",
             "type": "string"
         },
         "last_name": {
-            "description": "The last name of the user.",
+            "description": "E.g. Dole",
             "type": "string"
         },
         "other_names": {
-            "description": "The other names of the user. For instance, middle names.",
+            "description": "Middle names and any other names that a person may possess. E.g. James William",
             "type": "string"
         },
         "password": {
-            "description": "The password of the user.",
+            "description": "A strong, secure password.",
             "type": "string"
         }
     }
