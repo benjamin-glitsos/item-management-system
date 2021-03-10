@@ -17,10 +17,9 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ## Admin
 
-**React (Node.js).**
+**React (Javascript).**
 
 * Container/Presenter pattern
-* React Hooks composition
 
 ## Database
 
