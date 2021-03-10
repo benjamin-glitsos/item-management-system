@@ -2,7 +2,7 @@
 
 Dockerised Model-View-Controller (MVC) architecture.
 
-## Controller&ndash;Scala
+## Controller-Scala
 
 * RESTful API
 * JSON Schema validation
@@ -11,11 +11,11 @@ Dockerised Model-View-Controller (MVC) architecture.
 * GRASP and SOLID
 * Object-Oriented in the large, Functional Programming in the small
 
-## Admin&ndash;React
+## Admin-React
 
 * Container/Presenter pattern
 
-## Database&ndash;PostgreSQL
+## Database-PostgreSQL
 
 * Separate metadata table
 * Use of Views
