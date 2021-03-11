@@ -4,11 +4,11 @@ import SidebarNavigation from "../components/SidebarNavigation";
 import styled from "styled-components";
 
 export default ({ children }) => (
-    <PageWrapper>
+    <FullHeight>
         <Page navigation={<SidebarNavigation />}>{children}</Page>
-    </PageWrapper>
+    </FullHeight>
 );
 
-const PageWrapper = styled.div`
+const FullHeight = styled.div`
     height: 100vh;
 `;
