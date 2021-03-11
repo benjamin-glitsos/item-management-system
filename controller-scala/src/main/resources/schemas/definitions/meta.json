@@ -4,7 +4,8 @@
     "definitions": {
         "notes": {
             "description": "Miscellaneous notes that can be added to this item.",
-            "type": "string"
+            "type": "string",
+            "maxLength": 1048576
         }
     }
 }
