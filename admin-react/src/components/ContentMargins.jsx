@@ -9,8 +9,12 @@ export default ({ type, children }) => (
 );
 
 const Margins = styled.div`
-    ${cond(props => props.type, {
+    ${props => cond(props.type, {
         full_width: "margin: 0 3em;",
+        article: `
+            max-width: 1080px;
+            margin: 0 auto;
+        `
         default: ""
     })}
 `;
