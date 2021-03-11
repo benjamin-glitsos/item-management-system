@@ -109,7 +109,7 @@ export default () => {
     console.log(rows);
 
     return (
-        <ContentMargins type="full_width">
+        <ContentMargins type="wide">
             <PageHeader
                 breadcrumbs={
                     <BreadcrumbBar
