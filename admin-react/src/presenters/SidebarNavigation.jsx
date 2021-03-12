@@ -7,11 +7,12 @@ import {
     LinkItem,
     Section
 } from "@atlaskit/side-navigation";
-import logo from "../assets/logo.svg";
+import logo from "@/assets/logo.svg";
 import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import UserAvatarCircleIcon from "@atlaskit/icon/glyph/user-avatar-circle";
+import doesMatchLocation from "@/utilities/doesMatchLocation";
 
 export default ({ location }) => {
     const projectMode =
@@ -19,9 +20,6 @@ export default ({ location }) => {
     const projectName =
         process.env.REACT_APP_PROJECT_NAME || "Item Management System";
     const projectAbbrev = process.env.REACT_APP_PROJECT_ABBREV || "IMS";
-
-    const doesMatchLocation = (path, location) =>
-        matchPath(location.pathname, { path, exact: true });
 
     return (
         <SideNavigation label="Main Navigation">
