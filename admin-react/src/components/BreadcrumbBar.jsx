@@ -3,16 +3,16 @@ import styled from "styled-components";
 
 export default ({ breadcrumbs }) => (
     <DisabledStyles>
-         <Breadcrumbs>
-             {breadcrumbs.map(([title, path], i) => (
-                 <BreadcrumbsItem
-                     text={title}
-                     key={`BreadcrumbBar/${i}-${title}`}
-                     href={path}
-                     isDisabled={i + 1 === breadcrumbs.length}
-                 />
-             ))}
-         </Breadcrumbs>
+        <Breadcrumbs>
+            {breadcrumbs.map(([title, path], i) => (
+                <BreadcrumbsItem
+                    text={title}
+                    key={`BreadcrumbBar/${i}-${title}`}
+                    href={path}
+                    isDisabled={i + 1 === breadcrumbs.length}
+                />
+            ))}
+        </Breadcrumbs>
     </DisabledStyles>
 );
 
