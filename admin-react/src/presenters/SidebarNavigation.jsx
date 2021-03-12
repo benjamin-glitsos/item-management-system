@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import doesMatchLocation from "../utilities/doesMatchLocation";
 import {
     SideNavigation,
     NavigationContent,
@@ -14,12 +13,15 @@ import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/docum
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import UserAvatarCircleIcon from "@atlaskit/icon/glyph/user-avatar-circle";
 
-export default () => {
+export default ({ location }) => {
     const projectMode =
         process.env.REACT_APP_PROJECT_MODE || process.env.NODE_ENV;
     const projectName =
         process.env.REACT_APP_PROJECT_NAME || "Item Management System";
     const projectAbbrev = process.env.REACT_APP_PROJECT_ABBREV || "IMS";
+
+    const doesMatchLocation = (path, location) =>
+        matchPath(location.pathname, { path, exact: true });
 
     return (
         <SideNavigation label="Main Navigation">

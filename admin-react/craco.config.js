@@ -1,3 +1,4 @@
+const path = require(`path`);
 const CracoRawLoaderPlugin = require("@baristalabs/craco-raw-loader");
 
 module.exports = {
@@ -10,6 +11,11 @@ module.exports = {
             }
         }
     ],
+    webpack: {
+        alias: {
+            "@": path.resolve(__dirname, "src/")
+        }
+    },
     eslint: {
         enabled: false
     }
