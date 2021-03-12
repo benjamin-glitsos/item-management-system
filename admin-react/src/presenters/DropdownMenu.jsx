@@ -1,5 +1,5 @@
-import DropdownMenu from "@atlaskit/dropdown-menu";
 import styled from "styled-components";
+import DropdownMenu from "@atlaskit/dropdown-menu";
 
 export default ({ name, children }) => (
     <Styles>

@@ -1,9 +1,9 @@
+import styled from "styled-components";
+import composeHooks from "react-hooks-compose";
 import Page from "@atlaskit/page";
 import "@atlaskit/css-reset";
-import SidebarNavigation from "@/presenters/SidebarNavigation";
-import styled from "styled-components";
 import Location from "@/containers/Location";
-import composeHooks from "react-hooks-compose";
+import SidebarNavigation from "@/presenters/SidebarNavigation";
 
 const SidebarNavigationComposition = composeHooks({ Location })(
     SidebarNavigation

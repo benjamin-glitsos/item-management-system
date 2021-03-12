@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+import DynamicTable from "@atlaskit/dynamic-table";
+import PageHeader from "@atlaskit/page-header";
+import { Checkbox } from "@atlaskit/checkbox";
 import FullwidthLayout from "@/presenters/FullwidthLayout";
 import BreadcrumbBar from "@/presenters/BreadcrumbBar";
 import TableActionsMenu from "@/presenters/TableActionsMenu";
@@ -8,11 +12,6 @@ import ActionsBar from "@/presenters/ActionsBar";
 import fromMaybe from "@/utilities/fromMaybe";
 import friendlyDate from "@/utilities/friendlyDate";
 import friendlyName from "@/utilities/friendlyName";
-import DynamicTable from "@atlaskit/dynamic-table";
-import PageHeader from "@atlaskit/page-header";
-import { Checkbox } from "@atlaskit/checkbox";
-import axios from "axios";
-import { pipeline, pipe } from "ts-pipe-compose";
 
 export default () => {
     const [data, setData] = useState({ data: [] });
@@ -27,7 +26,6 @@ export default () => {
             }
         });
 
-        console.log(result.data);
         setData(result.data);
     }, []);
 

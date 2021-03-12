@@ -1,7 +1,7 @@
-import DropdownMenu from "./DropdownMenu";
 import ButtonGroup from "@atlaskit/button/button-group";
 import Button from "@atlaskit/button/standard-button";
 import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
+import DropdownMenu from "@/presenters/DropdownMenu";
 
 export default () => (
     <ButtonGroup>

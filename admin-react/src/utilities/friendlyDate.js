@@ -1,6 +1,6 @@
-import capitaliseFirstLetter from "./capitaliseFirstLetter";
 import dateFormat from "dateformat";
 import timeAgo from "node-time-ago";
+import capitaliseFirstLetter from "@/utilities/capitaliseFirstLetter";
 
 export default dateTimeStr => {
     if (dateTimeStr === null) {
