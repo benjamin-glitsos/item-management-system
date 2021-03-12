@@ -1,4 +1,4 @@
-import capitalise from "./capitalise";
+import capitaliseFirstLetter from "./capitaliseFirstLetter";
 import dateFormat from "dateformat";
 import timeAgo from "node-time-ago";
 
@@ -11,7 +11,7 @@ export default dateTimeStr => {
         const oneDay = 1000 * 60 * 60 * 24;
         const isLessThanOneDayAgo = date > now - oneDay;
         if (isLessThanOneDayAgo) {
-            return capitalise(timeAgo(date));
+            return capitaliseFirstLetter(timeAgo(date));
         } else {
             return dateFormat(now, `mmmm dS, yyyy "at" h:MMtt`);
         }

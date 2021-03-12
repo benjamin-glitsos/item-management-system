@@ -1,5 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { matchPath } from "react-router";
 
-const location = useLocation();
-
-export default path => matchPath(location.pathname, { path, exact: true });
+export default (location, path) =>
+    matchPath(location.pathname, { path, exact: true });

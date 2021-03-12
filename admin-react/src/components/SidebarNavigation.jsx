@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import doesMatchLocation from "../utilities/doesMatchLocation";
 import {
     SideNavigation,
@@ -9,7 +10,6 @@ import {
 } from "@atlaskit/side-navigation";
 import logo from "../assets/logo.svg";
 import styled from "styled-components";
-import { matchPath } from "react-router";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import UserAvatarCircleIcon from "@atlaskit/icon/glyph/user-avatar-circle";
@@ -20,8 +20,6 @@ export default () => {
     const projectName =
         process.env.REACT_APP_PROJECT_NAME || "Item Management System";
     const projectAbbrev = process.env.REACT_APP_PROJECT_ABBREV || "IMS";
-
-    const modeIndicator = mode === "production" ? "" : ` (${mode})`;
 
     return (
         <SideNavigation label="Main Navigation">
@@ -36,9 +34,19 @@ export default () => {
                         iconBefore={
                             <AppLogo src={logo} alt={`${projectName} logo`} />
                         }
-                        description={projectName}
+                        description={
+                            <Fragment>
+                                {projectName}
+                                {projectMode === "production" ? null : (
+                                    <Fragment>
+                                        <br />
+                                        {`(${projectMode})`}
+                                    </Fragment>
+                                )}
+                            </Fragment>
+                        }
                     >
-                        {projectAbbrev + modeIndicator}
+                        {projectAbbrev}
                     </Header>
                 </NavigationHeader>
                 <Section key="SideNavigation/Section/Home" title="Home">
