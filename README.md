@@ -13,10 +13,10 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ## Admin-React
 
-* Container/Presenter pattern
+* Container/Presenter architecture via composing of React Hooks
 
 ## Database-PostgreSQL
 
-* Separate metadata table
-* Use of Views
+* Shared metadata table joined via Views and Triggers
+* Stored Procedures and Domains
 * Fourth normal form (4NF)
