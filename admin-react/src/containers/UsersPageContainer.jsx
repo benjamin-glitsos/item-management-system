@@ -29,6 +29,10 @@ export default () => {
         setState(state => ({ ...state, response: response.data }));
     }, [state.request]);
 
+    useEffect(() => {
+        state.response.errors.forEach(console.error);
+    }, [state.response.errors]);
+
     const head = {
         cells: [
             {
