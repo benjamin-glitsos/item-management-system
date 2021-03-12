@@ -3,11 +3,17 @@ import fromMaybe from "./fromMaybe";
 export default (firstName, lastName, otherNames) => {
     const optionalOtherNames = fromMaybe(otherNames);
 
-    const otherNameInitials = optionalOtherNames && optionalOtherNames
-        .split(/\s+/)
-        .map(name => name.charAt(0).toUpperCase() + ".");
+    const namesList = (() => {
+        if (!!optionalOtherNames) {
+            const otherNameInitials = optionalOtherNames
+                .split(/\s+/)
+                .map(name => name.charAt(0).toUpperCase() + ".");
 
-    return [firstName, ...otherNameInitials, lastName]
-        .filter(x => !!x)
-        .join(" ");
+            return [firstName, ...otherNameInitials, lastName]
+        } else {
+            return [firstName, lastName]
+        }
+    })()
+    
+    return namesList.join(" ")
 };

@@ -94,8 +94,8 @@ export default () => {
         username,
         friendlyName(firstName, lastName, otherNames),
         emailAddress,
-        friendlyDate(fromMaybe(createdAt)),
-        friendlyDate(editedAt)
+        friendlyDate(createdAt),
+        friendlyDate(fromMaybe(editedAt))
     ];
 
     const rows = data.data.map((row, i) => ({
