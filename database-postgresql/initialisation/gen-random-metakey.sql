@@ -13,6 +13,6 @@ BEGIN
     FOR i IN 1..length LOOP
       record_key := record_key || allowed_chars[1+random()*(array_length(allowed_chars, 1)-1)];
     END LOOP;
-    RETURN CONCAT_WS('.', table_key, record_key);
+    RETURN CONCAT_WS('~', table_key, record_key);
 END;
 $$ LANGUAGE plpgsql;
