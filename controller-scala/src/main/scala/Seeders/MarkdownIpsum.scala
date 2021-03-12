@@ -53,25 +53,27 @@ object MarkdownIpsum extends SeederTrait {
       sentence
     }
 
-  final def apply(textProducer: TextProducer): String = {
+  final def apply(textProducer: TextProducer): Option[String] = {
     if (hasContent()) {
       val hasHeadings: Boolean = hasHeading()
 
-      (1 to max(1, numberOfParagraphs))
-        .map(paragraph => {
-          val heading: Option[String] = Option
-            .when(hasHeadings) { s"## ${textProducer.latinSentence(1)}" }
+      Some(
+        (1 to max(1, numberOfParagraphs))
+          .map(paragraph => {
+            val heading: Option[String] = Option
+              .when(hasHeadings) { s"## ${textProducer.latinSentence(1)}" }
 
-          val content: String =
-            emphasiseSentence(textProducer.latinSentence(numberOfSentences()))
+            val content: String =
+              emphasiseSentence(textProducer.latinSentence(numberOfSentences()))
 
-          heading ++ List(content)
-        })
-        .flatten
-        .mkString("\n\n")
+            heading ++ List(content)
+          })
+          .flatten
+          .mkString("\n\n")
+      )
 
     } else {
-      new String
+      None
     }
   }
 }

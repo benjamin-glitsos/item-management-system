@@ -6,9 +6,9 @@ trait UsersDAOCreate {
       emailAddress: String,
       firstName: String,
       lastName: String,
-      otherNames: String,
+      otherNames: Option[String],
       password: String,
-      notes: String
+      notes: Option[String]
   ) = {
     run(
       quote(
@@ -18,7 +18,7 @@ trait UsersDAOCreate {
             _.email_address -> lift(emailAddress),
             _.first_name    -> lift(firstName),
             _.last_name     -> lift(lastName),
-            _.other_names   -> lift(Some(otherNames): Option[String]),
+            _.other_names   -> lift(otherNames),
             _.password      -> lift(password),
             _.notes         -> lift(notes)
           )

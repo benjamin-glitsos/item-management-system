@@ -7,9 +7,9 @@ trait UsersServicesCreate {
       emailAddress: String,
       firstName: String,
       lastName: String,
-      otherNames: String,
+      otherNames: Option[String],
       password: String,
-      notes: String
+      notes: Option[String]
   ): String = {
     try {
       UsersDAO

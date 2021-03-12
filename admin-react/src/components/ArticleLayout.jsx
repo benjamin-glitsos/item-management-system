@@ -1,1 +1,3 @@
-export default ({ children }) => <Margins maxWidth="800px">{children}</Margins>
+import ContentMargins from "../components/ContentMargins";
+
+export default ({ children }) => <ContentMargins maxWidth="800px">{children}</ContentMargins>

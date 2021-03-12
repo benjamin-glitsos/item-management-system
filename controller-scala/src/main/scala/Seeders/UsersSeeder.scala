@@ -1,7 +1,7 @@
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
-import scala.util.Properties.envOrElse
+import OptionUtilities.emptyStringToOption
 
 object UsersSeeder extends SeederTrait {
   override final val count: Int = 15
@@ -19,7 +19,7 @@ object UsersSeeder extends SeederTrait {
       emailAddress = System.getenv("SUPER_ADMIN_EMAIL_ADDRESS"),
       firstName = System.getenv("SUPER_ADMIN_FIRST_NAME"),
       lastName = System.getenv("SUPER_ADMIN_LAST_NAME"),
-      otherNames = envOrElse("SUPER_ADMIN_OTHER_NAMES", new String),
+      otherNames = Some(System.getenv("SUPER_ADMIN_OTHER_NAMES")),
       password = System.getenv("SUPER_ADMIN_PASSWORD"),
       notes = MarkdownIpsum(text)
     )
@@ -29,7 +29,7 @@ object UsersSeeder extends SeederTrait {
       emailAddress = System.getenv("DEMO_ADMIN_EMAIL_ADDRESS"),
       firstName = System.getenv("DEMO_ADMIN_FIRST_NAME"),
       lastName = System.getenv("DEMO_ADMIN_LAST_NAME"),
-      otherNames = envOrElse("DEMO_ADMIN_OTHER_NAMES", new String),
+      otherNames = Some("DEMO_ADMIN_OTHER_NAMES"),
       password = System.getenv("DEMO_ADMIN_PASSWORD"),
       notes = MarkdownIpsum(text)
     )
@@ -45,15 +45,17 @@ object UsersSeeder extends SeederTrait {
       val emailAddress: String = person.getEmail()
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
-      val otherNames: String = repeatedRunArray[String](
-        randomGaussianDiscrete(min = 0, max = 2),
-        () => {
-          val person: Person = fairy.person()
-          person.getMiddleName
-        }
-      ).mkString(" ").trim()
-      val password: String = generatePassword(length = 15)
-      val notes: String    = MarkdownIpsum(text)
+      val otherNames: Option[String] = emptyStringToOption(
+        repeatedRunArray[String](
+          randomGaussianDiscrete(min = 0, max = 2),
+          () => {
+            val person: Person = fairy.person()
+            person.getMiddleName
+          }
+        ).mkString(" ")
+      )
+      val password: String      = generatePassword(length = 15)
+      val notes: Option[String] = MarkdownIpsum(text)
 
       UsersServices.create(
         username,

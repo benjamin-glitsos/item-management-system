@@ -23,10 +23,10 @@ object UsersRoutes {
         val emailAddress: String = body("email_address").str
         val firstName: String    = body("first_name").str
         val lastName: String     = body("last_name").str
-        val otherNames: String =
-          Try(body("other_names").str).getOrElse(new String)
-        val password: String = body("password").str
-        val notes: String    = Try(body("notes").str).getOrElse(new String)
+        val otherNames: Option[String] =
+          Try(body("other_names").str).toOption
+        val password: String      = body("password").str
+        val notes: Option[String] = Try(body("notes").str).toOption
 
         complete(
           UsersServices.create(
