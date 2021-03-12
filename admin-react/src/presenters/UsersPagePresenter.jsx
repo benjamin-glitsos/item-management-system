@@ -20,10 +20,13 @@ export default ({ state, setState, head, rows }) => (
             actions={<ActionsBar />}
             bottomBar={
                 <TableStatusBar
-                    placeholder={
-                        "A list of users who have access to log in to this system."
-                    }
-                    numberOfSelected={0}
+                    currentPage={state.request.data.page_number}
+                    pageLength={state.request.data.page_length}
+                    totalPages={state.response.data.total_pages}
+                    itemRangeStart={state.response.data.range_start}
+                    itemRangeEnd={state.response.data.range_end}
+                    totalItemsCount={state.response.data.total_items}
+                    numberOfSelected={state.selected.length}
                 />
             }
         >

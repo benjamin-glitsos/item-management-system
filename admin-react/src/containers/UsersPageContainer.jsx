@@ -17,7 +17,11 @@ export default () => {
                 page_length: 10
             }
         },
-        response: []
+        response: {
+            data: {},
+            errors: []
+        },
+        selected: []
     });
 
     useEffect(async () => {
@@ -69,7 +73,7 @@ export default () => {
         ]
     };
 
-    const rows = state.response.map((row, i) => ({
+    const rows = state.response.data.data.map((row, i) => ({
         key: `UsersTable/Row/${i}`,
         cells: pipe(
             row,
