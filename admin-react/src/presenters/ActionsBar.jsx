@@ -5,7 +5,7 @@ import DropdownMenu from "%/presenters/DropdownMenu";
 
 export default () => (
     <ButtonGroup>
-        <Button appearance="primary">Create New</Button>
+        {/* <Button appearance="primary">Create New</Button> */}
         <DropdownMenu name="Delete" triggerType="button">
             <DropdownItemGroup>
                 <DropdownItem>Soft Delete</DropdownItem>

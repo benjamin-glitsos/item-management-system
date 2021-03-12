@@ -6,7 +6,7 @@ export default () => (
     <RightAligned>
         <DropdownMenu name="Actions" triggerType="button">
             <DropdownItemGroup>
-                <DropdownItem>Edit</DropdownItem>
+                {/* <DropdownItem>Edit</DropdownItem> */}
                 <DropdownItem>Delete</DropdownItem>
                 <DropdownItem>Hard Delete</DropdownItem>
             </DropdownItemGroup>
