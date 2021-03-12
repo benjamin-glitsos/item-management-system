@@ -5,9 +5,9 @@ import TableActionsMenu from "../components/TableActionsMenu";
 import TableStatusBar from "../components/TableStatusBar";
 import NoData from "../components/NoData";
 import ActionsBar from "../components/ActionsBar";
+import fromMaybe from "../utilities/fromMaybe"
 import friendlyDate from "../utilities/friendlyDate";
 import friendlyName from "../utilities/friendlyName";
-import toMaybe from "../utilities/toMaybe";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import { Checkbox } from "@atlaskit/checkbox";
@@ -94,8 +94,8 @@ export default () => {
         username,
         friendlyName(firstName, lastName, otherNames),
         emailAddress,
-        friendlyDate(createdAt),
-        friendlyDate(toMaybe(editedAt))
+        friendlyDate(fromMaybe(createdAt)),
+        friendlyDate(editedAt)
     ];
 
     const rows = data.data.map((row, i) => ({
