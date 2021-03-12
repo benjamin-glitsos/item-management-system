@@ -4,7 +4,7 @@ import timeAgo from "node-time-ago";
 
 export default dateTimeStr => {
     if (dateTimeStr === null) {
-        return "Never"
+        return "Never";
     } else {
         const now = new Date();
         const date = new Date(dateTimeStr);

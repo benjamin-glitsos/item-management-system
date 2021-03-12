@@ -4,4 +4,4 @@ export default ([x]) => {
     } else {
         return x;
     }
-}
+};

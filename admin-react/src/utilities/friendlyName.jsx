@@ -9,11 +9,11 @@ export default (firstName, lastName, otherNames) => {
                 .split(/\s+/)
                 .map(name => name.charAt(0).toUpperCase() + ".");
 
-            return [firstName, ...otherNameInitials, lastName]
+            return [firstName, ...otherNameInitials, lastName];
         } else {
-            return [firstName, lastName]
+            return [firstName, lastName];
         }
-    })()
-    
-    return namesList.join(" ")
+    })();
+
+    return namesList.join(" ");
 };

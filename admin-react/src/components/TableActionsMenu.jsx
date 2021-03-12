@@ -1,15 +1,14 @@
-import DropdownMenu, {
-    DropdownItem,
-    DropdownItemGroup
-} from "@atlaskit/dropdown-menu";
+import DropdownMenu from "./DropdownMenu";
+import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
 import styled from "styled-components";
 
 export default () => (
     <RightAligned>
-        <DropdownMenu trigger="Actions" triggerType="button">
+        <DropdownMenu name="Actions" triggerType="button">
             <DropdownItemGroup>
                 <DropdownItem>Edit</DropdownItem>
                 <DropdownItem>Delete</DropdownItem>
+                <DropdownItem>Hard Delete</DropdownItem>
             </DropdownItemGroup>
         </DropdownMenu>
     </RightAligned>

@@ -3,8 +3,8 @@ import { gridSize } from "@atlaskit/theme";
 import styled from "styled-components";
 
 export default ({ maxWidth, children }) => {
-    return <Margins maxWidth={maxWidth}>{children}</Margins>
-}
+    return <Margins maxWidth={maxWidth}>{children}</Margins>;
+};
 
 const Margins = styled.div`
     margin: 0 auto;

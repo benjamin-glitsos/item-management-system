@@ -5,7 +5,7 @@ import TableActionsMenu from "../components/TableActionsMenu";
 import TableStatusBar from "../components/TableStatusBar";
 import NoData from "../components/NoData";
 import ActionsBar from "../components/ActionsBar";
-import fromMaybe from "../utilities/fromMaybe"
+import fromMaybe from "../utilities/fromMaybe";
 import friendlyDate from "../utilities/friendlyDate";
 import friendlyName from "../utilities/friendlyName";
 import DynamicTable from "@atlaskit/dynamic-table";
@@ -27,7 +27,7 @@ export default () => {
             }
         });
 
-        console.log(result.data)
+        console.log(result.data);
         setData(result.data);
     }, []);
 
