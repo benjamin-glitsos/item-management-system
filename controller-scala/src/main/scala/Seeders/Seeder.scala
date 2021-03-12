@@ -1,5 +1,7 @@
 object Seeder {
   final def apply() = {
-    UsersSeeder()
+    if (System.getenv("PROJECT_MODE") != "production") {
+      UsersSeeder()
+    }
   }
 }

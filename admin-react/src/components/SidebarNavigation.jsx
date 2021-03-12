@@ -76,20 +76,6 @@ export default () => {
                         Users
                     </LinkItem>
                 </Section>
-                <Section
-                    key="SideNavigation/Section/YourProfile"
-                    title="Your Profile"
-                >
-                    <LinkItem
-                        key="SideNavigation/LinkItem/YourProfile"
-                        iconBefore={<UserAvatarCircleIcon size="medium" />}
-                        href="/users/username"
-                        isSelected={doesMatchLocation("/users/username")}
-                        description="You are logged in as username."
-                    >
-                        Firstname Lastname
-                    </LinkItem>
-                </Section>
             </NavigationContent>
         </SideNavigation>
     );

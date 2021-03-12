@@ -7,7 +7,7 @@ import NoData from "../components/NoData";
 import ActionsBar from "../components/ActionsBar";
 import friendlyDate from "../utilities/friendlyDate";
 import friendlyName from "../utilities/friendlyName";
-import fromMaybe from "../utilities/fromMaybe";
+import toMaybe from "../utilities/toMaybe";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import { Checkbox } from "@atlaskit/checkbox";
@@ -27,6 +27,7 @@ export default () => {
             }
         });
 
+        console.log(result.data)
         setData(result.data);
     }, []);
 
@@ -94,7 +95,7 @@ export default () => {
         friendlyName(firstName, lastName, otherNames),
         emailAddress,
         friendlyDate(createdAt),
-        friendlyDate(fromMaybe(editedAt))
+        friendlyDate(toMaybe(editedAt))
     ];
 
     const rows = data.data.map((row, i) => ({
@@ -103,7 +104,6 @@ export default () => {
             row
         )
     }));
-    console.log(rows);
 
     return (
         <FullwidthLayout>

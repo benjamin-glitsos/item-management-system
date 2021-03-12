@@ -11,6 +11,12 @@ trait UsersServicesList {
         (for {
           totalItems <- UsersDAO.count().map(_.toInt)
 
+          _ <- if (
+            totalItems <= 10 && System.getenv("PROJECT_MODE") != "production"
+          ) {
+            UsersSeeder()
+          }
+
           val offset: Int     = (pageNumber - 1) * pageLength
           val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
           val rangeStart: Int = 1 + offset
