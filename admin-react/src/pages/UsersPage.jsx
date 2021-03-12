@@ -56,18 +56,20 @@ export default () => {
             {
                 key: "createdAt",
                 content: "Created At",
-                isSortable: false
+                isSortable: false,
+                width: 15
             },
             {
                 key: "editedAt",
                 content: "Edited At",
-                isSortable: false
+                isSortable: false,
+                width: 15
             },
             {
                 key: "actions",
                 content: null,
                 isSortable: false,
-                width: 15
+                width: 10
             }
         ]
     };
@@ -95,11 +97,6 @@ export default () => {
         friendlyDate(fromMaybe(editedAt))
     ];
 
-    // TODO: The Page component will compose Container with header and table wrapped in page margin. Hence the Presenter is these three parts combined.
-    // TODO: see the TODO inside the controller about handling the otherNames' Maybe value better there.
-    // TODO: add onClick to row for left and right-mouse buttons. Left = Edit, Right = Dropdown.
-    // TODO: remove the excessive page margin for this table page
-    // TODO: add styling to BreadcrumbBar to make the cursor not become a cross icon when mousing over the disabled segment of the path
     const rows = data.data.map((row, i) => ({
         key: `UsersPage/Table/Row/${i}`,
         cells: pipeline(columnTransformations, rowActions, x => x.map(toCell))(
