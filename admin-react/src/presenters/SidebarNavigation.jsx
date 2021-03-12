@@ -10,8 +10,8 @@ import {
 import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
-import logo from "@/assets/logo.svg";
-import doesMatchLocation from "@/utilities/doesMatchLocation";
+import logo from "%/assets/logo.svg";
+import doesMatchLocation from "%/utilities/doesMatchLocation";
 
 export default ({ location }) => {
     const projectMode =

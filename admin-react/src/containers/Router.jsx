@@ -1,8 +1,8 @@
 import { Router, Route, Switch } from "react-router";
 import createBrowserHistory from "history/createBrowserHistory";
-import App from "@/presenters/App";
-import ReadmePage from "@/presenters/ReadmePage";
-import UsersPage from "@/presenters/UsersPage";
+import App from "%/presenters/App";
+import ReadmePage from "%/presenters/ReadmePage";
+import UsersPage from "%/presenters/UsersPage";
 
 export default () => (
     <Router history={createBrowserHistory()}>

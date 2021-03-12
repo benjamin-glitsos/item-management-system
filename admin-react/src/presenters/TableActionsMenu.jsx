@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
-import DropdownMenu from "@/containers/DropdownMenu";
+import DropdownMenu from "%/presenters/DropdownMenu";
 
 export default () => (
     <RightAligned>

@@ -1,4 +1,4 @@
-import fromMaybe from "@/utilities/fromMaybe";
+import fromMaybe from "%/utilities/fromMaybe";
 
 export default (firstName, lastName, otherNames) => {
     const optionalOtherNames = fromMaybe(otherNames);

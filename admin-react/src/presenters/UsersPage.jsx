@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import pipe from "pipe-functions";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import { Checkbox } from "@atlaskit/checkbox";
-import FullwidthLayout from "@/presenters/FullwidthLayout";
-import BreadcrumbBar from "@/presenters/BreadcrumbBar";
-import TableActionsMenu from "@/presenters/TableActionsMenu";
-import TableStatusBar from "@/presenters/TableStatusBar";
-import NoData from "@/presenters/NoData";
-import ActionsBar from "@/presenters/ActionsBar";
-import fromMaybe from "@/utilities/fromMaybe";
-import friendlyDate from "@/utilities/friendlyDate";
-import friendlyName from "@/utilities/friendlyName";
+import FullwidthLayout from "%/presenters/FullwidthLayout";
+import BreadcrumbBar from "%/presenters/BreadcrumbBar";
+import TableActionsMenu from "%/presenters/TableActionsMenu";
+import TableStatusBar from "%/presenters/TableStatusBar";
+import NoData from "%/presenters/NoData";
+import ActionsBar from "%/presenters/ActionsBar";
+import fromMaybe from "%/utilities/fromMaybe";
+import friendlyDate from "%/utilities/friendlyDate";
+import friendlyName from "%/utilities/friendlyName";
 
 export default () => {
     const [data, setData] = useState({ data: [] });
@@ -98,9 +99,7 @@ export default () => {
 
     const rows = data.data.map((row, i) => ({
         key: `UsersPage/Table/Row/${i}`,
-        cells: pipeline(columnTransformations, rowActions, x => x.map(toCell))(
-            row
-        )
+        cells: pipe(row, columnTransformations, rowActions, x => x.map(toCell))
     }));
 
     return (
