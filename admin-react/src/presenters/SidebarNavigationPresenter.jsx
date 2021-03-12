@@ -11,7 +11,7 @@ import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import logo from "%/assets/logo.svg";
-import doesMatchLocation from "%/utilities/doesMatchLocation";
+import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
 
 export default ({ location }) => {
     const projectMode =
@@ -53,7 +53,7 @@ export default ({ location }) => {
                         key="SideNavigation/LinkItem/Readme"
                         iconBefore={<MediaServicesDocumentIcon size="medium" />}
                         href="/"
-                        isSelected={doesMatchLocation("/", location)}
+                        isSelected={doesMatchRouterLocation("/", location)}
                     >
                         Readme
                     </LinkItem>
@@ -63,7 +63,7 @@ export default ({ location }) => {
                         key="SideNavigation/LinkItem/Users"
                         iconBefore={<PeopleIcon size="medium" />}
                         href="/users"
-                        isSelected={doesMatchLocation("/users", location)}
+                        isSelected={doesMatchRouterLocation("/users", location)}
                     >
                         Users
                     </LinkItem>

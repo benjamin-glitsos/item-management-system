@@ -1,16 +1,16 @@
 import { Router, Route, Switch } from "react-router";
 import createBrowserHistory from "history/createBrowserHistory";
-import App from "%/presenters/App";
-import ReadmePage from "%/presenters/ReadmePage";
-import UsersPage from "%/presenters/UsersPage";
+import Page from "%/presenters/Page";
+import ReadmePage from "%/components/ReadmePage";
+import UsersPage from "%/components/UsersPage";
 
 export default () => (
     <Router history={createBrowserHistory()}>
-        <App>
+        <Page>
             <Switch>
                 <Route exact path="/" component={ReadmePage} />
                 <Route path="/users" component={UsersPage} />
             </Switch>
-        </App>
+        </Page>
     </Router>
 );
