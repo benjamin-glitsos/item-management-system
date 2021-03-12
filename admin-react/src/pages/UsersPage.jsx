@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ContentMargins from "../components/ContentMargins";
+import FullwidthLayout from "../components/FullwidthLayout";
 import BreadcrumbBar from "../components/BreadcrumbBar";
 import TableActionsMenu from "../components/TableActionsMenu";
 import TableStatusBar from "../components/TableStatusBar";
@@ -109,7 +109,7 @@ export default () => {
     console.log(rows);
 
     return (
-        <ContentMargins type="wide">
+        <FullwidthLayout>
             <PageHeader
                 breadcrumbs={
                     <BreadcrumbBar
@@ -144,6 +144,6 @@ export default () => {
                 onSetPage={() => {}}
                 emptyView={<NoData />}
             />
-        </ContentMargins>
+        </FullwidthLayout>
     );
 };
