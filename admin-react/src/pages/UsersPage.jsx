@@ -20,7 +20,7 @@ export default () => {
     useEffect(async () => {
         const result = await axios({
             method: "REPORT",
-            url: "http://localhost:4073/api/v1/users/",
+            url: "http://localhost:4073/api/rest/v1/users/",
             data: {
                 page_number: 1,
                 page_length: 10

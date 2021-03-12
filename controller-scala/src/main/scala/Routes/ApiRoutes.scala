@@ -7,7 +7,7 @@ object ApiRoutes {
 
   final def apply(): Route = (AccessControl() & HandleRejections())(
     concat(
-      pathPrefix("v1")(Version1Routes()),
+      pathPrefix("rest")(RestRoutes()),
       preflightRoute()
     )
   )
