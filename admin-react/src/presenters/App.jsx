@@ -1,13 +1,17 @@
 import Page from "@atlaskit/page";
 import "@atlaskit/css-reset";
 import SidebarNavigation from "@/presenters/SidebarNavigation";
-import Location from "@/containers/Location";
 import styled from "styled-components";
+import Location from "@/containers/Location";
 import composeHooks from "react-hooks-compose";
+
+const SidebarNavigationComposition = composeHooks({ Location })(
+    SidebarNavigation
+);
 
 export default ({ children }) => (
     <FullHeight>
-        <Page navigation={<SidebarNavigation />}>{children}</Page>
+        <Page navigation={<SidebarNavigationComposition />}>{children}</Page>
     </FullHeight>
 );
 
