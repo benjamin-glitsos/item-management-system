@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import pipe from "pipe-functions";
+import { toast } from "react-toastify";
 import { Checkbox } from "@atlaskit/checkbox";
 import TableActionsMenu from "%/presenters/TableActionsMenu";
 import fromMaybe from "%/utilities/fromMaybe";
@@ -30,7 +31,10 @@ export default () => {
     }, [state.request]);
 
     useEffect(() => {
-        state.response.errors.forEach(console.error);
+        state.response.errors.forEach(e => {
+            toast.error(`${e.title}: ${e.description}`);
+            console.error(e);
+        });
     }, [state.response.errors]);
 
     const head = {
