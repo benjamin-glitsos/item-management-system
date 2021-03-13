@@ -15,7 +15,8 @@ export default ({ doesSelectionExist, action }) => {
 
 const Icon = styled.div`
     & > span {
-        margin-top: -0.05em;
+        margin-top: -2px;
+        margin-left: 1.5px;
     }
 
     & > span,
