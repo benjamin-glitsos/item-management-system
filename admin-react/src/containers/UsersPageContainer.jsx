@@ -7,6 +7,8 @@ import TableActionsMenu from "%/presenters/TableActionsMenu";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
+import isBetween from "%/utilities/isBetween";
+import Error from "%/utilities/Error";
 import toast from "%/utilities/toast";
 
 export default () => {
@@ -51,9 +53,15 @@ export default () => {
             draft.isLoading = bool;
         });
 
-    const setResponse = data =>
+    const setResponse = response =>
         setState(draft => {
-            draft.response = Object.assign(draft.response, data);
+            if (isBetween(200, response.request.status, 299)) {
+                draft.response = Object.assign(draft.response, response.data);
+            } else {
+                draft.response.errors = [
+                    new Error("error", "Error", "Something went wrong.")
+                ];
+            }
         });
 
     const setPageNumber = (event, page, analyticsEvent) =>
@@ -79,7 +87,7 @@ export default () => {
     useEffect(async () => {
         setLoading(true);
         const response = await requestListUsers(state.request.body);
-        setResponse(response.data);
+        setResponse(response);
         setLoading(false);
     }, [state.request]);
 
