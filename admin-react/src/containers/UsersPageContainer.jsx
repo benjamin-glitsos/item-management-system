@@ -7,7 +7,6 @@ import TableActionsMenu from "%/presenters/TableActionsMenu";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
-import isBetween from "%/utilities/isBetween";
 import Error from "%/utilities/Error";
 import toast from "%/utilities/toast";
 
@@ -55,13 +54,12 @@ export default () => {
 
     const setResponse = response =>
         setState(draft => {
-            if (isBetween(200, response.request.status, 299)) {
-                draft.response = Object.assign(draft.response, response.data);
-            } else {
-                draft.response.errors = [
-                    new Error("error", "Error", "Something went wrong.")
-                ];
-            }
+            draft.response = Object.assign(draft.response, response.data);
+        });
+
+    const setResponseErrors = errors =>
+        setState(draft => {
+            draft.response.errors = errors;
         });
 
     const setPageNumber = (event, page, analyticsEvent) =>
@@ -91,14 +89,19 @@ export default () => {
 
     const listUsersAction = async () => {
         setLoading(true);
-        const response = await requestListUsers(state.request.body);
-        setResponse(response);
+        try {
+            const response = await requestListUsers(state.request.body);
+            setResponse(response);
+        } catch (error) {
+            setResponseErrors([
+                new Error("error", "Error", "Something went wrong.")
+            ]);
+        }
         setLoading(false);
     };
 
     const handleErrorsAction = () =>
         state.response.errors.forEach(error => {
-            toast(error);
             console.error(error);
         });
 

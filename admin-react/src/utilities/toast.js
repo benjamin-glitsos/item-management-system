@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 
 export default error =>
-    toast(`${error.title}: ${error.description}`, {
-        type: toast.type.ERROR,
+    toast.error(`${error.title}: ${error.description}`, {
         position: "bottom-right"
     });
