@@ -4,6 +4,7 @@ import axios from "axios";
 import pipe from "pipe-functions";
 import { Checkbox } from "@atlaskit/checkbox";
 import TableActionsMenu from "%/presenters/TableActionsMenu";
+import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
@@ -118,7 +119,12 @@ export default () => {
         cells: [
             {
                 key: "isSelected",
-                content: null,
+                content: (
+                    <RemoveAllSelected
+                        doesSelectionExist={state.selected.length > 0}
+                        action={setRemoveAllSelected}
+                    />
+                ),
                 isSortable: false,
                 width: 3
             },
