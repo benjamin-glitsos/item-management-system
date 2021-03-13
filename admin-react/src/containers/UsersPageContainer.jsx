@@ -9,7 +9,6 @@ import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
 import Error from "%/utilities/Error";
-import toast from "%/utilities/toast";
 import config from "%/config";
 
 export default () => {

@@ -5,7 +5,7 @@ export default ({ doesSelectionExist, action }) => {
     if (doesSelectionExist) {
         return (
             <Icon onClick={action}>
-                <EditorCloseIcon size="small" />
+                <EditorCloseIcon size="small" label="Clear all selections." />
             </Icon>
         );
     } else {
