@@ -14,10 +14,12 @@ if [[ "$ADMIN_RUN" == "yes" ]]; then
     case "$PROJECT_MODE" in
         "development" )
             FORCE_COLOR=true
-            npm start | cat
+            npm run start | cat
         ;;
         "production" )
-            npm build
+            # npm run build
+            FORCE_COLOR=true
+            npm run start | cat
         ;;
         * )
             echo "Project mode is not recognised."
