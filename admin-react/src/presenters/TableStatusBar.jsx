@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import numbersToWords from "number-to-words";
 import fromMaybe from "%/utilities/fromMaybe";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
@@ -11,23 +12,18 @@ export default ({
     totalItemsCount,
     numberOfSelected
 }) => {
-    if (
-        [
-            currentPage,
-            pageLength,
-            totalPages,
-            itemRangeStart,
-            itemRangeEnd,
-            totalItemsCount,
-            numberOfSelected
-        ].some(x => x)
-    ) {
-        return "";
-    } else if (numberOfSelected === 0) {
-        return `Showing page ${currentPage} of ${totalPages} total pages, and items ${itemRangeStart} to ${itemRangeEnd} of ${totalItemsCount} total items, with ${pageLength} items per page.`;
+    if (numberOfSelected === 0) {
+        return (
+            <Fragment>
+                Showing items {itemRangeStart}
+                &ndash;{itemRangeEnd} of total {totalItemsCount}.
+            </Fragment>
+        );
     } else {
-        return `${capitaliseFirstLetter(
-            numbersToWords.toWords(numberOfSelected)
-        )} selected.`;
+        return;
+        <Fragment>
+            {capitaliseFirstLetter(numbersToWords.toWords(numberOfSelected))}{" "}
+            selected.
+        </Fragment>;
     }
 };
