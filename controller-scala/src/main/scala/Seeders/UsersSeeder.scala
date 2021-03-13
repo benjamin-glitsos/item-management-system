@@ -52,7 +52,7 @@ object UsersSeeder extends SeederTrait {
             val person: Person = fairy.person()
             person.getMiddleName
           }
-        ).mkString(" ")
+        ).mkString(" ").trim()
       )
       val password: String      = generatePassword(length = 15)
       val notes: Option[String] = MarkdownIpsum(text)
