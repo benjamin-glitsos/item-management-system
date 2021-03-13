@@ -9,9 +9,10 @@ import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
 import Error from "%/utilities/Error";
 import toast from "%/utilities/toast";
+import config from "%/config";
 
 export default () => {
-    const apiPath = "http://localhost:4073/api/rest/v1/users/";
+    const apiUrl = config.serverUrl + "v1/users/";
 
     const [state, setState] = useImmer({
         request: {
@@ -33,14 +34,14 @@ export default () => {
     const requestListUsers = body =>
         axios({
             method: "REPORT",
-            url: apiPath,
+            url: apiUrl,
             data: body
         });
 
     const requestDeleteUsers = (method, usernames) =>
         axios({
             method: "DELETE",
-            url: apiPath,
+            url: apiUrl,
             data: {
                 method,
                 usernames
