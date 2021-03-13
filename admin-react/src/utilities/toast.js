@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
-export default e =>
-    toast(`${e.title}: ${e.description}`, {
+export default error =>
+    toast(`${error.title}: ${error.description}`, {
         type: toast.type.ERROR,
         position: "bottom-right"
     });

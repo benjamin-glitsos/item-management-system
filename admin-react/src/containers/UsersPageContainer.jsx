@@ -84,6 +84,11 @@ export default () => {
             }
         });
 
+    const setRemoveAllSelected = () =>
+        setState(draft => {
+            draft.selected = [];
+        });
+
     const listUsersAction = async () => {
         setLoading(true);
         const response = await requestListUsers(state.request.body);
@@ -92,19 +97,20 @@ export default () => {
     };
 
     const handleErrorsAction = () =>
-        state.response.errors.forEach(e => {
-            toast(e);
-            console.error(e);
+        state.response.errors.forEach(error => {
+            toast(error);
+            console.error(error);
         });
 
     const deleteUsersAction = async (method, usernames) => {
         await requestDeleteUsers(method, usernames);
         await listUsersAction();
+        setRemoveAllSelected();
     };
 
-    useEffect(() => listUsersAction(), [state.request]);
+    useEffect(listUsersAction, [state.request]);
 
-    useEffect(() => handleErrorsAction(), [state.response.errors]);
+    useEffect(handleErrorsAction, [state.response.errors]);
 
     const head = {
         cells: [
@@ -172,7 +178,7 @@ export default () => {
             row => [
                 <Checkbox
                     isChecked={state.selected.includes(row[0])}
-                    onChange={e => setSelected(row[0])}
+                    onChange={() => setSelected(row[0])}
                 />,
                 ...row,
                 <TableActionsMenu
