@@ -11,7 +11,14 @@ import NoData from "%/presenters/NoData";
 import ActionsBar from "%/presenters/ActionsBar";
 import enumerateToNumber from "%/utilities/enumerateToNumber";
 
-export default ({ head, rows, state, setPageNumber, setPageLength }) => (
+export default ({
+    head,
+    rows,
+    state,
+    requestDeleteUsers,
+    setPageNumber,
+    setPageLength
+}) => (
     <FullwidthLayout>
         <PageHeader
             breadcrumbs={
@@ -22,11 +29,21 @@ export default ({ head, rows, state, setPageNumber, setPageLength }) => (
                     ]}
                 />
             }
-            actions={<ActionsBar />}
+            actions={
+                <ActionsBar
+                    isDeletable={state.selected.length > 0}
+                    softDeleteAction={e =>
+                        requestDeleteUsers("soft", state.selected)
+                    }
+                    hardDeleteAction={e =>
+                        requestDeleteUsers("hard", state.selected)
+                    }
+                />
+            }
             bottomBar={
                 <TableStatusBar
-                    currentPage={state.request.data.page_number}
-                    pageLength={state.request.data.page_length}
+                    currentPage={state.request.body.page_number}
+                    pageLength={state.request.body.page_length}
                     totalPages={state.response.data.total_pages}
                     itemRangeStart={state.response.data.range_start}
                     itemRangeEnd={state.response.data.range_end}
@@ -63,8 +80,8 @@ export default ({ head, rows, state, setPageNumber, setPageLength }) => (
                                 label: n,
                                 value: n
                             }))}
-                            value={state.request.data.page_length}
-                            placeholder={state.request.data.page_length}
+                            value={state.request.body.page_length}
+                            placeholder={state.request.body.page_length}
                             onChange={setPageLength}
                         />
                     </PageLengthStyles>

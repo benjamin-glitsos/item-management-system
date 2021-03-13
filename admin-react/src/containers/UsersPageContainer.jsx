@@ -10,11 +10,11 @@ import friendlyName from "%/utilities/friendlyName";
 import toast from "%/utilities/toast";
 
 export default () => {
+    const apiPath = "http://localhost:4073/api/rest/v1/users/";
+
     const [state, setState] = useImmer({
         request: {
-            method: "REPORT",
-            url: "http://localhost:4073/api/rest/v1/users/",
-            data: {
+            body: {
                 page_number: 1,
                 page_length: 10
             }
@@ -29,6 +29,23 @@ export default () => {
         selected: []
     });
 
+    const requestListUsers = body =>
+        axios({
+            method: "REPORT",
+            url: apiPath,
+            data: body
+        });
+
+    const requestDeleteUsers = (method, usernames) =>
+        axios({
+            method: "DELETE",
+            url: apiPath,
+            data: {
+                method,
+                usernames
+            }
+        });
+
     const setLoading = bool =>
         setState(draft => {
             draft.isLoading = bool;
@@ -41,13 +58,13 @@ export default () => {
 
     const setPageNumber = (event, page, analyticsEvent) =>
         setState(draft => {
-            draft.request.data.page_number = page;
+            draft.request.body.page_number = page;
         });
 
     const setPageLength = selectedOption =>
         setState(draft => {
-            draft.request.data.page_number = 1;
-            draft.request.data.page_length = selectedOption.value;
+            draft.request.body.page_number = 1;
+            draft.request.body.page_length = selectedOption.value;
         });
 
     const setSelected = key =>
@@ -61,7 +78,7 @@ export default () => {
 
     useEffect(async () => {
         setLoading(true);
-        const response = await axios(state.request);
+        const response = await requestListUsers(state.request.body);
         setResponse(response.data);
         setLoading(false);
     }, [state.request]);
@@ -142,7 +159,10 @@ export default () => {
                     onChange={e => setSelected(row[0])}
                 />,
                 ...row,
-                <TableActionsMenu />
+                <TableActionsMenu
+                    softDeleteAction={() => console.log("wow")}
+                    hardDeleteAction={e => requestDeleteUsers("soft", [row[0]])}
+                />
             ],
             x =>
                 x.map((x, i) => ({
@@ -152,5 +172,12 @@ export default () => {
         )
     }));
 
-    return { head, rows, state, setPageNumber, setPageLength };
+    return {
+        head,
+        rows,
+        state,
+        requestDeleteUsers,
+        setPageNumber,
+        setPageLength
+    };
 };
