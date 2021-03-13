@@ -75,20 +75,22 @@ export default ({ head, rows, state, setPageNumber, setPageLength }) => (
 );
 
 const TableControlsStyles = styled.div`
-    div {
-        margin-left: 0;
-        margin-right: 0;
+    & > div {
+        max-width: none;
+        padding-left: 0;
+        padding-right: 0;
     }
 `;
 
 const PageNumberStyles = styled.div`
-    div {
+    & > div {
         justify-content: center;
     }
 `;
 
 const PageLengthStyles = styled.div`
-    div {
+    & > div {
         justify-content: right;
+        margin-right: -8px;
     }
 `;
