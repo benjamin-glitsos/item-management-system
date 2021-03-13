@@ -20,10 +20,13 @@ export default ({
             </Fragment>
         );
     } else {
-        return;
-        <Fragment>
-            {capitaliseFirstLetter(numbersToWords.toWords(numberOfSelected))}{" "}
-            selected.
-        </Fragment>;
+        return (
+            <Fragment>
+                {capitaliseFirstLetter(
+                    numbersToWords.toWords(numberOfSelected)
+                )}{" "}
+                items selected.
+            </Fragment>
+        );
     }
 };

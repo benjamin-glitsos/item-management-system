@@ -50,7 +50,14 @@ export default () => {
             draft.request.data.page_length = selectedOption.value;
         });
 
-    const setSelected = key => setState(draft => {});
+    const setSelected = key =>
+        setState(draft => {
+            if (!draft.selected.includes(key)) {
+                draft.selected.push(key);
+            } else {
+                draft.selected = draft.selected.filter(x => x !== key);
+            }
+        });
 
     useEffect(async () => {
         setLoading(true);
@@ -130,7 +137,10 @@ export default () => {
                 friendlyDate(fromMaybe(editedAt))
             ],
             row => [
-                <Checkbox isChecked={true} onChange={e => e} />,
+                <Checkbox
+                    isChecked={state.selected.includes(row[0])}
+                    onChange={e => setSelected(row[0])}
+                />,
                 ...row,
                 <TableActionsMenu />
             ],
