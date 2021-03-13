@@ -8,7 +8,7 @@ export default ({ softDeleteAction, hardDeleteAction }) => (
             <DropdownItemGroup>
                 {/* <DropdownItem>Edit</DropdownItem> */}
                 <DropdownItem>
-                    <div onClick={() => console.log("wow")}>Delete</div>
+                    <div onClick={softDeleteAction}>Delete</div>
                 </DropdownItem>
                 <DropdownItem onClick={hardDeleteAction}>
                     Hard Delete

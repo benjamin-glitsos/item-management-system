@@ -84,19 +84,27 @@ export default () => {
             }
         });
 
-    useEffect(async () => {
+    const listUsersAction = async () => {
         setLoading(true);
         const response = await requestListUsers(state.request.body);
         setResponse(response);
         setLoading(false);
-    }, [state.request]);
+    };
 
-    useEffect(() => {
+    const handleErrorsAction = () =>
         state.response.errors.forEach(e => {
             toast(e);
             console.error(e);
         });
-    }, [state.response.errors]);
+
+    const deleteUsersAction = async (method, usernames) => {
+        await requestDeleteUsers(method, usernames);
+        await listUsersAction();
+    };
+
+    useEffect(() => listUsersAction(), [state.request]);
+
+    useEffect(() => handleErrorsAction(), [state.response.errors]);
 
     const head = {
         cells: [
@@ -168,8 +176,8 @@ export default () => {
                 />,
                 ...row,
                 <TableActionsMenu
-                    softDeleteAction={() => console.log("wow")}
-                    hardDeleteAction={e => requestDeleteUsers("soft", [row[0]])}
+                    softDeleteAction={() => deleteUsersAction("soft", [row[0]])}
+                    hardDeleteAction={() => deleteUsersAction("hard", [row[0]])}
                 />
             ],
             x =>
@@ -184,8 +192,8 @@ export default () => {
         head,
         rows,
         state,
-        requestDeleteUsers,
         setPageNumber,
-        setPageLength
+        setPageLength,
+        deleteUsersAction
     };
 };

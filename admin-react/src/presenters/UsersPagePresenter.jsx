@@ -15,9 +15,9 @@ export default ({
     head,
     rows,
     state,
-    requestDeleteUsers,
     setPageNumber,
-    setPageLength
+    setPageLength,
+    deleteUsersAction
 }) => (
     <FullwidthLayout>
         <PageHeader
@@ -32,11 +32,11 @@ export default ({
             actions={
                 <ActionsBar
                     isDeletable={state.selected.length > 0}
-                    softDeleteAction={e =>
-                        requestDeleteUsers("soft", state.selected)
+                    softDeleteAction={() =>
+                        deleteUsersAction("soft", state.selected)
                     }
-                    hardDeleteAction={e =>
-                        requestDeleteUsers("hard", state.selected)
+                    hardDeleteAction={() =>
+                        deleteUsersAction("hard", state.selected)
                     }
                 />
             }
