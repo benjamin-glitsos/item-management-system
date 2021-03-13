@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useImmer } from "use-immer";
 import axios from "axios";
 import pipe from "pipe-functions";
 import { Checkbox } from "@atlaskit/checkbox";
@@ -9,7 +10,7 @@ import friendlyName from "%/utilities/friendlyName";
 import toast from "%/utilities/toast";
 
 export default () => {
-    const [state, setState] = useState({
+    const [state, setState] = useImmer({
         request: {
             method: "REPORT",
             url: "http://localhost:4073/api/rest/v1/users/",
@@ -19,15 +20,24 @@ export default () => {
             }
         },
         response: {
-            data: {},
+            data: {
+                items: []
+            },
             errors: []
         },
+        isLoading: false,
         selected: []
     });
 
     useEffect(async () => {
+        setState(draft => {
+            draft.isLoading = true;
+        });
         const response = await axios(state.request);
-        setState(state => ({ ...state, response: response.data }));
+        setState(draft => {
+            draft.response = Object.assign(draft.response, response.data);
+            draft.isLoading = false;
+        });
     }, [state.request]);
 
     useEffect(() => {
@@ -81,7 +91,8 @@ export default () => {
         ]
     };
 
-    const rows = state.response.data.data.map((row, i) => ({
+    console.log(state);
+    const rows = state.response.data.items.map((row, i) => ({
         key: `UsersTable/Row/${i}`,
         cells: pipe(
             row,

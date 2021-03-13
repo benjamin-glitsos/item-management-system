@@ -1,5 +1,5 @@
 import { Router, Route, Switch } from "react-router";
-import createBrowserHistory from "history/createBrowserHistory";
+import { createBrowserHistory } from "history";
 import Page from "%/presenters/Page";
 import ReadmePage from "%/components/ReadmePage";
 import UsersPage from "%/components/UsersPage";

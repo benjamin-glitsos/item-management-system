@@ -20,7 +20,7 @@ export default ({
             itemRangeEnd,
             totalItemsCount,
             numberOfSelected
-        ].some(x => !!fromMaybe(x))
+        ].some(x => x)
     ) {
         return "";
     } else if (numberOfSelected === 0) {

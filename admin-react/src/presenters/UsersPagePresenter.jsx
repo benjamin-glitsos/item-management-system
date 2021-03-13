@@ -1,4 +1,5 @@
 import DynamicTable from "@atlaskit/dynamic-table";
+import Pagination from "@atlaskit/pagination";
 import PageHeader from "@atlaskit/page-header";
 import FullwidthLayout from "%/presenters/FullwidthLayout";
 import BreadcrumbBar from "%/presenters/BreadcrumbBar";
@@ -35,15 +36,19 @@ export default ({ state, setState, head, rows }) => (
         <DynamicTable
             head={head}
             rows={rows}
-            rowsPerPage={10}
-            defaultPage={1}
-            loadingSpinnerSize="large"
-            isLoading={false}
-            isFixedSize
-            defaultSortKey="term"
-            defaultSortOrder="ASC"
-            onSetPage={() => {}}
+            isLoading={state.isLoading}
             emptyView={<NoData />}
+        />
+        <Pagination
+            pages={[...Array(7).keys()].map(n => n + 1)}
+            onChange={(event, page, analyticsEvent) =>
+                setState(draft => {
+                    draft.request.data.page_number = page;
+                })
+            }
         />
     </FullwidthLayout>
 );
+// rowsPerPage={state.request.data.page_length}
+// defaultPage={state.request.data.page_number}
+// onSetPage={() => {}}

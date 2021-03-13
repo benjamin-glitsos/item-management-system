@@ -6,11 +6,10 @@ import SidebarNavigation from "%/components/SidebarNavigation";
 
 export default ({ children }) => (
     <FullHeight>
-        <Page navigation={<SidebarNavigation />}>
-            <ToastContainer>{children}</ToastContainer>
-        </Page>
+        <Page navigation={<SidebarNavigation />}>{children}</Page>
     </FullHeight>
 );
+// <ToastContainer>{children}</ToastContainer>
 
 const FullHeight = styled.div`
     height: 100vh;
