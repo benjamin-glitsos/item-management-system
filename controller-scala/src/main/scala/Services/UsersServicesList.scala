@@ -1,6 +1,10 @@
 import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
+import doobie._
+import cats._
+import cats.effect._
+import cats.implicits._
 import upickle.default._
 import upickle_bundle.general._
 
@@ -11,12 +15,11 @@ trait UsersServicesList {
         (for {
           totalItems <- UsersDAO.count().map(_.toInt)
 
-          val _: Unit = {
+          _ <- {
             if (
               totalItems <= 10 && System.getenv("PROJECT_MODE") != "production"
-            ) {
-              UsersSeeder()
-            }
+            ) { UsersSeeder() }
+            ().pure[ConnectionIO]
           }
 
           val offset: Int     = (pageNumber - 1) * pageLength
