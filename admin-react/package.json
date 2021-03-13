@@ -34,6 +34,7 @@
         "react-scripts": "4.0.3",
         "react-toastify": "^7.0.3",
         "simple-maybe": "^1.4.0",
+        "simplur": "^3.0.0",
         "styled-components": "^5.2.1",
         "use-immer": "^0.4.2"
     },

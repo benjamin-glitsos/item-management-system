@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import numbersToWords from "number-to-words";
+import simplur from "simplur";
 import fromMaybe from "%/utilities/fromMaybe";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
@@ -20,12 +21,14 @@ export default ({
             </Fragment>
         );
     } else {
+        const numberToWorded = n =>
+            capitaliseFirstLetter(numbersToWords.toWords(n));
         return (
             <Fragment>
-                {capitaliseFirstLetter(
-                    numbersToWords.toWords(numberOfSelected)
-                )}{" "}
-                items selected.
+                {simplur`${[
+                    numberOfSelected,
+                    numberToWorded
+                ]} item[|s] selected.`}
             </Fragment>
         );
     }
