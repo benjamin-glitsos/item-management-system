@@ -13,6 +13,7 @@
         "@atlaskit/page": "^12.0.5",
         "@atlaskit/page-header": "^10.0.7",
         "@atlaskit/pagination": "^13.0.10",
+        "@atlaskit/select": "^13.2.0",
         "@atlaskit/side-navigation": "^0.8.1",
         "@atlaskit/theme": "^11.0.2",
         "@baristalabs/craco-raw-loader": "^1.2.0",

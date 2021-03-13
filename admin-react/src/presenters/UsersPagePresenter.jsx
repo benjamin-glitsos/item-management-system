@@ -1,13 +1,15 @@
 import DynamicTable from "@atlaskit/dynamic-table";
-import Pagination from "@atlaskit/pagination";
 import PageHeader from "@atlaskit/page-header";
+import Pagination from "@atlaskit/pagination";
+import Select from "@atlaskit/select";
 import FullwidthLayout from "%/presenters/FullwidthLayout";
 import BreadcrumbBar from "%/presenters/BreadcrumbBar";
 import TableStatusBar from "%/presenters/TableStatusBar";
 import NoData from "%/presenters/NoData";
 import ActionsBar from "%/presenters/ActionsBar";
+import enumerateToNumber from "%/utilities/enumerateToNumber";
 
-export default ({ state, setState, head, rows }) => (
+export default ({ head, rows, state, setPageNumber, setPageLength }) => (
     <FullwidthLayout>
         <PageHeader
             breadcrumbs={
@@ -40,15 +42,17 @@ export default ({ state, setState, head, rows }) => (
             emptyView={<NoData />}
         />
         <Pagination
-            pages={[...Array(7).keys()].map(n => n + 1)}
-            onChange={(event, page, analyticsEvent) =>
-                setState(draft => {
-                    draft.request.data.page_number = page;
-                })
-            }
+            pages={enumerateToNumber(state.response.data.total_pages)}
+            onChange={setPageNumber}
+        />
+        <Select
+            options={[10, 25, 50, 100].map(n => ({
+                label: n,
+                value: n
+            }))}
+            value={state.request.data.page_length}
+            placeholder={state.request.data.page_length}
+            onChange={setPageLength}
         />
     </FullwidthLayout>
 );
-// rowsPerPage={state.request.data.page_length}
-// defaultPage={state.request.data.page_number}
-// onSetPage={() => {}}

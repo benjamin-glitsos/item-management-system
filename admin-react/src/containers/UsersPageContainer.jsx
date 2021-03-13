@@ -91,7 +91,6 @@ export default () => {
         ]
     };
 
-    console.log(state);
     const rows = state.response.data.items.map((row, i) => ({
         key: `UsersTable/Row/${i}`,
         cells: pipe(
@@ -120,5 +119,16 @@ export default () => {
         )
     }));
 
-    return { state, setState, head, rows };
+    const setPageNumber = (event, page, analyticsEvent) =>
+        setState(draft => {
+            draft.request.data.page_number = page;
+        });
+
+    const setPageLength = selectedOption =>
+        setState(draft => {
+            draft.request.data.page_number = 1;
+            draft.request.data.page_length = selectedOption.value;
+        });
+
+    return { head, rows, state, setPageNumber, setPageLength };
 };
