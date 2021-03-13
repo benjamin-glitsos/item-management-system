@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useImmer } from "use-immer";
 import axios from "axios";
 import pipe from "pipe-functions";
@@ -29,15 +29,34 @@ export default () => {
         selected: []
     });
 
+    const setLoading = bool =>
+        setState(draft => {
+            draft.isLoading = bool;
+        });
+
+    const setResponse = data =>
+        setState(draft => {
+            draft.response = Object.assign(draft.response, data);
+        });
+
+    const setPageNumber = (event, page, analyticsEvent) =>
+        setState(draft => {
+            draft.request.data.page_number = page;
+        });
+
+    const setPageLength = selectedOption =>
+        setState(draft => {
+            draft.request.data.page_number = 1;
+            draft.request.data.page_length = selectedOption.value;
+        });
+
+    const setSelected = key => setState(draft => {});
+
     useEffect(async () => {
-        setState(draft => {
-            draft.isLoading = true;
-        });
+        setLoading(true);
         const response = await axios(state.request);
-        setState(draft => {
-            draft.response = Object.assign(draft.response, response.data);
-            draft.isLoading = false;
-        });
+        setResponse(response.data);
+        setLoading(false);
     }, [state.request]);
 
     useEffect(() => {
@@ -110,7 +129,11 @@ export default () => {
                 friendlyDate(createdAt),
                 friendlyDate(fromMaybe(editedAt))
             ],
-            row => [<Checkbox />, ...row, <TableActionsMenu />],
+            row => [
+                <Checkbox isChecked={true} onChange={e => e} />,
+                ...row,
+                <TableActionsMenu />
+            ],
             x =>
                 x.map((x, i) => ({
                     key: `UsersTable/Cell/${i}`,
@@ -118,17 +141,6 @@ export default () => {
                 }))
         )
     }));
-
-    const setPageNumber = (event, page, analyticsEvent) =>
-        setState(draft => {
-            draft.request.data.page_number = page;
-        });
-
-    const setPageLength = selectedOption =>
-        setState(draft => {
-            draft.request.data.page_number = 1;
-            draft.request.data.page_length = selectedOption.value;
-        });
 
     return { head, rows, state, setPageNumber, setPageLength };
 };
