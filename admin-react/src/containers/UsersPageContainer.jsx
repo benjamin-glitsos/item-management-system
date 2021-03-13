@@ -101,9 +101,7 @@ export default () => {
     };
 
     const handleErrorsAction = () =>
-        state.response.errors.forEach(error => {
-            console.error(error);
-        });
+        state.response.errors.forEach(console.error);
 
     const deleteUsersAction = async (method, usernames) => {
         await requestDeleteUsers(method, usernames);
