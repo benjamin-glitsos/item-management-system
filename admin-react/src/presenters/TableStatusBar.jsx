@@ -13,7 +13,9 @@ export default ({
     totalItemsCount,
     numberOfSelected
 }) => {
-    if (numberOfSelected === 0) {
+    if (totalItemsCount === undefined || totalItemsCount === null) {
+        return null;
+    } else if (numberOfSelected === 0) {
         return (
             <Fragment>
                 Showing items {itemRangeStart}
