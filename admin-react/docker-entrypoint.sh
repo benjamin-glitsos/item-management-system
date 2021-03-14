@@ -13,7 +13,8 @@ if [[ "$ADMIN_RUN" == "yes" ]]; then
     cd /app
     case "$PROJECT_MODE" in
         "development" )
-            FORCE_COLOR=true
+            export FORCE_COLOR=true
+            export PORT=$ADMIN_PORT
             npm run start | cat
         ;;
         "production" )
