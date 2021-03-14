@@ -40,4 +40,4 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - ${ADMIN_PORT}:3000
+      - ${ADMIN_PORT}:${ADMIN_PORT}
