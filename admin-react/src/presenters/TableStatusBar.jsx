@@ -14,7 +14,7 @@ export default ({
     numberOfSelected
 }) => {
     if (totalItemsCount === undefined || totalItemsCount === null) {
-        return null;
+        return "Zero items.";
     } else if (numberOfSelected === 0) {
         return (
             <Fragment>
