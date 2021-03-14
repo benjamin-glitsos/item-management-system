@@ -5,8 +5,9 @@ import akka.http.scaladsl.model.headers.RawHeader
 object AccessControl {
   def apply(): Directive0 = {
     val allowOriginUrl = if (System.getenv("PROJECT_MODE") == "production") {
-      val adminDomain = System.getenv("PROJECT_DOMAIN")
-      s"https://$adminDomain"
+      val projectDomain  = System.getenv("PROJECT_DOMAIN")
+      val adminSubdomain = System.getenv("ADMIN_SUBDOMAIN")
+      s"https://$adminSubdomain.$projectDomain"
     } else {
       val adminPort = System.getenv("ADMIN_PORT")
       s"http://localhost:$adminPort"
