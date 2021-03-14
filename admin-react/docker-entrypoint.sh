@@ -17,9 +17,8 @@ if [[ "$ADMIN_RUN" == "yes" ]]; then
             npm run start | cat
         ;;
         "production" )
-            # npm run build
-            FORCE_COLOR=true
-            npm run start | cat
+            npm run build
+            serve -s ./build -l $ADMIN_PORT
         ;;
         * )
             echo "Project mode is not recognised."
