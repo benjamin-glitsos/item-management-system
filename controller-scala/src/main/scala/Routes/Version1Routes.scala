@@ -6,7 +6,7 @@ object Version1Routes {
   final def apply(): Route = (AccessControl() & HandleRejections())(
     concat(
       pathPrefix("users")(UsersRoutes()),
-      PreflightRoutes(),
+      CorsRoutes.preflight(),
       RejectionRoutes.notFound()
     )
   )
