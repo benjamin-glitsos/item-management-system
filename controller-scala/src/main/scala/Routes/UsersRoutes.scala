@@ -7,7 +7,7 @@ import CustomMethodDirectives._
 
 object UsersRoutes {
   private final def rootRoutes(): Route = concat(
-    report(
+    report {
       Validation("list-users") { body: ujson.Value =>
         {
           val pageNumber: Int = body("page_number").num.toInt
@@ -16,8 +16,8 @@ object UsersRoutes {
           complete(UsersServices.list(pageNumber, pageLength))
         }
       }
-    ),
-    post(
+    },
+    post {
       Validation("create-user") { body: ujson.Value =>
         val username: String     = body("username").str
         val emailAddress: String = body("email_address").str
@@ -40,8 +40,8 @@ object UsersRoutes {
           )
         )
       }
-    ),
-    delete(
+    },
+    delete {
       Validation("delete-users") { body: ujson.Value =>
         {
           val method: String          = body("method").str
@@ -50,18 +50,18 @@ object UsersRoutes {
           complete(UsersServices.delete(method, usernames))
         }
       }
-    )
+    }
   )
 
   private final def usernameRoutes(): Route = pathPrefix(Segment) {
     username: String =>
       concat(
-        get(
+        get {
           Validation("open-user") { body: ujson.Value =>
             complete(UsersServices.open(username))
           }
-        ),
-        patch(
+        },
+        patch {
           Validation("edit-user") { body: ujson.Value =>
             {
               val newUsername: Option[String] =
@@ -91,7 +91,7 @@ object UsersRoutes {
               )
             }
           }
-        )
+        }
       )
   }
 
