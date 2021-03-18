@@ -11,7 +11,6 @@ import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
-import file from "%/utilities/publicFile";
 
 export default ({ location }) => {
     const projectMode =
@@ -32,7 +31,9 @@ export default ({ location }) => {
                         )}
                         iconBefore={
                             <AppLogo
-                                src={file("/images/logo.svg")}
+                                src={
+                                    process.env.PUBLIC_URL + "/images/logo.svg"
+                                }
                                 alt={`${projectName} logo`}
                             />
                         }

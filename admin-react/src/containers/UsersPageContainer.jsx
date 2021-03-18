@@ -14,7 +14,7 @@ import config from "%/config";
 export default () => {
     const apiUrl = config.serverUrl + "v1/users/";
 
-    const [state, setState] = useImmer({
+    const defaultState = {
         request: {
             body: {
                 page_number: 1,
@@ -29,7 +29,9 @@ export default () => {
         },
         isLoading: false,
         selected: []
-    });
+    };
+
+    const [state, setState] = useImmer(defaultState);
 
     const requestListUsers = body =>
         axios({
