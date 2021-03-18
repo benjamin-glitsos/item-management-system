@@ -10,8 +10,8 @@ import {
 import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
-import logo from "%/assets/logo.svg";
 import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
+import file from "%/utilities/publicFile";
 
 export default ({ location }) => {
     const projectMode =
@@ -31,7 +31,10 @@ export default ({ location }) => {
                             </LinkItem>
                         )}
                         iconBefore={
-                            <AppLogo src={logo} alt={`${projectName} logo`} />
+                            <AppLogo
+                                src={file("/logo.svg")}
+                                alt={`${projectName} logo`}
+                            />
                         }
                         description={
                             <Fragment>
