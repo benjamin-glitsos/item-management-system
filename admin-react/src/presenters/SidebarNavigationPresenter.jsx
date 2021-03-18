@@ -32,7 +32,7 @@ export default ({ location }) => {
                         )}
                         iconBefore={
                             <AppLogo
-                                src={file("/logo.svg")}
+                                src={file("/images/logo.svg")}
                                 alt={`${projectName} logo`}
                             />
                         }
