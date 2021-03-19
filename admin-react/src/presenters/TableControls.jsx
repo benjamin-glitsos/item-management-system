@@ -3,11 +3,12 @@ import HorizontalRule from "%/presenters/HorizontalRule";
 import { Grid, GridColumn } from "@atlaskit/page";
 import Pagination from "@atlaskit/pagination";
 import Select from "@atlaskit/select";
-import enumerateToNumber from "%/utilities/enumerateToNumber";
+import enumerate from "%/utilities/enumerate";
 
 export default ({
     isLoading,
     totalPages,
+    pageNumber,
     pageLength,
     setPageNumber,
     setPageLength
@@ -20,7 +21,8 @@ export default ({
                     <GridColumn medium={10}>
                         <PageNumberStyles>
                             <Pagination
-                                pages={enumerateToNumber(totalPages)}
+                                pages={enumerate(totalPages)}
+                                selectedIndex={pageNumber - 1}
                                 onChange={setPageNumber}
                             />
                         </PageNumberStyles>

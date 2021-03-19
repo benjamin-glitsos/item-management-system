@@ -61,6 +61,7 @@ export default ({
         <TableControls
             isLoading={state.isLoading}
             totalPages={state.response.data.total_pages}
+            pageNumber={state.request.body.page_number}
             pageLength={state.request.body.page_length}
             setPageNumber={setPageNumber}
             setPageLength={setPageLength}

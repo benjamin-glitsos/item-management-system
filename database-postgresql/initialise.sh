@@ -7,9 +7,11 @@ cat_sql() {
 psql << SQL
 $(cat_sql /extensions/*)
 $(cat_sql /domains/*)
-$(cat_sql /functions/*)
+$(cat_sql /functions/generate-random-metakey)
+$(cat_sql /functions/sha1-encrypt)
 $(cat_sql /tables/meta)
 $(cat_sql /tables/users)
 $(cat_sql /views/*)
+$(cat_sql /functions/insert-into-users-with-meta)
 $(cat_sql /triggers/*)
 SQL

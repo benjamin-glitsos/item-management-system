@@ -1,32 +1,17 @@
 CREATE FUNCTION users_with_meta_trigger()
-RETURNS TRIGGER AS $$
+RETURNS trigger
+AS $$
 BEGIN
-    -- Insert --
     IF TG_OP = 'INSERT' THEN
-        WITH insert_meta AS (
-            INSERT INTO meta (metakey, notes)
-            VALUES (generate_random_metakey('users'), NEW.notes)
-            RETURNING id
-        )
-        INSERT INTO users (
-            username
-          , email_address
-          , first_name
-          , last_name
-          , other_names
-          , password
-          , meta_id
-        )
-        VALUES (
-            NEW.username
-          , NEW.email_address
-          , NEW.first_name
-          , NEW.last_name
-          , NEW.other_names
-          , sha1_encrypt(NEW.password)
-          , (SELECT id FROM insert_meta)
+        PERFORM insert_into_users_with_meta(
+              NEW.username
+            , NEW.email_address
+            , NEW.first_name
+            , NEW.last_name
+            , NEW.other_names
+            , NEW.password
+            , NEW.notes
         );
-        RETURN null;
 
     -- Open --
     ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
