@@ -3,7 +3,7 @@ RETURNS trigger
 AS $$
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        PERFORM insert_into_users_with_meta(
+        PERFORM insert_for_users_with_meta(
               NEW.username
             , NEW.email_address
             , NEW.first_name
@@ -13,25 +13,15 @@ BEGIN
             , NEW.notes
         );
 
-    -- Open --
     ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
-        UPDATE meta SET opens=OLD.opens + 1
-        WHERE id=(
-            SELECT meta_id
-            FROM users
-            WHERE username=OLD.username
+        PERFORM open_for_users_with_meta(
+              OLD.username
         );
-        RETURN null;
 
-    -- Soft Delete --
     ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted=true AND OLD.is_deleted=false THEN
-        UPDATE meta SET is_deleted=true, deleted_at=NOW(), edits=edits + 1
-        WHERE id=(
-            SELECT meta_id
-            FROM users
-            WHERE username=OLD.username
+        PERFORM soft_delete_for_users_with_meta(
+              OLD.username
         );
-        RETURN null;
 
     -- Restore Delete --
     ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted=false AND OLD.is_deleted=true THEN

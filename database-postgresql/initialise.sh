@@ -12,6 +12,6 @@ $(cat_sql /functions/sha1-encrypt)
 $(cat_sql /tables/meta)
 $(cat_sql /tables/users)
 $(cat_sql /views/*)
-$(cat_sql /functions/insert-into-users-with-meta)
+$(cat_sql /functions/*-for-users-with-meta)
 $(cat_sql /triggers/*)
 SQL
