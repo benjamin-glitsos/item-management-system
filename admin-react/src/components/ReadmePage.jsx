@@ -3,6 +3,7 @@ import PageHeader from "@atlaskit/page-header";
 import readme from "%/assets/README.md";
 import ArticleLayout from "%/presenters/ArticleLayout";
 import BreadcrumbBar from "%/presenters/BreadcrumbBar";
+import GithubButton from "%/presenters/GithubButton";
 
 export default () => (
     <ArticleLayout>
@@ -12,5 +13,6 @@ export default () => (
             Readme
         </PageHeader>
         <ReactMarkdown>{readme}</ReactMarkdown>
+        <GithubButton />
     </ArticleLayout>
 );
