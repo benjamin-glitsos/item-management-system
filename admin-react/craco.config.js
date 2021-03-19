@@ -16,7 +16,5 @@ module.exports = {
             "%": path.resolve(__dirname, "src/")
         }
     },
-    eslint: {
-        enabled: false
-    }
+    eslint: {}
 };

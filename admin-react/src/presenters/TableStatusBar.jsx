@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import numbersToWords from "number-to-words";
 import simplur from "simplur";
-import fromMaybe from "%/utilities/fromMaybe";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
 export default ({

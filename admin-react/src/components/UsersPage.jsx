@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import composeHooks from "react-hooks-compose";
 import UsersPageContainer from "%/containers/UsersPageContainer";
 import UsersPagePresenter from "%/presenters/UsersPagePresenter";

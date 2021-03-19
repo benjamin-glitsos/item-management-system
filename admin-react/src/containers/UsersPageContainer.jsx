@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import axios from "axios";
 import pipe from "pipe-functions";
@@ -8,7 +8,7 @@ import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
-import Error from "%/utilities/Error";
+import genericError from "%/errors/generic";
 import config from "%/config";
 
 export default () => {
@@ -90,17 +90,17 @@ export default () => {
             draft.selected = [];
         });
 
-    const listUsersAction = async () => {
-        setLoading(true);
-        try {
-            const response = await requestListUsers(state.request.body);
-            setResponse(response);
-        } catch (error) {
-            setResponseErrors([
-                new Error("error", "Error", "Something went wrong.")
-            ]);
-        }
-        setLoading(false);
+    const listUsersAction = () => {
+        (async () => {
+            setLoading(true);
+            try {
+                const response = await requestListUsers(state.request.body);
+                setResponse(response);
+            } catch (error) {
+                setResponseErrors([genericError]);
+            }
+            setLoading(false);
+        })();
     };
 
     const handleErrorsAction = () =>

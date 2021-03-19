@@ -1,5 +1,3 @@
-import { Grid, GridColumn } from "@atlaskit/page";
-import { gridSize } from "@atlaskit/theme";
 import styled from "styled-components";
 
 export default ({ maxWidth, children }) => {
