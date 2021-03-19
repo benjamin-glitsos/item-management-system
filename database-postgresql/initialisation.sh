@@ -1,22 +1,16 @@
 #!/bin/bash
 
 cat_sql() {
-    local filename=${1}
-    cat "/docker-entrypoint-initdb.d/initialisation/$filename.sql"
-}
-
-cat_interpolated_sql() {
-    local filename=${1}
-    eval "echo \"$(cat_sql "$filename")\""
+    local filepath=${1}
+    cat "/docker-entrypoint-initdb.d/src/$filepath.sql"
 }
 
 psql << SQL
-$(cat_sql "extensions")
-$(cat_sql "domains")
-$(cat_sql "gen-random-metakey")
-$(cat_sql "meta-table")
-$(cat_sql "users-table")
-$(cat_sql "sha1-encrypt")
-$(cat_sql "users-with-meta-view")
-$(cat_sql "users-with-meta-trigger")
+$(cat_sql "extensions/*")
+$(cat_sql "domains/*")
+$(cat_sql "functions/*")
+$(cat_sql "tables/meta")
+$(cat_sql "tables/users")
+$(cat_sql "views/*")
+$(cat_sql "triggers/*")
 SQL
