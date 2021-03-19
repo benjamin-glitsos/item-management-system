@@ -97,6 +97,7 @@ object UsersRoutes {
 
   final def apply(): Route = concat(
     usernameRoutes(),
-    rootRoutes()
+    rootRoutes(),
+    RejectionRoutes.notFound()
   )
 }

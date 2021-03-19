@@ -35,7 +35,7 @@ export default ({
                                     value: n
                                 }))}
                                 value={pageLength}
-                                placeholder={pageLength}
+                                placeholder={`${pageLength} per page`}
                                 onChange={setPageLength}
                             />
                         </PageLengthStyles>
