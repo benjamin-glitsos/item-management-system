@@ -1,15 +1,10 @@
 import org.everit.json.schema.{Schema, ValidationException}
 import org.everit.json.schema.loader.{SchemaClient, SchemaLoader}
-import akka.http.scaladsl.server._
 import org.json.{JSONObject, JSONTokener}
 import scala.io.Source
 import scala.jdk.CollectionConverters._
-import akka.http.scaladsl.server.Directives._
-import scala.concurrent.duration._
-import akka.http.scaladsl.model.HttpEntity
 import upickle.default._
 import cats.implicits._
-import cats.data.Validated.{Valid, Invalid}
 import scala.util.{Try, Success, Failure}
 import upickle_bundle.general._
 
