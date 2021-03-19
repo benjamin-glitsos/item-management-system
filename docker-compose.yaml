@@ -6,8 +6,8 @@ services:
     image: database-postgresql
     container_name: database-postgresql
     volumes:
-      - ./database-postgresql/initialisation.sh:/docker-entrypoint-initdb.d/initialisation.sh
-      - ./database-postgresql/initialisation:/docker-entrypoint-initdb.d/initialisation
+      - ./database-postgresql/initialise.sh:/docker-entrypoint-initdb.d/initialise.sh
+      - ./database-postgresql/src:/docker-entrypoint-initdb.d/src
     restart: on-failure
     env_file: .env
     ports:
