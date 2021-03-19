@@ -1,7 +1,1 @@
-import styled from "styled-components";
-
-export default () => <Styles>There is no data to display.</Styles>;
-
-const Styles = styled.div`
-    margin-bottom: 24px;
-`;
+export default () => "There is no data to display.";
