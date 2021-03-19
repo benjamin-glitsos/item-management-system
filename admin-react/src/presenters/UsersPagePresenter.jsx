@@ -42,6 +42,7 @@ export default ({
             }
             bottomBar={
                 <TableStatusBar
+                    isLoading={state.isLoading}
                     currentPage={state.request.body.page_number}
                     pageLength={state.request.body.page_length}
                     totalPages={state.response.data.total_pages}

@@ -1,9 +1,11 @@
 import { Fragment } from "react";
+import NonBreakingSpace from "%/presenters/NonBreakingSpace";
 import numbersToWords from "number-to-words";
 import simplur from "simplur";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
 export default ({
+    isLoading,
     currentPage,
     pageLength,
     totalPages,
@@ -12,7 +14,9 @@ export default ({
     totalItemsCount,
     numberOfSelected
 }) => {
-    if (totalItemsCount === undefined || totalItemsCount === null) {
+    if (isLoading) {
+        return <NonBreakingSpace />;
+    } else if (totalItemsCount === undefined || totalItemsCount === null) {
         return "Zero items.";
     } else if (numberOfSelected === 0) {
         return (
