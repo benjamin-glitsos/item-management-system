@@ -4,11 +4,25 @@ import "@atlaskit/css-reset";
 import SidebarNavigation from "%/components/SidebarNavigation";
 
 export default ({ children }) => (
-    <FullHeight>
-        <Page navigation={<SidebarNavigation />}>{children}</Page>
-    </FullHeight>
+    <Page
+        navigation={
+            <SidebarStyles>
+                <SidebarNavigation />
+            </SidebarStyles>
+        }
+    >
+        <PageStyles>{children}</PageStyles>
+    </Page>
 );
 
-const FullHeight = styled.div`
+const SidebarStyles = styled.div`
     height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+`;
+
+const PageStyles = styled.div`
+    margin-left: 240px;
+    min-height: calc(100vh - 49px);
+    padding-bottom: 20px;
 `;
