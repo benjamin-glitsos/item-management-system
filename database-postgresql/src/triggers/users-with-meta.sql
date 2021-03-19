@@ -40,7 +40,7 @@ BEGIN
 
     -- Soft Delete --
     ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted=true AND OLD.is_deleted=false THEN
-        UPDATE meta SET is_deleted=true, deleted_at=NOW()
+        UPDATE meta SET is_deleted=true, deleted_at=NOW(), edits=edits + 1
         WHERE id=(
             SELECT meta_id
             FROM users
@@ -50,7 +50,7 @@ BEGIN
 
     -- Restore Delete --
     ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted=false AND OLD.is_deleted=true THEN
-        UPDATE meta SET is_deleted=false
+        UPDATE meta SET is_deleted=false, edits=edits + 1
         WHERE id=(
             SELECT meta_id
             FROM users
@@ -87,7 +87,7 @@ BEGIN
             RETURNING meta_id
         )
         UPDATE meta
-        SET edits=edits + 1, edited_at=NOW(), notes=NEW.notes
+        SET edited_at=NOW(), notes=NEW.notes, edits=edits + 1
         WHERE id=(SELECT meta_id FROM users_update);
         RETURN NEW;
 
