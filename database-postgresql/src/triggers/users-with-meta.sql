@@ -74,7 +74,9 @@ BEGIN
         RETURN null;
 
     -- Update --
-    ELSIF TG_OP = 'UPDATE' AND NEW.* IS DISTINCT FROM OLD.* THEN
+    ELSIF TG_OP = 'UPDATE'
+        AND NEW.* IS DISTINCT FROM OLD.*
+        AND OLD.is_deleted=false THEN
         WITH users_update AS (
             UPDATE users
             SET username=NEW.username
