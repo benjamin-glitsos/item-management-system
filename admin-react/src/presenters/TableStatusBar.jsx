@@ -13,6 +13,7 @@ export default () => {
     const itemRangeEnd = context.state.response.data.range_end;
     const totalItemsCount = context.state.response.data.total_items;
     const numberOfSelected = context.state.selected.length;
+
     if (isLoading) {
         return <NonBreakingSpace />;
     } else if (totalItemsCount === undefined || totalItemsCount === null) {

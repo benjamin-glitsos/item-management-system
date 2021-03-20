@@ -15,6 +15,7 @@ export default () => {
     const pageLength = context.state.response.data.page_length;
     const totalPages = context.state.response.data.total_pages;
     const setPageLength = context.setPageLength;
+
     return (
         <ButtonGroup>
             <DeletionMenu
