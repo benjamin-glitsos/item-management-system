@@ -77,7 +77,11 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
                 const response = await requestListItems(state.request.body);
                 setResponse(response);
             } catch (error) {
-                setResponseErrors(error.response.data.errors);
+                if (error.response.data.errors) {
+                    setResponseErrors(error.response.data.errors);
+                } else {
+                    console.error(error);
+                }
             }
             setLoading(false);
         })();

@@ -30,8 +30,10 @@ trait UsersServicesList {
           val output: String = write(
             ujson.Obj(
               "data" -> ujson.Obj(
-                "total_items" -> ujson.Num(totalItems),
+                "page_number" -> ujson.Num(pageNumber),
+                "page_length" -> ujson.Num(pageLength),
                 "total_pages" -> ujson.Num(totalPages),
+                "total_items" -> ujson.Num(totalItems),
                 "range_start" -> ujson.Num(rangeStart),
                 "range_end"   -> ujson.Num(rangeEnd),
                 "items"       -> writeJs(data)

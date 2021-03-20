@@ -23,10 +23,7 @@ export default () => {
         apiPath: `v1/${slug}/`,
         defaultState: {
             request: {
-                body: {
-                    page_number: 1,
-                    page_length: 10
-                }
+                body: {}
             },
             response: {
                 data: {

@@ -31,7 +31,7 @@ export default ({
                     hardDeleteAction={() =>
                         deleteItemsAction("hard", state.selected)
                     }
-                    pageLength={state.request.body.page_length}
+                    pageLength={state.response.data.page_length}
                     totalPages={state.response.data.total_pages}
                     setPageLength={setPageLength}
                 />
@@ -39,7 +39,7 @@ export default ({
             bottomBar={
                 <TableStatusBar
                     isLoading={state.isLoading}
-                    currentPage={state.request.body.page_number}
+                    currentPage={state.response.data.page_number}
                     totalPages={state.response.data.total_pages}
                     itemRangeStart={state.response.data.range_start}
                     itemRangeEnd={state.response.data.range_end}
@@ -58,9 +58,9 @@ export default ({
         />
         <Pagination
             isLoading={state.isLoading}
+            pageNumber={state.response.data.page_number}
+            pageLength={state.response.data.page_length}
             totalPages={state.response.data.total_pages}
-            pageNumber={state.request.body.page_number}
-            pageLength={state.request.body.page_length}
             setPageNumber={setPageNumber}
         />
     </FullwidthLayout>
