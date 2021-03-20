@@ -17,6 +17,7 @@
         "@atlaskit/select": "^13.2.0",
         "@atlaskit/side-navigation": "^0.8.1",
         "@atlaskit/theme": "^11.0.2",
+        "@babel/plugin-proposal-optional-chaining": "^7.13.8",
         "@baristalabs/craco-raw-loader": "^1.2.0",
         "@craco/craco": "^6.1.1",
         "axios": "^0.21.1",

@@ -40,10 +40,16 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
             draft.response = Object.assign(draft.response, response.data);
         });
 
-    const setResponseErrors = errors =>
-        setState(draft => {
-            draft.response.errors = errors;
-        });
+    const setResponseErrors = errors => {
+        const list = errors?.response?.data?.errors;
+        if (list) {
+            setState(draft => {
+                draft.response.errors = list;
+            });
+        } else {
+            console.error(errors);
+        }
+    };
 
     const setPageNumber = (event, page, analyticsEvent) =>
         setState(draft => {
@@ -77,11 +83,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
                 const response = await requestListItems(state.request.body);
                 setResponse(response);
             } catch (error) {
-                if (error.response.data.errors) {
-                    setResponseErrors(error.response.data.errors);
-                } else {
-                    console.error(error);
-                }
+                setResponseErrors(error);
             }
             setLoading(false);
         })();
