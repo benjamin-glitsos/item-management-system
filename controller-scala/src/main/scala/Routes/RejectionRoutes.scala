@@ -10,6 +10,11 @@ object RejectionRoutes extends ValidationTrait {
     SerialisedErrors(serialiseErrors(NonEmptyChain(NotFoundError())))
   )
 
+  final def badRequestError(se: String): Route = complete(
+    BadRequest,
+    SerialisedErrors(se)
+  )
+
   final def internalServerError(se: String): Route = complete(
     InternalServerError,
     SerialisedErrors(se)

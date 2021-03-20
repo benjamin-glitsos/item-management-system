@@ -7,7 +7,7 @@ object HandleRejections {
       .newBuilder()
       .handle {
         case ValidationRejection(se: String, _) =>
-          RejectionRoutes.internalServerError(se)
+          RejectionRoutes.badRequestError(se)
         case AuthorizationFailedRejection =>
           RejectionRoutes.authorisationFailed()
       }
