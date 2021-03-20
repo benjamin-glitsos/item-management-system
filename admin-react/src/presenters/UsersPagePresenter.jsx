@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";

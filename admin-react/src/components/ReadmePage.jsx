@@ -1,18 +1,10 @@
-import ReactMarkdown from "react-markdown";
-import PageHeader from "@atlaskit/page-header";
-import readme from "%/assets/README.md";
-import ArticleLayout from "%/presenters/ArticleLayout";
-import BreadcrumbBar from "%/presenters/BreadcrumbBar";
-import GithubButton from "%/presenters/GithubButton";
+import composeHooks from "react-hooks-compose";
+import ReadmePageContainer from "%/containers/ReadmePageContainer";
+import ReadmePagePresenter from "%/presenters/ReadmePagePresenter";
 
-export default () => (
-    <ArticleLayout>
-        <PageHeader
-            breadcrumbs={<BreadcrumbBar breadcrumbs={[["Home", "/"]]} />}
-        >
-            Readme
-        </PageHeader>
-        <ReactMarkdown>{readme}</ReactMarkdown>
-        <GithubButton />
-    </ArticleLayout>
-);
+export default () => {
+    const Component = composeHooks({ ReadmePageContainer })(
+        ReadmePagePresenter
+    );
+    return <Component />;
+};
