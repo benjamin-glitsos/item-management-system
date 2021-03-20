@@ -15,7 +15,7 @@ export default ({
     state,
     setPageNumber,
     setPageLength,
-    deleteUsersAction,
+    deleteItemsAction,
     breadcrumbs
 }) => (
     <FullwidthLayout>
@@ -26,10 +26,10 @@ export default ({
                     doesDataExist={doesDataExist}
                     isDeletable={state.selected.length > 0}
                     softDeleteAction={() =>
-                        deleteUsersAction("soft", state.selected)
+                        deleteItemsAction("soft", state.selected)
                     }
                     hardDeleteAction={() =>
-                        deleteUsersAction("hard", state.selected)
+                        deleteItemsAction("hard", state.selected)
                     }
                     pageLength={state.request.body.page_length}
                     totalPages={state.response.data.total_pages}

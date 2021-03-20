@@ -13,7 +13,7 @@ export default ({
     state,
     setPageNumber,
     setPageLength,
-    deleteUsersAction
+    deleteItemsAction
 }) => (
     <PageLayout title={metaTitle} description={description}>
         <ListLayout
@@ -24,7 +24,7 @@ export default ({
             state={state}
             setPageNumber={setPageNumber}
             setPageLength={setPageLength}
-            deleteUsersAction={deleteUsersAction}
+            deleteItemsAction={deleteItemsAction}
             breadcrumbs={[homeBreadcrumb, [title, `/${slug}`]]}
         />
     </PageLayout>

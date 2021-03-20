@@ -20,11 +20,6 @@ trait UsersServicesDelete {
             .hardDelete(usernames)
             .transact(xa)
             .unsafeRunSync
-        case "hard-delete-all-rows" =>
-          UsersDAO
-            .hardDeleteAllRows()
-            .transact(xa)
-            .unsafeRunSync
       }
     } catch {
       case e: java.sql.SQLException =>

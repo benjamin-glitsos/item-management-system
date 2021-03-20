@@ -30,12 +30,4 @@ trait UsersDAODelete {
       )
     )
   }
-
-  final def hardDeleteAllRows() = {
-    run(
-      quote(
-        query[UsersWithMeta].delete
-      )
-    )
-  }
 }
