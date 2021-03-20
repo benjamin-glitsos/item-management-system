@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import axios from "axios";
-import genericError from "%/errors/generic";
 import config from "%/config";
-import ToastError from "%/components/ToastError";
 import TableActionsMenu from "%/presenters/TableActionsMenu";
+import { useFlags } from "@atlaskit/flag";
+import Error from "@atlaskit/icon/glyph/editor/warning";
 
 export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
+
+    const { showFlag } = useFlags();
 
     const requestListItems = body =>
         axios({
@@ -75,7 +77,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
                 const response = await requestListItems(state.request.body);
                 setResponse(response);
             } catch (error) {
-                setResponseErrors([genericError]);
+                setResponseErrors(error.response.data.errors);
             }
             setLoading(false);
         })();
@@ -83,8 +85,15 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
 
     const handleErrorsAction = () =>
         state.response.errors.forEach((error, i) => {
-            console.error;
-            <ToastError id={i} error={error} />;
+            console.error(error);
+            showFlag({
+                icon: <Error />,
+                id: i,
+                key: `Toast/Error/${error.code}/${i}`,
+                title: error.title,
+                description: error.description,
+                isAutoDismiss: true
+            });
         });
 
     const deleteItemsAction = async (method, usernames) => {

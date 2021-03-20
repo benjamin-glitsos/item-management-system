@@ -10,12 +10,12 @@ object ServerExitRepl {
     println(
       ansi()
         .a("\n")
-        .fg(BLUE)
+        .fg(MAGENTA)
         .a("The server is online at ")
         .bold()
         .a(s"http://localhost:${System.getenv("CONTROLLER_PORT")}/")
         .a("\n")
-        .fg(PURPLE)
+        .fg(MAGENTA)
         .a("The admin panel is online at ")
         .bold()
         .a(s"http://localhost:${System.getenv("ADMIN_PORT")}/")
@@ -37,7 +37,7 @@ object ServerExitRepl {
       terminal_input = StdIn
         .readLine(
           ansi()
-            .fg(GREEN)
+            .fg(MAGENTA)
             .a("Use 'exit' to shutdown the server... \n")
             .reset()
             .toString()
