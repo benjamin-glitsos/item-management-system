@@ -12,6 +12,8 @@ object ServerExitRepl {
         .a("\n")
         .fg(BLUE)
         .a("The server is online.")
+        .bold()
+        .a(s"https://localhost:${System.getenv("CONTROLLER_PORT")}/")
         .reset()
         .a("\n")
     )

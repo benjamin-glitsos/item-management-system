@@ -12,6 +12,12 @@ import genericError from "%/errors/generic";
 import config from "%/config";
 
 export default () => {
+    const title = "Users";
+
+    const description = `A list of users who can log into the ${
+        process.env.PROJECT_NAME || "Item Management System"
+    }.`;
+
     const apiUrl = config.serverUrl + "v1/users/";
 
     const defaultState = {
@@ -204,6 +210,8 @@ export default () => {
     }));
 
     return {
+        title,
+        description,
         head,
         rows,
         state,
