@@ -1,3 +1,4 @@
+import { createContext } from "react";
 import pipe from "pipe-functions";
 import { Checkbox } from "@atlaskit/checkbox";
 import PageContainer from "%/containers/PageContainer";
@@ -7,7 +8,9 @@ import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 import friendlyName from "%/utilities/friendlyName";
 
-export default () => {
+export const UsersContext = createContext();
+
+export default ({ children }) => {
     const title = "Users";
     const slug = "users";
 
@@ -105,10 +108,11 @@ export default () => {
         })
     });
 
-    return {
-        title,
-        slug,
-        ...pageContainer,
-        ...listContainer
-    };
+    const { Provider } = UsersContext;
+
+    return (
+        <Provider value={{ title, slug, ...pageContainer, ...listContainer }}>
+            {children}
+        </Provider>
+    );
 };
