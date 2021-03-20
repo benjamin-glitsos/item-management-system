@@ -7,6 +7,7 @@ export default ({
     metaTitle,
     description,
     homeBreadcrumb,
+    doesDataExist,
     head,
     rows,
     state,
@@ -17,6 +18,7 @@ export default ({
     <PageLayout title={metaTitle} description={description}>
         <ListLayout
             title={title}
+            doesDataExist={doesDataExist}
             head={head}
             rows={rows}
             state={state}

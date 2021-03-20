@@ -11,6 +11,7 @@ export default ({
     title,
     head,
     rows,
+    doesDataExist,
     state,
     setPageNumber,
     setPageLength,
@@ -22,6 +23,7 @@ export default ({
             breadcrumbs={<BreadcrumbBar breadcrumbs={breadcrumbs} />}
             actions={
                 <ActionsBar
+                    doesDataExist={doesDataExist}
                     isDeletable={state.selected.length > 0}
                     softDeleteAction={() =>
                         deleteUsersAction("soft", state.selected)
@@ -29,13 +31,15 @@ export default ({
                     hardDeleteAction={() =>
                         deleteUsersAction("hard", state.selected)
                     }
+                    pageLength={state.request.body.page_length}
+                    totalPages={state.response.data.total_pages}
+                    setPageLength={setPageLength}
                 />
             }
             bottomBar={
                 <TableStatusBar
                     isLoading={state.isLoading}
                     currentPage={state.request.body.page_number}
-                    pageLength={state.request.body.page_length}
                     totalPages={state.response.data.total_pages}
                     itemRangeStart={state.response.data.range_start}
                     itemRangeEnd={state.response.data.range_end}
@@ -58,7 +62,6 @@ export default ({
             pageNumber={state.request.body.page_number}
             pageLength={state.request.body.page_length}
             setPageNumber={setPageNumber}
-            setPageLength={setPageLength}
         />
     </FullwidthLayout>
 );

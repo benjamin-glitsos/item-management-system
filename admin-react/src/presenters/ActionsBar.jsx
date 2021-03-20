@@ -1,25 +1,26 @@
+import DeletionMenu from "%/presenters/DeletionMenu";
+import PageLengthSelect from "%/presenters/PageLengthSelect";
 import ButtonGroup from "@atlaskit/button/button-group";
-import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
-import DropdownMenu from "%/presenters/DropdownMenu";
 
-export default ({ isDeletable, softDeleteAction, hardDeleteAction }) => (
+export default ({
+    doesDataExist,
+    isDeletable,
+    softDeleteAction,
+    hardDeleteAction,
+    pageLength,
+    setPageLength
+}) => (
     <ButtonGroup>
-        {/* <Button appearance="primary">Create New</Button> */}
-        <DropdownMenu name="Deletion" triggerType="button">
-            <DropdownItemGroup>
-                <DropdownItem
-                    onClick={softDeleteAction}
-                    isDisabled={!isDeletable}
-                >
-                    Soft Delete
-                </DropdownItem>
-                <DropdownItem
-                    onClick={hardDeleteAction}
-                    isDisabled={!isDeletable}
-                >
-                    Hard Delete
-                </DropdownItem>
-            </DropdownItemGroup>
-        </DropdownMenu>
+        <DeletionMenu
+            isVisible={doesDataExist}
+            isDeletable={isDeletable}
+            softDeleteAction={softDeleteAction}
+            hardDeleteAction={hardDeleteAction}
+        />
+        <PageLengthSelect
+            isVisible={doesDataExist}
+            pageLength={pageLength}
+            setPageLength={setPageLength}
+        />
     </ButtonGroup>
 );

@@ -108,7 +108,13 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         )
     );
 
+    const doesDataExist =
+        !state.isLoading &&
+        state.request.body.page_length > 0 &&
+        state.request.body.total_pages > 0;
+
     return {
+        doesDataExist,
         head,
         rows,
         state,
