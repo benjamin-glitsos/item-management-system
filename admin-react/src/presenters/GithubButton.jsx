@@ -24,4 +24,8 @@ const Styles = styled.div`
     .link-icon {
         fill: #0052cc;
     }
+
+    a:hover .link-icon {
+        fill: #0065ff;
+    }
 `;

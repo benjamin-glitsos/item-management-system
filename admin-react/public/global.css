@@ -1,0 +1,11 @@
+.atlaskit-portal > div {
+    bottom: unset;
+    left: unset;
+    top: 128px;
+    right: 428px;
+}
+
+.atlaskit-portal div[role="alert"] {
+    box-shadow: 0 0 1px rgba(9, 30, 66, 0.31),
+        0 18px 21px -8px rgba(9, 30, 66, 0.25);
+}
