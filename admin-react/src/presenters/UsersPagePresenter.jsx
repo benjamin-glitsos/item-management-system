@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Helmet } from "react-helmet";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
+import PageLayout from "%/presenters/PageLayout";
 import FullwidthLayout from "%/presenters/FullwidthLayout";
 import BreadcrumbBar from "%/presenters/BreadcrumbBar";
 import TableStatusBar from "%/presenters/TableStatusBar";
@@ -19,11 +20,7 @@ export default ({
     setPageLength,
     deleteUsersAction
 }) => (
-    <Fragment>
-        <Helmet>
-            <title>{title}</title>
-            <meta name="description" content={description} />
-        </Helmet>
+    <PageLayout title={title} description={description}>
         <FullwidthLayout>
             <PageHeader
                 breadcrumbs={
@@ -75,5 +72,5 @@ export default ({
                 setPageLength={setPageLength}
             />
         </FullwidthLayout>
-    </Fragment>
+    </PageLayout>
 );
