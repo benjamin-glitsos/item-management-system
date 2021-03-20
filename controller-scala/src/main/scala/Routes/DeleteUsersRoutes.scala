@@ -1,5 +1,6 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.model.StatusCodes.NoContent
 import upickle.default._
 
 object DeleteUsersRoutes {
@@ -9,7 +10,7 @@ object DeleteUsersRoutes {
         val method: String          = body("method").str
         val usernames: List[String] = read[List[String]](body("usernames"))
 
-        complete(UsersServices.delete(method, usernames))
+        complete(NoContent, UsersServices.delete(method, usernames))
       }
     }
   }
