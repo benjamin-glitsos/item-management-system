@@ -25,7 +25,7 @@ export default () => {
             request: {
                 body: {
                     page_number: 1,
-                    page_length: 10
+                    page_length: 12
                 }
             },
             response: {

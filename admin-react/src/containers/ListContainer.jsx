@@ -3,6 +3,7 @@ import { useImmer } from "use-immer";
 import axios from "axios";
 import genericError from "%/errors/generic";
 import config from "%/config";
+import ToastError from "%/components/ToastError";
 import TableActionsMenu from "%/presenters/TableActionsMenu";
 
 export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
@@ -81,7 +82,10 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     };
 
     const handleErrorsAction = () =>
-        state.response.errors.forEach(console.error);
+        state.response.errors.forEach((error, i) => {
+            console.error;
+            <ToastError id={i} error={error} />;
+        });
 
     const deleteItemsAction = async (method, usernames) => {
         await requestDeleteItems(method, usernames);
