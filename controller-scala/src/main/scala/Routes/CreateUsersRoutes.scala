@@ -1,6 +1,5 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import akka.http.scaladsl.model.StatusCodes.Created
 import scala.util.{Try}
 
 object CreateUsersRoutes {
@@ -16,7 +15,6 @@ object CreateUsersRoutes {
       val notes: Option[String] = Try(body("notes").str).toOption
 
       complete(
-        Created,
         UsersServices.create(
           username,
           emailAddress,

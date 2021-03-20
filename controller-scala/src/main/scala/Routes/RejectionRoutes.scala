@@ -15,11 +15,6 @@ object RejectionRoutes extends ValidationTrait {
     SerialisedErrors(se)
   )
 
-  final def badRequestError(se: String): Route = complete(
-    BadRequest,
-    SerialisedErrors(se)
-  )
-
   final def authorisationFailed(): Route = complete(
     Forbidden,
     SerialisedErrors(
