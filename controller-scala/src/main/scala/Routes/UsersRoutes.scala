@@ -11,11 +11,7 @@ object UsersRoutes {
   private final def usernameRoutes(): Route = pathPrefix(Segment) {
     username: String =>
       concat(
-        get {
-          Validation("open-user") { body: ujson.Value =>
-            complete(UsersServices.open(username))
-          }
-        },
+        OpenUserRoutes(username),
         EditUserRoutes(username)
       )
   }

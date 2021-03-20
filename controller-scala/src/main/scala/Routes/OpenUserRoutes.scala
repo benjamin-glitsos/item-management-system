@@ -1,12 +1,11 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle_bundle.general._
-import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object OpenUserRoutes {
   final def apply(username: String): Route = get {
     Validation("open-user") { body: ujson.Value =>
-      complete(NoContent, UsersServices.open(username))
+      complete(UsersServices.open(username))
     }
   }
 }
