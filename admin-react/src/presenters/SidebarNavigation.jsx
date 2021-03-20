@@ -1,4 +1,5 @@
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
+import { useLocation } from "react-router-dom";
 import {
     SideNavigation,
     NavigationContent,
@@ -11,10 +12,9 @@ import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
-import { SidebarNavigationContext } from "%/components/SidebarNavigation";
 
 export default () => {
-    const context = useContext(SidebarNavigationContext);
+    const location = useLocation();
     const projectMode =
         process.env.REACT_APP_PROJECT_MODE || process.env.NODE_ENV;
     const projectName =
@@ -59,10 +59,7 @@ export default () => {
                         key="SideNavigation/LinkItem/Readme"
                         iconBefore={<MediaServicesDocumentIcon size="medium" />}
                         href="/"
-                        isSelected={doesMatchRouterLocation(
-                            "/",
-                            context.location
-                        )}
+                        isSelected={doesMatchRouterLocation("/", location)}
                     >
                         Readme
                     </LinkItem>
@@ -72,10 +69,7 @@ export default () => {
                         key="SideNavigation/LinkItem/Users"
                         iconBefore={<PeopleIcon size="medium" />}
                         href="/users"
-                        isSelected={doesMatchRouterLocation(
-                            "/users",
-                            context.location
-                        )}
+                        isSelected={doesMatchRouterLocation("/users", location)}
                     >
                         Users
                     </LinkItem>
