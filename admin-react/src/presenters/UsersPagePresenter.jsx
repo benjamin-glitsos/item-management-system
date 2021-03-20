@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import ContentLayout from "%/presenters/ContentLayout";
 import ListPresenter from "%/presenters/ListPresenter";
-import { UsersContext } from "%/containers/UsersPageContainer";
+import List from "%/components/List";
+import { UsersContext } from "%/components/UsersPage";
 
 export default () => {
     const context = useContext(UsersContext);
@@ -10,20 +11,7 @@ export default () => {
             title={context.metaTitle}
             description={context.description}
         >
-            <ListPresenter
-                title={context.title}
-                doesDataExist={context.doesDataExist}
-                head={context.head}
-                rows={context.rows}
-                state={context.state}
-                setPageNumber={context.setPageNumber}
-                setPageLength={context.setPageLength}
-                deleteItemsAction={context.deleteItemsAction}
-                breadcrumbs={[
-                    context.homeBreadcrumb,
-                    [context.title, `/${context.slug}`]
-                ]}
-            />
+            <List context={context} />
         </ContentLayout>
     );
 };
