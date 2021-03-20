@@ -5,7 +5,7 @@ import BreadcrumbBar from "%/presenters/BreadcrumbBar";
 import TableStatusBar from "%/presenters/TableStatusBar";
 import NoData from "%/presenters/NoData";
 import ActionsBar from "%/presenters/ActionsBar";
-import TableControls from "%/presenters/TableControls";
+import Pagination from "%/presenters/Pagination";
 
 export default ({
     title,
@@ -56,7 +56,7 @@ export default ({
             isLoading={state.isLoading}
             emptyView={<NoData />}
         />
-        <TableControls
+        <Pagination
             isLoading={state.isLoading}
             totalPages={state.response.data.total_pages}
             pageNumber={state.request.body.page_number}

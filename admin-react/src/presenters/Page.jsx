@@ -24,5 +24,5 @@ const SidebarStyles = styled.div`
 const PageStyles = styled.div`
     margin-left: 240px;
     min-height: calc(100vh - 49px);
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 `;

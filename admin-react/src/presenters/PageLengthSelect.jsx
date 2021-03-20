@@ -13,6 +13,7 @@ export default ({ isVisible, pageLength, setPageLength }) => {
                     value={pageLength}
                     placeholder={`${pageLength} per page`}
                     onChange={setPageLength}
+                    spacing="compact"
                 />
             </Styles>
         );
@@ -23,7 +24,6 @@ export default ({ isVisible, pageLength, setPageLength }) => {
 
 const Styles = styled.div`
     & > div {
-        justify-content: right;
-        margin-right: -8px;
+        min-width: 120px;
     }
 `;

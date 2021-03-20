@@ -6,13 +6,13 @@ import enumerate from "%/utilities/enumerate";
 export default ({ isLoading, totalPages, pageNumber, setPageNumber }) => {
     if (!isLoading && totalPages > 0) {
         return (
-            <TableControlStyles>
+            <PaginationStyles>
                 <Pagination
                     pages={enumerate(totalPages)}
                     selectedIndex={pageNumber - 1}
                     onChange={setPageNumber}
                 />
-            </TableControlStyles>
+            </PaginationStyles>
         );
     } else {
         return (
@@ -23,11 +23,10 @@ export default ({ isLoading, totalPages, pageNumber, setPageNumber }) => {
     }
 };
 
-const TableControlStyles = styled.div`
+const PaginationStyles = styled.div`
+    text-align: center;
     & > div {
-        max-width: none;
-        padding-left: 0;
-        padding-right: 0;
+        display: inline-flex !important;
     }
 `;
 
