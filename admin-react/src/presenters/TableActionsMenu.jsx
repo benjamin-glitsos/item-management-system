@@ -6,7 +6,6 @@ export default ({ softDeleteAction, hardDeleteAction }) => (
     <RightAligned>
         <DropdownMenu name="Actions" triggerType="button">
             <DropdownItemGroup>
-                {/* <DropdownItem>Edit</DropdownItem> */}
                 <DropdownItem>
                     <div onClick={softDeleteAction}>Delete</div>
                 </DropdownItem>

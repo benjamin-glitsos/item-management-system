@@ -96,15 +96,11 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     const head = _head(setRemoveAllSelected, state.selected);
 
     const rows = state.response.data.items.map((row, i) =>
-        _rows(
-            row,
-            i,
-            state.selected,
-            setSelected,
-            <TableActionsMenu
-                softDeleteAction={() => deleteAction("soft", [row[0]])}
-                hardDeleteAction={() => deleteAction("hard", [row[0]])}
-            />
+        _rows(row, i, state.selected, setSelected, () =>
+            TableActionsMenu({
+                softDeleteAction: () => deleteItemsAction("soft", [row[0]]),
+                hardDeleteAction: () => deleteItemsAction("hard", [row[0]])
+            })
         )
     );
 
