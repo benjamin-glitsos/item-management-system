@@ -1,13 +1,16 @@
 import { useContext } from "react";
-import PageLayout from "%/presenters/PageLayout";
-import ListLayout from "%/presenters/ListLayout";
+import ContentLayout from "%/presenters/ContentLayout";
+import ListPresenter from "%/presenters/ListPresenter";
 import { UsersContext } from "%/containers/UsersPageContainer";
 
 export default () => {
     const context = useContext(UsersContext);
     return (
-        <PageLayout title={context.metaTitle} description={context.description}>
-            <ListLayout
+        <ContentLayout
+            title={context.metaTitle}
+            description={context.description}
+        >
+            <ListPresenter
                 title={context.title}
                 doesDataExist={context.doesDataExist}
                 head={context.head}
@@ -21,6 +24,6 @@ export default () => {
                     [context.title, `/${context.slug}`]
                 ]}
             />
-        </PageLayout>
+        </ContentLayout>
     );
 };

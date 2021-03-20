@@ -13,7 +13,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ## Admin-React
 
-* Container/Presenter architecture via React Hooks and Context
+* Container/Presenter architecture via React Context
 
 ## Database-PostgreSQL
 
