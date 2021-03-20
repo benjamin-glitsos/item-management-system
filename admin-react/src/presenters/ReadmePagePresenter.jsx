@@ -10,9 +10,7 @@ import GithubButton from "%/presenters/GithubButton";
 export default ({ title, description }) => (
     <Fragment>
         <Helmet>
-            <title>
-                {title} : {process.env.PROJECT_ABBREV || "IMS"}
-            </title>
+            <title>{title}</title>
             <meta name="description" content={description} />
         </Helmet>
         <ArticleLayout>

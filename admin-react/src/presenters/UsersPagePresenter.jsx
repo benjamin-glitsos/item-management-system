@@ -21,9 +21,7 @@ export default ({
 }) => (
     <Fragment>
         <Helmet>
-            <title>
-                {title} : {process.env.PROJECT_ABBREV || "IMS"}
-            </title>
+            <title>{title}</title>
             <meta name="description" content={description} />
         </Helmet>
         <FullwidthLayout>
