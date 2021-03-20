@@ -11,6 +11,7 @@ export default () => {
 
     const pageContainer = PageContainer({
         title,
+        slug,
         description: `A list of users who can log into the ${
             process.env.PROJECT_NAME || "Item Management System"
         }.`
@@ -106,6 +107,8 @@ export default () => {
     });
 
     return {
+        title,
+        slug,
         ...pageContainer,
         ...listContainer
     };

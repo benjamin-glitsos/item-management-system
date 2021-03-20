@@ -1,4 +1,7 @@
-export default ({ title: _title, description }) => {
-    const title = `${_title} : ${process.env.PROJECT_ABBREV || "IMS"}`;
-    return { title, description };
+export default ({ title, slug, description }) => {
+    const metaTitle = `${title} : ${process.env.PROJECT_ABBREV || "IMS"}`;
+
+    const homeBreadcrumb = ["Home", "/"];
+
+    return { title, slug, metaTitle, description, homeBreadcrumb };
 };
