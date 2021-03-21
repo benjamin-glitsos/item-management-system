@@ -19,6 +19,15 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
 
     const { showFlag } = useFlags();
 
+    const queryPageNumber = pageNumber => ({
+        page_number: pageNumber === 1 ? undefined : pageNumber
+    });
+
+    const queryPageLength = pageLength => ({
+        page_length:
+            pageLength === config.defaultPageLength ? undefined : pageLength
+    });
+
     const requestListItems = body =>
         axios({
             method: "REPORT",
@@ -56,15 +65,6 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
             console.error(errors);
         }
     };
-
-    const queryPageNumber = pageNumber => ({
-        page_number: pageNumber === 1 ? undefined : pageNumber
-    });
-
-    const queryPageLength = pageLength => ({
-        page_length:
-            pageLength === config.defaultPageLength ? undefined : pageLength
-    });
 
     const setPageNumber = (event, pageNumber, analyticsEvent) =>
         setQuery(queryPageNumber(pageNumber));
