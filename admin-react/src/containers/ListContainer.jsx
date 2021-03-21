@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
-import { useQueryParams, NumberParam } from "use-query-params";
+import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
@@ -20,7 +20,8 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
 
     const [query, setQuery] = useQueryParams({
         page_number: NumberParam,
-        page_length: NumberParam
+        page_length: NumberParam,
+        search: StringParam
     });
 
     const { showFlag } = useFlags();
@@ -71,7 +72,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
             ...queryPageNumber(1)
         });
 
-    const setSearch = search => setQuery({ search });
+    const setSearch = search => setQuery({ search: querySearch(search) });
 
     const setSelected = key =>
         setState(draft => {
@@ -139,11 +140,11 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         )
     );
 
-    const doesDataExist =
-        !state.isLoading && state.response.data.total_pages > 0;
+    const isDataEmpty =
+        state.isLoading || !(state.response.data.total_pages > 0);
 
     return {
-        doesDataExist,
+        isDataEmpty,
         head,
         rows,
         state,

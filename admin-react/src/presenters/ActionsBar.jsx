@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import DeletionMenu from "%/presenters/DeletionMenu";
 import PageLengthSelect from "%/presenters/PageLengthSelect";
 import ButtonGroup from "@atlaskit/button/button-group";
@@ -7,8 +7,8 @@ import { ListContext } from "%/components/List";
 
 export default () => {
     const context = useContext(ListContext);
-    const doesDataExist = context.doesDataExist;
-    const isDeletable = context.state.selected.length > 0;
+    const isDataEmpty = context.isDataEmpty;
+    const isDeletable = isDataEmpty || context.state.selected.length > 0;
     const softDeleteAction = () =>
         context.deleteItemsAction("soft", context.state.selected);
     const hardDeleteAction = () =>
@@ -19,24 +19,31 @@ export default () => {
     const setSearch = context.setSearch;
     const search = context.query.search;
 
+    const [searchState, setSearchState] = useState("");
+
+    useEffect(() => setSearchState(search), []);
+
     return (
         <ButtonGroup>
             <Textfield
-                isVisible={doesDataExist}
+                isDisabled={isDataEmpty}
                 aria-label="Search"
                 isCompact={true}
                 placeholder="Search"
-                value={search}
-                onChange={search => setSearch(search.target.value)}
+                value={searchState}
+                onChange={search => {
+                    const value = search.target.value;
+                    setSearch(value);
+                    setSearchState(value);
+                }}
             />
             <DeletionMenu
-                isVisible={doesDataExist}
-                isDeletable={isDeletable}
+                isDisabled={isDeletable}
                 softDeleteAction={softDeleteAction}
                 hardDeleteAction={hardDeleteAction}
             />
             <PageLengthSelect
-                isVisible={doesDataExist}
+                isDisabled={isDataEmpty}
                 pageLength={pageLength}
                 setPageLength={setPageLength}
             />

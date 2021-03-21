@@ -2,26 +2,21 @@ import styled from "styled-components";
 import Select from "@atlaskit/select";
 import config from "%/config";
 
-export default ({ isVisible, pageLength, setPageLength }) => {
-    if (isVisible) {
-        return (
-            <Styles>
-                <Select
-                    options={config.pageLengths.map(n => ({
-                        label: n,
-                        value: n
-                    }))}
-                    value={pageLength}
-                    placeholder={`${pageLength} per page`}
-                    onChange={selection => setPageLength(selection.value)}
-                    spacing="compact"
-                />
-            </Styles>
-        );
-    } else {
-        return null;
-    }
-};
+export default ({ isDisabled, pageLength, setPageLength }) => (
+    <Styles>
+        <Select
+            options={config.pageLengths.map(n => ({
+                label: n,
+                value: n,
+                isDisabled
+            }))}
+            value={pageLength}
+            placeholder={`${pageLength || config.defaultPageLength} per page`}
+            onChange={selection => setPageLength(selection.value)}
+            spacing="compact"
+        />
+    </Styles>
+);
 
 const Styles = styled.div`
     & > div {
