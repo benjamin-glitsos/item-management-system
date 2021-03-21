@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import Select from "@atlaskit/select";
+import config from "%/config";
 
 export default ({ isVisible, pageLength, setPageLength }) => {
     if (isVisible) {
         return (
             <Styles>
                 <Select
-                    options={[10, 25, 50, 100].map(n => ({
+                    options={config.pageLengths.map(n => ({
                         label: n,
                         value: n
                     }))}

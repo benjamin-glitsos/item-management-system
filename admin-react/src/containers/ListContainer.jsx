@@ -1,15 +1,21 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
+import { useQueryParams, NumberParam } from "use-query-params";
 import axios from "axios";
-import config from "%/config";
 import TableActionsMenu from "%/presenters/TableActionsMenu";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
+import config from "%/config";
 
 export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
+
+    const [query, setQuery] = useQueryParams({
+        page_number: NumberParam,
+        page_length: NumberParam
+    });
 
     const { showFlag } = useFlags();
 
@@ -37,7 +43,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
 
     const setResponse = response =>
         setState(draft => {
-            draft.response = Object.assign(draft.response, response.data);
+            Object.assign(draft.response, response.data);
         });
 
     const setResponseErrors = errors => {
@@ -51,15 +57,22 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         }
     };
 
-    const setPageNumber = (event, page, analyticsEvent) =>
-        setState(draft => {
-            draft.request.body.page_number = page;
-        });
+    const queryPageNumber = pageNumber => ({
+        page_number: pageNumber === 1 ? undefined : pageNumber
+    });
+
+    const queryPageLength = pageLength => ({
+        page_length:
+            pageLength === config.defaultPageLength ? undefined : pageLength
+    });
+
+    const setPageNumber = (event, pageNumber, analyticsEvent) =>
+        setQuery(queryPageNumber(pageNumber));
 
     const setPageLength = selectedOption =>
-        setState(draft => {
-            draft.request.body.page_number = 1;
-            draft.request.body.page_length = selectedOption.value;
+        setQuery({
+            ...queryPageLength(selectedOption.value),
+            ...queryPageNumber(1)
         });
 
     const setSelected = key =>
@@ -80,7 +93,10 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         (async () => {
             setLoading(true);
             try {
-                const response = await requestListItems(state.request.body);
+                const response = await requestListItems({
+                    ...state.request.body,
+                    ...query
+                });
                 setResponse(response);
             } catch (error) {
                 setResponseErrors(error);
@@ -108,8 +124,8 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         setRemoveAllSelected();
     };
 
-    useEffect(listItemsAction, [state.request]);
-
+    useEffect(listItemsAction, []);
+    useEffect(listItemsAction, [query, state.request]);
     useEffect(handleErrorsAction, [state.response.errors]);
 
     const head = _head(setRemoveAllSelected, state.selected);
