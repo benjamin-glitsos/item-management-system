@@ -2,9 +2,14 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useQueryParams, NumberParam } from "use-query-params";
 import axios from "axios";
-import TableActionsMenu from "%/presenters/TableActionsMenu";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
+import TableActionsMenu from "%/presenters/TableActionsMenu";
+import {
+    queryPageNumber,
+    queryPageLength,
+    querySearch
+} from "%/utilities/queryParameters";
 import config from "%/config";
 
 export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
@@ -18,15 +23,6 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     });
 
     const { showFlag } = useFlags();
-
-    const queryPageNumber = pageNumber => ({
-        page_number: pageNumber === 1 ? undefined : pageNumber
-    });
-
-    const queryPageLength = pageLength => ({
-        page_length:
-            pageLength === config.defaultPageLength ? undefined : pageLength
-    });
 
     const requestListItems = body =>
         axios({
@@ -74,6 +70,8 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
             ...queryPageLength(selectedOption.value),
             ...queryPageNumber(1)
         });
+
+    const setSearch = search => setQuery(querySearch(search));
 
     const setSelected = key =>
         setState(draft => {
@@ -149,6 +147,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         state,
         setPageNumber,
         setPageLength,
+        setSearch,
         deleteItemsAction
     };
 };
