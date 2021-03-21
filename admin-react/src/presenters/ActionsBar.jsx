@@ -2,6 +2,7 @@ import { useContext } from "react";
 import DeletionMenu from "%/presenters/DeletionMenu";
 import PageLengthSelect from "%/presenters/PageLengthSelect";
 import ButtonGroup from "@atlaskit/button/button-group";
+import Textfield from "@atlaskit/textfield";
 import { ListContext } from "%/components/List";
 
 export default () => {
@@ -18,6 +19,12 @@ export default () => {
 
     return (
         <ButtonGroup>
+            <Textfield
+                isVisible={doesDataExist}
+                aria-label="Search"
+                isCompact={true}
+                placeholder="Search"
+            />
             <DeletionMenu
                 isVisible={doesDataExist}
                 isDeletable={isDeletable}

@@ -32,6 +32,6 @@ trait UsersDAOList {
 
     val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    (update ++ where ++ sort ++ page).update.run
+    (select ++ where ++ sort ++ page).update.run
   }
 }
