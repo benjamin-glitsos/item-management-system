@@ -4,7 +4,7 @@ import scala.util.Random
 trait SeederTrait {
   implicit final def times(n: Int) = new {
     def times(fn: => Unit) = {
-      val seedFactor: Double = System.getenv("SEED_FACTOR").toDouble
+      val seedFactor: Double = System.getenv("CONTROLLER_SEED_FACTOR").toDouble
       val count: Int         = round(n * seedFactor).toInt
       for (i <- 1 to count) fn
     }
