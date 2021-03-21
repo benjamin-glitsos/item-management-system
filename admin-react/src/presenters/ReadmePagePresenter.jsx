@@ -1,15 +1,18 @@
 import { useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import readme from "%/assets/README.md";
-import ContentLayout from "%/presenters/ContentLayout";
+import PageLayout from "%/presenters/PageLayout";
 import ArticleLayout from "%/presenters/ArticleLayout";
 import GithubButton from "%/presenters/GithubButton";
-import { ReadmeContext } from "%/containers/ReadmePageContainer";
+import { ReadmeContext } from "%/components/ReadmePage";
 
 export default () => {
     const context = useContext(ReadmeContext);
     return (
-        <ContentLayout title={context.title} description={context.description}>
+        <PageLayout
+            title={context.metaTitle}
+            description={context.description}
+        >
             <ArticleLayout
                 title={context.title}
                 breadcrumbs={[context.homeBreadcrumb]}
@@ -17,6 +20,6 @@ export default () => {
                 <ReactMarkdown>{context.readme}</ReactMarkdown>
                 <GithubButton />
             </ArticleLayout>
-        </ContentLayout>
+        </PageLayout>
     );
 };
