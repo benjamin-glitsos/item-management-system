@@ -19,7 +19,9 @@ export default () => {
                 <Pagination
                     pages={enumerate(totalPages)}
                     selectedIndex={pageNumber - 1}
-                    onChange={setPageNumber}
+                    onChange={(event, pageNumber, analyticsEvent) =>
+                        setPageNumber(pageNumber)
+                    }
                 />
             </PaginationStyles>
         );

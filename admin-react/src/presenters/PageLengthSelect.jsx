@@ -13,7 +13,7 @@ export default ({ isVisible, pageLength, setPageLength }) => {
                     }))}
                     value={pageLength}
                     placeholder={`${pageLength} per page`}
-                    onChange={setPageLength}
+                    onChange={selection => setPageLength(selection.value)}
                     spacing="compact"
                 />
             </Styles>

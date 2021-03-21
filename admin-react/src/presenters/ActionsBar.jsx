@@ -16,6 +16,8 @@ export default () => {
     const pageLength = context.state.response.data.page_length;
     const totalPages = context.state.response.data.total_pages;
     const setPageLength = context.setPageLength;
+    const setSearch = context.setSearch;
+    const search = context.query.search;
 
     return (
         <ButtonGroup>
@@ -24,6 +26,8 @@ export default () => {
                 aria-label="Search"
                 isCompact={true}
                 placeholder="Search"
+                value={search}
+                onChange={search => setSearch(search.target.value)}
             />
             <DeletionMenu
                 isVisible={doesDataExist}

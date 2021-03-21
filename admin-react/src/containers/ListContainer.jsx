@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
+import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam } from "use-query-params";
 import axios from "axios";
 import { useFlags } from "@atlaskit/flag";
@@ -62,16 +63,15 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         }
     };
 
-    const setPageNumber = (event, pageNumber, analyticsEvent) =>
-        setQuery(queryPageNumber(pageNumber));
+    const setPageNumber = pageNumber => setQuery(queryPageNumber(pageNumber));
 
-    const setPageLength = selectedOption =>
+    const setPageLength = pageLength =>
         setQuery({
-            ...queryPageLength(selectedOption.value),
+            ...queryPageLength(pageLength),
             ...queryPageNumber(1)
         });
 
-    const setSearch = search => setQuery(querySearch(search));
+    const setSearch = search => setQuery({ search });
 
     const setSelected = key =>
         setState(draft => {
@@ -123,7 +123,9 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     };
 
     useEffect(listItemsAction, []);
-    useEffect(listItemsAction, [query, state.request]);
+
+    useThrottledEffect(listItemsAction, 500, [query, state.request]);
+
     useEffect(handleErrorsAction, [state.response.errors]);
 
     const head = _head(setRemoveAllSelected, state.selected);
@@ -145,6 +147,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         head,
         rows,
         state,
+        query,
         setPageNumber,
         setPageLength,
         setSearch,
