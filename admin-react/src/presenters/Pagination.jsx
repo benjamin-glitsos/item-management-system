@@ -13,7 +13,7 @@ export default () => {
     const totalPages = context.state.response.data.total_pages;
     const setPageNumber = context.setPageNumber;
 
-    if (!isLoading && totalPages > 0) {
+    if (!isLoading && totalPages > 0 && pageLength > 0) {
         return (
             <PaginationStyles>
                 <Pagination
