@@ -18,12 +18,12 @@ BEGIN
             OLD.username
         );
 
-    ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted=true AND OLD.is_deleted=false THEN
+    ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted=yes AND OLD.is_deleted=no THEN
         PERFORM soft_delete_for_users_with_meta(
             OLD.username
         );
 
-    ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted=false AND OLD.is_deleted=true THEN
+    ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted=no AND OLD.is_deleted=yes THEN
         PERFORM restore_delete_for_users_with_meta(
             _username
         );
@@ -35,7 +35,7 @@ BEGIN
 
     ELSIF TG_OP = 'UPDATE'
         AND NEW.* IS DISTINCT FROM OLD.*
-        AND OLD.is_deleted=false THEN
+        AND OLD.is_deleted=no THEN
         PERFORM update_for_users_with_meta(
             OLD.username
           , NEW.username
