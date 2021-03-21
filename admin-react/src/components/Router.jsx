@@ -9,7 +9,7 @@ import UsersPage from "%/components/UsersPage";
 export default () => (
     <Router history={createBrowserHistory()}>
         <Page>
-            <Analytics id={process.env.PROJECT_GOOGLE_ANALYTICS_ID}>
+            <Analytics id={process.env.REACT_APP_PROJECT_GOOGLE_ANALYTICS_ID}>
                 <Switch>
                     <QueryParamProvider ReactRouterRoute={Route} exact path="/">
                         <ReadmePage />
