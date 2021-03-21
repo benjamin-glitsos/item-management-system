@@ -7,7 +7,11 @@ import upickle.default._
 import upickle_bundle.general._
 
 trait UsersServicesList {
-  final def list(pageNumber: Int, pageLength: Int): ujson.Value = {
+  final def list(
+      pageNumber: Int,
+      pageLength: Int,
+      search: String
+  ): ujson.Value = {
     read[ujson.Value](
       try {
         (for {
@@ -25,7 +29,7 @@ trait UsersServicesList {
           val rangeStart: Int = 1 + offset
           val rangeEnd: Int   = rangeStart + pageLength - 1
 
-          data <- UsersDAO.list(offset, pageLength)
+          data <- UsersDAO.list(offset, pageLength, search)
 
           val output: String = write(
             ujson.Obj(
