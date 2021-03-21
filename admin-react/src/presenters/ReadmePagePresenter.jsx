@@ -9,15 +9,12 @@ import { ReadmeContext } from "%/components/ReadmePage";
 export default () => {
     const context = useContext(ReadmeContext);
     return (
-        <PageLayout
-            title={context.metaTitle}
-            description={context.description}
-        >
+        <PageLayout title={context.metaTitle} description={context.description}>
             <ArticleLayout
                 title={context.title}
                 breadcrumbs={[context.homeBreadcrumb]}
             >
-                <ReactMarkdown>{context.readme}</ReactMarkdown>
+                <ReactMarkdown>{readme}</ReactMarkdown>
                 <GithubButton />
             </ArticleLayout>
         </PageLayout>
