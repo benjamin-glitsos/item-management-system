@@ -29,7 +29,7 @@ object UsersSeeder extends SeederTrait {
       emailAddress = System.getenv("DEMO_ADMIN_EMAIL_ADDRESS"),
       firstName = System.getenv("DEMO_ADMIN_FIRST_NAME"),
       lastName = System.getenv("DEMO_ADMIN_LAST_NAME"),
-      otherNames = Some("DEMO_ADMIN_OTHER_NAMES"),
+      otherNames = Some(System.getenv("DEMO_ADMIN_OTHER_NAMES")),
       password = System.getenv("DEMO_ADMIN_PASSWORD"),
       notes = MarkdownIpsum(text)
     )
