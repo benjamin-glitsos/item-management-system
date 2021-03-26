@@ -21,11 +21,11 @@ trait UsersDAOList {
     // """
     //
     // val where: Fragment = whereAnd(notDeleted, isInSearch)
-    //
-    // val sort: Fragment = fr"ORDER BY edited_at DESC"
-    //
-    // val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    (select ++ from).query[UsersList].to[List]
+    val sort: Fragment = fr"ORDER BY edited_at DESC"
+
+    val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
+
+    (select ++ from ++ sort ++ page).query[UsersList].to[List]
   }
 }
