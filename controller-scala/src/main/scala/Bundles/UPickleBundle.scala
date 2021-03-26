@@ -26,6 +26,8 @@ package upickle_bundle {
 
     implicit final val upickleUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
 
+    implicit final val upickleUsersList: ReadWriter[UsersList] = macroRW
+
     implicit final val upickleError: ReadWriter[Error] = macroRW
 
     implicit final def upickleMarshaller: ToEntityMarshaller[ujson.Value] = {

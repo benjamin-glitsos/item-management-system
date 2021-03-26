@@ -34,9 +34,6 @@ trait UsersDAOList {
     //
     // val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    (select ++ from)
-      .query[(String, String, String, List[String], String, List[String])]
-      .compile
-      .toList
+    (select ++ from).query[UsersList].compile.toList
   }
 }
