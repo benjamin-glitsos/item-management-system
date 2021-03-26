@@ -6,6 +6,6 @@ case class UsersList(
     first_name: String,
     last_name: String,
     other_names: Option[String],
-    created_at: LocalDateTime,
-    edited_at: Option[LocalDateTime]
+    created_at: String,
+    edited_at: Option[String]
 )

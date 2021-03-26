@@ -6,17 +6,9 @@ import doobie.implicits._
 
 trait UsersDAOList {
   final def list(offset: Int, pageLength: Int, search: String) = {
-    val select: Fragment = fr"""
-    | SELECT username
-    |   , email_address
-    |   , first_name
-    |   , last_name
-    |   , other_names
-    |   , created_at
-    |   , edited_at
-    """.stripMargin
+    val select: Fragment = fr"SELECT *"
 
-    val from: Fragment = fr"FROM users_with_meta"
+    val from: Fragment = fr"FROM users_list"
 
     // val notDeleted = fr"is_deleted=no"
     //
@@ -34,6 +26,6 @@ trait UsersDAOList {
     //
     // val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    (select ++ from).query[UsersList].compile.toList
+    (select ++ from).query[UsersList].to[List]
   }
 }

@@ -29,5 +29,8 @@ package doobie_bundle {
 
     implicit final val usersWithMetaSchema =
       schemaMeta[UsersWithMeta]("users_with_meta")
+
+    implicit final val usersListSchema =
+      schemaMeta[UsersList]("users_list")
   }
 }
