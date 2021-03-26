@@ -9,8 +9,9 @@ object ListUsersRoutes {
       {
         val pageNumber: Int = body("page_number").num.toInt
         val pageLength: Int = body("page_length").num.toInt
+        val search: String  = body("search").str
 
-        complete(UsersServices.list(pageNumber, pageLength))
+        complete(UsersServices.list(pageNumber, pageLength, search))
       }
     }
   }

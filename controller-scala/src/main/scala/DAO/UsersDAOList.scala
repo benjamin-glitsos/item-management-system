@@ -16,22 +16,24 @@ trait UsersDAOList {
     |   , edited_at
     """.stripMargin
 
-    val notDeleted = fr"is_deleted=no"
+    val from: Fragment = fr"users_with_meta"
 
-    val isInSearch = fr"""
-    | (username LIKE "%$search%")
-    | OR (email_address LIKE "%$search%")
-    | OR (first_name LIKE "%$search%")
-    | OR (last_name LIKE "%$search%")
-    | OR (other_names LIKE "%$search%")
-    """
+    // val notDeleted = fr"is_deleted=no"
+    //
+    // val isInSearch = fr"""
+    // | (username LIKE "%$search%")
+    // | OR (email_address LIKE "%$search%")
+    // | OR (first_name LIKE "%$search%")
+    // | OR (last_name LIKE "%$search%")
+    // | OR (other_names LIKE "%$search%")
+    // """
+    //
+    // val where: Fragment = whereAnd(notDeleted, isInSearch)
+    //
+    // val sort: Fragment = fr"ORDER BY edited_at DESC"
+    //
+    // val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    val where: Fragment = whereAnd(notDeleted, isInSearch)
-
-    val sort: Fragment = fr"ORDER BY edited_at DESC"
-
-    val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
-
-    (select ++ where ++ sort ++ page).update.run
+    (select ++ from).update.run
   }
 }

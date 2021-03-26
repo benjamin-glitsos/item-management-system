@@ -1,4 +1,4 @@
-CREATE FUNCTION generate_random_metakey(table_name text)
+CREATE FUNCTION generate_random_metakey(table_name text default '')
 RETURNS text
 AS $$
 DECLARE
@@ -9,7 +9,7 @@ DECLARE
 BEGIN
     CASE
         WHEN table_name = 'users' THEN table_key := 'user';
-        ELSE table_key := '0';
+        ELSE table_key := 'meta';
     END CASE;
     FOR i IN 1..key_length LOOP
       record_key := record_key || allowed_chars[1+random()*(array_length(allowed_chars, 1)-1)];
