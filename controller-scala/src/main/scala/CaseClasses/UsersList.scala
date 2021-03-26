@@ -1,5 +1,3 @@
-import java.time.LocalDateTime
-
 case class UsersList(
     username: String,
     email_address: String,
