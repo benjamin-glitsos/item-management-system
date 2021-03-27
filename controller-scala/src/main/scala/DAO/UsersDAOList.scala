@@ -1,5 +1,5 @@
 import doobie.Fragment
-import doobie.Fragments.{whereAndOpt}
+import doobie.Fragments.{whereOrOpt}
 import doobie._
 import doobie.implicits._
 import doobie.implicits.javatime._
@@ -10,18 +10,15 @@ trait UsersDAOList {
 
     val from: Fragment = fr"FROM users_list"
 
-    val matchesSearch = search.map(s => fr"username ILIKE ${s"%$s%"}")
-
-    // val matchesSearch: Option[Fragment] =
-    //   search.map(s => fr"""
-    //     | (username LIKE '%$s%'
-    //     | OR email_address LIKE '%$s%'
-    //     | OR first_name LIKE '$s')
-    //     """)
+    val matchesUsername = search.map(s => fr"username ILIKE ${s"%$s%"}")
+    val matchesEmailAddress =
+      search.map(s => fr"email_address ILIKE ${s"%$s%"}")
+    val matchesName = search.map(s => fr"first_name ILIKE ${s"%$s%"}")
 
     // ++ sort ++ page
 
-    val where: Fragment = whereAndOpt(matchesSearch)
+    val where: Fragment =
+      whereOrOpt(matchesUsername, matchesEmailAddress, matchesName)
 
     val sort: Fragment = fr"ORDER BY edited_at DESC"
 
