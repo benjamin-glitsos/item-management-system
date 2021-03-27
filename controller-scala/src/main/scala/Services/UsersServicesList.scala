@@ -24,11 +24,15 @@ trait UsersServicesList {
           val totalItems: Int = data.length
           val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
 
-          _ <- {
+          dataAfterPossibleSeeding <- {
             if (
               totalItems <= 10 && System.getenv("PROJECT_MODE") != "production"
-            ) { UsersSeeder() }
-            ().pure[ConnectionIO]
+            ) {
+              UsersSeeder()
+              UsersDAO.list(offset, pageLength, search)
+            } else {
+              data.pure[ConnectionIO]
+            }
           }
 
           val output: String = write(
@@ -40,7 +44,7 @@ trait UsersServicesList {
                 "total_items" -> ujson.Num(totalItems),
                 "range_start" -> ujson.Num(rangeStart),
                 "range_end"   -> ujson.Num(rangeEnd),
-                "items"       -> writeJs(data)
+                "items"       -> writeJs(dataAfterPossibleSeeding)
               )
             )
           )
