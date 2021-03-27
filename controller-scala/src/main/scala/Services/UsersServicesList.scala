@@ -14,22 +14,22 @@ trait UsersServicesList {
   ): ujson.Value = {
     read[ujson.Value](
       try {
+        val offset: Int     = (pageNumber - 1) * pageLength
+        val rangeStart: Int = 1 + offset
+        val rangeEnd: Int   = rangeStart + pageLength - 1
+
         (for {
-          totalItems <- UsersDAO.count().map(_.toInt)
+          data <- UsersDAO.list(offset, pageLength, search)
+
+          val totalItems: Int = data.length
+          val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
+
           _ <- {
             if (
               totalItems <= 10 && System.getenv("PROJECT_MODE") != "production"
             ) { UsersSeeder() }
             ().pure[ConnectionIO]
           }
-
-          data <- UsersDAO.list(offset, pageLength, search)
-
-          // val totalItems: Int = data.length
-          val offset: Int     = (pageNumber - 1) * pageLength
-          val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
-          val rangeStart: Int = 1 + offset
-          val rangeEnd: Int   = rangeStart + pageLength - 1
 
           val output: String = write(
             ujson.Obj(

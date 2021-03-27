@@ -1,6 +1,5 @@
 object UsersDAO
-    extends UsersDAOCount
-    with UsersDAOList
+    extends UsersDAOList
     with UsersDAOOpen
     with UsersDAOCreate
     with UsersDAOEdit
