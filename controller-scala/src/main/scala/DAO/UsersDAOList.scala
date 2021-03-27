@@ -10,7 +10,7 @@ trait UsersDAOList {
 
     val from: Fragment = fr"FROM users_list"
 
-    val matchesSearch = search.map(s => fr"username LIKE $s")
+    val matchesSearch = search.map(s => fr"username ILIKE ${s"%$s%"}")
 
     // val matchesSearch: Option[Fragment] =
     //   search.map(s => fr"""
