@@ -7,4 +7,5 @@ CREATE VIEW users_list AS
       , other_names
       , created_at
       , edited_at
-    FROM users_with_meta;
+    FROM users_with_meta
+    WHERE is_deleted = false;
