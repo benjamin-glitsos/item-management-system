@@ -16,8 +16,7 @@
         "search": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 4096,
-            "default": ""
+            "maxLength": 4096
         }
     }
 }

@@ -12,7 +12,7 @@ trait UsersServicesList {
   final def list(
       pageNumber: Int,
       pageLength: Int,
-      search: String
+      search: Option[String]
   ): ujson.Value = {
     read[ujson.Value](
       try {
