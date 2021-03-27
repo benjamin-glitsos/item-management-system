@@ -26,7 +26,8 @@ trait UsersServicesList {
 
           dataAfterPossibleSeeding <- {
             if (
-              totalItems <= 10 && System.getenv("PROJECT_MODE") != "production"
+              totalItems <= 10 && search.isEmpty && System
+                .getenv("PROJECT_MODE") != "production"
             ) {
               UsersSeeder()
               UsersDAO.list(offset, pageLength, search)
