@@ -15,8 +15,6 @@ trait UsersDAOList {
       search.map(s => fr"email_address ILIKE ${s"%$s%"}")
     val matchesName = search.map(s => fr"first_name ILIKE ${s"%$s%"}")
 
-    // ++ sort ++ page
-
     val where: Fragment =
       whereOrOpt(matchesUsername, matchesEmailAddress, matchesName)
 
@@ -24,6 +22,6 @@ trait UsersDAOList {
 
     val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    (select ++ from ++ where).query[UsersList].to[List]
+    (select ++ from ++ where ++ sort ++ page).query[UsersList].to[List]
   }
 }
