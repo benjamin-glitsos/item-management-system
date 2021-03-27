@@ -5,6 +5,8 @@ import doobie._
 import cats.implicits._
 import upickle.default._
 import upickle_bundle.general._
+import doobie.implicits.javasql._
+import doobie.implicits.javatime._
 
 trait UsersServicesList {
   final def list(

@@ -4,6 +4,8 @@ import doobie.{Meta => _, _}
 import doobie.util.ExecutionContexts
 import io.getquill.{idiom => _, _}
 import doobie.quill.DoobieContext
+import doobie.implicits.javasql._
+import doobie.implicits.javatime._
 
 package doobie_bundle {
   object connection {

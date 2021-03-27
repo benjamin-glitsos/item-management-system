@@ -3,6 +3,8 @@ import doobie.Fragment
 import doobie.Fragments.{setOpt, whereAnd}
 import doobie._
 import doobie.implicits._
+import doobie.implicits.javasql._
+import doobie.implicits.javatime._
 
 trait UsersDAOList {
   final def list(offset: Int, pageLength: Int, search: String) = {
@@ -10,6 +12,9 @@ trait UsersDAOList {
 
     val from: Fragment = fr"FROM users_list"
 
+    // TODO: where clause isnt working yet
+    // TODO: use whereAndOpt by making search be Option[String] hence not using default in the json schema for that
+    // TODO: isInSearch will use just the name and email fields from the users_list view.
     // val notDeleted = fr"is_deleted=no"
     //
     // val isInSearch = fr"""
