@@ -17,7 +17,7 @@ object CreateUsersRoutes {
 
       complete(
         NoContent,
-        UsersServices.create(
+        UsersService.create(
           username,
           emailAddress,
           firstName,

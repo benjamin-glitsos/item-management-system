@@ -5,7 +5,7 @@ import upickle_bundle.general._
 object OpenUserRoutes {
   final def apply(username: String): Route = get {
     Validation("open-user") { body: ujson.Value =>
-      complete(UsersServices.open(username))
+      complete(UsersService.open(username))
     }
   }
 }

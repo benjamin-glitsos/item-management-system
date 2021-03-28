@@ -1,6 +1,6 @@
 object UsersDAO
-    extends UsersDAOList
-    with UsersDAOOpen
-    with UsersDAOCreate
-    with UsersDAOEdit
-    with UsersDAODelete {}
+    extends UsersListDAO
+    with UsersOpenDAO
+    with UsersCreateDAO
+    with UsersEditDAO
+    with UsersDeleteDAO {}

@@ -5,7 +5,7 @@ import doobie._
 import doobie.implicits._
 import doobie.implicits.javatime._
 
-trait UsersDAOList {
+trait UsersListDAO {
   final def list(offset: Int, pageLength: Int, search: Option[String]) = {
     val select: Fragment = fr"""
     SELECT

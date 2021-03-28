@@ -1,6 +1,6 @@
 import doobie_bundle.database.dc._
 
-trait UsersDAOOpen {
+trait UsersOpenDAO {
   final def open(username: String) = {
     run(
       quote(

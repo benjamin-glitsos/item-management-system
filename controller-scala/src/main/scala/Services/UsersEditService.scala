@@ -1,7 +1,7 @@
 import doobie.implicits._
 import doobie_bundle.connection._
 
-trait UsersServicesEdit {
+trait UsersEditService {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],

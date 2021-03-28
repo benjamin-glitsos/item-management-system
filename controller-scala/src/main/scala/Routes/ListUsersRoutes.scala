@@ -12,7 +12,7 @@ object ListUsersRoutes {
         val pageLength: Int        = body("page_length").num.toInt
         val search: Option[String] = Try(body("search").str).toOption
 
-        complete(UsersServices.list(pageNumber, pageLength, search))
+        complete(UsersService.list(pageNumber, pageLength, search))
       }
     }
   }

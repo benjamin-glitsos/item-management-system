@@ -10,7 +10,7 @@ object DeleteUsersRoutes {
         val method: String          = body("method").str
         val usernames: List[String] = read[List[String]](body("usernames"))
 
-        complete(NoContent, UsersServices.delete(method, usernames))
+        complete(NoContent, UsersService.delete(method, usernames))
       }
     }
   }

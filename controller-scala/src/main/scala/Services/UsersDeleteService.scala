@@ -1,7 +1,7 @@
 import doobie.implicits._
 import doobie_bundle.connection._
 
-trait UsersServicesDelete {
+trait UsersDeleteService {
   final def delete(method: String, usernames: List[String]): String = {
     try {
       method match {
