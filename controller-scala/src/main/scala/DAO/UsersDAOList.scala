@@ -1,3 +1,4 @@
+import java.time.LocalDateTime
 import doobie.Fragment
 import doobie.Fragments.{whereOrOpt}
 import doobie._
@@ -6,7 +7,12 @@ import doobie.implicits.javatime._
 
 trait UsersDAOList {
   final def list(offset: Int, pageLength: Int, search: Option[String]) = {
-    val select: Fragment = fr"SELECT *"
+    val select: Fragment = fr"""
+    SELECT
+      COUNT(*) OVER() as total_count
+    , COUNT(*) OVER() as filtered_total_count
+    ,  *
+    """
 
     val from: Fragment = fr"FROM users_list"
 
@@ -22,6 +28,20 @@ trait UsersDAOList {
 
     val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
-    (select ++ from ++ where ++ sort ++ page).query[UsersList].to[List]
+    (select ++ from ++ where ++ sort ++ page)
+      .query[
+        (
+            Int,
+            Int,
+            String,
+            String,
+            String,
+            String,
+            Option[String],
+            LocalDateTime,
+            Option[LocalDateTime]
+        )
+      ]
+      .to[List]
   }
 }
