@@ -21,6 +21,8 @@ trait UsersServicesList {
         (for {
           data <- UsersDAO.list(offset, pageLength, search)
 
+          // TODO: use window functions to return the totalCount and the filteredTotalCount from the UsersDAO doobie query
+
           val totalItems: Int = data.length
           val totalPages: Int = Math.ceil(totalItems.toFloat / pageLength).toInt
 
