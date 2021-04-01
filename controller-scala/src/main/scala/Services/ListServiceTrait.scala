@@ -1,3 +1,4 @@
+import scala.util.Try
 import Math.ceil
 
 trait ListServiceTrait {

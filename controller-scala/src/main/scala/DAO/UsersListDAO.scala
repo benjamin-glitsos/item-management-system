@@ -7,30 +7,71 @@ import doobie.implicits.javatime._
 
 trait UsersListDAO {
   final def list(offset: Int, pageLength: Int, search: Option[String]) = {
-    val select: Fragment = fr"""
-    SELECT
-      COUNT(*) OVER() as total_count
-    , COUNT(*) OVER() as filtered_total_count
-    ,  *
+    val matchesUsernameFragment = search.map(s => fr"username ILIKE ${s"%$s%"}")
+    val matchesEmailAddressFragment =
+      search.map(s => fr"email_address ILIKE ${s"%$s%"}")
+    val matchesNameFragment = search.map(s => fr"first_name ILIKE ${s"%$s%"}")
+
+    val whereFragment: Fragment =
+      whereOrOpt(
+        matchesUsernameFragment,
+        matchesEmailAddressFragment,
+        matchesNameFragment
+      )
+
+    val sortFragment: Fragment = fr"ORDER BY edited_at DESC"
+
+    val pageFragment: Fragment = fr"LIMIT $pageLength OFFSET $offset"
+
+    val queryFragment: Fragment = fr"""
+    WITH total AS(
+        SELECT
+            *
+          , COUNT(*) OVER() AS total_count
+        FROM users_list
+    ), filtered AS(
+        SELECT
+            *
+          , COUNT(*) OVER() AS filtered_count
+        FROM total
+        $whereFragment
+        $sortFragment
+    ), limited AS(
+      SELECT
+          *
+        , row_number() OVER() AS row_number
+      FROM filtered
+      $pageFragment
+    ), page AS(
+      SELECT
+          *
+        , MIN(row_number) OVER() AS page_start
+        , MAX(row_number) OVER() AS page_end
+        , COUNT(*) OVER() AS page_count
+      FROM limited
+    )
+    SELECT 
+        total_count
+      , filtered_count
+      , page_start
+      , page_end
+      , page_count
+      , username
+      , email_address
+      , first_name
+      , last_name
+      , other_names
+      , created_at
+      , edited_at
+    FROM page
     """
 
-    val from: Fragment = fr"FROM users_list"
-
-    val matchesUsername = search.map(s => fr"username ILIKE ${s"%$s%"}")
-    val matchesEmailAddress =
-      search.map(s => fr"email_address ILIKE ${s"%$s%"}")
-    val matchesName = search.map(s => fr"first_name ILIKE ${s"%$s%"}")
-
-    val where: Fragment =
-      whereOrOpt(matchesUsername, matchesEmailAddress, matchesName)
-
-    val sort: Fragment = fr"ORDER BY edited_at DESC"
-
-    val page: Fragment = fr"LIMIT $pageLength OFFSET $offset"
-
-    (select ++ from ++ where ++ sort ++ page)
+    queryFragment
       .query[
         (
+            Int,
+            Int,
+            Int,
             Int,
             Int,
             String,

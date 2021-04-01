@@ -1,5 +1,4 @@
 import java.time.LocalDateTime
-import scala.util.Try
 import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
@@ -16,9 +15,7 @@ trait UsersListService extends ListServiceTrait {
   ): ujson.Value = {
     read[ujson.Value](
       try {
-        val offset: Int     = (pageNumber - 1) * pageLength
-        val rangeStart: Int = 1 + offset
-        val rangeEnd: Int   = rangeStart + pageLength - 1
+        val offset: Int = (pageNumber - 1) * pageLength
 
         (for {
           data <- UsersDAO.list(offset, pageLength, search)
@@ -36,22 +33,34 @@ trait UsersListService extends ListServiceTrait {
           }
 
           val totalItemsCount: Int = getOrZero(dataAfterPossibleSeeding.head._1)
+
           val totalPagesCount: Int = calculatePageCount(
             pageLength,
             totalItemsCount
           )
+
           val filteredItemsCount: Int = getOrZero(
             dataAfterPossibleSeeding.head._2
           )
+
           val filteredPagesCount: Int = calculatePageCount(
             pageLength,
-            totalFilteredItems
+            filteredItemsCount
           )
+
+          val pageItemsStart: Int = getOrZero(dataAfterPossibleSeeding.head._3)
+
+          val pageItemsEnd: Int = getOrZero(dataAfterPossibleSeeding.head._4)
+
+          val pageItemsCount: Int = getOrZero(dataAfterPossibleSeeding.head._5)
 
           val items: List[UsersList] = dataAfterPossibleSeeding map {
             case (
                   totalItemsCount: Int,
                   filteredItemsCount: Int,
+                  pageItemsStart: Int,
+                  pageItemsEnd: Int,
+                  pageItemsCount: Int,
                   username: String,
                   email_address: String,
                   first_name: String,
@@ -74,14 +83,12 @@ trait UsersListService extends ListServiceTrait {
           val output: String = write(
             ujson.Obj(
               "data" -> ujson.Obj(
-                "page_number"          -> ujson.Num(pageNumber),
-                "page_length"          -> ujson.Num(pageLength),
                 "total_items_count"    -> ujson.Num(totalItemsCount),
                 "total_pages_count"    -> ujson.Num(totalPagesCount),
                 "filtered_items_count" -> ujson.Num(filteredItemsCount),
                 "filtered_pages_count" -> ujson.Num(filteredPagesCount),
-                "range_start"          -> ujson.Num(rangeStart),
-                "range_end"            -> ujson.Num(rangeEnd),
+                "page_items_start"     -> ujson.Num(pageItemsStart),
+                "page_items_end"       -> ujson.Num(pageItemsEnd),
                 "items"                -> writeJs(items)
               )
             )
