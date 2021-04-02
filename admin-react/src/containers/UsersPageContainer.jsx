@@ -5,7 +5,6 @@ import ListContainer from "%/containers/ListContainer";
 import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
-import friendlyName from "%/utilities/friendlyName";
 
 export default () => {
     const title = "Users";
@@ -73,17 +72,9 @@ export default () => {
             key: `${title}/Table/Row/${i}`,
             cells: pipe(
                 row,
-                ({
+                ({ username, email_address, name, created_at, edited_at }) => [
                     username,
-                    email_address,
-                    first_name,
-                    last_name,
-                    other_names,
-                    created_at,
-                    edited_at
-                }) => [
-                    username,
-                    friendlyName(first_name, last_name, other_names),
+                    name,
                     email_address,
                     friendlyDate(created_at),
                     friendlyDate(fromMaybe(edited_at))

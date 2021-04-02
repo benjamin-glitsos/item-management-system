@@ -56,9 +56,7 @@ trait UsersListDAO {
       , page_end
       , username
       , email_address
-      , first_name
-      , last_name
-      , other_names
+      , name
       , created_at
       , edited_at
     FROM page
@@ -74,8 +72,6 @@ trait UsersListDAO {
             String,
             String,
             String,
-            String,
-            Option[String],
             LocalDateTime,
             Option[LocalDateTime]
         )

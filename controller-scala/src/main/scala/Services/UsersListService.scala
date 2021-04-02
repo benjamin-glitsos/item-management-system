@@ -62,18 +62,14 @@ trait UsersListService extends ListServiceTrait {
                   pageItemsEnd: Int,
                   username: String,
                   email_address: String,
-                  first_name: String,
-                  last_name: String,
-                  other_names: Option[String],
+                  name: String,
                   created_at: LocalDateTime,
                   edited_at: Option[LocalDateTime]
                 ) =>
               UsersList(
                 username,
                 email_address,
-                first_name,
-                last_name,
-                other_names,
+                name,
                 created_at,
                 edited_at
               )

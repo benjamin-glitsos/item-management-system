@@ -2,9 +2,7 @@ CREATE VIEW users_list AS
     SELECT
         username
       , email_address
-      , first_name
-      , last_name
-      , other_names
+      , friendly_name(first_name, last_name, other_names) AS name
       , created_at
       , edited_at
     FROM users_with_meta
