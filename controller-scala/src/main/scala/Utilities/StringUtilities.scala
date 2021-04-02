@@ -2,7 +2,7 @@ object StringUtilities {
   final def friendlyName(
       firstName: String,
       lastName: String,
-      otherNames: List[String]
+      otherNames: Option[String]
   ): String = {
     otherNames match {
       case None => List(firstName, lastName).mkString(" ")
