@@ -30,8 +30,6 @@ export default () => {
                 emptyView={<NoData />}
                 defaultSortKey="created_at"
                 defaultSortOrder="DESC"
-                sortKey={context.query.sort[0]}
-                sortOrder={context.query.sort[1]}
                 onSort={e => context.setSort([e.key, e.sortOrder])}
             />
             <Pagination />

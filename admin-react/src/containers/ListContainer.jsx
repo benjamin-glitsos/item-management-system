@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
-import {
-    useQueryParams,
-    NumberParam,
-    StringParam,
-    ArrayParam
-} from "use-query-params";
+import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
@@ -17,6 +12,7 @@ import {
     querySearch,
     querySort
 } from "%/utilities/queryParameters";
+import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import config from "%/config";
 
 export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
@@ -28,7 +24,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         page_number: NumberParam,
         page_length: NumberParam,
         search: StringParam,
-        sort: ArrayParam
+        sort: CommaArrayParam
     });
 
     const { showFlag } = useFlags();
