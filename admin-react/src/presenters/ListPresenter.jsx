@@ -11,6 +11,7 @@ import { ListContext } from "%/components/List";
 
 export default () => {
     const context = useContext(ListContext);
+    const sort = context.query.sort;
 
     return (
         <FullwidthLayout>
@@ -30,6 +31,8 @@ export default () => {
                 emptyView={<NoData />}
                 defaultSortKey="created_at"
                 defaultSortOrder="DESC"
+                sortKey={sort.length == 2 ? sort[0] : undefined}
+                sortOrder={sort.length == 2 ? sort[1] : undefined}
                 onSort={e => context.setSort([e.key, e.sortOrder])}
             />
             <Pagination />

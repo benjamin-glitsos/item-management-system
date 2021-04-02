@@ -29,7 +29,7 @@ trait UsersListDAO {
       )
 
     val sortFragment: Fragment =
-      fr"ORDER BY ${sort._1} ${sort._2}"
+      fr0"ORDER BY username asc"
 
     val pageFragment: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
@@ -44,6 +44,7 @@ trait UsersListDAO {
             *
           , COUNT(*) OVER() AS filtered_count
         FROM total
+        $whereFragment
     ), limited AS(
       SELECT
           *
