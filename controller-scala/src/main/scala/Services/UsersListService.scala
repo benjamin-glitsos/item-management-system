@@ -89,6 +89,8 @@ trait UsersListService extends ListServiceTrait {
                 "page_items_count"     -> ujson.Num(pageItemsCount),
                 "page_items_start"     -> ujson.Num(pageItemsStart),
                 "page_items_end"       -> ujson.Num(pageItemsEnd),
+                "page_number"          -> ujson.Num(pageNumber),
+                "page_length"          -> ujson.Num(pageLength),
                 "items"                -> writeJs(items)
               )
             )

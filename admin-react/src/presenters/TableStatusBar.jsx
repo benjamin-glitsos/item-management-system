@@ -22,12 +22,12 @@ export default () => {
     } else if (totalItemsCount === undefined || totalItemsCount === null) {
         return "Zero items.";
     } else if (numberOfSelected === 0) {
-        return (
-            <Fragment>
-                Showing items {pageItemsStart}
-                &ndash;{pageItemsEnd} of {filteredItemsCount}.
-            </Fragment>
-        );
+        const filteredStatus = `Showing items ${
+            pageItemsStart + String.fromCharCode(8211) + pageItemsEnd
+        } of ${filteredItemsCount}`;
+        const totalStatus =
+            filteredItemsCount < totalItemsCount && `out of ${totalItemsCount}`;
+        return [filteredStatus, totalStatus].filter(x => !!x).join(" ") + ".";
     } else {
         const numberToWorded = n =>
             capitaliseFirstLetter(numbersToWords.toWords(n));

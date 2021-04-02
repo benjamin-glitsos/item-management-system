@@ -9,6 +9,7 @@ export default () => {
     const context = useContext(ListContext);
     const isDataEmpty = context.isDataEmpty;
     const isDeletable = isDataEmpty || context.state.selected.length > 0;
+    const isLoading = context.state.isLoading;
     const softDeleteAction = () =>
         context.deleteItemsAction("soft", context.state.selected);
     const hardDeleteAction = () =>
@@ -16,7 +17,7 @@ export default () => {
     const setPageLength = context.setPageLength;
     const setSearch = context.setSearch;
     const search = context.query.search;
-    const pageItemsCount = context.state.response.data.page_items_count;
+    const pageLength = context.state.response.data.page_length;
 
     const [searchState, setSearchState] = useState("");
 
@@ -42,7 +43,7 @@ export default () => {
             />
             <PageLengthSelect
                 isDisabled={isDataEmpty}
-                pageLength={pageItemsCount}
+                pageLength={pageLength}
                 setPageLength={setPageLength}
             />
         </ButtonGroup>

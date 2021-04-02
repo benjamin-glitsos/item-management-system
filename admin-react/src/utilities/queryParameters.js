@@ -1,3 +1,5 @@
+import config from "%/config";
+
 const isQueryDefault = (value, defaultTest) =>
     defaultTest ? undefined : value;
 
