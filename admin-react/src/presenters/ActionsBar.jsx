@@ -25,18 +25,6 @@ export default () => {
 
     return (
         <ButtonGroup>
-            <Textfield
-                isDisabled={isDataEmpty}
-                aria-label="Search"
-                isCompact={true}
-                placeholder="Search"
-                value={searchState}
-                onChange={search => {
-                    const value = search.target.value;
-                    setSearch(value);
-                    setSearchState(value);
-                }}
-            />
             <DeletionMenu
                 isDisabled={isDeletable}
                 softDeleteAction={softDeleteAction}
@@ -50,3 +38,15 @@ export default () => {
         </ButtonGroup>
     );
 };
+// <Textfield
+//     isDisabled={isDataEmpty}
+//     aria-label="Search"
+//     isCompact={true}
+//     placeholder="Search"
+//     value={searchState}
+//     onChange={search => {
+//         const value = search.target.value;
+//         setSearch(value);
+//         setSearchState(value);
+//     }}
+// />

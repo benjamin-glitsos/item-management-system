@@ -7,10 +7,7 @@ import { UsersContext } from "%/components/UsersPage";
 export default () => {
     const context = useContext(UsersContext);
     return (
-        <PageLayout
-            title={context.metaTitle}
-            description={context.description}
-        >
+        <PageLayout title={context.metaTitle} description={context.description}>
             <List context={context} />
         </PageLayout>
     );

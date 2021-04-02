@@ -47,7 +47,6 @@ trait UsersListDAO {
           *
         , MIN(row_number) OVER() AS page_start
         , MAX(row_number) OVER() AS page_end
-        , COUNT(*) OVER() AS page_count
       FROM limited
     )
     SELECT 
@@ -55,7 +54,6 @@ trait UsersListDAO {
       , filtered_count
       , page_start
       , page_end
-      , page_count
       , username
       , email_address
       , first_name
@@ -69,7 +67,6 @@ trait UsersListDAO {
     queryFragment
       .query[
         (
-            Int,
             Int,
             Int,
             Int,

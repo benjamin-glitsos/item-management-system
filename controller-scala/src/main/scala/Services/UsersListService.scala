@@ -52,7 +52,7 @@ trait UsersListService extends ListServiceTrait {
 
           val pageItemsEnd: Int = getOrZero(dataAfterPossibleSeeding.head._4)
 
-          val pageItemsCount: Int = getOrZero(dataAfterPossibleSeeding.head._5)
+          val pageItemsCount: Int = dataAfterPossibleSeeding.length
 
           val items: List[UsersList] = dataAfterPossibleSeeding map {
             case (
@@ -60,7 +60,6 @@ trait UsersListService extends ListServiceTrait {
                   filteredItemsCount: Int,
                   pageItemsStart: Int,
                   pageItemsEnd: Int,
-                  pageItemsCount: Int,
                   username: String,
                   email_address: String,
                   first_name: String,
@@ -87,6 +86,7 @@ trait UsersListService extends ListServiceTrait {
                 "total_pages_count"    -> ujson.Num(totalPagesCount),
                 "filtered_items_count" -> ujson.Num(filteredItemsCount),
                 "filtered_pages_count" -> ujson.Num(filteredPagesCount),
+                "page_items_count"     -> ujson.Num(pageItemsCount),
                 "page_items_start"     -> ujson.Num(pageItemsStart),
                 "page_items_end"       -> ujson.Num(pageItemsEnd),
                 "items"                -> writeJs(items)
