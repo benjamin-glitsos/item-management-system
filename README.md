@@ -1,8 +1,8 @@
-# Item Management System
+## Item Management System
 
 Dockerised Model-View-Controller (MVC) architecture.
 
-## Controller-Scala
+### Controller-Scala
 
 * RESTful API
 * JSON Schema validation
@@ -11,11 +11,11 @@ Dockerised Model-View-Controller (MVC) architecture.
 * GRASP and SOLID
 * Object-Oriented in the large, Functional Programming in the small
 
-## Admin-React
+### Admin-React
 
 * Container/Presenter architecture via React Context
 
-## Database-PostgreSQL
+### Database-PostgreSQL
 
 * Shared metadata table joined via Views and Triggers
 * Stored Procedures, Window Functions and Domains

@@ -15,7 +15,10 @@ export default () => {
                 breadcrumbs={[context.homeBreadcrumb]}
             >
                 <ReactMarkdown>{readme}</ReactMarkdown>
+                <h2>Codebase</h2>
                 <GithubButton />
+                <h2>Database Schema</h2>
+                <img src={process.env.PUBLIC_URL + "/images/er-diagram.svg"} />
             </ArticleLayout>
         </PageLayout>
     );
