@@ -8,10 +8,11 @@ import NoData from "%/presenters/NoData";
 import ActionsBar from "%/presenters/ActionsBar";
 import Pagination from "%/presenters/Pagination";
 import { ListContext } from "%/components/List";
+import config from "%/config";
 
 export default () => {
     const context = useContext(ListContext);
-    const sort = context.query.sort;
+    const sort = context.query.sort || config.defaultSort;
 
     return (
         <FullwidthLayout>
@@ -29,6 +30,8 @@ export default () => {
                 rows={context.rows}
                 isLoading={context.state.isLoading}
                 emptyView={<NoData />}
+                sortKey={sort[0]}
+                sortOrder={sort[1]}
                 defaultSortKey="created_at"
                 defaultSortOrder="DESC"
                 onSort={e => context.setSort([e.key, e.sortOrder])}
@@ -37,5 +40,3 @@ export default () => {
         </FullwidthLayout>
     );
 };
-// sortKey={sort.length == 2 ? sort[0] : undefined}
-// sortOrder={sort.length == 2 ? sort[1] : undefined}
