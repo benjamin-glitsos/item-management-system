@@ -1,6 +1,6 @@
 import doobie_bundle.database.dc._
 
-trait UsersDAOCreate {
+trait UsersCreateDAO {
   final def create(
       username: String,
       emailAddress: String,

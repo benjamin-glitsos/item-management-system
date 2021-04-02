@@ -73,20 +73,20 @@ export default () => {
             key: `${title}/Table/Row/${i}`,
             cells: pipe(
                 row,
-                ([
+                ({
                     username,
-                    emailAddress,
-                    firstName,
-                    lastName,
-                    otherNames,
-                    createdAt,
-                    editedAt
-                ]) => [
+                    email_address,
+                    first_name,
+                    last_name,
+                    other_names,
+                    created_at,
+                    edited_at
+                }) => [
                     username,
-                    friendlyName(firstName, lastName, otherNames),
-                    emailAddress,
-                    friendlyDate(createdAt),
-                    friendlyDate(fromMaybe(editedAt))
+                    friendlyName(first_name, last_name, other_names),
+                    email_address,
+                    friendlyDate(created_at),
+                    friendlyDate(fromMaybe(edited_at))
                 ],
                 row => [
                     <Checkbox

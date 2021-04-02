@@ -8,18 +8,22 @@ import { ListContext } from "%/components/List";
 export default () => {
     const context = useContext(ListContext);
     const isLoading = context.state.isLoading;
-    const pageNumber = context.state.response.data.page_number;
-    const pageLength = context.state.response.data.page_length;
-    const totalPages = context.state.response.data.total_pages;
     const setPageNumber = context.setPageNumber;
 
-    if (!isLoading && totalPages > 0) {
+    const stats = context.state.response.data;
+    const pageNumber = stats.page_number;
+    const totalPagesCount = stats.total_pages_count;
+    const pageItemsCount = stats.page_items_count;
+
+    if (!isLoading && totalPagesCount > 0 && pageItemsCount > 0) {
         return (
             <PaginationStyles>
                 <Pagination
-                    pages={enumerate(totalPages)}
+                    pages={enumerate(totalPagesCount)}
                     selectedIndex={pageNumber - 1}
-                    onChange={setPageNumber}
+                    onChange={(event, pageNumber, analyticsEvent) =>
+                        setPageNumber(pageNumber)
+                    }
                 />
             </PaginationStyles>
         );

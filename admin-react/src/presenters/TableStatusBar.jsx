@@ -9,22 +9,25 @@ import { ListContext } from "%/components/List";
 export default () => {
     const context = useContext(ListContext);
     const isLoading = context.state.isLoading;
-    const itemRangeStart = context.state.response.data.range_start;
-    const itemRangeEnd = context.state.response.data.range_end;
-    const totalItemsCount = context.state.response.data.total_items;
     const numberOfSelected = context.state.selected.length;
+
+    const stats = context.state.response.data;
+    const totalItemsCount = stats.total_items_count;
+    const filteredItemsCount = stats.filtered_items_count;
+    const pageItemsStart = stats.page_items_start;
+    const pageItemsEnd = stats.page_items_end;
 
     if (isLoading) {
         return <NonBreakingSpace />;
     } else if (totalItemsCount === undefined || totalItemsCount === null) {
         return "Zero items.";
     } else if (numberOfSelected === 0) {
-        return (
-            <Fragment>
-                Showing items {itemRangeStart}
-                &ndash;{itemRangeEnd} of total {totalItemsCount}.
-            </Fragment>
-        );
+        const filteredStatus = `Showing items ${
+            pageItemsStart + String.fromCharCode(8211) + pageItemsEnd
+        } of ${filteredItemsCount}`;
+        const totalStatus =
+            filteredItemsCount < totalItemsCount && `out of ${totalItemsCount}`;
+        return [filteredStatus, totalStatus].filter(x => !!x).join(" ") + ".";
     } else {
         const numberToWorded = n =>
             capitaliseFirstLetter(numbersToWords.toWords(n));

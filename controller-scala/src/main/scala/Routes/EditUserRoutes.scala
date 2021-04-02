@@ -22,7 +22,7 @@ object EditUserRoutes {
 
         complete(
           NoContent,
-          UsersServices.edit(
+          UsersService.edit(
             username,
             newUsername,
             emailAddress,

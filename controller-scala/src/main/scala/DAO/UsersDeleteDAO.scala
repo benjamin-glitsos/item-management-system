@@ -1,6 +1,6 @@
 import doobie_bundle.database.dc._
 
-trait UsersDAODelete {
+trait UsersDeleteDAO {
   final def softDelete(usernames: List[String]) = {
     run(
       quote(

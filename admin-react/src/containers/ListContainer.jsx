@@ -1,10 +1,16 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
-import { useQueryParams, NumberParam } from "use-query-params";
+import useThrottledEffect from "use-throttled-effect";
+import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
-import TableActionsMenu from "%/presenters/TableActionsMenu";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
+import TableActionsMenu from "%/presenters/TableActionsMenu";
+import {
+    queryPageNumber,
+    queryPageLength,
+    querySearch
+} from "%/utilities/queryParameters";
 import config from "%/config";
 
 export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
@@ -14,19 +20,11 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
 
     const [query, setQuery] = useQueryParams({
         page_number: NumberParam,
-        page_length: NumberParam
+        page_length: NumberParam,
+        search: StringParam
     });
 
     const { showFlag } = useFlags();
-
-    const queryPageNumber = pageNumber => ({
-        page_number: pageNumber === 1 ? undefined : pageNumber
-    });
-
-    const queryPageLength = pageLength => ({
-        page_length:
-            pageLength === config.defaultPageLength ? undefined : pageLength
-    });
 
     const requestListItems = body =>
         axios({
@@ -66,13 +64,19 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         }
     };
 
-    const setPageNumber = (event, pageNumber, analyticsEvent) =>
-        setQuery(queryPageNumber(pageNumber));
+    const setPageNumber = (pageNumber = 1) =>
+        setQuery({ page_number: queryPageNumber(pageNumber) });
 
-    const setPageLength = selectedOption =>
+    const setPageLength = (pageLength = config.defaultPageLength) =>
         setQuery({
-            ...queryPageLength(selectedOption.value),
-            ...queryPageNumber(1)
+            page_number: queryPageNumber(1),
+            page_length: queryPageLength(pageLength)
+        });
+
+    const setSearch = (search = "") =>
+        setQuery({
+            page_number: queryPageNumber(1),
+            search: querySearch(search)
         });
 
     const setSelected = key =>
@@ -125,7 +129,9 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     };
 
     useEffect(listItemsAction, []);
-    useEffect(listItemsAction, [query, state.request]);
+
+    useThrottledEffect(listItemsAction, 500, [query, state.request]);
+
     useEffect(handleErrorsAction, [state.response.errors]);
 
     const head = _head(setRemoveAllSelected, state.selected);
@@ -133,22 +139,26 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     const rows = state.response.data.items.map((row, i) =>
         _rows(row, i, state.selected, setSelected, () =>
             TableActionsMenu({
-                softDeleteAction: () => deleteItemsAction("soft", [row[0]]),
-                hardDeleteAction: () => deleteItemsAction("hard", [row[0]])
+                softDeleteAction: () =>
+                    deleteItemsAction("soft", [row.username]),
+                hardDeleteAction: () =>
+                    deleteItemsAction("hard", [row.username])
             })
         )
     );
 
-    const doesDataExist =
-        !state.isLoading && state.response.data.total_pages > 0;
+    const isDataEmpty =
+        state.isLoading || !(state.response.data.total_items_count > 0);
 
     return {
-        doesDataExist,
+        isDataEmpty,
         head,
         rows,
         state,
+        query,
         setPageNumber,
         setPageLength,
+        setSearch,
         deleteItemsAction
     };
 };

@@ -1,7 +1,7 @@
 import doobie.implicits._
 import doobie_bundle.connection._
 
-trait UsersServicesCreate {
+trait UsersCreateService {
   final def create(
       username: String,
       emailAddress: String,

@@ -3,7 +3,7 @@ import doobie_bundle.connection._
 import upickle.default._
 import upickle_bundle.general._
 
-trait UsersServicesOpen {
+trait UsersOpenService {
   final def open(username: String): ujson.Value = {
     read[ujson.Value](
       try {

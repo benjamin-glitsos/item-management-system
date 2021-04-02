@@ -4,16 +4,19 @@
     "type": "object",
     "properties": {
         "page_number": {
-            "description": "The page of items to select.",
             "type": "integer",
             "minimum": 1,
             "default": 1
         },
         "page_length": {
-            "description": "The number of items per page.",
             "type": "integer",
             "enum": [10, 25, 50, 100],
             "default": 10
+        },
+        "search": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
         }
     }
 }

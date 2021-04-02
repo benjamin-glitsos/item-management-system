@@ -4,7 +4,7 @@ import doobie.Fragments.{setOpt, whereAnd}
 import doobie._
 import doobie.implicits._
 
-trait UsersDAOEdit {
+trait UsersEditDAO {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],
