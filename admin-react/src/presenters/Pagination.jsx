@@ -12,14 +12,14 @@ export default () => {
 
     const stats = context.state.response.data;
     const pageNumber = stats.page_number;
-    const totalPagesCount = stats.total_pages_count;
+    const filteredPagesCount = stats.filtered_pages_count;
     const pageItemsCount = stats.page_items_count;
 
-    if (!isLoading && totalPagesCount > 0 && pageItemsCount > 0) {
+    if (!isLoading && filteredPagesCount > 0 && pageItemsCount > 0) {
         return (
             <PaginationStyles>
                 <Pagination
-                    pages={enumerate(totalPagesCount)}
+                    pages={enumerate(filteredPagesCount)}
                     selectedIndex={pageNumber - 1}
                     onChange={(event, pageNumber, analyticsEvent) =>
                         setPageNumber(pageNumber)
