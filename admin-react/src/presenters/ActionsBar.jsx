@@ -8,7 +8,7 @@ import { ListContext } from "%/components/List";
 export default () => {
     const context = useContext(ListContext);
     const isDataEmpty = context.isDataEmpty;
-    const isDeletable = isDataEmpty && context.state.selected.length > 0;
+    const isDeletable = !isDataEmpty && context.state.selected.length > 0;
     const isLoading = context.state.isLoading;
     const softDeleteAction = () =>
         context.deleteItemsAction("soft", context.state.selected);
@@ -38,7 +38,7 @@ export default () => {
                 }}
             />
             <DeletionMenu
-                isDisabled={isDeletable}
+                isDisabled={!isDeletable}
                 softDeleteAction={softDeleteAction}
                 hardDeleteAction={hardDeleteAction}
             />
