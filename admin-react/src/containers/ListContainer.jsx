@@ -64,15 +64,20 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         }
     };
 
-    const setPageNumber = pageNumber => setQuery(queryPageNumber(pageNumber));
+    const setPageNumber = (pageNumber = 1) =>
+        setQuery({ page_number: queryPageNumber(pageNumber) });
 
-    const setPageLength = pageLength =>
+    const setPageLength = (pageLength = config.defaultPageLength) =>
         setQuery({
-            ...queryPageLength(pageLength),
-            ...queryPageNumber(1)
+            page_number: queryPageNumber(1),
+            page_length: queryPageLength(pageLength)
         });
 
-    const setSearch = search => setQuery({ search: querySearch(search) });
+    const setSearch = (search = "") =>
+        setQuery({
+            page_number: queryPageNumber(1),
+            search: querySearch(search)
+        });
 
     const setSelected = key =>
         setState(draft => {
@@ -134,14 +139,16 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     const rows = state.response.data.items.map((row, i) =>
         _rows(row, i, state.selected, setSelected, () =>
             TableActionsMenu({
-                softDeleteAction: () => deleteItemsAction("soft", [row[0]]),
-                hardDeleteAction: () => deleteItemsAction("hard", [row[0]])
+                softDeleteAction: () =>
+                    deleteItemsAction("soft", [row.username]),
+                hardDeleteAction: () =>
+                    deleteItemsAction("hard", [row.username])
             })
         )
     );
 
     const isDataEmpty =
-        state.isLoading || !(state.response.data.total_pages > 0);
+        state.isLoading || !(state.response.data.total_items_count > 0);
 
     return {
         isDataEmpty,

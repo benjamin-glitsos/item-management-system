@@ -8,12 +8,13 @@ import { ListContext } from "%/components/List";
 export default () => {
     const context = useContext(ListContext);
     const isDataEmpty = context.isDataEmpty;
-    const isDeletable = isDataEmpty || context.state.selected.length > 0;
+    const isDeletable = isDataEmpty && context.state.selected.length > 0;
     const isLoading = context.state.isLoading;
     const softDeleteAction = () =>
         context.deleteItemsAction("soft", context.state.selected);
     const hardDeleteAction = () =>
         context.deleteItemsAction("hard", context.state.selected);
+    const setPageNumber = context.setPageNumber;
     const setPageLength = context.setPageLength;
     const setSearch = context.setSearch;
     const search = context.query.search;

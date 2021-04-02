@@ -1,12 +1,12 @@
 import config from "%/config";
 
-const isQueryDefault = (value, defaultTest) =>
+const isQueryDefault = (defaultTest, value) =>
     defaultTest ? undefined : value;
 
 export const queryPageNumber = pageNumber =>
-    isQueryDefault(pageNumber, pageNumber === 1);
+    isQueryDefault(pageNumber === 1, pageNumber);
 
 export const queryPageLength = pageLength =>
-    isQueryDefault(pageLength, pageLength === config.defaultPageLength);
+    isQueryDefault(pageLength === config.defaultPageLength, pageLength);
 
-export const querySearch = search => isQueryDefault(search, search === "");
+export const querySearch = search => isQueryDefault(search === "", search);
