@@ -28,8 +28,12 @@ trait UsersListDAO {
         matchesNameFragment
       )
 
+    val sortKeyFragment: Fragment = Fragment.const(sort._1)
+
+    val sortOrderFragment: Fragment = Fragment.const(sort._2)
+
     val sortFragment: Fragment =
-      fr0"ORDER BY username asc"
+      fr"ORDER BY" ++ sortKeyFragment ++ sortOrderFragment
 
     val pageFragment: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
