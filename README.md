@@ -15,8 +15,9 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 * Container/Presenter architecture via React Context
 
-## Database-PostgreSQL
+## Database-PostgreSQL-R
 
+* Stored procedures using the R language
 * Shared metadata table joined via Views and Triggers
 * Stored Procedures, Window Functions and Domains
 * Fourth normal form (4NF)

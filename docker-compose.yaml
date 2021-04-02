@@ -1,13 +1,13 @@
 version: '3.1'
 services:
-  database_postgresql:
+  database_postgresql_r:
     build:
-      context: ./database-postgresql/
-    image: database-postgresql
-    container_name: database-postgresql
+      context: ./database-postgresql-r/
+    image: database-postgresql-r
+    container_name: database-postgresql-r
     volumes:
-      - ./database-postgresql/initialise.sh:/docker-entrypoint-initdb.d/initialise.sh
-      - ./database-postgresql/src:/docker-entrypoint-initdb.d/src
+      - ./database-postgresql-r/initialise.sh:/docker-entrypoint-initdb.d/initialise.sh
+      - ./database-postgresql-r/src:/docker-entrypoint-initdb.d/src
     restart: on-failure
     env_file: .env
     ports:
@@ -23,7 +23,7 @@ services:
     env_file: .env
     stdin_open: true
     depends_on:
-      - "database_postgresql"
+      - "database_postgresql_r"
     ports:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
   admin_react:
