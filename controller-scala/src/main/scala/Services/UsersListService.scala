@@ -6,6 +6,7 @@ import doobie._
 import cats.implicits._
 import upickle.default._
 import upickle_bundle.general._
+import StringUtilities.friendlyName
 
 trait UsersListService extends ListServiceTrait {
   final def list(
@@ -72,9 +73,7 @@ trait UsersListService extends ListServiceTrait {
               UsersList(
                 username,
                 email_address,
-                first_name,
-                last_name,
-                other_names,
+                friendlyName(first_name, last_name, other_names),
                 created_at,
                 edited_at
               )
