@@ -11,6 +11,7 @@ import { ListContext } from "%/components/List";
 
 export default () => {
     const context = useContext(ListContext);
+
     return (
         <FullwidthLayout>
             <PageHeader
@@ -27,6 +28,11 @@ export default () => {
                 rows={context.rows}
                 isLoading={context.state.isLoading}
                 emptyView={<NoData />}
+                defaultSortKey="created_at"
+                defaultSortOrder="DESC"
+                sortKey={context.query.sort[0]}
+                sortOrder={context.query.sort[1]}
+                onSort={e => context.setSort([e.key, e.sortOrder])}
             />
             <Pagination />
         </FullwidthLayout>

@@ -47,23 +47,23 @@ export default () => {
                     isSortable: false,
                     width: 3
                 },
-                { key: "username", content: "Username", isSortable: false },
-                { key: "name", content: "Name", isSortable: false },
+                { key: "username", content: "Username", isSortable: true },
+                { key: "first_name", content: "Name", isSortable: true },
                 {
-                    key: "emailAddress",
+                    key: "email_address",
                     content: "Email Address",
-                    isSortable: false
+                    isSortable: true
                 },
                 {
-                    key: "createdAt",
+                    key: "created_at",
                     content: "Created At",
-                    isSortable: false,
+                    isSortable: true,
                     width: 15
                 },
                 {
-                    key: "editedAt",
+                    key: "edited_at",
                     content: "Edited At",
-                    isSortable: false,
+                    isSortable: true,
                     width: 15
                 },
                 { key: "actions", content: null, isSortable: false, width: 10 }

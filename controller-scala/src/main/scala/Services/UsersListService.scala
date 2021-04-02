@@ -11,14 +11,15 @@ trait UsersListService extends ListServiceTrait {
   final def list(
       pageNumber: Int,
       pageLength: Int,
-      search: Option[String]
+      search: Option[String],
+      sort: (String, String)
   ): ujson.Value = {
     read[ujson.Value](
       try {
         val offset: Int = (pageNumber - 1) * pageLength
 
         (for {
-          data <- UsersDAO.list(offset, pageLength, search)
+          data <- UsersDAO.list(offset, pageLength, search, sort)
 
           dataAfterPossibleSeeding <- {
             if (
@@ -26,7 +27,7 @@ trait UsersListService extends ListServiceTrait {
                 .getenv("PROJECT_MODE") != "production"
             ) {
               UsersSeeder()
-              UsersDAO.list(offset, pageLength, search)
+              UsersDAO.list(offset, pageLength, search, sort)
             } else {
               data.pure[ConnectionIO]
             }

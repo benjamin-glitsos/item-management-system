@@ -17,6 +17,27 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 4096
+        },
+        "sort": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string",
+                    "enum": [
+                        "username",
+                        "first_name",
+                        "email_address",
+                        "created_at",
+                        "edited_at"
+                    ]
+                },
+                {
+                    "type": "string",
+                    "enum": ["ASC", "DESC"]
+                }
+            ],
+            "additionalItems": false,
+            "default": ["created_at", "DESC"]
         }
     }
 }

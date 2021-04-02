@@ -6,11 +6,20 @@ import doobie.implicits._
 import doobie.implicits.javatime._
 
 trait UsersListDAO {
-  final def list(offset: Int, pageLength: Int, search: Option[String]) = {
-    val matchesUsernameFragment = search.map(s => fr"username ILIKE ${s"%$s%"}")
-    val matchesEmailAddressFragment =
+  final def list(
+      offset: Int,
+      pageLength: Int,
+      search: Option[String],
+      sort: (String, String)
+  ) = {
+    val matchesUsernameFragment: Option[Fragment] =
+      search.map(s => fr"username ILIKE ${s"%$s%"}")
+
+    val matchesEmailAddressFragment: Option[Fragment] =
       search.map(s => fr"email_address ILIKE ${s"%$s%"}")
-    val matchesNameFragment = search.map(s => fr"first_name ILIKE ${s"%$s%"}")
+
+    val matchesNameFragment: Option[Fragment] =
+      search.map(s => fr"first_name ILIKE ${s"%$s%"}")
 
     val whereFragment: Fragment =
       whereOrOpt(
@@ -19,7 +28,8 @@ trait UsersListDAO {
         matchesNameFragment
       )
 
-    val sortFragment: Fragment = fr"ORDER BY edited_at DESC"
+    val sortFragment: Fragment =
+      fr"ORDER BY ${sort._1} ${sort._2}"
 
     val pageFragment: Fragment = fr"LIMIT $pageLength OFFSET $offset"
 
@@ -34,13 +44,12 @@ trait UsersListDAO {
             *
           , COUNT(*) OVER() AS filtered_count
         FROM total
-        $whereFragment
-        $sortFragment
     ), limited AS(
       SELECT
           *
         , row_number() OVER() AS row_number
       FROM filtered
+      $sortFragment
       $pageFragment
     ), page AS(
       SELECT

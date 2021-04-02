@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
-import { useQueryParams, NumberParam, StringParam } from "use-query-params";
+import {
+    useQueryParams,
+    NumberParam,
+    StringParam,
+    ArrayParam
+} from "use-query-params";
 import axios from "axios";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
@@ -9,7 +14,8 @@ import TableActionsMenu from "%/presenters/TableActionsMenu";
 import {
     queryPageNumber,
     queryPageLength,
-    querySearch
+    querySearch,
+    querySort
 } from "%/utilities/queryParameters";
 import config from "%/config";
 
@@ -21,7 +27,8 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
     const [query, setQuery] = useQueryParams({
         page_number: NumberParam,
         page_length: NumberParam,
-        search: StringParam
+        search: StringParam,
+        sort: ArrayParam
     });
 
     const { showFlag } = useFlags();
@@ -78,6 +85,9 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
             page_number: queryPageNumber(1),
             search: querySearch(search)
         });
+
+    const setSort = (sort = []) =>
+        setQuery({ sort: querySort(sort.slice(0, 2)) });
 
     const setSelected = key =>
         setState(draft => {
@@ -159,6 +169,7 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
         setPageNumber,
         setPageLength,
         setSearch,
+        setSort,
         deleteItemsAction
     };
 };
