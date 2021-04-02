@@ -13,11 +13,10 @@ export default () => {
         context.deleteItemsAction("soft", context.state.selected);
     const hardDeleteAction = () =>
         context.deleteItemsAction("hard", context.state.selected);
-    const pageLength = context.state.response.data.page_length;
-    const totalPages = context.state.response.data.total_pages;
     const setPageLength = context.setPageLength;
     const setSearch = context.setSearch;
     const search = context.query.search;
+    const pageItemsCount = context.state.response.data.page_items_count;
 
     const [searchState, setSearchState] = useState("");
 
@@ -25,6 +24,17 @@ export default () => {
 
     return (
         <ButtonGroup>
+            <Textfield
+                aria-label="Search"
+                isCompact={true}
+                placeholder="Search"
+                value={searchState}
+                onChange={search => {
+                    const value = search.target.value;
+                    setSearch(value);
+                    setSearchState(value);
+                }}
+            />
             <DeletionMenu
                 isDisabled={isDeletable}
                 softDeleteAction={softDeleteAction}
@@ -32,21 +42,9 @@ export default () => {
             />
             <PageLengthSelect
                 isDisabled={isDataEmpty}
-                pageLength={pageLength}
+                pageLength={pageItemsCount}
                 setPageLength={setPageLength}
             />
         </ButtonGroup>
     );
 };
-// <Textfield
-//     isDisabled={isDataEmpty}
-//     aria-label="Search"
-//     isCompact={true}
-//     placeholder="Search"
-//     value={searchState}
-//     onChange={search => {
-//         const value = search.target.value;
-//         setSearch(value);
-//         setSearchState(value);
-//     }}
-// />
