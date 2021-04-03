@@ -19,7 +19,7 @@ export default () => (
 );
 
 const Styles = styled.div`
-    margin-top: 40px;
+    margin-top: 28px;
 
     .link-icon {
         fill: #0052cc;
