@@ -49,12 +49,12 @@ trait UsersListDAO {
           , COUNT(*) OVER() AS filtered_count
         FROM total
         $whereFragment
+        $sortFragment
     ), limited AS(
       SELECT
           *
         , row_number() OVER() AS row_number
       FROM filtered
-      $sortFragment
       $pageFragment
     ), page AS(
       SELECT
