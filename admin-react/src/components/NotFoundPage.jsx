@@ -1,32 +1,13 @@
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import Button from "@atlaskit/button";
-import PageLayout from "%/presenters/PageLayout";
-import ArticleLayout from "%/presenters/ArticleLayout";
+import { createContext } from "react";
+import NotFoundPageContainer from "%/containers/NotFoundPageContainer";
+import NotFoundPagePresenter from "%/presenters/NotFoundPagePresenter";
 
-export default () => {
-    const history = useHistory();
-    const handleReturnHome = () => {
-        history.push("/");
-    };
+export const NotFoundContext = createContext();
 
-    const title = "Page not found";
-    const description =
-        "The page at this location does not exist. Please click on the button below to return to the homepage.";
-    return (
-        <PageLayout title={title} description={description}>
-            <ArticleLayout title={title} breadcrumbs={["Home"]}>
-                <p>{description}</p>
-                <HomeButtonStyles>
-                    <Button appearance="primary" onClick={handleReturnHome}>
-                        Back to Home
-                    </Button>
-                </HomeButtonStyles>
-            </ArticleLayout>
-        </PageLayout>
-    );
-};
+const { Provider } = NotFoundContext;
 
-const HomeButtonStyles = styled.div`
-    margin-top: 28px;
-`;
+export default () => (
+    <Provider value={NotFoundPageContainer()}>
+        <NotFoundPagePresenter />
+    </Provider>
+);

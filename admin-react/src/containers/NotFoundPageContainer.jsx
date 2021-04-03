@@ -1,15 +1,14 @@
 import PageContainer from "%/containers/PageContainer";
 
 export default () => {
-    const title = "Readme";
+    const title = "Page not found";
     const slug = "";
 
     const pageContainer = PageContainer({
         title,
         slug,
-        description: `Information about the architecture and technology stack of the ${
-            process.env.PROJECT_NAME || "Item Management System"
-        }.`
+        description:
+            "The page at this location does not exist. Please click on the button below to return to the homepage."
     });
     return { ...pageContainer };
 };
