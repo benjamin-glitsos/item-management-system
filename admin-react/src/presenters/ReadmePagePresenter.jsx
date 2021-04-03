@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import readme from "%/assets/README.md";
 import PageLayout from "%/presenters/PageLayout";
@@ -18,8 +19,15 @@ export default () => {
                 <h2>Codebase</h2>
                 <GithubButton />
                 <h2>Database Schema</h2>
-                <img src={process.env.PUBLIC_URL + "/images/er-diagram.svg"} />
+                <DatabaseSchema
+                    src={process.env.PUBLIC_URL + "/images/er-diagram.svg"}
+                />
             </ArticleLayout>
         </PageLayout>
     );
 };
+
+const DatabaseSchema = styled.img`
+    margin: 40px auto 0 auto;
+    display: block;
+`;
