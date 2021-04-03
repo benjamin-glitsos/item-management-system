@@ -16,6 +16,7 @@
         "@atlaskit/pagination": "^13.0.10",
         "@atlaskit/select": "^13.2.0",
         "@atlaskit/side-navigation": "^0.8.1",
+        "@atlaskit/spinner": "^15.0.7",
         "@atlaskit/textfield": "^5.0.1",
         "@atlaskit/theme": "^11.0.2",
         "@atlaskit/tooltip": "^17.2.0",
@@ -39,6 +40,7 @@
         "react-router-ga": "^1.2.3",
         "react-scripts": "4.0.3",
         "simplur": "^3.0.0",
+        "source-map-explorer": "^2.5.2",
         "styled-components": "^3.2.6",
         "use-immer": "^0.4.2",
         "use-query-params": "^1.2.0",
@@ -46,7 +48,8 @@
     },
     "scripts": {
         "start": "craco start",
-        "build": "craco build"
+        "build": "craco build",
+        "analyse": "source-map-explorer 'build/static/js/*.js'"
     },
     "eslintConfig": {
         "extends": [
