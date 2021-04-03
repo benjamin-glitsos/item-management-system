@@ -1,5 +1,4 @@
 import transform from "transform-object";
-import { Checkbox } from "@atlaskit/checkbox";
 import PageContainer from "%/containers/PageContainer";
 import ListContainer from "%/containers/ListContainer";
 import fromMaybe from "%/utilities/fromMaybe";

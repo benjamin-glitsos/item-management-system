@@ -8,6 +8,7 @@ import LoadingPage from "%/components/LoadingPage";
 
 const ReadmePage = lazy(() => import("%/components/ReadmePage"));
 const UsersPage = lazy(() => import("%/components/UsersPage"));
+const NotFoundPage = lazy(() => import("%/components/NotFoundPage"));
 
 export default () => (
     <Router history={createBrowserHistory()}>
@@ -27,6 +28,12 @@ export default () => (
                             path="/users"
                         >
                             <UsersPage />
+                        </QueryParamProvider>
+                        <QueryParamProvider
+                            ReactRouterRoute={NotFoundPage}
+                            path="*"
+                        >
+                            <NotFoundPage />
                         </QueryParamProvider>
                     </Switch>
                 </Suspense>
