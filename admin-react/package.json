@@ -48,7 +48,7 @@
     "scripts": {
         "start": "craco start",
         "build": "craco build",
-        "analyze": "source-map-explorer 'build/static/js/*.js'"
+        "analyse": "source-map-explorer 'build/static/js/*.js'"
     },
     "eslintConfig": {
         "extends": [
