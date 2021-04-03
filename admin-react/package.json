@@ -25,7 +25,6 @@
         "axios": "^0.21.1",
         "dateformat": "^4.5.1",
         "immer": "^8.0.1",
-        "node-time-ago": "^1.0.0",
         "number-to-words": "^1.2.4",
         "pipe-functions": "^1.3.0",
         "prop-types": "^15.7.2",
@@ -52,8 +51,7 @@
     },
     "eslintConfig": {
         "extends": [
-            "react-app",
-            "react-app/jest"
+            "react-app"
         ]
     },
     "browserslist": {

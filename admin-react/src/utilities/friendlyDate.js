@@ -1,5 +1,5 @@
 import dateFormat from "dateformat";
-import timeAgo from "node-time-ago";
+// import timeAgo from "node-time-ago";
 import Tooltip from "@atlaskit/tooltip";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
@@ -14,8 +14,8 @@ export default dateTimeStr => {
         const fullDate = dateFormat(now, `mmmm dS, yyyy "at" h:MMtt`);
         if (isLessThanOneDayAgo) {
             return (
-                <Tooltip content="wow">
-                    {capitaliseFirstLetter(timeAgo(date))}
+                <Tooltip content={fullDate}>
+                    {capitaliseFirstLetter("wow")}
                 </Tooltip>
             );
         } else {
