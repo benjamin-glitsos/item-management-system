@@ -1,4 +1,4 @@
-import { Suspense, lazy, createElement } from "react";
+import { Suspense, lazy } from "react";
 import { Router, Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 import { QueryParamProvider } from "use-query-params";
