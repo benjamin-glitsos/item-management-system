@@ -1,7 +1,11 @@
 import dateFormat from "dateformat";
-// import timeAgo from "node-time-ago";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 import Tooltip from "@atlaskit/tooltip";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
+
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo();
 
 export default dateTimeStr => {
     if (dateTimeStr === null) {
@@ -15,7 +19,7 @@ export default dateTimeStr => {
         if (isLessThanOneDayAgo) {
             return (
                 <Tooltip content={fullDate}>
-                    {capitaliseFirstLetter("wow")}
+                    {capitaliseFirstLetter(timeAgo.format(date))}
                 </Tooltip>
             );
         } else {
