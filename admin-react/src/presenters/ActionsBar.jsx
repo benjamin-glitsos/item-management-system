@@ -1,5 +1,7 @@
+import { Fragment } from "react";
 import { useContext, useEffect, useState } from "react";
-import DeletionMenu from "%/presenters/DeletionMenu";
+import styled from "styled-components";
+import ActionsMenu from "%/presenters/ActionsMenu";
 import PageLengthSelect from "%/presenters/PageLengthSelect";
 import ButtonGroup from "@atlaskit/button/button-group";
 import Textfield from "@atlaskit/textfield";
@@ -25,28 +27,38 @@ export default () => {
     useEffect(() => setSearchState(search), []);
 
     return (
-        <ButtonGroup>
-            <Textfield
-                aria-label="Search"
-                isCompact={true}
-                placeholder="Search"
-                value={searchState}
-                onChange={search => {
-                    const value = search.target.value;
-                    setSearch(value);
-                    setSearchState(value);
-                }}
-            />
-            <DeletionMenu
-                isDisabled={!isDeletable}
-                softDeleteAction={softDeleteAction}
-                hardDeleteAction={hardDeleteAction}
-            />
-            <PageLengthSelect
-                isDisabled={isDataEmpty}
-                pageLength={pageLength}
-                setPageLength={setPageLength}
-            />
-        </ButtonGroup>
+        <Fragment>
+            <ButtonGroup>
+                <Textfield
+                    aria-label="Search"
+                    isCompact={true}
+                    placeholder="Search"
+                    value={searchState}
+                    onChange={search => {
+                        const value = search.target.value;
+                        setSearch(value);
+                        setSearchState(value);
+                    }}
+                />
+                <PageLengthSelect
+                    isDisabled={isDataEmpty}
+                    pageLength={pageLength}
+                    setPageLength={setPageLength}
+                />
+                <ButtonLeftSpace>
+                    <ActionsMenu
+                        isDisabled={!isDeletable}
+                        softDeleteAction={softDeleteAction}
+                        hardDeleteAction={hardDeleteAction}
+                    />
+                </ButtonLeftSpace>
+            </ButtonGroup>
+        </Fragment>
     );
 };
+
+const ButtonLeftSpace = styled.span`
+    button {
+        margin-left: 0.25em;
+    }
+`;
