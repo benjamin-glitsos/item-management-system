@@ -8,69 +8,37 @@ export default ({ breadcrumbs }) => {
         history.push(`/${path}`);
     };
 
-    const breadcrumbsData = breadcrumbs.reduce(
-        (acc, [currTitle, currPath], i) => {
+    const breadcrumbsData = breadcrumbs
+        .reduce((acc, [currTitle, currPath], i) => {
             const prev = acc[i - 1];
             var path = currPath;
             if (prev) {
-                const prevPath = prev[2];
+                const prevPath = prev.path;
                 if (prevPath === "/") {
                     path = prevPath + currPath;
                 } else {
                     path = [prevPath, currPath].join("/");
                 }
             }
-            return [...acc, [currTitle, currPath, path]];
-        },
-        []
-    );
-    console.log(breadcrumbsData);
-    // breadcrumbs.reduce((acc, [currTitle, currPath], i) => {
-    //     // var path = "";
-    //     // if (acc) {
-    //     //     if (acc[i].hasOwnProperty("href")) {
-    //     //         path = "has";
-    //     //     } else {
-    //     //         path = "not";
-    //     //     }
-    //     // }
-    //     // const prevPath = acc[i] !== [] && acc[i].href;
-    //     // const path =
-    //     //     prevPath && currPath !== "/"
-    //     //         ? [prevPath, currPath].join("/")
-    //     //         : currPath;
-    //     const path = "";
-    //     return [
-    //         ...acc,
-    //         {
-    //             text: currTitle,
-    //             key: `BreadcrumbBar/${i}-${currTitle}`,
-    //             href: path,
-    //             isDisabled: i + 1 === breadcrumbs.length
-    //         }
-    //     ];
-    // }, []);
-
-    // const breadcrumbsData = breadcrumbs.reduce(
-    //     ([accTitle, accPath], [currTitle, currPath], i) => ({
-    //         text: currTitle,
-    //         key: `BreadcrumbBar/${i}-${currTitle}`,
-    //         href: [current.href, path].join("/"),
-    //         isDisabled: i + 1 === breadcrumbs.length
-    //     }),
-    //     { href: "" }
-    // );
-
-    // .map(props => (
-    //     <BreadcrumbsItem
-    //         {...props}
-    //         onClick={() => handleClick(props.href)}
-    //     />
-    // ));
+            return [...acc, { title: currTitle, key: currPath, path }];
+        }, [])
+        .map(({ key, path, title }, i) => ({
+            text: title,
+            key: `BreadcrumbBar/${i}-${key}`,
+            href: path,
+            isDisabled: i + 1 === breadcrumbs.length
+        }));
 
     return (
         <DisabledStyles>
-            <Breadcrumbs></Breadcrumbs>
+            <Breadcrumbs>
+                {breadcrumbsData.map(props => (
+                    <BreadcrumbsItem
+                        {...props}
+                        onClick={() => handleClick(props.href)}
+                    />
+                ))}
+            </Breadcrumbs>
         </DisabledStyles>
     );
 };
