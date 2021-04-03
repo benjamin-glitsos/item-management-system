@@ -2,7 +2,7 @@ import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
 import DropdownMenu from "%/presenters/DropdownMenu";
 
 export default ({ isDisabled, softDeleteAction, hardDeleteAction }) => (
-    <DropdownMenu name="Deletion" triggerType="button">
+    <DropdownMenu name="Actions" triggerType="button">
         <DropdownItemGroup>
             <DropdownItem onClick={softDeleteAction} isDisabled={isDisabled}>
                 Soft Delete

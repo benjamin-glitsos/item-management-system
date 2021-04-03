@@ -3,6 +3,7 @@ import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
+import pipe from "pipe-functions";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
 import TableActionsMenu from "%/presenters/TableActionsMenu";
@@ -12,10 +13,11 @@ import {
     querySearch,
     querySort
 } from "%/utilities/queryParameters";
+import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import config from "%/config";
 
-export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
+export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
@@ -140,18 +142,49 @@ export default ({ apiPath, defaultState, head: _head, rows: _rows }) => {
 
     useEffect(handleErrorsAction, [state.response.errors]);
 
-    const head = _head(setRemoveAllSelected, state.selected);
+    const head = {
+        cells: [
+            {
+                key: "isSelected",
+                content: (
+                    <RemoveAllSelected
+                        doesSelectionExist={state.selected.length > 0}
+                        action={setRemoveAllSelected}
+                    />
+                ),
+                isSortable: false,
+                width: 3
+            },
+            ...headContent,
+            { key: "actions", content: null, isSortable: false, width: 10 }
+        ]
+    };
 
-    const rows = state.response.data.items.map((row, i) =>
-        _rows(row, i, state.selected, setSelected, () =>
-            TableActionsMenu({
-                softDeleteAction: () =>
-                    deleteItemsAction("soft", [row.username]),
-                hardDeleteAction: () =>
-                    deleteItemsAction("hard", [row.username])
-            })
+    const rows = state.response.data.items.map((row, i) => ({
+        key: `${title}/Table/Row/${i}`,
+        cells: pipe(
+            row,
+            rowsTransform,
+            row => [
+                <Checkbox
+                    isChecked={selectedState.includes(row[0])}
+                    onChange={() => setSelected(row[0])}
+                />,
+                ...row,
+                TableActionsMenu({
+                    softDeleteAction: () =>
+                        deleteItemsAction("soft", [row.username]),
+                    hardDeleteAction: () =>
+                        deleteItemsAction("hard", [row.username])
+                })
+            ],
+            x =>
+                x.map((x, i) => ({
+                    key: `Table/Cell/${i}`,
+                    content: x
+                }))
         )
-    );
+    }));
 
     const isDataEmpty =
         state.isLoading || !(state.response.data.total_items_count > 0);
