@@ -6,7 +6,7 @@ import axios from "axios";
 import pipe from "pipe-functions";
 import { useFlags } from "@atlaskit/flag";
 import Error from "@atlaskit/icon/glyph/editor/warning";
-import TableActionsMenu from "%/presenters/TableActionsMenu";
+import ActionsMenu from "%/presenters/ActionsMenu";
 import {
     queryPageNumber,
     queryPageLength,
@@ -171,12 +171,7 @@ export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
                     onChange={() => setSelected(row[0])}
                 />,
                 ...row,
-                TableActionsMenu({
-                    softDeleteAction: () =>
-                        deleteItemsAction("soft", [row.username]),
-                    hardDeleteAction: () =>
-                        deleteItemsAction("hard", [row.username])
-                })
+                ActionsMenu({ items: [row.username] })
             ],
             x =>
                 x.map((x, i) => ({

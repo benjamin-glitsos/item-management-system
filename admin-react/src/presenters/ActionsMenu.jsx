@@ -4,15 +4,12 @@ import DropdownMenu from "%/presenters/DropdownMenu";
 import { ListContext } from "%/components/List";
 import friendlyAction from "%/utilities/friendlyAction";
 
-export default ({ isDisabled }) => {
+export default ({ items }) => {
     const context = useContext(ListContext);
-    const items = context.state.selected;
     const numberOfItems = items.length;
     const isDeletable = !context.isDataEmpty && numberOfItems > 0;
-    const softDeleteAction = () =>
-        context.deleteItemsAction("soft", context.state.selected);
-    const hardDeleteAction = () =>
-        context.deleteItemsAction("hard", context.state.selected);
+    const softDeleteAction = () => context.deleteItemsAction("soft", items);
+    const hardDeleteAction = () => context.deleteItemsAction("hard", items);
 
     const actions = [
         {

@@ -25,7 +25,7 @@ export default () => {
         <Fragment>
             <ButtonGroup>
                 <ButtonRightSpace>
-                    <ActionsMenu />
+                    <ActionsMenu items={context.state.selected} />
                 </ButtonRightSpace>
                 <Textfield
                     aria-label="Search"
