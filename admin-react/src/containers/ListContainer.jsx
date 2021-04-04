@@ -194,6 +194,7 @@ export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
         setPageLength,
         setSearch,
         setSort,
+        setRemoveAllSelected,
         deleteItemsAction
     };
 };

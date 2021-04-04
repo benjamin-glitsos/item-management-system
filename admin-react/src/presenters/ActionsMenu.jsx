@@ -4,7 +4,7 @@ import DropdownMenu from "%/presenters/DropdownMenu";
 import { ListContext } from "%/components/List";
 import friendlyAction from "%/utilities/friendlyAction";
 
-export default ({ items }) => {
+export default ({ items, additionalItems = [] }) => {
     const context = useContext(ListContext);
     const numberOfItems = items.length;
     const isDeletable = numberOfItems > 0;
@@ -12,7 +12,7 @@ export default ({ items }) => {
     const hardDeleteAction = () => context.deleteItemsAction("hard", items);
 
     const Actions = () => {
-        const data = [
+        const items = [
             {
                 title: "Delete",
                 onClick: softDeleteAction,
@@ -22,10 +22,13 @@ export default ({ items }) => {
                 title: "Hard delete",
                 onClick: hardDeleteAction,
                 isVisible: isDeletable
-            }
+            },
+            ...additionalItems
         ];
 
-        const filtered = data.filter(a => a.isVisible);
+        console.log(items);
+
+        const filtered = items.filter(a => a.isVisible);
 
         if (filtered.length >= 1) {
             return filtered.map(a => {

@@ -25,7 +25,16 @@ export default () => {
         <Fragment>
             <ButtonGroup>
                 <ButtonRightSpace>
-                    <ActionsMenu items={context.state.selected} />
+                    <ActionsMenu
+                        items={context.state.selected}
+                        additionalItems={[
+                            {
+                                title: "Deselect",
+                                onClick: context.setRemoveAllSelected,
+                                isVisible: context.state.selected.length > 0
+                            }
+                        ]}
+                    />
                 </ButtonRightSpace>
                 <Textfield
                     aria-label="Search"

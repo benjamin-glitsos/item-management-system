@@ -27,8 +27,6 @@ export default () => {
                 />
             </PaginationStyles>
         );
-    } else if (isLoading) {
-        return null;
     } else {
         return (
             <HorizontalRuleStyles>
