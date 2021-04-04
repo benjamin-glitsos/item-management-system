@@ -10,12 +10,7 @@ import { ListContext } from "%/components/List";
 export default () => {
     const context = useContext(ListContext);
     const isDataEmpty = context.isDataEmpty;
-    const isDeletable = !isDataEmpty && context.state.selected.length > 0;
     const isLoading = context.state.isLoading;
-    const softDeleteAction = () =>
-        context.deleteItemsAction("soft", context.state.selected);
-    const hardDeleteAction = () =>
-        context.deleteItemsAction("hard", context.state.selected);
     const setPageNumber = context.setPageNumber;
     const setPageLength = context.setPageLength;
     const setSearch = context.setSearch;
@@ -29,6 +24,9 @@ export default () => {
     return (
         <Fragment>
             <ButtonGroup>
+                <ButtonRightSpace>
+                    <ActionsMenu />
+                </ButtonRightSpace>
                 <Textfield
                     aria-label="Search"
                     isCompact={true}
@@ -45,20 +43,13 @@ export default () => {
                     pageLength={pageLength}
                     setPageLength={setPageLength}
                 />
-                <ButtonLeftSpace>
-                    <ActionsMenu
-                        isDisabled={!isDeletable}
-                        softDeleteAction={softDeleteAction}
-                        hardDeleteAction={hardDeleteAction}
-                    />
-                </ButtonLeftSpace>
             </ButtonGroup>
         </Fragment>
     );
 };
 
-const ButtonLeftSpace = styled.span`
+const ButtonRightSpace = styled.span`
     button {
-        margin-left: 0.25em;
+        margin-right: 0.25em;
     }
 `;
