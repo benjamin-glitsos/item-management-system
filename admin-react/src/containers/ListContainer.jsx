@@ -5,6 +5,7 @@ import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
 import pipe from "pipe-functions";
 import { useFlags } from "@atlaskit/flag";
+import { Checkbox } from "@atlaskit/checkbox";
 import Error from "@atlaskit/icon/glyph/editor/warning";
 import ActionsMenu from "%/presenters/ActionsMenu";
 import {
@@ -161,16 +162,15 @@ export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
     };
 
     const rows = state.response.data.items.map((row, i) => ({
-        key: `${title}/Table/Row/${i}`,
+        key: `Table/Row/${row.username}-${i}`,
         cells: pipe(
             row,
-            rowsTransform,
             row => [
                 <Checkbox
-                    isChecked={selectedState.includes(row[0])}
-                    onChange={() => setSelected(row[0])}
+                    isChecked={state.selected.includes(row.username)}
+                    onChange={() => setSelected(row.username)}
                 />,
-                ...row,
+                ...Object.values(row),
                 ActionsMenu({ items: [row.username] })
             ],
             x =>

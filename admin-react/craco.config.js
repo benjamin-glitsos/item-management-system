@@ -1,6 +1,5 @@
 const path = require(`path`);
 const CracoRawLoaderPlugin = require("@baristalabs/craco-raw-loader");
-const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     reactScriptsVersion: "react-scripts",
@@ -15,12 +14,6 @@ module.exports = {
     webpack: {
         alias: {
             "%": path.resolve(__dirname, "src/")
-        },
-        configure: {
-            optimization: {
-                minimize: true,
-                minimizer: [new TerserPlugin()]
-            }
         }
     },
     eslint: {
