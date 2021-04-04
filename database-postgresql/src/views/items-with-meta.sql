@@ -1,6 +1,7 @@
 CREATE VIEW items_with_meta AS
     SELECT
-        i.name
+        i.key
+      , i.name
       , i.description
       , m.metakey
       , m.opens
