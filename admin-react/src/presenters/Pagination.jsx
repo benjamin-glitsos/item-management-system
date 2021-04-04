@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import HorizontalRule from "%/presenters/HorizontalRule";
 import Pagination from "@atlaskit/pagination";
 import enumerate from "%/utilities/enumerate";
 import { ListContext } from "%/components/List";
@@ -28,11 +27,7 @@ export default () => {
             </PaginationStyles>
         );
     } else {
-        return (
-            <HorizontalRuleStyles>
-                <HorizontalRule />
-            </HorizontalRuleStyles>
-        );
+        return null;
     }
 };
 
@@ -41,8 +36,4 @@ const PaginationStyles = styled.div`
     & > div {
         display: inline-flex !important;
     }
-`;
-
-const HorizontalRuleStyles = styled.div`
-    margin-top: 24px;
 `;

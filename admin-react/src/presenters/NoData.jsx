@@ -1,1 +1,8 @@
-export default () => "There is no data to display.";
+import { Fragment } from "react";
+import styled from "styled-components";
+
+export default () => <Styles>There is no data to display.</Styles>;
+
+const Styles = styled.div`
+    margin-bottom: 28px;
+`;
