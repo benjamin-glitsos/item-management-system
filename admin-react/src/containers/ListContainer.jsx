@@ -18,7 +18,7 @@ import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import config from "%/config";
 
-export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
+export default ({ apiPath, defaultState, headContent, rowTransform }) => {
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
@@ -165,6 +165,7 @@ export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
         key: `Table/Row/${row.username}-${i}`,
         cells: pipe(
             row,
+            rowTransform,
             row => [
                 <Checkbox
                     isChecked={state.selected.includes(row.username)}

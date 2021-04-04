@@ -5,7 +5,7 @@ import Tooltip from "@atlaskit/tooltip";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
 TimeAgo.addDefaultLocale(en);
-const timeAgo = new TimeAgo();
+const timeAgo = new TimeAgo("en-US");
 
 export default dateTimeStr => {
     if (dateTimeStr === null) {
