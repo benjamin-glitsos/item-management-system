@@ -3,9 +3,9 @@ RETURNS text
 AS $$
 DECLARE
     ellipsis text := '...';
-    ellipsis_length integer := 3
+    ellipsis_length integer := 3;
 BEGIN
-    RETURN LEFT(full_text, max_length - ellipsis_length) || ellipsis
+    RETURN LEFT(full_text, max_length - ellipsis_length) || ellipsis;
 END;
 $$ LANGUAGE plpgsql;
 
