@@ -6,7 +6,6 @@ import doobie._
 import cats.implicits._
 import upickle.default._
 import upickle_bundle.general._
-import StringUtilities.friendlyName
 
 trait ItemsListService extends ListServiceTrait {
   final def list(
@@ -64,7 +63,7 @@ trait ItemsListService extends ListServiceTrait {
                   pageItemsEnd: Int,
                   key: String,
                   name: String,
-                  description: String,
+                  description: Option[String],
                   created_at: LocalDateTime,
                   edited_at: Option[LocalDateTime]
                 ) =>

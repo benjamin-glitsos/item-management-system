@@ -1,6 +1,6 @@
 import java.time.LocalDateTime
 
-case class UsersWithMeta(
+case class ItemsWithMeta(
     key: String,
     name: String,
     description: Option[String],

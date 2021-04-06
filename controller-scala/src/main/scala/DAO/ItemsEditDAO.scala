@@ -10,7 +10,6 @@ trait ItemsEditDAO {
       newKey: Option[String],
       name: Option[String],
       description: Option[String],
-      metakey: Option[String],
       notes: Option[String]
   ) = {
     val update: Fragment =
@@ -20,7 +19,6 @@ trait ItemsEditDAO {
       newKey.map(s => fr"key=$s"),
       name.map(s => fr"name=$s"),
       description.map(s => fr"description=$s"),
-      metakey.map(s => fr"metakey=$s"),
       notes.map(s => fr"notes=$s")
     )
 
