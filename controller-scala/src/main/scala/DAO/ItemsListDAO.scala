@@ -85,7 +85,7 @@ trait ItemsListDAO {
             Int,
             String,
             String,
-            String,
+            Option[String],
             LocalDateTime,
             Option[LocalDateTime]
         )
