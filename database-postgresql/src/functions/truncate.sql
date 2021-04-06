@@ -2,11 +2,14 @@ CREATE FUNCTION truncate(max_length integer, full_text text)
 RETURNS text
 AS $$
 DECLARE
-    ellipsis text := '...';
-    ellipsis_length integer := 3;
+    ellipsis text := ' ...';
+    ellipsis_length integer := LENGTH(ellipsis);
+    full_text_length integer := LENGTH(full_text);
 BEGIN
-    RETURN LEFT(full_text, max_length - ellipsis_length) || ellipsis;
+    IF full_text_length <= max_length THEN
+        RETURN full_text;
+    ELSE
+        RETURN full_text || ellipsis;
+    END IF;
 END;
 $$ LANGUAGE plpgsql;
-
--- TODO: use if/else to add ellipsis only if it exceeds (n - 3) and only if string is not null. Use declaring variables to make this neater.
