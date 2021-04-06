@@ -7,8 +7,9 @@ DECLARE
     table_key text := '';
     record_key text := '';
 BEGIN
-    CASE
-        WHEN table_name = 'users' THEN table_key := 'user';
+    CASE table_name
+        WHEN 'users' THEN table_key := 'user';
+        WHEN 'items' THEN table_key := 'item';
         ELSE table_key := 'meta';
     END CASE;
     FOR i IN 1..key_length LOOP

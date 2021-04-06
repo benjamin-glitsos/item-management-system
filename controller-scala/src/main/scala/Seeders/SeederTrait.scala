@@ -60,6 +60,9 @@ trait SeederTrait {
     sample(1)
   }
 
+  final def formatName(words: String): String =
+    words.filterNot("?!-_".toSet)
+
   final def formatKey(words: String): String =
     words.replace(" ", "_").toUpperCase()
 
