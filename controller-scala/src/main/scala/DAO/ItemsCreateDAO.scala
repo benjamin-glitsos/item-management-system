@@ -4,7 +4,7 @@ trait ItemsCreateDAO {
   final def create(
       key: String,
       name: String,
-      description: String,
+      description: Option[String],
       notes: Option[String]
   ) = {
     run(
