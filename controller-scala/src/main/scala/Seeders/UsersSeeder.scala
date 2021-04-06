@@ -7,7 +7,7 @@ object UsersSeeder extends SeederTrait {
   override final val count: Int = 15
 
   override final def clearData(): Unit = {
-    UsersService.delete(method = "hard-delete-all-rows", usernames = List())
+    UsersService.delete(method = "hard-delete-all-rows")
   }
 
   override final def predefinedData(): Unit = {

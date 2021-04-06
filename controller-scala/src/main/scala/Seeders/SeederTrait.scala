@@ -60,6 +60,9 @@ trait SeederTrait {
     sample(1)
   }
 
+  final def formatKey(words: String): String =
+    words.replace(" ", "_").toUpperCase()
+
   protected val count: Int = 0
   protected def clearData(): Unit = {}
   protected def predefinedData(): Unit = {}

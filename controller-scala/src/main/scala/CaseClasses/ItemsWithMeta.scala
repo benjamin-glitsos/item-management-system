@@ -3,7 +3,7 @@ import java.time.LocalDateTime
 case class UsersWithMeta(
     key: String,
     name: String,
-    description: String,
+    description: Option[String],
     metakey: String,
     opens: Int,
     edits: Int,

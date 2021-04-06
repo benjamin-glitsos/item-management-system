@@ -2,7 +2,7 @@ CREATE TABLE items (
     id SERIAL PRIMARY KEY
   , key VARCHAR(100) UNIQUE NOT NULL
   , name VARCHAR(250) NOT NULL
-  , description TEXT NOT NULL
+  , description TEXT
   , meta_id SMALLINT UNIQUE NOT NULL
   , CONSTRAINT fk_meta FOREIGN KEY(meta_id) REFERENCES meta(id)
 );
