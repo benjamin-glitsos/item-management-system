@@ -25,8 +25,10 @@ package upickle_bundle {
       )
 
     implicit final val upickleUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
+    implicit final val upickleUsersList: ReadWriter[UsersList]         = macroRW
 
-    implicit final val upickleUsersList: ReadWriter[UsersList] = macroRW
+    implicit final val upickleItemsWithMeta: ReadWriter[ItemsWithMeta] = macroRW
+    implicit final val upickleItemsList: ReadWriter[ItemsList]         = macroRW
 
     implicit final val upickleError: ReadWriter[Error] = macroRW
 
