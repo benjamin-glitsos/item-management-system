@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Edit Item",
+    "type": "object",
+    "properties": {
+        "key": {
+            "$ref": "definitions/items.json#/definitions/key"
+        },
+        "name": {
+            "$ref": "definitions/items.json#/definitions/name"
+        },
+        "description": {
+            "$ref": "definitions/items.json#/definitions/description"
+        },
+        "notes": {
+            "$ref": "definitions/meta.json#/definitions/notes"
+        }
+    },
+    "anyOf": [
+        { "required": ["key"] },
+        { "required": ["name"] },
+        { "required": ["description"] },
+        { "required": ["notes"] }
+    ]
+}

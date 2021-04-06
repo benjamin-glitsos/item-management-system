@@ -13,11 +13,8 @@ object ItemsSeeder extends SeederTrait {
       val fairy: Fairy       = Fairy.create();
       val text: TextProducer = fairy.textProducer();
 
-      val key: String = formatKey(
-        text.word(randomGaussianDiscrete(min = 2, max = 4))
-      )
-
-      val name: String                = text.word(randomGaussianDiscrete(min = 1, max = 8))
+      val name: String                = text.word(randomGaussianDiscrete(min = 1, max = 10))
+      val key: String                 = formatKey(name)
       val description: Option[String] = MarkdownIpsum(text)
       val notes: Option[String]       = MarkdownIpsum(text)
 

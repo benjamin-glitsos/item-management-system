@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "List Items",
+    "type": "object",
+    "properties": {
+        "page_number": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+        },
+        "page_length": {
+            "type": "integer",
+            "enum": [10, 25, 50, 100],
+            "default": 10
+        },
+        "search": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+        },
+        "sort": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string",
+                    "enum": [
+                        "key",
+                        "name",
+                        "description",
+                        "created_at",
+                        "edited_at"
+                    ]
+                },
+                {
+                    "type": "string",
+                    "enum": ["ASC", "DESC"]
+                }
+            ],
+            "additionalItems": false,
+            "default": ["created_at", "DESC"]
+        }
+    }
+}
