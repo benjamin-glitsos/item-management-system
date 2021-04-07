@@ -1,16 +1,22 @@
 import transform from "transform-object";
+import { titleCase } from "title-case";
 import PageContainer from "%/containers/PageContainer";
 import ListContainer from "%/containers/ListContainer";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";
 
 export default () => {
-    const title = "Users";
-    const slug = "users";
+    const nameSingular = "user";
+    const namePlural = "users";
+    const title = titleCase(namePlural);
+    const slug = namePlural;
 
     const pageContainer = PageContainer({
+        nameSingular,
+        namePlural,
         title,
         slug,
+        namePlural,
         description: `A list of users who can log into the ${
             process.env.PROJECT_NAME || "Item Management System"
         }.`
@@ -59,5 +65,11 @@ export default () => {
             })
     });
 
-    return { title, slug, ...pageContainer, ...listContainer };
+    return {
+        nameSingular,
+        namePlural,
+        title,
+        ...pageContainer,
+        ...listContainer
+    };
 };

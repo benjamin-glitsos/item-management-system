@@ -1,10 +1,14 @@
 import PageContainer from "%/containers/PageContainer";
 
 export default () => {
-    const title = "Page not found";
-    const slug = "";
+    const nameSingular = "page not found";
+    const namePlural = nameSingular;
+    const title = titleCase(namePlural);
+    const slug = nameSingular;
 
     const pageContainer = PageContainer({
+        nameSingular,
+        namePlural,
         title,
         slug,
         description:
