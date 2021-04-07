@@ -1,6 +1,6 @@
 CREATE TABLE items (
     id SERIAL PRIMARY KEY
-  , key VARCHAR(250) UNIQUE NOT NULL
+  , key KEY UNIQUE NOT NULL
   , name VARCHAR(250) NOT NULL
   , description TEXT
   , meta_id SMALLINT UNIQUE NOT NULL
