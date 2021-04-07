@@ -2,7 +2,7 @@ CREATE VIEW items_list AS
     SELECT
         key
       , name
-      , truncate(50, description) AS description
+      , abbreviate_multiline_text(description) AS description
       , created_at
       , edited_at
     FROM items_with_meta
