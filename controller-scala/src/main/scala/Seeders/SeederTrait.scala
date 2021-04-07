@@ -36,16 +36,16 @@ trait SeederTrait {
   ): Int = {
     def sample(i: Int): Int = {
       if (i <= 3) {
-        var normalSample: Double = Random.nextGaussian() * sd + mean
+        val normalSample: Double = Random.nextGaussian() * sd + mean
 
-        var halfNormalSample: Double = if (normalSample <= mean) {
+        val halfNormalSample: Double = if (normalSample <= mean) {
           normalSample
         } else {
-          var d: Double = normalSample - mean
+          val d: Double = normalSample - mean
           normalSample + d
         }
 
-        var discreteHalfNormalSample: Int = round(halfNormalSample).toInt
+        val discreteHalfNormalSample: Int = round(halfNormalSample).toInt
 
         if (min to max contains discreteHalfNormalSample) {
           discreteHalfNormalSample
@@ -60,11 +60,16 @@ trait SeederTrait {
     sample(1)
   }
 
-  final def formatName(words: String): String =
-    words.filterNot("?!-_".toSet)
+  final def createKey(words: String): String = {
+    val randomCode =
+      Seq.fill(length)(Random.nextPrintableChar()).mkString(new String) + Seq
+        .fill(length)(Random.nextInt())
+        .mkString(new String)
+    (words.split(" ").map(_.left(3)) :+ randomCode).mkString("-").toUpperCase()
+  }
 
-  final def formatKey(words: String): String =
-    words.replace(" ", "_").toUpperCase()
+  final def toTitleCase(s: String): String =
+    s.split(" ").map(_.capitalize).mkString(" ")
 
   protected val count: Int = 0
   protected def clearData(): Unit = {}
