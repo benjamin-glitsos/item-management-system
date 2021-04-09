@@ -16,7 +16,7 @@ trait ItemsListService extends ListServiceTrait {
   ): ujson.Value = {
     read[ujson.Value](
       try {
-        val offset: Int = (pageNumber - 1) * pageLength
+        val offset: Int = calculateOffset(pageNumber, pageLength)
 
         (for {
           data <- UsersDAO.list(offset, pageLength, search, sort)
