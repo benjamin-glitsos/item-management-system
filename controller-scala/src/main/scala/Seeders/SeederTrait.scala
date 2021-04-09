@@ -34,7 +34,7 @@ trait SeederTrait {
       mean: Double = 1,
       sd: Double = 1
   ): Int = {
-    def sample(i: Int): Int = {
+    def sample(i: Int = 1): Int = {
       if (i <= 3) {
         val normalSample: Double = Random.nextGaussian() * sd + mean
 
@@ -57,15 +57,26 @@ trait SeederTrait {
       }
     }
 
-    sample(1)
+    sample()
   }
 
   final def createKey(words: String): String = {
+    def abbreviate(word: String): String = if (word.length() <= 3) {
+      word
+    } else {
+      val start = left(2, word)
+      val end   = right(1, word)
+      start + end
+    }
+
     val randomCode =
-      Seq.fill(length)(Random.nextPrintableChar()).mkString(new String) + Seq
-        .fill(length)(Random.nextInt())
+      Seq
+        .fill(randomGaussianDiscrete(min = 1, max = 5))(
+          Random.nextPrintableChar()
+        )
         .mkString(new String)
-    (words.split(" ").map(_.left(3)) :+ randomCode).mkString("-").toUpperCase()
+
+    (words.split(" ").map(abbreviate) :+ randomCode).mkString("-").toUpperCase()
   }
 
   final def toTitleCase(s: String): String =
