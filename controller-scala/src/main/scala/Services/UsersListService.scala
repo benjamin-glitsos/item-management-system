@@ -1,4 +1,3 @@
-import java.time.LocalDateTime
 import upickle.default._
 import doobie.implicits._
 import doobie_bundle.connection._
@@ -107,10 +106,17 @@ trait UsersListService extends ListServiceTrait {
 
           reseedIfNeeded <- {
             if (
-              totalItemsCount <= 15 && totalItemsCount != 0 && search.isEmpty && System
-                .getenv("PROJECT_MODE") != "production"
+              LogicUtilities.all(
+                List(
+                  totalItemsCount <= 15,
+                  totalItemsCount != 0,
+                  search.isEmpty,
+                  System
+                    .getenv("PROJECT_MODE") != "production"
+                )
+              )
             ) {
-              UsersSeeder()
+              UsersSeeder().pure[ConnectionIO]
             } else {
               ().pure[ConnectionIO]
             }
