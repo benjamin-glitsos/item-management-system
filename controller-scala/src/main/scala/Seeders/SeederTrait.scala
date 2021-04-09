@@ -80,9 +80,6 @@ trait SeederTrait {
       .toUpperCase()
   }
 
-  final def toTitleCase(s: String): String =
-    s.split(" ").map(_.capitalize).mkString(" ")
-
   protected val count: Int = 0
   protected def clearData(): Unit = {}
   protected def predefinedData(): Unit = {}

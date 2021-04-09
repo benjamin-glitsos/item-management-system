@@ -14,7 +14,9 @@ object ItemsSeeder extends SeederTrait {
       val text: TextProducer = fairy.textProducer();
 
       val name: String =
-        toTitleCase(text.latinWord(randomGaussianDiscrete(min = 2, max = 15)))
+        StringUtilities.toTitleCase(
+          text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
+        )
       val key: String                 = createKey(name)
       val description: Option[String] = MarkdownIpsum(text)
       val notes: Option[String]       = MarkdownIpsum(text)
