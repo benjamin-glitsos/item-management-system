@@ -6,5 +6,5 @@ trait ListServiceTrait {
     ceil(items.toFloat / pageLength).toInt
   }
 
-  final def getOrZero(n: Int): Int = Try(n).toOption.getOrElse(0)
+  final def getOrZero(n: Int): Int = Try(n).getOrElse(0)
 }

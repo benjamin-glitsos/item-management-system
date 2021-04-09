@@ -6,9 +6,25 @@ import doobie._
 import cats.implicits._
 import upickle.default._
 import upickle_bundle.general._
-import StringUtilities.friendlyName
 
 trait UsersListService extends ListServiceTrait {
+  private final def friendlyName(
+      firstName: String,
+      lastName: String,
+      otherNames: Option[String]
+  ): String = {
+    otherNames match {
+      case None => List(firstName, lastName).mkString(" ")
+      case Some(otherNames) => {
+        val otherNamesInitials =
+          otherNames.split(" ").filter(_.length >= 1).map(_.charAt(0) + ".")
+        (List(firstName) ++ otherNamesInitials ++ List(lastName))
+          .mkString(" ")
+      }
+
+    }
+  }
+
   final def list(
       pageNumber: Int,
       pageLength: Int,
@@ -22,27 +38,52 @@ trait UsersListService extends ListServiceTrait {
         (for {
           data <- UsersDAO.list(offset, pageLength, search, sort)
 
-          dataAfterPossibleSeeding <- {
-            if (
-              getOrZero(data.head._1) <= 10 && search.isEmpty && System
-                .getenv("PROJECT_MODE") != "production"
-            ) {
-              UsersSeeder()
-              UsersDAO.list(offset, pageLength, search, sort)
-            } else {
-              data.pure[ConnectionIO]
-            }
-          }
+          val (
+            totalItemsCount: Int,
+            filteredItemsCount: Int,
+            pageItemsStart: Int,
+            pageItemsEnd: Int,
+            items: List[UsersList]
+          ) = data.headOption match {
+            case None => (0, 0, 0, 0, List());
+            case Some(dataFirstRow) => {
+              println(dataFirstRow)
+              val totalItemsCount    = dataFirstRow._1
+              val filteredItemsCount = dataFirstRow._2
+              val pageItemsStart     = dataFirstRow._3
+              val pageItemsEnd       = dataFirstRow._4
 
-          val totalItemsCount: Int = getOrZero(dataAfterPossibleSeeding.head._1)
+              val items: List[UsersList] = data.map(x => {
+                val username      = x._5
+                val email_address = x._6
+                val firstName     = x._7
+                val lastName      = x._8
+                val otherNames    = x._9
+                val created_at    = x._10
+                val edited_at     = x._11
+
+                UsersList(
+                  username,
+                  email_address,
+                  name = friendlyName(firstName, lastName, otherNames),
+                  created_at,
+                  edited_at
+                )
+              })
+
+              (
+                totalItemsCount,
+                filteredItemsCount,
+                pageItemsStart,
+                pageItemsEnd,
+                items
+              )
+            };
+          }
 
           val totalPagesCount: Int = calculatePageCount(
             pageLength,
             totalItemsCount
-          )
-
-          val filteredItemsCount: Int = getOrZero(
-            dataAfterPossibleSeeding.head._2
           )
 
           val filteredPagesCount: Int = calculatePageCount(
@@ -50,34 +91,7 @@ trait UsersListService extends ListServiceTrait {
             filteredItemsCount
           )
 
-          val pageItemsStart: Int = getOrZero(dataAfterPossibleSeeding.head._3)
-
-          val pageItemsEnd: Int = getOrZero(dataAfterPossibleSeeding.head._4)
-
-          val pageItemsCount: Int = dataAfterPossibleSeeding.length
-
-          val items: List[UsersList] = dataAfterPossibleSeeding map {
-            case (
-                  totalItemsCount: Int,
-                  filteredItemsCount: Int,
-                  pageItemsStart: Int,
-                  pageItemsEnd: Int,
-                  username: String,
-                  email_address: String,
-                  first_name: String,
-                  last_name: String,
-                  other_names: Option[String],
-                  created_at: LocalDateTime,
-                  edited_at: Option[LocalDateTime]
-                ) =>
-              UsersList(
-                username,
-                email_address,
-                friendlyName(first_name, last_name, other_names),
-                created_at,
-                edited_at
-              )
-          }
+          val pageItemsCount: Int = items.length
 
           val output: String = write(
             ujson.Obj(
@@ -95,6 +109,12 @@ trait UsersListService extends ListServiceTrait {
               )
             )
           )
+          // if (
+          //   totalItemsCount <= 15 && totalItemsCount != 0 && search.isEmpty && System
+          //     .getenv("PROJECT_MODE") != "production"
+          // ) {
+          //   UsersSeeder()
+          // }
         } yield (output))
           .transact(xa)
           .unsafeRunSync
