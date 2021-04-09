@@ -1,6 +1,6 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY
-  , username VARCHAR(20) UNIQUE NOT NULL
+  , username USERNAME UNIQUE NOT NULL
   , email_address EMAIL_ADDRESS NOT NULL
   , first_name VARCHAR(50) NOT NULL
   , last_name VARCHAR(70) NOT NULL
