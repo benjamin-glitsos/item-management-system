@@ -11,6 +11,7 @@
         "@atlaskit/dynamic-table": "^14.2.0",
         "@atlaskit/flag": "^14.2.2",
         "@atlaskit/icon": "^21.3.0",
+        "@atlaskit/modal-dialog": "^11.2.9",
         "@atlaskit/page": "^12.0.5",
         "@atlaskit/page-header": "^10.0.7",
         "@atlaskit/pagination": "^13.0.10",
