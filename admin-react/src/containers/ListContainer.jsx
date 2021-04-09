@@ -18,7 +18,12 @@ import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import config from "%/config";
 
-export default ({ apiPath, defaultState, headContentColumns, rowsTransform }) => {
+export default ({
+    apiPath,
+    defaultState,
+    headContentColumns,
+    rowsTransform
+}) => {
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
@@ -124,7 +129,7 @@ export default ({ apiPath, defaultState, headContentColumns, rowsTransform }) =>
             showFlag({
                 icon: <Error />,
                 id: i,
-                key: `Toast/Error/${error.code}/${i}`,
+                key: `Toast/Error/${error.code},${i}`,
                 title: error.title,
                 description: error.description,
                 isAutoDismiss: true
@@ -187,7 +192,7 @@ export default ({ apiPath, defaultState, headContentColumns, rowsTransform }) =>
     };
 
     const rows = state.response.data.items.map((row, i) => ({
-        key: `Table/Row/${row.username}-${i}`,
+        key: `Table/Row/${row.username},${i}`,
         cells: pipe(
             row,
             row => [

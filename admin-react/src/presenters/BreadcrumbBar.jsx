@@ -24,7 +24,7 @@ export default ({ breadcrumbs }) => {
         }, [])
         .map(({ key, path, title }, i) => ({
             text: title,
-            key: `BreadcrumbBar/${i}-${key}`,
+            key: `BreadcrumbBar/${key},${i}`,
             href: path,
             isDisabled: i + 1 === breadcrumbs.length
         }));
