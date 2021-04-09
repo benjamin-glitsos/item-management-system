@@ -5,12 +5,14 @@
         "username": {
             "description": "E.g. bdole43",
             "type": "string",
-            "maxLength": 20
+            "maxLength": 20,
+            "pattern": "^[-_a-zA-Z0-9]*$"
         },
         "email_address": {
             "description": "E.g. bdole@example.com",
             "type": "string",
-            "maxLength": 50
+            "maxLength": 50,
+            "pattern": "^[a-zA-Z0-9.!#$%&''*+/=?^_\\`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         },
         "first_name": {
             "description": "E.g. Bob",
