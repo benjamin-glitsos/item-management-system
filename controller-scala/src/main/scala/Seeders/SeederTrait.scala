@@ -11,19 +11,19 @@ trait SeederTrait {
     }
   }
 
-  private final def powerOfTen(p: Int): Long = {
-    pow(10, p).toLong
-  }
-
   final def biasedCoinFlip(probability: Double): Boolean = {
-    val precision = powerOfTen(2).toInt
+    val precision = MathUtilities.powerOfTen(2).toInt
     val flip      = Random.between(1, precision).toDouble / precision
     probability >= flip
   }
 
-  final def generatePassword(length: Int): String = {
+  final def randomPrintableChars(length: Int): String = {
     Seq.fill(length)(Random.nextPrintableChar()).mkString(new String)
   }
+
+  final def randomAlphanumerics(length: Int): String = Random.alphanumeric
+    .take(length)
+    .mkString
 
   final def repeatedRunArray[A](n: Int, fn: () => A): List[A] = {
     (1 to n).map(_ => fn()).toList
@@ -70,10 +70,9 @@ trait SeederTrait {
       firstChars + lastChar
     }
 
-    val randomCode =
-      Random.alphanumeric
-        .take(randomGaussianDiscrete(min = 1, max = 5))
-        .mkString
+    val randomCode = randomAlphanumerics(
+      randomGaussianDiscrete(min = 1, max = 6)
+    )
 
     (words.split(" ").take(4).map(abbreviate) :+ randomCode)
       .filter(!StringUtilities.isEmpty(_))

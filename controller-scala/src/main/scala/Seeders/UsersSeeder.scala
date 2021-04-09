@@ -54,7 +54,7 @@ object UsersSeeder extends SeederTrait {
           }
         ).mkString(" ").trim()
       )
-      val password: String      = generatePassword(length = 15)
+      val password: String      = randomPrintableChars(length = 15)
       val notes: Option[String] = MarkdownIpsum(text)
 
       UsersService.create(
