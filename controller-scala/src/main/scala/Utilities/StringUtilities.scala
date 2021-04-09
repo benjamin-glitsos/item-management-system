@@ -15,4 +15,6 @@ object StringUtilities {
 
     }
   }
+
+  final def isEmpty(s: String): Boolean = s == null || s.isEmpty
 }

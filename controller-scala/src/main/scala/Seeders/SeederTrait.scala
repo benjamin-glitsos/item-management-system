@@ -1,5 +1,6 @@
 import scala.math.{round, pow}
 import scala.util.Random
+import org.apache.commons.lang3.StringUtils.{left, right}
 
 trait SeederTrait {
   implicit final def times(n: Int) = new {
@@ -64,19 +65,20 @@ trait SeederTrait {
     def abbreviate(word: String): String = if (word.length() <= 3) {
       word
     } else {
-      val start = left(2, word)
-      val end   = right(1, word)
-      start + end
+      val firstChars = left(word, 2)
+      val lastChar   = right(word, 1)
+      firstChars + lastChar
     }
 
     val randomCode =
-      Seq
-        .fill(randomGaussianDiscrete(min = 1, max = 5))(
-          Random.nextPrintableChar()
-        )
-        .mkString(new String)
+      Random.alphanumeric
+        .take(randomGaussianDiscrete(min = 1, max = 5))
+        .mkString
 
-    (words.split(" ").map(abbreviate) :+ randomCode).mkString("-").toUpperCase()
+    (words.split(" ").take(4).map(abbreviate) :+ randomCode)
+      .filter(!StringUtilities.isEmpty(_))
+      .mkString("-")
+      .toUpperCase()
   }
 
   final def toTitleCase(s: String): String =
