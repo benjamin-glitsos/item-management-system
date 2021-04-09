@@ -19,29 +19,45 @@ trait ItemsListService extends ListServiceTrait {
         val offset: Int = (pageNumber - 1) * pageLength
 
         (for {
-          data <- ItemsDAO.list(offset, pageLength, search, sort)
+          data <- UsersDAO.list(offset, pageLength, search, sort)
 
-          dataAfterPossibleSeeding <- {
-            if (
-              getOrZero(data.head._1) <= 10 && search.isEmpty && System
-                .getenv("PROJECT_MODE") != "production"
-            ) {
-              ItemsSeeder()
-              ItemsDAO.list(offset, pageLength, search, sort)
-            } else {
-              data.pure[ConnectionIO]
-            }
+          val (
+            totalItemsCount: Int,
+            filteredItemsCount: Int,
+            pageItemsStart: Int,
+            pageItemsEnd: Int,
+            items: List[ItemsList]
+          ) = data.headOption match {
+            case None => (0, 0, 0, 0, List());
+            case Some(dataFirstRow) => {
+              val totalItemsCount    = dataFirstRow._1
+              val filteredItemsCount = dataFirstRow._2
+              val pageItemsStart     = dataFirstRow._3
+              val pageItemsEnd       = dataFirstRow._4
+
+              val items: List[ItemsList] = data.map(x => {
+                val key         = x._5
+                val name        = x._6
+                val description = x._7
+                val created_at  = x._8
+                val edited_at   = x._9
+
+                ItemsList(key, name, description, created_at, edited_at)
+              })
+
+              (
+                totalItemsCount,
+                filteredItemsCount,
+                pageItemsStart,
+                pageItemsEnd,
+                items
+              )
+            };
           }
-
-          val totalItemsCount: Int = getOrZero(dataAfterPossibleSeeding.head._1)
 
           val totalPagesCount: Int = calculatePageCount(
             pageLength,
             totalItemsCount
-          )
-
-          val filteredItemsCount: Int = getOrZero(
-            dataAfterPossibleSeeding.head._2
           )
 
           val filteredPagesCount: Int = calculatePageCount(
@@ -49,32 +65,7 @@ trait ItemsListService extends ListServiceTrait {
             filteredItemsCount
           )
 
-          val pageItemsStart: Int = getOrZero(dataAfterPossibleSeeding.head._3)
-
-          val pageItemsEnd: Int = getOrZero(dataAfterPossibleSeeding.head._4)
-
-          val pageItemsCount: Int = dataAfterPossibleSeeding.length
-
-          val items: List[ItemsList] = dataAfterPossibleSeeding map {
-            case (
-                  totalItemsCount: Int,
-                  filteredItemsCount: Int,
-                  pageItemsStart: Int,
-                  pageItemsEnd: Int,
-                  key: String,
-                  name: String,
-                  description: Option[String],
-                  created_at: LocalDateTime,
-                  edited_at: Option[LocalDateTime]
-                ) =>
-              ItemsList(
-                key,
-                name,
-                description,
-                created_at,
-                edited_at
-              )
-          }
+          val pageItemsCount: Int = items.length
 
           val output: String = write(
             ujson.Obj(
@@ -92,6 +83,25 @@ trait ItemsListService extends ListServiceTrait {
               )
             )
           )
+
+          reseedIfNeeded <- {
+            if (
+              LogicUtilities.all(
+                List(
+                  totalItemsCount <= 15,
+                  totalItemsCount != 0,
+                  search.isEmpty,
+                  System
+                    .getenv("PROJECT_MODE") != "production"
+                )
+              )
+            ) {
+              ItemsSeeder().pure[ConnectionIO]
+            } else {
+              ().pure[ConnectionIO]
+            }
+          }
+
         } yield (output))
           .transact(xa)
           .unsafeRunSync

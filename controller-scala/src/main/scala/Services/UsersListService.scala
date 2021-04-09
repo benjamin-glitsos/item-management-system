@@ -46,7 +46,6 @@ trait UsersListService extends ListServiceTrait {
           ) = data.headOption match {
             case None => (0, 0, 0, 0, List());
             case Some(dataFirstRow) => {
-              println(dataFirstRow)
               val totalItemsCount    = dataFirstRow._1
               val filteredItemsCount = dataFirstRow._2
               val pageItemsStart     = dataFirstRow._3
