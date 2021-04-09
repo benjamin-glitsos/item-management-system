@@ -18,7 +18,7 @@ import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import config from "%/config";
 
-export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
+export default ({ apiPath, defaultState, headContentColumns, rowsTransform }) => {
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
@@ -143,21 +143,46 @@ export default ({ apiPath, defaultState, headContent, rowsTransform }) => {
 
     useEffect(handleErrorsAction, [state.response.errors]);
 
+    const selectionHeadColumn = {
+        key: "isSelected",
+        content: (
+            <RemoveAllSelected
+                doesSelectionExist={state.selected.length > 0}
+                action={setRemoveAllSelected}
+            />
+        ),
+        isSortable: false,
+        width: 3
+    };
+
+    const metaHeadColumns = [
+        {
+            key: "created_at",
+            content: "Created At",
+            isSortable: true,
+            width: 15
+        },
+        {
+            key: "edited_at",
+            content: "Edited At",
+            isSortable: true,
+            width: 15
+        }
+    ];
+
+    const actionsHeadColumn = {
+        key: "actions",
+        content: null,
+        isSortable: false,
+        width: 10
+    };
+
     const head = {
         cells: [
-            {
-                key: "isSelected",
-                content: (
-                    <RemoveAllSelected
-                        doesSelectionExist={state.selected.length > 0}
-                        action={setRemoveAllSelected}
-                    />
-                ),
-                isSortable: false,
-                width: 3
-            },
-            ...headContent,
-            { key: "actions", content: null, isSortable: false, width: 10 }
+            selectionHeadColumn,
+            ...headContentColumns,
+            ...metaHeadColumns,
+            actionsHeadColumn
         ]
     };
 

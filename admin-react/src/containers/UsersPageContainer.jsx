@@ -37,25 +37,13 @@ export default () => {
             isLoading: false,
             selected: []
         },
-        headContent: [
+        headContentColumns: [
             { key: "username", content: "Username", isSortable: true },
             { key: "first_name", content: "Name", isSortable: true },
             {
                 key: "email_address",
                 content: "Email Address",
                 isSortable: true
-            },
-            {
-                key: "created_at",
-                content: "Created At",
-                isSortable: true,
-                width: 15
-            },
-            {
-                key: "edited_at",
-                content: "Edited At",
-                isSortable: true,
-                width: 15
             }
         ],
         rowTransform: row =>
