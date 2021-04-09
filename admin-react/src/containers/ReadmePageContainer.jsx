@@ -1,3 +1,4 @@
+import { titleCase } from "title-case";
 import PageContainer from "%/containers/PageContainer";
 
 export default () => {

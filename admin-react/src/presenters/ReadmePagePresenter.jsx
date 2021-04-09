@@ -28,6 +28,5 @@ export default () => {
 };
 
 const DatabaseSchema = styled.img`
-    margin: 28px auto 0 auto;
-    display: block;
+    margin-top: 28px;
 `;
