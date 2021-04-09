@@ -8,7 +8,7 @@ trait UsersCreateDAO {
       lastName: String,
       otherNames: Option[String],
       password: String,
-      notes: Option[String]
+      additionalNotes: Option[String]
   ) = {
     run(
       quote(
@@ -20,7 +20,7 @@ trait UsersCreateDAO {
             _.last_name     -> lift(lastName),
             _.other_names   -> lift(otherNames),
             _.password      -> lift(password),
-            _.notes         -> lift(notes)
+            _.additionalNotes         -> lift(additionalNotes)
           )
       )
     )

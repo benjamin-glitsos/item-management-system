@@ -7,7 +7,7 @@ BEGIN
             NEW.key
           , NEW.name
           , NEW.description
-          , NEW.notes
+          , NEW.additional_notes
         );
 
     ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
@@ -38,7 +38,7 @@ BEGIN
           , NEW.key
           , NEW.name
           , NEW.description
-          , NEW.notes
+          , NEW.additional_notes
         );
 
     END IF;

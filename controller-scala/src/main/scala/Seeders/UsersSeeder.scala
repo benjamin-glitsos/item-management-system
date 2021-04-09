@@ -21,7 +21,7 @@ object UsersSeeder extends SeederTrait {
       lastName = System.getenv("SUPER_ADMIN_LAST_NAME"),
       otherNames = sys.env.get("SUPER_ADMIN_OTHER_NAMES"),
       password = System.getenv("SUPER_ADMIN_PASSWORD"),
-      notes = MarkdownIpsum(text)
+      additionalNotes = MarkdownIpsum(text)
     )
 
     UsersService.create(
@@ -31,7 +31,7 @@ object UsersSeeder extends SeederTrait {
       lastName = System.getenv("DEMO_ADMIN_LAST_NAME"),
       otherNames = sys.env.get("DEMO_ADMIN_OTHER_NAMES"),
       password = System.getenv("DEMO_ADMIN_PASSWORD"),
-      notes = MarkdownIpsum(text)
+      additionalNotes = MarkdownIpsum(text)
     )
   }
 
@@ -55,7 +55,7 @@ object UsersSeeder extends SeederTrait {
         ).mkString(" ").trim()
       )
       val password: String      = randomPrintableChars(length = 15)
-      val notes: Option[String] = MarkdownIpsum(text)
+      val additionalNotes: Option[String] = MarkdownIpsum(text)
 
       UsersService.create(
         username,
@@ -64,7 +64,7 @@ object UsersSeeder extends SeederTrait {
         lastName,
         otherNames,
         password,
-        notes
+        additionalNotes
       )
     }
 

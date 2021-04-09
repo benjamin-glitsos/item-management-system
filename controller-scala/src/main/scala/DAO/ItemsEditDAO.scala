@@ -10,7 +10,7 @@ trait ItemsEditDAO {
       newKey: Option[String],
       name: Option[String],
       description: Option[String],
-      notes: Option[String]
+      additionalNotes: Option[String]
   ) = {
     val update: Fragment =
       fr"UPDATE items_with_meta"
@@ -19,7 +19,7 @@ trait ItemsEditDAO {
       newKey.map(s => fr"key=$s"),
       name.map(s => fr"name=$s"),
       description.map(s => fr"description=$s"),
-      notes.map(s => fr"notes=$s")
+      additionalNotes.map(s => fr"additionalNotes=$s")
     )
 
     val where: Fragment = whereAnd(fr"key=$oldKey")

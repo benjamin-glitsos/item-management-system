@@ -13,7 +13,7 @@ object EditItemRoutes {
           Try(body("name").str).toOption
         val description: Option[String] =
           Try(body("description").str).toOption
-        val notes: Option[String] = Try(body("notes").str).toOption
+        val additionalNotes: Option[String] = Try(body("additional_notes").str).toOption
 
         complete(
           NoContent,
@@ -22,7 +22,7 @@ object EditItemRoutes {
             newKey,
             name,
             description,
-            notes
+            additionalNotes
           )
         )
       }

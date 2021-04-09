@@ -7,7 +7,7 @@ trait ItemsEditService {
       newKey: Option[String],
       name: Option[String],
       description: Option[String],
-      notes: Option[String]
+      additionalNotes: Option[String]
   ): String = {
     try {
       ItemsDAO
@@ -16,7 +16,7 @@ trait ItemsEditService {
           newKey,
           name,
           description,
-          notes
+          additionalNotes
         )
         .transact(xa)
         .unsafeRunSync

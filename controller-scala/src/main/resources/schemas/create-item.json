@@ -12,9 +12,9 @@
         "description": {
             "$ref": "definitions/items.json#/definitions/description"
         },
-        "notes": {
-            "$ref": "definitions/meta.json#/definitions/notes"
+        "additional_notes": {
+            "$ref": "definitions/meta.json#/definitions/additional_notes"
         }
     },
-    "required": ["key", "name", "description", "notes"]
+    "required": ["key", "name", "description", "additional_notes"]
 }

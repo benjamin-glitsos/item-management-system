@@ -18,7 +18,7 @@ object EditUserRoutes {
         val otherNames: Option[String] =
           Try(body("other_names").str).toOption
         val password: Option[String] = Try(body("password").str).toOption
-        val notes: Option[String]    = Try(body("notes").str).toOption
+        val additionalNotes: Option[String]    = Try(body("additional_notes").str).toOption
 
         complete(
           NoContent,
@@ -30,7 +30,7 @@ object EditUserRoutes {
             lastName,
             otherNames,
             password,
-            notes
+            additionalNotes
           )
         )
       }

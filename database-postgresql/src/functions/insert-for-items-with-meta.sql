@@ -2,14 +2,14 @@ CREATE FUNCTION insert_for_items_with_meta(
     _key text
   , _name text
   , _description text
-  , _notes text
+  , _additional_notes text
 )
 RETURNS void
 AS $$
 BEGIN
     WITH insert_meta AS (
-        INSERT INTO meta (metakey, notes)
-        VALUES (generate_random_metakey('items'), _notes)
+        INSERT INTO meta (metakey, additional_notes)
+        VALUES (generate_random_metakey('items'), _additional_notes)
         RETURNING id
     )
     INSERT INTO items (

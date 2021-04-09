@@ -5,7 +5,7 @@ trait ItemsCreateDAO {
       key: String,
       name: String,
       description: Option[String],
-      notes: Option[String]
+      additionalNotes: Option[String]
   ) = {
     run(
       quote(
@@ -14,7 +14,7 @@ trait ItemsCreateDAO {
             _.key         -> lift(key),
             _.name        -> lift(name),
             _.description -> lift(description),
-            _.notes       -> lift(notes)
+            _.additionalNotes       -> lift(additionalNotes)
           )
       )
     )

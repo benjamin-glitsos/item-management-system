@@ -21,8 +21,8 @@
         "password": {
             "$ref": "definitions/users.json#/definitions/password"
         },
-        "notes": {
-            "$ref": "definitions/meta.json#/definitions/notes"
+        "additional_notes": {
+            "$ref": "definitions/meta.json#/definitions/additional_notes"
         }
     },
     "required": [

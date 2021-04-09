@@ -10,6 +10,6 @@ CREATE VIEW items_with_meta AS
       , m.created_at
       , m.edited_at
       , m.deleted_at
-      , m.notes
+      , m.additional_notes
     FROM items i
     INNER JOIN meta m ON i.meta_id = m.id;

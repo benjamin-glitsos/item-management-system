@@ -14,5 +14,5 @@ case class UsersWithMeta(
     created_at: LocalDateTime,
     edited_at: Option[LocalDateTime],
     deleted_at: Option[LocalDateTime],
-    notes: Option[String]
+    additionalNotes: Option[String]
 )

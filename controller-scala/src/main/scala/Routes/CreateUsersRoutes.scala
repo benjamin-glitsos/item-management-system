@@ -13,7 +13,7 @@ object CreateUsersRoutes {
       val otherNames: Option[String] =
         Try(body("other_names").str).toOption
       val password: String      = body("password").str
-      val notes: Option[String] = Try(body("notes").str).toOption
+      val additionalNotes: Option[String] = Try(body("additional_notes").str).toOption
 
       complete(
         NoContent,
@@ -24,7 +24,7 @@ object CreateUsersRoutes {
           lastName,
           otherNames,
           password,
-          notes
+          additionalNotes
         )
       )
     }

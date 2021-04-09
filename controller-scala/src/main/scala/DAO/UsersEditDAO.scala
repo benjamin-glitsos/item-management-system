@@ -13,7 +13,7 @@ trait UsersEditDAO {
       lastName: Option[String],
       otherNames: Option[String],
       password: Option[String],
-      notes: Option[String]
+      additionalNotes: Option[String]
   ) = {
     val update: Fragment =
       fr"UPDATE users_with_meta"
@@ -25,7 +25,7 @@ trait UsersEditDAO {
       lastName.map(s => fr"last_name=$s"),
       otherNames.map(s => fr"other_names=$s"),
       password.map(s => fr"password=$s"),
-      notes.map(s => fr"notes=$s")
+      additionalNotes.map(s => fr"additionalNotes=$s")
     )
 
     val where: Fragment = whereAnd(fr"username=$oldUsername")

@@ -7,5 +7,5 @@ CREATE TABLE meta (
   , created_at TIMESTAMP NOT NULL DEFAULT NOW()
   , edited_at TIMESTAMP
   , deleted_at TIMESTAMP
-  , notes TEXT
+  , additional_notes TEXT
 );

@@ -19,13 +19,13 @@ object ItemsSeeder extends SeederTrait {
         )
       val key: String                 = createKey(name)
       val description: Option[String] = MarkdownIpsum(text)
-      val notes: Option[String]       = MarkdownIpsum(text)
+      val additionalNotes: Option[String]       = MarkdownIpsum(text)
 
       ItemsService.create(
         key,
         name,
         description,
-        notes
+        additionalNotes
       )
     }
 

@@ -10,7 +10,7 @@ trait UsersEditService {
       lastName: Option[String],
       otherNames: Option[String],
       password: Option[String],
-      notes: Option[String]
+      additionalNotes: Option[String]
   ): String = {
     try {
       UsersDAO
@@ -22,7 +22,7 @@ trait UsersEditService {
           otherNames,
           emailAddress,
           password,
-          notes
+          additionalNotes
         )
         .transact(xa)
         .unsafeRunSync
