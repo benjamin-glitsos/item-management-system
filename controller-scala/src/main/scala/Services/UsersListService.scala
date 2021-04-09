@@ -61,14 +61,9 @@ trait UsersListService extends ListServiceTrait {
                 val otherNames    = x._9
                 val created_at    = x._10
                 val edited_at     = x._11
+                val name          = friendlyName(firstName, lastName, otherNames)
 
-                UsersList(
-                  username,
-                  email_address,
-                  name = friendlyName(firstName, lastName, otherNames),
-                  created_at,
-                  edited_at
-                )
+                UsersList(username, email_address, name, created_at, edited_at)
               })
 
               (
@@ -109,12 +104,18 @@ trait UsersListService extends ListServiceTrait {
               )
             )
           )
-          // if (
-          //   totalItemsCount <= 15 && totalItemsCount != 0 && search.isEmpty && System
-          //     .getenv("PROJECT_MODE") != "production"
-          // ) {
-          //   UsersSeeder()
-          // }
+
+          reseedIfNeeded <- {
+            if (
+              totalItemsCount <= 15 && totalItemsCount != 0 && search.isEmpty && System
+                .getenv("PROJECT_MODE") != "production"
+            ) {
+              UsersSeeder()
+            } else {
+              ().pure[ConnectionIO]
+            }
+          }
+
         } yield (output))
           .transact(xa)
           .unsafeRunSync
