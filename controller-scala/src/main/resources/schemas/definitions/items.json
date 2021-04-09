@@ -5,7 +5,8 @@
         "key": {
             "description": "E.g. SOFA_TAN_LEATHER_MATT",
             "type": "string",
-            "maxLength": 250
+            "maxLength": 250,
+            "pattern": "^[-A-Z0-9]*$"
         },
         "name": {
             "description": "E.g. Sofa Leather Lounge (Tan, Leather)",
