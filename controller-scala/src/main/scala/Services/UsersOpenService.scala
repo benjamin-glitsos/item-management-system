@@ -1,7 +1,7 @@
 import doobie.implicits._
-import doobie_bundle.connection._
+import doobie_import.connection._
 import upickle.default._
-import upickle_bundle.general._
+import upickle_import.general._
 
 trait UsersOpenService {
   final def open(username: String): ujson.Value = {

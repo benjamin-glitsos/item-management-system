@@ -5,7 +5,7 @@ import doobie.util.ExecutionContexts
 import io.getquill.{idiom => _, _}
 import doobie.quill.DoobieContext
 
-package doobie_bundle {
+package doobie_import {
   object connection {
     implicit final val contextShift: ContextShift[IO] =
       IO.contextShift(ExecutionContext.global)

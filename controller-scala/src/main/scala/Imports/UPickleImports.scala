@@ -6,7 +6,7 @@ import akka.http.scaladsl.model.{HttpEntity}
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import org.typelevel.ci.CIString
 
-package upickle_bundle {
+package upickle_import {
   object general {
     implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
       readwriter[ujson.Value].bimap[LocalDateTime](

@@ -1,4 +1,4 @@
-import doobie_bundle.database.dc._
+import doobie_import.database.dc._
 
 trait ItemsCreateDAO {
   final def create(

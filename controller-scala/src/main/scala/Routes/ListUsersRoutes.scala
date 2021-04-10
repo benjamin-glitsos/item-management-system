@@ -1,6 +1,6 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import upickle_bundle.general._
+import upickle_import.general._
 import upickle.default._
 import CustomMethodDirectives.report
 import scala.util.{Try}

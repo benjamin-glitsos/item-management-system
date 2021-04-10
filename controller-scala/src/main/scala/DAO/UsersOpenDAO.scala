@@ -1,4 +1,4 @@
-import doobie_bundle.database.dc._
+import doobie_import.database.dc._
 
 trait UsersOpenDAO {
   final def open(username: String) = {

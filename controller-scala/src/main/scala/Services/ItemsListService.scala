@@ -1,11 +1,11 @@
 import java.time.LocalDateTime
 import upickle.default._
 import doobie.implicits._
-import doobie_bundle.connection._
+import doobie_import.connection._
 import doobie._
 import cats.implicits._
 import upickle.default._
-import upickle_bundle.general._
+import upickle_import.general._
 
 trait ItemsListService extends ListServiceTrait {
   final def list(

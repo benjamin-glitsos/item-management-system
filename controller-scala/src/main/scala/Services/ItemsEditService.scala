@@ -1,5 +1,5 @@
 import doobie.implicits._
-import doobie_bundle.connection._
+import doobie_import.connection._
 
 trait ItemsEditService {
   final def edit(

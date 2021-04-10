@@ -1,5 +1,5 @@
 import doobie.implicits._
-import doobie_bundle.connection._
+import doobie_import.connection._
 
 trait ItemsDeleteService {
   final def delete(method: String, keys: List[String] = List()): String = {
