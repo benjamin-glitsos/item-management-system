@@ -59,6 +59,6 @@ export default () => {
 
 const ButtonRightSpace = styled.span`
     button {
-        margin-right: 0.3em;
+        margin-right: 0.5em;
     }
 `;

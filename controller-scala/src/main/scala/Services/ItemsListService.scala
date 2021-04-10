@@ -28,7 +28,7 @@ trait ItemsListService extends ListServiceTrait {
             pageItemsEnd: Int,
             items: List[ItemsList]
           ) = data.headOption match {
-            case None => (0, 0, 0, 0, List());
+            case None => emptyListData[ItemsList]();
             case Some(dataFirstRow) => {
               val totalItemsCount    = dataFirstRow._1
               val filteredItemsCount = dataFirstRow._2
@@ -55,33 +55,15 @@ trait ItemsListService extends ListServiceTrait {
             };
           }
 
-          val totalPagesCount: Int = calculatePageCount(
+          val output: String = createListOutput(
+            totalItemsCount,
+            filteredItemsCount,
+            pageItemsCount = items.length,
+            pageItemsStart,
+            pageItemsEnd,
+            pageNumber,
             pageLength,
-            totalItemsCount
-          )
-
-          val filteredPagesCount: Int = calculatePageCount(
-            pageLength,
-            filteredItemsCount
-          )
-
-          val pageItemsCount: Int = items.length
-
-          val output: String = write(
-            ujson.Obj(
-              "data" -> ujson.Obj(
-                "total_items_count"    -> ujson.Num(totalItemsCount),
-                "total_pages_count"    -> ujson.Num(totalPagesCount),
-                "filtered_items_count" -> ujson.Num(filteredItemsCount),
-                "filtered_pages_count" -> ujson.Num(filteredPagesCount),
-                "page_items_count"     -> ujson.Num(pageItemsCount),
-                "page_items_start"     -> ujson.Num(pageItemsStart),
-                "page_items_end"       -> ujson.Num(pageItemsEnd),
-                "page_number"          -> ujson.Num(pageNumber),
-                "page_length"          -> ujson.Num(pageLength),
-                "items"                -> writeJs(items)
-              )
-            )
+            writeJs(items)
           )
 
           reseedIfNeeded <- {

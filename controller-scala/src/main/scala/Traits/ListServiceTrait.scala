@@ -7,6 +7,9 @@ import upickle.default._
 import upickle_bundle.general._
 
 trait ListServiceTrait {
+  final def emptyListData[A](): (Int, Int, Int, Int, List[A]) =
+    (0, 0, 0, 0, List())
+
   final def calculatePageCount(pageLength: Int, items: Int): Int =
     ceil(items.toFloat / pageLength).toInt
 
