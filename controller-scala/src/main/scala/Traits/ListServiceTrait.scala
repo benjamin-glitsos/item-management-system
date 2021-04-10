@@ -13,14 +13,15 @@ trait ListServiceTrait {
   final def calculateOffset(pageNumber: Int, pageLength: Int): Int =
     (pageNumber - 1) * pageLength
 
-  final def createListOutput[A](
+  final def createListOutput(
       totalItemsCount: Int,
       filteredItemsCount: Int,
+      pageItemsCount: Int,
       pageItemsStart: Int,
       pageItemsEnd: Int,
       pageNumber: Int,
       pageLength: Int,
-      items: List[A]
+      items: ujson.Value
   ): String = {
     val totalPagesCount: Int = calculatePageCount(
       pageLength,
@@ -31,8 +32,6 @@ trait ListServiceTrait {
       pageLength,
       filteredItemsCount
     )
-
-    val pageItemsCount: Int = items.length
 
     write(
       ujson.Obj(
@@ -46,7 +45,7 @@ trait ListServiceTrait {
           "page_items_end"       -> ujson.Num(pageItemsEnd),
           "page_number"          -> ujson.Num(pageNumber),
           "page_length"          -> ujson.Num(pageLength),
-          "items"                -> writeJs[List[A]](items)
+          "items"                -> items
         )
       )
     )

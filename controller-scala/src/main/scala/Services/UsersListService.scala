@@ -73,14 +73,15 @@ trait UsersListService extends ListServiceTrait {
             };
           }
 
-          val output: String = createListOutput[UsersList](
+          val output: String = createListOutput(
             totalItemsCount,
             filteredItemsCount,
+            pageItemsCount = items.length,
             pageItemsStart,
             pageItemsEnd,
             pageNumber,
             pageLength,
-            items
+            writeJs(items)
           )
 
           reseedIfNeeded <- {

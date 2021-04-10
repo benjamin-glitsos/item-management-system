@@ -19,7 +19,7 @@ trait ItemsListService extends ListServiceTrait {
         val offset: Int = calculateOffset(pageNumber, pageLength)
 
         (for {
-          data <- UsersDAO.list(offset, pageLength, search, sort)
+          data <- ItemsDAO.list(offset, pageLength, search, sort)
 
           val (
             totalItemsCount: Int,
