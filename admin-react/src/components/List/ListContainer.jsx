@@ -8,14 +8,14 @@ import transform from "transform-object";
 import { useFlags } from "@atlaskit/flag";
 import { Checkbox } from "@atlaskit/checkbox";
 import Error from "@atlaskit/icon/glyph/editor/warning";
-import ActionsMenu from "%/presenters/ActionsMenu";
+import ActionsMenu from "%/components/ActionsMenu";
 import {
     queryPageNumber,
     queryPageLength,
     querySearch,
     querySort
 } from "%/utilities/queryParameters";
-import RemoveAllSelected from "%/presenters/RemoveAllSelected";
+import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import fromMaybe from "%/utilities/fromMaybe";
 import friendlyDate from "%/utilities/friendlyDate";

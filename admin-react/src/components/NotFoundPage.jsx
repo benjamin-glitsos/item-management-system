@@ -3,10 +3,10 @@ import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { titleCase } from "title-case";
 import Button from "@atlaskit/button";
-import PageContainer from "%/containers/PageContainer";
-import ListContainer from "%/containers/ListContainer";
-import PageLayout from "%/presenters/PageLayout";
-import ArticleLayout from "%/presenters/ArticleLayout";
+import PageContainer from "%/components/Page/PageContainer";
+import ListContainer from "%/components/List/ListContainer";
+import PageLayout from "%/components/PageLayout";
+import ArticleLayout from "%/components/ArticleLayout";
 
 export const Context = createContext();
 

@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
-import FullwidthLayout from "%/presenters/FullwidthLayout";
-import BreadcrumbBar from "%/presenters/BreadcrumbBar";
-import TableStatusBar from "%/presenters/TableStatusBar";
-import NoData from "%/presenters/NoData";
-import ActionsBar from "%/presenters/ActionsBar";
-import Pagination from "%/presenters/Pagination";
-import { ListContext } from "%/components/List";
+import FullwidthLayout from "%/components/FullwidthLayout";
+import BreadcrumbBar from "%/components/BreadcrumbBar";
+import TableStatusBar from "%/components/TableStatusBar";
+import NoData from "%/components/NoData";
+import ActionsBar from "%/components/ActionsBar";
+import Pagination from "%/components/Pagination";
+import { ListContext } from "%/components/List/List";
 import config from "%/config";
 
 export default () => {

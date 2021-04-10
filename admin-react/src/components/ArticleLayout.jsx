@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PageHeader from "@atlaskit/page-header";
-import BreadcrumbBar from "%/presenters/BreadcrumbBar";
-import ContentMargins from "%/presenters/ContentMargins";
+import BreadcrumbBar from "%/components/BreadcrumbBar";
+import ContentMargins from "%/components/ContentMargins";
 
 export default ({ title, breadcrumbs, children }) => (
     <MarginBottom>

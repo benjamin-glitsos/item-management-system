@@ -3,7 +3,7 @@ import { Router, Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 import { QueryParamProvider } from "use-query-params";
 import Analytics from "react-router-ga";
-import Page from "%/presenters/PagePresenter";
+import Page from "%/components/Page/PagePresenter";
 import LoadingPage from "%/components/LoadingPage";
 
 const ReadmePage = lazy(() => import("%/components/ReadmePage"));

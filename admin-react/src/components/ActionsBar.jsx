@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import ActionsMenu from "%/presenters/ActionsMenu";
-import PageLengthSelect from "%/presenters/PageLengthSelect";
+import ActionsMenu from "%/components/ActionsMenu";
+import PageLengthSelect from "%/components/PageLengthSelect";
 import ButtonGroup from "@atlaskit/button/button-group";
 import Textfield from "@atlaskit/textfield";
-import { ListContext } from "%/components/List";
+import { ListContext } from "%/components/List/List";
 
 export default () => {
     const context = useContext(ListContext);

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "@atlaskit/button";
-import GithubIcon from "%/presenters/GithubIcon";
+import GithubIcon from "%/components/GithubIcon";
 
 export default () => (
     <Styles>

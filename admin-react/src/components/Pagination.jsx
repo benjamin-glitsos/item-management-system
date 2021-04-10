@@ -2,7 +2,7 @@ import { useContext } from "react";
 import styled from "styled-components";
 import Pagination from "@atlaskit/pagination";
 import enumerate from "%/utilities/enumerate";
-import { ListContext } from "%/components/List";
+import { ListContext } from "%/components/List/List";
 
 export default () => {
     const context = useContext(ListContext);

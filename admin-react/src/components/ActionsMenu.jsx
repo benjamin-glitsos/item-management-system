@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
-import DropdownMenu from "%/presenters/DropdownMenu";
-import { ListContext } from "%/components/List";
+import DropdownMenu from "%/components/DropdownMenu";
+import { ListContext } from "%/components/List/List";
 import friendlyAction from "%/utilities/friendlyAction";
 
 export default ({ items, additionalItems = [] }) => {

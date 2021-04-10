@@ -3,11 +3,11 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { titleCase } from "title-case";
 import readme from "%/assets/README.md";
-import PageContainer from "%/containers/PageContainer";
-import PageLayout from "%/presenters/PageLayout";
-import ArticleLayout from "%/presenters/ArticleLayout";
-import GithubButton from "%/presenters/GithubButton";
-import ImagesLightbox from "%/presenters/ImagesLightbox";
+import PageContainer from "%/components/Page/PageContainer";
+import PageLayout from "%/components/PageLayout";
+import ArticleLayout from "%/components/ArticleLayout";
+import GithubButton from "%/components/GithubButton";
+import ImagesLightbox from "%/components/ImagesLightbox";
 import { ReadmeContext } from "%/components/ReadmePage";
 
 export default () => {

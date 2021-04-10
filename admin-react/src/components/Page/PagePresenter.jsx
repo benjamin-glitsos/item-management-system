@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Page from "@atlaskit/page";
 import "@atlaskit/css-reset";
-import SidebarNavigation from "%/presenters/SidebarNavigation";
+import SidebarNavigation from "%/components/SidebarNavigation";
 import { FlagsProvider } from "@atlaskit/flag";
 
 export default ({ children }) => (
