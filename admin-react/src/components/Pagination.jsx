@@ -8,6 +8,7 @@ export default () => {
     const context = useContext(ListContext);
     const isLoading = context.state.isLoading;
     const setPageNumber = context.setPageNumber;
+    const setDeselectAll = context.setDeselectAll;
 
     const stats = context.state.response.data;
     const pageNumber = stats.page_number;
@@ -20,9 +21,10 @@ export default () => {
                 <Pagination
                     pages={enumerate(filteredPagesCount)}
                     selectedIndex={pageNumber - 1}
-                    onChange={(event, pageNumber, analyticsEvent) =>
-                        setPageNumber(pageNumber)
-                    }
+                    onChange={(event, pageNumber, analyticsEvent) => {
+                        setDeselectAll();
+                        setPageNumber(pageNumber);
+                    }}
                 />
             </PaginationStyles>
         );

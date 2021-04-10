@@ -8,8 +8,8 @@ export default ({ items, additionalItems = [] }) => {
     const context = useContext(ListContext);
     const numberOfItems = items.length;
     const isDeletable = numberOfItems > 0;
-    const softDeleteAction = () => context.deleteItemsAction("soft", items);
-    const hardDeleteAction = () => context.deleteItemsAction("hard", items);
+    const softDeleteAction = () => {}; // TODO: context.deleteItemsAction("soft", items);
+    const hardDeleteAction = () => {}; // TODO: context.deleteItemsAction("hard", items);
 
     const Actions = () => {
         const items = [
@@ -25,8 +25,6 @@ export default ({ items, additionalItems = [] }) => {
             },
             ...additionalItems
         ];
-
-        console.log(items);
 
         const filtered = items.filter(a => a.isVisible);
 

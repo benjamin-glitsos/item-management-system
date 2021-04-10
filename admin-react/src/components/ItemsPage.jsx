@@ -53,7 +53,8 @@ export default () => {
                 content: "Description",
                 isSortable: true
             }
-        ]
+        ],
+        keyColumn: "key"
     });
 
     const pageContext = {

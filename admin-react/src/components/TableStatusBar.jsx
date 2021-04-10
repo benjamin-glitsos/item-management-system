@@ -29,13 +29,13 @@ export default () => {
         const totalStatus =
             filteredItemsCount < totalItemsCount && `out of ${totalItemsCount}`;
         return [filteredStatus, totalStatus].filter(x => !!x).join(" ") + ".";
-    } else {
+    } else if (numberOfSelected < 10) {
         const numberToWorded = n =>
             capitaliseFirstLetter(numbersToWords.toWords(n));
-        return (
-            <Fragment>
-                {numberOfSelected === 1 ? nameSingular : namePlural} selected.
-            </Fragment>
-        );
+        return `${numberToWorded(numberOfSelected)} ${
+            numberOfSelected === 1 ? nameSingular : namePlural
+        } selected.`;
+    } else {
+        return `${numberOfSelected} selected.`;
     }
 };

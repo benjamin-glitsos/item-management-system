@@ -30,7 +30,7 @@ export default () => {
                         additionalItems={[
                             {
                                 title: "Deselect",
-                                onClick: context.setRemoveAllSelected,
+                                onClick: context.setDeselectAll,
                                 isVisible: context.state.selected.length > 0
                             }
                         ]}

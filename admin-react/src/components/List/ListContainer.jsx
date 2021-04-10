@@ -25,7 +25,8 @@ export default ({
     apiPath,
     defaultState,
     headContentColumns,
-    rowTransform = row => row
+    rowTransform = row => row,
+    keyColumn
 }) => {
     const apiUrl = config.serverUrl + apiPath;
 
@@ -47,13 +48,13 @@ export default ({
             data: body
         });
 
-    const requestDeleteItems = (method, usernames) =>
+    const requestDeleteItems = (method, keys) =>
         axios({
             method: "DELETE",
             url: apiUrl,
             data: {
                 method,
-                usernames
+                keys
             }
         });
 
@@ -105,7 +106,7 @@ export default ({
             }
         });
 
-    const setRemoveAllSelected = () =>
+    const setDeselectAll = () =>
         setState(draft => {
             draft.selected = [];
         });
@@ -139,10 +140,10 @@ export default ({
             });
         });
 
-    const deleteItemsAction = async (method, usernames) => {
-        await requestDeleteItems(method, usernames);
+    const deleteItemsAction = async (method, keys) => {
+        await requestDeleteItems(method, keys);
         listItemsAction();
-        setRemoveAllSelected();
+        setDeselectAll();
     };
 
     useEffect(listItemsAction, []);
@@ -156,7 +157,7 @@ export default ({
         content: (
             <RemoveAllSelected
                 doesSelectionExist={state.selected.length > 0}
-                action={setRemoveAllSelected}
+                action={setDeselectAll}
             />
         ),
         isSortable: false,
@@ -195,7 +196,7 @@ export default ({
     };
 
     const rows = state.response.data.items.map((row, i) => ({
-        key: `Table/Row/${row.username},${i}`,
+        key: `Table/Row/${row[keyColumn]},${i}`,
         cells: pipe(
             row,
             row =>
@@ -206,11 +207,11 @@ export default ({
             rowTransform,
             row => [
                 <Checkbox
-                    isChecked={state.selected.includes(row.username)}
-                    onChange={() => setSelected(row.username)}
+                    isChecked={state.selected.includes(row[keyColumn])}
+                    onChange={() => setSelected(row[keyColumn])}
                 />,
                 ...Object.values(row),
-                ActionsMenu({ items: [row.username] })
+                ActionsMenu({ items: [row[keyColumn]] })
             ],
             x =>
                 x.map((x, i) => ({
@@ -233,7 +234,7 @@ export default ({
         setPageLength,
         setSearch,
         setSort,
-        setRemoveAllSelected,
+        setDeselectAll,
         deleteItemsAction
     };
 };

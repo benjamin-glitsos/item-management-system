@@ -51,7 +51,8 @@ export default () => {
                 content: "Email Address",
                 isSortable: true
             }
-        ]
+        ],
+        keyColumn: "username"
     });
 
     const pageContext = {
