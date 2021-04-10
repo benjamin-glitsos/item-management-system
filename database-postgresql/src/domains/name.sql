@@ -1,0 +1,4 @@
+CREATE DOMAIN name AS VARCHAR(255)
+CHECK (
+    VALUE <> ''
+);
