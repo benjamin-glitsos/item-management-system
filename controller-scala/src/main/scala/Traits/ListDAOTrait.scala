@@ -7,12 +7,15 @@ import doobie.implicits.javatime._
 
 trait ListDAOTrait extends ListTrait {
   final def listFragment(
+      table: String,
       offset: Int,
       pageLength: Int,
       search: Option[String],
       sort: Sort,
       whereFragment: Fragment
   ): Fragment = {
+    val viewFragment: Fragment = Fragment.const(s"${table}_list")
+
     val sortKeyFragment: Fragment = Fragment.const(sort._1)
 
     val sortOrderFragment: Fragment = Fragment.const(sort._2)
@@ -27,7 +30,7 @@ trait ListDAOTrait extends ListTrait {
         SELECT
             *
           , COUNT(*) OVER() AS total_count
-        FROM users_list
+        FROM $viewFragment
     ), filtered AS(
         SELECT
             *

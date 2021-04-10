@@ -29,6 +29,7 @@ trait ItemsListDAO extends ListDAOTrait {
       )
 
     val withListFragment: Fragment = listFragment(
+      "items",
       offset,
       pageLength,
       search,
