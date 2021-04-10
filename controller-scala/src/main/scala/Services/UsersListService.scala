@@ -43,7 +43,7 @@ trait UsersListService extends ListServiceTrait {
             pageItemsEnd: Int,
             items: List[UsersList]
           ) = data.headOption match {
-            case None => (0, 0, 0, 0, List());
+            case None => emptyListData[UsersList]();
             case Some(dataFirstRow) => {
               val totalItemsCount    = dataFirstRow._1
               val filteredItemsCount = dataFirstRow._2
@@ -84,23 +84,11 @@ trait UsersListService extends ListServiceTrait {
             writeJs(items)
           )
 
-          reseedIfNeeded <- {
-            if (
-              LogicUtilities.all(
-                List(
-                  totalItemsCount <= 15,
-                  totalItemsCount != 0,
-                  search.isEmpty,
-                  System
-                    .getenv("PROJECT_MODE") != "production"
-                )
-              )
-            ) {
-              UsersSeeder().pure[ConnectionIO]
-            } else {
-              ().pure[ConnectionIO]
-            }
-          }
+          a <- reseedIfNeeded(
+            totalItemsCount,
+            search,
+            UsersSeeder.apply
+          )
 
         } yield (output))
           .transact(xa)

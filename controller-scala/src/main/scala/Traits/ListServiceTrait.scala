@@ -53,4 +53,26 @@ trait ListServiceTrait {
       )
     )
   }
+
+  final def reseedIfNeeded(
+      totalItemsCount: Int,
+      search: Option[String],
+      seeder: () => Unit
+  ): ConnectionIO[Unit] = {
+    if (
+      LogicUtilities.all(
+        List(
+          totalItemsCount <= 15,
+          totalItemsCount != 0,
+          search.isEmpty,
+          System
+            .getenv("PROJECT_MODE") != "production"
+        )
+      )
+    ) {
+      seeder().pure[ConnectionIO]
+    } else {
+      ().pure[ConnectionIO]
+    }
+  }
 }

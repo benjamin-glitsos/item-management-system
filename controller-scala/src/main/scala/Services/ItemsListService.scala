@@ -66,23 +66,11 @@ trait ItemsListService extends ListServiceTrait {
             writeJs(items)
           )
 
-          reseedIfNeeded <- {
-            if (
-              LogicUtilities.all(
-                List(
-                  totalItemsCount <= 15,
-                  totalItemsCount != 0,
-                  search.isEmpty,
-                  System
-                    .getenv("PROJECT_MODE") != "production"
-                )
-              )
-            ) {
-              ItemsSeeder().pure[ConnectionIO]
-            } else {
-              ().pure[ConnectionIO]
-            }
-          }
+          a <- reseedIfNeeded(
+            totalItemsCount,
+            search,
+            ItemsSeeder.apply
+          )
 
         } yield (output))
           .transact(xa)
