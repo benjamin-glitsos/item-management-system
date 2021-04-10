@@ -6,7 +6,7 @@ import doobie.implicits._
 import doobie.implicits.javatime._
 
 trait ListDAOTrait extends ListTrait {
-  final def withListFragment(
+  final def listFragment(
       offset: Int,
       pageLength: Int,
       search: Option[String],

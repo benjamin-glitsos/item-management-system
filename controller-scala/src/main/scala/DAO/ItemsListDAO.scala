@@ -28,7 +28,7 @@ trait ItemsListDAO extends ListDAOTrait {
         matchesDescriptionFragment
       )
 
-    val withListFragment_ = withListFragment(
+    val withListFragment: Fragment = listFragment(
       offset,
       pageLength,
       search,
@@ -37,7 +37,7 @@ trait ItemsListDAO extends ListDAOTrait {
     )
 
     val queryFragment: Fragment = fr"""
-    $withListFragment_
+    $withListFragment
     SELECT 
         total_count
       , filtered_count
