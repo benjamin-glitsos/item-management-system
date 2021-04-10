@@ -11,6 +11,7 @@ import {
 import styled from "styled-components";
 import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
+import DocumentIcon from "@atlaskit/icon/glyph/document";
 import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
 
 export default () => {
@@ -62,6 +63,16 @@ export default () => {
                         isSelected={doesMatchRouterLocation("/", location)}
                     >
                         Readme
+                    </LinkItem>
+                </Section>
+                <Section key="SideNavigation/Section/Content" title="Content">
+                    <LinkItem
+                        key="SideNavigation/LinkItem/Items"
+                        iconBefore={<DocumentIcon size="medium" />}
+                        href="/items"
+                        isSelected={doesMatchRouterLocation("/items", location)}
+                    >
+                        Items
                     </LinkItem>
                 </Section>
                 <Section key="SideNavigation/Section/System" title="System">

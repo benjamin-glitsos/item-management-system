@@ -8,6 +8,7 @@ import LoadingPage from "%/components/LoadingPage";
 
 const ReadmePage = lazy(() => import("%/components/ReadmePage"));
 const UsersPage = lazy(() => import("%/components/UsersPage"));
+const ItemsPage = lazy(() => import("%/components/ItemsPage"));
 const NotFoundPage = lazy(() => import("%/components/NotFoundPage"));
 
 export default () => (
@@ -28,6 +29,12 @@ export default () => (
                             path="/users"
                         >
                             <UsersPage />
+                        </QueryParamProvider>
+                        <QueryParamProvider
+                            ReactRouterRoute={Route}
+                            path="/items"
+                        >
+                            <ItemsPage />
                         </QueryParamProvider>
                         <QueryParamProvider
                             ReactRouterRoute={NotFoundPage}

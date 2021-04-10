@@ -14,8 +14,8 @@ const { Provider } = Context;
 export default () => {
     const context = useContext(Context);
 
-    const nameSingular = "user";
-    const namePlural = "users";
+    const nameSingular = "item";
+    const namePlural = "items";
     const title = titleCase(namePlural);
     const slug = namePlural;
 
@@ -46,11 +46,11 @@ export default () => {
             selected: []
         },
         headContentColumns: [
-            { key: "username", content: "Username", isSortable: true },
-            { key: "first_name", content: "Name", isSortable: true },
+            { key: "key", content: "Key", isSortable: true },
+            { key: "name", content: "Name", isSortable: true },
             {
-                key: "email_address",
-                content: "Email Address",
+                key: "description",
+                content: "Description",
                 isSortable: true
             }
         ],
