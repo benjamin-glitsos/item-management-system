@@ -9,7 +9,7 @@ import {
     Section
 } from "@atlaskit/side-navigation";
 import styled from "styled-components";
-import MediaServicesDocumentIcon from "@atlaskit/icon/glyph/media-services/document";
+import HomeCircleIcon from "@atlaskit/icon/glyph/home-circle";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import DocumentIcon from "@atlaskit/icon/glyph/document";
 import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
@@ -58,7 +58,7 @@ export default () => {
                 <Section key="SideNavigation/Section/Home" title="Home">
                     <LinkItem
                         key="SideNavigation/LinkItem/Readme"
-                        iconBefore={<MediaServicesDocumentIcon size="medium" />}
+                        iconBefore={<HomeCircleIcon size="medium" />}
                         href="/"
                         isSelected={doesMatchRouterLocation("/", location)}
                     >
