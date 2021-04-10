@@ -5,7 +5,7 @@ import doobie._
 import doobie.implicits._
 import doobie.implicits.javatime._
 
-trait ItemsListDAO {
+trait ItemsListDAO extends ListDAOTrait {
   final def list(
       offset: Int,
       pageLength: Int,

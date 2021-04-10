@@ -12,11 +12,8 @@ trait ItemsOpenService extends ServiceTrait {
 
           data <- ItemsDAO.open(key)
 
-          val output: String = write(
-            ujson.Obj(
-              "data" -> writeJs(data)
-            )
-          )
+          val output: String = createDataOutput(writeJs(data))
+
         } yield (output))
           .transact(xa)
           .unsafeRunSync
