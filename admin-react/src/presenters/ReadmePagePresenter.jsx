@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
+import { titleCase } from "title-case";
 import readme from "%/assets/README.md";
+import PageContainer from "%/containers/PageContainer";
 import PageLayout from "%/presenters/PageLayout";
 import ArticleLayout from "%/presenters/ArticleLayout";
 import GithubButton from "%/presenters/GithubButton";
@@ -10,6 +12,24 @@ import { ReadmeContext } from "%/components/ReadmePage";
 
 export default () => {
     const context = useContext(ReadmeContext);
+
+    const nameSingular = "readme";
+    const namePlural = nameSingular;
+    const title = titleCase(namePlural);
+    const slug = nameSingular;
+
+    const pageContainer = PageContainer({
+        nameSingular,
+        namePlural,
+        title,
+        slug,
+        description: `Information about the architecture and technology stack of the ${
+            process.env.PROJECT_NAME || "Item Management System"
+        }.`
+    });
+
+    const pageContext = { ...pageContainer };
+
     return (
         <PageLayout title={context.metaTitle} description={context.description}>
             <ArticleLayout
