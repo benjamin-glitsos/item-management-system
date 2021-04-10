@@ -4,6 +4,7 @@ import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
 import pipe from "pipe-functions";
+import transform from "transform-object";
 import { useFlags } from "@atlaskit/flag";
 import { Checkbox } from "@atlaskit/checkbox";
 import Error from "@atlaskit/icon/glyph/editor/warning";
@@ -16,13 +17,15 @@ import {
 } from "%/utilities/queryParameters";
 import RemoveAllSelected from "%/presenters/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
+import fromMaybe from "%/utilities/fromMaybe";
+import friendlyDate from "%/utilities/friendlyDate";
 import config from "%/config";
 
 export default ({
     apiPath,
     defaultState,
     headContentColumns,
-    rowsTransform
+    rowTransform = row => row
 }) => {
     const apiUrl = config.serverUrl + apiPath;
 
@@ -195,6 +198,12 @@ export default ({
         key: `Table/Row/${row.username},${i}`,
         cells: pipe(
             row,
+            row =>
+                transform(row, {
+                    created_at: friendlyDate,
+                    edited_at: d => friendlyDate(fromMaybe(d))
+                }),
+            rowTransform,
             row => [
                 <Checkbox
                     isChecked={state.selected.includes(row.username)}

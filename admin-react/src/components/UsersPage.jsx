@@ -4,8 +4,6 @@ import PageContainer from "%/containers/PageContainer";
 import ListContainer from "%/containers/ListContainer";
 import PageLayout from "%/presenters/PageLayout";
 import List from "%/components/List";
-import fromMaybe from "%/utilities/fromMaybe";
-import friendlyDate from "%/utilities/friendlyDate";
 
 export const Context = createContext();
 
@@ -53,12 +51,7 @@ export default () => {
                 content: "Email Address",
                 isSortable: true
             }
-        ],
-        rowTransform: row =>
-            transform(row, {
-                created_at: friendlyDate,
-                edited_at: d => friendlyDate(fromMaybe(d))
-            })
+        ]
     });
 
     const pageContext = {

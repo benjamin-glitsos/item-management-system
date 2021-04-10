@@ -53,12 +53,7 @@ export default () => {
                 content: "Description",
                 isSortable: true
             }
-        ],
-        rowTransform: row =>
-            transform(row, {
-                created_at: friendlyDate,
-                edited_at: d => friendlyDate(fromMaybe(d))
-            })
+        ]
     });
 
     const pageContext = {
