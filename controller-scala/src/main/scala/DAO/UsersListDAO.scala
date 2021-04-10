@@ -5,7 +5,7 @@ import doobie._
 import doobie.implicits._
 import doobie.implicits.javatime._
 
-trait UsersListDAO {
+trait UsersListDAO extends ListDAOTrait {
   final def list(
       offset: Int,
       pageLength: Int,
@@ -28,41 +28,16 @@ trait UsersListDAO {
         matchesNameFragment
       )
 
-    val sortKeyFragment: Fragment = Fragment.const(sort._1)
-
-    val sortOrderFragment: Fragment = Fragment.const(sort._2)
-
-    val sortFragment: Fragment =
-      fr"ORDER BY" ++ sortKeyFragment ++ sortOrderFragment
-
-    val pageFragment: Fragment = fr"LIMIT $pageLength OFFSET $offset"
+    val withListFragment_ = withListFragment(
+      offset,
+      pageLength,
+      search,
+      sort,
+      whereFragment
+    )
 
     val queryFragment: Fragment = fr"""
-    WITH total AS(
-        SELECT
-            *
-          , COUNT(*) OVER() AS total_count
-        FROM users_list
-    ), filtered AS(
-        SELECT
-            *
-          , COUNT(*) OVER() AS filtered_count
-        FROM total
-        $whereFragment
-        $sortFragment
-    ), limited AS(
-      SELECT
-          *
-        , row_number() OVER() AS row_number
-      FROM filtered
-      $pageFragment
-    ), page AS(
-      SELECT
-          *
-        , MIN(row_number) OVER() AS page_start
-        , MAX(row_number) OVER() AS page_end
-      FROM limited
-    )
+    $withListFragment_
     SELECT 
         total_count
       , filtered_count
