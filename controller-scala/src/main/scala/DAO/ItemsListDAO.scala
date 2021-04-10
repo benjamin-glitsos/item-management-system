@@ -10,7 +10,7 @@ trait ItemsListDAO extends ListDAOTrait {
       offset: Int,
       pageLength: Int,
       search: Option[String],
-      sort: (String, String)
+      sort: Sort
   ) = {
     val matchesKeyFragment: Option[Fragment] =
       search.map(s => fr"key ILIKE ${s"%$s%"}")

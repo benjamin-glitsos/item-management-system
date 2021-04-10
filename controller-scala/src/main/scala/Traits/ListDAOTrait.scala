@@ -5,12 +5,12 @@ import doobie._
 import doobie.implicits._
 import doobie.implicits.javatime._
 
-trait ListDAOTrait {
+trait ListDAOTrait extends ListTrait {
   final def withListFragment(
       offset: Int,
       pageLength: Int,
       search: Option[String],
-      sort: (String, String),
+      sort: Sort,
       whereFragment: Fragment
   ): Fragment = {
     val sortKeyFragment: Fragment = Fragment.const(sort._1)

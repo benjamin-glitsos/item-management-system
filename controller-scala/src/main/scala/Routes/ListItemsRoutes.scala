@@ -5,14 +5,14 @@ import upickle.default._
 import CustomMethodDirectives.report
 import scala.util.{Try}
 
-object ListItemsRoutes {
+object ListItemsRoutes extends ListTrait {
   final def apply(): Route = report {
     Validation("list-items") { body: ujson.Value =>
       {
         val pageNumber: Int        = body("page_number").num.toInt
         val pageLength: Int        = body("page_length").num.toInt
         val search: Option[String] = Try(body("search").str).toOption
-        val sort: (String, String) = read[(String, String)](body("sort"))
+        val sort: Sort             = read[Sort](body("sort"))
 
         complete(ItemsService.list(pageNumber, pageLength, search, sort))
       }

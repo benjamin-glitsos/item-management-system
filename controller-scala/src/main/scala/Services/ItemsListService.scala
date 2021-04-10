@@ -12,7 +12,7 @@ trait ItemsListService extends ListServiceTrait {
       pageNumber: Int,
       pageLength: Int,
       search: Option[String],
-      sort: (String, String)
+      sort: Sort
   ): ujson.Value = {
     read[ujson.Value](
       try {

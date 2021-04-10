@@ -10,7 +10,7 @@ trait UsersListDAO extends ListDAOTrait {
       offset: Int,
       pageLength: Int,
       search: Option[String],
-      sort: (String, String)
+      sort: Sort
   ) = {
     val matchesUsernameFragment: Option[Fragment] =
       search.map(s => fr"username ILIKE ${s"%$s%"}")

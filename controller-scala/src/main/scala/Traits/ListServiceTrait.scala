@@ -6,7 +6,7 @@ import cats.implicits._
 import upickle.default._
 import upickle_import.general._
 
-trait ListServiceTrait {
+trait ListServiceTrait extends ListTrait with ServiceTrait {
   final def emptyListData[A](): (Int, Int, Int, Int, List[A]) =
     (0, 0, 0, 0, List())
 
