@@ -3,7 +3,7 @@ import doobie_import.connection._
 import upickle.default._
 import upickle_import.general._
 
-trait UsersOpenService {
+trait UsersOpenService extends ServiceTrait {
   final def open(username: String): ujson.Value = {
     read[ujson.Value](
       try {
@@ -12,11 +12,8 @@ trait UsersOpenService {
 
           data <- UsersDAO.open(username)
 
-          val output: String = write(
-            ujson.Obj(
-              "data" -> writeJs(data)
-            )
-          )
+          val output: String = createDataOutput(writeJs(data))
+
         } yield (output))
           .transact(xa)
           .unsafeRunSync

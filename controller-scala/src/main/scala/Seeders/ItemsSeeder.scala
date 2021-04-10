@@ -17,9 +17,9 @@ object ItemsSeeder extends SeederTrait {
         StringUtilities.toTitleCase(
           text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
         )
-      val key: String                 = createKey(name)
-      val description: Option[String] = MarkdownIpsum(text)
-      val additionalNotes: Option[String]       = MarkdownIpsum(text)
+      val key: String                     = createKey(name)
+      val description: Option[String]     = MarkdownIpsum(text)
+      val additionalNotes: Option[String] = MarkdownIpsum(text)
 
       ItemsService.create(
         key,

@@ -9,7 +9,8 @@ object CreateItemsRoutes {
       val key: String                 = body("key").str
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
-      val additionalNotes: Option[String]       = Try(body("additional_notes").str).toOption
+      val additionalNotes: Option[String] =
+        Try(body("additional_notes").str).toOption
 
       complete(
         NoContent,
