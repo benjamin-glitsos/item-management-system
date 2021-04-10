@@ -1,13 +1,75 @@
-import { createContext } from "react";
-import UsersPageContainer from "%/containers/UsersPageContainer";
-import UsersPagePresenter from "%/presenters/UsersPagePresenter";
+import { createContext, useContext } from "react";
+import { titleCase } from "title-case";
+import PageContainer from "%/components/Page/PageContainer";
+import ListContainer from "%/components/List/ListContainer";
+import PageLayout from "%/components/PageLayout";
+import List from "%/components/List/List";
 
-export const UsersContext = createContext();
+export const Context = createContext();
 
-const { Provider } = UsersContext;
+const { Provider } = Context;
 
-export default () => (
-    <Provider value={UsersPageContainer()}>
-        <UsersPagePresenter />
-    </Provider>
-);
+export default () => {
+    const context = useContext(Context);
+
+    const nameSingular = "user";
+    const namePlural = "users";
+    const title = titleCase(namePlural);
+    const slug = namePlural;
+
+    const pageContainer = PageContainer({
+        nameSingular,
+        namePlural,
+        title,
+        slug,
+        namePlural,
+        description: `A list of ${namePlural} who can log into the ${
+            process.env.PROJECT_NAME || "Item Management System"
+        }.`
+    });
+
+    const listContainer = ListContainer({
+        apiPath: `v1/${slug}/`,
+        defaultState: {
+            request: {
+                body: {}
+            },
+            response: {
+                data: {
+                    items: []
+                },
+                errors: []
+            },
+            isLoading: false,
+            selected: []
+        },
+        headContentColumns: [
+            { key: "username", content: "Username", isSortable: true },
+            { key: "first_name", content: "Name", isSortable: true },
+            {
+                key: "email_address",
+                content: "Email Address",
+                isSortable: true
+            }
+        ]
+    });
+
+    const pageContext = {
+        nameSingular,
+        namePlural,
+        title,
+        ...pageContainer,
+        ...listContainer
+    };
+
+    return (
+        <Provider value={pageContext}>
+            <PageLayout
+                title={pageContext.metaTitle}
+                description={pageContext.description}
+            >
+                <List context={pageContext} />
+            </PageLayout>
+        </Provider>
+    );
+};

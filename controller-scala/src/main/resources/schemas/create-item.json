@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Create Item",
+    "type": "object",
+    "properties": {
+        "key": {
+            "$ref": "definitions/items.json#/definitions/key"
+        },
+        "name": {
+            "$ref": "definitions/items.json#/definitions/name"
+        },
+        "description": {
+            "$ref": "definitions/items.json#/definitions/description"
+        },
+        "additional_notes": {
+            "$ref": "definitions/meta.json#/definitions/additional_notes"
+        }
+    },
+    "required": ["key", "name", "description", "additional_notes"]
+}

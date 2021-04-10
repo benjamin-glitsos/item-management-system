@@ -7,7 +7,7 @@ object UsersSeeder extends SeederTrait {
   override final val count: Int = 15
 
   override final def clearData(): Unit = {
-    UsersService.delete(method = "hard-delete-all-rows", usernames = List())
+    UsersService.delete(method = "hard-delete-all-rows")
   }
 
   override final def predefinedData(): Unit = {
@@ -21,7 +21,7 @@ object UsersSeeder extends SeederTrait {
       lastName = System.getenv("SUPER_ADMIN_LAST_NAME"),
       otherNames = sys.env.get("SUPER_ADMIN_OTHER_NAMES"),
       password = System.getenv("SUPER_ADMIN_PASSWORD"),
-      notes = MarkdownIpsum(text)
+      additionalNotes = MarkdownIpsum(text)
     )
 
     UsersService.create(
@@ -31,7 +31,7 @@ object UsersSeeder extends SeederTrait {
       lastName = System.getenv("DEMO_ADMIN_LAST_NAME"),
       otherNames = sys.env.get("DEMO_ADMIN_OTHER_NAMES"),
       password = System.getenv("DEMO_ADMIN_PASSWORD"),
-      notes = MarkdownIpsum(text)
+      additionalNotes = MarkdownIpsum(text)
     )
   }
 
@@ -54,8 +54,8 @@ object UsersSeeder extends SeederTrait {
           }
         ).mkString(" ").trim()
       )
-      val password: String      = generatePassword(length = 15)
-      val notes: Option[String] = MarkdownIpsum(text)
+      val password: String      = randomPrintableChars(length = 15)
+      val additionalNotes: Option[String] = MarkdownIpsum(text)
 
       UsersService.create(
         username,
@@ -64,7 +64,7 @@ object UsersSeeder extends SeederTrait {
         lastName,
         otherNames,
         password,
-        notes
+        additionalNotes
       )
     }
 

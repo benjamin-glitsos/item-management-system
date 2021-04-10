@@ -1,100 +1,95 @@
-import java.time.LocalDateTime
-import upickle.default._
 import doobie.implicits._
-import doobie_bundle.connection._
+import doobie_import.connection._
 import doobie._
 import cats.implicits._
 import upickle.default._
-import upickle_bundle.general._
-import StringUtilities.friendlyName
+import upickle_import.general._
 
 trait UsersListService extends ListServiceTrait {
+  private final def friendlyName(
+      firstName: String,
+      lastName: String,
+      otherNames: Option[String]
+  ): String = {
+    otherNames match {
+      case None => List(firstName, lastName).mkString(" ")
+      case Some(otherNames) => {
+        val otherNamesInitials =
+          otherNames.split(" ").filter(_.length >= 1).map(_.charAt(0) + ".")
+        (List(firstName) ++ otherNamesInitials ++ List(lastName))
+          .mkString(" ")
+      }
+
+    }
+  }
+
   final def list(
       pageNumber: Int,
       pageLength: Int,
       search: Option[String],
-      sort: (String, String)
+      sort: Sort
   ): ujson.Value = {
     read[ujson.Value](
       try {
-        val offset: Int = (pageNumber - 1) * pageLength
+        val offset: Int = calculateOffset(pageNumber, pageLength)
 
         (for {
           data <- UsersDAO.list(offset, pageLength, search, sort)
 
-          dataAfterPossibleSeeding <- {
-            if (
-              getOrZero(data.head._1) <= 10 && search.isEmpty && System
-                .getenv("PROJECT_MODE") != "production"
-            ) {
-              UsersSeeder()
-              UsersDAO.list(offset, pageLength, search, sort)
-            } else {
-              data.pure[ConnectionIO]
-            }
+          val (
+            totalItemsCount: Int,
+            filteredItemsCount: Int,
+            pageItemsStart: Int,
+            pageItemsEnd: Int,
+            items: List[UsersList]
+          ) = data.headOption match {
+            case None => emptyListData[UsersList]();
+            case Some(dataFirstRow) => {
+              val totalItemsCount    = dataFirstRow._1
+              val filteredItemsCount = dataFirstRow._2
+              val pageItemsStart     = dataFirstRow._3
+              val pageItemsEnd       = dataFirstRow._4
+
+              val items: List[UsersList] = data.map(x => {
+                val username      = x._5
+                val email_address = x._6
+                val firstName     = x._7
+                val lastName      = x._8
+                val otherNames    = x._9
+                val created_at    = x._10
+                val edited_at     = x._11
+                val name          = friendlyName(firstName, lastName, otherNames)
+
+                UsersList(username, email_address, name, created_at, edited_at)
+              })
+
+              (
+                totalItemsCount,
+                filteredItemsCount,
+                pageItemsStart,
+                pageItemsEnd,
+                items
+              )
+            };
           }
 
-          val totalItemsCount: Int = getOrZero(dataAfterPossibleSeeding.head._1)
-
-          val totalPagesCount: Int = calculatePageCount(
+          val output: String = createListOutput(
+            totalItemsCount,
+            filteredItemsCount,
+            pageItemsCount = items.length,
+            pageItemsStart,
+            pageItemsEnd,
+            pageNumber,
             pageLength,
-            totalItemsCount
+            writeJs(items)
           )
 
-          val filteredItemsCount: Int = getOrZero(
-            dataAfterPossibleSeeding.head._2
+          a <- reseedIfNeeded(
+            totalItemsCount,
+            search,
+            UsersSeeder.apply
           )
 
-          val filteredPagesCount: Int = calculatePageCount(
-            pageLength,
-            filteredItemsCount
-          )
-
-          val pageItemsStart: Int = getOrZero(dataAfterPossibleSeeding.head._3)
-
-          val pageItemsEnd: Int = getOrZero(dataAfterPossibleSeeding.head._4)
-
-          val pageItemsCount: Int = dataAfterPossibleSeeding.length
-
-          val items: List[UsersList] = dataAfterPossibleSeeding map {
-            case (
-                  totalItemsCount: Int,
-                  filteredItemsCount: Int,
-                  pageItemsStart: Int,
-                  pageItemsEnd: Int,
-                  username: String,
-                  email_address: String,
-                  first_name: String,
-                  last_name: String,
-                  other_names: Option[String],
-                  created_at: LocalDateTime,
-                  edited_at: Option[LocalDateTime]
-                ) =>
-              UsersList(
-                username,
-                email_address,
-                friendlyName(first_name, last_name, other_names),
-                created_at,
-                edited_at
-              )
-          }
-
-          val output: String = write(
-            ujson.Obj(
-              "data" -> ujson.Obj(
-                "total_items_count"    -> ujson.Num(totalItemsCount),
-                "total_pages_count"    -> ujson.Num(totalPagesCount),
-                "filtered_items_count" -> ujson.Num(filteredItemsCount),
-                "filtered_pages_count" -> ujson.Num(filteredPagesCount),
-                "page_items_count"     -> ujson.Num(pageItemsCount),
-                "page_items_start"     -> ujson.Num(pageItemsStart),
-                "page_items_end"       -> ujson.Num(pageItemsEnd),
-                "page_number"          -> ujson.Num(pageNumber),
-                "page_length"          -> ujson.Num(pageLength),
-                "items"                -> writeJs(items)
-              )
-            )
-          )
         } yield (output))
           .transact(xa)
           .unsafeRunSync

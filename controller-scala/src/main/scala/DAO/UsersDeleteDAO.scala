@@ -1,4 +1,4 @@
-import doobie_bundle.database.dc._
+import doobie_import.database.dc._
 
 trait UsersDeleteDAO {
   final def softDelete(usernames: List[String]) = {

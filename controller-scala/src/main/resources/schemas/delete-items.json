@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Delete or Restore Items",
+    "type": "object",
+    "properties": {
+        "method": {
+            "$ref": "definitions/deletion.json#/definitions/method"
+        },
+        "keys": {
+            "$ref": "definitions/deletion.json#/definitions/keys"
+        }
+    },
+    "required": ["method", "keys"]
+}

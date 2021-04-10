@@ -10,7 +10,7 @@ BEGIN
           , NEW.last_name
           , NEW.other_names
           , NEW.password
-          , NEW.notes
+          , NEW.additional_notes
         );
 
     ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
@@ -44,7 +44,7 @@ BEGIN
           , NEW.last_name
           , NEW.other_names
           , NEW.password
-          , NEW.notes
+          , NEW.additional_notes
         );
 
     END IF;

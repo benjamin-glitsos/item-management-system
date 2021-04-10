@@ -6,6 +6,7 @@ object Seeder {
       ) == "yes"
     ) {
       UsersSeeder()
+      ItemsSeeder()
     }
   }
 }

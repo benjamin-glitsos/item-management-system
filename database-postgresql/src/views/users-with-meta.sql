@@ -13,6 +13,6 @@ CREATE VIEW users_with_meta AS
       , m.created_at
       , m.edited_at
       , m.deleted_at
-      , m.notes
+      , m.additional_notes
     FROM users u
     INNER JOIN meta m ON u.meta_id = m.id;

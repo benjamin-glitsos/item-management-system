@@ -2,7 +2,7 @@ import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes._
 import cats.data.NonEmptyChain
-import upickle_bundle.general._
+import upickle_import.general._
 
 object RejectionRoutes extends ValidationTrait {
   final def notFound(): Route = complete(

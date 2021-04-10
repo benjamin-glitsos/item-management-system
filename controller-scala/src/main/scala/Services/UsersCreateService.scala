@@ -1,5 +1,5 @@
 import doobie.implicits._
-import doobie_bundle.connection._
+import doobie_import.connection._
 
 trait UsersCreateService {
   final def create(
@@ -9,7 +9,7 @@ trait UsersCreateService {
       lastName: String,
       otherNames: Option[String],
       password: String,
-      notes: Option[String]
+      additionalNotes: Option[String]
   ): String = {
     try {
       UsersDAO
@@ -20,7 +20,7 @@ trait UsersCreateService {
           lastName,
           otherNames,
           password,
-          notes
+          additionalNotes
         )
         .transact(xa)
         .unsafeRunSync

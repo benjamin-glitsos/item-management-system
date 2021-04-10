@@ -5,14 +5,14 @@ CREATE FUNCTION insert_for_users_with_meta(
   , _last_name text
   , _other_names text
   , _password text
-  , _notes text
+  , _additional_notes text
 )
 RETURNS void
 AS $$
 BEGIN
     WITH insert_meta AS (
-        INSERT INTO meta (metakey, notes)
-        VALUES (generate_random_metakey('users'), _notes)
+        INSERT INTO meta (metakey, additional_notes)
+        VALUES (generate_random_metakey('users'), _additional_notes)
         RETURNING id
     )
     INSERT INTO users (

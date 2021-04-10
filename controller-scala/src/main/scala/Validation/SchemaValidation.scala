@@ -6,7 +6,7 @@ import scala.jdk.CollectionConverters._
 import upickle.default._
 import cats.implicits._
 import scala.util.{Try, Success, Failure}
-import upickle_bundle.general._
+import upickle_import.general._
 
 object SchemaValidation extends ValidationTrait {
   final def apply(
