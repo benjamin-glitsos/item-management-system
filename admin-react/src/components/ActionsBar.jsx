@@ -34,6 +34,7 @@ export default () => {
                                 isVisible: context.state.selected.length > 0
                             }
                         ]}
+                        deleteItemsAction={context.deleteItemsAction}
                     />
                 </ButtonRightSpace>
                 <Textfield

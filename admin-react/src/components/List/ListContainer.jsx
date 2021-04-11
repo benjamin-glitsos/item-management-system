@@ -212,7 +212,10 @@ export default ({
                     onChange={() => setSelected(row[keyColumnSingular])}
                 />,
                 ...Object.values(row),
-                ActionsMenu({ items: [row[keyColumnSingular]] })
+                ActionsMenu({
+                    items: [row[keyColumnSingular]],
+                    deleteItemsAction
+                })
             ],
             x =>
                 x.map((x, i) => ({

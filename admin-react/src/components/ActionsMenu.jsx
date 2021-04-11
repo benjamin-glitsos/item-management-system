@@ -1,15 +1,12 @@
-import { useContext } from "react";
 import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
 import DropdownMenu from "%/components/DropdownMenu";
-import { ListContext } from "%/components/List/List";
 import friendlyAction from "%/utilities/friendlyAction";
 
-export default ({ items, additionalItems = [] }) => {
-    const context = useContext(ListContext);
+export default ({ items, additionalItems = [], deleteItemsAction }) => {
     const numberOfItems = items.length;
     const isDeletable = numberOfItems > 0;
-    const softDeleteAction = () => context.deleteItemsAction("soft", items);
-    const hardDeleteAction = () => context.deleteItemsAction("hard", items);
+    const softDeleteAction = () => deleteItemsAction("soft", items);
+    const hardDeleteAction = () => deleteItemsAction("hard", items);
 
     const Actions = () => {
         const items = [
