@@ -9,7 +9,7 @@ const timeAgo = new TimeAgo();
 
 export default dateTimeStr => {
     if (dateTimeStr === null) {
-        return "Never";
+        return "(Never)";
     } else {
         const now = new Date();
         const date = new Date(dateTimeStr);
