@@ -11,7 +11,6 @@ export default () => {
     const isLoading = context.state.isLoading;
     const numberOfSelected = context.state.selected.length;
     const isSearch = isBlank(context.query.search);
-
     const nameSingular = context.nameSingular;
     const namePlural = context.namePlural;
     const stats = context.state.response.data;
@@ -20,13 +19,14 @@ export default () => {
     const pageItemsStart = stats.page_items_start;
     const pageItemsEnd = stats.page_items_end;
 
+    const namePluralOrMatches = !isSearch ? namePlural : "matches";
+
     if (isLoading) {
         return <NonBreakingSpace />;
-    } else if (totalItemsCount === undefined || totalItemsCount === null) {
-        return `Zero ${namePlural}.`;
+    } else if ([undefined, null, 0].includes(totalItemsCount)) {
+        return `Zero ${namePluralOrMatches}.`;
     } else if (numberOfSelected === 0) {
-        const name = !isSearch ? namePlural : "matches";
-        const filteredStatus = `Showing ${name} ${
+        const filteredStatus = `Showing ${namePluralOrMatches} ${
             pageItemsStart + String.fromCharCode(8211) + pageItemsEnd
         } of ${filteredItemsCount}`;
         const totalStatus =
