@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
 import { titleCase } from "title-case";
+import transform from "transform-object";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import PageLayout from "%/components/PageLayout";
 import List from "%/components/List/List";
-import fromMaybe from "%/utilities/fromMaybe";
-import friendlyDate from "%/utilities/friendlyDate";
+import friendlyNull from "%/utilities/friendlyNull";
 
 export const Context = createContext();
 
@@ -54,6 +54,10 @@ export default () => {
                 isSortable: true
             }
         ],
+        rowTransform: row =>
+            transform(row, {
+                description: friendlyNull
+            }),
         keyColumnSingular: "key",
         keyColumnPlural: "keys"
     });
