@@ -54,7 +54,8 @@ export default () => {
                 isSortable: true
             }
         ],
-        keyColumn: "key"
+        keyColumnSingular: "key",
+        keyColumnPlural: "keys"
     });
 
     const pageContext = {

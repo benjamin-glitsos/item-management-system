@@ -13,7 +13,6 @@ import config from "%/config";
 export default () => {
     const context = useContext(ListContext);
     const sort = context.query.sort || config.defaultSort;
-    console.log(context.state.selected);
 
     return (
         <FullwidthLayout>

@@ -52,7 +52,8 @@ export default () => {
             },
             { key: "first_name", content: "Name", isSortable: true }
         ],
-        keyColumn: "username"
+        keyColumnSingular: "username",
+        keyColumnPlural: "usernames"
     });
 
     const pageContext = {

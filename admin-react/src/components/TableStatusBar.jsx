@@ -2,13 +2,15 @@ import { useContext } from "react";
 import { Fragment } from "react";
 import NonBreakingSpace from "%/components/NonBreakingSpace";
 import numbersToWords from "number-to-words";
-import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 import { ListContext } from "%/components/List/List";
+import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
+import isBlank from "%/utilities/isBlank";
 
 export default () => {
     const context = useContext(ListContext);
     const isLoading = context.state.isLoading;
     const numberOfSelected = context.state.selected.length;
+    const isSearch = isBlank(context.query.search);
 
     const nameSingular = context.nameSingular;
     const namePlural = context.namePlural;
@@ -23,7 +25,8 @@ export default () => {
     } else if (totalItemsCount === undefined || totalItemsCount === null) {
         return `Zero ${namePlural}.`;
     } else if (numberOfSelected === 0) {
-        const filteredStatus = `Showing ${namePlural} ${
+        const name = !isSearch ? namePlural : "matches";
+        const filteredStatus = `Showing ${name} ${
             pageItemsStart + String.fromCharCode(8211) + pageItemsEnd
         } of ${filteredItemsCount}`;
         const totalStatus =

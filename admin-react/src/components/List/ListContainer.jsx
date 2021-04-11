@@ -26,7 +26,8 @@ export default ({
     defaultState,
     headContentColumns,
     rowTransform = row => row,
-    keyColumn
+    keyColumnSingular,
+    keyColumnPlural
 }) => {
     const apiUrl = config.serverUrl + apiPath;
 
@@ -54,7 +55,7 @@ export default ({
             url: apiUrl,
             data: {
                 method,
-                keys
+                [keyColumnPlural]: keys
             }
         });
 
@@ -196,7 +197,7 @@ export default ({
     };
 
     const rows = state.response.data.items.map((row, i) => ({
-        key: `Table/Row/${row[keyColumn]},${i}`,
+        key: `Table/Row/${row[keyColumnSingular]},${i}`,
         cells: pipe(
             row,
             row =>
@@ -207,11 +208,11 @@ export default ({
             rowTransform,
             row => [
                 <Checkbox
-                    isChecked={state.selected.includes(row[keyColumn])}
-                    onChange={() => setSelected(row[keyColumn])}
+                    isChecked={state.selected.includes(row[keyColumnSingular])}
+                    onChange={() => setSelected(row[keyColumnSingular])}
                 />,
                 ...Object.values(row),
-                ActionsMenu({ items: [row[keyColumn]] })
+                ActionsMenu({ items: [row[keyColumnSingular]] })
             ],
             x =>
                 x.map((x, i) => ({
