@@ -1,10 +1,8 @@
 import Math.ceil
 import doobie.implicits._
-import doobie_import.connection._
 import doobie._
 import cats.implicits._
 import upickle.default._
-import upickle_import.general._
 
 trait ListServiceTrait extends ListTrait with ServiceTrait {
   final def emptyListData[A](): (Int, Int, Int, Int, List[A]) =

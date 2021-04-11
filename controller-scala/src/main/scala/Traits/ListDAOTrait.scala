@@ -1,9 +1,7 @@
 import java.time.LocalDateTime
 import doobie.Fragment
-import doobie.Fragments.{whereOrOpt}
 import doobie._
 import doobie.implicits._
-import doobie.implicits.javatime._
 
 trait ListDAOTrait extends ListTrait {
   final def listFragment(
