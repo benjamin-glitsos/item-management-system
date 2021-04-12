@@ -41,7 +41,7 @@ object UsersSeeder extends SeederTrait {
       val person: Person     = fairy.person();
       val text: TextProducer = fairy.textProducer();
 
-      val username: String     = person.getUsername()
+      val username: String     = person.getUsername() + randomIntegerBetween(1, 99)
       val emailAddress: String = person.getEmail()
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
@@ -54,7 +54,7 @@ object UsersSeeder extends SeederTrait {
           }
         ).mkString(" ").trim()
       )
-      val password: String      = randomPrintableChars(length = 15)
+      val password: String                = randomPrintableChars(length = 15)
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       UsersService.create(

@@ -11,6 +11,9 @@ trait SeederTrait {
     }
   }
 
+  final def randomIntegerBetween(min: Int, max: Int): Int =
+    Random.between(min, max)
+
   final def biasedCoinFlip(probability: Double): Boolean = {
     val precision = MathUtilities.powerOfTen(2).toInt
     val flip      = Random.between(1, precision).toDouble / precision
