@@ -11,5 +11,5 @@ case class ItemsWithMeta(
     created_at: LocalDateTime,
     edited_at: Option[LocalDateTime],
     deleted_at: Option[LocalDateTime],
-    additionalNotes: Option[String]
+    additional_notes: Option[String]
 )
