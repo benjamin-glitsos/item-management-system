@@ -10,12 +10,16 @@
         "keys": {
             "description": "The identifier keys of the items that should be deleted or restored.",
             "type": "array",
-            "items": {
-                "type": "string"
-            },
             "minItems": 1,
             "maxItems": 100,
-            "uniqueItems": true
+            "uniqueItems": true,
+            "items": {
+                "type": "string",
+                "description": "Identifier key",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[^\\s]+(s+[^\\s]+)*$"
+            }
         }
     }
 }

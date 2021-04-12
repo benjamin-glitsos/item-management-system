@@ -5,13 +5,16 @@
         "key": {
             "description": "E.g. SOFA_TAN_LEATHER_MATT",
             "type": "string",
-            "maxLength": 250,
+            "minLength": 1,
+            "maxLength": 255,
             "pattern": "^[-A-Z0-9]*$"
         },
         "name": {
             "description": "E.g. Sofa Leather Lounge (Tan, Leather)",
             "type": "string",
-            "maxLength": 255
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[^\\s]+(s+[^\\s]+)*$"
         },
         "description": {
             "$ref": "definitions/miscellaneous.json#/definitions/long_text"
