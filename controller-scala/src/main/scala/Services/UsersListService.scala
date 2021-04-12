@@ -5,7 +5,7 @@ import upickle.default._
 import upickle_import.general._
 
 trait UsersListService extends ListServiceTrait {
-  private final def friendlyName(
+  private final def formatName(
       firstName: String,
       lastName: String,
       otherNames: Option[String]
@@ -57,7 +57,7 @@ trait UsersListService extends ListServiceTrait {
                 val otherNames    = x._9
                 val created_at    = x._10
                 val edited_at     = x._11
-                val name          = friendlyName(firstName, lastName, otherNames)
+                val name          = formatName(firstName, lastName, otherNames)
 
                 UsersList(username, email_address, name, created_at, edited_at)
               })

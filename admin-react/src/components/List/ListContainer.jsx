@@ -18,7 +18,7 @@ import {
 import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import fromMaybe from "%/utilities/fromMaybe";
-import friendlyDate from "%/utilities/friendlyDate";
+import formatDate from "%/utilities/formatDate";
 import config from "%/config";
 
 export default ({
@@ -202,8 +202,8 @@ export default ({
             row,
             row =>
                 transform(row, {
-                    created_at: friendlyDate,
-                    edited_at: d => friendlyDate(fromMaybe(d))
+                    created_at: formatDate,
+                    edited_at: d => formatDate(fromMaybe(d))
                 }),
             rowTransform,
             row => [

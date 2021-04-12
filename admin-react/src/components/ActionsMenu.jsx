@@ -1,6 +1,6 @@
 import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
 import DropdownMenu from "%/components/DropdownMenu";
-import friendlyAction from "%/utilities/friendlyAction";
+import formatAction from "%/utilities/formatAction";
 
 export default ({ items, additionalItems = [], deleteItemsAction }) => {
     const numberOfItems = items.length;
@@ -29,14 +29,14 @@ export default ({ items, additionalItems = [], deleteItemsAction }) => {
             return filtered.map(a => {
                 return (
                     <DropdownItem onClick={a.onClick}>
-                        {friendlyAction(numberOfItems, a.title)}
+                        {formatAction(numberOfItems, a.title)}
                     </DropdownItem>
                 );
             });
         } else {
             return (
                 <DropdownItem isDisabled={true}>
-                    No actions available. {friendlyAction(numberOfItems, "")}.
+                    No actions available. {formatAction(numberOfItems, "")}.
                 </DropdownItem>
             );
         }
