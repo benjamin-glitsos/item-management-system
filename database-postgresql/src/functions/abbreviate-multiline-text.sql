@@ -3,6 +3,6 @@ RETURNS text AS $$
 DECLARE
     max_length integer := 50;
 BEGIN
-    RETURN truncate(max_length, wrap(source));
+    RETURN truncate(max_length, wrap(trim(source)));
 END;
 $$ LANGUAGE plpgsql;
