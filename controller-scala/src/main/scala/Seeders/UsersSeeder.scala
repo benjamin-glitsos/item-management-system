@@ -43,7 +43,7 @@ object UsersSeeder extends SeederTrait {
 
       val username: String =
         person.getUsername() + randomIntegerBetween(1, 99).toString
-      val emailAddress: String = person.getEmail()
+      val emailAddress: String = s"$username@example.com"
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
       val otherNames: Option[String] = emptyStringToOption(
