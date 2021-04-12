@@ -18,8 +18,8 @@ object ItemsSeeder extends SeederTrait {
           text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
         )
       val key: String                     = createKey(name)
-      val description: Option[String]     = MarkdownIpsum(text)
-      val additionalNotes: Option[String] = MarkdownIpsum(text)
+      val description: Option[String]     = MarkdownSeeder(text)
+      val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       ItemsService.create(
         key,

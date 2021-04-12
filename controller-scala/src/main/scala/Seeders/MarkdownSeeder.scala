@@ -1,7 +1,7 @@
 import scala.math.{min, max}
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object MarkdownIpsum extends SeederTrait {
+object MarkdownSeeder extends SeederTrait {
   private final def hasContent(): Boolean = biasedCoinFlip(probability = 0.75)
   private final def numberOfParagraphs(): Int =
     randomGaussianDiscrete(min = 1, max = 3, mean = 1)
