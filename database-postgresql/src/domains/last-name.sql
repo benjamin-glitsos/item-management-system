@@ -1,4 +1,4 @@
 CREATE DOMAIN last_name AS VARCHAR(70)
 CHECK (
-    VALUE <> ''
+    not_empty(VALUE)
 );

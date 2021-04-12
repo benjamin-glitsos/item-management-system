@@ -1,4 +1,4 @@
 CREATE DOMAIN password AS VARCHAR(40)
 CHECK (
-    VALUE <> ''
+    not_empty(VALUE)
 );

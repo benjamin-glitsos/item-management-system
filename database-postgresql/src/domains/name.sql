@@ -1,4 +1,4 @@
 CREATE DOMAIN name AS VARCHAR(255)
 CHECK (
-    VALUE <> ''
+    not_empty(VALUE)
 );
