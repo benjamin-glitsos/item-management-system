@@ -19,7 +19,7 @@ trait ItemsEditDAO {
       newKey.map(s => fr"key=$s"),
       name.map(s => fr"name=$s"),
       description.map(s => fr"description=$s"),
-      additionalNotes.map(s => fr"additionalNotes=$s")
+      additionalNotes.map(s => fr"additional_notes=$s")
     )
 
     val where: Fragment = whereAnd(fr"key=$oldKey")

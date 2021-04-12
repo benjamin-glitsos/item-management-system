@@ -14,13 +14,13 @@ trait UsersCreateDAO {
       quote(
         query[UsersWithMeta]
           .insert(
-            _.username      -> lift(username),
-            _.email_address -> lift(emailAddress),
-            _.first_name    -> lift(firstName),
-            _.last_name     -> lift(lastName),
-            _.other_names   -> lift(otherNames),
-            _.password      -> lift(password),
-            _.additionalNotes         -> lift(additionalNotes)
+            _.username         -> lift(username),
+            _.email_address    -> lift(emailAddress),
+            _.first_name       -> lift(firstName),
+            _.last_name        -> lift(lastName),
+            _.other_names      -> lift(otherNames),
+            _.password         -> lift(password),
+            _.additional_notes -> lift(additionalNotes)
           )
       )
     )

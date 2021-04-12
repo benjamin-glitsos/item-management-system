@@ -25,7 +25,7 @@ trait UsersEditDAO {
       lastName.map(s => fr"last_name=$s"),
       otherNames.map(s => fr"other_names=$s"),
       password.map(s => fr"password=$s"),
-      additionalNotes.map(s => fr"additionalNotes=$s")
+      additionalNotes.map(s => fr"additional_notes=$s")
     )
 
     val where: Fragment = whereAnd(fr"username=$oldUsername")

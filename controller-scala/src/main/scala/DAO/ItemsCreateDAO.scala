@@ -11,10 +11,10 @@ trait ItemsCreateDAO {
       quote(
         query[ItemsWithMeta]
           .insert(
-            _.key         -> lift(key),
-            _.name        -> lift(name),
-            _.description -> lift(description),
-            _.additionalNotes       -> lift(additionalNotes)
+            _.key              -> lift(key),
+            _.name             -> lift(name),
+            _.description      -> lift(description),
+            _.additional_notes -> lift(additionalNotes)
           )
       )
     )
