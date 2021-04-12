@@ -2,22 +2,29 @@ import { DropdownItem, DropdownItemGroup } from "@atlaskit/dropdown-menu";
 import DropdownMenu from "%/components/DropdownMenu";
 import formatAction from "%/utilities/formatAction";
 
-export default ({ items, additionalItems = [], deleteItemsAction }) => {
+export default ({
+    items,
+    additionalItems = [],
+    deleteItemsAction,
+    setDeselectAll
+}) => {
     const numberOfItems = items.length;
     const isDeletable = numberOfItems > 0;
-    const softDeleteAction = () => deleteItemsAction("soft", items);
-    const hardDeleteAction = () => deleteItemsAction("hard", items);
+    const deleteItemsActionHandler = method => {
+        setDeselectAll();
+        deleteItemsAction(method, items);
+    };
 
     const Actions = () => {
         const items = [
             {
                 title: "Delete",
-                onClick: softDeleteAction,
+                onClick: deleteItemsActionHandler("soft"),
                 isVisible: isDeletable
             },
             {
                 title: "Hard delete",
-                onClick: hardDeleteAction,
+                onClick: deleteItemsActionHandler("hard"),
                 isVisible: isDeletable
             },
             ...additionalItems

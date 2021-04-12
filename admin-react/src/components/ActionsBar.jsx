@@ -14,6 +14,7 @@ export default () => {
     const setPageNumber = context.setPageNumber;
     const setPageLength = context.setPageLength;
     const setSearch = context.setSearch;
+    const setDeselectAll = context.setDeselectAll;
     const search = context.query.search;
     const pageLength = context.state.response.data.page_length;
 
@@ -44,6 +45,7 @@ export default () => {
                     value={searchState}
                     onChange={search => {
                         const value = search.target.value;
+                        setDeselectAll();
                         setSearch(value);
                         setSearchState(value);
                     }}
@@ -52,6 +54,7 @@ export default () => {
                     isDisabled={isDataEmpty}
                     pageLength={pageLength}
                     setPageLength={setPageLength}
+                    setDeselectAll={setDeselectAll}
                 />
             </ButtonGroup>
         </Fragment>

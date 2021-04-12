@@ -214,7 +214,8 @@ export default ({
                 ...Object.values(row),
                 ActionsMenu({
                     items: [row[keyColumnSingular]],
-                    deleteItemsAction
+                    deleteItemsAction,
+                    setDeselectAll
                 })
             ],
             x =>
