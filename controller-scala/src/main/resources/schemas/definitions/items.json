@@ -11,12 +11,10 @@
         "name": {
             "description": "E.g. Sofa Leather Lounge (Tan, Leather)",
             "type": "string",
-            "maxLength": 250
+            "maxLength": 255
         },
         "description": {
-            "description": "E.g. A stunning *Italian leather* lounge with contemporary design.",
-            "type": "string",
-            "maxLength": 1048576
+            "$ref": "definitions/miscellaneous.json#/definitions/long_text"
         }
     }
 }

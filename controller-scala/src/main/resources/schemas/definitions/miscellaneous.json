@@ -1,9 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Meta Definitions",
+    "title": "Miscellaneous Definitions",
     "definitions": {
-        "additional_notes": {
-            "description": "Miscellaneous additional_notes that can be added to this item.",
+        "long_text": {
+            "description": "For long-form text content.",
             "type": "string",
             "maxLength": 1048576
         }
