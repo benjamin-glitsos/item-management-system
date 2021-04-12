@@ -1,7 +1,8 @@
 CREATE FUNCTION not_empty(
-    _key text
+    s text
 )
 RETURNS boolean AS $$
 BEGIN
+    RETURN trim(s) <> '';
 END;
 $$ LANGUAGE plpgsql;

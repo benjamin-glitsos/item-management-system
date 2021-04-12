@@ -7,6 +7,7 @@ cat_sql() {
 psql << SQL
 $(cat_sql /settings/*)
 $(cat_sql /extensions/*)
+$(cat_sql /functions/not-empty)
 $(cat_sql /domains/*)
 $(cat_sql /functions/generate-random-metakey)
 $(cat_sql /functions/sha1-encrypt)
