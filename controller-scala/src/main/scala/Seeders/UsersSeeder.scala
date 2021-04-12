@@ -41,7 +41,8 @@ object UsersSeeder extends SeederTrait {
       val person: Person     = fairy.person();
       val text: TextProducer = fairy.textProducer();
 
-      val username: String     = person.getUsername() + randomIntegerBetween(1, 99)
+      val username: String =
+        person.getUsername() + randomIntegerBetween(1, 99).toString
       val emailAddress: String = person.getEmail()
       val firstName: String    = person.getFirstName()
       val lastName: String     = person.getLastName()
