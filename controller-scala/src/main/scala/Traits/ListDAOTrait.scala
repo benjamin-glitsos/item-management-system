@@ -1,4 +1,3 @@
-import java.time.LocalDateTime
 import doobie.Fragment
 import doobie._
 import doobie.implicits._

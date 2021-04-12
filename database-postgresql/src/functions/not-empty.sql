@@ -1,6 +1,6 @@
-CREATE FUNCTION not_empty(s text)
+CREATE FUNCTION not_empty(value text)
 RETURNS boolean AS $$
 BEGIN
-    RETURN trim(s) <> '';
+    RETURN trim(value) <> '';
 END;
 $$ LANGUAGE plpgsql;
