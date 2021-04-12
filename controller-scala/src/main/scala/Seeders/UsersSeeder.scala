@@ -41,11 +41,18 @@ object UsersSeeder extends SeederTrait {
       val person: Person     = fairy.person();
       val text: TextProducer = fairy.textProducer();
 
+      val randomNumber: String = randomIntegerBetween(1, 99).toString
       val username: String =
-        person.getUsername() + randomIntegerBetween(1, 99).toString
-      val emailAddress: String = s"$username@example.com"
-      val firstName: String    = person.getFirstName()
-      val lastName: String     = person.getLastName()
+        person.getUsername() + randomNumber
+      val emailAddress: String = {
+        val atSymbol: String = "@"
+        val Array(emailUserName, emailDomainName) =
+          person.getEmail().split(atSymbol)
+        emailUserName + randomNumber + atSymbol + emailDomainName
+      }
+
+      val firstName: String = person.getFirstName()
+      val lastName: String  = person.getLastName()
       val otherNames: Option[String] = emptyStringToOption(
         repeatedRunArray[String](
           randomGaussianDiscrete(min = 0, max = 2),
