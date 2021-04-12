@@ -1,6 +1,4 @@
-CREATE FUNCTION soft_delete_for_users_with_meta(
-    _username text
-)
+CREATE FUNCTION soft_delete_for_users_with_meta(_username text)
 RETURNS void AS $$
 BEGIN
     UPDATE meta SET is_deleted=true, deleted_at=NOW(), edits=edits + 1

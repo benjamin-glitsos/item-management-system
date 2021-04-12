@@ -1,6 +1,4 @@
-CREATE FUNCTION not_empty(
-    s text
-)
+CREATE FUNCTION not_empty(s text)
 RETURNS boolean AS $$
 BEGIN
     RETURN trim(s) <> '';
