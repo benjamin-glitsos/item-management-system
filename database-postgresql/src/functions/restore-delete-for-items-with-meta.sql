@@ -1,8 +1,7 @@
 CREATE FUNCTION restore_delete_for_items_with_meta(
     _key text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     UPDATE meta SET is_deleted=false, edits=edits + 1
     WHERE id=(

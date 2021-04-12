@@ -8,8 +8,7 @@ CREATE FUNCTION update_for_users_with_meta(
   , new_password text
   , new_additional_notes text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     WITH users_update AS (
         UPDATE users

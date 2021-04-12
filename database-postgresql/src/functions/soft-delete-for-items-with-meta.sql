@@ -1,8 +1,7 @@
 CREATE FUNCTION soft_delete_for_items_with_meta(
     _key text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     UPDATE meta SET is_deleted=true, deleted_at=NOW(), edits=edits + 1
     WHERE id=(

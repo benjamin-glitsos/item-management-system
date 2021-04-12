@@ -1,8 +1,7 @@
 CREATE FUNCTION open_for_items_with_meta(
     _key text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     UPDATE meta SET opens=opens + 1
     WHERE id=(

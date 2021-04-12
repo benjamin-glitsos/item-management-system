@@ -1,6 +1,5 @@
 CREATE FUNCTION wrap(source text)
-RETURNS text
-AS $$
+RETURNS text AS $$
 DECLARE
     pilcrow text := CHR(182);
 BEGIN

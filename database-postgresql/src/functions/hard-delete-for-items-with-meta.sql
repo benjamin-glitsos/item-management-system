@@ -1,8 +1,7 @@
 CREATE FUNCTION hard_delete_for_items_with_meta(
     _key text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     WITH delete_items AS (
         DELETE FROM items

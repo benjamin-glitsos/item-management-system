@@ -7,8 +7,7 @@ CREATE FUNCTION insert_for_users_with_meta(
   , _password text
   , _additional_notes text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     WITH insert_meta AS (
         INSERT INTO meta (metakey, additional_notes)

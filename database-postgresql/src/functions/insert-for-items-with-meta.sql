@@ -4,8 +4,7 @@ CREATE FUNCTION insert_for_items_with_meta(
   , _description text
   , _additional_notes text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     WITH insert_meta AS (
         INSERT INTO meta (metakey, additional_notes)

@@ -1,6 +1,5 @@
 CREATE FUNCTION truncate(max_length integer, source text)
-RETURNS text
-AS $$
+RETURNS text AS $$
 DECLARE
     ellipsis text := ' ...';
     ellipsis_length integer := LENGTH(ellipsis);

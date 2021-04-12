@@ -5,8 +5,7 @@ CREATE FUNCTION update_for_items_with_meta(
   , new_description text
   , new_additional_notes text
 )
-RETURNS void
-AS $$
+RETURNS void AS $$
 BEGIN
     WITH items_update AS (
         UPDATE items
