@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
+import * as yup from "yup";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -113,20 +114,48 @@ export default () => {
 
     console.log(`The username is: ${username}`);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
-    const onSubmit = data => console.log(data);
+    const useYupValidationResolver = validationSchema =>
+        useCallback(
+            async data => {
+                try {
+                    const values = await validationSchema.validate(data, {
+                        abortEarly: false
+                    });
+
+                    return {
+                        values,
+                        errors: {}
+                    };
+                } catch (errors) {
+                    return {
+                        values: {},
+                        errors: errors.inner.reduce(
+                            (allErrors, currentError) => ({
+                                ...allErrors,
+                                [currentError.path]: {
+                                    type: currentError.type ?? "validation",
+                                    message: currentError.message
+                                }
+                            }),
+                            {}
+                        )
+                    };
+                }
+            },
+            [validationSchema]
+        );
+    const validationSchema = yup.object({
+        firstName: yup.string().required("Required"),
+        lastName: yup.string().required("Required")
+    });
+
+    const resolver = useYupValidationResolver(validationSchema);
+    const { handleSubmit, register } = useForm({ resolver });
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register("firstName")} /> {/* register an input */}
-            <input {...register("lastName", { required: true })} />
-            {errors.lastName && <p>Last name is required.</p>}
-            <input {...register("age", { pattern: /\d+/ })} />
-            {errors.age && <p>Please enter number for age.</p>}
+        <form onSubmit={handleSubmit(data => console.log(data))}>
+            <input {...register("firstName")} />
+            <input {...register("lastName")} />
             <input type="submit" />
         </form>
     );
