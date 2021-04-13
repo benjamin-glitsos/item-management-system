@@ -5,7 +5,6 @@ cat_sql() {
 }
 
 psql << SQL
-$(cat_sql /settings/*)
 $(cat_sql /extensions/*)
 $(cat_sql /functions/not-empty)
 $(cat_sql /functions/no-leading-or-trailing-spaces)
