@@ -113,50 +113,23 @@ export default () => {
         console.log(x);
     };
 
+    validation();
+
     console.log(`The username is: ${username}`);
 
-    const useYupValidationResolver = validationSchema =>
-        useCallback(
-            async data => {
-                try {
-                    const values = await validationSchema.validate(data, {
-                        abortEarly: false
-                    });
-
-                    return {
-                        values,
-                        errors: {}
-                    };
-                } catch (errors) {
-                    return {
-                        values: {},
-                        errors: errors.inner.reduce(
-                            (allErrors, currentError) => ({
-                                ...allErrors,
-                                [currentError.path]: {
-                                    type: currentError.type ?? "validation",
-                                    message: currentError.message
-                                }
-                            }),
-                            {}
-                        )
-                    };
-                }
-            },
-            [validationSchema]
-        );
-    const validationSchema = yup.object({
-        firstName: yup.number().min(18).required(),
-        lastName: yup.string().required()
+    const validationSchema = yup.object().shape({
+        name: yup.string().required(),
+        age: yup.number().min(18).required()
     });
 
-    const resolver = useYupValidationResolver(validationSchema);
-    const { handleSubmit, register } = useForm({ resolver });
+    const { register, handleSubmit } = useForm({
+        resolver: yupResolver(validationSchema)
+    });
 
     return (
-        <form onSubmit={handleSubmit(data => console.log(data))}>
-            <input {...register("firstName")} />
-            <input {...register("lastName")} />
+        <form onSubmit={handleSubmit(d => console.log(d))}>
+            <input name="name" {...register("name")} />
+            <input name="age" type="number" {...register("age")} />
             <input type="submit" />
         </form>
     );
