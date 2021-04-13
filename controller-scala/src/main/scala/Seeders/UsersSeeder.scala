@@ -15,22 +15,22 @@ object UsersSeeder extends SeederTrait {
     val text: TextProducer = fairy.textProducer();
 
     UsersService.create(
-      username = System.getenv("SUPER_ADMIN_USERNAME"),
-      emailAddress = System.getenv("SUPER_ADMIN_EMAIL_ADDRESS"),
-      firstName = System.getenv("SUPER_ADMIN_FIRST_NAME"),
-      lastName = System.getenv("SUPER_ADMIN_LAST_NAME"),
-      otherNames = sys.env.get("SUPER_ADMIN_OTHER_NAMES"),
-      password = System.getenv("SUPER_ADMIN_PASSWORD"),
+      username = System.getenv("ADMIN_USERNAME"),
+      emailAddress = System.getenv("ADMIN_EMAIL_ADDRESS"),
+      firstName = System.getenv("ADMIN_FIRST_NAME"),
+      lastName = System.getenv("ADMIN_LAST_NAME"),
+      otherNames = sys.env.get("ADMIN_OTHER_NAMES"),
+      password = System.getenv("ADMIN_PASSWORD"),
       additionalNotes = MarkdownSeeder(text)
     )
 
     UsersService.create(
-      username = System.getenv("DEMO_ADMIN_USERNAME"),
-      emailAddress = System.getenv("DEMO_ADMIN_EMAIL_ADDRESS"),
-      firstName = System.getenv("DEMO_ADMIN_FIRST_NAME"),
-      lastName = System.getenv("DEMO_ADMIN_LAST_NAME"),
-      otherNames = sys.env.get("DEMO_ADMIN_OTHER_NAMES"),
-      password = System.getenv("DEMO_ADMIN_PASSWORD"),
+      username = System.getenv("DEMO_USERNAME"),
+      emailAddress = System.getenv("DEMO_EMAIL_ADDRESS"),
+      firstName = System.getenv("DEMO_FIRST_NAME"),
+      lastName = System.getenv("DEMO_LAST_NAME"),
+      otherNames = sys.env.get("DEMO_OTHER_NAMES"),
+      password = System.getenv("DEMO_PASSWORD"),
       additionalNotes = MarkdownSeeder(text)
     )
   }
