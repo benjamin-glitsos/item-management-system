@@ -20,10 +20,14 @@ trait ItemsListDAO extends ListDAOTrait {
     val matchesNameFragment: Option[Fragment] =
       trimmedSearch.map(s => fr"name ~* $s")
 
+    val matchesDescriptionFragment: Option[Fragment] =
+      search.map(s => fr"description ~* $s")
+
     val whereFragment: Fragment =
       whereOrOpt(
         matchesKeyFragment,
-        matchesNameFragment
+        matchesNameFragment,
+        matchesDescriptionFragment
       )
 
     val withListFragment: Fragment = listFragment(
