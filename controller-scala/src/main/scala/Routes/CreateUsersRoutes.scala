@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object CreateUsersRoutes {
   final def apply(): Route = post {
-    Validation("create-user") { body: ujson.Value =>
+    Validation("create-users") { body: ujson.Value =>
       val username: String     = body("username").str
       val emailAddress: String = body("email_address").str
       val firstName: String    = body("first_name").str

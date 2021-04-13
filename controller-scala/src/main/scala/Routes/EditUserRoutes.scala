@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object EditUserRoutes {
   final def apply(username: String): Route = patch {
-    Validation("edit-user") { body: ujson.Value =>
+    Validation("edit-users") { body: ujson.Value =>
       {
         val newUsername: Option[String] =
           Try(body("username").str).toOption
