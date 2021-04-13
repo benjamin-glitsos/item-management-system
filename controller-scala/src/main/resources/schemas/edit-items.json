@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Create Item",
+    "title": "Edit Items",
     "type": "object",
     "properties": {
         "key": {
@@ -16,5 +16,10 @@
             "$ref": "definitions/miscellaneous.json#/definitions/long_text"
         }
     },
-    "required": ["key", "name"]
+    "anyOf": [
+        { "required": ["key"] },
+        { "required": ["name"] },
+        { "required": ["description"] },
+        { "required": ["additional_notes"] }
+    ]
 }
