@@ -7,44 +7,37 @@ import Page from "%/components/Page/PagePresenter";
 import LoadingPage from "%/components/LoadingPage";
 
 const ReadmePage = lazy(() => import("%/components/ReadmePage"));
-const UsersPage = lazy(() => import("%/components/UsersPage"));
-const ItemsPage = lazy(() => import("%/components/ItemsPage"));
+const UsersListPage = lazy(() => import("%/components/UsersListPage"));
+const UsersOpenPage = lazy(() => import("%/components/UsersOpenPage"));
+const ItemsListPage = lazy(() => import("%/components/ItemsListPage"));
 const NotFoundPage = lazy(() => import("%/components/NotFoundPage"));
 
 export default () => (
     <Router history={createBrowserHistory()}>
-        <Page>
-            <Analytics id={process.env.REACT_APP_PROJECT_GOOGLE_ANALYTICS_ID}>
-                <Suspense fallback={<LoadingPage />}>
-                    <Switch>
-                        <QueryParamProvider
-                            ReactRouterRoute={Route}
-                            exact
-                            path="/"
-                        >
-                            <ReadmePage />
-                        </QueryParamProvider>
-                        <QueryParamProvider
-                            ReactRouterRoute={Route}
-                            path="/users"
-                        >
-                            <UsersPage />
-                        </QueryParamProvider>
-                        <QueryParamProvider
-                            ReactRouterRoute={Route}
-                            path="/items"
-                        >
-                            <ItemsPage />
-                        </QueryParamProvider>
-                        <QueryParamProvider
-                            ReactRouterRoute={NotFoundPage}
-                            path="*"
-                        >
-                            <NotFoundPage />
-                        </QueryParamProvider>
-                    </Switch>
-                </Suspense>
-            </Analytics>
-        </Page>
+        <Analytics id={process.env.REACT_APP_PROJECT_GOOGLE_ANALYTICS_ID}>
+            <QueryParamProvider>
+                <Page>
+                    <Suspense fallback={<LoadingPage />}>
+                        <Switch>
+                            <Route exact path="/">
+                                <ReadmePage />
+                            </Route>
+                            <Route exact path="/users">
+                                <UsersListPage />
+                            </Route>
+                            <Route path="/users/:username">
+                                <UsersOpenPage />
+                            </Route>
+                            <Route path="/items">
+                                <ItemsListPage />
+                            </Route>
+                            <Route path="*">
+                                <NotFoundPage />
+                            </Route>
+                        </Switch>
+                    </Suspense>
+                </Page>
+            </QueryParamProvider>
+        </Analytics>
     </Router>
 );
