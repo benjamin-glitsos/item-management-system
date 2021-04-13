@@ -7,6 +7,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 * RESTful API
 * JSON Schema validation
 * Type-safety using Algebraic Data Types
+* Trait inheritance
 * Java Interop
 * GRASP and SOLID
 * Object-Oriented in the large, Functional Programming in the small
