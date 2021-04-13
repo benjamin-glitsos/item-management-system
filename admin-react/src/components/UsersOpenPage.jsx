@@ -119,17 +119,30 @@ export default () => {
 
     const validationSchema = yup.object().shape({
         name: yup.string().required(),
-        age: yup.number().min(18).required()
+        age: yup.number().min(18).integer().required()
     });
 
-    const { register, handleSubmit } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
         resolver: yupResolver(validationSchema)
     });
 
+    const onSubmit = data => console.log(data);
+
     return (
-        <form onSubmit={handleSubmit(d => console.log(d))}>
-            <input name="name" {...register("name")} />
-            <input name="age" type="number" {...register("age")} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+                {...register("firstName")}
+                defaultValue={state.item?.first_name}
+            />
+            <p>{errors.firstName?.message}</p>
+
+            <input {...register("age")} defaultValue={state.item?.age} />
+            <p>{errors.age?.message}</p>
+
             <input type="submit" />
         </form>
     );
