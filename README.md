@@ -18,6 +18,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 
 ### Database-PostgreSQL
 
-* Shared metadata table joined via Views and Triggers
-* Stored Procedures, Window Functions and Domains
+* DRY via use of a separate metadata table joined via Views and Triggers
+* Data integrity via the heavy usage of custom domains
+* Use of trigram indexes, stored procedures, and window functions.
 * Fourth normal form (4NF)
