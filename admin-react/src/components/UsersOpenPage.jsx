@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 export default () => {
@@ -145,8 +146,8 @@ export default () => {
             [validationSchema]
         );
     const validationSchema = yup.object({
-        firstName: yup.string().required("Required"),
-        lastName: yup.string().required("Required")
+        firstName: yup.number().min(18).required(),
+        lastName: yup.string().required()
     });
 
     const resolver = useYupValidationResolver(validationSchema);
