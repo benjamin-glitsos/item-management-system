@@ -62,9 +62,7 @@ trait ListServiceTrait extends ListTrait with ServiceTrait {
         List(
           totalItemsCount <= 15,
           totalItemsCount != 0,
-          search.isEmpty,
-          System
-            .getenv("PROJECT_MODE") != "production"
+          search.isEmpty
         )
       )
     ) {
