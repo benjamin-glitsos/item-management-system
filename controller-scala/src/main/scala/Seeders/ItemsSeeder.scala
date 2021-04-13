@@ -1,7 +1,7 @@
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object ItemsSeeder extends SeederTrait {
+object ItemsSeeder extends EntitySeederTrait {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
@@ -9,7 +9,7 @@ object ItemsSeeder extends SeederTrait {
   }
 
   final def predefinedData(): Unit = if (
-    System.getenv("PROJECT_MODE") == "production"
+    System.getenv("PROJECT_MODE") != "production"
   ) {
     val fairy: Fairy       = Fairy.create();
     val text: TextProducer = fairy.textProducer();

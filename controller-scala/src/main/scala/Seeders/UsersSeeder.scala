@@ -3,7 +3,7 @@ import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 import OptionUtilities.emptyStringToOption
 
-object UsersSeeder extends SeederTrait {
+object UsersSeeder extends EntitySeederTrait {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
