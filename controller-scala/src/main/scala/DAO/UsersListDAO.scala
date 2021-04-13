@@ -12,14 +12,16 @@ trait UsersListDAO extends ListDAOTrait {
       search: Option[String],
       sort: Sort
   ) = {
+    val trimmedSearch = trimSearch(search)
+
     val matchesUsernameFragment: Option[Fragment] =
-      search.map(s => fr"username ~* $s")
+      trimmedSearch.map(s => fr"username ~* $s")
 
     val matchesEmailAddressFragment: Option[Fragment] =
-      search.map(s => fr"email_address ~* $s")
+      trimmedSearch.map(s => fr"email_address ~* $s")
 
     val matchesNameFragment: Option[Fragment] =
-      search.map(s => fr"first_name ~* $s")
+      trimmedSearch.map(s => fr"first_name ~* $s")
 
     val whereFragment: Fragment =
       whereOrOpt(

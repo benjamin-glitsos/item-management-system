@@ -3,6 +3,9 @@ import doobie._
 import doobie.implicits._
 
 trait ListDAOTrait extends ListTrait {
+  final def trimSearch(search: Option[String]): Option[String] =
+    search.map(_.trim)
+
   final def listFragment(
       table: String,
       offset: Int,

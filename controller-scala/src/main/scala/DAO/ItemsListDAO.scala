@@ -12,11 +12,13 @@ trait ItemsListDAO extends ListDAOTrait {
       search: Option[String],
       sort: Sort
   ) = {
+    val trimmedSearch = trimSearch(search)
+
     val matchesKeyFragment: Option[Fragment] =
-      search.map(s => fr"key ~* $s")
+      trimmedSearch.map(s => fr"key ~* $s")
 
     val matchesNameFragment: Option[Fragment] =
-      search.map(s => fr"name ~* $s")
+      trimmedSearch.map(s => fr"name ~* $s")
 
     val whereFragment: Fragment =
       whereOrOpt(
