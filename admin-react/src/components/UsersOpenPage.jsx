@@ -10,6 +10,7 @@ export default () => {
     // TODO: First check that every feature will work
     // TODO NEXT: use buildYup to use your state.schema in the form
     // TODO NEXT: create the schema/edit-users endpoint and ensure that it pulls in the ref fields properly
+    // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
 
     const { username } = useParams();
 
