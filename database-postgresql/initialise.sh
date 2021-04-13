@@ -22,6 +22,7 @@ $(cat_sql /views/users-list)
 $(cat_sql /tables/items)
 $(cat_sql /views/items-with-meta)
 $(cat_sql /views/items-list)
+$(cat_sql /indexes/*)
 $(cat_sql /functions/*-for-*-with-meta)
 $(cat_sql /triggers/*)
 SQL
