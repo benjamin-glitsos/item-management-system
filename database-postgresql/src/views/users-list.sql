@@ -8,4 +8,4 @@ CREATE VIEW users_list AS
       , created_at
       , edited_at
     FROM users_with_meta
-    WHERE is_deleted = false;
+    WHERE is_deleted IS false;

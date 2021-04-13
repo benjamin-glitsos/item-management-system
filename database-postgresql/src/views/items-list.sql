@@ -6,4 +6,4 @@ CREATE VIEW items_list AS
       , created_at
       , edited_at
     FROM items_with_meta
-    WHERE is_deleted = false;
+    WHERE is_deleted IS false;
