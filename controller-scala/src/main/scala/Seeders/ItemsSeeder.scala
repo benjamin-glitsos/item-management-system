@@ -8,6 +8,20 @@ object ItemsSeeder extends SeederTrait {
     ItemsService.delete(method = "hard-delete-all-rows")
   }
 
+  override final def predefinedData(): Unit = if (
+    System.getenv("PROJECT_MODE") == "production"
+  ) {
+    val fairy: Fairy       = Fairy.create();
+    val text: TextProducer = fairy.textProducer();
+
+    ItemsService.create(
+      key = System.getenv("DEMO_ITEM_KEY"),
+      name = System.getenv("DEMO_ITEM_NAME"),
+      description = MarkdownSeeder(text),
+      additionalNotes = MarkdownSeeder(text)
+    )
+  }
+
   override final def seed(): Unit = {
     def seedRow(): Unit = {
       val fairy: Fairy       = Fairy.create();
