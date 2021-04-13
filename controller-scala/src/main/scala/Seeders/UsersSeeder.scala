@@ -6,11 +6,11 @@ import OptionUtilities.emptyStringToOption
 object UsersSeeder extends SeederTrait {
   override final val count: Int = 15
 
-  override final def clearData(): Unit = {
+  final def clearData(): Unit = {
     UsersService.delete(method = "hard-delete-all-rows")
   }
 
-  override final def predefinedData(): Unit = {
+  final def predefinedData(): Unit = {
     val fairy: Fairy       = Fairy.create();
     val text: TextProducer = fairy.textProducer();
 
@@ -35,7 +35,7 @@ object UsersSeeder extends SeederTrait {
     )
   }
 
-  override final def seed(): Unit = {
+  final def seed(): Unit = {
     def seedRow(): Unit = {
       val fairy: Fairy       = Fairy.create();
       val person: Person     = fairy.person();
@@ -79,7 +79,7 @@ object UsersSeeder extends SeederTrait {
     count times seedRow()
   }
 
-  override final def apply(): Unit = {
+  final def apply(): Unit = {
     clearData()
     predefinedData()
     seed()
