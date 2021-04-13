@@ -3,7 +3,7 @@ import akka.http.scaladsl.server.Route
 import scala.util.{Try}
 import akka.http.scaladsl.model.StatusCodes.NoContent
 
-object EditUserRoutes {
+object EditUsersRoutes {
   final def apply(username: String): Route = patch {
     Validation("edit-users") { body: ujson.Value =>
       {
@@ -18,7 +18,8 @@ object EditUserRoutes {
         val otherNames: Option[String] =
           Try(body("other_names").str).toOption
         val password: Option[String] = Try(body("password").str).toOption
-        val additionalNotes: Option[String]    = Try(body("additional_notes").str).toOption
+        val additionalNotes: Option[String] =
+          Try(body("additional_notes").str).toOption
 
         complete(
           NoContent,

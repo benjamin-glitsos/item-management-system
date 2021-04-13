@@ -3,7 +3,7 @@ import akka.http.scaladsl.server.Route
 import scala.util.{Try}
 import akka.http.scaladsl.model.StatusCodes.NoContent
 
-object EditItemRoutes {
+object EditItemsRoutes {
   final def apply(key: String): Route = patch {
     Validation("edit-items") { body: ujson.Value =>
       {

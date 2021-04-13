@@ -11,8 +11,8 @@ object UsersRoutes {
   private final def usernameRoutes(): Route = pathPrefix(Segment) {
     username: String =>
       concat(
-        OpenUserRoutes(username),
-        EditUserRoutes(username)
+        OpenUsersRoutes(username),
+        EditUsersRoutes(username)
       )
   }
 

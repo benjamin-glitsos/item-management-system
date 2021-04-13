@@ -10,8 +10,8 @@ object ItemsRoutes {
 
   private final def keyRoutes(): Route = pathPrefix(Segment) { key: String =>
     concat(
-      OpenItemRoutes(key),
-      EditItemRoutes(key)
+      OpenItemsRoutes(key),
+      EditItemsRoutes(key)
     )
   }
 
