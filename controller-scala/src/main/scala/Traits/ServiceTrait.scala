@@ -1,3 +1,4 @@
+import java.sql.SQLException
 import upickle.default._
 
 trait ServiceTrait {
@@ -6,4 +7,10 @@ trait ServiceTrait {
       "data" -> data
     )
   )
+
+  def handleSqlException(e: SQLException): String = {
+    System.err.println(e.getMessage)
+    System.err.println(e.getSQLState)
+    new String
+  }
 }

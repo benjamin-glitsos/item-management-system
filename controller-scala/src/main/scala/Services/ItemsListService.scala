@@ -1,3 +1,4 @@
+import java.sql.SQLException
 import upickle.default._
 import doobie.implicits._
 import doobie_import.connection._
@@ -73,10 +74,7 @@ trait ItemsListService extends ListServiceTrait {
           .transact(xa)
           .unsafeRunSync
       } catch {
-        case e: java.sql.SQLException =>
-          System.err.println(e.getMessage)
-          System.err.println(e.getSQLState)
-          new String
+        case e: SQLException => handleSqlException(e)
       }
     )
   }

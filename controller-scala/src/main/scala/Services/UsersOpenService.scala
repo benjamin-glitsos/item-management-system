@@ -1,3 +1,4 @@
+import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
 import upickle.default._
@@ -18,10 +19,7 @@ trait UsersOpenService extends ServiceTrait {
           .transact(xa)
           .unsafeRunSync
       } catch {
-        case e: java.sql.SQLException =>
-          System.err.println(e.getMessage)
-          System.err.println(e.getSQLState)
-          new String
+        case e: SQLException => handleSqlException(e)
       }
     )
   }

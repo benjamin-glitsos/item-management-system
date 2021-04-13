@@ -1,3 +1,4 @@
+import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
 
@@ -18,12 +19,10 @@ trait ItemsCreateService {
         )
         .transact(xa)
         .unsafeRunSync
+      new String
     } catch {
-      case e: java.sql.SQLException =>
-        System.err.println(e.getMessage)
-        System.err.println(e.getSQLState)
+      case e: SQLException => handleSqlException(e)
     }
 
-    new String
   }
 }
