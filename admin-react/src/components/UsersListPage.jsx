@@ -45,12 +45,12 @@ export default () => {
         },
         headContentColumns: [
             { key: "username", content: "Username", isSortable: true },
+            { key: "first_name", content: "Name", isSortable: true },
             {
                 key: "email_address",
                 content: "Email Address",
                 isSortable: true
-            },
-            { key: "first_name", content: "Name", isSortable: true }
+            }
         ],
         keyColumnSingular: "username",
         keyColumnPlural: "usernames"

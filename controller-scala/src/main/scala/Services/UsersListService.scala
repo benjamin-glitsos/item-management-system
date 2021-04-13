@@ -60,7 +60,7 @@ trait UsersListService extends ListServiceTrait {
                 val edited_at     = x._11
                 val name          = formatName(firstName, lastName, otherNames)
 
-                UsersList(username, email_address, name, created_at, edited_at)
+                UsersList(username, name, email_address, created_at, edited_at)
               })
 
               (
