@@ -15,13 +15,13 @@ trait UsersListDAO extends ListDAOTrait {
     val trimmedSearch = trimSearch(search)
 
     val matchesUsernameFragment: Option[Fragment] =
-      trimmedSearch.map(s => fr"username ~* $s")
+      trimmedSearch.map(s => fr"username ILIKE ${s"%$s%"}")
 
     val matchesEmailAddressFragment: Option[Fragment] =
-      trimmedSearch.map(s => fr"email_address ~* $s")
+      trimmedSearch.map(s => fr"email_address ILIKE ${s"%$s%"}")
 
     val matchesNameFragment: Option[Fragment] =
-      trimmedSearch.map(s => fr"first_name ~* $s")
+      trimmedSearch.map(s => fr"first_name ILIKE ${s"%$s%"}")
 
     val whereFragment: Fragment =
       whereOrOpt(

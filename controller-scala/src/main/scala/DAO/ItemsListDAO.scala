@@ -15,13 +15,13 @@ trait ItemsListDAO extends ListDAOTrait {
     val trimmedSearch = trimSearch(search)
 
     val matchesKeyFragment: Option[Fragment] =
-      trimmedSearch.map(s => fr"key ~* $s")
+      trimmedSearch.map(s => fr"key ILIKE ${s"%$s%"}")
 
     val matchesNameFragment: Option[Fragment] =
-      trimmedSearch.map(s => fr"name ~* $s")
+      trimmedSearch.map(s => fr"name ILIKE ${s"%$s%"}")
 
     val matchesDescriptionFragment: Option[Fragment] =
-      search.map(s => fr"description ~* $s")
+      search.map(s => fr"description ILIKE ${s"%$s%"}")
 
     val whereFragment: Fragment =
       whereOrOpt(
