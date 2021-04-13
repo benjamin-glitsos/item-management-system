@@ -8,6 +8,8 @@ import * as yup from "yup";
 
 export default () => {
     // TODO: First check that every feature will work
+    // TODO NEXT: use buildYup to use your state.schema in the form
+    // TODO NEXT: create the schema/edit-users endpoint and ensure that it pulls in the ref fields properly
 
     const { username } = useParams();
 
