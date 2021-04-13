@@ -27,6 +27,7 @@ trait UsersEditService extends ServiceTrait {
         )
         .transact(xa)
         .unsafeRunSync
+      new String
     } catch {
       case e: SQLException => handleSqlException(e)
     }

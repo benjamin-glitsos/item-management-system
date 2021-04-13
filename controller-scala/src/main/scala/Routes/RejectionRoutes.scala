@@ -4,10 +4,12 @@ import akka.http.scaladsl.model.StatusCodes._
 import cats.data.NonEmptyChain
 import upickle_import.general._
 
-object RejectionRoutes extends ValidationTrait {
+object RejectionRoutes {
   final def notFound(): Route = complete(
     NotFound,
-    SerialisedErrors(serialiseErrors(NonEmptyChain(NotFoundError())))
+    SerialisedErrors(
+      ErrorsUtilities.serialiseErrors(NonEmptyChain(NotFoundError()))
+    )
   )
 
   final def badRequestError(se: String): Route = complete(
@@ -23,7 +25,7 @@ object RejectionRoutes extends ValidationTrait {
   final def authorisationFailed(): Route = complete(
     Forbidden,
     SerialisedErrors(
-      serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
+      ErrorsUtilities.serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
     )
   )
 }

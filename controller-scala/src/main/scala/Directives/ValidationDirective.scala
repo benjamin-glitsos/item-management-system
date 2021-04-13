@@ -4,18 +4,10 @@ import scala.concurrent.duration._
 import akka.http.scaladsl.model.HttpEntity
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
-import cats.data.NonEmptyChain
-import upickle.default._
 import upickle_import.general._
 
 object ValidationDirective {
   private final val staticEndpoints = List("open-user")
-
-  private def serialiseErrors(errors: NonEmptyChain[Error]): String = {
-    write(
-      errors.toChain.toList
-    )
-  }
 
   final def apply(endpointName: String): Directive1[ujson.Value] =
     extractStrictEntity(3.seconds)
@@ -29,7 +21,7 @@ object ValidationDirective {
             case Valid(v) => provide(v)
             case Invalid(e) =>
               reject(
-                ValidationRejection(serialiseErrors(e))
+                ValidationRejection(ErrorsUtilities.serialiseErrors(e))
               )
           }
         }
