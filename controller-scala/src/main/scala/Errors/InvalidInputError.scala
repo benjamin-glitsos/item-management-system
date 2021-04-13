@@ -1,5 +1,5 @@
-object InvalidInputError {
+object InvalidInputError extends ErrorTrait {
   final def apply(description: String): Error = {
-    Error(ErrorCodes.INVALID_INPUT, "Invalid Input", description)
+    Error(INVALID_INPUT, "Invalid Input", description)
   }
 }
