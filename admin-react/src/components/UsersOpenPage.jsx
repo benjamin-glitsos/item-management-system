@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
+import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 
 export default () => {
@@ -110,5 +111,23 @@ export default () => {
         console.log(x);
     };
 
-    return `The username is: ${username}`;
+    console.log(`The username is: ${username}`);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+    const onSubmit = data => console.log(data);
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <input {...register("firstName")} /> {/* register an input */}
+            <input {...register("lastName", { required: true })} />
+            {errors.lastName && <p>Last name is required.</p>}
+            <input {...register("age", { pattern: /\d+/ })} />
+            {errors.age && <p>Please enter number for age.</p>}
+            <input type="submit" />
+        </form>
+    );
 };
