@@ -2,7 +2,7 @@ import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
 
-trait UsersEditService {
+trait UsersEditService extends ServiceTrait {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],
@@ -27,6 +27,7 @@ trait UsersEditService {
         )
         .transact(xa)
         .unsafeRunSync
+      new String
     } catch {
       case e: SQLException => handleSqlException(e)
     }

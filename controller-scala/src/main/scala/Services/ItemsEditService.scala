@@ -2,7 +2,7 @@ import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
 
-trait ItemsEditService {
+trait ItemsEditService extends ServiceTrait {
   final def edit(
       oldKey: String,
       newKey: Option[String],

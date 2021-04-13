@@ -6,14 +6,8 @@ import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 import upickle_import.general._
 
-object Validation {
+object ValidationDirective {
   private final val staticEndpoints = List("open-user")
-
-  private def serialiseErrors(errors: NonEmptyChain[Error]): String = {
-    write(
-      errors.toChain.toList
-    )
-  }
 
   final def apply(endpointName: String): Directive1[ujson.Value] =
     extractStrictEntity(3.seconds)
@@ -27,7 +21,7 @@ object Validation {
             case Valid(v) => provide(v)
             case Invalid(e) =>
               reject(
-                ValidationRejection(serialiseErrors(e))
+                ValidationRejection(ErrorsUtilities.serialiseErrors(e))
               )
           }
         }

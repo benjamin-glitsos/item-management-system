@@ -2,7 +2,7 @@ import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
 
-trait UsersDeleteService {
+trait UsersDeleteService extends ServiceTrait {
   final def delete(method: String, usernames: List[String] = List()): String = {
     try {
       method match {
