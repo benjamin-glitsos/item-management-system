@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object DeleteItemsRoutes {
   final def apply(): Route = delete {
-    Validation("delete-items") { body: ujson.Value =>
+    ValidationDirective("delete-items") { body: ujson.Value =>
       {
         val method: String     = body("method").str
         val keys: List[String] = read[List[String]](body("keys"))

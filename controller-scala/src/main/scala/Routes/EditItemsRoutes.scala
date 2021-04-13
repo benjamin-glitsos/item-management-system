@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object EditItemsRoutes {
   final def apply(key: String): Route = patch {
-    Validation("edit-items") { body: ujson.Value =>
+    ValidationDirective("edit-items") { body: ujson.Value =>
       {
         val newKey: Option[String] =
           Try(body("key").str).toOption

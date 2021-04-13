@@ -7,7 +7,7 @@ import scala.util.{Try}
 
 object ListUsersRoutes extends ListTrait {
   final def apply(): Route = report {
-    Validation("list-users") { body: ujson.Value =>
+    ValidationDirective("list-users") { body: ujson.Value =>
       {
         val pageNumber: Int        = body("page_number").num.toInt
         val pageLength: Int        = body("page_length").num.toInt
