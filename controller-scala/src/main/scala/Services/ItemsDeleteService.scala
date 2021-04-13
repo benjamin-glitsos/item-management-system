@@ -2,7 +2,7 @@ import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
 
-trait ItemsDeleteService {
+trait ItemsDeleteService extends ServiceTrait {
   final def delete(method: String, keys: List[String] = List()): String = {
     try {
       method match {

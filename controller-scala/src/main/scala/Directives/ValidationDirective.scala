@@ -4,9 +4,11 @@ import scala.concurrent.duration._
 import akka.http.scaladsl.model.HttpEntity
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
+import cats.data.NonEmptyChain
+import upickle.default._
 import upickle_import.general._
 
-object Validation {
+object ValidationDirective {
   private final val staticEndpoints = List("open-user")
 
   private def serialiseErrors(errors: NonEmptyChain[Error]): String = {
