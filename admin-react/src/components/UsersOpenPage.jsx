@@ -4,7 +4,9 @@ import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { joiResolver } from "@hookform/resolvers/joi";
 import * as yup from "yup";
+import Joi from "joi";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -72,17 +74,19 @@ export default () => {
 
     const yupSchema = buildYup(state.schema, {});
 
-    const validationSchema = yup.object().shape({
-        name: yup.string().required(),
-        age: yup.number().min(18).integer().required()
+    const joiSchema = Joi.object({
+        username: Joi.string().required(),
+        first_name: Joi.string().required()
     });
+    console.log(joiSchema);
 
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm({
-        resolver: yupResolver(yupSchema)
+        // resolver: yupResolver(yupSchema)
+        resolver: joiResolver(joiSchema)
     });
 
     const onSubmit = data => console.log(data);
