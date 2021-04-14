@@ -98,13 +98,13 @@ export default () => {
                 {...register("username")}
                 defaultValue={state.item?.username}
             />
-            <p>{errors.username?.message}</p>
+            <p>{errors?.username?.message}</p>
 
             <input
                 {...register("first_name")}
                 defaultValue={state.item?.first_name}
             />
-            <p>{errors.first_name?.message}</p>
+            <p>{errors?.first_name?.message}</p>
 
             <input type="submit" />
         </form>
