@@ -8,6 +8,7 @@ import * as Yup from "yup";
 
 export default () => {
     // TODO: First check that every feature will work
+    // TODO: remove empty strings from the form data. You may need to use the Controller component from react-hook-form. And ensure that empty forms don't submit. And ensure that only changed fields get added to the object, the same fields as default don't get added.
     // TODO NEXT: create the schema/edit-users endpoint and ensure that it pulls in the ref fields properly
     // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
 
@@ -79,12 +80,17 @@ export default () => {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(yupSchema)
     });
 
     const onSubmit = data => console.log(data);
+
+    const watchAllFields = watch();
+
+    console.log(watchAllFields);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
