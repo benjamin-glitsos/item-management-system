@@ -26,52 +26,15 @@ export default () => {
                     maxLength: 20,
                     pattern: "^[-_a-zA-Z0-9]*$"
                 },
-                email_address: {
-                    description: "E.g. bdole@example.com",
-                    type: "string",
-                    maxLength: 50,
-                    pattern:
-                        "^[a-zA-Z0-9.!#$%&''*+/=?^_\\`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-                },
                 first_name: {
                     description: "E.g. Bob",
                     type: "string",
                     minLength: 1,
                     maxLength: 50,
                     pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                last_name: {
-                    description: "E.g. Dole",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 70,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                other_names: {
-                    description:
-                        "Middle names and any other names that a person may possess. E.g. James William",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 120,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                password: {
-                    description: "A strong, secure password.",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 40,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
                 }
             },
-            anyOf: [
-                { required: ["username"] },
-                { required: ["email_address"] },
-                { required: ["first_name"] },
-                { required: ["last_name"] },
-                { required: ["other_names"] },
-                { required: ["password"] },
-                { required: ["additional_notes"] }
-            ]
+            anyOf: [{ required: ["username"] }, { required: ["first_name"] }]
         },
         item: {}
     };
@@ -107,18 +70,7 @@ export default () => {
 
     useEffect(getItemAction, []);
 
-    console.log(state);
-
     const yupSchema = buildYup(state.schema, {});
-
-    const validation = async () => {
-        const x = await yupSchema.isValid(state.item);
-        console.log(x);
-    };
-
-    validation();
-
-    console.log(`The username is: ${username}`);
 
     const validationSchema = yup.object().shape({
         name: yup.string().required(),
@@ -130,21 +82,25 @@ export default () => {
         handleSubmit,
         formState: { errors }
     } = useForm({
-        resolver: yupResolver(validationSchema)
+        resolver: yupResolver(yupSchema)
     });
 
     const onSubmit = data => console.log(data);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
+            <div>{console.log(errors)}</div>
             <input
-                {...register("firstName")}
+                {...register("username")}
+                defaultValue={state.item?.username}
+            />
+            <p>{errors.username?.message}</p>
+
+            <input
+                {...register("first_name")}
                 defaultValue={state.item?.first_name}
             />
-            <p>{errors.firstName?.message}</p>
-
-            <input {...register("age")} defaultValue={state.item?.age} />
-            <p>{errors.age?.message}</p>
+            <p>{errors.first_name?.message}</p>
 
             <input type="submit" />
         </form>
