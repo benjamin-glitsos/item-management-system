@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { joiResolver } from "@hookform/resolvers/joi";
-import * as yup from "yup";
+import * as Yup from "yup";
 import Joi from "joi";
+import Enjoi from "enjoi";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -24,19 +25,14 @@ export default () => {
             properties: {
                 username: {
                     description: "E.g. bdole43",
-                    type: "string",
-                    maxLength: 20,
-                    pattern: "^[-_a-zA-Z0-9]*$"
+                    type: "string"
                 },
                 first_name: {
                     description: "E.g. Bob",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 50,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
+                    type: "string"
                 }
             },
-            anyOf: [{ required: ["username"] }, { required: ["first_name"] }]
+            minProperties: 1
         },
         item: {}
     };
@@ -72,28 +68,43 @@ export default () => {
 
     useEffect(getItemAction, []);
 
+    Yup.addMethod(Yup.object, "atLeastOneOf", function (list) {
+        return this.test({
+            name: "atLeastOneOf",
+            message: "${path} must have at least one of these keys: ${keys}",
+            exclusive: true,
+            params: { keys: list.join(", ") },
+            test: value => value == null || list.some(f => value[f] != null)
+        });
+    });
+
+    const yupSchemaExample = Yup.object().shape({
+        username: Yup.string(),
+        first_name: Yup.string()
+    });
+
     const yupSchema = buildYup(state.schema, {});
 
-    const joiSchema = Joi.object({
-        username: Joi.string().required(),
-        first_name: Joi.string().required()
-    });
-    console.log(joiSchema);
+    const joiSchemaExample = Joi.object({
+        username: Joi.string().optional().allow(""),
+        first_name: Joi.string().optional().allow("")
+    }).min(3);
+
+    const joiSchema = Enjoi.schema(state.schema);
 
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm({
-        // resolver: yupResolver(yupSchema)
-        resolver: joiResolver(joiSchema)
+        resolver: yupResolver(yupSchema)
+        // resolver: joiResolver(joiSchemaExample)
     });
 
     const onSubmit = data => console.log(data);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div>{console.log(errors)}</div>
             <input
                 {...register("username")}
                 defaultValue={state.item?.username}

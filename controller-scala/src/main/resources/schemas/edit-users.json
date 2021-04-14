@@ -25,13 +25,5 @@
             "$ref": "definitions/miscellaneous.json#/definitions/long_text"
         }
     },
-    "anyOf": [
-        { "required": ["username"] },
-        { "required": ["email_address"] },
-        { "required": ["first_name"] },
-        { "required": ["last_name"] },
-        { "required": ["other_names"] },
-        { "required": ["password"] },
-        { "required": ["additional_notes"] }
-    ]
+    "minProperties": 1
 }

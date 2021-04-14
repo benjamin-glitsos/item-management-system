@@ -27,6 +27,7 @@
         "@hookform/resolvers": "^2.3.0",
         "axios": "^0.21.1",
         "dateformat": "^4.5.1",
+        "enjoi": "^9.0.0",
         "immer": "^8.0.1",
         "javascript-time-ago": "^2.3.4",
         "joi": "^17.4.0",

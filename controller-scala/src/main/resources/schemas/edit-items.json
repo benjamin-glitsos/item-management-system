@@ -16,10 +16,5 @@
             "$ref": "definitions/miscellaneous.json#/definitions/long_text"
         }
     },
-    "anyOf": [
-        { "required": ["key"] },
-        { "required": ["name"] },
-        { "required": ["description"] },
-        { "required": ["additional_notes"] }
-    ]
+    "minProperties": 1
 }
