@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 export default () => {
@@ -76,11 +75,51 @@ export default () => {
     };
 
     const yupSchemaExample = Yup.object().shape({
-        username: Yup.string().required(),
+        username: Yup.string()
+            .min(8)
+            .required()
+            .matches(RegExp("(.*[a-z].*)"), "Lowercase")
+            .matches(RegExp("(.*[A-Z].*)"), "Uppercase")
+            .matches(RegExp("(.*\\d.*)"), "Number")
+            .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special"),
         first_name: Yup.string().required()
     });
 
     const yupSchema = buildYup(state.schema);
+
+    const yupResolver = validationSchema =>
+        useCallback(
+            async data => {
+                try {
+                    const values = await validationSchema.validate(data, {
+                        abortEarly: false
+                    });
+
+                    return {
+                        values,
+                        errors: {}
+                    };
+                } catch (errors) {
+                    return {
+                        values: {},
+                        // TODO: map errors into the format: { keys: [error_messages] }
+                        errors
+                    };
+                }
+            },
+            [validationSchema]
+        );
+
+    // errors: errors.inner.reduce(
+    //     (allErrors, currentError) => ({
+    //         ...allErrors,
+    //         [currentError.path]: {
+    //             type: currentError.type ?? "validation",
+    //             message: currentError.message
+    //         }
+    //     }),
+    //     {}
+    // );
 
     const {
         register,
