@@ -87,7 +87,7 @@ export default () => {
 
     const yupSchema = buildYup(state.schema);
 
-    const yupResolver = validationSchema =>
+    const formResolver = validationSchema =>
         useCallback(
             async data => {
                 try {
@@ -126,7 +126,7 @@ export default () => {
         handleSubmit,
         formState: { errors }
     } = useForm({
-        resolver: yupResolver(yupSchema)
+        resolver: formResolver(yupSchema)
     });
 
     const onSubmit = data => console.log(data);
