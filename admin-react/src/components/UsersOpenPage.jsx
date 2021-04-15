@@ -34,7 +34,8 @@ export default () => {
                     pattern: "^[^\\s]+(s+[^\\s]+)*$"
                 }
             },
-            minProperties: 1
+            minProperties: 1,
+            required: ["username", "first_name"]
         },
         item: {}
     };
@@ -70,17 +71,20 @@ export default () => {
 
     useEffect(getItemAction, []);
 
+    const yupConfig = {
+        abortEarly: false
+    };
+
     const yupSchemaExample = Yup.object().shape({
-        username: Yup.string(),
-        first_name: Yup.string()
+        username: Yup.string().required(),
+        first_name: Yup.string().required()
     });
 
-    const yupSchema = buildYup(state.schema, {});
+    const yupSchema = buildYup(state.schema);
 
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(yupSchema)
@@ -88,30 +92,29 @@ export default () => {
 
     const onSubmit = data => console.log(data);
 
-    const watchAllFields = watch();
+    console.log(errors);
 
-    console.log(watchAllFields);
-
-    // TODO: map the multiple errors to the <li>. Once yup's abortEarly:false is used, then you can do this
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <input
                 {...register("username")}
                 defaultValue={state.item?.username}
             />
-            <ul>
-                <li>{errors?.username?.message}</li>
-            </ul>
 
             <input
                 {...register("first_name")}
                 defaultValue={state.item?.first_name}
             />
-            <ul>
-                <li>{errors?.first_name?.message}</li>
-            </ul>
 
             <input type="submit" />
         </form>
     );
 };
+// TODO: map the multiple errors to the <li>. Once yup's abortEarly:false is used, then you can do this
+
+// <ul>
+//     <li>{errors?.first_name?.message}</li>
+// </ul>
+// <ul>
+//     <li>{errors?.username?.message}</li>
+// </ul>
