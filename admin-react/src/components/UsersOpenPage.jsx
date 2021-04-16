@@ -7,17 +7,19 @@ import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
 import Textfield from "@atlaskit/textfield";
-import Button from "@atlaskit/button";
+import Button, { ButtonGroup } from "@atlaskit/button";
 import groupBy from "group-by";
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import ReactMarkdown from "react-markdown";
 import fromMaybe from "%/utilities/fromMaybe";
+import { useHistory } from "react-router-dom";
 
 export default () => {
     // TODO: First check that every feature will work
     // TODO: remove empty strings from the form data. You may need to use the Controller component from react-hook-form. And ensure that empty forms don't submit. And ensure that only changed fields get added to the object, the same fields as default don't get added.
     // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
+    const history = useHistory();
 
     const { username } = useParams();
 
@@ -175,6 +177,9 @@ export default () => {
             return null;
         }
     };
+    const cancelHandler = () => {
+        history.push("..");
+    };
 
     return (
         <Fragment>
@@ -206,9 +211,14 @@ export default () => {
                     register={register}
                 />
                 <MarkdownTextarea register={register} />
-                <Button type="submit" appearance="primary">
-                    Submit
-                </Button>
+                <ButtonGroup>
+                    <Button appearance="subtle" onClick={cancelHandler}>
+                        Cancel
+                    </Button>
+                    <Button type="submit" appearance="primary">
+                        Submit
+                    </Button>
+                </ButtonGroup>
             </form>
         </Fragment>
     );
