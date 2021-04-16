@@ -16,87 +16,23 @@ export default () => {
     const { username } = useParams();
 
     const defaultState = {
-        schema: {
-            $schema: "http://json-schema.org/draft-07/schema#",
-            title: "Create Users",
-            type: "object",
-            properties: {
-                username: {
-                    description: "E.g. bdole43",
-                    type: "string",
-                    maxLength: 20,
-                    pattern: "^[-_a-zA-Z0-9]*$"
-                },
-                email_address: {
-                    description: "E.g. bdole@example.com",
-                    type: "string",
-                    maxLength: 50,
-                    format: "email"
-                },
-                first_name: {
-                    description: "E.g. Bob",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 50,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                last_name: {
-                    description: "E.g. Dole",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 70,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                other_names: {
-                    description:
-                        "Middle names and any other names that a person may possess. E.g. James William",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 120,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                password: {
-                    description: "A strong, secure password.",
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 40,
-                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
-                },
-                additional_notes: {
-                    type: "string",
-                    maxLength: 1048576,
-                    pattern: "[\\s\\S]*\\S[\\s\\S]*"
-                }
-            },
-            required: [
-                "username",
-                "email_address",
-                "first_name",
-                "last_name",
-                "other_names",
-                "password"
-            ]
-        },
+        schema: {},
         item: {}
     };
 
     const [state, setState] = useImmer(defaultState);
 
-    // const requestItem = () =>
-    //     axios({
-    //         method: "GET",
-    //         url: config.serverUrl + `/users/${username}`
-    //     });
-
-    console.log(config.serverUrl + "v1/schemas/edit-users");
+    const requestItem = () =>
+        axios({
+            method: "GET",
+            url: config.serverUrl + `v1/users/${username}/`
+        });
 
     const requestSchema = () =>
         axios({
             method: "GET",
-            url: config.serverUrl + "v1/schemas/edit-users"
+            url: config.serverUrl + "v1/schemas/edit-users/"
         });
-
-    requestSchema().then(console.log);
 
     const setItem = item =>
         setState(draft => {
@@ -112,39 +48,31 @@ export default () => {
         (async () => {
             try {
                 const schema = await requestSchema();
-                setSchema(schema);
+                setSchema(schema.data);
             } catch (error) {}
         })();
     };
 
-    // const openItemAction = () => {
-    //     (async () => {
-    //         try {
-    //             const item = await requestItem();
-    //             setItem(item);
-    //         } catch (error) {}
-    //     })();
-    // };
+    const openItemAction = () => {
+        (async () => {
+            try {
+                const item = await requestItem();
+                setItem(item.data.data);
+            } catch (error) {}
+        })();
+    };
 
+    useEffect(openItemAction, []);
     useEffect(schemaAction, []);
-    // useEffect(openItemAction, []);
 
     const yupConfig = {
         abortEarly: false
     };
 
-    const yupSchemaExample = Yup.object().shape({
-        username: Yup.string()
-            .min(8)
-            .required()
-            .matches(RegExp("(.*[a-z].*)"), "Lowercase")
-            .matches(RegExp("(.*[A-Z].*)"), "Uppercase")
-            .matches(RegExp("(.*\\d.*)"), "Number")
-            .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special"),
-        first_name: Yup.string().required()
-    });
-
-    const yupSchema = buildYup(state.schema);
+    const yupSchema =
+        Object.keys(state.schema).length === 0
+            ? Yup.object()
+            : buildYup(state.schema);
 
     const formResolver = validationSchema =>
         useCallback(
@@ -190,7 +118,7 @@ export default () => {
 
     const onSubmit = data => console.log(data);
 
-    // console.log(errors);
+    console.log(errors);
 
     return (
         <div>
