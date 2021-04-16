@@ -15,18 +15,16 @@ object SchemaValidation extends ValidationTrait {
   ): Validated[ujson.Value] = {
     val entityObject: JSONObject = new JSONObject(entityText)
 
-    val rawSchema: JSONObject = {
-      val schemaSource: Source =
-        Source.fromResource(s"schemas/$endpointName.json")
+    val schemaSource: Source =
+      Source.fromResource(s"schemas/$endpointName.json")
 
-      val schemaString: String =
-        try schemaSource.mkString
-        finally schemaSource.close()
+    val schemaString: String =
+      try schemaSource.mkString
+      finally schemaSource.close()
 
-      new JSONObject(
-        new JSONTokener(schemaString)
-      )
-    }
+    val rawSchema: JSONObject = new JSONObject(
+      new JSONTokener(schemaString)
+    )
 
     val schema: Schema =
       SchemaLoader
