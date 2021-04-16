@@ -15,28 +15,7 @@ object SchemaValidation extends ValidationTrait {
   ): Validated[ujson.Value] = {
     val entityObject: JSONObject = new JSONObject(entityText)
 
-    val schemaSource: Source =
-      Source.fromResource(s"schemas/$endpointName.json")
-
-    val schemaString: String =
-      try schemaSource.mkString
-      finally schemaSource.close()
-
-    val rawSchema: JSONObject = new JSONObject(
-      new JSONTokener(schemaString)
-    )
-
-    val schema: Schema =
-      SchemaLoader
-        .builder()
-        .schemaClient(SchemaClient.classPathAwareClient())
-        .useDefaults(true)
-        .schemaJson(rawSchema)
-        .resolutionScope(schemaPath)
-        .draftV7Support()
-        .build()
-        .load()
-        .build()
+    val schema: Schema = SchemasService.get(endpointName)
 
     Try(schema.validate(entityObject)) match {
       case Success(_) => {
