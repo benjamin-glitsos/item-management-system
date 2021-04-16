@@ -203,7 +203,7 @@ export default ({
     const rows = state.response.data.items.map((row, i) => ({
         key: `Table/Row/${row[keyColumnSingular]},${i}`,
         onClick: () => {
-            history.push(`${location.pathname}/${row[keyColumnSingular]}`);
+            history.push(`./${row[keyColumnSingular]}`);
         },
         cells: pipe(
             row,

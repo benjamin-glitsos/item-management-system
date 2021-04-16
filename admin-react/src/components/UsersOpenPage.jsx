@@ -116,8 +116,9 @@ export default () => {
                 <input
                     id={id}
                     {...register(name)}
-                    defaultValue={state.item?.[name]}
+                    defaultValue={state.item[name]}
                 />
+                {/* TODO: test why defaultValue doesnt work. It could be optional chaining or due to rendering before users state is available (race condition) */}
             </div>
         );
     };
