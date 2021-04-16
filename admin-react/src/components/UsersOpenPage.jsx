@@ -122,6 +122,8 @@ export default () => {
         );
     };
 
+    console.log(state.item);
+
     return (
         <Fragment>
             <p>
