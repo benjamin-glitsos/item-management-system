@@ -43,7 +43,7 @@ export default () => {
                     title={pageContext.title}
                     breadcrumbs={[pageContext.homeBreadcrumb]}
                 >
-                    <ReactMarkdown>{readme}</ReactMarkdown>
+                    <ReactMarkdown source={readme} />
                     <h2>Codebase</h2>
                     <GithubButton />
                     <h2>Database Schema</h2>

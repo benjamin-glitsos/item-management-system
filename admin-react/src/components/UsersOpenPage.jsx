@@ -9,12 +9,15 @@ import axios from "axios";
 import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import groupBy from "group-by";
+import ReactMde from "react-mde";
+import "react-mde/lib/styles/css/react-mde-all.css";
+import ReactMarkdown from "react-markdown";
+import fromMaybe from "%/utilities/fromMaybe";
 
 export default () => {
     // TODO: First check that every feature will work
     // TODO: remove empty strings from the form data. You may need to use the Controller component from react-hook-form. And ensure that empty forms don't submit. And ensure that only changed fields get added to the object, the same fields as default don't get added.
     // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
-    // TODO: use the atlaskit form fields
 
     const { username } = useParams();
 
@@ -96,7 +99,6 @@ export default () => {
                         errors: {}
                     };
                 } catch (errors) {
-                    console.log(errors);
                     return {
                         values: {},
                         errors: groupBy(
@@ -124,8 +126,6 @@ export default () => {
         resolver: formResolver(yupSchema)
     });
 
-    console.log(state.item);
-
     const TextField = ({ name, title, register }) => {
         const id = `Field/${name}`;
         if (state.item[name]) {
@@ -148,6 +148,28 @@ export default () => {
                         </ul>
                     )}
                 </Fragment>
+            );
+        } else {
+            return null;
+        }
+    };
+
+    const MarkdownTextarea = register => {
+        const [selectedTab, setSelectedTab] = useState("write");
+        if (state.item?.additional_notes) {
+            const [value, setValue] = useState(
+                fromMaybe(state.item.additional_notes)
+            );
+            return (
+                <ReactMde
+                    value={value}
+                    onChange={setValue}
+                    selectedTab={selectedTab}
+                    onTabChange={setSelectedTab}
+                    generateMarkdownPreview={markdown =>
+                        Promise.resolve(<ReactMarkdown source={markdown} />)
+                    }
+                />
             );
         } else {
             return null;
@@ -183,6 +205,7 @@ export default () => {
                     title="Other names"
                     register={register}
                 />
+                <MarkdownTextarea register={register} />
                 <Button type="submit" appearance="primary">
                     Submit
                 </Button>

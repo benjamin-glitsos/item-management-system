@@ -42,6 +42,7 @@
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.0.7",
         "react-markdown": "^5.0.3",
+        "react-mde": "^11.1.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "react-router-ga": "^1.2.3",
