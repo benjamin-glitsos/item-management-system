@@ -4,16 +4,27 @@
     "type": "object",
     "properties": {
         "key": {
-            "$ref": "definitions/items.json#/definitions/key"
+            "description": "E.g. SOFA_TAN_LEATHER_MATT",
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[-A-Z0-9]*$"
         },
         "name": {
-            "$ref": "definitions/items.json#/definitions/name"
+            "description": "E.g. Sofa Leather Lounge (Tan, Leather)",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[^\\s]+(s+[^\\s]+)*$"
         },
         "description": {
-            "$ref": "definitions/items.json#/definitions/description"
+            "type": "string",
+            "maxLength": 1048576,
+            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
         },
         "additional_notes": {
-            "$ref": "definitions/miscellaneous.json#/definitions/long_text"
+            "type": "string",
+            "maxLength": 1048576,
+            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
         }
     },
     "required": ["key", "name"]

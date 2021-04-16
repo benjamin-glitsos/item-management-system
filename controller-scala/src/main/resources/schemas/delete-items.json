@@ -4,10 +4,23 @@
     "type": "object",
     "properties": {
         "method": {
-            "$ref": "definitions/deletion.json#/definitions/method"
+            "description": "The method of deletion or restoration to use.",
+            "type": "string",
+            "enum": ["soft", "hard", "restore"]
         },
         "keys": {
-            "$ref": "definitions/deletion.json#/definitions/keys"
+            "description": "The identifier keys of the items that should be deleted or restored.",
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true,
+            "items": {
+                "type": "string",
+                "description": "Identifier key",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[^\\s]+(s+[^\\s]+)*$"
+            }
         }
     },
     "required": ["method", "keys"]

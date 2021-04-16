@@ -10,12 +10,8 @@ import upickle_import.general._
 
 object SchemasDAO {
   final def load(name: String): Schema = {
-    val directory = "schemas"
-    val classpath = s"classpath://$directory/"
-    val filepath  = s"$directory/$name.json"
-
     val source: Source =
-      Source.fromResource(filepath)
+      Source.fromResource(s"schemas/$name.json")
 
     val rawSchema: JSONObject = {
       val s: String =
@@ -29,10 +25,8 @@ object SchemasDAO {
 
     SchemaLoader
       .builder()
-      .schemaClient(SchemaClient.classPathAwareClient())
       .useDefaults(true)
       .schemaJson(rawSchema)
-      .resolutionScope(classpath)
       .draftV7Support()
       .build()
       .load()
