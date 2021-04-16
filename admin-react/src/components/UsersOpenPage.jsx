@@ -6,7 +6,6 @@ import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
-import Form, { Field } from "@atlaskit/form";
 import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 
@@ -114,17 +113,17 @@ export default () => {
     console.log(state.item);
 
     const TextField = ({ name, title, register }) => {
+        const id = `Field/${name}`;
         if (state.item[name]) {
             return (
-                <Field label={title} name={name}>
-                    {({ fieldProps }) => (
-                        <Textfield
-                            {...register(name)}
-                            defaultValue={state.item[name]}
-                            {...fieldProps}
-                        />
-                    )}
-                </Field>
+                <Fragment>
+                    <label htmlFor={id}>{title}</label>
+                    <Textfield
+                        id={id}
+                        {...register(name)}
+                        defaultValue={state.item[name]}
+                    />
+                </Fragment>
             );
         } else {
             return null;
@@ -134,40 +133,36 @@ export default () => {
     return (
         <Fragment>
             <h3>{state.item?.username}</h3>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                {({ formProps }) => (
-                    <form {...formProps}>
-                        <TextField
-                            name="username"
-                            title="Username"
-                            register={register}
-                        />
-                        <TextField
-                            name="email_address"
-                            title="Email address"
-                            register={register}
-                        />
-                        <TextField
-                            name="first_name"
-                            title="First name"
-                            register={register}
-                        />
-                        <TextField
-                            name="last_name"
-                            title="Last name"
-                            register={register}
-                        />
-                        <TextField
-                            name="other_names"
-                            title="Other names"
-                            register={register}
-                        />
-                        <Button type="submit" appearance="primary">
-                            Submit
-                        </Button>
-                    </form>
-                )}
-            </Form>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                    name="username"
+                    title="Username"
+                    register={register}
+                />
+                <TextField
+                    name="email_address"
+                    title="Email address"
+                    register={register}
+                />
+                <TextField
+                    name="first_name"
+                    title="First name"
+                    register={register}
+                />
+                <TextField
+                    name="last_name"
+                    title="Last name"
+                    register={register}
+                />
+                <TextField
+                    name="other_names"
+                    title="Other names"
+                    register={register}
+                />
+                <Button type="submit" appearance="primary">
+                    Submit
+                </Button>
+            </form>
         </Fragment>
     );
 };
