@@ -110,17 +110,21 @@ export default () => {
 
     const Field = ({ name, title, register }) => {
         const id = `Input/${name}`;
-        return (
-            <div>
-                <label htmlFor={id}>{title}</label>
-                <input
-                    id={id}
-                    {...register(name)}
-                    defaultValue={state.item[name]}
-                />
-                {/* TODO: test why defaultValue doesnt work. It could be optional chaining or due to rendering before users state is available (race condition) */}
-            </div>
-        );
+        if (state.item[name]) {
+            return (
+                <Fragment>
+                    <label htmlFor={id}>{title}</label>
+                    <input
+                        id={id}
+                        {...register(name)}
+                        defaultValue={state.item[name]}
+                    />
+                    {/* TODO: test why defaultValue doesnt work. It could be optional chaining or due to rendering before users state is available (race condition) */}
+                </Fragment>
+            );
+        } else {
+            return null;
+        }
     };
 
     console.log(state.item);
@@ -153,7 +157,6 @@ export default () => {
         </Fragment>
     );
 };
-// TODO: map the multiple errors to the <li>. Once yup's abortEarly:false is used, then you can do this
 
 // errors: errors.inner.reduce(
 //     (allErrors, currentError) => ({
