@@ -36,6 +36,12 @@ export default () => {
             url: config.serverUrl + "v1/schemas/edit-users/"
         });
 
+    const submitItem = () =>
+        axios({
+            method: "PATCH",
+            url: config.serverUrl + `v1/users/${username}/`
+        });
+
     const setItem = item =>
         setState(draft => {
             draft.item = item;
@@ -100,8 +106,10 @@ export default () => {
             [validationSchema]
         );
 
-    const onSubmit = data => console.log(data);
-
+    const onSubmit = data => {
+        console.log(data);
+        submitItem(data);
+    };
     const {
         register,
         handleSubmit,
