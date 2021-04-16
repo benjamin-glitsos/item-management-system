@@ -6,8 +6,9 @@ import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
-import { InlineEditableTextfield } from "@atlaskit/inline-edit";
-import styled from "styled-components";
+import Form, { Field } from "@atlaskit/form";
+import Textfield from "@atlaskit/textfield";
+import Button from "@atlaskit/button";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -112,20 +113,18 @@ export default () => {
 
     console.log(state.item);
 
-    const Field = ({ name, title, register }) => {
-        const value = state.item[name];
-
-        const [editValue, setEditValue] = useState(value);
-
-        if (value) {
+    const TextField = ({ name, title, register }) => {
+        if (state.item[name]) {
             return (
-                <InlineEditableTextfield
-                    label={title}
-                    defaultValue={editValue}
-                    {...register(name)}
-                    onConfirm={value => setEditValue(value)}
-                    placeholder="Click to enter text"
-                />
+                <Field label={title} name={name}>
+                    {({ fieldProps }) => (
+                        <Textfield
+                            {...register(name)}
+                            defaultValue={state.item[name]}
+                            {...fieldProps}
+                        />
+                    )}
+                </Field>
             );
         } else {
             return null;
@@ -134,29 +133,41 @@ export default () => {
 
     return (
         <Fragment>
-            <p>
-                <b>{state.item?.username}</b>
-            </p>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Field name="username" title="Username" register={register} />
-                <Field
-                    name="email_address"
-                    title="Email address"
-                    register={register}
-                />
-                <Field
-                    name="first_name"
-                    title="First name"
-                    register={register}
-                />
-                <Field name="last_name" title="Last name" register={register} />
-                <Field
-                    name="other_names"
-                    title="Other names"
-                    register={register}
-                />
-                <input type="submit" />
-            </form>
+            <h3>{state.item?.username}</h3>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                {({ formProps }) => (
+                    <form {...formProps}>
+                        <TextField
+                            name="username"
+                            title="Username"
+                            register={register}
+                        />
+                        <TextField
+                            name="email_address"
+                            title="Email address"
+                            register={register}
+                        />
+                        <TextField
+                            name="first_name"
+                            title="First name"
+                            register={register}
+                        />
+                        <TextField
+                            name="last_name"
+                            title="Last name"
+                            register={register}
+                        />
+                        <TextField
+                            name="other_names"
+                            title="Other names"
+                            register={register}
+                        />
+                        <Button type="submit" appearance="primary">
+                            Submit
+                        </Button>
+                    </form>
+                )}
+            </Form>
         </Fragment>
     );
 };
