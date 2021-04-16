@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
 import InlineEdit from "@atlaskit/inline-edit";
+import Textfield from "@atlaskit/textfield";
+import styled from "styled-components";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -129,27 +131,41 @@ export default () => {
 
     console.log(state.item);
 
-    const [editValue, setEditValue] = useState("Field value");
+    const ReadViewContainer = styled.div`
+        display: flex;
+        max-width: 100%;
+        word-break: break-word;
+    `;
+
+    const InlineEditExample = () => {
+        const [editValue, setEditValue] = useState("Field value");
+
+        return (
+            <div>
+                <InlineEdit
+                    defaultValue={editValue}
+                    label="Inline edit"
+                    editView={({ errorMessage, ...fieldProps }) => (
+                        <Textfield {...fieldProps} autoFocus />
+                    )}
+                    readView={() => (
+                        <ReadViewContainer data-testid="read-view">
+                            {editValue || "Click to enter value"}
+                        </ReadViewContainer>
+                    )}
+                    onConfirm={value => setEditValue(value)}
+                />
+            </div>
+        );
+    };
 
     return (
         <Fragment>
             <p>
                 <b>{state.item?.username}</b>
             </p>
-            <InlineEdit
-                defaultValue={editValue}
-                label="Inline edit"
-                editView={({ errorMessage, ...fieldProps }) => (
-                    <Textfield {...fieldProps} autoFocus />
-                )}
-                readView={() => (
-                    <ReadViewContainer data-testid="read-view">
-                        {editValue || "Click to enter value"}
-                    </ReadViewContainer>
-                )}
-                onConfirm={value => setEditValue(value)}
-            />
             <form onSubmit={handleSubmit(onSubmit)}>
+                <InlineEditExample />
                 <Field name="username" title="Username" register={register} />
                 <Field
                     name="email_address"
