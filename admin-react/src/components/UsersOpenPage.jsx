@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { Fragment, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
@@ -10,8 +10,8 @@ import axios from "axios";
 export default () => {
     // TODO: First check that every feature will work
     // TODO: remove empty strings from the form data. You may need to use the Controller component from react-hook-form. And ensure that empty forms don't submit. And ensure that only changed fields get added to the object, the same fields as default don't get added.
-    // TODO NEXT: create the schema/edit-users endpoint and ensure that it pulls in the ref fields properly
     // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
+    // TODO: use the atlaskit form fields
 
     const { username } = useParams();
 
@@ -87,6 +87,7 @@ export default () => {
                         errors: {}
                     };
                 } catch (errors) {
+                    console.log(errors);
                     return {
                         values: {},
                         // TODO: map errors into the format: { keys: [error_messages] }
@@ -97,16 +98,7 @@ export default () => {
             [validationSchema]
         );
 
-    // errors: errors.inner.reduce(
-    //     (allErrors, currentError) => ({
-    //         ...allErrors,
-    //         [currentError.path]: {
-    //             type: currentError.type ?? "validation",
-    //             message: currentError.message
-    //         }
-    //     }),
-    //     {}
-    // );
+    const onSubmit = data => console.log(data);
 
     const {
         register,
@@ -116,32 +108,60 @@ export default () => {
         resolver: formResolver(yupSchema)
     });
 
-    const onSubmit = data => console.log(data);
-
-    console.log(errors);
+    const Field = ({ name, title, register }) => {
+        const id = `Input/${name}`;
+        return (
+            <div>
+                <label htmlFor={id}>{title}</label>
+                <input
+                    id={id}
+                    {...register(name)}
+                    defaultValue={state.item?.[name]}
+                />
+            </div>
+        );
+    };
 
     return (
-        <div>
+        <Fragment>
             <p>
-                <b>{username}</b>
+                <b>{state.item?.username}</b>
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    {...register("username")}
-                    defaultValue={state.item?.username}
+                <Field name="username" title="Username" register={register} />
+                <Field
+                    name="email_address"
+                    title="Email address"
+                    register={register}
                 />
-
-                <input
-                    {...register("first_name")}
-                    defaultValue={state.item?.first_name}
+                <Field
+                    name="first_name"
+                    title="First name"
+                    register={register}
                 />
-
+                <Field name="last_name" title="Last name" register={register} />
+                <Field
+                    name="other_names"
+                    title="Other names"
+                    register={register}
+                />
                 <input type="submit" />
             </form>
-        </div>
+        </Fragment>
     );
 };
 // TODO: map the multiple errors to the <li>. Once yup's abortEarly:false is used, then you can do this
+
+// errors: errors.inner.reduce(
+//     (allErrors, currentError) => ({
+//         ...allErrors,
+//         [currentError.path]: {
+//             type: currentError.type ?? "validation",
+//             message: currentError.message
+//         }
+//     }),
+//     {}
+// );
 
 // <ul>
 //     <li>{errors?.first_name?.message}</li>
