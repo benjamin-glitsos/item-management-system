@@ -111,52 +111,44 @@ export default () => {
         resolver: formResolver(yupSchema)
     });
 
-    const Field = ({ name, title, register }) => {
-        const id = `Input/${name}`;
-        if (state.item[name]) {
-            return (
-                <Fragment>
-                    <label htmlFor={id}>{title}</label>
-                    <input
-                        id={id}
-                        {...register(name)}
-                        defaultValue={state.item[name]}
-                    />
-                </Fragment>
-            );
-        } else {
-            return null;
-        }
-    };
-
     console.log(state.item);
 
     const ReadViewContainer = styled.div`
         display: flex;
+        line-height: ${6 * 2.5} / 11};
         max-width: 100%;
+        min-height: ${(6 * 2.5) / 11}em;
+        padding: ${6}px ${6 - 2}px;
         word-break: break-word;
     `;
 
-    const InlineEditExample = () => {
-        const [editValue, setEditValue] = useState("Field value");
+    const Field = ({ name, title, register }) => {
+        const value = state.item[name];
 
-        return (
-            <div>
+        const [editValue, setEditValue] = useState(value);
+
+        if (value) {
+            return (
                 <InlineEdit
-                    defaultValue={editValue}
-                    label="Inline edit"
+                    label={title}
                     editView={({ errorMessage, ...fieldProps }) => (
-                        <Textfield {...fieldProps} autoFocus />
+                        <Textfield
+                            {...register(name)}
+                            defaultValue={value}
+                            autoFocus
+                        />
                     )}
                     readView={() => (
                         <ReadViewContainer data-testid="read-view">
-                            {editValue || "Click to enter value"}
+                            {value || "Click to enter value"}
                         </ReadViewContainer>
                     )}
                     onConfirm={value => setEditValue(value)}
                 />
-            </div>
-        );
+            );
+        } else {
+            return null;
+        }
     };
 
     return (
@@ -165,7 +157,6 @@ export default () => {
                 <b>{state.item?.username}</b>
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <InlineEditExample />
                 <Field name="username" title="Username" register={register} />
                 <Field
                     name="email_address"
