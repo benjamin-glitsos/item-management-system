@@ -15,17 +15,18 @@ object SchemaValidation extends ValidationTrait {
   ): Validated[ujson.Value] = {
     val entityObject: JSONObject = new JSONObject(entityText)
 
-    val schemaSource: Source =
-      Source.fromResource(s"schemas/$endpointName.json")
+    val rawSchema: JSONObject = {
+      val schemaSource: Source =
+        Source.fromResource(s"schemas/$endpointName.json")
 
-    val schemaString: String =
-      try schemaSource.mkString
-      finally schemaSource.close()
+      val schemaString: String =
+        try schemaSource.mkString
+        finally schemaSource.close()
 
-    val rawSchema: JSONObject =
       new JSONObject(
         new JSONTokener(schemaString)
       )
+    }
 
     val schema: Schema =
       SchemaLoader
@@ -33,7 +34,7 @@ object SchemaValidation extends ValidationTrait {
         .schemaClient(SchemaClient.classPathAwareClient())
         .useDefaults(true)
         .schemaJson(rawSchema)
-        .resolutionScope("classpath://schemas/")
+        .resolutionScope(schemaPath)
         .draftV7Support()
         .build()
         .load()
