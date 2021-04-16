@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useCallback } from "react";
+import { Fragment, useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
+import InlineEdit from "@atlaskit/inline-edit";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -119,7 +120,6 @@ export default () => {
                         {...register(name)}
                         defaultValue={state.item[name]}
                     />
-                    {/* TODO: test why defaultValue doesnt work. It could be optional chaining or due to rendering before users state is available (race condition) */}
                 </Fragment>
             );
         } else {
@@ -129,11 +129,26 @@ export default () => {
 
     console.log(state.item);
 
+    const [editValue, setEditValue] = useState("Field value");
+
     return (
         <Fragment>
             <p>
                 <b>{state.item?.username}</b>
             </p>
+            <InlineEdit
+                defaultValue={editValue}
+                label="Inline edit"
+                editView={({ errorMessage, ...fieldProps }) => (
+                    <Textfield {...fieldProps} autoFocus />
+                )}
+                readView={() => (
+                    <ReadViewContainer data-testid="read-view">
+                        {editValue || "Click to enter value"}
+                    </ReadViewContainer>
+                )}
+                onConfirm={value => setEditValue(value)}
+            />
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Field name="username" title="Username" register={register} />
                 <Field
