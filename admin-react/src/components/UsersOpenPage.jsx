@@ -4,6 +4,7 @@ import { useImmer } from "use-immer";
 import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
+import config from "%/config";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -16,7 +17,7 @@ export default () => {
     const defaultState = {
         schema: {
             $schema: "http://json-schema.org/draft-07/schema#",
-            title: "Edit Users",
+            title: "Create Users",
             type: "object",
             properties: {
                 username: {
@@ -25,28 +26,71 @@ export default () => {
                     maxLength: 20,
                     pattern: "^[-_a-zA-Z0-9]*$"
                 },
+                email_address: {
+                    description: "E.g. bdole@example.com",
+                    type: "string",
+                    maxLength: 50,
+                    format: "email"
+                },
                 first_name: {
                     description: "E.g. Bob",
                     type: "string",
                     minLength: 1,
                     maxLength: 50,
                     pattern: "^[^\\s]+(s+[^\\s]+)*$"
+                },
+                last_name: {
+                    description: "E.g. Dole",
+                    type: "string",
+                    minLength: 1,
+                    maxLength: 70,
+                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
+                },
+                other_names: {
+                    description:
+                        "Middle names and any other names that a person may possess. E.g. James William",
+                    type: "string",
+                    minLength: 1,
+                    maxLength: 120,
+                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
+                },
+                password: {
+                    description: "A strong, secure password.",
+                    type: "string",
+                    minLength: 1,
+                    maxLength: 40,
+                    pattern: "^[^\\s]+(s+[^\\s]+)*$"
+                },
+                additional_notes: {
+                    type: "string",
+                    maxLength: 1048576,
+                    pattern: "[\\s\\S]*\\S[\\s\\S]*"
                 }
             },
-            minProperties: 1,
-            required: ["username", "first_name"]
+            required: [
+                "username",
+                "email_address",
+                "first_name",
+                "last_name",
+                "other_names",
+                "password"
+            ]
         },
         item: {}
     };
 
     const [state, setState] = useImmer(defaultState);
 
-    const apiUrl = `/users/${username}`;
+    // const requestItem = () =>
+    //     axios({
+    //         method: "GET",
+    //         url: config.serverUrl + `/users/${username}`
+    //     });
 
-    const requestItem = () =>
+    const requestSchema = () =>
         axios({
             method: "GET",
-            url: apiUrl
+            url: config.serverUrl + "/schemas/edit-users"
         });
 
     const setItem = item =>
@@ -59,16 +103,27 @@ export default () => {
             draft.schema = schema;
         });
 
-    const getItemAction = () => {
+    const schemaAction = () => {
         (async () => {
             try {
-                const item = await requestItem();
-                setItem(item);
+                const schema = await requestSchema();
+                setSchema(schema);
             } catch (error) {}
         })();
     };
 
-    useEffect(getItemAction, []);
+    // const openItemAction = () => {
+    //     (async () => {
+    //         try {
+    //             const item = await requestItem();
+    //             setItem(item);
+    //         } catch (error) {}
+    //     })();
+    // };
+
+    useEffect(schemaAction, []);
+    // useEffect(openItemAction, []);
+    console.log(state);
 
     const yupConfig = {
         abortEarly: false
@@ -131,7 +186,7 @@ export default () => {
 
     const onSubmit = data => console.log(data);
 
-    console.log(errors);
+    // console.log(errors);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

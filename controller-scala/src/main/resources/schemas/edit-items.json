@@ -4,13 +4,11 @@
     "type": "object",
     "properties": {
         "key": {
-            "description": "E.g. SOFA_TAN_LEATHER_MATT",
             "type": "string",
             "maxLength": 255,
             "pattern": "^[-A-Z0-9]*$"
         },
         "name": {
-            "description": "E.g. Sofa Leather Lounge (Tan, Leather)",
             "type": "string",
             "minLength": 1,
             "maxLength": 255,
