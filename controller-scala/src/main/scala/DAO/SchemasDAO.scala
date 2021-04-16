@@ -9,10 +9,10 @@ import scala.util.{Try, Success, Failure}
 import upickle_import.general._
 
 object SchemasDAO {
-  final def get(name: String): Schema = {
+  final def load(name: String): Schema = {
     val directory = "schemas"
     val classpath = s"classpath://$directory/"
-    val filepath  = s"$directory/$endpointName.json"
+    val filepath  = s"$directory/$name.json"
 
     val source: Source =
       Source.fromResource(filepath)

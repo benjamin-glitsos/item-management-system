@@ -15,7 +15,7 @@ object SchemaValidation extends ValidationTrait {
   ): Validated[ujson.Value] = {
     val entityObject: JSONObject = new JSONObject(entityText)
 
-    val schema: Schema = SchemasService.get(endpointName)
+    val schema: Schema = SchemasService.load(endpointName)
 
     Try(schema.validate(entityObject)) match {
       case Success(_) => {

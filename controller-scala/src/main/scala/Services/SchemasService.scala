@@ -1,3 +1,3 @@
 object SchemasService {
-  final def get(name: String) = SchemasDAO.get(name: String)
+  final def load(name: String) = SchemasDAO.load(name: String)
 }
