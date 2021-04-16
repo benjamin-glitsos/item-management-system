@@ -6,6 +6,7 @@ object Version1Routes {
   final def apply(): Route =
     (AccessControlDirective() & HandleRejectionsDirective())(
       concat(
+        pathPrefix("schemas")(SchemasRoutes()),
         pathPrefix("users")(UsersRoutes()),
         pathPrefix("items")(ItemsRoutes()),
         PreflightRoutes()
