@@ -6,8 +6,7 @@ import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
-import InlineEdit from "@atlaskit/inline-edit";
-import Textfield from "@atlaskit/textfield";
+import { InlineEditableTextfield } from "@atlaskit/inline-edit";
 import styled from "styled-components";
 
 export default () => {
@@ -113,15 +112,6 @@ export default () => {
 
     console.log(state.item);
 
-    const ReadViewContainer = styled.div`
-        display: flex;
-        line-height: ${6 * 2.5} / 11};
-        max-width: 100%;
-        min-height: ${(6 * 2.5) / 11}em;
-        padding: ${6}px ${6 - 2}px;
-        word-break: break-word;
-    `;
-
     const Field = ({ name, title, register }) => {
         const value = state.item[name];
 
@@ -129,21 +119,12 @@ export default () => {
 
         if (value) {
             return (
-                <InlineEdit
+                <InlineEditableTextfield
                     label={title}
-                    editView={({ errorMessage, ...fieldProps }) => (
-                        <Textfield
-                            {...register(name)}
-                            defaultValue={value}
-                            autoFocus
-                        />
-                    )}
-                    readView={() => (
-                        <ReadViewContainer data-testid="read-view">
-                            {value || "Click to enter value"}
-                        </ReadViewContainer>
-                    )}
+                    defaultValue={editValue}
+                    {...register(name)}
                     onConfirm={value => setEditValue(value)}
+                    placeholder="Click to enter text"
                 />
             );
         } else {
