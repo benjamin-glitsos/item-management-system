@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
@@ -29,6 +30,9 @@ export default ({
     keyColumnSingular,
     keyColumnPlural
 }) => {
+    const location = useLocation();
+    const history = useHistory();
+
     const apiUrl = config.serverUrl + apiPath;
 
     const [state, setState] = useImmer(defaultState);
@@ -198,6 +202,9 @@ export default ({
 
     const rows = state.response.data.items.map((row, i) => ({
         key: `Table/Row/${row[keyColumnSingular]},${i}`,
+        onClick: () => {
+            history.push(`${location.pathname}/${row[keyColumnSingular]}`);
+        },
         cells: pipe(
             row,
             row =>

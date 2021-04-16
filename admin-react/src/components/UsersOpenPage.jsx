@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
+import axios from "axios";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -87,11 +88,15 @@ export default () => {
     //         url: config.serverUrl + `/users/${username}`
     //     });
 
+    console.log(config.serverUrl + "v1/schemas/edit-users");
+
     const requestSchema = () =>
         axios({
             method: "GET",
-            url: config.serverUrl + "/schemas/edit-users"
+            url: config.serverUrl + "v1/schemas/edit-users"
         });
+
+    requestSchema().then(console.log);
 
     const setItem = item =>
         setState(draft => {
@@ -123,7 +128,6 @@ export default () => {
 
     useEffect(schemaAction, []);
     // useEffect(openItemAction, []);
-    console.log(state);
 
     const yupConfig = {
         abortEarly: false
@@ -189,19 +193,24 @@ export default () => {
     // console.log(errors);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-                {...register("username")}
-                defaultValue={state.item?.username}
-            />
+        <div>
+            <p>
+                <b>{username}</b>
+            </p>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                    {...register("username")}
+                    defaultValue={state.item?.username}
+                />
 
-            <input
-                {...register("first_name")}
-                defaultValue={state.item?.first_name}
-            />
+                <input
+                    {...register("first_name")}
+                    defaultValue={state.item?.first_name}
+                />
 
-            <input type="submit" />
-        </form>
+                <input type="submit" />
+            </form>
+        </div>
     );
 };
 // TODO: map the multiple errors to the <li>. Once yup's abortEarly:false is used, then you can do this
