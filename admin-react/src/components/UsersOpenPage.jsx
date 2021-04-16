@@ -8,6 +8,7 @@ import config from "%/config";
 import axios from "axios";
 import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
+import groupBy from "group-by";
 
 export default () => {
     // TODO: First check that every feature will work
@@ -98,8 +99,13 @@ export default () => {
                     console.log(errors);
                     return {
                         values: {},
-                        // TODO: map errors into the format: { keys: [error_messages] }
-                        errors
+                        errors: groupBy(
+                            errors.inner.map(e => ({
+                                path: e.path,
+                                message: e.message
+                            })),
+                            "path"
+                        )
                     };
                 }
             },
@@ -123,6 +129,7 @@ export default () => {
     const TextField = ({ name, title, register }) => {
         const id = `Field/${name}`;
         if (state.item[name]) {
+            const errorsList = errors?.[name];
             return (
                 <Fragment>
                     <label htmlFor={id}>{title}</label>
@@ -131,6 +138,15 @@ export default () => {
                         {...register(name)}
                         defaultValue={state.item[name]}
                     />
+                    {errorsList && (
+                        <ul>
+                            {errorsList.map((error, i) => (
+                                <li key={`Errors/${name}/${i}`}>
+                                    {error.message}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </Fragment>
             );
         } else {
@@ -174,21 +190,3 @@ export default () => {
         </Fragment>
     );
 };
-
-// errors: errors.inner.reduce(
-//     (allErrors, currentError) => ({
-//         ...allErrors,
-//         [currentError.path]: {
-//             type: currentError.type ?? "validation",
-//             message: currentError.message
-//         }
-//     }),
-//     {}
-// );
-
-// <ul>
-//     <li>{errors?.first_name?.message}</li>
-// </ul>
-// <ul>
-//     <li>{errors?.username?.message}</li>
-// </ul>

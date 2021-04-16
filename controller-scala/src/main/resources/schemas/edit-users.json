@@ -5,11 +5,13 @@
     "properties": {
         "username": {
             "type": "string",
+            "minLength": 1,
             "maxLength": 20,
             "pattern": "^[-_a-zA-Z0-9]*$"
         },
         "email_address": {
             "type": "string",
+            "minLength": 5,
             "maxLength": 50,
             "format": "email"
         },
