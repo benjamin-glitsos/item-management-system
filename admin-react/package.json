@@ -28,6 +28,7 @@
         "axios": "^0.21.1",
         "babel-plugin-ramda": "^2.0.0",
         "dateformat": "^4.5.1",
+        "deep-object-diff": "^1.1.0",
         "enjoi": "^9.0.0",
         "immer": "^8.0.1",
         "javascript-time-ago": "^2.3.4",

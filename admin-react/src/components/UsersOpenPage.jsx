@@ -7,6 +7,7 @@ import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
 import axios from "axios";
+import { diff } from "deep-object-diff";
 import Textfield from "@atlaskit/textfield";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import ReactMde from "react-mde";
@@ -16,9 +17,6 @@ import fromMaybe from "%/utilities/fromMaybe";
 import { useHistory } from "react-router-dom";
 
 export default () => {
-    // TODO: integrate MarkdownTextarea into form using register
-    // TODO: remove empty strings from the form data. You may need to use the Controller component from react-hook-form. And ensure that empty forms don't submit. And ensure that only changed fields get added to the object, the same fields as default don't get added.
-    // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
     const history = useHistory();
 
     const { username } = useParams();
@@ -94,10 +92,24 @@ export default () => {
     const formResolver = validationSchema =>
         useCallback(
             async data => {
+                const resolvedData = R.pipe(
+                    R.map(x => {
+                        if (typeof x === "string") {
+                            return x.trim() === "" ? null : x;
+                        } else {
+                            return x;
+                        }
+                    }),
+                    x => diff(state.item, x)
+                )(data);
+                console.log(resolvedData);
                 try {
-                    const values = await validationSchema.validate(data, {
-                        abortEarly: false
-                    });
+                    const values = await validationSchema.validate(
+                        resolvedData,
+                        {
+                            abortEarly: false
+                        }
+                    );
 
                     return {
                         values,
@@ -122,7 +134,7 @@ export default () => {
         );
 
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
         submitItem(data);
     };
 
@@ -134,8 +146,6 @@ export default () => {
     } = useForm({
         resolver: formResolver(yupSchema)
     });
-
-    console.log(errors);
 
     const TextField = ({ name, title, register }) => {
         const id = `Field/${name}`;
