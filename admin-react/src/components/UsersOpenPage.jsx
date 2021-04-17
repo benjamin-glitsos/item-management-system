@@ -89,12 +89,6 @@ export default () => {
             ? Yup.object()
             : buildYup(state.schema);
 
-    const groupByProps = R.pipe(
-        R.chain(R.toPairs),
-        R.groupBy(R.head),
-        R.map(R.pluck(1))
-    );
-
     const groupByKey = R.groupWith((a, b) => R.head(a) === R.head(b));
 
     const formResolver = validationSchema =>
@@ -114,8 +108,12 @@ export default () => {
                         values: {},
                         errors: R.pipe(
                             R.prop("inner"),
-                            R.map(e => [e.path, e.message]),
-                            R.groupWith((a, b) => R.head(a) === R.head(b))
+                            R.map(e => ({
+                                [e.path]: e.message
+                            })),
+                            R.chain(R.toPairs),
+                            R.groupBy(R.head),
+                            R.map(R.pluck(1))
                         )(errors)
                     };
                 }
@@ -154,9 +152,7 @@ export default () => {
                     {errorsList && (
                         <ul>
                             {errorsList.map((error, i) => (
-                                <li key={`Errors/${name}/${i}`}>
-                                    {error.message}
-                                </li>
+                                <li key={`Errors/${name}/${i}`}>{error}</li>
                             ))}
                         </ul>
                     )}
