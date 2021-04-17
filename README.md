@@ -16,7 +16,7 @@ Dockerised Model-View-Controller (MVC) architecture.
 * React Hooks, Context and Effects
 * Container/Presenter pattern where useful
 * Ramda functional combinator library
-* Intuitive UI/UX using Atlaskit by Atlassian
+* Atlassian Design System
 
 ### Database-PostgreSQL
 
