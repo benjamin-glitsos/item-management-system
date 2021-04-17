@@ -10,13 +10,21 @@ import axios from "axios";
 import { diff } from "deep-object-diff";
 import Textfield from "@atlaskit/textfield";
 import Button, { ButtonGroup } from "@atlaskit/button";
+import { useFlags } from "@atlaskit/flag";
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router-dom";
+import noNewDataToSubmitError from "%/errors/noNewDataToSubmit";
+import removeAllUndefined from "%/utilities/removeAllUndefined";
+import isBlank from "%/utilities/isBlank";
+import isObjectEmpty from "%/utilities/isObjectEmpty";
+import toast from "%/utilities/toast";
 
 export default () => {
     const history = useHistory();
+
+    const { showFlag } = useFlags();
 
     const { username } = useParams();
 
@@ -85,25 +93,13 @@ export default () => {
         abortEarly: false
     };
 
-    const jsonSchemaToYupConfig = {
-        errMessages: {
-            email: {
-                format: "Not a valid email address",
-                max: "lalalal"
-            }
-        }
-    };
-
-    const yupSchema =
-        Object.keys(state.schema).length === 0
-            ? Yup.object()
-            : buildYup(state.schema, jsonSchemaToYupConfig);
-
-    const removeAllUndefined = R.reject(R.equals(undefined));
+    const yupSchema = isObjectEmpty(state.schema)
+        ? Yup.object()
+        : buildYup(state.schema);
 
     const nullifyEmptyStrings = R.map(x => {
         if (typeof x === "string") {
-            return x.trim() === "" ? null : x;
+            return isBlank(x) ? null : x;
         } else {
             return x;
         }
@@ -117,7 +113,7 @@ export default () => {
         R.map(R.pluck(1))
     );
 
-    const formResolver = validationSchema =>
+    const formResolver = schema =>
         useCallback(
             async data => {
                 const resolvedData = R.pipe(
@@ -125,26 +121,22 @@ export default () => {
                     x => diff(state.item, x),
                     removeAllUndefined
                 )(data);
-                try {
-                    const values = await validationSchema.validate(
-                        resolvedData,
-                        {
-                            abortEarly: false
-                        }
-                    );
 
-                    return {
-                        values,
-                        errors: {}
-                    };
-                } catch (errors) {
-                    return {
-                        values: {},
-                        errors: formatYupErrors(errors)
-                    };
+                var value = { values: {}, errors: {} };
+
+                if (isObjectEmpty(resolvedData)) {
+                    toast(0, noNewDataToSubmitError, showFlag);
+                } else {
+                    try {
+                        values = await schema.validate(resolvedData, yupConfig);
+                    } catch (errors) {
+                        errors = formatYupErrors(errors);
+                    }
                 }
+
+                return value;
             },
-            [validationSchema]
+            [schema]
         );
 
     const onSubmit = data => {

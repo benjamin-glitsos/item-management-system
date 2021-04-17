@@ -18,6 +18,7 @@ import {
 import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import formatDate from "%/utilities/formatDate";
+import toast from "%/utilities/toast";
 import config from "%/config";
 
 export default ({
@@ -134,14 +135,7 @@ export default ({
     const handleErrorsAction = () =>
         state.response.errors.forEach((error, i) => {
             console.error(error);
-            showFlag({
-                icon: <Error />,
-                id: i,
-                key: `Toast/Error/${error.code},${i}`,
-                title: error.title,
-                description: error.description,
-                isAutoDismiss: true
-            });
+            toast(i, error, showFlag);
         });
 
     const deleteItemsAction = async (method, keys) => {
