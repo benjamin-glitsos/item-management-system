@@ -26,7 +26,8 @@
         "other_names": {
             "type": "string",
             "maxLength": 120,
-            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
+            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$",
+            "nullable": true
         },
         "password": {
             "type": "string",
@@ -36,7 +37,8 @@
         "additional_notes": {
             "type": "string",
             "maxLength": 1048576,
-            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
+            "pattern": "[\\s\\S]*\\S[\\s\\S]*",
+            "nullable": true
         }
     },
     "minProperties": 1
