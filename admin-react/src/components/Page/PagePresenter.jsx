@@ -5,27 +5,37 @@ import SidebarNavigation from "%/components/SidebarNavigation";
 import { FlagsProvider } from "@atlaskit/flag";
 
 export default ({ children }) => (
-    <Page
-        navigation={
-            <SidebarStyles>
-                <SidebarNavigation />
-            </SidebarStyles>
-        }
-    >
-        <FlagsProvider>
-            <PageStyles>{children}</PageStyles>
-        </FlagsProvider>
-    </Page>
+    <PageStyles>
+        <Page
+            navigation={
+                <SidebarStyles>
+                    <SidebarNavigation />
+                </SidebarStyles>
+            }
+        >
+            <FlagsProvider>
+                <ContentStyles>{children}</ContentStyles>
+            </FlagsProvider>
+        </Page>
+    </PageStyles>
 );
 
 const SidebarStyles = styled.div`
-    height: 100vh;
     overflow-y: auto;
-    position: fixed;
+    max-height: 100vh;
+`;
+
+const ContentStyles = styled.div`
+    background-color: white;
+    min-height: calc(100vh - 49px);
+    padding-bottom: 15px;
+    padding-top: 3em;
+    margin-top: -3em;
 `;
 
 const PageStyles = styled.div`
-    margin-left: 240px;
-    min-height: calc(100vh - 49px);
-    padding-bottom: 15px;
+    background-color: #fafbfc;
+    div > div > div:nth-child(2) {
+        z-index: 3;
+    }
 `;
