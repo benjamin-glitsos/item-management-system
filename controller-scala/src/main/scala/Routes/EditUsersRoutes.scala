@@ -2,6 +2,8 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.{Try}
 import akka.http.scaladsl.model.StatusCodes.NoContent
+import upickle.default._
+import upickle_import.general._
 
 object EditUsersRoutes {
   final def apply(username: String): Route = patch {
@@ -18,8 +20,8 @@ object EditUsersRoutes {
         val emailAddress: Option[String] =
           Try(body("email_address").str).toOption
         val password: Option[String] = Try(body("password").str).toOption
-        val additionalNotes: Option[String] =
-          Try(body("additional_notes").str).toOption
+        val additionalNotes: Option[Option[String]] =
+          Try(read[Option[String]](body("additional_notes"))).toOption
 
         complete(
           NoContent,

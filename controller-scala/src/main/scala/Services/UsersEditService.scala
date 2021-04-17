@@ -11,7 +11,7 @@ trait UsersEditService extends ServiceTrait {
       otherNames: Option[String],
       emailAddress: Option[String],
       password: Option[String],
-      additionalNotes: Option[String]
+      additionalNotes: Option[Option[String]]
   ): String = {
     try {
       UsersDAO

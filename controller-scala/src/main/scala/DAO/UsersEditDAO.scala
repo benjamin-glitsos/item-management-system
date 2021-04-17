@@ -13,7 +13,7 @@ trait UsersEditDAO {
       otherNames: Option[String],
       emailAddress: Option[String],
       password: Option[String],
-      additionalNotes: Option[String]
+      additionalNotes: Option[Option[String]]
   ) = {
     val update: Fragment =
       fr"UPDATE users_with_meta"
