@@ -7,6 +7,9 @@ object SchemasService extends ServiceTrait {
 
   final def loadSchema(name: String): Schema = load(name)
 
-  final def loadJson(name: String): ujson.Value =
-    read[ujson.Value](load(name).toString())
+  final def loadJson(name: String): ujson.Value = {
+    val json = read[ujson.Value](load(name).toString())
+    json.obj.remove("title")
+    json
+  }
 }
