@@ -43,7 +43,7 @@ export default () => {
                     aria-label="Search"
                     isCompact={true}
                     placeholder="Search"
-                    value={searchState}
+                    value={searchState || ""}
                     onChange={search => {
                         const value = search.target.value;
                         setDeselectAll();

@@ -60,8 +60,6 @@ export default () => {
             draft.schema = schema;
         });
 
-    console.log(state.schema);
-
     const schemaAction = () => {
         (async () => {
             try {
