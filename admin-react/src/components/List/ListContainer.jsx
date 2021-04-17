@@ -27,6 +27,8 @@ export default ({
     defaultState,
     headContentColumns,
     rowTransform = row => row,
+    nameSingular,
+    namePlural,
     keyColumnSingular,
     keyColumnPlural
 }) => {
@@ -199,38 +201,50 @@ export default ({
         ]
     };
 
-    const rows = state.response.data.items.map((row, i) => ({
-        key: `Row/${row[keyColumnSingular]},${i}`,
-        cells: pipe(
-            row,
-            row =>
-                transform(row, {
-                    username: username => (
-                        <Link to={`/users/${username}`}>{username}</Link>
-                    ),
-                    created_at: formatDate,
-                    edited_at: d => formatDate(fromMaybe(d))
-                }),
-            rowTransform,
-            row => [
-                <Checkbox
-                    isChecked={state.selected.includes(row[keyColumnSingular])}
-                    onChange={() => setSelected(row[keyColumnSingular])}
-                />,
-                ...Object.values(row),
-                ActionsMenu({
-                    items: [row[keyColumnSingular]],
-                    deleteItemsAction,
-                    setDeselectAll
-                })
-            ],
-            x =>
-                x.map((x, i) => ({
-                    key: `Cell/${row[keyColumnSingular]},${i}`,
-                    content: x
-                }))
-        )
-    }));
+    const rows = state.response.data.items.map((row, i) => {
+        const key = row[keyColumnSingular];
+        return {
+            key: `Row/${key},${i}`,
+            cells: pipe(
+                row,
+                row =>
+                    transform(row, {
+                        [keyColumnSingular]: x => (
+                            <Link to={`/${namePlural}/${key}`}>{key}</Link>
+                        ),
+                        created_at: formatDate,
+                        edited_at: d => formatDate(fromMaybe(d))
+                    }),
+                rowTransform,
+                row => [
+                    <Checkbox
+                        isChecked={state.selected.includes(key)}
+                        onChange={() => setSelected(key)}
+                    />,
+                    ...Object.values(row),
+                    ActionsMenu({
+                        items: [key],
+                        deleteItemsAction,
+                        setDeselectAll,
+                        additionalItems: [
+                            {
+                                title: "Open",
+                                onClick: () => {
+                                    history.push(`/${namePlural}/${key}`);
+                                },
+                                isVisible: true
+                            }
+                        ]
+                    })
+                ],
+                x =>
+                    x.map((x, i) => ({
+                        key: `Cell/${key},${i}`,
+                        content: x
+                    }))
+            )
+        };
+    });
 
     const isDataEmpty =
         state.isLoading || !(state.response.data.total_items_count > 0);

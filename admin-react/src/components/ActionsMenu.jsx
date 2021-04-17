@@ -17,6 +17,7 @@ export default ({
 
     const Actions = () => {
         const items = [
+            ...additionalItems,
             {
                 title: "Delete",
                 onClick: deleteItemsActionHandler("soft"),
@@ -26,8 +27,7 @@ export default ({
                 title: "Hard delete",
                 onClick: deleteItemsActionHandler("hard"),
                 isVisible: isDeletable
-            },
-            ...additionalItems
+            }
         ];
 
         const filtered = items.filter(a => a.isVisible);

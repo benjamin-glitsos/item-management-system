@@ -14,6 +14,8 @@ export default () => {
 
     const nameSingular = "user";
     const namePlural = "users";
+    const keyColumnSingular = "username";
+    const keyColumnPlural = "usernames";
     const title = titleCase(namePlural);
     const slug = namePlural;
 
@@ -52,8 +54,10 @@ export default () => {
                 isSortable: true
             }
         ],
-        keyColumnSingular: "username",
-        keyColumnPlural: "usernames"
+        nameSingular,
+        namePlural,
+        keyColumnSingular,
+        keyColumnPlural
     });
 
     const pageContext = {
