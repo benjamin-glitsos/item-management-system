@@ -85,10 +85,19 @@ export default () => {
         abortEarly: false
     };
 
+    const jsonSchemaToYupConfig = {
+        errMessages: {
+            email: {
+                format: "Not a valid email address",
+                max: "lalalal"
+            }
+        }
+    };
+
     const yupSchema =
         Object.keys(state.schema).length === 0
             ? Yup.object()
-            : buildYup(state.schema);
+            : buildYup(state.schema, jsonSchemaToYupConfig);
 
     const removeAllUndefined = R.reject(R.equals(undefined));
 
