@@ -15,8 +15,8 @@ object EditUsersRoutes {
           Try(body("first_name").str).toOption
         val lastName: Option[String] =
           Try(body("last_name").str).toOption
-        val otherNames: Option[String] =
-          Try(body("other_names").str).toOption
+        val otherNames: Option[Option[String]] =
+          Try(body("other_names").strOpt).toOption
         val emailAddress: Option[String] =
           Try(body("email_address").str).toOption
         val password: Option[String] = Try(body("password").str).toOption

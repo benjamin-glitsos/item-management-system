@@ -8,7 +8,7 @@ trait UsersEditService extends ServiceTrait {
       newUsername: Option[String],
       firstName: Option[String],
       lastName: Option[String],
-      otherNames: Option[String],
+      otherNames: Option[Option[String]],
       emailAddress: Option[String],
       password: Option[String],
       additionalNotes: Option[Option[String]]
