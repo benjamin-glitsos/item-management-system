@@ -179,7 +179,7 @@ export default () => {
         }
     };
     const cancelHandler = () => {
-        history.push("..");
+        history.push("/users");
     };
 
     return (
