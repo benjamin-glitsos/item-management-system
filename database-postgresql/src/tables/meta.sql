@@ -4,8 +4,8 @@ CREATE TABLE meta (
   , opens POSITIVE_INTEGER NOT NULL DEFAULT 0
   , edits POSITIVE_INTEGER NOT NULL DEFAULT 0
   , is_deleted BOOLEAN NOT NULL DEFAULT false
-  , created_at TIMESTAMP NOT NULL DEFAULT NOW()
-  , edited_at TIMESTAMP
-  , deleted_at TIMESTAMP
+  , created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  , edited_at TIMESTAMPTZ
+  , deleted_at TIMESTAMPTZ
   , additional_notes LONG_TEXT
 );

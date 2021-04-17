@@ -10,6 +10,8 @@ services:
       - ./database-postgresql/src:/docker-entrypoint-initdb.d/src
     restart: on-failure
     env_file: .env
+    environment:
+      - TZ=${PROJECT_TIMEZONE}
     ports:
       - ${POSTGRES_PORT}:5432
   controller_scala:

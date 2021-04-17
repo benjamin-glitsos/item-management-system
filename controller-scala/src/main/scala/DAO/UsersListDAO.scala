@@ -1,4 +1,3 @@
-import java.time.LocalDateTime
 import doobie.Fragment
 import doobie.Fragments.{whereOrOpt}
 import doobie._
@@ -76,8 +75,8 @@ trait UsersListDAO extends ListDAOTrait {
             String,
             String,
             Option[String],
-            LocalDateTime,
-            Option[LocalDateTime]
+            String,
+            Option[String]
         )
       ]
       .to[List]

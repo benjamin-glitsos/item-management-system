@@ -1,5 +1,3 @@
-import java.time.LocalDateTime
-
 case class UsersWithMeta(
     username: String,
     email_address: String,
@@ -11,8 +9,8 @@ case class UsersWithMeta(
     opens: Int,
     edits: Int,
     is_deleted: Boolean,
-    created_at: LocalDateTime,
-    edited_at: Option[LocalDateTime],
-    deleted_at: Option[LocalDateTime],
+    created_at: String,
+    edited_at: Option[String],
+    deleted_at: Option[String],
     additional_notes: Option[String]
 )

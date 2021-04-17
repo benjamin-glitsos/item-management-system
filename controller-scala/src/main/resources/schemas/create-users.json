@@ -44,7 +44,6 @@
         "email_address",
         "first_name",
         "last_name",
-        "other_names",
         "password"
     ]
 }
