@@ -36,6 +36,7 @@ export default () => {
                             }
                         ]}
                         deleteItemsAction={context.deleteItemsAction}
+                        setDeselectAll={context.setDeselectAll}
                     />
                 </ButtonRightSpace>
                 <Textfield

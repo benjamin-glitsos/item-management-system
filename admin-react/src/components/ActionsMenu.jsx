@@ -20,12 +20,12 @@ export default ({
             ...additionalItems,
             {
                 title: "Delete",
-                onClick: deleteItemsActionHandler("soft"),
+                onClick: () => deleteItemsActionHandler("soft"),
                 isVisible: isDeletable
             },
             {
                 title: "Hard delete",
-                onClick: deleteItemsActionHandler("hard"),
+                onClick: () => deleteItemsActionHandler("hard"),
                 isVisible: isDeletable
             }
         ];
