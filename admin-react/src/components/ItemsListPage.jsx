@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
+import R from "ramda";
 import { titleCase } from "title-case";
-import transform from "transform-object";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import PageLayout from "%/components/PageLayout";
@@ -54,10 +54,7 @@ export default () => {
                 isSortable: true
             }
         ],
-        rowTransform: row =>
-            transform(row, {
-                description: formatNull
-            }),
+        rowTransform: R.evolve({ description: formatNull }),
         keyColumnSingular: "key",
         keyColumnPlural: "keys"
     });

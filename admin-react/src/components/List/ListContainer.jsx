@@ -1,11 +1,10 @@
 import { useEffect } from "react";
+import R from "ramda";
 import { useHistory, Link } from "react-router-dom";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
-import pipe from "pipe-functions";
-import transform from "transform-object";
 import { useFlags } from "@atlaskit/flag";
 import { Checkbox } from "@atlaskit/checkbox";
 import Error from "@atlaskit/icon/glyph/editor/warning";
@@ -205,16 +204,14 @@ export default ({
         const key = row[keyColumnSingular];
         return {
             key: `Row/${key},${i}`,
-            cells: pipe(
-                row,
-                row =>
-                    transform(row, {
-                        [keyColumnSingular]: x => (
-                            <Link to={`/${namePlural}/${key}`}>{key}</Link>
-                        ),
-                        created_at: formatDate,
-                        edited_at: d => formatDate(fromMaybe(d))
-                    }),
+            cells: R.pipe(
+                R.evolve({
+                    [keyColumnSingular]: x => (
+                        <Link to={`/${namePlural}/${key}`}>{key}</Link>
+                    ),
+                    created_at: formatDate,
+                    edited_at: d => formatDate(fromMaybe(d))
+                }),
                 rowTransform,
                 row => [
                     <Checkbox
@@ -242,7 +239,7 @@ export default ({
                         key: `Cell/${key},${i}`,
                         content: x
                     }))
-            )
+            )(row)
         };
     });
 

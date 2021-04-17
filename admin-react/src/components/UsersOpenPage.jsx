@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
+import R from "ramda";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm, Controller } from "react-hook-form";
@@ -8,7 +9,6 @@ import config from "%/config";
 import axios from "axios";
 import Textfield from "@atlaskit/textfield";
 import Button, { ButtonGroup } from "@atlaskit/button";
-import groupBy from "group-by";
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import ReactMarkdown from "react-markdown";
@@ -89,6 +89,8 @@ export default () => {
             ? Yup.object()
             : buildYup(state.schema);
 
+    const groupByProp = prop => R.groupBy(R.prop(prop));
+
     const formResolver = validationSchema =>
         useCallback(
             async data => {
@@ -104,13 +106,14 @@ export default () => {
                 } catch (errors) {
                     return {
                         values: {},
-                        errors: groupBy(
-                            errors.inner.map(e => ({
+                        errors: () => {
+                            const e = errors.inner.map(e => ({
                                 path: e.path,
                                 message: e.message
-                            })),
-                            "path"
-                        )
+                            }));
+                            console.log(e);
+                            return e;
+                        }
                     };
                 }
             },
