@@ -22,6 +22,26 @@ import isBlank from "%/utilities/isBlank";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
 
+const Field = ({ name, title, Component, errors, register }) => {
+    const id = `Field/${name}`;
+    const fieldErrors = errors?.[name];
+    return (
+        <Fragment>
+            <label htmlFor={id}>{title}</label>
+            <Component id={id} {...register(name)} />
+            {fieldErrors && (
+                <ul>
+                    {fieldErrors.map((error, i) => (
+                        <li key={`Errors/${name}/${i}`}>{error}</li>
+                    ))}
+                </ul>
+            )}
+        </Fragment>
+    );
+};
+
+// TODO: then make ControlledField component as well
+
 export default () => {
     const history = useHistory();
 
@@ -93,6 +113,8 @@ export default () => {
         }
     });
 
+    const nullToEmptyString = x => (x === null ? "" : x);
+
     const formatYupErrors = R.pipe(
         R.map(e => ({ [e.path]: e.message })),
         R.chain(R.toPairs),
@@ -114,7 +136,6 @@ export default () => {
                         resolvedData,
                         yupConfig
                     );
-                    // setInput(values);
                     return {
                         values,
                         errors: {}
@@ -162,24 +183,6 @@ export default () => {
         resolver: formResolver(yupSchema)
     });
 
-    const Field = ({ name, title, register }) => {
-        const id = `Field/${name}`;
-        const errorsList = errors?.[name];
-        return (
-            <Fragment>
-                <Label htmlFor={id}>{title}</Label>
-                <Textfield id={id} {...register(name)} />
-                {errorsList && (
-                    <ul>
-                        {errorsList.map((error, i) => (
-                            <li key={`Errors/${name}/${i}`}>{error}</li>
-                        ))}
-                    </ul>
-                )}
-            </Fragment>
-        );
-    };
-
     const MarkdownTextarea = ({ name, title }) => {
         const [selectedTab, setSelectedTab] = useState("write");
         const errorsList = errors?.additional_notes;
@@ -224,7 +227,9 @@ export default () => {
             try {
                 const item = await requestItem();
                 const data = item.data.data;
-                R.forEachObjIndexed((value, key) => setValue(key, value))(data);
+                R.forEachObjIndexed((value, key) =>
+                    setValue(key, nullToEmptyString(value))
+                )(data);
             } catch (error) {}
         })();
     };
@@ -236,21 +241,11 @@ export default () => {
         <Fragment>
             <h3>{state.item?.username}</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Field name="username" title="Username" register={register} />
                 <Field
-                    name="email_address"
-                    title="Email address"
-                    register={register}
-                />
-                <Field
-                    name="first_name"
-                    title="First name"
-                    register={register}
-                />
-                <Field name="last_name" title="Last name" register={register} />
-                <Field
-                    name="other_names"
-                    title="Other names"
+                    name="username"
+                    title="Username"
+                    Component={Textfield}
+                    errors={errors}
                     register={register}
                 />
                 <MarkdownTextarea
@@ -273,3 +268,20 @@ export default () => {
 const Label = styled.label`
     ${props => props.isChanged && "font-style: italic;"}
 `;
+
+// <Field
+//     name="email_address"
+//     title="Email address"
+//     register={register}
+// />
+// <Field
+//     name="first_name"
+//     title="First name"
+//     register={register}
+// />
+// <Field name="last_name" title="Last name" register={register} />
+// <Field
+//     name="other_names"
+//     title="Other names"
+//     register={register}
+// />
