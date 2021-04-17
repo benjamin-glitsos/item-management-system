@@ -21,14 +21,7 @@ object EditUsersRoutes {
           Try(body("email_address").str).toOption
         val password: Option[String] = Try(body("password").str).toOption
         val additionalNotes: Option[Option[String]] =
-          Try(body("additional_notes").str).toOption.map(x =>
-            x match {
-              case "null" => None
-              case other  => Some(other)
-            }
-          )
-
-        println(additionalNotes)
+          Try(body("additional_notes").strOpt).toOption
 
         complete(
           NoContent,
