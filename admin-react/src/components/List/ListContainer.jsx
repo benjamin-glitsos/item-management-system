@@ -17,7 +17,6 @@ import {
 } from "%/utilities/queryParameters";
 import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
-import fromMaybe from "%/utilities/fromMaybe";
 import formatDate from "%/utilities/formatDate";
 import config from "%/config";
 
@@ -210,7 +209,7 @@ export default ({
                         <Link to={`/${namePlural}/${key}`}>{key}</Link>
                     ),
                     created_at: formatDate,
-                    edited_at: d => formatDate(fromMaybe(d))
+                    edited_at: formatDate
                 }),
                 rowTransform,
                 row => [

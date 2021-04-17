@@ -13,7 +13,6 @@ import Button, { ButtonGroup } from "@atlaskit/button";
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import ReactMarkdown from "react-markdown";
-import fromMaybe from "%/utilities/fromMaybe";
 import { useHistory } from "react-router-dom";
 
 export default () => {
@@ -54,8 +53,14 @@ export default () => {
 
     const setSchema = schema =>
         setState(draft => {
+            delete schema.properties.additional_notes.anyOf;
+            schema.properties.additional_notes.type = "string";
+            delete schema.properties.other_names.anyOf;
+            schema.properties.other_names.type = "string";
             draft.schema = schema;
         });
+
+    console.log(state.schema);
 
     const schemaAction = () => {
         (async () => {
@@ -105,7 +110,7 @@ export default () => {
                 console.log(resolvedData);
                 try {
                     const values = await validationSchema.validate(
-                        resolvedData,
+                        { username: "ben" },
                         {
                             abortEarly: false
                         }
@@ -134,7 +139,6 @@ export default () => {
         );
 
     const onSubmit = data => {
-        console.log(data);
         submitItem(data);
     };
 

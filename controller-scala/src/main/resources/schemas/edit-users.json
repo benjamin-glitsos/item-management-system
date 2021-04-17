@@ -25,7 +25,6 @@
         },
         "other_names": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "nullable": true,
             "maxLength": 120,
             "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
         },
@@ -36,7 +35,6 @@
         },
         "additional_notes": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "nullable": true,
             "maxLength": 1048576,
             "pattern": "[\\s\\S]*\\S[\\s\\S]*"
         }
