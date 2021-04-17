@@ -22,13 +22,20 @@ import isBlank from "%/utilities/isBlank";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
 
-const Field = ({ name, title, Component, errors, register }) => {
+const RegisteredField = ({
+    name,
+    title,
+    Component,
+    errors,
+    register,
+    ...props
+}) => {
     const id = `Field/${name}`;
     const fieldErrors = errors?.[name];
     return (
         <Fragment>
             <label htmlFor={id}>{title}</label>
-            <Component id={id} {...register(name)} />
+            <Component id={id} {...props} {...register(name)} />
             {fieldErrors && (
                 <ul>
                     {fieldErrors.map((error, i) => (
@@ -40,7 +47,78 @@ const Field = ({ name, title, Component, errors, register }) => {
     );
 };
 
-// TODO: then make ControlledField component as well
+const ControlledField = ({ name, title, Component, errors, control }) => (
+    <Controller
+        control={control}
+        name={name}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+            <Fragment>
+                <p>{title}</p>
+                <Component
+                    onBlur={onBlur}
+                    inputRef={ref}
+                    onChange={onChange}
+                    value={value}
+                />
+                {errors && (
+                    <ul>
+                        {errors.map((error, i) => (
+                            <li key={`Errors/${name}/${i}`}>{error}</li>
+                        ))}
+                    </ul>
+                )}
+            </Fragment>
+        )}
+    />
+);
+
+const MarkdownTextarea = props => {
+    const [selectedTab, setSelectedTab] = useState("write");
+    return (
+        <ReactMde
+            selectedTab={selectedTab}
+            onTabChange={setSelectedTab}
+            generateMarkdownPreview={markdown =>
+                Promise.resolve(<ReactMarkdown source={markdown} />)
+            }
+            {...props}
+        />
+    );
+};
+
+// const MarkdownTextarea = ({ name, title }) => {
+//     const [selectedTab, setSelectedTab] = useState("write");
+//     const errorsList = errors?.additional_notes;
+//     return (
+//         <Controller
+//             control={control}
+//             name={name}
+//             render={({ field: { onChange, onBlur, value, ref } }) => (
+//                 <Fragment>
+//                     <p>{title}</p>
+//                     <ReactMde
+//                         selectedTab={selectedTab}
+//                         onTabChange={setSelectedTab}
+//                         generateMarkdownPreview={markdown =>
+//                             Promise.resolve(<ReactMarkdown source={markdown} />)
+//                         }
+//                         onBlur={onBlur}
+//                         inputRef={ref}
+//                         onChange={onChange}
+//                         value={value}
+//                     />
+//                     {errorsList && (
+//                         <ul>
+//                             {errorsList.map((error, i) => (
+//                                 <li key={`Errors/${name}/${i}`}>{error}</li>
+//                             ))}
+//                         </ul>
+//                     )}
+//                 </Fragment>
+//             )}
+//         />
+//     );
+// };
 
 export default () => {
     const history = useHistory();
@@ -183,41 +261,6 @@ export default () => {
         resolver: formResolver(yupSchema)
     });
 
-    const MarkdownTextarea = ({ name, title }) => {
-        const [selectedTab, setSelectedTab] = useState("write");
-        const errorsList = errors?.additional_notes;
-        return (
-            <Controller
-                control={control}
-                name={name}
-                render={({ field: { onChange, onBlur, value, ref } }) => (
-                    <Fragment>
-                        <p>{title}</p>
-                        <ReactMde
-                            selectedTab={selectedTab}
-                            onTabChange={setSelectedTab}
-                            generateMarkdownPreview={markdown =>
-                                Promise.resolve(
-                                    <ReactMarkdown source={markdown} />
-                                )
-                            }
-                            onBlur={onBlur}
-                            inputRef={ref}
-                            onChange={onChange}
-                            value={value}
-                        />
-                        {errorsList && (
-                            <ul>
-                                {errorsList.map((error, i) => (
-                                    <li key={`Errors/${name}/${i}`}>{error}</li>
-                                ))}
-                            </ul>
-                        )}
-                    </Fragment>
-                )}
-            />
-        );
-    };
     const cancelHandler = () => {
         history.push("/users");
     };
@@ -241,16 +284,19 @@ export default () => {
         <Fragment>
             <h3>{state.item?.username}</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Field
+                <RegisteredField
                     name="username"
                     title="Username"
                     Component={Textfield}
                     errors={errors}
                     register={register}
                 />
-                <MarkdownTextarea
+                <ControlledField
                     name="additional_notes"
                     title="Additional Notes"
+                    Component={MarkdownTextarea}
+                    errors={errors?.additional_notes}
+                    control={control}
                 />
                 <ButtonGroup>
                     <Button appearance="subtle" onClick={cancelHandler}>
