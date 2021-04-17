@@ -5,37 +5,31 @@
     "properties": {
         "username": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 20,
             "pattern": "^[-_a-zA-Z0-9]*$"
         },
         "email_address": {
             "type": "string",
-            "minLength": 5,
             "maxLength": 50,
             "format": "email"
         },
         "first_name": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 50,
             "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
         },
         "last_name": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 70,
             "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
         },
         "other_names": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 120,
             "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
         },
         "password": {
             "type": "string",
-            "minLength": 1,
             "maxLength": 40,
             "pattern": "^[^\\s]+(s+[^\\s]+)*$"
         },
