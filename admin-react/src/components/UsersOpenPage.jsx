@@ -25,9 +25,7 @@ export default () => {
 
     const defaultState = {
         schema: {},
-        item: {
-            additional_notes: "wow"
-        }
+        item: {}
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -163,23 +161,38 @@ export default () => {
 
     const MarkdownTextarea = ({ name, title }) => {
         const [selectedTab, setSelectedTab] = useState("write");
-        if (state.item?.additional_notes) {
-            const [value, setValue] = useState(
-                fromMaybe(state.item.additional_notes)
-            );
+        const additionalNotes = state.item?.additional_notes;
+        if (additionalNotes) {
+            const defaultValue = state.item?.additional_notes || "";
             return (
-                <Fragment>
-                    <p>{title}</p>
-                    <ReactMde
-                        value={value}
-                        onChange={setValue}
-                        selectedTab={selectedTab}
-                        onTabChange={setSelectedTab}
-                        generateMarkdownPreview={markdown =>
-                            Promise.resolve(<ReactMarkdown source={markdown} />)
-                        }
-                    />
-                </Fragment>
+                <Controller
+                    control={control}
+                    name={name}
+                    defaultValue={defaultValue}
+                    render={({
+                        field: { onChange, onBlur, value, name, ref },
+                        defaultValue,
+                        fieldState: { invalid, isTouched, isDirty, error },
+                        formState
+                    }) => (
+                        <Fragment>
+                            <p>{title}</p>
+                            <ReactMde
+                                selectedTab={selectedTab}
+                                onTabChange={setSelectedTab}
+                                generateMarkdownPreview={markdown =>
+                                    Promise.resolve(
+                                        <ReactMarkdown source={markdown} />
+                                    )
+                                }
+                                onBlur={onBlur}
+                                inputRef={ref}
+                                onChange={onChange}
+                                value={value}
+                            />
+                        </Fragment>
+                    )}
+                />
             );
         } else {
             return null;
@@ -218,28 +231,9 @@ export default () => {
                     title="Other names"
                     register={register}
                 />
-                <Controller
-                    control={control}
+                <MarkdownTextarea
                     name="additional_notes"
-                    render={({
-                        field: { onChange, onBlur, value, name, ref },
-                        fieldState: { invalid, isTouched, isDirty, error },
-                        formState
-                    }) => (
-                        <ReactMde
-                            selectedTab={"write"}
-                            onTabChange={() => {}}
-                            generateMarkdownPreview={markdown =>
-                                Promise.resolve(
-                                    <ReactMarkdown source={markdown} />
-                                )
-                            }
-                            onBlur={onBlur}
-                            inputRef={ref}
-                            onChange={onChange}
-                            value={value}
-                        />
-                    )}
+                    title="Additional Notes"
                 />
                 <ButtonGroup>
                     <Button appearance="subtle" onClick={cancelHandler}>
