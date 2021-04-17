@@ -1,3 +1,3 @@
 import R from "ramda";
 
-export default () => R.reject(R.equals(undefined));
+export default x => R.reject(R.equals(undefined))(x);

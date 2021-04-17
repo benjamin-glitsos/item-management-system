@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
 import R from "ramda";
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm, Controller } from "react-hook-form";
@@ -29,8 +30,7 @@ export default () => {
     const { username } = useParams();
 
     const defaultState = {
-        schema: {},
-        item: {}
+        schema: {}
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -54,11 +54,6 @@ export default () => {
             data
         });
 
-    const setItem = item =>
-        setState(draft => {
-            draft.item = item;
-        });
-
     const setSchema = schema =>
         setState(draft => {
             delete schema.properties.additional_notes.anyOf;
@@ -66,6 +61,11 @@ export default () => {
             delete schema.properties.other_names.anyOf;
             schema.properties.other_names.type = "string";
             draft.schema = schema;
+        });
+
+    const setInput = input =>
+        setState(draft => {
+            draft.input = input;
         });
 
     const schemaAction = () => {
@@ -77,18 +77,6 @@ export default () => {
         })();
     };
 
-    const openItemAction = () => {
-        (async () => {
-            try {
-                const item = await requestItem();
-                setItem(item.data.data);
-            } catch (error) {}
-        })();
-    };
-
-    useEffect(openItemAction, []);
-    useEffect(schemaAction, []);
-
     const yupConfig = {
         abortEarly: false
     };
@@ -99,14 +87,13 @@ export default () => {
 
     const nullifyEmptyStrings = R.map(x => {
         if (typeof x === "string") {
-            return isBlank(x) ? null : x;
+            return x.trim().length === 0 ? null : x;
         } else {
             return x;
         }
     });
 
     const formatYupErrors = R.pipe(
-        R.prop("inner"),
         R.map(e => ({ [e.path]: e.message })),
         R.chain(R.toPairs),
         R.groupBy(R.head),
@@ -117,24 +104,45 @@ export default () => {
         useCallback(
             async data => {
                 const resolvedData = R.pipe(
-                    nullifyEmptyStrings,
                     x => diff(state.item, x),
-                    removeAllUndefined
+                    x => removeAllUndefined(x),
+                    nullifyEmptyStrings
                 )(data);
 
-                var value = { values: {}, errors: {} };
-
-                if (isObjectEmpty(resolvedData)) {
-                    toast(0, noNewDataToSubmitError, showFlag);
-                } else {
-                    try {
-                        values = await schema.validate(resolvedData, yupConfig);
-                    } catch (errors) {
-                        errors = formatYupErrors(errors);
+                try {
+                    const values = await schema.validate(
+                        resolvedData,
+                        yupConfig
+                    );
+                    // setInput(values);
+                    return {
+                        values,
+                        errors: {}
+                    };
+                } catch (errors) {
+                    const validationErrors = errors?.inner;
+                    if (validationErrors) {
+                        const errors = formatYupErrors(validationErrors);
+                        return {
+                            values: {},
+                            errors
+                        };
                     }
                 }
 
-                return value;
+                // if (isObjectEmpty(resolvedData)) {
+                //     toast(0, noNewDataToSubmitError, showFlag);
+                //     return {};
+                // } else {
+                // }
+
+                // console.log(resolvedData);
+                //
+                // return {
+                //     values: {},
+                //     errors: {},
+                //     ...resolver()
+                // };
             },
             [schema]
         );
@@ -147,101 +155,100 @@ export default () => {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
         control
     } = useForm({
         resolver: formResolver(yupSchema)
     });
 
-    const TextField = ({ name, title, register }) => {
+    const Field = ({ name, title, register }) => {
         const id = `Field/${name}`;
-        if (state.item[name]) {
-            const errorsList = errors?.[name];
-            return (
-                <Fragment>
-                    <label htmlFor={id}>{title}</label>
-                    <Textfield
-                        id={id}
-                        {...register(name)}
-                        defaultValue={state.item[name]}
-                    />
-                    {errorsList && (
-                        <ul>
-                            {errorsList.map((error, i) => (
-                                <li key={`Errors/${name}/${i}`}>{error}</li>
-                            ))}
-                        </ul>
-                    )}
-                </Fragment>
-            );
-        } else {
-            return null;
-        }
+        const errorsList = errors?.[name];
+        return (
+            <Fragment>
+                <Label htmlFor={id}>{title}</Label>
+                <Textfield id={id} {...register(name)} />
+                {errorsList && (
+                    <ul>
+                        {errorsList.map((error, i) => (
+                            <li key={`Errors/${name}/${i}`}>{error}</li>
+                        ))}
+                    </ul>
+                )}
+            </Fragment>
+        );
     };
 
     const MarkdownTextarea = ({ name, title }) => {
         const [selectedTab, setSelectedTab] = useState("write");
-        const additionalNotes = state.item?.additional_notes;
-        if (additionalNotes) {
-            const defaultValue = state.item?.additional_notes || "";
-            return (
-                <Controller
-                    control={control}
-                    name={name}
-                    defaultValue={defaultValue}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <Fragment>
-                            <p>{title}</p>
-                            <ReactMde
-                                selectedTab={selectedTab}
-                                onTabChange={setSelectedTab}
-                                generateMarkdownPreview={markdown =>
-                                    Promise.resolve(
-                                        <ReactMarkdown source={markdown} />
-                                    )
-                                }
-                                onBlur={onBlur}
-                                inputRef={ref}
-                                onChange={onChange}
-                                value={value}
-                            />
-                        </Fragment>
-                    )}
-                />
-            );
-        } else {
-            return null;
-        }
+        const errorsList = errors?.additional_notes;
+        return (
+            <Controller
+                control={control}
+                name={name}
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <Fragment>
+                        <p>{title}</p>
+                        <ReactMde
+                            selectedTab={selectedTab}
+                            onTabChange={setSelectedTab}
+                            generateMarkdownPreview={markdown =>
+                                Promise.resolve(
+                                    <ReactMarkdown source={markdown} />
+                                )
+                            }
+                            onBlur={onBlur}
+                            inputRef={ref}
+                            onChange={onChange}
+                            value={value}
+                        />
+                        {errorsList && (
+                            <ul>
+                                {errorsList.map((error, i) => (
+                                    <li key={`Errors/${name}/${i}`}>{error}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </Fragment>
+                )}
+            />
+        );
     };
     const cancelHandler = () => {
         history.push("/users");
     };
 
+    const openItemAction = () => {
+        (async () => {
+            try {
+                const item = await requestItem();
+                const data = item.data.data;
+                R.forEachObjIndexed((value, key) => setValue(key, value))(data);
+            } catch (error) {}
+        })();
+    };
+
+    useEffect(openItemAction, []);
+    useEffect(schemaAction, []);
+
     return (
         <Fragment>
             <h3>{state.item?.username}</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField
-                    name="username"
-                    title="Username"
-                    register={register}
-                />
-                <TextField
+                <Field name="username" title="Username" register={register} />
+                <Field
                     name="email_address"
                     title="Email address"
                     register={register}
                 />
-                <TextField
+                <Field
                     name="first_name"
                     title="First name"
                     register={register}
                 />
-                <TextField
-                    name="last_name"
-                    title="Last name"
-                    register={register}
-                />
-                <TextField
+                <Field name="last_name" title="Last name" register={register} />
+                <Field
                     name="other_names"
                     title="Other names"
                     register={register}
@@ -262,3 +269,7 @@ export default () => {
         </Fragment>
     );
 };
+
+const Label = styled.label`
+    ${props => props.isChanged && "font-style: italic;"}
+`;
