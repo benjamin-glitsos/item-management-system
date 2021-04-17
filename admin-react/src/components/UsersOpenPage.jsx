@@ -17,6 +17,7 @@ import "react-mde/lib/styles/css/react-mde-all.css";
 import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router-dom";
 import noNewDataToSubmitError from "%/errors/noNewDataToSubmit";
+import successError from "%/errors/successError";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isBlank from "%/utilities/isBlank";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
@@ -106,7 +107,8 @@ export default () => {
     const { username } = useParams();
 
     const defaultState = {
-        schema: {}
+        schema: {},
+        item: {}
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -139,9 +141,9 @@ export default () => {
             draft.schema = schema;
         });
 
-    const setInput = input =>
+    const setItem = item =>
         setState(draft => {
-            draft.input = input;
+            draft.item = item;
         });
 
     const schemaAction = () => {
@@ -161,7 +163,7 @@ export default () => {
         ? Yup.object()
         : buildYup(state.schema);
 
-    const nullifyEmptyStrings = R.map(x => {
+    const emptyStringsToNull = R.map(x => {
         if (typeof x === "string") {
             return x.trim().length === 0 ? null : x;
         } else {
@@ -181,45 +183,47 @@ export default () => {
     const formResolver = schema =>
         useCallback(
             async data => {
-                const resolvedData = R.pipe(
+                const formattedData = R.pipe(
+                    emptyStringsToNull,
                     x => diff(state.item, x),
-                    x => removeAllUndefined(x),
-                    nullifyEmptyStrings
+                    x => removeAllUndefined(x)
                 )(data);
 
-                try {
-                    const values = await schema.validate(
-                        resolvedData,
-                        yupConfig
-                    );
-                    return {
-                        values,
-                        errors: {}
-                    };
-                } catch (errors) {
-                    const validationErrors = errors?.inner;
-                    if (validationErrors) {
-                        const errors = formatYupErrors(validationErrors);
-                        return {
-                            values: {},
-                            errors
-                        };
+                const resolvedData = await (async () => {
+                    if (isObjectEmpty(formattedData)) {
+                        toast("info", 0, noNewDataToSubmitError, showFlag);
+                        return {};
+                    } else {
+                        try {
+                            const values = await schema.validate(
+                                resolvedData,
+                                yupConfig
+                            );
+                            toast("success", 0, successError, showFlag);
+                            return {
+                                values,
+                                errors: {}
+                            };
+                        } catch (errors) {
+                            const validationErrors = errors?.inner;
+                            if (validationErrors) {
+                                const errors = formatYupErrors(
+                                    validationErrors
+                                );
+                                return {
+                                    values: {},
+                                    errors
+                                };
+                            }
+                        }
                     }
-                }
+                })();
 
-                // if (isObjectEmpty(resolvedData)) {
-                //     toast(0, noNewDataToSubmitError, showFlag);
-                //     return {};
-                // } else {
-                // }
-
-                // console.log(resolvedData);
-                //
-                // return {
-                //     values: {},
-                //     errors: {},
-                //     ...resolver()
-                // };
+                return {
+                    values: {},
+                    errors: {},
+                    ...resolvedData
+                };
             },
             [schema]
         );
@@ -248,9 +252,20 @@ export default () => {
             try {
                 const item = await requestItem();
                 const data = item.data.data;
-                R.forEachObjIndexed((value, key) =>
-                    setValue(key, nullToEmptyString(value))
-                )(data);
+                setItem(data);
+
+                const formFields = [
+                    "username",
+                    "email_address",
+                    "first_name",
+                    "last_name",
+                    "other_names",
+                    "additional_notes"
+                ];
+
+                for (const key of formFields) {
+                    setValue(key, nullToEmptyString(data[key]));
+                }
             } catch (error) {}
         })();
     };
@@ -292,7 +307,7 @@ export default () => {
                 />
                 <RegisteredField
                     name="other_names"
-                    title="Other name"
+                    title="Other names"
                     Component={Textfield}
                     errors={errors}
                     register={register}

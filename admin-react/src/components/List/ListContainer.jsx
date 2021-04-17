@@ -135,7 +135,7 @@ export default ({
     const handleErrorsAction = () =>
         state.response.errors.forEach((error, i) => {
             console.error(error);
-            toast(i, error, showFlag);
+            toast("error", i, error, showFlag);
         });
 
     const deleteItemsAction = async (method, keys) => {
