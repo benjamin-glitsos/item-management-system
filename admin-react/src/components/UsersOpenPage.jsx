@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import config from "%/config";
@@ -25,7 +25,9 @@ export default () => {
 
     const defaultState = {
         schema: {},
-        item: {}
+        item: {
+            additional_notes: "wow"
+        }
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -121,10 +123,12 @@ export default () => {
         console.log(data);
         submitItem(data);
     };
+
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        control
     } = useForm({
         resolver: formResolver(yupSchema)
     });
@@ -157,22 +161,25 @@ export default () => {
         }
     };
 
-    const MarkdownTextarea = register => {
+    const MarkdownTextarea = ({ name, title }) => {
         const [selectedTab, setSelectedTab] = useState("write");
         if (state.item?.additional_notes) {
             const [value, setValue] = useState(
                 fromMaybe(state.item.additional_notes)
             );
             return (
-                <ReactMde
-                    value={value}
-                    onChange={setValue}
-                    selectedTab={selectedTab}
-                    onTabChange={setSelectedTab}
-                    generateMarkdownPreview={markdown =>
-                        Promise.resolve(<ReactMarkdown source={markdown} />)
-                    }
-                />
+                <Fragment>
+                    <p>{title}</p>
+                    <ReactMde
+                        value={value}
+                        onChange={setValue}
+                        selectedTab={selectedTab}
+                        onTabChange={setSelectedTab}
+                        generateMarkdownPreview={markdown =>
+                            Promise.resolve(<ReactMarkdown source={markdown} />)
+                        }
+                    />
+                </Fragment>
             );
         } else {
             return null;
@@ -211,7 +218,29 @@ export default () => {
                     title="Other names"
                     register={register}
                 />
-                <MarkdownTextarea register={register} />
+                <Controller
+                    control={control}
+                    name="additional_notes"
+                    render={({
+                        field: { onChange, onBlur, value, name, ref },
+                        fieldState: { invalid, isTouched, isDirty, error },
+                        formState
+                    }) => (
+                        <ReactMde
+                            selectedTab={"write"}
+                            onTabChange={() => {}}
+                            generateMarkdownPreview={markdown =>
+                                Promise.resolve(
+                                    <ReactMarkdown source={markdown} />
+                                )
+                            }
+                            onBlur={onBlur}
+                            inputRef={ref}
+                            onChange={onChange}
+                            value={value}
+                        />
+                    )}
+                />
                 <ButtonGroup>
                     <Button appearance="subtle" onClick={cancelHandler}>
                         Cancel
