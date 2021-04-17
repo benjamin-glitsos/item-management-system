@@ -89,7 +89,13 @@ export default () => {
             ? Yup.object()
             : buildYup(state.schema);
 
-    const groupByProp = prop => R.groupBy(R.prop(prop));
+    const groupByProps = R.pipe(
+        R.chain(R.toPairs),
+        R.groupBy(R.head),
+        R.map(R.pluck(1))
+    );
+
+    const groupByKey = R.groupWith((a, b) => R.head(a) === R.head(b));
 
     const formResolver = validationSchema =>
         useCallback(
@@ -106,14 +112,11 @@ export default () => {
                 } catch (errors) {
                     return {
                         values: {},
-                        errors: () => {
-                            const e = errors.inner.map(e => ({
-                                path: e.path,
-                                message: e.message
-                            }));
-                            console.log(e);
-                            return e;
-                        }
+                        errors: R.pipe(
+                            R.prop("inner"),
+                            R.map(e => [e.path, e.message]),
+                            R.groupWith((a, b) => R.head(a) === R.head(b))
+                        )(errors)
                     };
                 }
             },
@@ -133,6 +136,8 @@ export default () => {
     } = useForm({
         resolver: formResolver(yupSchema)
     });
+
+    console.log(errors);
 
     const TextField = ({ name, title, register }) => {
         const id = `Field/${name}`;
@@ -172,12 +177,7 @@ export default () => {
                     control={control}
                     name={name}
                     defaultValue={defaultValue}
-                    render={({
-                        field: { onChange, onBlur, value, name, ref },
-                        defaultValue,
-                        fieldState: { invalid, isTouched, isDirty, error },
-                        formState
-                    }) => (
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Fragment>
                             <p>{title}</p>
                             <ReactMde
