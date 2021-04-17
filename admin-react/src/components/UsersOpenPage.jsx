@@ -90,25 +90,35 @@ export default () => {
             ? Yup.object()
             : buildYup(state.schema);
 
-    const groupByKey = R.groupWith((a, b) => R.head(a) === R.head(b));
+    const removeAllUndefined = R.reject(R.equals(undefined));
+
+    const nullifyEmptyStrings = R.map(x => {
+        if (typeof x === "string") {
+            return x.trim() === "" ? null : x;
+        } else {
+            return x;
+        }
+    });
+
+    const formatYupErrors = R.pipe(
+        R.prop("inner"),
+        R.map(e => ({ [e.path]: e.message })),
+        R.chain(R.toPairs),
+        R.groupBy(R.head),
+        R.map(R.pluck(1))
+    );
 
     const formResolver = validationSchema =>
         useCallback(
             async data => {
                 const resolvedData = R.pipe(
-                    R.map(x => {
-                        if (typeof x === "string") {
-                            return x.trim() === "" ? null : x;
-                        } else {
-                            return x;
-                        }
-                    }),
-                    x => diff(state.item, x)
+                    nullifyEmptyStrings,
+                    x => diff(state.item, x),
+                    removeAllUndefined
                 )(data);
-                console.log(resolvedData);
                 try {
                     const values = await validationSchema.validate(
-                        { username: "ben" },
+                        resolvedData,
                         {
                             abortEarly: false
                         }
@@ -121,15 +131,7 @@ export default () => {
                 } catch (errors) {
                     return {
                         values: {},
-                        errors: R.pipe(
-                            R.prop("inner"),
-                            R.map(e => ({
-                                [e.path]: e.message
-                            })),
-                            R.chain(R.toPairs),
-                            R.groupBy(R.head),
-                            R.map(R.pluck(1))
-                        )(errors)
+                        errors: formatYupErrors(errors)
                     };
                 }
             },
@@ -137,6 +139,7 @@ export default () => {
         );
 
     const onSubmit = data => {
+        console.log(data);
         submitItem(data);
     };
 
