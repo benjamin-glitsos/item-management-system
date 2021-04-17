@@ -24,10 +24,10 @@
             "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
         },
         "other_names": {
-            "type": "string",
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "nullable": true,
             "maxLength": 120,
-            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$",
-            "nullable": true
+            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
         },
         "password": {
             "type": "string",
@@ -35,10 +35,10 @@
             "pattern": "^[^\\s]+(s+[^\\s]+)*$"
         },
         "additional_notes": {
-            "type": "string",
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "nullable": true,
             "maxLength": 1048576,
-            "pattern": "[\\s\\S]*\\S[\\s\\S]*",
-            "nullable": true
+            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
         }
     },
     "minProperties": 1
