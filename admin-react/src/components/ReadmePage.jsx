@@ -46,8 +46,8 @@ export default () => {
                     <ReactMarkdown source={readme} />
                     <h2>Codebase</h2>
                     <GithubButton />
-                    <h2>Database Schema</h2>
-                    <DatabaseSchemaStyles>
+                    <h2>Database ER Diagram</h2>
+                    <DiagramStyles>
                         <ImagesLightbox
                             images={[
                                 {
@@ -58,13 +58,29 @@ export default () => {
                                 }
                             ]}
                         />
-                    </DatabaseSchemaStyles>
+                    </DiagramStyles>
+                    <h2>Data Validation BPMN Diagram</h2>
+                    <DiagramStyles>
+                        <ImagesLightbox
+                            images={[
+                                {
+                                    src:
+                                        process.env.PUBLIC_URL +
+                                        "/images/data-validation-diagram.svg",
+                                    alt: `BPMN diagram of the data validation paths of the ${process.env.PROJECT_ABBREV}`
+                                }
+                            ]}
+                        />
+                    </DiagramStyles>
                 </ArticleLayout>
             </PageLayout>
         </Provider>
     );
 };
 
-const DatabaseSchemaStyles = styled.div`
+const DiagramStyles = styled.div`
     margin-top: 28px;
+    img {
+        max-width: 100%;
+    }
 `;
