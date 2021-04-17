@@ -11,8 +11,8 @@ export default ({
     const numberOfItems = items.length;
     const isDeletable = numberOfItems > 0;
     const deleteItemsActionHandler = method => {
-        setDeselectAll();
-        deleteItemsAction(method, items);
+        // setDeselectAll();
+        // deleteItemsAction(method, items);
     };
 
     const Actions = () => {

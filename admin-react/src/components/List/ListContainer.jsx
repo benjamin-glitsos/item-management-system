@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
@@ -200,14 +200,14 @@ export default ({
     };
 
     const rows = state.response.data.items.map((row, i) => ({
-        key: `Table/Row/${row[keyColumnSingular]},${i}`,
-        onClick: () => {
-            history.push(`/users/${row[keyColumnSingular]}`);
-        },
+        key: `Row/${row[keyColumnSingular]},${i}`,
         cells: pipe(
             row,
             row =>
                 transform(row, {
+                    username: username => (
+                        <Link to={`/users/${username}`}>{username}</Link>
+                    ),
                     created_at: formatDate,
                     edited_at: d => formatDate(fromMaybe(d))
                 }),
@@ -226,7 +226,7 @@ export default ({
             ],
             x =>
                 x.map((x, i) => ({
-                    key: `Table/Cell/${i}`,
+                    key: `Cell/${row[keyColumnSingular]},${i}`,
                     content: x
                 }))
         )

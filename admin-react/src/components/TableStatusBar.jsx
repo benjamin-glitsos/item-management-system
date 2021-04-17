@@ -10,23 +10,34 @@ export default () => {
     const context = useContext(ListContext);
     const isLoading = context.state.isLoading;
     const numberOfSelected = context.state.selected.length;
-    const isSearch = isBlank(context.query.search);
-    const nameSingular = context.nameSingular;
-    const namePlural = context.namePlural;
     const stats = context.state.response.data;
     const totalItemsCount = stats.total_items_count;
     const filteredItemsCount = stats.filtered_items_count;
     const pageItemsStart = stats.page_items_start;
     const pageItemsEnd = stats.page_items_end;
 
-    const namePluralOrMatches = !isSearch ? namePlural : "matches";
+    const name = (() => {
+        const nameSingular = context.nameSingular;
+        const namePlural = context.namePlural;
+        const matchSingular = "match";
+        const matchPlural = "matches";
+
+        const isSearch = isBlank(context.query.search);
+        const isSingular = numberOfSelected === 1;
+
+        if (isSearch) {
+            return isSingular ? matchSingular : matchPlural;
+        } else {
+            return isSingular ? nameSingular : namePlural;
+        }
+    })();
 
     if (isLoading) {
         return <NonBreakingSpace />;
     } else if ([undefined, null, 0].includes(totalItemsCount)) {
-        return `Zero ${namePluralOrMatches}.`;
+        return `Zero ${name}.`;
     } else if (numberOfSelected === 0) {
-        const filteredStatus = `Showing ${namePluralOrMatches} ${
+        const filteredStatus = `Showing ${name} ${
             pageItemsStart + String.fromCharCode(8211) + pageItemsEnd
         } of ${filteredItemsCount}`;
         const totalStatus =
@@ -35,10 +46,8 @@ export default () => {
     } else if (numberOfSelected < 10) {
         const numberToWorded = n =>
             capitaliseFirstLetter(numbersToWords.toWords(n));
-        return `${numberToWorded(numberOfSelected)} ${
-            numberOfSelected === 1 ? nameSingular : namePlural
-        } selected.`;
+        return `${numberToWorded(numberOfSelected)} ${name} selected.`;
     } else {
-        return `${numberOfSelected} selected.`;
+        return `${numberOfSelected} ${name} selected.`;
     }
 };
