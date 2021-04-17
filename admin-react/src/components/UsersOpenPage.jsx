@@ -42,10 +42,11 @@ export default () => {
             url: config.serverUrl + "v1/schemas/edit-users/"
         });
 
-    const submitItem = () =>
+    const submitItem = data =>
         axios({
             method: "PATCH",
-            url: config.serverUrl + `v1/users/${username}/`
+            url: config.serverUrl + `v1/users/${username}/`,
+            data
         });
 
     const setItem = item =>
