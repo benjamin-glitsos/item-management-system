@@ -2,7 +2,7 @@
 
 Dockerised Model-View-Controller (MVC) architecture.
 
-### Controller-Scala
+### Controller-Scala Container
 
 * RESTful API
 * JSON Schema validation
@@ -11,14 +11,14 @@ Dockerised Model-View-Controller (MVC) architecture.
 * GRASP and SOLID
 * Object-Oriented in the large, Functional Programming in the small
 
-### Admin-React
+### Admin-React Container
 
 * React Hooks, Context and Effects
 * Container/Presenter pattern where useful
 * Ramda functional combinator library
 * Atlassian Design System
 
-### Database-PostgreSQL
+### Database-PostgreSQL Container
 
 * DRY via use of a separate metadata table joined via Views and Triggers
 * Data integrity via the heavy usage of custom domains
