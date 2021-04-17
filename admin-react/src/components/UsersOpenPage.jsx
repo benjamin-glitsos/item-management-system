@@ -16,7 +16,7 @@ import fromMaybe from "%/utilities/fromMaybe";
 import { useHistory } from "react-router-dom";
 
 export default () => {
-    // TODO: First check that every feature will work
+    // TODO: integrate MarkdownTextarea into form using register
     // TODO: remove empty strings from the form data. You may need to use the Controller component from react-hook-form. And ensure that empty forms don't submit. And ensure that only changed fields get added to the object, the same fields as default don't get added.
     // TODO: add functionality to onSubmit that removes attributes that are blank strings or maybe also other blank properties e.g. []
     const history = useHistory();
