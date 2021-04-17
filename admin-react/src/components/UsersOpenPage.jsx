@@ -22,24 +22,25 @@ import isBlank from "%/utilities/isBlank";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
 
-const RegisteredField = ({
+const Field = ({
     name,
     title,
     Component,
     errors,
-    register,
+    additionalProps,
     ...props
 }) => {
-    const id = `Field/${name}`;
+    const fieldId = `Field/${name}`;
+    const errorId = `Field/Error/${name}`;
     const fieldErrors = errors?.[name];
     return (
         <Fragment>
-            <label htmlFor={id}>{title}</label>
-            <Component id={id} {...props} {...register(name)} />
+            <label htmlFor={fieldId}>{title}</label>
+            <Component id={fieldId} {...additionalProps} {...props} />
             {fieldErrors && (
                 <ul>
                     {fieldErrors.map((error, i) => (
-                        <li key={`Errors/${name}/${i}`}>{error}</li>
+                        <li key={`${errorId}/${i}`}>{error}</li>
                     ))}
                 </ul>
             )}
@@ -47,27 +48,38 @@ const RegisteredField = ({
     );
 };
 
+const RegisteredField = ({
+    name,
+    title,
+    Component,
+    errors,
+    register,
+    ...props
+}) => (
+    <Field
+        name={name}
+        title={title}
+        Component={Component}
+        errors={errors}
+        additionalProps={register(name)}
+    />
+);
+
 const ControlledField = ({ name, title, Component, errors, control }) => (
     <Controller
         control={control}
         name={name}
         render={({ field: { onChange, onBlur, value, ref } }) => (
-            <Fragment>
-                <p>{title}</p>
-                <Component
-                    onBlur={onBlur}
-                    inputRef={ref}
-                    onChange={onChange}
-                    value={value}
-                />
-                {errors && (
-                    <ul>
-                        {errors.map((error, i) => (
-                            <li key={`Errors/${name}/${i}`}>{error}</li>
-                        ))}
-                    </ul>
-                )}
-            </Fragment>
+            <Field
+                name={name}
+                title={title}
+                Component={Component}
+                errors={errors}
+                onBlur={onBlur}
+                inputRef={ref}
+                onChange={onChange}
+                value={value}
+            />
         )}
     />
 );
@@ -85,40 +97,6 @@ const MarkdownTextarea = props => {
         />
     );
 };
-
-// const MarkdownTextarea = ({ name, title }) => {
-//     const [selectedTab, setSelectedTab] = useState("write");
-//     const errorsList = errors?.additional_notes;
-//     return (
-//         <Controller
-//             control={control}
-//             name={name}
-//             render={({ field: { onChange, onBlur, value, ref } }) => (
-//                 <Fragment>
-//                     <p>{title}</p>
-//                     <ReactMde
-//                         selectedTab={selectedTab}
-//                         onTabChange={setSelectedTab}
-//                         generateMarkdownPreview={markdown =>
-//                             Promise.resolve(<ReactMarkdown source={markdown} />)
-//                         }
-//                         onBlur={onBlur}
-//                         inputRef={ref}
-//                         onChange={onChange}
-//                         value={value}
-//                     />
-//                     {errorsList && (
-//                         <ul>
-//                             {errorsList.map((error, i) => (
-//                                 <li key={`Errors/${name}/${i}`}>{error}</li>
-//                             ))}
-//                         </ul>
-//                     )}
-//                 </Fragment>
-//             )}
-//         />
-//     );
-// };
 
 export default () => {
     const history = useHistory();
@@ -291,9 +269,37 @@ export default () => {
                     errors={errors}
                     register={register}
                 />
+                <RegisteredField
+                    name="email_address"
+                    title="Email address"
+                    Component={Textfield}
+                    errors={errors}
+                    register={register}
+                />
+                <RegisteredField
+                    name="first_name"
+                    title="First name"
+                    Component={Textfield}
+                    errors={errors}
+                    register={register}
+                />
+                <RegisteredField
+                    name="last_name"
+                    title="Last name"
+                    Component={Textfield}
+                    errors={errors}
+                    register={register}
+                />
+                <RegisteredField
+                    name="other_names"
+                    title="Other name"
+                    Component={Textfield}
+                    errors={errors}
+                    register={register}
+                />
                 <ControlledField
                     name="additional_notes"
-                    title="Additional Notes"
+                    title="Additional notes"
                     Component={MarkdownTextarea}
                     errors={errors?.additional_notes}
                     control={control}
@@ -314,20 +320,3 @@ export default () => {
 const Label = styled.label`
     ${props => props.isChanged && "font-style: italic;"}
 `;
-
-// <Field
-//     name="email_address"
-//     title="Email address"
-//     register={register}
-// />
-// <Field
-//     name="first_name"
-//     title="First name"
-//     register={register}
-// />
-// <Field name="last_name" title="Last name" register={register} />
-// <Field
-//     name="other_names"
-//     title="Other names"
-//     register={register}
-// />
