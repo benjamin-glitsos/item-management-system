@@ -99,6 +99,34 @@ export default () => {
                         errors={openContainer.errors}
                         register={openContainer.register}
                     />
+                    <RegisteredField
+                        name="first_name"
+                        title="First name"
+                        Component={Textfield}
+                        errors={openContainer.errors}
+                        register={openContainer.register}
+                    />
+                    <RegisteredField
+                        name="last_name"
+                        title="Last name"
+                        Component={Textfield}
+                        errors={openContainer.errors}
+                        register={openContainer.register}
+                    />
+                    <RegisteredField
+                        name="other_names"
+                        title="Other names"
+                        Component={Textfield}
+                        errors={openContainer.errors}
+                        register={openContainer.register}
+                    />
+                    <ControlledField
+                        name="additional_notes"
+                        title="Additional notes"
+                        Component={MarkdownTextarea}
+                        errors={openContainer.errors?.additional_notes}
+                        control={openContainer.control}
+                    />
                     <ButtonGroup>
                         <Button
                             appearance="subtle"
@@ -115,31 +143,3 @@ export default () => {
         </OpenLayout>
     );
 };
-// <RegisteredField
-//     name="first_name"
-//     title="First name"
-//     Component={Textfield}
-//     errors={errors}
-//     register={register}
-// />
-// <RegisteredField
-//     name="last_name"
-//     title="Last name"
-//     Component={Textfield}
-//     errors={errors}
-//     register={register}
-// />
-// <RegisteredField
-//     name="other_names"
-//     title="Other names"
-//     Component={Textfield}
-//     errors={errors}
-//     register={register}
-// />
-// <ControlledField
-//     name="additional_notes"
-//     title="Additional notes"
-//     Component={MarkdownTextarea}
-//     errors={errors?.additional_notes}
-//     control={control}
-// />

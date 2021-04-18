@@ -193,6 +193,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
         handleSubmit,
         setValue,
         errors,
+        control,
         onSubmit,
         state
     };
