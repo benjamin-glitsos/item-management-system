@@ -1,3 +1,5 @@
+import Field from "%/components/Field";
+
 export default ({ name, title, Component, errors, register, ...props }) => (
     <Field
         name={name}

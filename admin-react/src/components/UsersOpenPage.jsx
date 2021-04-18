@@ -1,10 +1,17 @@
-import { Fragment, useEffect, useCallback } from "react";
+import {
+    Fragment,
+    useEffect,
+    useCallback,
+    createContext,
+    useContext
+} from "react";
 import R from "ramda";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm, Controller } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
+import { titleCase } from "title-case";
 import config from "%/config";
 import axios from "axios";
 import { diff } from "deep-object-diff";
@@ -13,11 +20,20 @@ import Button, { ButtonGroup } from "@atlaskit/button";
 import { useFlags } from "@atlaskit/flag";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { useHistory } from "react-router-dom";
+import PageContainer from "%/components/Page/PageContainer";
+import OpenLayout from "%/components/OpenLayout";
+import RegisteredField from "%/components/RegisteredField";
+import ControlledField from "%/components/ControlledField";
+import MarkdownTextarea from "%/components/MarkdownTextarea";
 import noNewDataToSubmitError from "%/errors/noNewDataToSubmit";
 import successError from "%/errors/successError";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
+
+export const Context = createContext();
+
+const { Provider } = Context;
 
 export default () => {
     const history = useHistory();
@@ -32,6 +48,26 @@ export default () => {
     };
 
     const [state, setState] = useImmer(defaultState);
+
+    const context = useContext(Context);
+
+    const nameSingular = "user";
+    const namePlural = "users";
+    const keyColumnSingular = "username";
+    const keyColumnPlural = "usernames";
+    const title = titleCase(namePlural);
+    const slug = namePlural;
+
+    const pageContainer = PageContainer({
+        nameSingular,
+        namePlural,
+        title,
+        slug,
+        namePlural,
+        description: `A ${nameSingular} in the ${
+            process.env.PROJECT_NAME || "Item Management System"
+        }.`
+    });
 
     const requestItem = () =>
         axios({
@@ -193,9 +229,15 @@ export default () => {
     useEffect(openItemAction, []);
     useEffect(schemaAction, []);
 
+    const pageContext = {
+        nameSingular,
+        namePlural,
+        title,
+        ...pageContainer
+    };
+
     return (
-        <Fragment>
-            <h3>{state.item?.username}</h3>
+        <Provider value={pageContext}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <RegisteredField
                     name="username"
@@ -248,6 +290,6 @@ export default () => {
                     </Button>
                 </ButtonGroup>
             </form>
-        </Fragment>
+        </Provider>
     );
 };

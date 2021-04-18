@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import { Helmet } from "react-helmet";
-import ArticleLayout from "%/components/ContentLayout";
+import ArticleLayout from "%/components/ArticleLayout";
 
 export default ({ title, description, children }) => (
-    <ArticleLayout title={title} description={description} maxWidth="800px">
+    <ArticleLayout title={title} description={description} maxWidth="1200px">
         {children}
     </ArticleLayout>
 );
