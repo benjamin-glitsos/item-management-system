@@ -17,7 +17,7 @@ import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 
-export default ({ key, nameSingular, namePlural, formFields }) => {
+export default ({ action, key, nameSingular, namePlural, formFields }) => {
     const history = useHistory();
 
     const defaultState = {
@@ -31,7 +31,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
 
     const itemUrl = config.serverUrl + `v1/${namePlural}/${key}/`;
 
-    const schemaUrl = config.serverUrl + `v1/schemas/edit-${namePlural}/`;
+    const schemaUrl = config.serverUrl + `v1/schemas/${action}-${namePlural}/`;
 
     const requestItem = () =>
         axios({
@@ -186,6 +186,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
     useEffect(schemaAction, []);
 
     return {
+        action,
         requestItem,
         requestSchema,
         cancelHandler,

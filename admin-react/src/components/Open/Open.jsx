@@ -1,9 +1,9 @@
 import { createContext } from "react";
 import OpenPresenter from "%/components/Open/OpenPresenter";
 
-export const ListContext = createContext();
+export const OpenContext = createContext();
 
-const { Provider } = ListContext;
+const { Provider } = OpenContext;
 
 export default ({ context, children }) => (
     <Provider value={context}>
