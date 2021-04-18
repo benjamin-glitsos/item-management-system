@@ -16,11 +16,11 @@ export default ({
             <Label htmlFor={fieldId}>{title}</Label>
             <Component id={fieldId} {...additionalProps} {...props} />
             {fieldErrors && (
-                <ul>
+                <Errors>
                     {fieldErrors.map((error, i) => (
                         <li key={`${errorId}/${i}`}>{error}</li>
                     ))}
-                </ul>
+                </Errors>
             )}
         </Wrapper>
     );
@@ -41,4 +41,17 @@ const Label = styled.label`
         Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     margin-bottom: 4px;
     margin-top: 0px;
+`;
+
+const Errors = styled.ul`
+    padding-left: 25px;
+    font-size: 0.857143em;
+    font-style: inherit;
+    line-height: 1.33333;
+    font-weight: normal;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    color: rgb(222, 53, 11);
+    margin-top: 4px;
+    display: flex;
 `;
