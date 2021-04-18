@@ -54,6 +54,7 @@ export default ({
         });
 
     const submitItem = data => {
+        console.log(data);
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
         } else {
@@ -63,7 +64,7 @@ export default ({
                 data
             })
                 .then(() => {
-                    setSubmissions();
+                    // setSubmissions();
                     toast("success", 0, success, showFlag);
                 })
                 .catch(() => {

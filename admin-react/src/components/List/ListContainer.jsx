@@ -207,27 +207,36 @@ export default ({
                     edited_at: formatDate
                 }),
                 rowTransform,
-                row => [
-                    <Checkbox
-                        isChecked={state.selected.includes(key)}
-                        onChange={() => setSelected(key)}
-                    />,
-                    ...Object.values(row),
-                    ActionsMenu({
-                        items: [key],
-                        deleteItemsAction,
-                        setDeselectAll,
-                        additionalItems: [
-                            {
-                                title: "Open",
-                                onClick: () => {
-                                    history.push(`/${namePlural}/${key}`);
+                row => {
+                    const isSelected = state.selected.includes(key);
+                    const setSelectedHandler = () => setSelected(key);
+                    return [
+                        <Checkbox
+                            isChecked={isSelected}
+                            onChange={setSelectedHandler}
+                        />,
+                        ...Object.values(row),
+                        ActionsMenu({
+                            items: [key],
+                            deleteItemsAction,
+                            setDeselectAll,
+                            additionalItems: [
+                                {
+                                    title: "Open",
+                                    onClick: () => {
+                                        history.push(`/${namePlural}/${key}`);
+                                    },
+                                    isVisible: true
                                 },
-                                isVisible: true
-                            }
-                        ]
-                    })
-                ],
+                                {
+                                    title: !isSelected ? "Select" : "Deselect",
+                                    onClick: setSelectedHandler,
+                                    isVisible: true
+                                }
+                            ]
+                        })
+                    ];
+                },
                 x =>
                     x.map((x, i) => ({
                         key: `Cell/${key},${i}`,

@@ -9,10 +9,13 @@ object ItemsRoutes {
   )
 
   private final def keyRoutes(): Route = pathPrefix(Segment) { key: String =>
-    concat(
-      OpenItemsRoutes(key),
-      EditItemsRoutes(key)
-    )
+    {
+      val keyToUpperCase = key.toUpperCase()
+      concat(
+        OpenItemsRoutes(keyToUpperCase),
+        EditItemsRoutes(keyToUpperCase)
+      )
+    }
   }
 
   final def apply(): Route = concat(

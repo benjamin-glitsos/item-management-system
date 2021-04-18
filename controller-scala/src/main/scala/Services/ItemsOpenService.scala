@@ -6,13 +6,12 @@ import upickle_import.general._
 
 trait ItemsOpenService extends ServiceTrait {
   final def open(key: String): ujson.Value = {
-    val keyToUpperCase = key.toUpperCase()
     read[ujson.Value](
       try {
         (for {
-          _ <- ItemsDAO.incrementOpens(keyToUpperCase)
+          _ <- ItemsDAO.incrementOpens(key)
 
-          data <- ItemsDAO.open(keyToUpperCase)
+          data <- ItemsDAO.open(key)
 
           val output: String = createDataOutput(writeJs(data))
 
