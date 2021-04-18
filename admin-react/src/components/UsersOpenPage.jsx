@@ -8,7 +8,6 @@ import { titleCase } from "title-case";
 import axios from "axios";
 import { diff } from "deep-object-diff";
 import Textfield from "@atlaskit/textfield";
-import Button, { ButtonGroup } from "@atlaskit/button";
 import { useFlags } from "@atlaskit/flag";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { useHistory } from "react-router-dom";
@@ -70,49 +69,36 @@ export default () => {
 
     return (
         <Open context={pageContext}>
-            <form onSubmit={openContainer.handleSubmit(openContainer.onSubmit)}>
-                <RegisteredField
-                    name="username"
-                    title="Username"
-                    Component={Textfield}
-                />
-                <RegisteredField
-                    name="email_address"
-                    title="Email address"
-                    Component={Textfield}
-                />
-                <RegisteredField
-                    name="first_name"
-                    title="First name"
-                    Component={Textfield}
-                />
-                <RegisteredField
-                    name="last_name"
-                    title="Last name"
-                    Component={Textfield}
-                />
-                <RegisteredField
-                    name="other_names"
-                    title="Other names"
-                    Component={Textfield}
-                />
-                <ControlledField
-                    name="additional_notes"
-                    title="Additional notes"
-                    Component={MarkdownTextarea}
-                />
-                <ButtonGroup>
-                    <Button
-                        appearance="subtle"
-                        onClick={openContainer.cancelHandler}
-                    >
-                        Cancel
-                    </Button>
-                    <Button type="submit" appearance="primary">
-                        Submit
-                    </Button>
-                </ButtonGroup>
-            </form>
+            <RegisteredField
+                name="username"
+                title="Username"
+                Component={Textfield}
+            />
+            <RegisteredField
+                name="email_address"
+                title="Email address"
+                Component={Textfield}
+            />
+            <RegisteredField
+                name="first_name"
+                title="First name"
+                Component={Textfield}
+            />
+            <RegisteredField
+                name="last_name"
+                title="Last name"
+                Component={Textfield}
+            />
+            <RegisteredField
+                name="other_names"
+                title="Other names"
+                Component={Textfield}
+            />
+            <ControlledField
+                name="additional_notes"
+                title="Additional notes"
+                Component={MarkdownTextarea}
+            />
         </Open>
     );
 };

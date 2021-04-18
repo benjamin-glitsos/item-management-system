@@ -1,9 +1,10 @@
 import { useContext } from "react";
+import { titleCase } from "title-case";
 import { OpenContext } from "%/components/Open/Open";
 import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
+import FormButtons from "%/components/FormButtons";
 import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
-import { titleCase } from "title-case";
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
@@ -19,7 +20,10 @@ export default ({ children }) => {
                 title={title}
                 breadcrumbs={generateBreadcrumbs(context.homeBreadcrumb)}
             >
-                {children}
+                <form onSubmit={context.handleSubmit(context.onSubmit)}>
+                    {children}
+                    <FormButtons cancelHandler={context.cancelHandler} />
+                </form>
             </OpenLayout>
         </PageLayout>
     );
