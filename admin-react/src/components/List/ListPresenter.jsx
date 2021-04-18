@@ -8,6 +8,7 @@ import NoData from "%/components/NoData";
 import ActionsBar from "%/components/ActionsBar";
 import Pagination from "%/components/Pagination";
 import { ListContext } from "%/components/List/List";
+import PageLayout from "%/components/PageLayout";
 import config from "%/config";
 
 export default () => {
@@ -15,28 +16,30 @@ export default () => {
     const sort = context.query.sort || config.defaultSort;
 
     return (
-        <FullwidthLayout>
-            <PageHeader
-                breadcrumbs={
-                    <BreadcrumbBar breadcrumbs={[context.homeBreadcrumb]} />
-                }
-                actions={<ActionsBar />}
-                bottomBar={<TableStatusBar />}
-            >
-                {context.title}
-            </PageHeader>
-            <DynamicTable
-                head={context.head}
-                rows={context.rows}
-                isLoading={context.state.isLoading}
-                emptyView={<NoData />}
-                sortKey={sort[0]}
-                sortOrder={sort[1]}
-                defaultSortKey="created_at"
-                defaultSortOrder="DESC"
-                onSort={e => context.setSort([e.key, e.sortOrder])}
-            />
-            <Pagination />
-        </FullwidthLayout>
+        <PageLayout title={context.metaTitle} description={context.description}>
+            <FullwidthLayout>
+                <PageHeader
+                    breadcrumbs={
+                        <BreadcrumbBar breadcrumbs={[context.homeBreadcrumb]} />
+                    }
+                    actions={<ActionsBar />}
+                    bottomBar={<TableStatusBar />}
+                >
+                    {context.title}
+                </PageHeader>
+                <DynamicTable
+                    head={context.head}
+                    rows={context.rows}
+                    isLoading={context.state.isLoading}
+                    emptyView={<NoData />}
+                    sortKey={sort[0]}
+                    sortOrder={sort[1]}
+                    defaultSortKey="created_at"
+                    defaultSortOrder="DESC"
+                    onSort={e => context.setSort([e.key, e.sortOrder])}
+                />
+                <Pagination />
+            </FullwidthLayout>
+        </PageLayout>
     );
 };

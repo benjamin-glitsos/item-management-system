@@ -1,12 +1,10 @@
 import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
-import PageLayout from "%/components/PageLayout";
 import List from "%/components/List/List";
 
 export default () => {
-    const nameSingular = "user";
-    const namePlural = "users";
+    const [nameSingular, namePlural] = config.names.users;
     const keyColumnSingular = "username";
     const keyColumnPlural = "usernames";
     const title = titleCase(namePlural);
@@ -53,19 +51,9 @@ export default () => {
     });
 
     const pageContext = {
-        nameSingular,
-        namePlural,
-        title,
         ...pageContainer,
         ...listContainer
     };
 
-    return (
-        <PageLayout
-            title={pageContext.metaTitle}
-            description={pageContext.description}
-        >
-            <List context={pageContext} />
-        </PageLayout>
-    );
+    return <List context={pageContext} />;
 };

@@ -187,6 +187,7 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
 
     return {
         action,
+        key,
         requestItem,
         requestSchema,
         cancelHandler,

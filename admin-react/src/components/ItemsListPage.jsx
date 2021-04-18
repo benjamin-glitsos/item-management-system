@@ -2,13 +2,11 @@ import R from "ramda";
 import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
-import PageLayout from "%/components/PageLayout";
 import List from "%/components/List/List";
 import formatNull from "%/utilities/formatNull";
 
 export default () => {
-    const nameSingular = "item";
-    const namePlural = "items";
+    const [nameSingular, namePlural] = config.names.items;
     const title = titleCase(namePlural);
     const slug = namePlural;
 
@@ -52,19 +50,9 @@ export default () => {
     });
 
     const pageContext = {
-        nameSingular,
-        namePlural,
-        title,
         ...pageContainer,
         ...listContainer
     };
 
-    return (
-        <PageLayout
-            title={pageContext.metaTitle}
-            description={pageContext.description}
-        >
-            <List context={pageContext} />
-        </PageLayout>
-    );
+    return <List context={pageContext} />;
 };

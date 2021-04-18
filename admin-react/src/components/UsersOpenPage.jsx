@@ -32,10 +32,8 @@ export default () => {
 
     const { username } = useParams();
 
-    const nameSingular = "user";
-    const namePlural = "users";
-    const keyColumnSingular = "username";
-    const keyColumnPlural = "usernames";
+    const [nameSingular, namePlural] = config.names.users;
+    const action = config.actions.EDIT;
     const title = titleCase(namePlural);
     const slug = namePlural;
 
@@ -51,7 +49,7 @@ export default () => {
     });
 
     const openContainer = OpenContainer({
-        action: "edit",
+        action,
         key: username,
         nameSingular,
         namePlural,
@@ -66,9 +64,6 @@ export default () => {
     });
 
     const pageContext = {
-        nameSingular,
-        namePlural,
-        title,
         ...pageContainer,
         ...openContainer
     };
