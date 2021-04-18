@@ -66,16 +66,6 @@ export default () => {
         ]
     });
 
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors },
-        control
-    } = useForm({
-        resolver: openContainer.resolver
-    });
-
     const pageContext = {
         nameSingular,
         namePlural,
@@ -92,20 +82,24 @@ export default () => {
             breadcrumbs={generateBreadcrumbs(pageContext.homeBreadcrumb)}
         >
             <Open context={pageContext}>
-                <form onSubmit={handleSubmit(openContainer.onSubmit)}>
+                <form
+                    onSubmit={openContainer.handleSubmit(
+                        openContainer.onSubmit
+                    )}
+                >
                     <RegisteredField
                         name="username"
                         title="Username"
                         Component={Textfield}
-                        errors={errors}
-                        register={register}
+                        errors={openContainer.errors}
+                        register={openContainer.register}
                     />
                     <RegisteredField
                         name="email_address"
                         title="Email address"
                         Component={Textfield}
-                        errors={errors}
-                        register={register}
+                        errors={openContainer.errors}
+                        register={openContainer.register}
                     />
                     <ButtonGroup>
                         <Button

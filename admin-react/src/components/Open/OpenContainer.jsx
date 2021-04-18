@@ -149,7 +149,15 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
             [schema]
         );
 
-    const resolver = formResolver(yupSchema);
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+        control
+    } = useForm({
+        resolver: formResolver(yupSchema)
+    });
 
     const cancelHandler = () => {
         history.push("/users");
@@ -181,7 +189,10 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
         requestItem,
         requestSchema,
         cancelHandler,
-        resolver,
+        register,
+        handleSubmit,
+        setValue,
+        errors,
         state
     };
 };
