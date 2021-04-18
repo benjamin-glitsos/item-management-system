@@ -64,20 +64,37 @@ trait SeederTrait {
     sample()
   }
 
+  final def overwriteText(c: Char, s: String): String = s.map(x => c)
+
   final def createKey(words: String): String = {
     def abbreviate(word: String): String = if (word.length() <= 3) {
       word
     } else {
-      val firstChars = left(word, 2)
-      val lastChar   = right(word, 1)
+      val firstChars: String = left(word, 2)
+      val lastChar: String   = right(word, 1)
       firstChars + lastChar
     }
 
-    val randomCode = randomAlphanumerics(
+    val randomCode: String = randomAlphanumerics(
       randomGaussianDiscrete(min = 1, max = 6)
     )
 
-    (words.split(" ").take(4).map(abbreviate) :+ randomCode)
+    val blacklist: List[String] = List("pee", "pus")
+
+    def censorBlacklist(code: String): String = {
+      if (blacklist contains code) {
+        overwriteText(randomAlphanumerics(1)(0), code)
+      } else {
+        code
+      }
+    }
+
+    (words
+      .split(" ")
+      .take(4)
+      .map(abbreviate)
+      .map(_.toLowerCase())
+      .map(censorBlacklist) :+ randomCode)
       .filter(!StringUtilities.isEmpty(_))
       .mkString("-")
       .toUpperCase()
