@@ -4,7 +4,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 
 ### Controller-Scala Container
 
-* Layered architecture: Service, DAO, Middleware and Seeders.
+* Layered architecture: Service, DAO, Middleware and Seeders
 * RESTful API design
 * Strong type-safety by using monads and other Algebraic Data Types
 * Object-oriented multiple-trait-inheritance pattern
@@ -14,11 +14,12 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 
 * React Hooks, Context and Effects
 * Container/Presenter pattern where useful
+* Ramda functional combinator library
 * Atlassian Design System
 
 ### Database-PostgreSQL Container
 
-* DRY via use of a separate metadata table joined via Views and Triggers
-* Data integrity via the heavy usage of custom domains
-* Use of trigram indexes, stored procedures, and window functions.
+* Architecture: rich metadata is abstracted into a separate table, however views, ‘instead of’ triggers and stored procedures allow operating on data as if it were contained in a single table
+* Trigram indexes speed up text search
+* Domain constraints ensure data integrity
 * Fourth normal form (4NF)
