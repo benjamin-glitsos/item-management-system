@@ -4,10 +4,9 @@ import BreadcrumbBar from "%/components/BreadcrumbBar";
 import ContentMargins from "%/components/ContentMargins";
 
 export default ({ title, breadcrumbs, maxWidth, children }) => {
-    const sidePadding = 30;
     return (
-        <MarginBottom sidePadding={sidePadding}>
-            <ContentMargins maxWidth={maxWidth - sidePadding * 2}>
+        <MarginBottom>
+            <ContentMargins maxWidth={maxWidth}>
                 <PageHeader
                     breadcrumbs={<BreadcrumbBar breadcrumbs={breadcrumbs} />}
                 >
@@ -21,11 +20,4 @@ export default ({ title, breadcrumbs, maxWidth, children }) => {
 
 const MarginBottom = styled.div`
     margin-bottom: 28px;
-    ${props => {
-        const sidePadding = props.sidePadding;
-        return `
-            padding-left: ${sidePadding};
-            padding-right: ${sidePadding};
-            `;
-    }}
 `;

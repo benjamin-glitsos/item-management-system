@@ -43,7 +43,7 @@ export default ({
         } else {
             return (
                 <DropdownItem isDisabled={true}>
-                    No actions available. {formatAction(numberOfItems, "")}.
+                    {formatAction(numberOfItems, "")}.
                 </DropdownItem>
             );
         }

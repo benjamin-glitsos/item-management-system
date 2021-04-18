@@ -11,6 +11,7 @@ export default ({ name, children }) => (
 
 const Styles = styled.div`
     [role="menuitem"] {
-        min-width: 110px;
+        min-width: 120px;
+        z-index: 4;
     }
 `;

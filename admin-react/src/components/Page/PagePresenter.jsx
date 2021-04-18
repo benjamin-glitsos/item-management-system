@@ -35,7 +35,4 @@ const ContentStyles = styled.div`
 
 const PageStyles = styled.div`
     background-color: #fafbfc;
-    div > div > div:nth-child(2) {
-        z-index: 3;
-    }
 `;
