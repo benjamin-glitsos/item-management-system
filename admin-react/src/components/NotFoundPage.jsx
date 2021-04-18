@@ -7,6 +7,7 @@ import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
+import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
 
 export const Context = createContext();
 
@@ -32,13 +33,6 @@ export default () => {
     const pageContext = { ...pageContainer };
 
     const location = useLocation();
-    const breadcrumbs = [
-        pageContext.homeBreadcrumb,
-        ...location.pathname
-            .split("/")
-            .filter(s => s !== "")
-            .map(s => [s, s])
-    ];
 
     const history = useHistory();
     const handleReturnHome = () => {
@@ -53,7 +47,9 @@ export default () => {
             >
                 <ArticleLayout
                     title={pageContext.title}
-                    breadcrumbs={breadcrumbs}
+                    breadcrumbs={generateBreadcrumbs(
+                        pageContext.homeBreadcrumb
+                    )}
                 >
                     <p>{pageContext.description}</p>
                     <HomeButtonStyles>

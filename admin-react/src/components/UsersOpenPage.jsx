@@ -12,7 +12,6 @@ import { useForm, Controller } from "react-hook-form";
 import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import { titleCase } from "title-case";
-import config from "%/config";
 import axios from "axios";
 import { diff } from "deep-object-diff";
 import Textfield from "@atlaskit/textfield";
@@ -25,11 +24,14 @@ import OpenLayout from "%/components/OpenLayout";
 import RegisteredField from "%/components/RegisteredField";
 import ControlledField from "%/components/ControlledField";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
+import Open from "%/components/Open/Open";
 import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
 import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
+import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
+import config from "%/config";
 
 export const Context = createContext();
 
@@ -68,18 +70,6 @@ export default () => {
             process.env.PROJECT_NAME || "Item Management System"
         }.`
     });
-
-    const requestItem = () =>
-        axios({
-            method: "GET",
-            url: config.serverUrl + `v1/users/${username}/`
-        });
-
-    const requestSchema = () =>
-        axios({
-            method: "GET",
-            url: config.serverUrl + "v1/schemas/edit-users/"
-        });
 
     const submitItem = data => {
         if (isObjectEmpty(data)) {
@@ -185,51 +175,6 @@ export default () => {
             [schema]
         );
 
-    // const formResolver = schema =>
-    //     useCallback(
-    //         async data => {
-    //             const formattedData = R.pipe(
-    //                 emptyStringsToNull,
-    //                 x => diff(state.item, x),
-    //                 x => removeAllUndefined(x)
-    //             )(data);
-    //
-    //             const o = (async () => {
-    //                 if (isObjectEmpty(formattedData)) {
-    //                     toast("info", 0, noNewDataToSubmitError, showFlag);
-    //                     return {};
-    //                 } else {
-    //                     try {
-    //                         const values = await schema.validate(
-    //                             resolvedData,
-    //                             yupConfig
-    //                         );
-    //                         return {
-    //                             values
-    //                         };
-    //                     } catch (errors) {
-    //                         const validationErrors = errors?.inner;
-    //                         if (validationErrors) {
-    //                             return {
-    //                                 errors: formatYupErrors(validationErrors)
-    //                             };
-    //                         } else {
-    //                             return {};
-    //                         }
-    //                     }
-    //                 }
-    //             })();
-    //
-    //             console.log(o);
-    //
-    //             return {
-    //                 values: {},
-    //                 errors: {}
-    //             };
-    //         },
-    //         [schema]
-    //     );
-
     const onSubmit = data => {
         console.log(data);
         submitItem(data);
@@ -284,58 +229,66 @@ export default () => {
 
     return (
         <Provider value={pageContext}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <RegisteredField
-                    name="username"
-                    title="Username"
-                    Component={Textfield}
-                    errors={errors}
-                    register={register}
-                />
-                <RegisteredField
-                    name="email_address"
-                    title="Email address"
-                    Component={Textfield}
-                    errors={errors}
-                    register={register}
-                />
-                <RegisteredField
-                    name="first_name"
-                    title="First name"
-                    Component={Textfield}
-                    errors={errors}
-                    register={register}
-                />
-                <RegisteredField
-                    name="last_name"
-                    title="Last name"
-                    Component={Textfield}
-                    errors={errors}
-                    register={register}
-                />
-                <RegisteredField
-                    name="other_names"
-                    title="Other names"
-                    Component={Textfield}
-                    errors={errors}
-                    register={register}
-                />
-                <ControlledField
-                    name="additional_notes"
-                    title="Additional notes"
-                    Component={MarkdownTextarea}
-                    errors={errors?.additional_notes}
-                    control={control}
-                />
-                <ButtonGroup>
-                    <Button appearance="subtle" onClick={cancelHandler}>
-                        Cancel
-                    </Button>
-                    <Button type="submit" appearance="primary">
-                        Submit
-                    </Button>
-                </ButtonGroup>
-            </form>
+            {console.log(pageContext)}
+            <OpenLayout
+                title={pageContext.title}
+                breadcrumbs={generateBreadcrumbs(pageContext.homeBreadcrumb)}
+            >
+                <Open context={pageContext}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <RegisteredField
+                            name="username"
+                            title="Username"
+                            Component={Textfield}
+                            errors={errors}
+                            register={register}
+                        />
+                        <RegisteredField
+                            name="email_address"
+                            title="Email address"
+                            Component={Textfield}
+                            errors={errors}
+                            register={register}
+                        />
+                        <RegisteredField
+                            name="first_name"
+                            title="First name"
+                            Component={Textfield}
+                            errors={errors}
+                            register={register}
+                        />
+                        <RegisteredField
+                            name="last_name"
+                            title="Last name"
+                            Component={Textfield}
+                            errors={errors}
+                            register={register}
+                        />
+                        <RegisteredField
+                            name="other_names"
+                            title="Other names"
+                            Component={Textfield}
+                            errors={errors}
+                            register={register}
+                        />
+                        <ControlledField
+                            name="additional_notes"
+                            title="Additional notes"
+                            Component={MarkdownTextarea}
+                            errors={errors?.additional_notes}
+                            control={control}
+                        />
+                        <ButtonGroup>
+                            <Button appearance="subtle" onClick={cancelHandler}>
+                                Cancel
+                            </Button>
+                            <Button type="submit" appearance="primary">
+                                Submit
+                            </Button>
+                        </ButtonGroup>
+                    </form>
+                </Open>
+            </OpenLayout>
         </Provider>
     );
 };

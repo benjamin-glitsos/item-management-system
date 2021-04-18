@@ -1,17 +1,10 @@
-import { createContext, useContext } from "react";
 import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import PageLayout from "%/components/PageLayout";
 import List from "%/components/List/List";
 
-export const Context = createContext();
-
-const { Provider } = Context;
-
 export default () => {
-    const context = useContext(Context);
-
     const nameSingular = "user";
     const namePlural = "users";
     const keyColumnSingular = "username";
@@ -69,13 +62,11 @@ export default () => {
     };
 
     return (
-        <Provider value={pageContext}>
-            <PageLayout
-                title={pageContext.metaTitle}
-                description={pageContext.description}
-            >
-                <List context={pageContext} />
-            </PageLayout>
-        </Provider>
+        <PageLayout
+            title={pageContext.metaTitle}
+            description={pageContext.description}
+        >
+            <List context={pageContext} />
+        </PageLayout>
     );
 };

@@ -1,4 +1,3 @@
-import { createContext, useContext } from "react";
 import R from "ramda";
 import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
@@ -7,13 +6,7 @@ import PageLayout from "%/components/PageLayout";
 import List from "%/components/List/List";
 import formatNull from "%/utilities/formatNull";
 
-export const Context = createContext();
-
-const { Provider } = Context;
-
 export default () => {
-    const context = useContext(Context);
-
     const nameSingular = "item";
     const namePlural = "items";
     const title = titleCase(namePlural);
@@ -68,13 +61,11 @@ export default () => {
     };
 
     return (
-        <Provider value={pageContext}>
-            <PageLayout
-                title={pageContext.metaTitle}
-                description={pageContext.description}
-            >
-                <List context={pageContext} />
-            </PageLayout>
-        </Provider>
+        <PageLayout
+            title={pageContext.metaTitle}
+            description={pageContext.description}
+        >
+            <List context={pageContext} />
+        </PageLayout>
     );
 };
