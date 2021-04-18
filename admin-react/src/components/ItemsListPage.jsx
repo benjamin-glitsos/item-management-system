@@ -3,10 +3,12 @@ import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import List from "%/components/List/List";
-import formatNull from "%/utilities/formatNull";
+import config from "%/config";
 
 export default () => {
     const [nameSingular, namePlural] = config.names.items;
+    const keyColumnSingular = "key";
+    const keyColumnPlural = "keys";
     const title = titleCase(namePlural);
     const slug = namePlural;
 
@@ -44,9 +46,11 @@ export default () => {
                 isSortable: true
             }
         ],
-        rowTransform: R.evolve({ description: formatNull }),
-        keyColumnSingular: "key",
-        keyColumnPlural: "keys"
+        nameSingular,
+        namePlural,
+        keyColumnSingular,
+        keyColumnPlural,
+        rowTransform: R.identity
     });
 
     const pageContext = {

@@ -2,6 +2,7 @@ import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import List from "%/components/List/List";
+import config from "%/config";
 
 export default () => {
     const [nameSingular, namePlural] = config.names.users;

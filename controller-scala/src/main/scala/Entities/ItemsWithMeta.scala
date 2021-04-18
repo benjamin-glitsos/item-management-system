@@ -1,5 +1,3 @@
-import java.time.LocalDateTime
-
 case class ItemsWithMeta(
     key: String,
     name: String,
@@ -8,8 +6,8 @@ case class ItemsWithMeta(
     opens: Int,
     edits: Int,
     is_deleted: Boolean,
-    created_at: LocalDateTime,
-    edited_at: Option[LocalDateTime],
-    deleted_at: Option[LocalDateTime],
+    created_at: String,
+    edited_at: Option[String],
+    deleted_at: Option[String],
     additional_notes: Option[String]
 )
