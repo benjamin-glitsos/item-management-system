@@ -30,10 +30,16 @@ export default ({ children }) => {
                                     context.onSubmit
                                 )}
                             >
-                                {children}
-                                <FormButtons
-                                    cancelHandler={context.cancelHandler}
-                                />
+                                <Grid fluid>
+                                    <Row>{children}</Row>
+                                    <Row end="xs">
+                                        <FormButtons
+                                            cancelHandler={
+                                                context.cancelHandler
+                                            }
+                                        />
+                                    </Row>
+                                </Grid>
                             </form>
                         </Col>
                         <Col sm={3}>

@@ -72,31 +72,37 @@ export default () => {
             <RegisteredField
                 name="username"
                 title="Username"
+                sm={6}
                 Component={Textfield}
             />
             <RegisteredField
                 name="email_address"
                 title="Email address"
+                sm={6}
                 Component={Textfield}
             />
             <RegisteredField
                 name="first_name"
                 title="First name"
+                sm={4}
                 Component={Textfield}
             />
             <RegisteredField
                 name="last_name"
                 title="Last name"
+                sm={4}
                 Component={Textfield}
             />
             <RegisteredField
                 name="other_names"
                 title="Other names"
+                sm={4}
                 Component={Textfield}
             />
             <ControlledField
                 name="additional_notes"
                 title="Additional notes"
+                sm={12}
                 Component={MarkdownTextarea}
             />
         </Open>

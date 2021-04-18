@@ -16,5 +16,4 @@ export default ({ cancelHandler }) => (
 
 const Styles = styled.div`
     margin-top: 24px;
-    float: right;
 `;
