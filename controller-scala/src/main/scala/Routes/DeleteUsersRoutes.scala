@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object DeleteUsersRoutes {
   final def apply(): Route = delete {
-    ValidationDirective("delete-users") { body: ujson.Value =>
+    ValidationMiddleware("delete-users") { body: ujson.Value =>
       {
         val method: String          = body("method").str
         val usernames: List[String] = read[List[String]](body("usernames"))

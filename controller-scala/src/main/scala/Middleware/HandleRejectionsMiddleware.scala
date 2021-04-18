@@ -1,7 +1,7 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 
-object HandleRejectionsDirective {
+object HandleRejectionsMiddleware {
   final def apply(): Directive0 = handleRejections(
     RejectionHandler
       .newBuilder()

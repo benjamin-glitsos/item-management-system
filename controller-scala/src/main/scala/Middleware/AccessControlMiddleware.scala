@@ -2,7 +2,7 @@ import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.headers.RawHeader
 
-object AccessControlDirective {
+object AccessControlMiddleware {
   def apply(): Directive0 = {
     val allowOriginUrl = if (System.getenv("PROJECT_MODE") == "production") {
       val projectDomain  = System.getenv("PROJECT_DOMAIN")

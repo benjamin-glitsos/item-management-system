@@ -4,7 +4,7 @@ import akka.http.scaladsl.server._
 
 object Version1Routes {
   final def apply(): Route =
-    (AccessControlDirective() & HandleRejectionsDirective())(
+    (AccessControlMiddleware() & HandleRejectionsMiddleware())(
       concat(
         pathPrefix("schemas")(SchemasRoutes()),
         pathPrefix("users")(UsersRoutes()),

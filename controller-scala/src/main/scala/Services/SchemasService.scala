@@ -11,6 +11,7 @@ object SchemasService extends ServiceTrait {
     val json = read[ujson.Value](load(name).toString())
     if (!includeTitle) {
       json.obj.remove("title")
+      json.obj.remove("description")
     }
     json
   }

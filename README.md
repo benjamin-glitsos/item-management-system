@@ -4,6 +4,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 
 ### Controller-Scala Container
 
+* Layered architecture: Service, DAO, Middleware and Seeders.
 * RESTful API
 * JSON Schema validation
 * Type-safety using Algebraic Data Types
@@ -14,6 +15,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 ### Admin-React Container
 
 * React Hooks, Context and Effects
+* JSON Schema form validation
 * Container/Presenter pattern where useful
 * Ramda functional combinator library
 * Atlassian Design System

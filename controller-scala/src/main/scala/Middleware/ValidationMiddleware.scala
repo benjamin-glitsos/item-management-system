@@ -6,7 +6,7 @@ import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 import upickle_import.general._
 
-object ValidationDirective {
+object ValidationMiddleware {
   private final val staticEndpoints = List("open-users", "open-items")
 
   final def apply(endpointName: String): Directive1[ujson.Value] =

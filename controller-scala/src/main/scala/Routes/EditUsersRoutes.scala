@@ -7,7 +7,7 @@ import upickle_import.general._
 
 object EditUsersRoutes {
   final def apply(username: String): Route = patch {
-    ValidationDirective("edit-users") { body: ujson.Value =>
+    ValidationMiddleware("edit-users") { body: ujson.Value =>
       {
         val newUsername: Option[String] =
           Try(body("username").str).toOption
