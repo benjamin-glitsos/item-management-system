@@ -175,7 +175,7 @@ export default ({
     });
 
     const cancelHandler = () => {
-        history.push("/users");
+        history.push(`/${namePlural}`);
     };
 
     const onSubmit = data => submitItem(data);
