@@ -35,13 +35,6 @@ export default () => {
 
     const { username } = useParams();
 
-    const defaultState = {
-        schema: {},
-        item: {}
-    };
-
-    const [state, setState] = useImmer(defaultState);
-
     const nameSingular = "user";
     const namePlural = "users";
     const keyColumnSingular = "username";
@@ -63,117 +56,16 @@ export default () => {
     const openContainer = OpenContainer({
         key: username,
         nameSingular,
-        namePlural
+        namePlural,
+        formFields: [
+            "username",
+            "email_address",
+            "first_name",
+            "last_name",
+            "other_names",
+            "additional_notes"
+        ]
     });
-
-    const submitItem = data => {
-        if (isObjectEmpty(data)) {
-            toast("info", 0, noNewDataToSubmitError, showFlag);
-        } else {
-            axios({
-                method: "PATCH",
-                url: config.serverUrl + `v1/users/${username}/`,
-                data
-            })
-                .then(() => {
-                    toast("success", 0, success, showFlag);
-                })
-                .catch(() => {
-                    toast("error", 0, success, showFlag);
-                });
-        }
-    };
-
-    const setSchema = schema =>
-        setState(draft => {
-            delete schema.properties.additional_notes.anyOf;
-            schema.properties.additional_notes.type = "string";
-            delete schema.properties.other_names.anyOf;
-            schema.properties.other_names.type = "string";
-            draft.schema = schema;
-        });
-
-    const setItem = item =>
-        setState(draft => {
-            draft.item = item;
-        });
-
-    const schemaAction = () => {
-        (async () => {
-            try {
-                const schema = await openContainer.requestSchema();
-                setSchema(schema.data);
-            } catch (error) {}
-        })();
-    };
-
-    const yupConfig = {
-        abortEarly: false
-    };
-
-    const yupSchema = isObjectEmpty(state.schema)
-        ? Yup.object()
-        : buildYup(state.schema);
-
-    const emptyStringsToNull = R.map(x => {
-        if (typeof x === "string") {
-            if (x.trim().length === 0) {
-                return null;
-            } else {
-                return x;
-            }
-        } else {
-            return x;
-        }
-    });
-
-    const nullToEmptyString = x => (x === null ? "" : x);
-
-    const formatYupErrors = R.pipe(
-        R.map(e => ({ [e.path]: e.message })),
-        R.chain(R.toPairs),
-        R.groupBy(R.head),
-        R.map(R.pluck(1))
-    );
-    const formResolver = schema =>
-        useCallback(
-            async data => {
-                const formattedData = R.pipe(
-                    emptyStringsToNull,
-                    x => diff(state.item, x),
-                    x => removeAllUndefined(x)
-                )(data);
-
-                class Output {
-                    constructor(values = {}, errors = {}) {
-                        this.values = values;
-                        this.errors = errors;
-                    }
-                }
-
-                try {
-                    const values = await schema.validate(
-                        formattedData,
-                        yupConfig
-                    );
-                    return {
-                        ...new Output(),
-                        values
-                    };
-                } catch (errors) {
-                    return {
-                        ...new Output(),
-                        errors: formatYupErrors(errors.inner)
-                    };
-                }
-            },
-            [schema]
-        );
-
-    const onSubmit = data => {
-        console.log(data);
-        submitItem(data);
-    };
 
     const {
         register,
@@ -182,38 +74,8 @@ export default () => {
         formState: { errors },
         control
     } = useForm({
-        resolver: formResolver(yupSchema)
+        resolver: openContainer.resolver
     });
-
-    const cancelHandler = () => {
-        history.push("/users");
-    };
-
-    const openItemAction = () => {
-        (async () => {
-            try {
-                const item = await openContainer.requestItem();
-                const data = item.data.data;
-                setItem(data);
-
-                const formFields = [
-                    "username",
-                    "email_address",
-                    "first_name",
-                    "last_name",
-                    "other_names",
-                    "additional_notes"
-                ];
-
-                for (const key of formFields) {
-                    setValue(key, nullToEmptyString(data[key]));
-                }
-            } catch (error) {}
-        })();
-    };
-
-    useEffect(openItemAction, []);
-    useEffect(schemaAction, []);
 
     const pageContext = {
         nameSingular,
@@ -231,7 +93,7 @@ export default () => {
             breadcrumbs={generateBreadcrumbs(pageContext.homeBreadcrumb)}
         >
             <Open context={pageContext}>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(openContainer.onSubmit)}>
                     <RegisteredField
                         name="username"
                         title="Username"
@@ -246,36 +108,11 @@ export default () => {
                         errors={errors}
                         register={register}
                     />
-                    <RegisteredField
-                        name="first_name"
-                        title="First name"
-                        Component={Textfield}
-                        errors={errors}
-                        register={register}
-                    />
-                    <RegisteredField
-                        name="last_name"
-                        title="Last name"
-                        Component={Textfield}
-                        errors={errors}
-                        register={register}
-                    />
-                    <RegisteredField
-                        name="other_names"
-                        title="Other names"
-                        Component={Textfield}
-                        errors={errors}
-                        register={register}
-                    />
-                    <ControlledField
-                        name="additional_notes"
-                        title="Additional notes"
-                        Component={MarkdownTextarea}
-                        errors={errors?.additional_notes}
-                        control={control}
-                    />
                     <ButtonGroup>
-                        <Button appearance="subtle" onClick={cancelHandler}>
+                        <Button
+                            appearance="subtle"
+                            onClick={openContainer.cancelHandler}
+                        >
                             Cancel
                         </Button>
                         <Button type="submit" appearance="primary">
@@ -287,3 +124,31 @@ export default () => {
         </OpenLayout>
     );
 };
+// <RegisteredField
+//     name="first_name"
+//     title="First name"
+//     Component={Textfield}
+//     errors={errors}
+//     register={register}
+// />
+// <RegisteredField
+//     name="last_name"
+//     title="Last name"
+//     Component={Textfield}
+//     errors={errors}
+//     register={register}
+// />
+// <RegisteredField
+//     name="other_names"
+//     title="Other names"
+//     Component={Textfield}
+//     errors={errors}
+//     register={register}
+// />
+// <ControlledField
+//     name="additional_notes"
+//     title="Additional notes"
+//     Component={MarkdownTextarea}
+//     errors={errors?.additional_notes}
+//     control={control}
+// />
