@@ -17,7 +17,14 @@ import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 
-export default ({ action, key, nameSingular, namePlural, formFields }) => {
+export default ({
+    action,
+    key,
+    nameSingular,
+    namePlural,
+    formFields,
+    optionalFields
+}) => {
     const history = useHistory();
 
     const defaultState = {
@@ -77,10 +84,10 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
 
     const setSchema = schema =>
         setState(draft => {
-            delete schema.properties.additional_notes.anyOf;
-            schema.properties.additional_notes.type = "string";
-            delete schema.properties.other_names.anyOf;
-            schema.properties.other_names.type = "string";
+            for (const field of optionalFields) {
+                delete schema.properties[field].anyOf;
+                schema.properties[field].type = "string";
+            }
             draft.schema = schema;
         });
 

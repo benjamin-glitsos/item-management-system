@@ -199,7 +199,9 @@ export default ({
             cells: R.pipe(
                 R.evolve({
                     [keyColumnSingular]: x => (
-                        <Link to={`/${namePlural}/${key}`}>{key}</Link>
+                        <Link to={`/${namePlural}/${key.toLowerCase()}`}>
+                            {key}
+                        </Link>
                     ),
                     created_at: formatDate,
                     edited_at: formatDate

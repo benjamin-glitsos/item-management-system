@@ -32,7 +32,7 @@ export default () => (
                             <Route exact path="/items">
                                 <ItemsListPage />
                             </Route>
-                            <Route exact path="/items/:item">
+                            <Route exact path="/items/:key">
                                 <ItemsOpenPage />
                             </Route>
                             <Route path="*">

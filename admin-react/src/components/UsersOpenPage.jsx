@@ -1,12 +1,5 @@
-import { Fragment, useEffect, useCallback } from "react";
-import R from "ramda";
 import { useParams } from "react-router-dom";
-import { useImmer } from "use-immer";
-import { useForm, Controller } from "react-hook-form";
-import * as Yup from "yup";
 import { titleCase } from "title-case";
-import axios from "axios";
-import { diff } from "deep-object-diff";
 import Textfield from "@atlaskit/textfield";
 import { useFlags } from "@atlaskit/flag";
 import "react-mde/lib/styles/css/react-mde-all.css";
@@ -17,18 +10,9 @@ import RegisteredField from "%/components/RegisteredField";
 import ControlledField from "%/components/ControlledField";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
 import Open from "%/components/Open/Open";
-import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
-import success from "%/messages/success";
-import removeAllUndefined from "%/utilities/removeAllUndefined";
-import isObjectEmpty from "%/utilities/isObjectEmpty";
-import toast from "%/utilities/toast";
 import config from "%/config";
 
 export default () => {
-    const history = useHistory();
-
-    const { showFlag } = useFlags();
-
     const { username } = useParams();
 
     const [nameSingular, namePlural] = config.names.users;
@@ -59,7 +43,8 @@ export default () => {
             "last_name",
             "other_names",
             "additional_notes"
-        ]
+        ],
+        optionalFields: ["other_names", "additional_notes"]
     });
 
     const pageContext = {

@@ -5,24 +5,21 @@
     "properties": {
         "key": {
             "type": "string",
-            "maxLength": 255,
-            "pattern": "^[-A-Z0-9]*$"
+            "maxLength": 255
         },
         "name": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 255,
-            "pattern": "^[^\\s]+(s+[^\\s]+)*$"
+            "maxLength": 255
         },
         "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
             "type": "string",
-            "maxLength": 1048576,
-            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
+            "maxLength": 1048576
         },
         "additional_notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
             "type": "string",
-            "maxLength": 1048576,
-            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
+            "maxLength": 1048576
         }
     },
     "minProperties": 1
