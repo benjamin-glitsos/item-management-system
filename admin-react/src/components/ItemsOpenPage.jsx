@@ -33,7 +33,7 @@ export default () => {
 
     const openContainer = OpenContainer({
         action,
-        key,
+        key: key.toUpperCase(),
         nameSingular,
         namePlural,
         formFields: ["key", "name", "description", "additional_notes"],
