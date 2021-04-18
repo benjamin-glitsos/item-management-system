@@ -1,6 +1,5 @@
-import { Fragment, useState, useEffect, useCallback } from "react";
+import { Fragment, useEffect, useCallback } from "react";
 import R from "ramda";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm, Controller } from "react-hook-form";
@@ -12,92 +11,13 @@ import { diff } from "deep-object-diff";
 import Textfield from "@atlaskit/textfield";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { useFlags } from "@atlaskit/flag";
-import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router-dom";
 import noNewDataToSubmitError from "%/errors/noNewDataToSubmit";
 import successError from "%/errors/successError";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
-import isBlank from "%/utilities/isBlank";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
-
-const Field = ({
-    name,
-    title,
-    Component,
-    errors,
-    additionalProps,
-    ...props
-}) => {
-    const fieldId = `Field/${name}`;
-    const errorId = `Field/Error/${name}`;
-    const fieldErrors = errors?.[name];
-    return (
-        <Fragment>
-            <label htmlFor={fieldId}>{title}</label>
-            <Component id={fieldId} {...additionalProps} {...props} />
-            {fieldErrors && (
-                <ul>
-                    {fieldErrors.map((error, i) => (
-                        <li key={`${errorId}/${i}`}>{error}</li>
-                    ))}
-                </ul>
-            )}
-        </Fragment>
-    );
-};
-
-const RegisteredField = ({
-    name,
-    title,
-    Component,
-    errors,
-    register,
-    ...props
-}) => (
-    <Field
-        name={name}
-        title={title}
-        Component={Component}
-        errors={errors}
-        additionalProps={register(name)}
-    />
-);
-
-const ControlledField = ({ name, title, Component, errors, control }) => (
-    <Controller
-        control={control}
-        name={name}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
-            <Field
-                name={name}
-                title={title}
-                Component={Component}
-                errors={errors}
-                onBlur={onBlur}
-                inputRef={ref}
-                onChange={onChange}
-                value={value}
-            />
-        )}
-    />
-);
-
-const MarkdownTextarea = props => {
-    const [selectedTab, setSelectedTab] = useState("write");
-    return (
-        <ReactMde
-            selectedTab={selectedTab}
-            onTabChange={setSelectedTab}
-            generateMarkdownPreview={markdown =>
-                Promise.resolve(<ReactMarkdown source={markdown} />)
-            }
-            {...props}
-        />
-    );
-};
 
 export default () => {
     const history = useHistory();
@@ -331,7 +251,3 @@ export default () => {
         </Fragment>
     );
 };
-
-const Label = styled.label`
-    ${props => props.isChanged && "font-style: italic;"}
-`;
