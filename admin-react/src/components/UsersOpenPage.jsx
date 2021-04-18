@@ -162,7 +162,6 @@ export default () => {
                         errors: {}
                     };
                 } catch (errors) {
-                    console.log(errors);
                     return {
                         values: {},
                         errors: formatYupErrors(errors.inner)
