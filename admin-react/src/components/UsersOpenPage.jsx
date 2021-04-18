@@ -3,7 +3,6 @@ import R from "ramda";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { useForm, Controller } from "react-hook-form";
-import { buildYup } from "json-schema-to-yup";
 import * as Yup from "yup";
 import { titleCase } from "title-case";
 import axios from "axios";
@@ -89,7 +88,7 @@ export default () => {
 
     return (
         <OpenLayout
-            title={pageContext.title}
+            title={`Edit ${nameSingular} : ${username}`}
             breadcrumbs={generateBreadcrumbs(pageContext.homeBreadcrumb)}
         >
             <Open context={pageContext}>

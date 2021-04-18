@@ -9,6 +9,7 @@ import formatDate from "%/utilities/formatDate";
 import toast from "%/utilities/toast";
 import config from "%/config";
 import * as Yup from "yup";
+import { buildYup } from "json-schema-to-yup";
 import { diff } from "deep-object-diff";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
@@ -28,18 +29,20 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
 
     const { showFlag } = useFlags();
 
-    const apiUrl = config.serverUrl + `v1/${nameSingular}/${key}`;
+    const itemUrl = config.serverUrl + `v1/${namePlural}/${key}/`;
+
+    const schemaUrl = config.serverUrl + `v1/schemas/edit-${namePlural}/`;
 
     const requestItem = () =>
         axios({
             method: "GET",
-            url: config.serverUrl + `v1/${namePlural}/${key}/`
+            url: itemUrl
         });
 
     const requestSchema = () =>
         axios({
             method: "GET",
-            url: config.serverUrl + `v1/schemas/edit-${namePlural}/`
+            url: schemaUrl
         });
 
     const submitItem = data => {
@@ -48,7 +51,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
         } else {
             axios({
                 method: "PATCH",
-                url: config.serverUrl + `v1/${namePlural}/${key}/`,
+                url: apiUrl,
                 data
             })
                 .then(() => {
@@ -66,7 +69,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
         });
 
     const setSchema = schema =>
-        openContainer.setState(draft => {
+        setState(draft => {
             delete schema.properties.additional_notes.anyOf;
             schema.properties.additional_notes.type = "string";
             delete schema.properties.other_names.anyOf;
@@ -160,7 +163,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
     const openItemAction = () => {
         (async () => {
             try {
-                const item = await openContainer.requestItem();
+                const item = await requestItem();
                 const data = item.data.data;
                 setItem(data);
 

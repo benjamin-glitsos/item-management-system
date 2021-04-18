@@ -32,7 +32,7 @@ export default ({
 }) => {
     const history = useHistory();
 
-    const apiUrl = config.serverUrl + `v1/${namePlural}`;
+    const apiUrl = config.serverUrl + `v1/${namePlural}/`;
 
     const [state, setState] = useImmer(defaultState);
 
