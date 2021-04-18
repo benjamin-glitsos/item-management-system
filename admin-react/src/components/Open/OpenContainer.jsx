@@ -51,7 +51,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
         } else {
             axios({
                 method: "PATCH",
-                url: apiUrl,
+                url: itemUrl,
                 data
             })
                 .then(() => {
@@ -193,6 +193,7 @@ export default ({ key, nameSingular, namePlural, formFields }) => {
         handleSubmit,
         setValue,
         errors,
+        onSubmit,
         state
     };
 };

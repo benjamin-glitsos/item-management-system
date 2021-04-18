@@ -74,8 +74,6 @@ export default () => {
         ...openContainer
     };
 
-    console.log(pageContext);
-
     return (
         <OpenLayout
             title={`Edit ${nameSingular} : ${username}`}
