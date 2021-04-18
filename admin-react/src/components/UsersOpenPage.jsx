@@ -86,7 +86,11 @@ export default () => {
             method: "PATCH",
             url: config.serverUrl + `v1/users/${username}/`,
             data
-        });
+        })
+            .then(x => {
+                toast("success", 0, successError, showFlag);
+            })
+            .catch(x => {});
 
     const setSchema = schema =>
         setState(draft => {
@@ -121,7 +125,11 @@ export default () => {
 
     const emptyStringsToNull = R.map(x => {
         if (typeof x === "string") {
-            return x.trim().length === 0 ? null : x;
+            if (x.trim().length === 0) {
+                return null;
+            } else {
+                return x;
+            }
         } else {
             return x;
         }
@@ -135,7 +143,6 @@ export default () => {
         R.groupBy(R.head),
         R.map(R.pluck(1))
     );
-
     const formResolver = schema =>
         useCallback(
             async data => {
@@ -145,44 +152,70 @@ export default () => {
                     x => removeAllUndefined(x)
                 )(data);
 
-                const resolvedData = await (async () => {
-                    if (isObjectEmpty(formattedData)) {
-                        toast("info", 0, noNewDataToSubmitError, showFlag);
-                        return {};
-                    } else {
-                        try {
-                            const values = await schema.validate(
-                                resolvedData,
-                                yupConfig
-                            );
-                            toast("success", 0, successError, showFlag);
-                            return {
-                                values,
-                                errors: {}
-                            };
-                        } catch (errors) {
-                            const validationErrors = errors?.inner;
-                            if (validationErrors) {
-                                const errors = formatYupErrors(
-                                    validationErrors
-                                );
-                                return {
-                                    values: {},
-                                    errors
-                                };
-                            }
-                        }
-                    }
-                })();
-
-                return {
-                    values: {},
-                    errors: {},
-                    ...resolvedData
-                };
+                try {
+                    const values = await schema.validate(
+                        formattedData,
+                        yupConfig
+                    );
+                    return {
+                        values,
+                        errors: {}
+                    };
+                } catch (errors) {
+                    console.log(errors);
+                    return {
+                        values: {},
+                        errors: formatYupErrors(errors.inner)
+                    };
+                }
             },
             [schema]
         );
+
+    // const formResolver = schema =>
+    //     useCallback(
+    //         async data => {
+    //             const formattedData = R.pipe(
+    //                 emptyStringsToNull,
+    //                 x => diff(state.item, x),
+    //                 x => removeAllUndefined(x)
+    //             )(data);
+    //
+    //             const o = (async () => {
+    //                 if (isObjectEmpty(formattedData)) {
+    //                     toast("info", 0, noNewDataToSubmitError, showFlag);
+    //                     return {};
+    //                 } else {
+    //                     try {
+    //                         const values = await schema.validate(
+    //                             resolvedData,
+    //                             yupConfig
+    //                         );
+    //                         return {
+    //                             values
+    //                         };
+    //                     } catch (errors) {
+    //                         const validationErrors = errors?.inner;
+    //                         if (validationErrors) {
+    //                             return {
+    //                                 errors: formatYupErrors(validationErrors)
+    //                             };
+    //                         } else {
+    //                             return {};
+    //                         }
+    //                     }
+    //                 }
+    //             })();
+    //
+    //             console.log(o);
+    //
+    //             return {
+    //                 values: {},
+    //                 errors: {}
+    //             };
+    //         },
+    //         [schema]
+    //     );
 
     const onSubmit = data => {
         console.log(data);
