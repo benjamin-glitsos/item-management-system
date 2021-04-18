@@ -37,8 +37,6 @@ const Label = styled.label`
     color: rgb(107, 119, 140);
     font-weight: 600;
     display: inline-block;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     margin-bottom: 4px;
     margin-top: 0px;
 `;
@@ -49,8 +47,6 @@ const Errors = styled.ul`
     font-style: inherit;
     line-height: 1.33333;
     font-weight: normal;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     color: rgb(222, 53, 11);
     margin-top: 4px;
     display: flex;

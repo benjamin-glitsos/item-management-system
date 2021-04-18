@@ -182,6 +182,15 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
         })();
     };
 
+    const sidebarItems = {
+        "metakey": state.item.metakey,
+        "Created at": formatDate(state.item.created_at),
+        "Edited at": formatDate(state.item.edited_at),
+        "Deleted at": formatDate(state.item.deleted_at),
+        "opens": state.item.opens,
+        "edits": state.item.edits
+    };
+
     useEffect(openItemAction, []);
     useEffect(schemaAction, []);
 
@@ -197,6 +206,8 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
         errors,
         control,
         onSubmit,
+        formFields,
+        sidebarItems,
         state
     };
 };
