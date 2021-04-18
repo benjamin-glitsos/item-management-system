@@ -38,11 +38,9 @@ const Wrapper = styled.div`
 
 const Label = styled.label`
     font-size: 0.857143em;
-    font-style: inherit;
     line-height: 1.33333;
     color: rgb(107, 119, 140);
     font-weight: 600;
-    display: inline-block;
     margin-bottom: 4px;
     margin-top: 0px;
 `;
@@ -50,10 +48,7 @@ const Label = styled.label`
 const Errors = styled.ul`
     padding-left: 25px;
     font-size: 0.857143em;
-    font-style: inherit;
     line-height: 1.33333;
-    font-weight: normal;
     color: rgb(222, 53, 11);
     margin-top: 4px;
-    display: flex;
 `;
