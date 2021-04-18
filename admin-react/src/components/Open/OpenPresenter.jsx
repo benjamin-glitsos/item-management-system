@@ -44,8 +44,9 @@ export default ({ children }) => {
                         </Col>
                         <Col sm={2}>
                             {Object.entries(context.sidebarItems).map(
-                                ([label, value]) => (
+                                ([label, value], i) => (
                                     <LabelValueItem
+                                        key={`LabelValueItem/${label},${i}`}
                                         label={label}
                                         value={value}
                                     />

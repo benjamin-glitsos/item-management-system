@@ -4,7 +4,7 @@ import upickle_import.general._
 
 object OpenUsersRoutes {
   final def apply(username: String): Route = get {
-    ValidationDirective("open-user") { body: ujson.Value =>
+    ValidationDirective("open-users") { body: ujson.Value =>
       complete(UsersService.open(username))
     }
   }

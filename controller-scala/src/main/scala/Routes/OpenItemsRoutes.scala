@@ -4,7 +4,7 @@ import upickle_import.general._
 
 object OpenItemsRoutes {
   final def apply(key: String): Route = get {
-    ValidationDirective("open-item") { body: ujson.Value =>
+    ValidationDirective("open-items") { body: ujson.Value =>
       complete(ItemsService.open(key))
     }
   }
