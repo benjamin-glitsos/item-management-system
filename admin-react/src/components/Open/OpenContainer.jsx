@@ -183,12 +183,12 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
     };
 
     const sidebarItems = {
-        "metakey": state.item.metakey,
+        "Metakey": state.item.metakey,
         "Created at": formatDate(state.item.created_at),
         "Edited at": formatDate(state.item.edited_at),
         "Deleted at": formatDate(state.item.deleted_at),
-        "opens": state.item.opens,
-        "edits": state.item.edits
+        "Opens": state.item.opens,
+        "Edits": state.item.edits
     };
 
     useEffect(openItemAction, []);

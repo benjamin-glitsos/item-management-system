@@ -10,6 +10,7 @@ const ReadmePage = lazy(() => import("%/components/ReadmePage"));
 const UsersListPage = lazy(() => import("%/components/UsersListPage"));
 const UsersOpenPage = lazy(() => import("%/components/UsersOpenPage"));
 const ItemsListPage = lazy(() => import("%/components/ItemsListPage"));
+const ItemsOpenPage = lazy(() => import("%/components/ItemsOpenPage"));
 const NotFoundPage = lazy(() => import("%/components/NotFoundPage"));
 
 export default () => (
@@ -30,6 +31,9 @@ export default () => (
                             </Route>
                             <Route exact path="/items">
                                 <ItemsListPage />
+                            </Route>
+                            <Route exact path="/items/:item">
+                                <ItemsOpenPage />
                             </Route>
                             <Route path="*">
                                 <NotFoundPage />
