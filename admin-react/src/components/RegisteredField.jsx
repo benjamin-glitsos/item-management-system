@@ -13,6 +13,7 @@ export default ({ name, title, sm, Component, ...props }) => {
                 Component={Component}
                 errors={context.errors}
                 additionalProps={context.register(name)}
+                {...props}
             />
         </Col>
     );

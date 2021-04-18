@@ -59,6 +59,7 @@ export default () => {
                 title="Username"
                 sm={6}
                 Component={Textfield}
+                isDisabled={true}
             />
             <RegisteredField
                 name="email_address"
