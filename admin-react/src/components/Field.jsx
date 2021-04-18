@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import styled from "styled-components";
 
 export default ({
     name,
@@ -12,8 +12,8 @@ export default ({
     const errorId = `Field/Error/${name}`;
     const fieldErrors = errors?.[name];
     return (
-        <Fragment>
-            <label htmlFor={fieldId}>{title}</label>
+        <Wrapper>
+            <Label htmlFor={fieldId}>{title}</Label>
             <Component id={fieldId} {...additionalProps} {...props} />
             {fieldErrors && (
                 <ul>
@@ -22,10 +22,23 @@ export default ({
                     ))}
                 </ul>
             )}
-        </Fragment>
+        </Wrapper>
     );
 };
 
-// const Label = styled.label`
-//     ${props => props.isChanged && "font-style: italic;"}
-// `;
+const Wrapper = styled.div`
+    margin-top: 8px;
+`;
+
+const Label = styled.label`
+    font-size: 0.857143em;
+    font-style: inherit;
+    line-height: 1.33333;
+    color: rgb(107, 119, 140);
+    font-weight: 600;
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    margin-bottom: 4px;
+    margin-top: 0px;
+`;
