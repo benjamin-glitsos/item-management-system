@@ -24,7 +24,7 @@ export default ({ children }) => {
             >
                 <Grid fluid>
                     <Row>
-                        <Col sm={9}>
+                        <Col sm={10}>
                             <form
                                 onSubmit={context.handleSubmit(
                                     context.onSubmit
@@ -42,7 +42,7 @@ export default ({ children }) => {
                                 </Grid>
                             </form>
                         </Col>
-                        <Col sm={3}>
+                        <Col sm={2}>
                             {Object.entries(context.sidebarItems).map(
                                 ([label, value]) => (
                                     <LabelValueItem
