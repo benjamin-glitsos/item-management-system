@@ -22,7 +22,6 @@ import toast from "%/utilities/toast";
 import config from "%/config";
 
 export default ({
-    apiPath,
     defaultState,
     headContentColumns,
     rowTransform = row => row,
@@ -33,7 +32,7 @@ export default ({
 }) => {
     const history = useHistory();
 
-    const apiUrl = config.serverUrl + apiPath;
+    const apiUrl = config.serverUrl + `v1/${namePlural}`;
 
     const [state, setState] = useImmer(defaultState);
 

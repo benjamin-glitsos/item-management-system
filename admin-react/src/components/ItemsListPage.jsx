@@ -24,7 +24,6 @@ export default () => {
     });
 
     const listContainer = ListContainer({
-        apiPath: `v1/${slug}/`,
         defaultState: {
             request: {
                 body: {}

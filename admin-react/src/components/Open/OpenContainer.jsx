@@ -8,10 +8,10 @@ import formatDate from "%/utilities/formatDate";
 import toast from "%/utilities/toast";
 import config from "%/config";
 
-export default ({ apiPath, username }) => {
+export default ({ key, nameSingular, namePlural }) => {
     const history = useHistory();
 
-    const apiUrl = config.serverUrl + apiPath;
+    const apiUrl = config.serverUrl + `v1/${nameSingular}/${key}`;
 
     const [state, setState] = useImmer({});
 
@@ -20,7 +20,7 @@ export default ({ apiPath, username }) => {
     const requestItem = () =>
         axios({
             method: "GET",
-            url: config.serverUrl + `v1/users/${username}/`
+            url: config.serverUrl + `v1/users/${key}/`
         });
 
     const requestSchema = () =>

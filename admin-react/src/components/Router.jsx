@@ -25,10 +25,10 @@ export default () => (
                             <Route exact path="/users">
                                 <UsersListPage />
                             </Route>
-                            <Route path="/users/:username">
+                            <Route exact path="/users/:username">
                                 <UsersOpenPage />
                             </Route>
-                            <Route path="/items">
+                            <Route exact path="/items">
                                 <ItemsListPage />
                             </Route>
                             <Route path="*">

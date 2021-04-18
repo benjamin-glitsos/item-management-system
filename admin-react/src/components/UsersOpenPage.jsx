@@ -1,10 +1,4 @@
-import {
-    Fragment,
-    useEffect,
-    useCallback,
-    createContext,
-    useContext
-} from "react";
+import { Fragment, useEffect, useCallback } from "react";
 import R from "ramda";
 import { useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
@@ -20,6 +14,7 @@ import { useFlags } from "@atlaskit/flag";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { useHistory } from "react-router-dom";
 import PageContainer from "%/components/Page/PageContainer";
+import OpenContainer from "%/components/Open/OpenContainer";
 import OpenLayout from "%/components/OpenLayout";
 import RegisteredField from "%/components/RegisteredField";
 import ControlledField from "%/components/ControlledField";
@@ -32,10 +27,6 @@ import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
 import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
 import config from "%/config";
-
-export const Context = createContext();
-
-const { Provider } = Context;
 
 export default () => {
     const history = useHistory();
@@ -50,8 +41,6 @@ export default () => {
     };
 
     const [state, setState] = useImmer(defaultState);
-
-    const context = useContext(Context);
 
     const nameSingular = "user";
     const namePlural = "users";
@@ -71,6 +60,12 @@ export default () => {
         }.`
     });
 
+    const openContainer = OpenContainer({
+        key: username,
+        nameSingular,
+        namePlural
+    });
+
     const submitItem = data => {
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
@@ -80,10 +75,10 @@ export default () => {
                 url: config.serverUrl + `v1/users/${username}/`,
                 data
             })
-                .then(x => {
+                .then(() => {
                     toast("success", 0, success, showFlag);
                 })
-                .catch(x => {
+                .catch(() => {
                     toast("error", 0, success, showFlag);
                 });
         }
@@ -106,7 +101,7 @@ export default () => {
     const schemaAction = () => {
         (async () => {
             try {
-                const schema = await requestSchema();
+                const schema = await openContainer.requestSchema();
                 setSchema(schema.data);
             } catch (error) {}
         })();
@@ -197,7 +192,7 @@ export default () => {
     const openItemAction = () => {
         (async () => {
             try {
-                const item = await requestItem();
+                const item = await openContainer.requestItem();
                 const data = item.data.data;
                 setItem(data);
 
@@ -224,71 +219,71 @@ export default () => {
         nameSingular,
         namePlural,
         title,
-        ...pageContainer
+        ...pageContainer,
+        ...openContainer
     };
 
+    console.log(pageContext);
+
     return (
-        <Provider value={pageContext}>
-            {console.log(pageContext)}
-            <OpenLayout
-                title={pageContext.title}
-                breadcrumbs={generateBreadcrumbs(pageContext.homeBreadcrumb)}
-            >
-                <Open context={pageContext}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <RegisteredField
-                            name="username"
-                            title="Username"
-                            Component={Textfield}
-                            errors={errors}
-                            register={register}
-                        />
-                        <RegisteredField
-                            name="email_address"
-                            title="Email address"
-                            Component={Textfield}
-                            errors={errors}
-                            register={register}
-                        />
-                        <RegisteredField
-                            name="first_name"
-                            title="First name"
-                            Component={Textfield}
-                            errors={errors}
-                            register={register}
-                        />
-                        <RegisteredField
-                            name="last_name"
-                            title="Last name"
-                            Component={Textfield}
-                            errors={errors}
-                            register={register}
-                        />
-                        <RegisteredField
-                            name="other_names"
-                            title="Other names"
-                            Component={Textfield}
-                            errors={errors}
-                            register={register}
-                        />
-                        <ControlledField
-                            name="additional_notes"
-                            title="Additional notes"
-                            Component={MarkdownTextarea}
-                            errors={errors?.additional_notes}
-                            control={control}
-                        />
-                        <ButtonGroup>
-                            <Button appearance="subtle" onClick={cancelHandler}>
-                                Cancel
-                            </Button>
-                            <Button type="submit" appearance="primary">
-                                Submit
-                            </Button>
-                        </ButtonGroup>
-                    </form>
-                </Open>
-            </OpenLayout>
-        </Provider>
+        <OpenLayout
+            title={pageContext.title}
+            breadcrumbs={generateBreadcrumbs(pageContext.homeBreadcrumb)}
+        >
+            <Open context={pageContext}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <RegisteredField
+                        name="username"
+                        title="Username"
+                        Component={Textfield}
+                        errors={errors}
+                        register={register}
+                    />
+                    <RegisteredField
+                        name="email_address"
+                        title="Email address"
+                        Component={Textfield}
+                        errors={errors}
+                        register={register}
+                    />
+                    <RegisteredField
+                        name="first_name"
+                        title="First name"
+                        Component={Textfield}
+                        errors={errors}
+                        register={register}
+                    />
+                    <RegisteredField
+                        name="last_name"
+                        title="Last name"
+                        Component={Textfield}
+                        errors={errors}
+                        register={register}
+                    />
+                    <RegisteredField
+                        name="other_names"
+                        title="Other names"
+                        Component={Textfield}
+                        errors={errors}
+                        register={register}
+                    />
+                    <ControlledField
+                        name="additional_notes"
+                        title="Additional notes"
+                        Component={MarkdownTextarea}
+                        errors={errors?.additional_notes}
+                        control={control}
+                    />
+                    <ButtonGroup>
+                        <Button appearance="subtle" onClick={cancelHandler}>
+                            Cancel
+                        </Button>
+                        <Button type="submit" appearance="primary">
+                            Submit
+                        </Button>
+                    </ButtonGroup>
+                </form>
+            </Open>
+        </OpenLayout>
     );
 };
