@@ -3,6 +3,7 @@ import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import List from "%/components/List/List";
+import formatNull from "%/utilities/formatNull";
 import config from "%/config";
 
 export default () => {
@@ -50,7 +51,7 @@ export default () => {
         namePlural,
         keyColumnSingular,
         keyColumnPlural,
-        rowTransform: R.identity
+        rowTransform: R.evolve({ description: formatNull })
     });
 
     const pageContext = {
