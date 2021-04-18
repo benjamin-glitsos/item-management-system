@@ -81,16 +81,23 @@ export default () => {
             url: config.serverUrl + "v1/schemas/edit-users/"
         });
 
-    const submitItem = data =>
-        axios({
-            method: "PATCH",
-            url: config.serverUrl + `v1/users/${username}/`,
-            data
-        })
-            .then(x => {
-                toast("success", 0, successError, showFlag);
+    const submitItem = data => {
+        if (isObjectEmpty(data)) {
+            toast("info", 0, noNewDataToSubmitError, showFlag);
+        } else {
+            axios({
+                method: "PATCH",
+                url: config.serverUrl + `v1/users/${username}/`,
+                data
             })
-            .catch(x => {});
+                .then(x => {
+                    toast("success", 0, successError, showFlag);
+                })
+                .catch(x => {
+                    toast("error", 0, successError, showFlag);
+                });
+        }
+    };
 
     const setSchema = schema =>
         setState(draft => {
@@ -152,18 +159,25 @@ export default () => {
                     x => removeAllUndefined(x)
                 )(data);
 
+                class Output {
+                    constructor(values = {}, errors = {}) {
+                        this.values = values;
+                        this.errors = errors;
+                    }
+                }
+
                 try {
                     const values = await schema.validate(
                         formattedData,
                         yupConfig
                     );
                     return {
-                        values,
-                        errors: {}
+                        ...new Output(),
+                        values
                     };
                 } catch (errors) {
                     return {
-                        values: {},
+                        ...new Output(),
                         errors: formatYupErrors(errors.inner)
                     };
                 }
