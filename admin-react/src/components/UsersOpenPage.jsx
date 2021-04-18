@@ -25,8 +25,8 @@ import OpenLayout from "%/components/OpenLayout";
 import RegisteredField from "%/components/RegisteredField";
 import ControlledField from "%/components/ControlledField";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
-import noNewDataToSubmitError from "%/errors/noNewDataToSubmit";
-import successError from "%/errors/successError";
+import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
+import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import toast from "%/utilities/toast";
@@ -91,10 +91,10 @@ export default () => {
                 data
             })
                 .then(x => {
-                    toast("success", 0, successError, showFlag);
+                    toast("success", 0, success, showFlag);
                 })
                 .catch(x => {
-                    toast("error", 0, successError, showFlag);
+                    toast("error", 0, success, showFlag);
                 });
         }
     };

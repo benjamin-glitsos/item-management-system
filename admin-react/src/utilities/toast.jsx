@@ -19,7 +19,7 @@ export default (type, id, error, showFlag) => {
     showFlag({
         icon,
         id,
-        key: `Toast/Error/${error.code},${id}`,
+        key: `Toast/Message/${error.code},${id}`,
         title: error.title,
         description: error.description,
         isAutoDismiss: true

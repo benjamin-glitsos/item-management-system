@@ -7,7 +7,7 @@ import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
 import { useFlags } from "@atlaskit/flag";
 import { Checkbox } from "@atlaskit/checkbox";
-import Error from "@atlaskit/icon/glyph/editor/warning";
+import Message from "@atlaskit/icon/glyph/editor/warning";
 import ActionsMenu from "%/components/ActionsMenu";
 import {
     queryPageNumber,
