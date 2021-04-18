@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import formatNull from "%/utilities/formatNull";
 
 export default ({
     name,
@@ -14,7 +15,12 @@ export default ({
     return (
         <Wrapper>
             <Label htmlFor={fieldId}>{title}</Label>
-            <Component id={fieldId} {...additionalProps} {...props} />
+            <Component
+                id={fieldId}
+                placeholder={formatNull()}
+                {...additionalProps}
+                {...props}
+            />
             {fieldErrors && (
                 <Errors>
                     {fieldErrors.map((error, i) => (

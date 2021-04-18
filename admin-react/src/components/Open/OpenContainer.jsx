@@ -21,6 +21,7 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
     const history = useHistory();
 
     const defaultState = {
+        submissions: 0,
         schema: {},
         item: {}
     };
@@ -55,6 +56,7 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
                 data
             })
                 .then(() => {
+                    setSubmissions();
                     toast("success", 0, success, showFlag);
                 })
                 .catch(() => {
@@ -62,6 +64,11 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
                 });
         }
     };
+
+    const setSubmissions = () =>
+        setState(draft => {
+            draft.submissions++;
+        });
 
     const setItem = item =>
         setState(draft => {
@@ -163,10 +170,7 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
         history.push("/users");
     };
 
-    const onSubmit = data => {
-        console.log(data);
-        submitItem(data);
-    };
+    const onSubmit = data => submitItem(data);
 
     const openItemAction = () => {
         (async () => {
@@ -192,6 +196,7 @@ export default ({ action, key, nameSingular, namePlural, formFields }) => {
     };
 
     useEffect(openItemAction, []);
+    useEffect(openItemAction, [state.submissions]);
     useEffect(schemaAction, []);
 
     return {

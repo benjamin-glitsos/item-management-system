@@ -1,1 +1,1 @@
-export default s => (s ? s : "(None)");
+export default (s = null) => (s ? s : "(None)");
