@@ -7,12 +7,14 @@ import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo();
 
-export default dateTimeStr => {
-    if (dateTimeStr === null) {
+export default d => {
+    if (d === undefined) {
+        return d;
+    } else if (d === null) {
         return "(Never)";
     } else {
         const now = new Date();
-        const date = new Date(dateTimeStr);
+        const date = new Date(d);
         const oneDay = 1000 * 60 * 60 * 24;
         const isLessThanOneDayAgo = date > now - oneDay;
         const fullDate = dateFormat(now, `mmmm dS, yyyy "at" h:MMtt`);
