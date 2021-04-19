@@ -64,9 +64,8 @@ export default ({
                 .then(response => {
                     const responseData = response.data.data;
                     toast("success", 0, success, showFlag);
-                    console.log(responseData);
                     if (responseData[key] !== state.item[key]) {
-                        history.push(`/${namePlural}/${responseData[key]}`);
+                        history.replace(`/${namePlural}/${responseData[key]}`);
                     } else {
                         setItem(responseData);
                     }
