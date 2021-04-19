@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import { Fragment } from "react";
+
 import LabelValueItem from "%/components/LabelValueItem";
 
 export default ({ items }) => (
-    <Styles>
+    <Fragment>
         {Object.entries(items).map(([label, value], i) => (
             <LabelValueItem
                 key={`LabelValueItem/${label},${i}`}
@@ -10,9 +11,5 @@ export default ({ items }) => (
                 value={value}
             />
         ))}
-    </Styles>
+    </Fragment>
 );
-
-const Styles = styled.div`
-    margin-top: 8px;
-`;

@@ -1,17 +1,20 @@
-import { Fragment } from "react";
 import styled from "styled-components";
 
 export default ({ label, value }) => (
-    <Fragment>
-        <Label>{label}</Label>
-        <Value>{value}</Value>
-    </Fragment>
+    <Wrapper>
+        <Label>{label.toUpperCase()}</Label>
+        <div>{value}</div>
+    </Wrapper>
 );
 
-const Label = styled.div`
-    font-weight: bold;
+const Wrapper = styled.div`
+    margin-top: 8px;
+    margin-bottom: 1em;
 `;
 
-const Value = styled.div`
-    margin-bottom: 1em;
+const Label = styled.div`
+    font-weight: 600;
+    font-size: 0.75em;
+    margin-bottom: 2px;
+    color: rgb(107, 119, 140);
 `;
