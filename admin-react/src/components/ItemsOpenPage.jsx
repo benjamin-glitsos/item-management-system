@@ -52,7 +52,6 @@ export default () => {
                 title="Key"
                 sm={6}
                 Component={Textfield}
-                isDisabled={true}
             />
             <RegisteredField
                 name="name"
