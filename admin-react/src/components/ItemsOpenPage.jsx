@@ -15,6 +15,7 @@ import config from "%/config";
 export default () => {
     const { key } = useParams();
 
+    const keyField = "key";
     const [nameSingular, namePlural] = config.names.items;
     const action = config.actions.EDIT;
     const title = titleCase(namePlural);
@@ -34,6 +35,7 @@ export default () => {
     const openContainer = OpenContainer({
         action,
         key: key.toUpperCase(),
+        keyField,
         nameSingular,
         namePlural,
         formFields: ["key", "name", "description", "additional_notes"],

@@ -15,6 +15,7 @@ import config from "%/config";
 export default () => {
     const { username } = useParams();
 
+    const keyField = "username";
     const [nameSingular, namePlural] = config.names.users;
     const action = config.actions.EDIT;
     const title = titleCase(namePlural);
@@ -36,6 +37,7 @@ export default () => {
         key: username,
         nameSingular,
         namePlural,
+        keyField,
         formFields: [
             "username",
             "email_address",

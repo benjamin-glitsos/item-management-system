@@ -22,6 +22,7 @@ export default ({
     key,
     nameSingular,
     namePlural,
+    keyField,
     formFields,
     optionalFields
 }) => {
@@ -53,6 +54,7 @@ export default ({
         });
 
     const submitItem = data => {
+        console.log(data);
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
         } else {
@@ -64,8 +66,10 @@ export default ({
                 .then(response => {
                     const responseData = response.data.data;
                     toast("success", 0, success, showFlag);
-                    if (responseData[key] !== state.item[key]) {
-                        history.replace(`/${namePlural}/${responseData[key]}`);
+                    if (responseData[keyField] !== state.item[keyField]) {
+                        history.replace(
+                            `/${namePlural}/${responseData[keyField]}`
+                        );
                     } else {
                         setItem(responseData);
                     }
