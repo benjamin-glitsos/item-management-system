@@ -1,7 +1,8 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.{Try}
-import akka.http.scaladsl.model.StatusCodes.NoContent
+import upickle.default._
+import upickle_import.general._
 
 object EditItemsRoutes {
   final def apply(key: String): Route = patch {
@@ -13,10 +14,10 @@ object EditItemsRoutes {
           Try(body("name").str).toOption
         val description: Option[String] =
           Try(body("description").str).toOption
-        val additionalNotes: Option[String] = Try(body("additional_notes").str).toOption
+        val additionalNotes: Option[String] =
+          Try(body("additional_notes").str).toOption
 
         complete(
-          NoContent,
           ItemsService.edit(
             key,
             newKey,

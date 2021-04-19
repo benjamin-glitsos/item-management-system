@@ -1,6 +1,8 @@
 import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
+import upickle.default._
+import upickle_import.general._
 
 trait ItemsEditService extends ServiceTrait {
   final def edit(
@@ -9,21 +11,29 @@ trait ItemsEditService extends ServiceTrait {
       name: Option[String],
       description: Option[String],
       additionalNotes: Option[String]
-  ): String = {
-    try {
-      ItemsDAO
-        .edit(
-          oldKey,
-          newKey,
-          name,
-          description,
-          additionalNotes
-        )
-        .transact(xa)
-        .unsafeRunSync
-      new String
-    } catch {
-      case e: SQLException => handleSqlException(e)
-    }
+  ): ujson.Value = {
+    read[ujson.Value](
+      try {
+        (for {
+          _ <- ItemsDAO
+            .edit(
+              oldKey,
+              newKey,
+              name,
+              description,
+              additionalNotes
+            )
+
+          data <- ItemsDAO.open(newKey.getOrElse(oldKey))
+
+          val output: String = createDataOutput(writeJs(data))
+
+        } yield (output))
+          .transact(xa)
+          .unsafeRunSync
+      } catch {
+        case e: SQLException => handleSqlException(e)
+      }
+    )
   }
 }

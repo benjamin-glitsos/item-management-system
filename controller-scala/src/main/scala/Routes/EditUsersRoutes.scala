@@ -1,7 +1,6 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.{Try}
-import akka.http.scaladsl.model.StatusCodes.NoContent
 import upickle.default._
 import upickle_import.general._
 
@@ -24,7 +23,6 @@ object EditUsersRoutes {
           Try(body("additional_notes").strOpt).toOption
 
         complete(
-          NoContent,
           UsersService.edit(
             username,
             newUsername,

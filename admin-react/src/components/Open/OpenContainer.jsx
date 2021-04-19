@@ -28,7 +28,6 @@ export default ({
     const history = useHistory();
 
     const defaultState = {
-        submissions: 0,
         schema: {},
         item: {}
     };
@@ -54,7 +53,6 @@ export default ({
         });
 
     const submitItem = data => {
-        console.log(data);
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
         } else {
@@ -63,8 +61,8 @@ export default ({
                 url: itemUrl,
                 data
             })
-                .then(() => {
-                    // setSubmissions();
+                .then(response => {
+                    setItem(response.data.data);
                     toast("success", 0, success, showFlag);
                 })
                 .catch(() => {
@@ -72,11 +70,6 @@ export default ({
                 });
         }
     };
-
-    const setSubmissions = () =>
-        setState(draft => {
-            draft.submissions++;
-        });
 
     const setItem = item =>
         setState(draft => {
@@ -186,12 +179,15 @@ export default ({
                 const item = await requestItem();
                 const data = item.data.data;
                 setItem(data);
-
-                for (const key of formFields) {
-                    setValue(key, nullToEmptyString(data[key]));
-                }
             } catch (error) {}
         })();
+    };
+
+    const itemValuesAction = () => {
+        const data = state.item;
+        for (const key of formFields) {
+            setValue(key, nullToEmptyString(data[key]));
+        }
     };
 
     const sidebarItems = {
@@ -204,7 +200,7 @@ export default ({
     };
 
     useEffect(openItemAction, []);
-    useEffect(openItemAction, [state.submissions]);
+    useEffect(itemValuesAction, [state.item]);
     useEffect(schemaAction, []);
 
     return {
