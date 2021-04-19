@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import styled from "styled-components";
 import { titleCase } from "title-case";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import { OpenContext } from "%/components/Open/Open";
@@ -22,40 +23,47 @@ export default ({ children }) => {
                 title={title}
                 breadcrumbs={generateBreadcrumbs(context.homeBreadcrumb)}
             >
-                <Grid fluid>
-                    <Row>
-                        <Col sm={10}>
-                            <form
-                                onSubmit={context.handleSubmit(
-                                    context.onSubmit
-                                )}
-                            >
-                                <Grid fluid>
-                                    <Row>{children}</Row>
-                                    <Row end="xs">
-                                        <FormButtons
-                                            cancelHandler={
-                                                context.cancelHandler
-                                            }
+                <OffsetGridOuterPadding>
+                    <Grid fluid>
+                        <Row>
+                            <Col sm={10}>
+                                <form
+                                    onSubmit={context.handleSubmit(
+                                        context.onSubmit
+                                    )}
+                                >
+                                    <Grid fluid>
+                                        <Row>{children}</Row>
+                                        <Row end="xs">
+                                            <FormButtons
+                                                cancelHandler={
+                                                    context.cancelHandler
+                                                }
+                                            />
+                                        </Row>
+                                    </Grid>
+                                </form>
+                            </Col>
+                            <Col sm={2}>
+                                {Object.entries(context.sidebarItems).map(
+                                    ([label, value], i) => (
+                                        <LabelValueItem
+                                            key={`LabelValueItem/${label},${i}`}
+                                            label={label}
+                                            value={value}
                                         />
-                                    </Row>
-                                </Grid>
-                            </form>
-                        </Col>
-                        <Col sm={2}>
-                            {Object.entries(context.sidebarItems).map(
-                                ([label, value], i) => (
-                                    <LabelValueItem
-                                        key={`LabelValueItem/${label},${i}`}
-                                        label={label}
-                                        value={value}
-                                    />
-                                )
-                            )}
-                        </Col>
-                    </Row>
-                </Grid>
+                                    )
+                                )}
+                            </Col>
+                        </Row>
+                    </Grid>
+                </OffsetGridOuterPadding>
             </OpenLayout>
         </PageLayout>
     );
 };
+
+const OffsetGridOuterPadding = styled.div`
+    margin-left: -32px;
+    margin-right: -32px;
+`;
