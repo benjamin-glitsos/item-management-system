@@ -8,6 +8,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 * RESTful API design
 * Strong type-safety by using monads and other Algebraic Data Types
 * Object-oriented multiple-trait-inheritance pattern
+* Utilises an SQL query builder
 * JSON Schema contract-first development
 
 ### Admin-React Container
