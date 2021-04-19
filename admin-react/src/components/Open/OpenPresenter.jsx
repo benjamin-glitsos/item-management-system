@@ -6,7 +6,7 @@ import { OpenContext } from "%/components/Open/Open";
 import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
-import LabelValueItem from "%/components/LabelValueItem";
+import LabelValuesSidebar from "%/components/LabelValuesSidebar";
 import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
 
 export default ({ children }) => {
@@ -45,15 +45,9 @@ export default ({ children }) => {
                                 </form>
                             </Col>
                             <Col sm={2}>
-                                {Object.entries(context.sidebarItems).map(
-                                    ([label, value], i) => (
-                                        <LabelValueItem
-                                            key={`LabelValueItem/${label},${i}`}
-                                            label={label}
-                                            value={value}
-                                        />
-                                    )
-                                )}
+                                <LabelValuesSidebar
+                                    items={context.sidebarItems}
+                                />
                             </Col>
                         </Row>
                     </Grid>
