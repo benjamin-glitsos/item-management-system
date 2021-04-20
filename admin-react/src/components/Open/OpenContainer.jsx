@@ -45,6 +45,8 @@ export default ({
         axios({
             method: "GET",
             url: itemUrl
+        }).catch(() => {
+            history.replace("/page-not-found");
         });
 
     const requestSchema = () =>
