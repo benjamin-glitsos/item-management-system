@@ -3,7 +3,7 @@ import { Router, Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
 import { QueryParamProvider } from "use-query-params";
 import Analytics from "react-router-ga";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Page from "%/components/Page/PagePresenter";
 import LoadingPage from "%/components/LoadingPage";
@@ -48,4 +48,3 @@ export default () => (
         </Analytics>
     </Router>
 );
-// <button onClick={() => toast("Wow so easy!")}>Notify!</button>

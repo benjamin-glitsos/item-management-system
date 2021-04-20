@@ -1,12 +1,14 @@
+import { toast } from "react-toastify";
+
 export default error => {
     const responseErrors = error?.response?.data?.errors;
     if (responseErrors) {
         for (const error of responseErrors) {
             console.error(error);
-            console.log("Flag: Error");
+            toast("Error");
         }
     } else {
         console.error(error);
-        console.log("Flag: Something went wrong");
+        toast("Something went wrong");
     }
 };
