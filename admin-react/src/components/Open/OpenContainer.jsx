@@ -114,15 +114,10 @@ export default ({
     };
 
     console.log(
-        (() => {
-            const properties = state.schema?.properties || {};
-            console.log(properties);
-            const x = R.map(y => {
-                console.log(y);
-                return R.pickBy((value, key) => key === "patternDescription");
-            })(properties);
-            console.log(x);
-        })()
+        R.pipe(
+            R.map(R.pickBy((value, key) => key === "patternDescription")),
+            R.map(R.filter(value => Object.keys(value).length > 0)) // TODO: doesnt work. Why is it even neccesary when you are using pickBy already?
+        )(state.schema?.properties || {})
     );
 
     // console.log(
