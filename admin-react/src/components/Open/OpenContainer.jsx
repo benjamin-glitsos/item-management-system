@@ -48,11 +48,9 @@ export default ({
         });
 
     const requestSchema = () =>
-        request({
-            axios: {
-                method: "GET",
-                url: schemaUrl
-            }
+        axios({
+            method: "GET",
+            url: schemaUrl
         }).catch(axiosErrorHandler);
 
     const submitItem = data => {
