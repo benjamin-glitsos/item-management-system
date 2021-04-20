@@ -11,7 +11,7 @@ import upickle_import.general._
 object SchemasDAO {
   final def load(name: String): Schema = {
     val source: Source =
-      Source.fromResource(s"schemas/$name.json")
+      Source.fromFile(s"/usr/src/app/public/schemas/$name.json")
 
     val rawSchema: JSONObject = {
       val s: String =
