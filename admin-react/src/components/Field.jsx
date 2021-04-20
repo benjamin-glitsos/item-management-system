@@ -46,9 +46,10 @@ const Label = styled.label`
 `;
 
 const Errors = styled.ul`
-    padding-left: 25px;
+    padding-left: 24px;
     font-size: 0.857143em;
     line-height: 1.33333;
     color: rgb(222, 53, 11);
-    margin-top: 4px;
+    margin-top: 6px;
+    margin-bottom: 6px;
 `;

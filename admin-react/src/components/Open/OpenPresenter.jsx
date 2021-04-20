@@ -35,11 +35,13 @@ export default ({ children }) => {
                                     <Grid fluid>
                                         <Row>{children}</Row>
                                         <Row end="xs">
-                                            <FormButtons
-                                                cancelHandler={
-                                                    context.cancelHandler
-                                                }
-                                            />
+                                            <Col sm={12}>
+                                                <FormButtons
+                                                    cancelHandler={
+                                                        context.cancelHandler
+                                                    }
+                                                />
+                                            </Col>
                                         </Row>
                                     </Grid>
                                 </form>
