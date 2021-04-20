@@ -154,6 +154,7 @@ export default ({
                         values
                     };
                 } catch (errors) {
+                    console.log(formatYupErrors(errors.inner));
                     return {
                         ...new Output(),
                         errors: formatYupErrors(errors.inner)
