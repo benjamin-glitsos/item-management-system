@@ -11,6 +11,7 @@
         "email_address": {
             "type": "string",
             "maxLength": 50,
+            "format": "email",
             "email": true
         },
         "first_name": {
