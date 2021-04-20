@@ -12,11 +12,11 @@ import * as Yup from "yup";
 import { buildYup } from "json-schema-to-yup";
 import { diff } from "deep-object-diff";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
-import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
+import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
+import successToast from "%/utilities/successToast";
 
 export default ({
     action,
@@ -60,7 +60,7 @@ export default ({
 
     const submitItem = data => {
         if (isObjectEmpty(data)) {
-            toast("info", 0, noNewDataToSubmitError, showFlag);
+            noNewDataToSubmitToast();
         } else {
             axios({
                 method: "PATCH",
@@ -69,7 +69,7 @@ export default ({
             })
                 .then(response => {
                     const responseData = response.data.data;
-                    toast("success", 0, success, showFlag);
+                    successToast();
                     if (responseData[keyField] !== state.item[keyField]) {
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`

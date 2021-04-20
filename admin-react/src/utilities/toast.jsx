@@ -1,27 +1,6 @@
-import ErrorIcon from "@atlaskit/icon/glyph/editor/warning";
-import SuccessIcon from "@atlaskit/icon/glyph/editor/success";
-import InfoIcon from "@atlaskit/icon/glyph/editor/info";
+import { toast } from "react-toastify";
+import Toast from "%/components/Toast";
 
-export default (type, id, error, showFlag) => {
-    const icon = (() => {
-        switch (type) {
-            case "error":
-                return <ErrorIcon />;
-            case "success":
-                return <SuccessIcon />;
-            case "info":
-                return <InfoIcon />;
-            default:
-                return null;
-        }
-    })();
-
-    showFlag({
-        icon,
-        id,
-        key: `Toast/Message/${error.code},${id}`,
-        title: error.title,
-        description: error.description,
-        isAutoDismiss: true
-    });
+export default ({ title, description }) => {
+    toast(<Toast title={title} description={description} />);
 };
