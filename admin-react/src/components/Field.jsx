@@ -50,6 +50,6 @@ const Errors = styled.ul`
     font-size: 0.857143em;
     line-height: 1.33333;
     color: rgb(222, 53, 11);
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 `;
