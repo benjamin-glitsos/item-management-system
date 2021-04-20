@@ -27,7 +27,7 @@ const SidebarStyles = styled.div`
 
 const ContentStyles = styled.div`
     background-color: white;
-    min-height: calc(100vh - 49px);
+    min-height: calc(100vh - 15px);
     padding-bottom: 15px;
     padding-top: 3em;
     margin-top: -3em;

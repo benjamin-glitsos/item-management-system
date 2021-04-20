@@ -49,6 +49,7 @@
         "react-router-ga": "^1.2.3",
         "react-scripts": "4.0.3",
         "react-simple-image-viewer": "0.0.8",
+        "react-toastify": "^7.0.3",
         "source-map-explorer": "^2.5.2",
         "styled-components": "^3.2.6",
         "title-case": "^3.0.3",
