@@ -33,10 +33,13 @@ export default ({
         const filtered = items.filter(a => a.isVisible);
 
         if (filtered.length >= 1) {
-            return filtered.map(a => {
+            return filtered.map(({ title, onClick }, i) => {
                 return (
-                    <DropdownItem onClick={a.onClick}>
-                        {formatAction(numberOfItems, a.title)}
+                    <DropdownItem
+                        onClick={onClick}
+                        key={`DropdownItem/${title},${i}`}
+                    >
+                        {formatAction(numberOfItems, title)}
                     </DropdownItem>
                 );
             });

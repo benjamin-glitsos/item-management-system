@@ -16,6 +16,7 @@ import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
 import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
+import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 
 export default ({
     action,
@@ -55,7 +56,7 @@ export default ({
                 method: "GET",
                 url: schemaUrl
             }
-        });
+        }).catch(error => axiosErrorHandler(error));
 
     const submitItem = data => {
         console.log(data);
@@ -78,9 +79,7 @@ export default ({
                         setItem(responseData);
                     }
                 })
-                .catch(() => {
-                    toast("error", 0, success, showFlag);
-                });
+                .catch(errors => axiosErrorHandler(errors));
         }
     };
 

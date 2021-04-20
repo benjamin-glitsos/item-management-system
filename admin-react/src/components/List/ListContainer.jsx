@@ -61,7 +61,7 @@ export default ({
                 method,
                 [keyColumnPlural]: keys
             }
-        });
+        }).catch(error => axiosErrorHandler(error));
 
     const setLoading = bool =>
         setState(draft => {
