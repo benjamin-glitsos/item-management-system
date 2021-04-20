@@ -5,21 +5,23 @@
     "properties": {
         "key": {
             "type": "string",
+            "minLength": 1,
             "maxLength": 255,
             "pattern": "^[-A-Z0-9]*$"
         },
         "name": {
             "type": "string",
+            "minLength": 1,
             "maxLength": 255
         },
         "description": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "type": "string",
+            "type": ["string", "null"],
+            "minLength": 1,
             "maxLength": 1048576
         },
         "additional_notes": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
-            "type": "string",
+            "type": ["string", "null"],
+            "minLength": 1,
             "maxLength": 1048576
         }
     },

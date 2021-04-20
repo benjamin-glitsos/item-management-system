@@ -12,10 +12,10 @@ object EditItemsRoutes {
           Try(body("key").str).toOption
         val name: Option[String] =
           Try(body("name").str).toOption
-        val description: Option[String] =
-          Try(body("description").str).toOption
-        val additionalNotes: Option[String] =
-          Try(body("additional_notes").str).toOption
+        val description: Option[Option[String]] =
+          Try(body("description").strOpt).toOption
+        val additionalNotes: Option[Option[String]] =
+          Try(body("additional_notes").strOpt).toOption
 
         complete(
           ItemsService.edit(

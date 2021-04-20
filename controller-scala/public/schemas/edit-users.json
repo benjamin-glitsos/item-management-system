@@ -10,7 +10,8 @@
         },
         "email_address": {
             "type": "string",
-            "maxLength": 50
+            "maxLength": 50,
+            "email": true
         },
         "first_name": {
             "type": "string",
@@ -21,7 +22,7 @@
             "maxLength": 70
         },
         "other_names": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "type": ["string", "null"],
             "maxLength": 120
         },
         "password": {
@@ -29,7 +30,7 @@
             "maxLength": 40
         },
         "additional_notes": {
-            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "type": ["string", "null"],
             "maxLength": 1048576
         }
     },

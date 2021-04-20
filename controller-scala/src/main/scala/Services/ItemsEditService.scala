@@ -9,8 +9,8 @@ trait ItemsEditService extends ServiceTrait {
       oldKey: String,
       newKey: Option[String],
       name: Option[String],
-      description: Option[String],
-      additionalNotes: Option[String]
+      description: Option[Option[String]],
+      additionalNotes: Option[Option[String]]
   ): ujson.Value = {
     read[ujson.Value](
       try {
