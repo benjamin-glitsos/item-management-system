@@ -16,7 +16,6 @@ import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
 import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
-import request from "%/utilities/request";
 
 export default ({
     action,
@@ -63,9 +62,12 @@ export default ({
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
         } else {
-            request({
-                axios: { method: "PATCH", url: itemUrl, data },
-                onSuccess: response => {
+            axios({
+                method: "PATCH",
+                url: itemUrl,
+                data
+            })
+                .then(response => {
                     const responseData = response.data.data;
                     toast("success", 0, success, showFlag);
                     if (responseData[keyField] !== state.item[keyField]) {
@@ -75,27 +77,10 @@ export default ({
                     } else {
                         setItem(responseData);
                     }
-                }
-            });
-            // axios({
-            //     method: "PATCH",
-            //     url: itemUrl,
-            //     data
-            // })
-            //     .then(response => {
-            //         const responseData = response.data.data;
-            //         toast("success", 0, success, showFlag);
-            //         if (responseData[keyField] !== state.item[keyField]) {
-            //             history.replace(
-            //                 `/${namePlural}/${responseData[keyField]}`
-            //             );
-            //         } else {
-            //             setItem(responseData);
-            //         }
-            //     })
-            //     .catch(() => {
-            //         toast("error", 0, success, showFlag);
-            //     });
+                })
+                .catch(() => {
+                    toast("error", 0, success, showFlag);
+                });
         }
     };
 

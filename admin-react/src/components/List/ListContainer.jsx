@@ -19,7 +19,7 @@ import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import formatDate from "%/utilities/formatDate";
 import toast from "%/utilities/toast";
-import request from "%/utilities/request";
+import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import config from "%/config";
 
 export default ({
@@ -73,17 +73,6 @@ export default ({
             Object.assign(draft.response, response.data);
         });
 
-    const setResponseErrors = errors => {
-        const list = errors?.response?.data?.errors;
-        if (list) {
-            setState(draft => {
-                draft.response.errors = list;
-            });
-        } else {
-            console.error(errors);
-        }
-    };
-
     const setPageNumber = (pageNumber = 1) =>
         setQuery({ page_number: queryPageNumber(pageNumber) });
 
@@ -119,41 +108,18 @@ export default ({
     const listItemsAction = () => {
         (async () => {
             setLoading(true);
-            const response = await request({
-                axios: {
-                    method: "REPORT",
-                    url: apiUrl,
-                    data: {
-                        ...state.request.body,
-                        ...query
-                    }
-                }
-            });
+            try {
+                const response = await requestListItems({
+                    ...state.request.body,
+                    ...query
+                });
+                setResponse(response);
+            } catch (error) {
+                axiosErrorHandler(error);
+            }
             setLoading(false);
-            return response;
         })();
     };
-    // {
-    //     (async () => {
-    //         setLoading(true);
-    //         try {
-    //             const response = await requestListItems({
-    //                 ...state.request.body,
-    //                 ...query
-    //             });
-    //             setResponse(response);
-    //         } catch (error) {
-    //             setResponseErrors(error);
-    //         }
-    //         setLoading(false);
-    //     })();
-    // }
-
-    const handleErrorsAction = () =>
-        state.response.errors.forEach((error, i) => {
-            console.error(error);
-            toast("error", i, error, showFlag);
-        });
 
     const deleteItemsAction = async (method, keys) => {
         await requestDeleteItems(method, keys);
@@ -164,8 +130,6 @@ export default ({
     useEffect(listItemsAction, []);
 
     useThrottledEffect(listItemsAction, 500, [query, state.request]);
-
-    useEffect(handleErrorsAction, [state.response.errors]);
 
     const selectionHeadColumn = {
         key: "isSelected",

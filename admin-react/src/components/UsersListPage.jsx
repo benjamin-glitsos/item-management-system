@@ -30,8 +30,7 @@ export default () => {
             response: {
                 data: {
                     items: []
-                },
-                errors: []
+                }
             },
             isLoading: false,
             selected: []
