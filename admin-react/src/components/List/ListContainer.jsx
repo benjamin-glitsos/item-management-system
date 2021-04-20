@@ -51,7 +51,9 @@ export default ({
             method: "REPORT",
             url: apiUrl,
             data: body
-        });
+        })
+            .then(setResponse)
+            .catch(axiosErrorHandler);
 
     const requestDeleteItems = (method, keys) =>
         axios({
@@ -61,7 +63,7 @@ export default ({
                 method,
                 [keyColumnPlural]: keys
             }
-        }).catch(error => axiosErrorHandler(error));
+        }).catch(axiosErrorHandler);
 
     const setLoading = bool =>
         setState(draft => {
@@ -106,19 +108,9 @@ export default ({
         });
 
     const listItemsAction = () => {
-        (async () => {
-            setLoading(true);
-            try {
-                const response = await requestListItems({
-                    ...state.request.body,
-                    ...query
-                });
-                setResponse(response);
-            } catch (error) {
-                axiosErrorHandler(error);
-            }
-            setLoading(false);
-        })();
+        setLoading(true);
+        requestListItems({ ...state.request.body, ...query });
+        setLoading(false);
     };
 
     const deleteItemsAction = async (method, keys) => {

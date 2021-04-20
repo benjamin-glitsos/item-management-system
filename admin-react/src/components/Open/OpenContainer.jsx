@@ -56,10 +56,9 @@ export default ({
                 method: "GET",
                 url: schemaUrl
             }
-        }).catch(error => axiosErrorHandler(error));
+        }).catch(axiosErrorHandler);
 
     const submitItem = data => {
-        console.log(data);
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
         } else {
@@ -79,7 +78,7 @@ export default ({
                         setItem(responseData);
                     }
                 })
-                .catch(errors => axiosErrorHandler(errors));
+                .catch(axiosErrorHandler);
         }
     };
 
