@@ -113,21 +113,30 @@ export default ({
         }
     };
 
+    console.log(
+        (() => {
+            const properties = state.schema?.properties || {};
+            console.log(properties);
+            const x = R.map(y => {
+                console.log(y);
+                return R.pickBy((value, key) => key === "patternDescription");
+            })(properties);
+            console.log(x);
+        })()
+    );
+
     // console.log(
     //     R.map(attributes => ({
     //         pattern: attributes?.patternDescription
     //     }))(state.schema?.properties || {})
     // );
-
-    console.log(
-        (state.schema?.properties || {}).reduce((accumulator, current) => {
-            const description = current?.patternDescription;
-            return {
-                ...accumulator,
-                ...(description ? { pattern: description } : {})
-            };
-        }, {})
-    );
+    // (state.schema?.properties || {}).reduce((accumulator, current) => {
+    //     const description = current?.patternDescription;
+    //     return {
+    //         ...accumulator,
+    //         ...(description ? { pattern: description } : {})
+    //     };
+    // }, {});
 
     const yupSchema = isObjectEmpty(state.schema)
         ? Yup.object()

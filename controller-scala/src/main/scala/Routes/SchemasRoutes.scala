@@ -5,7 +5,7 @@ import upickle_import.general._
 object SchemasRoutes {
   final def apply(): Route = pathPrefix(Segment) { name: String =>
     get {
-      complete(SchemasService.loadJson(name, includeTitle = false))
+      complete(SchemasService.loadJson(name, isFull = false))
     }
   }
 }
