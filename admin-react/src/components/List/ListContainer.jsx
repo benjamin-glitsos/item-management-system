@@ -19,6 +19,7 @@ import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import formatDate from "%/utilities/formatDate";
 import toast from "%/utilities/toast";
+import request from "%/utilities/request";
 import config from "%/config";
 
 export default ({
@@ -118,18 +119,35 @@ export default ({
     const listItemsAction = () => {
         (async () => {
             setLoading(true);
-            try {
-                const response = await requestListItems({
-                    ...state.request.body,
-                    ...query
-                });
-                setResponse(response);
-            } catch (error) {
-                setResponseErrors(error);
-            }
+            const response = await request({
+                axios: {
+                    method: "REPORT",
+                    url: apiUrl,
+                    data: {
+                        ...state.request.body,
+                        ...query
+                    }
+                }
+            });
             setLoading(false);
+            return response;
         })();
     };
+    // {
+    //     (async () => {
+    //         setLoading(true);
+    //         try {
+    //             const response = await requestListItems({
+    //                 ...state.request.body,
+    //                 ...query
+    //             });
+    //             setResponse(response);
+    //         } catch (error) {
+    //             setResponseErrors(error);
+    //         }
+    //         setLoading(false);
+    //     })();
+    // }
 
     const handleErrorsAction = () =>
         state.response.errors.forEach((error, i) => {

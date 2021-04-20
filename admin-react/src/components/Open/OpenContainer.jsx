@@ -16,6 +16,7 @@ import noNewDataToSubmitError from "%/messages/noNewDataToSubmit";
 import success from "%/messages/success";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
+import request from "%/utilities/request";
 
 export default ({
     action,
@@ -50,9 +51,11 @@ export default ({
         });
 
     const requestSchema = () =>
-        axios({
-            method: "GET",
-            url: schemaUrl
+        request({
+            axios: {
+                method: "GET",
+                url: schemaUrl
+            }
         });
 
     const submitItem = data => {
@@ -60,12 +63,9 @@ export default ({
         if (isObjectEmpty(data)) {
             toast("info", 0, noNewDataToSubmitError, showFlag);
         } else {
-            axios({
-                method: "PATCH",
-                url: itemUrl,
-                data
-            })
-                .then(response => {
+            request({
+                axios: { method: "PATCH", url: itemUrl, data },
+                onSuccess: response => {
                     const responseData = response.data.data;
                     toast("success", 0, success, showFlag);
                     if (responseData[keyField] !== state.item[keyField]) {
@@ -75,10 +75,27 @@ export default ({
                     } else {
                         setItem(responseData);
                     }
-                })
-                .catch(() => {
-                    toast("error", 0, success, showFlag);
-                });
+                }
+            });
+            // axios({
+            //     method: "PATCH",
+            //     url: itemUrl,
+            //     data
+            // })
+            //     .then(response => {
+            //         const responseData = response.data.data;
+            //         toast("success", 0, success, showFlag);
+            //         if (responseData[keyField] !== state.item[keyField]) {
+            //             history.replace(
+            //                 `/${namePlural}/${responseData[keyField]}`
+            //             );
+            //         } else {
+            //             setItem(responseData);
+            //         }
+            //     })
+            //     .catch(() => {
+            //         toast("error", 0, success, showFlag);
+            //     });
         }
     };
 
