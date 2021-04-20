@@ -113,6 +113,22 @@ export default ({
         }
     };
 
+    // console.log(
+    //     R.map(attributes => ({
+    //         pattern: attributes?.patternDescription
+    //     }))(state.schema?.properties || {})
+    // );
+
+    console.log(
+        (state.schema?.properties || {}).reduce((accumulator, current) => {
+            const description = current?.patternDescription;
+            return {
+                ...accumulator,
+                ...(description ? { pattern: description } : {})
+            };
+        }, {})
+    );
+
     const yupSchema = isObjectEmpty(state.schema)
         ? Yup.object()
         : buildYup(state.schema, jsonSchemaToYupConfig);

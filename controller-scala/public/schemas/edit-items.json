@@ -7,7 +7,8 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 255,
-            "pattern": "^[-A-Z0-9]*$"
+            "pattern": "^[-A-Z0-9]*$",
+            "patternDescription": "key can only contain uppercase letters (A-Z), numbers (0-9) and the hyphen symbol (-)"
         },
         "name": {
             "type": "string",
