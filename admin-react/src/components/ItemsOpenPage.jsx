@@ -33,7 +33,7 @@ export default () => {
 
     const openContainer = OpenContainer({
         action,
-        key: key.toUpperCase(),
+        key,
         keyField,
         nameSingular,
         namePlural,
