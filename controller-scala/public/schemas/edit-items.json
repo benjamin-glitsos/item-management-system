@@ -5,7 +5,7 @@
     "properties": {
         "key": {
             "type": "string",
-            "minLength": 40,
+            "minLength": 1,
             "maxLength": 255,
             "pattern": "^[-A-Z0-9]*$"
         },

@@ -104,9 +104,18 @@ export default ({
         abortEarly: false
     };
 
+    const jsonSchemaToYupConfig = {
+        errMessages: {
+            key: {
+                pattern:
+                    "key can only contain uppercase letters (A-Z), numbers (0-9) and the hyphen symbol (-)"
+            }
+        }
+    };
+
     const yupSchema = isObjectEmpty(state.schema)
         ? Yup.object()
-        : buildYup(state.schema);
+        : buildYup(state.schema, jsonSchemaToYupConfig);
 
     const emptyStringsToNull = R.map(x => {
         if (typeof x === "string") {
