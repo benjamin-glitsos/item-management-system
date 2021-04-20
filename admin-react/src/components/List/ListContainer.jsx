@@ -5,7 +5,6 @@ import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
 import axios from "axios";
-import { useFlags } from "@atlaskit/flag";
 import { Checkbox } from "@atlaskit/checkbox";
 import Message from "@atlaskit/icon/glyph/editor/warning";
 import ActionsMenu from "%/components/ActionsMenu";
@@ -43,8 +42,6 @@ export default ({
         search: StringParam,
         sort: CommaArrayParam
     });
-
-    const { showFlag } = useFlags();
 
     const requestListItems = body =>
         axios({

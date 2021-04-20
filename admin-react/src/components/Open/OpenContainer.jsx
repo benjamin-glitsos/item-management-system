@@ -4,7 +4,6 @@ import { useHistory, Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useImmer } from "use-immer";
 import axios from "axios";
-import { useFlags } from "@atlaskit/flag";
 import formatDate from "%/utilities/formatDate";
 import toast from "%/utilities/toast";
 import config from "%/config";
@@ -35,8 +34,6 @@ export default ({
     };
 
     const [state, setState] = useImmer(defaultState);
-
-    const { showFlag } = useFlags();
 
     const itemUrl = config.serverUrl + `v1/${namePlural}/${key}/`;
 
