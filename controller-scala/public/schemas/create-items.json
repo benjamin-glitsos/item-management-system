@@ -5,20 +5,29 @@
     "properties": {
         "key": {
             "type": "string",
+            "pattern": "^[-A-Z0-9]*$",
+            "patternDescription": "key can only contain uppercase letters (A-Z), numbers (0-9), and the hyphen symbol (-)",
+            "minLength": 1,
             "maxLength": 255
         },
         "name": {
             "type": "string",
+            "pattern": "^[^<>%$&]*$",
+            "patternDescription": "name cannot include certain characters (^, <, >, %, $, &)",
             "minLength": 1,
             "maxLength": 255
         },
         "description": {
-            "type": "string",
-            "maxLength": 1048576
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 1048576,
+            "nullable": true
         },
         "additional_notes": {
-            "type": "string",
-            "maxLength": 1048576
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 1048576,
+            "nullable": true
         }
     },
     "required": ["key", "name"]
