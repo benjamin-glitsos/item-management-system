@@ -169,7 +169,6 @@ export default ({
         useCallback(
             async data => {
                 const formattedData = R.pipe(
-                    emptyStringsToNull,
                     x => diff(state.item, x),
                     x => removeAllUndefined(x)
                 )(data);
@@ -186,9 +185,10 @@ export default ({
                         formattedData,
                         yupConfig
                     );
+                    const formattedValues = emptyStringsToNull(values);
                     return {
                         ...new Output(),
-                        values
+                        formattedValues
                     };
                 } catch (errors) {
                     console.log(formatYupErrors(errors.inner));

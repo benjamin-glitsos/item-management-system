@@ -36,7 +36,6 @@
             "type": ["string", "null"],
             "pattern": "^[^<>%$&]*$",
             "patternDescription": "other_names cannot include certain characters (^, <, >, %, $, &)",
-            "minLength": 1,
             "maxLength": 120,
             "nullable": true
         },
@@ -49,7 +48,6 @@
         },
         "additional_notes": {
             "type": ["string", "null"],
-            "minLength": 1,
             "maxLength": 1048576,
             "nullable": true
         }

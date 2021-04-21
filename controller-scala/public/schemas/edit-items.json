@@ -19,13 +19,11 @@
         },
         "description": {
             "type": ["string", "null"],
-            "minLength": 1,
             "maxLength": 1048576,
             "nullable": true
         },
         "additional_notes": {
             "type": ["string", "null"],
-            "minLength": 1,
             "maxLength": 1048576,
             "nullable": true
         }

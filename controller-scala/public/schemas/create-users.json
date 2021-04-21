@@ -36,7 +36,6 @@
             "type": ["string", "null"],
             "pattern": "^[^<>%$&]*$",
             "patternDescription": "other_names cannot include certain characters (^, <, >, %, $, &)",
-            "minLength": 1,
             "maxLength": 120,
             "nullable": true
         },
