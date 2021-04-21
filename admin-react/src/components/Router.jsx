@@ -38,7 +38,7 @@ export default () => (
                                 <ItemsListPage />
                             </Route>
                             <Route exact path="/items/:key">
-                                <ItemsOpenPage />
+                                <ItemsOpenPage action="edit" />
                             </Route>
                             <Route exact path="/create-item">
                                 <ItemsOpenPage action="create" />
