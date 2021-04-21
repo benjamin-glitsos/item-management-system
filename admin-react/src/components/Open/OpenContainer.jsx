@@ -105,10 +105,16 @@ export default ({
     };
 
     const getErrMessagesFromSchema = () =>
-        R.pipe(
-            R.map(R.pickBy((value, key) => key.match(/^.*Description$/)),
-            R.filter(value => Object.keys(value).length > 0)
-        )(state.schema?.properties || {});
+        Object.entries(state.schema?.properties || []).reduce(
+            (accumulator, current) => {
+                const [key, value] = current;
+                const descriptionValues = R.pickBy((val, key) =>
+                    key.match(/^.*Description$/)
+                )(value);
+                return [...accumulator, [key, descriptionValues]];
+            },
+            []
+        );
 
     const jsonSchemaToYupConfig = {
         errMessages: {
