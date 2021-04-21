@@ -39,6 +39,8 @@ export default ({
 
     const itemUrl = config.serverUrl + `v1/${namePlural}/${key}/`;
 
+    const createUrl = config.serverUrl + `v1/${namePlural}/`;
+
     const schemaUrl = config.serverUrl + `v1/schemas/${action}-${namePlural}/`;
 
     const requestItem = () =>
@@ -60,14 +62,20 @@ export default ({
             noNewDataToSubmitToast();
         } else {
             axios({
-                method: "PATCH",
-                url: itemUrl,
+                method: isCreate ? "POST" : "PATCH",
+                url: isCreate ? createUrl : itemUrl,
                 data
             })
                 .then(response => {
                     const responseData = response.data.data;
                     successToast();
-                    if (responseData[keyField] !== state.item[keyField]) {
+                    if (isCreate) {
+                        history.replace(
+                            `/${namePlural}/${state.item[keyField]}`
+                        );
+                    } else if (
+                        responseData[keyField] !== state.item[keyField]
+                    ) {
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
                         );
@@ -188,11 +196,10 @@ export default ({
                     );
                     const formattedValues = emptyStringsToNull(values);
                     return {
-                        ...new Output(),
+                        ...new Output(formattedValues),
                         formattedValues
                     };
                 } catch (errors) {
-                    console.log(formatYupErrors(errors.inner));
                     return {
                         ...new Output(),
                         errors: formatYupErrors(errors.inner)
