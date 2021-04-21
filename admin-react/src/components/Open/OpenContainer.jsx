@@ -186,10 +186,7 @@ export default ({
                         yupConfig
                     );
                     const formattedValues = emptyStringsToNull(values);
-                    return {
-                        ...new Output(),
-                        formattedValues
-                    };
+                    return new Output(formattedValues);
                 } catch (errors) {
                     console.log(formatYupErrors(errors.inner));
                     return {
