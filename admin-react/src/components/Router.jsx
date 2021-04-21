@@ -29,13 +29,19 @@ export default () => (
                                 <UsersListPage />
                             </Route>
                             <Route exact path="/users/:username">
-                                <UsersOpenPage />
+                                <UsersOpenPage action="edit" />
+                            </Route>
+                            <Route exact path="/create-user">
+                                <UsersOpenPage action="create" />
                             </Route>
                             <Route exact path="/items">
                                 <ItemsListPage />
                             </Route>
                             <Route exact path="/items/:key">
-                                <ItemsOpenPage />
+                                <ItemsOpenPage action="edit" />
+                            </Route>
+                            <Route exact path="/create-item">
+                                <ItemsOpenPage action="create" />
                             </Route>
                             <Route path="*">
                                 <NotFoundPage />

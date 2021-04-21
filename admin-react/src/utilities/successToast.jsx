@@ -7,6 +7,5 @@ export default () => {
         "Success",
         "Successfully completed."
     );
-    console.log(message);
     toast(message);
 };

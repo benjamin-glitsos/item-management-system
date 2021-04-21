@@ -13,7 +13,7 @@ export default ({ children }) => {
     const context = useContext(OpenContext);
     const title = `${titleCase(
         [context.action, context.nameSingular].join(" ")
-    )} : ${context.key}`;
+    )}${!context.isCreate ? `: ${context.key}` : ""}`;
     return (
         <PageLayout
             title={`${title} : ${process.env.PROJECT_ABBREV || "IMS"}`}
@@ -21,7 +21,10 @@ export default ({ children }) => {
         >
             <OpenLayout
                 title={title}
-                breadcrumbs={generateBreadcrumbs(context.homeBreadcrumb)}
+                breadcrumbs={[
+                    context.homeBreadcrumb,
+                    [titleCase(context.namePlural), `/${context.namePlural}`]
+                ]}
             >
                 <OffsetGridOuterPadding>
                     <Grid fluid>

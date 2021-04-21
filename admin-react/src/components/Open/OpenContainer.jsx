@@ -20,6 +20,7 @@ import mapObjKeys from "%/utilities/mapObjKeys";
 
 export default ({
     action,
+    isCreate,
     key,
     nameSingular,
     namePlural,
@@ -38,6 +39,8 @@ export default ({
 
     const itemUrl = config.serverUrl + `v1/${namePlural}/${key}/`;
 
+    const createUrl = config.serverUrl + `v1/${namePlural}/`;
+
     const schemaUrl = config.serverUrl + `v1/schemas/${action}-${namePlural}/`;
 
     const requestItem = () =>
@@ -55,18 +58,26 @@ export default ({
         }).catch(axiosErrorHandler);
 
     const submitItem = data => {
-        if (isObjectEmpty(data)) {
+        if (!isCreate && isObjectEmpty(data)) {
             noNewDataToSubmitToast();
         } else {
             axios({
-                method: "PATCH",
-                url: itemUrl,
-                data
+                method: isCreate ? "POST" : "PATCH",
+                url: isCreate ? createUrl : itemUrl,
+                data: {
+                    ...data,
+                    ...(isCreate && namePlural === "users"
+                        ? { password: "DemoPassword" }
+                        : {})
+                }
             })
                 .then(response => {
                     const responseData = response.data.data;
                     successToast();
-                    if (responseData[keyField] !== state.item[keyField]) {
+                    if (isCreate) {
+                        history.replace(`/${namePlural}/${data[keyField]}`);
+                    } else if (responseData[keyField] !== data[keyField]) {
+                        setItem(responseData);
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
                         );
@@ -89,6 +100,21 @@ export default ({
                 delete schema.properties[field].anyOf;
                 schema.properties[field].type = "string";
             }
+
+            const requiredList = schema?.required;
+
+            if (requiredList) {
+                for (const requiredField of requiredList) {
+                    schema.properties[requiredField].required = true;
+                }
+
+                delete schema.required;
+            }
+
+            if (namePlural === "users") {
+                delete schema.properties.password;
+            }
+
             draft.schema = schema;
         });
 
@@ -165,6 +191,7 @@ export default ({
         R.groupBy(R.head),
         R.map(R.pluck(1))
     );
+
     const formResolver = schema =>
         useCallback(
             async data => {
@@ -188,7 +215,6 @@ export default ({
                     const formattedValues = emptyStringsToNull(values);
                     return new Output(formattedValues);
                 } catch (errors) {
-                    console.log(formatYupErrors(errors.inner));
                     return {
                         ...new Output(),
                         errors: formatYupErrors(errors.inner)
@@ -215,13 +241,15 @@ export default ({
     const onSubmit = data => submitItem(data);
 
     const openItemAction = () => {
-        (async () => {
-            try {
-                const item = await requestItem();
-                const data = item.data.data;
-                setItem(data);
-            } catch (error) {}
-        })();
+        if (!isCreate) {
+            (async () => {
+                try {
+                    const item = await requestItem();
+                    const data = item.data.data;
+                    setItem(data);
+                } catch (error) {}
+            })();
+        }
     };
 
     const itemValuesAction = () => {
@@ -246,6 +274,7 @@ export default ({
 
     return {
         action,
+        isCreate,
         key,
         requestItem,
         requestSchema,

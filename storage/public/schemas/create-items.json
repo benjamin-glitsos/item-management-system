@@ -1,32 +1,24 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Create Items",
-    "type": "object",
-    "properties": {
-        "key": {
-            "type": "string",
-            "pattern": "^[-A-Z0-9]*$",
-            "patternDescription": "key can only contain uppercase letters (A-Z), numbers (0-9), and the hyphen symbol (-)",
-            "minLength": 1,
-            "maxLength": 255
-        },
-        "name": {
-            "type": "string",
-            "pattern": "^[^<>%$&]*$",
-            "patternDescription": "name cannot include certain characters (^, <, >, %, $, &)",
-            "minLength": 1,
-            "maxLength": 255
-        },
-        "description": {
-            "type": ["string", "null"],
-            "maxLength": 1048576,
-            "nullable": true
-        },
-        "additional_notes": {
-            "type": ["string", "null"],
-            "maxLength": 1048576,
-            "nullable": true
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Create Items",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string"
     },
-    "required": ["key", "name"]
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": ["string", "null"],
+      "maxLength": 1048576,
+      "nullable": true
+    },
+    "additional_notes": {
+      "type": ["string", "null"],
+      "maxLength": 1048576,
+      "nullable": true
+    }
+  },
+  "required": ["key", "name"]
 }

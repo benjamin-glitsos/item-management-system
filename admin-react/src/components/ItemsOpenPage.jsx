@@ -11,14 +11,24 @@ import MarkdownTextarea from "%/components/MarkdownTextarea";
 import Open from "%/components/Open/Open";
 import config from "%/config";
 
-export default () => {
+export default ({ action }) => {
+    const isCreate = action === "create";
+
     const { key } = useParams();
 
     const keyField = "key";
     const [nameSingular, namePlural] = config.names.items;
-    const action = config.actions.EDIT;
-    const title = titleCase(namePlural);
+    const title = isCreate
+        ? titleCase(`${action} ${nameSingular}`)
+        : titleCase(namePlural);
     const slug = namePlural;
+    const description = isCreate
+        ? `Create a ${nameSingular} in the ${
+              process.env.PROJECT_NAME || "Item Management System"
+          }.`
+        : `A ${nameSingular} in the ${
+              process.env.PROJECT_NAME || "Item Management System"
+          }.`;
 
     const pageContainer = PageContainer({
         nameSingular,
@@ -26,13 +36,12 @@ export default () => {
         title,
         slug,
         namePlural,
-        description: `A ${nameSingular} in the ${
-            process.env.PROJECT_NAME || "Item Management System"
-        }.`
+        description
     });
 
     const openContainer = OpenContainer({
         action,
+        isCreate,
         key,
         keyField,
         nameSingular,

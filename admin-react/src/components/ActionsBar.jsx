@@ -1,14 +1,17 @@
 import { Fragment } from "react";
 import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import ActionsMenu from "%/components/ActionsMenu";
 import PageLengthSelect from "%/components/PageLengthSelect";
-import ButtonGroup from "@atlaskit/button/button-group";
+import Button, { ButtonGroup } from "@atlaskit/button";
 import Textfield from "@atlaskit/textfield";
 import { ListContext } from "%/components/List/List";
 
 export default () => {
     const context = useContext(ListContext);
+    const history = useHistory();
+
     const isDataEmpty = context.isDataEmpty;
     const isLoading = context.state.isLoading;
     const setPageNumber = context.setPageNumber;
@@ -25,20 +28,27 @@ export default () => {
     return (
         <Fragment>
             <ButtonGroup>
-                <ButtonRightSpace>
-                    <ActionsMenu
-                        items={context.state.selected}
-                        additionalItems={[
-                            {
-                                title: "Deselect",
-                                onClick: context.setDeselectAll,
-                                isVisible: context.state.selected.length > 0
-                            }
-                        ]}
-                        deleteItemsAction={context.deleteItemsAction}
-                        setDeselectAll={context.setDeselectAll}
-                    />
-                </ButtonRightSpace>
+                <Button
+                    appearance="primary"
+                    onClick={() =>
+                        history.push(`/create-${context.nameSingular}`)
+                    }
+                >
+                    Create {context.nameSingular}
+                </Button>
+                <ActionsMenu
+                    items={context.state.selected}
+                    additionalItems={[
+                        {
+                            title: "Deselect",
+                            onClick: context.setDeselectAll,
+                            isVisible: context.state.selected.length > 0
+                        }
+                    ]}
+                    deleteItemsAction={context.deleteItemsAction}
+                    setDeselectAll={context.setDeselectAll}
+                />
+                <Spacer />
                 <Textfield
                     aria-label="Search"
                     isCompact={true}
@@ -62,8 +72,8 @@ export default () => {
     );
 };
 
-const ButtonRightSpace = styled.span`
-    button {
-        margin-right: 0.5em;
-    }
+const Spacer = styled.div`
+    display: inline-block;
+    padding: 0;
+    margin: 0;
 `;
