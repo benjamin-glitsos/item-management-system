@@ -108,9 +108,12 @@ export default ({
         Object.entries(state.schema?.properties || []).reduce(
             (accumulator, current) => {
                 const [key, value] = current;
-                const descriptionValues = R.pickBy((val, key) =>
-                    key.match(/^.*Description$/)
-                )(value);
+                const descriptionValues = R.pickBy((val, key) => {
+                    const { fieldName } = key.match(
+                        /^(?<fieldName>.*)Description$/
+                    );
+                    return { fieldName };
+                })(value);
                 return [...accumulator, [key, descriptionValues]];
             },
             []
