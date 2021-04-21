@@ -33,7 +33,7 @@ export default ({
     const defaultState = {
         schema: {},
         item: {},
-        additionalOpens: 0
+        opens: 0
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -77,7 +77,6 @@ export default ({
                     successToast();
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
-                        setAdditionalOpens();
                     } else if (responseData[keyField] !== data[keyField]) {
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
@@ -90,14 +89,18 @@ export default ({
         }
     };
 
+    const setOpens = () =>
+        setState(draft => {
+            draft.opens++;
+        });
+
+    if (!isCreate && state.opens === 0) {
+        setOpens();
+    }
+
     const setItem = item =>
         setState(draft => {
             draft.item = item;
-        });
-
-    const setAdditionalOpens = () =>
-        setState(draft => {
-            draft.additionalOpens++;
         });
 
     const setSchema = schema =>
@@ -274,7 +277,7 @@ export default ({
         "Edits": state.item?.edits
     };
 
-    useEffect(openItemAction, []);
+    useEffect(openItemAction, [state.opens]);
     useEffect(itemValuesAction, [state.item]);
     useEffect(schemaAction, []);
 
