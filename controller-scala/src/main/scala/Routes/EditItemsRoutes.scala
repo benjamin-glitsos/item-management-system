@@ -1,7 +1,6 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import scala.util.{Try}
-import upickle.default._
+import scala.util.Try
 import upickle_import.general._
 
 object EditItemsRoutes {

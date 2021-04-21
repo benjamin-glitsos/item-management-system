@@ -1,12 +1,7 @@
-import org.everit.json.schema.{Schema, ValidationException}
-import org.everit.json.schema.loader.{SchemaClient, SchemaLoader}
-import org.json.{JSONObject, JSONTokener}
-import scala.io.Source
-import scala.jdk.CollectionConverters._
+import org.everit.json.schema.Schema
+import org.everit.json.schema.loader.SchemaLoader
+import org.json.JSONObject
 import upickle.default._
-import cats.implicits._
-import upickle_import.general._
-import org.everit.json.schema.{Schema}
 
 object SchemasService extends ServiceTrait {
   private final def load(name: String): JSONObject = SchemasDAO.load(name)
