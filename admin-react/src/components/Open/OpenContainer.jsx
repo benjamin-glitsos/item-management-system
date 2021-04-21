@@ -58,10 +58,9 @@ export default ({
         }).catch(axiosErrorHandler);
 
     const submitItem = data => {
-        if (isObjectEmpty(data)) {
+        if (!isCreate && isObjectEmpty(data)) {
             noNewDataToSubmitToast();
         } else {
-            console.log(data);
             axios({
                 method: isCreate ? "POST" : "PATCH",
                 url: isCreate ? createUrl : itemUrl,
