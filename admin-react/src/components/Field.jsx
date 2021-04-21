@@ -1,20 +1,29 @@
 import styled from "styled-components";
 import formatNull from "%/utilities/formatNull";
 
+const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
+
 export default ({
     name,
     title,
     Component,
     errors,
+    action,
+    schemaProperties,
     additionalProps,
     ...props
 }) => {
     const fieldId = `Field/${name}`;
     const errorId = `Field/Error/${name}`;
     const fieldErrors = errors?.[name];
+    const isRequired =
+        action === "create" && schemaProperties?.[name]?.required;
     return (
         <Wrapper>
-            <Label htmlFor={fieldId}>{title}</Label>
+            <Label htmlFor={fieldId}>
+                {title}
+                {isRequired && <RequiredAsterisk />}
+            </Label>
             <Component
                 id={fieldId}
                 placeholder={formatNull()}
@@ -52,4 +61,8 @@ const Errors = styled.ul`
     color: rgb(222, 53, 11);
     margin-top: 4px;
     margin-bottom: 4px;
+`;
+
+const Asterisk = styled.span`
+    color: rgb(222, 53, 11);
 `;

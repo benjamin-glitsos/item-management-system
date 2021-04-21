@@ -11,6 +11,8 @@ export default ({ name, title, sm, Component, ...props }) => {
                 name={name}
                 title={title}
                 Component={Component}
+                action={context.action}
+                schemaProperties={context.state.schema.properties}
                 errors={context.errors}
                 additionalProps={context.register(name)}
                 {...props}

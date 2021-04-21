@@ -278,8 +278,8 @@ export default ({
     };
 
     useEffect(openItemAction, [state.opens]);
+    useEffect(schemaAction, [state.opens]);
     useEffect(itemValuesAction, [state.item]);
-    useEffect(schemaAction, []);
 
     return {
         action,
