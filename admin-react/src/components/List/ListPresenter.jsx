@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { titleCase } from "title-case";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import FullwidthLayout from "%/components/FullwidthLayout";
@@ -20,7 +21,15 @@ export default () => {
             <FullwidthLayout>
                 <PageHeader
                     breadcrumbs={
-                        <BreadcrumbBar breadcrumbs={[context.homeBreadcrumb]} />
+                        <BreadcrumbBar
+                            breadcrumbs={[
+                                context.homeBreadcrumb,
+                                [
+                                    titleCase(context.namePlural),
+                                    `./${context.namePlural}`
+                                ]
+                            ]}
+                        />
                     }
                     actions={<ActionsBar />}
                     bottomBar={<TableStatusBar />}
