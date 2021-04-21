@@ -205,9 +205,13 @@ export default ({
         useCallback(
             async data => {
                 const formattedData = R.pipe(
+                    x => emptyStringsToNull(x),
+                    x => removeAllUndefined(x),
                     x => diff(state.item, x),
-                    x => removeAllUndefined(x)
+                    R.pick(formFields)
                 )(data);
+
+                console.log("formatted:", formattedData);
 
                 class Output {
                     constructor(values = {}, errors = {}) {
