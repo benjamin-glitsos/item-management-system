@@ -16,6 +16,7 @@ import isObjectEmpty from "%/utilities/isObjectEmpty";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
 import successToast from "%/utilities/successToast";
+import mapObjKeys from "%/utilities/mapObjKeys";
 
 export default ({
     action,
@@ -104,20 +105,29 @@ export default ({
         abortEarly: false
     };
 
-    const getErrMessagesFromSchema = () =>
-        Object.entries(state.schema?.properties || []).reduce(
+    const getErrMessagesFromSchema = () => {
+        const descriptionAttributePattern = /^(?<fieldName>.*)Description$/;
+        return Object.entries(state.schema?.properties || []).reduce(
             (accumulator, current) => {
-                const [key, value] = current;
-                const descriptionValues = R.pickBy((val, key) => {
-                    const { fieldName } = key.match(
-                        /^(?<fieldName>.*)Description$/
-                    );
-                    return { fieldName };
-                })(value);
-                return [...accumulator, [key, descriptionValues]];
+                const [key, attributes] = current;
+                const descriptionAttributes = R.pipe(
+                    R.pickBy((value, key) =>
+                        key.match(descriptionAttributePattern)
+                    ),
+                    x =>
+                        R.map(
+                            mapObjKeys(
+                                key =>
+                                    key.match(descriptionAttributePattern)
+                                        .fieldName
+                            )(x)
+                        )
+                )(attributes);
+                return [...accumulator, [key, descriptionAttributes]];
             },
             []
         );
+    };
 
     const jsonSchemaToYupConfig = {
         errMessages: {
