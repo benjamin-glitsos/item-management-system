@@ -114,20 +114,17 @@ export default ({
                     R.pickBy((value, key) =>
                         key.match(descriptionAttributePattern)
                     ),
-                    x =>
-                        R.map(
-                            mapObjKeys(
-                                key =>
-                                    key.match(descriptionAttributePattern)
-                                        .fieldName
-                            )(x)
-                        )
+                    mapObjKeys(
+                        key => key.match(descriptionAttributePattern).fieldName
+                    )
                 )(attributes);
                 return [...accumulator, [key, descriptionAttributes]];
             },
             []
         );
     };
+
+    console.log(getErrMessagesFromSchema);
 
     const jsonSchemaToYupConfig = {
         errMessages: {
