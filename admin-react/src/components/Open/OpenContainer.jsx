@@ -64,7 +64,12 @@ export default ({
             axios({
                 method: isCreate ? "POST" : "PATCH",
                 url: isCreate ? createUrl : itemUrl,
-                data
+                data: {
+                    ...data,
+                    ...(isCreate && namePlural === "users"
+                        ? { password: "DemoPassword" }
+                        : {})
+                }
             })
                 .then(response => {
                     const responseData = response.data.data;
@@ -102,6 +107,12 @@ export default ({
                 for (const requiredField of requiredList) {
                     schema.properties[requiredField].required = true;
                 }
+
+                delete schema.required;
+            }
+
+            if (namePlural === "users") {
+                delete schema.properties.password;
             }
 
             draft.schema = schema;
@@ -186,14 +197,7 @@ export default ({
             async data => {
                 const formattedData = R.pipe(
                     x => diff(state.item, x),
-                    x => removeAllUndefined(x),
-                    x =>
-                        isCreate && namePlural === "items"
-                            ? {
-                                  ...x,
-                                  ...{ password: "DemoPassword1" }
-                              }
-                            : x
+                    x => removeAllUndefined(x)
                 )(data);
 
                 class Output {
