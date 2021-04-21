@@ -32,7 +32,8 @@ export default ({
 
     const defaultState = {
         schema: {},
-        item: {}
+        item: {},
+        refreshes: 0
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -77,7 +78,6 @@ export default ({
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
                     } else if (responseData[keyField] !== data[keyField]) {
-                        setItem(responseData);
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
                         );
@@ -88,6 +88,15 @@ export default ({
                 .catch(axiosErrorHandler);
         }
     };
+
+    const setRefreshes = () =>
+        setState(draft => {
+            draft.refreshes++;
+        });
+
+    if (!isCreate && state.refreshes === 0) {
+        setRefreshes();
+    }
 
     const setItem = item =>
         setState(draft => {
@@ -268,9 +277,9 @@ export default ({
         "Edits": state.item?.edits
     };
 
-    useEffect(openItemAction, []);
+    useEffect(openItemAction, [state.refreshes]);
+    useEffect(schemaAction, [state.refreshes]);
     useEffect(itemValuesAction, [state.item]);
-    useEffect(schemaAction, []);
 
     return {
         action,
