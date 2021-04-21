@@ -20,6 +20,7 @@ import mapObjKeys from "%/utilities/mapObjKeys";
 
 export default ({
     action,
+    isCreate,
     key,
     nameSingular,
     namePlural,
@@ -218,13 +219,15 @@ export default ({
     const onSubmit = data => submitItem(data);
 
     const openItemAction = () => {
-        (async () => {
-            try {
-                const item = await requestItem();
-                const data = item.data.data;
-                setItem(data);
-            } catch (error) {}
-        })();
+        if (!isCreate) {
+            (async () => {
+                try {
+                    const item = await requestItem();
+                    const data = item.data.data;
+                    setItem(data);
+                } catch (error) {}
+            })();
+        }
     };
 
     const itemValuesAction = () => {
@@ -249,6 +252,7 @@ export default ({
 
     return {
         action,
+        isCreate,
         key,
         requestItem,
         requestSchema,

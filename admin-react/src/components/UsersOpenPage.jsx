@@ -12,12 +12,23 @@ import Open from "%/components/Open/Open";
 import config from "%/config";
 
 export default ({ action }) => {
+    const isCreate = action === "create";
+
     const { username } = useParams();
 
     const keyField = "username";
     const [nameSingular, namePlural] = config.names.users;
-    const title = titleCase(namePlural);
+    const title = isCreate
+        ? titleCase(`${action} ${nameSingular}`)
+        : titleCase(namePlural);
     const slug = namePlural;
+    const description = isCreate
+        ? `Create a ${nameSingular} in the ${
+              process.env.PROJECT_NAME || "Item Management System"
+          }.`
+        : `A ${nameSingular} in the ${
+              process.env.PROJECT_NAME || "Item Management System"
+          }.`;
 
     const pageContainer = PageContainer({
         nameSingular,
@@ -25,13 +36,12 @@ export default ({ action }) => {
         title,
         slug,
         namePlural,
-        description: `A ${nameSingular} in the ${
-            process.env.PROJECT_NAME || "Item Management System"
-        }.`
+        description
     });
 
     const openContainer = OpenContainer({
         action,
+        isCreate,
         key: username,
         nameSingular,
         namePlural,

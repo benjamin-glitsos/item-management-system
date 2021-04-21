@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import ActionsMenu from "%/components/ActionsMenu";
 import PageLengthSelect from "%/components/PageLengthSelect";
-import ButtonGroup from "@atlaskit/button/button-group";
+import Button, { ButtonGroup } from "@atlaskit/button";
 import Textfield from "@atlaskit/textfield";
 import { ListContext } from "%/components/List/List";
 
@@ -25,20 +25,22 @@ export default () => {
     return (
         <Fragment>
             <ButtonGroup>
-                <ButtonRightSpace>
-                    <ActionsMenu
-                        items={context.state.selected}
-                        additionalItems={[
-                            {
-                                title: "Deselect",
-                                onClick: context.setDeselectAll,
-                                isVisible: context.state.selected.length > 0
-                            }
-                        ]}
-                        deleteItemsAction={context.deleteItemsAction}
-                        setDeselectAll={context.setDeselectAll}
-                    />
-                </ButtonRightSpace>
+                <Button appearance="primary">Create User</Button>
+                <ActionsMenu
+                    items={context.state.selected}
+                    additionalItems={[
+                        {
+                            title: "Deselect",
+                            onClick: context.setDeselectAll,
+                            isVisible: context.state.selected.length > 0
+                        }
+                    ]}
+                    deleteItemsAction={context.deleteItemsAction}
+                    setDeselectAll={context.setDeselectAll}
+                />
+            </ButtonGroup>
+            <ButtonGroup>
+                <ButtonRightSpace></ButtonRightSpace>
                 <Textfield
                     aria-label="Search"
                     isCompact={true}
