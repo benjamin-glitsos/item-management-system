@@ -14,9 +14,9 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 ### Admin-React Container
 
 * React Hooks, Context and Effects
-* Container/Presenter pattern where useful
-* Ramda functional combinator library
-* Atlassian Design System
+* Container/Presenter pattern for complex components
+* Ramda functional data pipelines
+* UI/UX using Atlassian Design System
 
 ### Database-PostgreSQL Container
 
