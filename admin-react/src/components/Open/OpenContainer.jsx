@@ -107,24 +107,33 @@ export default ({
 
     const getErrMessagesFromSchema = () => {
         const descriptionAttributePattern = /^(?<fieldName>.*)Description$/;
-        return Object.entries(state.schema?.properties || []).reduce(
-            (accumulator, current) => {
-                const [key, attributes] = current;
-                const descriptionAttributes = R.pipe(
-                    R.pickBy((value, key) =>
-                        key.match(descriptionAttributePattern)
-                    ),
-                    mapObjKeys(
-                        key => key.match(descriptionAttributePattern).fieldName
-                    )
-                )(attributes);
-                return [...accumulator, [key, descriptionAttributes]];
-            },
-            []
+        return Object.fromEntries(
+            Object.entries(state.schema?.properties || []).reduce(
+                (accumulator, current) => {
+                    const [key, attributes] = current;
+
+                    const descriptionAttributes = R.pipe(
+                        R.pickBy((value, key) =>
+                            key.match(descriptionAttributePattern)
+                        ),
+                        mapObjKeys(
+                            key =>
+                                descriptionAttributePattern.exec(key)?.groups
+                                    ?.fieldName
+                        )
+                    )(attributes);
+
+                    const attributesPair =
+                        Object.keys(descriptionAttributes).length > 0
+                            ? [[key, descriptionAttributes]]
+                            : [];
+
+                    return [...accumulator, ...attributesPair];
+                },
+                []
+            )
         );
     };
-
-    console.log(getErrMessagesFromSchema);
 
     const jsonSchemaToYupConfig = {
         errMessages: {
