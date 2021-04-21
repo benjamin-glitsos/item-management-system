@@ -33,7 +33,7 @@ export default ({
     const defaultState = {
         schema: {},
         item: {},
-        opens: 0
+        refreshes: 0
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -89,13 +89,13 @@ export default ({
         }
     };
 
-    const setOpens = () =>
+    const setRefreshes = () =>
         setState(draft => {
-            draft.opens++;
+            draft.refreshes++;
         });
 
-    if (!isCreate && state.opens === 0) {
-        setOpens();
+    if (!isCreate && state.refreshes === 0) {
+        setRefreshes();
     }
 
     const setItem = item =>
@@ -277,8 +277,8 @@ export default ({
         "Edits": state.item?.edits
     };
 
-    useEffect(openItemAction, [state.opens]);
-    useEffect(schemaAction, [state.opens]);
+    useEffect(openItemAction, [state.refreshes]);
+    useEffect(schemaAction, [state.refreshes]);
     useEffect(itemValuesAction, [state.item]);
 
     return {
