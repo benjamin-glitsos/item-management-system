@@ -104,34 +104,17 @@ export default ({
         abortEarly: false
     };
 
+    const getErrMessagesFromSchema = () =>
+        R.pipe(
+            R.map(R.pickBy((value, key) => key.match(/^.*Description$/)),
+            R.filter(value => Object.keys(value).length > 0)
+        )(state.schema?.properties || {});
+
     const jsonSchemaToYupConfig = {
         errMessages: {
-            key: {
-                pattern:
-                    "key can only contain uppercase letters (A-Z), numbers (0-9) and the hyphen symbol (-)"
-            }
+            ...getErrMessagesFromSchema()
         }
     };
-
-    console.log(
-        R.pipe(
-            R.map(R.pickBy((value, key) => key === "patternDescription")),
-            R.map(R.filter(value => Object.keys(value).length > 0)) // TODO: doesnt work. Why is it even neccesary when you are using pickBy already?
-        )(state.schema?.properties || {})
-    );
-
-    // console.log(
-    //     R.map(attributes => ({
-    //         pattern: attributes?.patternDescription
-    //     }))(state.schema?.properties || {})
-    // );
-    // (state.schema?.properties || {}).reduce((accumulator, current) => {
-    //     const description = current?.patternDescription;
-    //     return {
-    //         ...accumulator,
-    //         ...(description ? { pattern: description } : {})
-    //     };
-    // }, {});
 
     const yupSchema = isObjectEmpty(state.schema)
         ? Yup.object()
