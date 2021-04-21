@@ -40,6 +40,9 @@ export default () => (
                             <Route exact path="/items/:key">
                                 <ItemsOpenPage />
                             </Route>
+                            <Route exact path="/create-item">
+                                <ItemsOpenPage action="create" />
+                            </Route>
                             <Route path="*">
                                 <NotFoundPage />
                             </Route>

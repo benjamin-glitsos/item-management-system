@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import ActionsMenu from "%/components/ActionsMenu";
 import PageLengthSelect from "%/components/PageLengthSelect";
@@ -9,6 +10,8 @@ import { ListContext } from "%/components/List/List";
 
 export default () => {
     const context = useContext(ListContext);
+    const history = useHistory();
+
     const isDataEmpty = context.isDataEmpty;
     const isLoading = context.state.isLoading;
     const setPageNumber = context.setPageNumber;
@@ -25,7 +28,14 @@ export default () => {
     return (
         <Fragment>
             <ButtonGroup>
-                <Button appearance="primary">Create User</Button>
+                <Button
+                    appearance="primary"
+                    onClick={() =>
+                        history.push(`/create-${context.nameSingular}`)
+                    }
+                >
+                    Create {context.nameSingular}
+                </Button>
                 <ActionsMenu
                     items={context.state.selected}
                     additionalItems={[
@@ -38,9 +48,7 @@ export default () => {
                     deleteItemsAction={context.deleteItemsAction}
                     setDeselectAll={context.setDeselectAll}
                 />
-            </ButtonGroup>
-            <ButtonGroup>
-                <ButtonRightSpace></ButtonRightSpace>
+                <Spacer />
                 <Textfield
                     aria-label="Search"
                     isCompact={true}
@@ -64,8 +72,8 @@ export default () => {
     );
 };
 
-const ButtonRightSpace = styled.span`
-    button {
-        margin-right: 0.5em;
-    }
+const Spacer = styled.div`
+    display: inline-block;
+    padding: 0;
+    margin: 0;
 `;
