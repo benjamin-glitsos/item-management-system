@@ -13,7 +13,9 @@
         "name": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 255
+            "maxLength": 255,
+            "pattern": "^[^<>%$&]*$",
+            "patternDescription": "name cannot include certain characters (^, <, >, %, $, &)"
         },
         "description": {
             "type": ["string", "null"],

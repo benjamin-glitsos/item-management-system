@@ -17,20 +17,28 @@
         },
         "first_name": {
             "type": "string",
-            "maxLength": 50
+            "maxLength": 50,
+            "pattern": "^[^<>%$&]*$",
+            "patternDescription": "first_name cannot include certain characters (^, <, >, %, $, &)"
         },
         "last_name": {
             "type": "string",
-            "maxLength": 70
+            "maxLength": 70,
+            "pattern": "^[^<>%$&]*$",
+            "patternDescription": "last_name cannot include certain characters (^, <, >, %, $, &)"
         },
         "other_names": {
             "type": ["string", "null"],
             "maxLength": 120,
-            "nullable": true
+            "nullable": true,
+            "pattern": "^[^<>%$&]*$",
+            "patternDescription": "other_names cannot include certain characters (^, <, >, %, $, &)"
         },
         "password": {
             "type": "string",
-            "maxLength": 40
+            "maxLength": 40,
+            "pattern": "^[^<>%$&]*$",
+            "patternDescription": "password cannot include certain characters (^, <, >, %, $, &)"
         },
         "additional_notes": {
             "type": ["string", "null"],
