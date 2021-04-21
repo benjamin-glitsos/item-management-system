@@ -11,12 +11,11 @@ import MarkdownTextarea from "%/components/MarkdownTextarea";
 import Open from "%/components/Open/Open";
 import config from "%/config";
 
-export default () => {
+export default ({ action }) => {
     const { username } = useParams();
 
     const keyField = "username";
     const [nameSingular, namePlural] = config.names.users;
-    const action = config.actions.EDIT;
     const title = titleCase(namePlural);
     const slug = namePlural;
 

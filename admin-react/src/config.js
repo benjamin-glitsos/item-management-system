@@ -9,8 +9,5 @@ export default {
     names: {
         users: ["user", "users"],
         items: ["item", "items"]
-    },
-    actions: {
-        EDIT: "edit"
     }
 };
