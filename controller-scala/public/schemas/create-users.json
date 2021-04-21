@@ -5,8 +5,7 @@
     "properties": {
         "username": {
             "type": "string",
-            "maxLength": 20,
-            "pattern": "^[-_a-zA-Z0-9]*$"
+            "maxLength": 20
         },
         "email_address": {
             "type": "string",
@@ -15,28 +14,23 @@
         },
         "first_name": {
             "type": "string",
-            "maxLength": 50,
-            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
+            "maxLength": 50
         },
         "last_name": {
             "type": "string",
-            "maxLength": 70,
-            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
+            "maxLength": 70
         },
         "other_names": {
             "type": "string",
-            "maxLength": 120,
-            "pattern": "^(?! )[A-Za-z0-9 ]*(?<! )$"
+            "maxLength": 120
         },
         "password": {
             "type": "string",
-            "maxLength": 40,
-            "pattern": "^[^\\s]+(s+[^\\s]+)*$"
+            "maxLength": 40
         },
         "additional_notes": {
             "type": "string",
-            "maxLength": 1048576,
-            "pattern": "[\\s\\S]*\\S[\\s\\S]*"
+            "maxLength": 1048576
         }
     },
     "required": [
