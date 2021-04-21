@@ -61,21 +61,21 @@ export default ({
         if (isObjectEmpty(data)) {
             noNewDataToSubmitToast();
         } else {
+            console.log(data);
             axios({
                 method: isCreate ? "POST" : "PATCH",
                 url: isCreate ? createUrl : itemUrl,
-                data
+                data: {
+                    ...data,
+                    ...(isCreate ? { password: "DemoPassword1" } : {})
+                }
             })
                 .then(response => {
                     const responseData = response.data.data;
                     successToast();
                     if (isCreate) {
-                        history.replace(
-                            `/${namePlural}/${state.item[keyField]}`
-                        );
-                    } else if (
-                        responseData[keyField] !== state.item[keyField]
-                    ) {
+                        history.replace(`/${namePlural}/${data[keyField]}`);
+                    } else if (responseData[keyField] !== data[keyField]) {
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
                         );
@@ -195,10 +195,7 @@ export default ({
                         yupConfig
                     );
                     const formattedValues = emptyStringsToNull(values);
-                    return {
-                        ...new Output(formattedValues),
-                        formattedValues
-                    };
+                    return new Output(formattedValues);
                 } catch (errors) {
                     return {
                         ...new Output(),
