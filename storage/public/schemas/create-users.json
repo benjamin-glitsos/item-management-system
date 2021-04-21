@@ -8,8 +8,7 @@
       "pattern": "^[-_a-zA-Z0-9]*$",
       "patternDescription": "username can only contain letters (a-z and A-Z), numbers (0-9), and the hyphen (-) and underscore (_) symbols",
       "minLength": 1,
-      "maxLength": 20,
-      "required": true
+      "maxLength": 20
     },
     "email_address": {
       "type": "string",
@@ -17,24 +16,21 @@
       "maxLength": 50,
       "format": "email",
       "email": true,
-      "emailDescription": "email_address must be properly formatted e.g. someone@example.com",
-      "required": true
+      "emailDescription": "email_address must be properly formatted e.g. someone@example.com"
     },
     "first_name": {
       "type": "string",
       "pattern": "^[^<>%$&]*$",
       "patternDescription": "first_name cannot include certain characters (^, <, >, %, $, &)",
       "minLength": 1,
-      "maxLength": 50,
-      "required": true
+      "maxLength": 50
     },
     "last_name": {
       "type": "string",
       "pattern": "^[^<>%$&]*$",
       "patternDescription": "last_name cannot include certain characters (^, <, >, %, $, &)",
       "minLength": 1,
-      "maxLength": 70,
-      "required": true
+      "maxLength": 70
     },
     "other_names": {
       "type": ["string", "null"],
@@ -48,8 +44,7 @@
       "pattern": "^[^<>%$&]*$",
       "patternDescription": "password cannot include certain characters (^, <, >, %, $, &)",
       "minLength": 8,
-      "maxLength": 40,
-      "required": true
+      "maxLength": 40
     },
     "additional_notes": {
       "type": ["string", "null"],
@@ -57,5 +52,12 @@
       "maxLength": 1048576,
       "nullable": true
     }
-  }
+  },
+  "required": [
+    "username",
+    "email_address",
+    "first_name",
+    "last_name",
+    "password"
+  ]
 }

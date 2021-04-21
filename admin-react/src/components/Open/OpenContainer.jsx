@@ -64,10 +64,7 @@ export default ({
             axios({
                 method: isCreate ? "POST" : "PATCH",
                 url: isCreate ? createUrl : itemUrl,
-                data: {
-                    ...data,
-                    ...(isCreate ? { password: "DemoPassword1" } : {})
-                }
+                data
             })
                 .then(response => {
                     const responseData = response.data.data;
@@ -75,6 +72,7 @@ export default ({
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
                     } else if (responseData[keyField] !== data[keyField]) {
+                        setItem(responseData);
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
                         );
@@ -97,6 +95,15 @@ export default ({
                 delete schema.properties[field].anyOf;
                 schema.properties[field].type = "string";
             }
+
+            const requiredList = schema?.required;
+
+            if (requiredList) {
+                for (const requiredField of requiredList) {
+                    schema.properties[requiredField].required = true;
+                }
+            }
+
             draft.schema = schema;
         });
 
@@ -173,12 +180,20 @@ export default ({
         R.groupBy(R.head),
         R.map(R.pluck(1))
     );
+
     const formResolver = schema =>
         useCallback(
             async data => {
                 const formattedData = R.pipe(
                     x => diff(state.item, x),
-                    x => removeAllUndefined(x)
+                    x => removeAllUndefined(x),
+                    x =>
+                        isCreate && namePlural === "items"
+                            ? {
+                                  ...x,
+                                  ...{ password: "DemoPassword1" }
+                              }
+                            : x
                 )(data);
 
                 class Output {

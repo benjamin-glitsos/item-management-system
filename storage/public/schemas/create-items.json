@@ -4,12 +4,10 @@
   "type": "object",
   "properties": {
     "key": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "description": {
       "type": ["string", "null"],
@@ -21,5 +19,6 @@
       "maxLength": 1048576,
       "nullable": true
     }
-  }
+  },
+  "required": ["key", "name"]
 }
