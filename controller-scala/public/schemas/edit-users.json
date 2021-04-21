@@ -5,43 +5,51 @@
     "properties": {
         "username": {
             "type": "string",
-            "maxLength": 20,
             "pattern": "^[-_a-zA-Z0-9]*$",
-            "patternDescription": "username can only contain letters (a-z and A-Z), numbers (0-9) and the hyphen (-) and underscore (_) symbols"
+            "patternDescription": "username can only contain letters (a-z and A-Z), numbers (0-9), and the hyphen (-) and underscore (_) symbols",
+            "minLength": 1,
+            "maxLength": 20
         },
         "email_address": {
             "type": "string",
+            "minLength": 1,
             "maxLength": 50,
             "format": "email",
-            "email": true
+            "email": true,
+            "emailDescription": "email_address must be properly formatted e.g. someone@example.com"
         },
         "first_name": {
             "type": "string",
-            "maxLength": 50,
             "pattern": "^[^<>%$&]*$",
-            "patternDescription": "first_name cannot include certain characters (^, <, >, %, $, &)"
+            "patternDescription": "first_name cannot include certain characters (^, <, >, %, $, &)",
+            "minLength": 1,
+            "maxLength": 50
         },
         "last_name": {
             "type": "string",
-            "maxLength": 70,
             "pattern": "^[^<>%$&]*$",
-            "patternDescription": "last_name cannot include certain characters (^, <, >, %, $, &)"
+            "patternDescription": "last_name cannot include certain characters (^, <, >, %, $, &)",
+            "minLength": 1,
+            "maxLength": 70
         },
         "other_names": {
             "type": ["string", "null"],
-            "maxLength": 120,
-            "nullable": true,
             "pattern": "^[^<>%$&]*$",
-            "patternDescription": "other_names cannot include certain characters (^, <, >, %, $, &)"
+            "patternDescription": "other_names cannot include certain characters (^, <, >, %, $, &)",
+            "minLength": 1,
+            "maxLength": 120,
+            "nullable": true
         },
         "password": {
             "type": "string",
-            "maxLength": 40,
             "pattern": "^[^<>%$&]*$",
-            "patternDescription": "password cannot include certain characters (^, <, >, %, $, &)"
+            "patternDescription": "password cannot include certain characters (^, <, >, %, $, &)",
+            "minLength": 8,
+            "maxLength": 40
         },
         "additional_notes": {
             "type": ["string", "null"],
+            "minLength": 1,
             "maxLength": 1048576,
             "nullable": true
         }
