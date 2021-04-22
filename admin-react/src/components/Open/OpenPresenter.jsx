@@ -25,7 +25,9 @@ export default ({ children }) => {
                 breadcrumbs={[
                     context.homeBreadcrumb,
                     [titleCase(context.namePlural), `./${context.namePlural}`],
-                    [context.key, `./${context.namePlural}/${context.key}`]
+                    context.isCreate
+                        ? [titleCase(context.action), ""]
+                        : [context.key, ""]
                 ]}
             >
                 <OffsetGridOuterPadding>
