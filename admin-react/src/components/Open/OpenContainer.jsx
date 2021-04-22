@@ -77,7 +77,10 @@ export default ({
                     successToast();
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
-                    } else if (responseData[keyField] !== data[keyField]) {
+                    } else if (
+                        data[keyField] &&
+                        responseData[keyField] !== data[keyField]
+                    ) {
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
                         );
@@ -210,8 +213,6 @@ export default ({
                     x => diff(state.item, x),
                     R.pick(formFields)
                 )(data);
-
-                console.log("formatted:", formattedData);
 
                 class Output {
                     constructor(values = {}, errors = {}) {

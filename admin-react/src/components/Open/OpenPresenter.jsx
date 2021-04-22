@@ -14,7 +14,6 @@ export default ({ children }) => {
     const title = `${titleCase(
         [context.action, context.nameSingular].join(" ")
     )}${!context.isCreate ? `: ${context.key}` : ""}`;
-    console.log(context.sidebarItems);
     return (
         <PageLayout
             title={`${title} : ${process.env.PROJECT_ABBREV || "IMS"}`}
