@@ -104,9 +104,9 @@ export default ({
             draft.selected = [];
         });
 
-    const listItemsAction = () => {
+    const listItemsAction = async () => {
         setLoading(true);
-        requestListItems({ ...state.request.body, ...query });
+        await requestListItems({ ...state.request.body, ...query });
         setLoading(false);
     };
 
