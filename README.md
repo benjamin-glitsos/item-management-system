@@ -7,9 +7,9 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 * Layered architecture: Routing, Middleware, Validation, Service, DAO, and Seeding layers
 * JSON Schema is used for back-end and front-end validation, and custom properties are used for custom validation messages
 * RESTful API design
-* Strong type-safety by using monads and other Algebraic Data Types
+* Strong type-safety by using monads and other Algebraic Data Types, and an SQL query builder
 * Object-oriented multiple-trait-inheritance pattern
-* Utilises an SQL query builder
+* Optimised to minimise round-trips and network load
 
 ### Admin-React Container
 
