@@ -13,6 +13,6 @@ CREATE VIEW meta_open AS
       , deleted_by.username AS deleted_by
       , m.additional_notes
     FROM meta m
-    LEFT OUTER JOIN users created_by ON m.created_by = created_by.id
+    INNER JOIN users created_by ON m.created_by = created_by.id
     LEFT OUTER JOIN users edited_by ON m.edited_by = edited_by.id
     LEFT OUTER JOIN users deleted_by ON m.deleted_by = deleted_by.id;

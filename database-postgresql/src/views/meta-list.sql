@@ -1,6 +1,6 @@
 CREATE VIEW meta_list AS
     SELECT
-      , id
+        id
       , created_at
       , edited_at
     FROM meta
