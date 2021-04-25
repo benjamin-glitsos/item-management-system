@@ -10,7 +10,7 @@ TimeAgo.addLabels("en", "custom", { now: { now: { future: "just now" } } });
 
 const timeAgo = new TimeAgo();
 
-export default d => {
+export default (d = null) => {
     if (d === undefined) {
         return d;
     } else if (d === null) {

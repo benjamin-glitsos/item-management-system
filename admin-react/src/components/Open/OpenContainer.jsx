@@ -290,15 +290,6 @@ export default ({
         }
     };
 
-    const sidebarItems = {
-        "Metakey": state.item?.metakey,
-        "Created at": formatDate(state.item?.created_at),
-        "Edited at": formatDate(state.item?.edited_at),
-        "Deleted at": formatDate(state.item?.deleted_at),
-        "Opens": state.item?.opens,
-        "Edits": state.item?.edits
-    };
-
     useEffect(openItemAction, [state.refreshes]);
     useEffect(schemaAction, [state.refreshes]);
     useEffect(itemValuesAction, [state.item]);
@@ -316,7 +307,6 @@ export default ({
         errors,
         control,
         onSubmit,
-        sidebarItems,
         state
     };
 };

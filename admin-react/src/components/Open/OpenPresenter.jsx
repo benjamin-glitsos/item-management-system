@@ -6,8 +6,9 @@ import { OpenContext } from "%/components/Open/Open";
 import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
-import LabelValuesSidebar from "%/components/LabelValuesSidebar";
 import LoadingSpinner from "%/components/LoadingSpinner";
+import OpenSidebarItem from "%/components/OpenSidebarItem";
+import EditorDetails from "%/components/EditorDetails";
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
@@ -58,9 +59,33 @@ export default ({ children }) => {
                                     </form>
                                 </Col>
                                 <Col sm={2}>
-                                    <LabelValuesSidebar
-                                        items={context.sidebarItems}
-                                    />
+                                    <OpenSidebarItem label="Metakey">
+                                        {context.state.item.metakey}
+                                    </OpenSidebarItem>
+                                    <OpenSidebarItem label="Created">
+                                        <EditorDetails
+                                            at={context.state.item.created_at}
+                                            by={context.state.item.created_by}
+                                        />
+                                    </OpenSidebarItem>
+                                    <OpenSidebarItem label="Edited">
+                                        <EditorDetails
+                                            at={context.state.item.edited_at}
+                                            by={context.state.item.edited_by}
+                                        />
+                                    </OpenSidebarItem>
+                                    <OpenSidebarItem label="Deleted">
+                                        <EditorDetails
+                                            at={context.state.item.deleted_at}
+                                            by={context.state.item.deleted_by}
+                                        />
+                                    </OpenSidebarItem>
+                                    <OpenSidebarItem label="Opens">
+                                        {context.state.item.opens}
+                                    </OpenSidebarItem>
+                                    <OpenSidebarItem label="Edits">
+                                        {context.state.item.edits}
+                                    </OpenSidebarItem>
                                 </Col>
                             </Row>
                         </Grid>

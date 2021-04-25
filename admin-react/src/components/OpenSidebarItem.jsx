@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default ({ label, value }) => (
+export default ({ label, children }) => (
     <Wrapper>
         <Label>{label.toUpperCase()}</Label>
-        <div>{value}</div>
+        <div>{children}</div>
     </Wrapper>
 );
 
