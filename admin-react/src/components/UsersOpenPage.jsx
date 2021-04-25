@@ -45,15 +45,7 @@ export default ({ action }) => {
         key: username,
         nameSingular,
         namePlural,
-        keyField,
-        formFields: [
-            "username",
-            "email_address",
-            "first_name",
-            "last_name",
-            "other_names",
-            "additional_notes"
-        ]
+        keyField
     });
 
     const pageContext = {

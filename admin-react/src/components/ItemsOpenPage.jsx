@@ -45,9 +45,7 @@ export default ({ action }) => {
         key,
         keyField,
         nameSingular,
-        namePlural,
-        formFields: ["key", "name", "description", "additional_notes"],
-        optionalFields: ["description", "additional_notes"]
+        namePlural
     });
 
     const pageContext = {

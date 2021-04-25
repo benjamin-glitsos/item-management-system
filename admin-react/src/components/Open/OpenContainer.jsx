@@ -24,9 +24,7 @@ export default ({
     key,
     nameSingular,
     namePlural,
-    keyField,
-    formFields,
-    optionalFields
+    keyField
 }) => {
     const history = useHistory();
 
@@ -79,8 +77,7 @@ export default ({
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
                     } else if (
-                        data[keyField] &&
-                        responseData[keyField] !== data[keyField]
+                        state.item[keyField] !== responseData[keyField]
                     ) {
                         history.replace(
                             `/${namePlural}/${responseData[keyField]}`
@@ -182,6 +179,15 @@ export default ({
         );
     };
 
+    const getFormFieldsFromSchema = () => {
+        const properties = state.schema?.properties;
+        if (!properties) {
+            return [];
+        } else {
+            return Object.keys(properties);
+        }
+    };
+
     const jsonSchemaToYupConfig = {
         errMessages: {
             ...getErrMessagesFromSchema()
@@ -220,7 +226,7 @@ export default ({
                     x => emptyStringsToNull(x),
                     x => removeAllUndefined(x),
                     x => diff(state.item, x),
-                    R.pick(formFields)
+                    R.pick(getFormFieldsFromSchema())
                 )(data);
 
                 class Output {
@@ -279,7 +285,7 @@ export default ({
 
     const itemValuesAction = () => {
         const data = state.item;
-        for (const key of formFields) {
+        for (const key of getFormFieldsFromSchema()) {
             setValue(key, nullToEmptyString(data[key]));
         }
     };
@@ -310,7 +316,6 @@ export default ({
         errors,
         control,
         onSubmit,
-        formFields,
         sidebarItems,
         state
     };
