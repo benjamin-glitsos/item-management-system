@@ -8,7 +8,7 @@ export default ({
     title,
     Component,
     errors,
-    action,
+    isCreate,
     schemaProperties,
     additionalProps,
     ...props
@@ -16,8 +16,8 @@ export default ({
     const fieldId = `Field/${name}`;
     const errorId = `Field/Error/${name}`;
     const fieldErrors = errors?.[name];
-    const isRequired =
-        action === "create" && schemaProperties?.[name]?.required;
+    const isRequired = isCreate && schemaProperties?.[name]?.required;
+    const placeholder = isCreate ? "" : formatNull();
     return (
         <Wrapper>
             <Label htmlFor={fieldId}>
@@ -26,7 +26,7 @@ export default ({
             </Label>
             <Component
                 id={fieldId}
-                placeholder={formatNull()}
+                placeholder={placeholder}
                 {...additionalProps}
                 {...props}
             />
