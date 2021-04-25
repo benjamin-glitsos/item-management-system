@@ -8,7 +8,7 @@ import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import OpenSidebarItem from "%/components/OpenSidebarItem";
-import EditorDetails from "%/components/EditorDetails";
+import UpdateAuthorDetails from "%/components/UpdateAuthorDetails";
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
@@ -63,19 +63,19 @@ export default ({ children }) => {
                                         {context.state.item.metakey}
                                     </OpenSidebarItem>
                                     <OpenSidebarItem label="Created">
-                                        <EditorDetails
+                                        <UpdateAuthorDetails
                                             at={context.state.item.created_at}
                                             by={context.state.item.created_by}
                                         />
                                     </OpenSidebarItem>
                                     <OpenSidebarItem label="Edited">
-                                        <EditorDetails
+                                        <UpdateAuthorDetails
                                             at={context.state.item.edited_at}
                                             by={context.state.item.edited_by}
                                         />
                                     </OpenSidebarItem>
                                     <OpenSidebarItem label="Deleted">
-                                        <EditorDetails
+                                        <UpdateAuthorDetails
                                             at={context.state.item.deleted_at}
                                             by={context.state.item.deleted_by}
                                         />
