@@ -5,6 +5,9 @@ import Tooltip from "@atlaskit/tooltip";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
 TimeAgo.addDefaultLocale(en);
+
+TimeAgo.addLabels("en", "custom", { now: { now: { future: "just now" } } });
+
 const timeAgo = new TimeAgo();
 
 export default d => {
