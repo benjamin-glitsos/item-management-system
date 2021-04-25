@@ -33,7 +33,8 @@ export default ({
     const defaultState = {
         schema: {},
         item: {},
-        refreshes: 0
+        refreshes: 0,
+        loading: false
     };
 
     const [state, setState] = useImmer(defaultState);
@@ -91,6 +92,11 @@ export default ({
                 .catch(axiosErrorHandler);
         }
     };
+
+    const setLoading = bool =>
+        setState(draft => {
+            draft.isLoading = bool;
+        });
 
     const setRefreshes = () =>
         setState(draft => {
@@ -258,9 +264,11 @@ export default ({
         if (!isCreate) {
             (async () => {
                 try {
+                    setLoading(true);
                     const item = await requestItem();
                     const data = item.data.data;
                     setItem(data);
+                    setLoading(false);
                 } catch (error) {}
             })();
         }

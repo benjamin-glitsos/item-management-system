@@ -25,18 +25,6 @@ export default () => {
     });
 
     const listContainer = ListContainer({
-        defaultState: {
-            request: {
-                body: {}
-            },
-            response: {
-                data: {
-                    items: []
-                }
-            },
-            isLoading: false,
-            selected: []
-        },
         headContentColumns: [
             { key: "key", content: "Key", isSortable: true },
             { key: "name", content: "Name", isSortable: true },

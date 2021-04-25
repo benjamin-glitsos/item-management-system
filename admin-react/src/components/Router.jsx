@@ -5,7 +5,7 @@ import { QueryParamProvider } from "use-query-params";
 import Analytics from "react-router-ga";
 import "react-toastify/dist/ReactToastify.min.css";
 import Page from "%/components/Page/PagePresenter";
-import LoadingPage from "%/components/LoadingPage";
+import LoadingSpinner from "%/components/LoadingSpinner";
 import ToastContainer from "%/components/ToastContainer";
 
 const ReadmePage = lazy(() => import("%/components/ReadmePage"));
@@ -20,7 +20,7 @@ export default () => (
         <Analytics id={process.env.REACT_APP_PROJECT_GOOGLE_ANALYTICS_ID}>
             <QueryParamProvider>
                 <Page>
-                    <Suspense fallback={<LoadingPage />}>
+                    <Suspense fallback={<LoadingSpinner spinnerSize="large" />}>
                         <Switch>
                             <Route exact path="/">
                                 <ReadmePage />

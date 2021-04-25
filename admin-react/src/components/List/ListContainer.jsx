@@ -22,7 +22,6 @@ import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import config from "%/config";
 
 export default ({
-    defaultState,
     headContentColumns,
     rowTransform = row => row,
     nameSingular,
@@ -33,6 +32,13 @@ export default ({
     const history = useHistory();
 
     const apiUrl = config.serverUrl + `v1/${namePlural}/`;
+
+    const defaultState = {
+        request: { body: {} },
+        response: { data: { items: [] } },
+        isLoading: false,
+        selected: []
+    };
 
     const [state, setState] = useImmer(defaultState);
 

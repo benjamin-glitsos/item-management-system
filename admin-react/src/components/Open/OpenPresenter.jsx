@@ -7,13 +7,24 @@ import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
 import LabelValuesSidebar from "%/components/LabelValuesSidebar";
+import LoadingSpinner from "%/components/LoadingSpinner";
 import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
+
+const LoadingHandler = ({ isCreate, isLoading, children }) => {
+    if (!isCreate && isLoading) {
+        return <LoadingSpinner spinnerSize="medium" />;
+    } else {
+        return children;
+    }
+};
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
     const title = `${titleCase(
         [context.action, context.nameSingular].join(" ")
     )}${!context.isCreate ? `: ${context.key}` : ""}`;
+    const isCreate = context.isCreate;
+    const isLoading = context.state.loading;
     return (
         <PageLayout
             title={`${title} : ${process.env.PROJECT_ABBREV || "IMS"}`}
@@ -33,29 +44,43 @@ export default ({ children }) => {
                     <Grid fluid>
                         <Row>
                             <Col sm={10}>
-                                <form
-                                    onSubmit={context.handleSubmit(
-                                        context.onSubmit
-                                    )}
+                                <LoadingHandler
+                                    isCreate={isCreate}
+                                    isLoading={isLoading}
                                 >
-                                    <Grid fluid>
-                                        <Row>{children}</Row>
-                                        <Row end="xs">
-                                            <Col sm={12}>
-                                                <FormButtons
-                                                    cancelHandler={
-                                                        context.cancelHandler
-                                                    }
-                                                />
-                                            </Col>
-                                        </Row>
-                                    </Grid>
-                                </form>
+                                    <form
+                                        onSubmit={context.handleSubmit(
+                                            context.onSubmit
+                                        )}
+                                    >
+                                        {" "}
+                                        <Grid fluid>
+                                            {" "}
+                                            <Row>{children}</Row>{" "}
+                                            <Row end="xs">
+                                                {" "}
+                                                <Col sm={12}>
+                                                    {" "}
+                                                    <FormButtons
+                                                        cancelHandler={
+                                                            context.cancelHandler
+                                                        }
+                                                    />{" "}
+                                                </Col>{" "}
+                                            </Row>{" "}
+                                        </Grid>{" "}
+                                    </form>
+                                </LoadingHandler>
                             </Col>
                             <Col sm={2}>
-                                <LabelValuesSidebar
-                                    items={context.sidebarItems}
-                                />
+                                <LoadingHandler
+                                    isCreate={isCreate}
+                                    isLoading={isLoading}
+                                >
+                                    <LabelValuesSidebar
+                                        items={context.sidebarItems}
+                                    />
+                                </LoadingHandler>
                             </Col>
                         </Row>
                     </Grid>
