@@ -1,4 +1,4 @@
-CREATE FUNCTION update_for_users_with_meta(
+CREATE FUNCTION update_for_users_open(
     old_username text
   , new_username text
   , new_email_address text

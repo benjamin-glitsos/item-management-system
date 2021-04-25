@@ -1,4 +1,4 @@
-CREATE VIEW users_with_meta AS
+CREATE VIEW users_open AS
     SELECT
         u.username
       , u.email_address

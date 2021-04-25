@@ -27,13 +27,13 @@ package doobie_import {
 
     import dc._
 
-    implicit final val usersWithMetaSchema =
-      schemaMeta[UsersWithMeta]("users_with_meta")
+    implicit final val usersOpenSchema =
+      schemaMeta[UsersOpen]("users_open")
     implicit final val usersListSchema =
       schemaMeta[UsersList]("users_list")
 
-    implicit final val itemsWithMetaSchema =
-      schemaMeta[ItemsWithMeta]("items_with_meta")
+    implicit final val itemsOpenSchema =
+      schemaMeta[ItemsOpen]("items_open")
     implicit final val itemsListSchema =
       schemaMeta[ItemsList]("items_list")
   }

@@ -16,7 +16,7 @@ trait UsersEditDAO {
       additionalNotes: Option[Option[String]]
   ) = {
     val update: Fragment =
-      fr"UPDATE users_with_meta"
+      fr"UPDATE users_open"
 
     val set: Fragment = setOpt(
       newUsername.map(s => fr"username=$s"),

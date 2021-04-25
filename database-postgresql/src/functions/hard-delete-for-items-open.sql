@@ -1,4 +1,4 @@
-CREATE FUNCTION hard_delete_for_items_with_meta(_key text)
+CREATE FUNCTION hard_delete_for_items_open(_key text)
 RETURNS void AS $$
 BEGIN
     WITH delete_items AS (

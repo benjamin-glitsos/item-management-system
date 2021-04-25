@@ -1,4 +1,4 @@
-CREATE FUNCTION hard_delete_for_users_with_meta(_username text)
+CREATE FUNCTION hard_delete_for_users_open(_username text)
 RETURNS void AS $$
 BEGIN
     WITH delete_users AS (

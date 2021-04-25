@@ -4,7 +4,7 @@ trait UsersOpenDAO {
   final def open(username: String) = {
     run(
       quote(
-        query[UsersWithMeta].filter(_.username == lift(username))
+        query[UsersOpen].filter(_.username == lift(username))
       )
     ).map(_.head)
   }
@@ -12,7 +12,7 @@ trait UsersOpenDAO {
   final def incrementOpens(username: String) = {
     run(
       quote(
-        query[UsersWithMeta]
+        query[UsersOpen]
           .filter(_.username == lift(username))
           .update(x => x.opens -> (x.opens + 1))
       )

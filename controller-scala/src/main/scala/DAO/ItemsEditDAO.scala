@@ -13,7 +13,7 @@ trait ItemsEditDAO {
       additionalNotes: Option[Option[String]]
   ) = {
     val update: Fragment =
-      fr"UPDATE items_with_meta"
+      fr"UPDATE items_open"
 
     val set: Fragment = setOpt(
       newKey.map(s => fr"key=$s"),

@@ -38,10 +38,10 @@ package upickle_import {
         json => CIString(json.toString())
       )
 
-    implicit final val upickleUsersWithMeta: ReadWriter[UsersWithMeta] = macroRW
+    implicit final val upickleUsersOpen: ReadWriter[UsersOpen] = macroRW
     implicit final val upickleUsersList: ReadWriter[UsersList]         = macroRW
 
-    implicit final val upickleItemsWithMeta: ReadWriter[ItemsWithMeta] = macroRW
+    implicit final val upickleItemsOpen: ReadWriter[ItemsOpen] = macroRW
     implicit final val upickleItemsList: ReadWriter[ItemsList]         = macroRW
 
     implicit final val upickleError: ReadWriter[Error] = macroRW

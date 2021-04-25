@@ -1,4 +1,4 @@
-CREATE FUNCTION insert_for_items_with_meta(
+CREATE FUNCTION insert_for_items_open(
     _key text
   , _name text
   , _description text

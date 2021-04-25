@@ -9,7 +9,7 @@ trait ItemsCreateDAO {
   ) = {
     run(
       quote(
-        query[ItemsWithMeta]
+        query[ItemsOpen]
           .insert(
             _.key              -> lift(key),
             _.name             -> lift(name),

@@ -1,4 +1,4 @@
-CREATE FUNCTION update_for_items_with_meta(
+CREATE FUNCTION update_for_items_open(
     old_key text
   , new_key text
   , new_name text

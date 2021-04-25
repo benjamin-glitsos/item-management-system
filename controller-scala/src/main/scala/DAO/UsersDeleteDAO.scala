@@ -4,7 +4,7 @@ trait UsersDeleteDAO {
   final def softDelete(usernames: List[String]) = {
     run(
       quote(
-        query[UsersWithMeta]
+        query[UsersOpen]
           .filter(x => liftQuery(usernames.toSet).contains(x.username))
           .update(_.is_deleted -> lift(true))
       )
@@ -14,7 +14,7 @@ trait UsersDeleteDAO {
   final def restoreDelete(usernames: List[String]) = {
     run(
       quote(
-        query[UsersWithMeta]
+        query[UsersOpen]
           .filter(x => liftQuery(usernames.toSet).contains(x.username))
           .update(_.is_deleted -> lift(false))
       )
@@ -24,7 +24,7 @@ trait UsersDeleteDAO {
   final def hardDelete(usernames: List[String]) = {
     run(
       quote(
-        query[UsersWithMeta]
+        query[UsersOpen]
           .filter(x => liftQuery(usernames.toSet).contains(x.username))
           .delete
       )
@@ -34,7 +34,7 @@ trait UsersDeleteDAO {
   final def hardDeleteAllRows() = {
     run(
       quote(
-        query[UsersWithMeta].delete
+        query[UsersOpen].delete
       )
     )
   }

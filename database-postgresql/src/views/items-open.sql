@@ -1,4 +1,4 @@
-CREATE VIEW items_with_meta AS
+CREATE VIEW items_open AS
     SELECT
         i.key
       , i.name

@@ -4,7 +4,7 @@ trait ItemsOpenDAO {
   final def open(key: String) = {
     run(
       quote(
-        query[ItemsWithMeta].filter(_.key == lift(key))
+        query[ItemsOpen].filter(_.key == lift(key))
       )
     ).map(_.head)
   }
@@ -12,7 +12,7 @@ trait ItemsOpenDAO {
   final def incrementOpens(key: String) = {
     run(
       quote(
-        query[ItemsWithMeta]
+        query[ItemsOpen]
           .filter(_.key == lift(key))
           .update(x => x.opens -> (x.opens + 1))
       )

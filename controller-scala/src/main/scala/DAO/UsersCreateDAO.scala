@@ -12,7 +12,7 @@ trait UsersCreateDAO {
   ) = {
     run(
       quote(
-        query[UsersWithMeta]
+        query[UsersOpen]
           .insert(
             _.username         -> lift(username),
             _.email_address    -> lift(emailAddress),

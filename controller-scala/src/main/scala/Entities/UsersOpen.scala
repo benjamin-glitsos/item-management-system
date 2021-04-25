@@ -1,7 +1,10 @@
-case class ItemsWithMeta(
-    key: String,
-    name: String,
-    description: Option[String],
+case class UsersOpen(
+    username: String,
+    email_address: String,
+    first_name: String,
+    last_name: String,
+    other_names: Option[String],
+    password: String,
     metakey: String,
     opens: Int,
     edits: Int,

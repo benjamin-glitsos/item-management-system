@@ -1,4 +1,4 @@
-CREATE FUNCTION insert_for_users_with_meta(
+CREATE FUNCTION insert_for_users_open(
     _username text
   , _email_address text
   , _first_name text
