@@ -8,15 +8,6 @@ import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
 import LabelValuesSidebar from "%/components/LabelValuesSidebar";
 import LoadingSpinner from "%/components/LoadingSpinner";
-import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
-
-const LoadingHandler = ({ isCreate, isLoading, children }) => {
-    if (!isCreate && isLoading) {
-        return <LoadingSpinner spinnerSize="medium" />;
-    } else {
-        return children;
-    }
-};
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
@@ -40,51 +31,41 @@ export default ({ children }) => {
                         : [context.key, ""]
                 ]}
             >
-                <OffsetGridOuterPadding>
-                    <Grid fluid>
-                        <Row>
-                            <Col sm={10}>
-                                <LoadingHandler
-                                    isCreate={isCreate}
-                                    isLoading={isLoading}
-                                >
+                {!isCreate && isLoading ? (
+                    <LoadingSpinner />
+                ) : (
+                    <OffsetGridOuterPadding>
+                        <Grid fluid>
+                            <Row>
+                                <Col sm={10}>
                                     <form
                                         onSubmit={context.handleSubmit(
                                             context.onSubmit
                                         )}
                                     >
-                                        {" "}
                                         <Grid fluid>
-                                            {" "}
-                                            <Row>{children}</Row>{" "}
+                                            <Row>{children}</Row>
                                             <Row end="xs">
-                                                {" "}
                                                 <Col sm={12}>
-                                                    {" "}
                                                     <FormButtons
                                                         cancelHandler={
                                                             context.cancelHandler
                                                         }
-                                                    />{" "}
-                                                </Col>{" "}
-                                            </Row>{" "}
-                                        </Grid>{" "}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        </Grid>
                                     </form>
-                                </LoadingHandler>
-                            </Col>
-                            <Col sm={2}>
-                                <LoadingHandler
-                                    isCreate={isCreate}
-                                    isLoading={isLoading}
-                                >
+                                </Col>
+                                <Col sm={2}>
                                     <LabelValuesSidebar
                                         items={context.sidebarItems}
                                     />
-                                </LoadingHandler>
-                            </Col>
-                        </Row>
-                    </Grid>
-                </OffsetGridOuterPadding>
+                                </Col>
+                            </Row>
+                        </Grid>
+                    </OffsetGridOuterPadding>
+                )}
             </OpenLayout>
         </PageLayout>
     );

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Spinner from "@atlaskit/spinner";
 
-export default spinnerSize => (
+export default () => (
     <Layout>
-        <Spinner size={spinnerSize} delay={0} />
+        <Spinner size="large" delay={0} />
     </Layout>
 );
 

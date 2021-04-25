@@ -20,7 +20,7 @@ export default () => (
         <Analytics id={process.env.REACT_APP_PROJECT_GOOGLE_ANALYTICS_ID}>
             <QueryParamProvider>
                 <Page>
-                    <Suspense fallback={<LoadingSpinner spinnerSize="large" />}>
+                    <Suspense fallback={<LoadingSpinner />}>
                         <Switch>
                             <Route exact path="/">
                                 <ReadmePage />
