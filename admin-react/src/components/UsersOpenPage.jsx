@@ -53,8 +53,7 @@ export default ({ action }) => {
             "last_name",
             "other_names",
             "additional_notes"
-        ],
-        optionalFields: ["other_names", "additional_notes"]
+        ]
     });
 
     const pageContext = {

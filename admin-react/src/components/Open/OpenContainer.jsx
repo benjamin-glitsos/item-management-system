@@ -114,9 +114,12 @@ export default ({
 
     const setSchema = schema =>
         setState(draft => {
-            for (const field of optionalFields) {
-                delete schema.properties[field].anyOf;
-                schema.properties[field].type = "string";
+            for (const field in schema.properties) {
+                if (schema.properties[field].type instanceof Array) {
+                    schema.properties[field].type = schema.properties[
+                        field
+                    ].type.filter(x => x !== "null")[0];
+                }
             }
 
             const requiredList = schema?.required;
