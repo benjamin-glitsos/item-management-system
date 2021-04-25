@@ -8,5 +8,5 @@ CREATE VIEW users_list AS
       , m.created_at
       , m.edited_at
     FROM users u
-    INNER JOIN meta m ON u.meta_id = m.id
+    INNER JOIN meta_list m ON u.meta_id = m.id
     WHERE is_deleted IS false;

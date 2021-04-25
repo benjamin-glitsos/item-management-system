@@ -8,8 +8,11 @@ CREATE VIEW items_open AS
       , m.edits
       , m.is_deleted
       , m.created_at
+      , m.created_by
       , m.edited_at
+      , m.edited_by
       , m.deleted_at
+      , m.deleted_by
       , m.additional_notes
     FROM items i
-    INNER JOIN meta m ON i.meta_id = m.id;
+    INNER JOIN meta_open m ON i.meta_id = m.id;

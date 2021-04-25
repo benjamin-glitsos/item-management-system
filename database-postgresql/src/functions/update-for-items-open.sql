@@ -16,7 +16,11 @@ BEGIN
         RETURNING meta_id
     )
     UPDATE meta
-    SET edited_at=NOW(), additional_notes=new_additional_notes, edits=edits + 1
+    SET
+        edited_at=NOW()
+      , edited_by=1
+      , additional_notes=new_additional_notes
+      , edits=edits + 1
     WHERE id=(SELECT meta_id FROM items_update);
 END;
 $$ LANGUAGE plpgsql;

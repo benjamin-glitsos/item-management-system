@@ -7,8 +7,8 @@ CREATE FUNCTION insert_for_items_open(
 RETURNS void AS $$
 BEGIN
     WITH insert_meta AS (
-        INSERT INTO meta (metakey, additional_notes)
-        VALUES (generate_random_metakey('items'), _additional_notes)
+        INSERT INTO meta (metakey, created_by, additional_notes)
+        VALUES (generate_random_metakey('items'), 1, _additional_notes)
         RETURNING id
     )
     INSERT INTO items (

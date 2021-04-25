@@ -18,12 +18,12 @@ BEGIN
             OLD.username
         );
 
-    ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted=true AND OLD.is_deleted=false THEN
+    ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted IS true AND OLD.is_deleted IS false THEN
         PERFORM soft_delete_for_users_open(
             OLD.username
         );
 
-    ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted=false AND OLD.is_deleted=true THEN
+    ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted IS false AND OLD.is_deleted IS true THEN
         PERFORM restore_delete_for_users_open(
             OLD.username
         );
@@ -35,7 +35,7 @@ BEGIN
 
     ELSIF TG_OP = 'UPDATE'
         AND NEW.* IS DISTINCT FROM OLD.*
-        AND OLD.is_deleted=false THEN
+        AND OLD.is_deleted IS false THEN
         PERFORM update_for_users_open(
             OLD.username
           , NEW.username
