@@ -3,5 +3,5 @@ CREATE TABLE items (
   , key KEY UNIQUE NOT NULL
   , name NAME NOT NULL
   , description LONG_TEXT
-  , meta_id POSITIVE_INTEGER UNIQUE NOT NULL REFERENCES meta(id)
+  , meta_id INTEGER UNIQUE NOT NULL REFERENCES meta(id)
 );

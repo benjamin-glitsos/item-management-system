@@ -6,5 +6,5 @@ CREATE TABLE users (
   , last_name LAST_NAME NOT NULL
   , other_names OTHER_NAMES
   , password PASSWORD NOT NULL
-  , meta_id POSITIVE_INTEGER UNIQUE NOT NULL REFERENCES meta(id)
+  , meta_id INTEGER UNIQUE NOT NULL REFERENCES meta(id)
 );

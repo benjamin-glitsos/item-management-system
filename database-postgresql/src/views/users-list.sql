@@ -1,11 +1,12 @@
 CREATE VIEW users_list AS
     SELECT
-        username
-      , email_address
-      , first_name
-      , last_name
-      , other_names
-      , created_at
-      , edited_at
-    FROM users_with_meta
+        u.username
+      , u.email_address
+      , u.first_name
+      , u.last_name
+      , u.other_names
+      , m.created_at
+      , m.edited_at
+    FROM users u
+    INNER JOIN meta m ON u.meta_id = m.id
     WHERE is_deleted IS false;

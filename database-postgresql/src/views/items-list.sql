@@ -1,9 +1,10 @@
 CREATE VIEW items_list AS
     SELECT
-        key
-      , name
-      , abbreviate_multiline_text(description) AS description
-      , created_at
-      , edited_at
-    FROM items_with_meta
+        i.key
+      , i.name
+      , abbreviate_multiline_text(i.description) AS description
+      , m.created_at
+      , m.edited_at
+    FROM items i
+    INNER JOIN meta m ON i.meta_id = m.id
     WHERE is_deleted IS false;

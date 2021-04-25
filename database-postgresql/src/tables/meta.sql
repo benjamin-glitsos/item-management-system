@@ -7,5 +7,8 @@ CREATE TABLE meta (
   , created_at TIMESTAMPTZ NOT NULL DEFAULT now()
   , edited_at TIMESTAMPTZ
   , deleted_at TIMESTAMPTZ
+  , created_by INTEGER NOT NULL
+  , edited_by INTEGER
+  , deleted_by INTEGER
   , additional_notes LONG_TEXT
 );
