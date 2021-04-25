@@ -6,5 +6,4 @@ CREATE VIEW items_list AS
       , m.created_at
       , m.edited_at
     FROM items i
-    INNER JOIN meta_list m ON i.meta_id = m.id
-    WHERE is_deleted IS false;
+    INNER JOIN meta_list m ON i.meta_id = m.id;

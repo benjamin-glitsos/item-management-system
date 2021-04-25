@@ -3,6 +3,7 @@ CREATE VIEW items_open AS
         i.key
       , i.name
       , i.description
+      , m.additional_notes
       , m.metakey
       , m.opens
       , m.edits
@@ -13,6 +14,5 @@ CREATE VIEW items_open AS
       , m.edited_by
       , m.deleted_at
       , m.deleted_by
-      , m.additional_notes
     FROM items i
     INNER JOIN meta_open m ON i.meta_id = m.id;

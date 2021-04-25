@@ -6,6 +6,7 @@ CREATE VIEW users_open AS
       , u.last_name
       , u.other_names
       , u.password
+      , m.additional_notes
       , m.metakey
       , m.opens
       , m.edits
@@ -16,6 +17,5 @@ CREATE VIEW users_open AS
       , m.edited_by
       , m.deleted_at
       , m.deleted_by
-      , m.additional_notes
     FROM users u
     INNER JOIN meta_open m ON u.meta_id = m.id;
