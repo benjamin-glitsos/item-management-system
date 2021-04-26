@@ -141,13 +141,13 @@ export default ({
     const metaHeadColumns = [
         {
             key: "created_at",
-            content: "Created At",
+            content: "Created",
             isSortable: true,
             width: 15
         },
         {
             key: "edited_at",
-            content: "Edited At",
+            content: "Edited",
             isSortable: true,
             width: 15
         }
