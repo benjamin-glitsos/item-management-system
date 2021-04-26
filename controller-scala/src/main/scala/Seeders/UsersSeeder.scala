@@ -26,16 +26,6 @@ object UsersSeeder extends EntitySeederTrait {
       password = System.getenv("ADMIN_PASSWORD"),
       additionalNotes = MarkdownSeeder(text)
     )
-
-    UsersService.create(
-      username = System.getenv("DEMO_USERNAME"),
-      emailAddress = System.getenv("DEMO_EMAIL_ADDRESS"),
-      firstName = System.getenv("DEMO_FIRST_NAME"),
-      lastName = System.getenv("DEMO_LAST_NAME"),
-      otherNames = sys.env.get("DEMO_OTHER_NAMES"),
-      password = System.getenv("DEMO_PASSWORD"),
-      additionalNotes = MarkdownSeeder(text)
-    )
   }
 
   final def seed(): Unit = {
