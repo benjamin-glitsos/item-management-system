@@ -17,10 +17,6 @@ object UsersSeeder extends EntitySeederTrait {
     val fairy: Fairy       = Fairy.create();
     val text: TextProducer = fairy.textProducer();
 
-    sql"ALTER TABLE meta DISABLE TRIGGER ALL".update.run
-      .transact(xa)
-      .unsafeRunSync
-
     UsersService.create(
       username = System.getenv("ADMIN_USERNAME"),
       emailAddress = System.getenv("ADMIN_EMAIL_ADDRESS"),
@@ -30,10 +26,6 @@ object UsersSeeder extends EntitySeederTrait {
       password = System.getenv("ADMIN_PASSWORD"),
       additionalNotes = MarkdownSeeder(text)
     )
-
-    sql"ALTER TABLE meta ENABLE TRIGGER ALL".update.run
-      .transact(xa)
-      .unsafeRunSync
 
     UsersService.create(
       username = System.getenv("DEMO_USERNAME"),

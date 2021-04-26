@@ -2,7 +2,6 @@ import doobie.Fragment
 import doobie.Fragments.{whereOrOpt}
 import doobie._
 import doobie.implicits._
-import doobie.implicits.javatime._
 
 trait ItemsListDAO extends ListDAOTrait {
   final def list(
