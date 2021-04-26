@@ -76,14 +76,13 @@ export default ({
                     successToast();
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
-                    } else if (
-                        state.item[keyField] !== responseData[keyField]
-                    ) {
-                        history.replace(
-                            `/${namePlural}/${responseData[keyField]}`
-                        );
                     } else {
                         setItem(responseData);
+                        if (state.item[keyField] !== responseData[keyField]) {
+                            history.replace(
+                                `/${namePlural}/${responseData[keyField]}`
+                            );
+                        }
                     }
                 })
                 .catch(axiosErrorHandler);
