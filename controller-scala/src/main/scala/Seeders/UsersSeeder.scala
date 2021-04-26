@@ -2,6 +2,9 @@ import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 import OptionUtilities.emptyStringToOption
+import doobie._
+import doobie.implicits._
+import doobie_import.connection._
 
 object UsersSeeder extends EntitySeederTrait {
   override final val count: Int = 15
@@ -14,6 +17,10 @@ object UsersSeeder extends EntitySeederTrait {
     val fairy: Fairy       = Fairy.create();
     val text: TextProducer = fairy.textProducer();
 
+    sql"ALTER TABLE meta DISABLE TRIGGER ALL".update.run
+      .transact(xa)
+      .unsafeRunSync
+
     UsersService.create(
       username = System.getenv("ADMIN_USERNAME"),
       emailAddress = System.getenv("ADMIN_EMAIL_ADDRESS"),
@@ -23,6 +30,10 @@ object UsersSeeder extends EntitySeederTrait {
       password = System.getenv("ADMIN_PASSWORD"),
       additionalNotes = MarkdownSeeder(text)
     )
+
+    sql"ALTER TABLE meta ENABLE TRIGGER ALL".update.run
+      .transact(xa)
+      .unsafeRunSync
 
     UsersService.create(
       username = System.getenv("DEMO_USERNAME"),
