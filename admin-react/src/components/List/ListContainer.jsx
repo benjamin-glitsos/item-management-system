@@ -192,6 +192,7 @@ export default ({
                         />,
                         ...Object.values(row),
                         ActionsMenu({
+                            namePlural,
                             items: [key],
                             deleteItemsAction,
                             setDeselectAll,

@@ -3,6 +3,7 @@ import DropdownMenu from "%/components/DropdownMenu";
 import formatAction from "%/utilities/formatAction";
 
 export default ({
+    namePlural,
     items,
     additionalItems = [],
     deleteItemsAction,
@@ -39,14 +40,14 @@ export default ({
                         onClick={onClick}
                         key={`DropdownItem/${title},${i}`}
                     >
-                        {formatAction(numberOfItems, title)}
+                        {formatAction(numberOfItems, title, namePlural)}
                     </DropdownItem>
                 );
             });
         } else {
             return (
                 <DropdownItem isDisabled={true}>
-                    {formatAction(numberOfItems, "")}.
+                    {formatAction(numberOfItems, "", namePlural)}.
                 </DropdownItem>
             );
         }

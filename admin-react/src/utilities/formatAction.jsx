@@ -1,9 +1,10 @@
-export default (numberOfItems, title) => {
+export default (numberOfItems, title, namePlural) => {
+    console.log(namePlural);
     if (numberOfItems < 1) {
-        return "Zero items selected";
+        return `Zero ${namePlural} selected`;
     } else if (numberOfItems == 1) {
         return title;
     } else if (numberOfItems > 1) {
-        return `${title} (${numberOfItems} items)`;
+        return `${title} (${numberOfItems} ${namePlural})`;
     }
 };

@@ -37,6 +37,7 @@ export default () => {
                     Create {context.nameSingular}
                 </Button>
                 <ActionsMenu
+                    namePlural={context.namePlural}
                     items={context.state.selected}
                     additionalItems={[
                         {
