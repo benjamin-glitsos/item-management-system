@@ -16,7 +16,7 @@ export default ({ children }) => {
         [context.action, context.nameSingular].join(" ")
     )}${!context.isCreate ? `: ${context.key}` : ""}`;
     const isCreate = context.isCreate;
-    const isLoading = context.state.loading;
+    const isLoading = context.state.isLoading;
     return (
         <PageLayout
             title={`${title} : ${process.env.PROJECT_ABBREV || "IMS"}`}

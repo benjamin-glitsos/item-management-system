@@ -32,7 +32,7 @@ export default ({
         schema: {},
         item: {},
         refreshes: 0,
-        loading: false
+        isLoading: true
     };
 
     const [state, setState] = useImmer(defaultState);

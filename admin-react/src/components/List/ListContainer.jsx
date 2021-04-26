@@ -36,7 +36,7 @@ export default ({
     const defaultState = {
         request: { body: {} },
         response: { data: { items: [] } },
-        isLoading: false,
+        isLoading: true,
         selected: []
     };
 
