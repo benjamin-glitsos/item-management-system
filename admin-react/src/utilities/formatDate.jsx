@@ -6,8 +6,6 @@ import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 
 TimeAgo.addDefaultLocale(en);
 
-TimeAgo.addLabels("en", "custom", { now: { now: { future: "just now" } } });
-
 const timeAgo = new TimeAgo();
 
 export default (d = null) => {
@@ -24,7 +22,9 @@ export default (d = null) => {
         if (isLessThanOneDayAgo) {
             return (
                 <Tooltip content={fullDate}>
-                    {capitaliseFirstLetter(timeAgo.format(date))}
+                    {capitaliseFirstLetter(
+                        timeAgo.format(date, { future: false })
+                    )}
                 </Tooltip>
             );
         } else {
