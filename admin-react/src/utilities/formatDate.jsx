@@ -18,7 +18,7 @@ export default (d = null) => {
         const date = new Date(d);
         const oneDay = 1000 * 60 * 60 * 24;
         const isLessThanOneDayAgo = date > now - oneDay;
-        const fullDate = dateFormat(now, `mmmm dS, yyyy "at" h:MMtt`);
+        const fullDate = dateFormat(now, 'mmmm dS, yyyy "at" h:MMtt');
         if (isLessThanOneDayAgo) {
             return (
                 <Tooltip content={fullDate}>
