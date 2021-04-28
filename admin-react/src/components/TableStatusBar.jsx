@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Fragment } from "react";
 import NonBreakingSpace from "%/components/NonBreakingSpace";
 import numbersToWords from "number-to-words";
 import { ListContext } from "%/components/List/List";

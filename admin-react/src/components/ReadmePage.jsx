@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { titleCase } from "title-case";
@@ -14,8 +14,6 @@ export const Context = createContext();
 const { Provider } = Context;
 
 export default () => {
-    const context = useContext(Context);
-
     const nameSingular = "readme";
     const namePlural = nameSingular;
     const title = titleCase(namePlural);

@@ -2,9 +2,6 @@ import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 import OptionUtilities.emptyStringToOption
-import doobie._
-import doobie.implicits._
-import doobie_import.connection._
 
 object UsersSeeder extends EntitySeederTrait {
   override final val count: Int = 15

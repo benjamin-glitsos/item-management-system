@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { titleCase } from "title-case";
 import Textfield from "@atlaskit/textfield";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import { useHistory } from "react-router-dom";
 import PageContainer from "%/components/Page/PageContainer";
 import OpenContainer from "%/components/Open/OpenContainer";
 import RegisteredField from "%/components/RegisteredField";

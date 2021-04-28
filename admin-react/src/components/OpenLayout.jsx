@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-import { Helmet } from "react-helmet";
 import ContentLayout from "%/components/ContentLayout";
 
 export default ({ title, breadcrumbs, children }) => (
