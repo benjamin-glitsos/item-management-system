@@ -122,8 +122,6 @@ export default ({
         setDeselectAll();
     };
 
-    useEffect(listItemsAction, []);
-
     useThrottledEffect(listItemsAction, 500, [query, state.request]);
 
     const selectionHeadColumn = {
