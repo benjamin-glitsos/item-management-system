@@ -11,17 +11,13 @@ export REACT_APP_PROJECT_GIT_REPO_URL="$PROJECT_GIT_REPO_URL"
 export REACT_APP_CONTROLLER_PORT="$CONTROLLER_PORT"
 export REACT_APP_CONTROLLER_SUBDOMAIN="$CONTROLLER_SUBDOMAIN"
 
-export CYPRESS_BASE_URL="http://localhost:$ADMIN_PORT"
-export CYPRESS_PORT="$ADMIN_CYPRESS_PORT"
-
 if [[ "$ADMIN_RUN" == "yes" ]]; then
     cd /app
     case "$PROJECT_MODE" in
         "development" )
             export FORCE_COLOR=true
             export PORT=$ADMIN_PORT
-            $(npm run start | cat) &
-            $(npm run cypress) &
+            npm run start | cat
         ;;
         "production" )
             npm run build

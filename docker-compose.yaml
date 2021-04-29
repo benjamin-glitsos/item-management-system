@@ -43,4 +43,3 @@ services:
     stdin_open: true
     ports:
       - ${ADMIN_PORT}:${ADMIN_PORT}
-      - ${ADMIN_CYPRESS_PORT}:${ADMIN_CYPRESS_PORT}
