@@ -59,7 +59,8 @@
     "scripts": {
         "start": "craco start",
         "build": "craco build",
-        "analyse": "source-map-explorer 'build/static/js/*.js'"
+        "analyse": "source-map-explorer 'build/static/js/*.js'",
+        "cypress": "cypress open"
     },
     "eslintConfig": {
         "extends": [

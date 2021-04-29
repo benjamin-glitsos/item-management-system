@@ -31,3 +31,7 @@ admin-react/*.iml
 admin-react/npm-debug.log*
 admin-react/yarn-debug.log*
 admin-react/yarn-error.log*
+admin-react/.nyc_output/
+admin-react/coverage/
+admin-react/cypress/videos/
+admin-react/cypress/screenshots/
