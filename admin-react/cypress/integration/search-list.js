@@ -4,13 +4,13 @@ describe("Search List", () => {
     const list = new ListPage();
 
     it("Exists", () => {
-        cy.fixture("dummy-items").then(dummyItems => {
-            list.visit("users");
+        list.visit("users");
 
+        cy.fixture("dummy-items").then(dummyItems => {
             dummyItems.forEach(item =>
                 cy.request(
                     "POST",
-                    Cypress.config("baseUrl") + "/api/rest/v1/items/",
+                    Cypress.config("apiBaseUrl") + "/api/rest/v1/items/",
                     item
                 )
             );
