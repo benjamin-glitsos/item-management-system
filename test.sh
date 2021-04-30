@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "What is ADMIN_PORT? (This is a variable in the env file. It is the port that the front-end admin panel is using.)"
+echo "What is ADMIN_PORT?"
 
 read frontEndPort
 

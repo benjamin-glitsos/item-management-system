@@ -61,6 +61,7 @@ export default () => {
                         setSearch(value);
                         setSearchState(value);
                     }}
+                    testId="search-bar"
                 />
                 <PageLengthSelect
                     isDisabled={isDataEmpty}
