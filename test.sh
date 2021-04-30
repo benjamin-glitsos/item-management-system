@@ -11,5 +11,4 @@ else
 fi
 
 npm --prefix ./admin-react/ run cypress -- \
-    --config baseUrl=http://localhost:$adminPort,\
-    apiBaseUrl=http://localhost:$controllerPort
+    --config baseUrl=http://localhost:$adminPort,apiBaseUrl=http://localhost:$controllerPort
