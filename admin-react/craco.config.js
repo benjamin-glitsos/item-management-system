@@ -20,11 +20,6 @@ module.exports = {
         enable: false
     },
     babel: {
-        plugins: ["@babel/plugin-proposal-optional-chaining", "ramda"],
-        env: {
-            development: {
-                plugins: ["istanbul"]
-            }
-        }
+        plugins: ["@babel/plugin-proposal-optional-chaining", "ramda"]
     }
 };
