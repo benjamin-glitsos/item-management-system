@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-echo "What is ADMIN_PORT?"
+if [ $# -gt 0 ]; then
+    let frontEndPort=$*
+else
+    echo "What is ADMIN_PORT?"
+    read frontEndPort
+fi
 
-read frontEndPort
-
-npm --prefix ./admin-react/ run cypress -- --config baseUrl=http://localhost:$frontEndPort
+npm --prefix ./admin-react/ run cypress -- \
+    --config baseUrl=http://localhost:$frontEndPort
