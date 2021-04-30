@@ -4,19 +4,18 @@ describe("Search List", () => {
     const list = new ListPage();
 
     it("Exists", () => {
-        cy.fixture("dummy-items").as("dummyItems");
+        cy.fixture("dummy-items").then(dummyItems => {
+            list.visit("users");
 
-        list.visit("users");
-
-        cy.wait("@dummyItems").then(dummyItems =>
             dummyItems.forEach(item =>
-                cy.request("POST", Cypress.config("baseUrl"), item)
-            )
-        );
+                cy.request(
+                    "POST",
+                    Cypress.config("baseUrl") + "/api/rest/v1/items/",
+                    item
+                )
+            );
 
-        cy.wait("@dummyItems").then(dummyItems => {
-            cy.get("[data-testid=search-bar]").as("searchBar");
-            cy.get("@searchBar").type(dummyItems[0]);
+            list.searchBar().type(dummyItems[0]);
         });
     });
 });
