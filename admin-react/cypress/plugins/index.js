@@ -3,7 +3,7 @@
  */
 // eslint-disable-next-line no-unused-vars
 
-require("dotenv").config({ path: "../../../.env" });
+require("dotenv").config({ path: require("find-config")(".env") });
 
 module.exports = (on, config) => {
     config.baseUrl = `http://localhost:${process.env.ADMIN_PORT}`;
