@@ -1,11 +1,11 @@
 import ListPage from "../pages/list";
+import searchTest from "../tests/search";
 
-describe("Search List", () => {
-    const list = new ListPage();
+describe("Items Page", () => {
+    const slug = "items";
+    const list = new ListPage(slug);
 
-    it("Search bar exists", () => {
-        list.visit("items");
-
+    beforeEach(() => {
         cy.fixture("dummy-items").then(dummyItems => {
             dummyItems.forEach(item =>
                 cy.request(
@@ -14,14 +14,11 @@ describe("Search List", () => {
                     item
                 )
             );
+        });
+    });
 
-            const firstDummyItem = dummyItems[0];
-
-            list.searchBar().type(firstDummyItem.key);
-            list.searchBar().clear();
-            list.searchBar().type(firstDummyItem.name);
-            list.searchBar().clear();
-
+    afterEach(() => {
+        cy.fixture("dummy-items").then(dummyItems => {
             cy.request(
                 "DELETE",
                 Cypress.env("API_BASE_URL") + "/api/rest/v1/items/",
@@ -32,4 +29,6 @@ describe("Search List", () => {
             );
         });
     });
+
+    searchTest(list);
 });
