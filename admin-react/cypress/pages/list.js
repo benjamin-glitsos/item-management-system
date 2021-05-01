@@ -1,15 +1,8 @@
-export default class ListPage {
+import Page from "./page";
+
+export default class ListPage extends Page {
     constructor(slug) {
-        this.slug = slug;
-        this.path = `/${slug}`;
-    }
-
-    title(s) {
-        return `${this.path} : ${s}`;
-    }
-
-    visit(slug) {
-        cy.visit(this.path);
+        super(slug);
     }
 
     searchBar() {

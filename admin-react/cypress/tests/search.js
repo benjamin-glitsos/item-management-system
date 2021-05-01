@@ -1,8 +1,6 @@
 export default page => {
     describe(page.title("Search"), () => {
         it(page.title("Search bar exists"), () => {
-            page.visit();
-
             cy.fixture("dummy-items").then(dummyItems => {
                 const firstDummyItem = dummyItems[0];
 
