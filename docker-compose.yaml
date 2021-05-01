@@ -14,6 +14,7 @@ services:
       - TZ=${PROJECT_TIMEZONE}
     ports:
       - ${POSTGRES_PORT}:5432
+
   controller_scala:
     build:
       context: ./controller-scala/
@@ -29,6 +30,7 @@ services:
       - "database_postgresql"
     ports:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
+
   admin_react:
     build:
       context: ./admin-react/
