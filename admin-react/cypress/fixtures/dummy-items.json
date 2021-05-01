@@ -1,4 +1,4 @@
 [
-    { "key": "TEST_ITEM_1", "name": "Test Item 1" },
-    { "key": "TEST_ITEM_2", "name": "Test Item 2" }
+    { "key": "TEST-ITEM-1", "name": "Test Item 1" },
+    { "key": "TEST-ITEM-2", "name": "Test Item 2" }
 ]

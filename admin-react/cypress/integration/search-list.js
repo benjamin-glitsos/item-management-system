@@ -4,7 +4,7 @@ describe("Search List", () => {
     const list = new ListPage();
 
     it("Search bar exists", () => {
-        list.visit("users");
+        list.visit("items");
 
         cy.fixture("dummy-items").then(dummyItems => {
             dummyItems.forEach(item =>
@@ -15,7 +15,21 @@ describe("Search List", () => {
                 )
             );
 
-            list.searchBar().type(dummyItems[0]);
+            const firstDummyItem = dummyItems[0];
+
+            list.searchBar().type(firstDummyItem.key);
+            list.searchBar().clear();
+            list.searchBar().type(firstDummyItem.name);
+            list.searchBar().clear();
+
+            cy.request(
+                "DELETE",
+                Cypress.env("API_BASE_URL") + "/api/rest/v1/items/",
+                {
+                    method: "hard",
+                    keys: dummyItems.map(item => item.key)
+                }
+            );
         });
     });
 });

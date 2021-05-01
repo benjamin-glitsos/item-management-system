@@ -1,8 +1,3 @@
-/**
- * @type {Cypress.PluginConfig}
- */
-// eslint-disable-next-line no-unused-vars
-
 require("dotenv").config({ path: require("find-config")(".env") });
 
 module.exports = (on, config) => {
