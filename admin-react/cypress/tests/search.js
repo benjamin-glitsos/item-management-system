@@ -10,13 +10,13 @@ export default page => {
                 page.searchBar().as("searchBar");
             });
 
-            it(page.title("Search by each searchable attribute"), () => {
-                page.searchableAttributes.forEach(attribute => {
+            for (const attribute of page.searchableAttributes) {
+                it(page.title(`Search by attribute - ${attribute}`), () => {
                     cy.get("@searchBar").type(firstDummyItem[attribute]);
                     cy.get("@searchBar").clear();
                     // TODO: check here that the dummy item is in the filtered list
                 });
-            });
+            }
         });
     });
 };
