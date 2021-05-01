@@ -15,12 +15,12 @@ object UsersSeeder extends EntitySeederTrait {
     val text: TextProducer = fairy.textProducer();
 
     UsersService.create(
-      username = System.getenv("ADMIN_USERNAME"),
-      emailAddress = System.getenv("ADMIN_EMAIL_ADDRESS"),
-      firstName = System.getenv("ADMIN_FIRST_NAME"),
-      lastName = System.getenv("ADMIN_LAST_NAME"),
-      otherNames = sys.env.get("ADMIN_OTHER_NAMES"),
-      password = System.getenv("ADMIN_PASSWORD"),
+      username = System.getenv("SUPER_USER_USERNAME"),
+      emailAddress = System.getenv("SUPER_USER_EMAIL_ADDRESS"),
+      firstName = System.getenv("SUPER_USER_FIRST_NAME"),
+      lastName = System.getenv("SUPER_USER_LAST_NAME"),
+      otherNames = sys.env.get("SUPER_USER_OTHER_NAMES"),
+      password = System.getenv("SUPER_USER_PASSWORD"),
       additionalNotes = MarkdownSeeder(text)
     )
   }
