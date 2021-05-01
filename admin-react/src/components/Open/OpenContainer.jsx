@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import R from "ramda";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useImmer } from "use-immer";
 import axios from "axios";
@@ -25,6 +25,7 @@ export default ({
     keyField
 }) => {
     const history = useHistory();
+    const location = useLocation();
 
     const defaultState = {
         schema: {},
@@ -287,7 +288,7 @@ export default ({
         }
     };
 
-    useEffect(openItemAction, [state.refreshes]);
+    useEffect(openItemAction, [state.refreshes, location]);
     useEffect(schemaAction, [state.refreshes]);
     useEffect(itemValuesAction, [state.item]);
 
