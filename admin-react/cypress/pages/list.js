@@ -1,8 +1,9 @@
 import Page from "./page";
 
 export default class ListPage extends Page {
-    constructor(slug) {
-        super(slug);
+    constructor({ slug, searchableAttributes }) {
+        super({ slug });
+        this.searchableAttributes = searchableAttributes;
     }
 
     searchBar() {

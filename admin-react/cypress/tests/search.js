@@ -1,13 +1,21 @@
 export default page => {
     describe(page.title("Search"), () => {
-        it(page.title("Search bar exists"), () => {
-            cy.fixture("dummy-items").then(dummyItems => {
-                const firstDummyItem = dummyItems[0];
+        before(() => page.createDummyData(1));
+        after(() => page.deleteDummyData(1));
 
-                page.searchBar().type(firstDummyItem.key);
-                page.searchBar().clear();
-                page.searchBar().type(firstDummyItem.name);
-                page.searchBar().clear();
+        cy.fixture("dummy-items").then(dummyItems => {
+            const firstDummyItem = dummyItems[0];
+
+            it(page.title("Search bar exists"), () => {
+                page.searchBar().as("searchBar");
+            });
+
+            it(page.title("Search by each searchable attribute"), () => {
+                page.searchableAttributes.forEach(attribute => {
+                    cy.get("@searchBar").type(firstDummyItem[attribute]);
+                    cy.get("@searchBar").clear();
+                    // TODO: check here that the dummy item is in the filtered list
+                });
             });
         });
     });

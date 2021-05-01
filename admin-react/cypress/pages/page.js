@@ -1,5 +1,5 @@
 export default class Page {
-    constructor(slug) {
+    constructor({ slug }) {
         this.slug = slug;
         this.path = `/${slug}`;
         this.apiUrl = `${Cypress.env("API_BASE_URL")}/v1/${this.slug}/`;
@@ -21,28 +21,18 @@ export default class Page {
         cy.request("DELETE", this.apiUrl, body);
     }
 
-    createDummyData() {
+    createDummyData(max) {
         cy.fixture("dummy-items").then(dummyItems => {
-            dummyItems.forEach(item => this.create(item));
+            dummyItems.take(max).forEach(item => this.create(item));
         });
     }
 
-    deleteDummyData() {
+    deleteDummyData(max) {
         cy.fixture("dummy-items").then(dummyItems => {
             this.delete({
                 method: "hard",
-                keys: dummyItems.map(item => item.key)
+                keys: dummyItems.take(max).map(item => item.key)
             });
         });
-    }
-
-    beforeTest() {
-        this.visit(this.slug);
-        this.createDummyData();
-    }
-
-    afterTest() {
-        this.deleteDummyData();
-        this.visit(this.slug);
     }
 }

@@ -1,8 +1,8 @@
-import ListPage from "../pages/list";
+import ItemsList from "../pages/items-list";
 import searchTest from "../tests/search";
 
 describe("Items List E2E Testing", () => {
-    const list = new ListPage("items");
+    const page = new ItemsList();
 
-    searchTest(list);
+    searchTest(page);
 });

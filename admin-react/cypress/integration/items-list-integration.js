@@ -1,11 +1,11 @@
-import ListPage from "../pages/list";
+import ItemsList from "../pages/items-list";
 import searchTest from "../tests/search";
 
 describe("Items List Integration Testing", () => {
-    const list = new ListPage("items");
+    const page = new ItemsList();
 
-    beforeEach(() => list.beforeTest());
-    afterEach(() => list.afterTest());
+    beforeEach(() => page.visit());
+    afterEach(() => page.visit());
 
-    searchTest(list);
+    searchTest(page);
 });
