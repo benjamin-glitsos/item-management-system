@@ -11,7 +11,7 @@ export default () => {
     const setDeselectAll = context.setDeselectAll;
 
     const stats = context.state.response.data;
-    const pageNumber = stats.page_number;
+    const pageNumber = (context.query.page_number || 1) - 1;
     const filteredPagesCount = stats.filtered_pages_count;
     const pageItemsCount = stats.page_items_count;
 
@@ -20,7 +20,7 @@ export default () => {
             <PaginationStyles>
                 <Pagination
                     pages={enumerate(filteredPagesCount)}
-                    selectedIndex={pageNumber - 1}
+                    selectedIndex={pageNumber}
                     onChange={(event, pageNumber, analyticsEvent) => {
                         setDeselectAll();
                         setPageNumber(pageNumber);

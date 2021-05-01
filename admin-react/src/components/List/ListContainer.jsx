@@ -91,7 +91,10 @@ export default ({
         });
 
     const setSort = (sort = []) =>
-        setQuery({ sort: querySort(sort.slice(0, 2)) });
+        setQuery({
+            page_number: queryPageNumber(1),
+            sort: querySort(sort.slice(0, 2))
+        });
 
     const setSelected = key =>
         setState(draft => {

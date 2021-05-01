@@ -45,7 +45,10 @@ export default () => {
                     sortOrder={sort[1]}
                     defaultSortKey="created_at"
                     defaultSortOrder="DESC"
-                    onSort={e => context.setSort([e.key, e.sortOrder])}
+                    onSort={e => {
+                        context.setDeselectAll();
+                        context.setSort([e.key, e.sortOrder]);
+                    }}
                 />
                 <Pagination />
             </FullwidthLayout>
