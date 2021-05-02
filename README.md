@@ -17,7 +17,8 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 * Container/Presenter pattern for complex components
 * Ramda functional data pipelines
 * UI/UX using Atlassian Design System
-* Automated e2e regression testing using Cypress with Page Object Model pattern
+* Automated regression testing using Cypress with Page Object Model pattern
+* Composition of test cases into both integration and e2e workflow test scenarios
 
 ### Database-PostgreSQL Container
 
