@@ -6,7 +6,6 @@ export default ({ at, by }) =>
     at && by ? (
         <Fragment>
             {formatDate(at)}
-            <br />
             by <Link to={`/users/${by}`}>{by}</Link>
         </Fragment>
     ) : (

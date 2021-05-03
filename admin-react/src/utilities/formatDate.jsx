@@ -28,7 +28,7 @@ export default (d = null) => {
                 </Tooltip>
             );
         } else {
-            return fullDate;
+            return <div>{fullDate}</div>;
         }
     }
 };
