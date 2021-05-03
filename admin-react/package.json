@@ -2,6 +2,29 @@
     "name": "admin-react",
     "version": "0.1.0",
     "private": true,
+    "scripts": {
+        "start": "craco start",
+        "build": "craco build",
+        "analyse": "source-map-explorer 'build/static/js/*.js'",
+        "cypress": "cypress open"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
     "dependencies": {
         "@atlaskit/breadcrumbs": "^10.1.0",
         "@atlaskit/button": "^15.1.4",
@@ -28,10 +51,8 @@
         "babel-plugin-ramda": "^2.0.0",
         "dateformat": "^4.5.1",
         "deep-object-diff": "^1.1.0",
-        "enjoi": "^9.0.0",
         "immer": "^8.0.1",
         "javascript-time-ago": "^2.3.4",
-        "joi": "^17.4.0",
         "json-schema-to-yup": "^1.8.8",
         "number-to-words": "^1.2.4",
         "query-string": "^5.1.1",
@@ -49,34 +70,16 @@
         "react-scripts": "4.0.3",
         "react-simple-image-viewer": "0.0.8",
         "react-toastify": "^7.0.3",
-        "source-map-explorer": "^2.5.2",
-        "styled-components": "^3.2.6",
+        "styled-components": "^5.2.3",
         "title-case": "^3.0.3",
         "use-immer": "^0.4.2",
         "use-query-params": "^1.2.0",
         "use-throttled-effect": "0.0.7"
     },
-    "scripts": {
-        "start": "craco start",
-        "build": "craco build",
-        "analyse": "source-map-explorer 'build/static/js/*.js'"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {}
+    "devDependencies": {
+        "cypress": "^7.2.0",
+        "dotenv": "^8.2.0",
+        "find-config": "^1.0.0",
+        "source-map-explorer": "^2.5.2"
+    }
 }
