@@ -57,26 +57,26 @@ export default ({ action }) => {
             <RegisteredField
                 name="key"
                 title="Key"
-                sm={6}
                 Component={Textfield}
+                columnWidths={{ md: 6 }}
             />
             <RegisteredField
                 name="name"
                 title="Name"
-                sm={6}
                 Component={Textfield}
+                columnWidths={{ md: 6 }}
             />
             <ControlledField
                 name="description"
                 title="Description"
-                sm={12}
                 Component={MarkdownTextarea}
+                columnWidths={{ md: 12 }}
             />
             <ControlledField
                 name="additional_notes"
                 title="Additional notes"
-                sm={12}
                 Component={MarkdownTextarea}
+                columnWidths={{ sm: 12 }}
             />
         </Open>
     );

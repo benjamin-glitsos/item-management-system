@@ -57,38 +57,38 @@ export default ({ action }) => {
             <RegisteredField
                 name="username"
                 title="Username"
-                sm={6}
                 Component={Textfield}
+                columnWidths={{ md: 6 }}
             />
             <RegisteredField
                 name="email_address"
                 title="Email address"
-                sm={6}
                 Component={Textfield}
+                columnWidths={{ md: 6 }}
             />
             <RegisteredField
                 name="first_name"
                 title="First name"
-                sm={4}
                 Component={Textfield}
+                columnWidths={{ lg: 4 }}
             />
             <RegisteredField
                 name="last_name"
                 title="Last name"
-                sm={4}
                 Component={Textfield}
+                columnWidths={{ lg: 4 }}
             />
             <RegisteredField
                 name="other_names"
                 title="Other names"
-                sm={4}
                 Component={Textfield}
+                columnWidths={{ lg: 4 }}
             />
             <ControlledField
                 name="additional_notes"
                 title="Additional notes"
-                sm={12}
                 Component={MarkdownTextarea}
+                columnWidths={{ sm: 12 }}
             />
         </Open>
     );

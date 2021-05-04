@@ -4,10 +4,10 @@ import { Col } from "react-flexbox-grid";
 import Field from "%/components/Field";
 import { OpenContext } from "%/components/Open/Open";
 
-export default ({ name, title, sm, Component }) => {
+export default ({ name, title, Component, columnWidths }) => {
     const context = useContext(OpenContext);
     return (
-        <Col sm={sm}>
+        <Col {...columnWidths}>
             <Controller
                 control={context.control}
                 name={name}
