@@ -136,10 +136,8 @@ export default ({
 
     const schemaAction = () => {
         (async () => {
-            try {
-                const schema = await requestSchema();
-                setSchema(schema.data);
-            } catch (error) {}
+            const schema = await requestSchema();
+            setSchema(schema.data);
         })();
     };
 
@@ -270,13 +268,11 @@ export default ({
     const openItemAction = () => {
         if (!isCreate) {
             (async () => {
-                try {
-                    setLoading(true);
-                    const item = await requestItem();
-                    const data = item.data.data;
-                    setItem(data);
-                    setLoading(false);
-                } catch (error) {}
+                setLoading(true);
+                const item = await requestItem();
+                const data = item.data.data;
+                setItem(data);
+                setLoading(false);
             })();
         }
     };
