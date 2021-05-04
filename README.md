@@ -20,7 +20,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 
 ### Database-PostgreSQL Container
 
-* Architecture: rich metadata is abstracted into a separate table, however views, ‘instead of’ triggers and stored procedures allow operating on data as if it were contained in a single table
+* Architecture: rich metadata is abstracted into a separate table, however the use of views, ‘instead of’ triggers and stored procedures allow operating as if the metadata was in the same table
 * Trigram indexes speed up text search
 * Domain constraints ensure data integrity
 * Fourth normal form (4NF)
