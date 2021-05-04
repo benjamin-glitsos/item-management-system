@@ -58,19 +58,19 @@ export default ({ action }) => {
                 name="key"
                 title="Key"
                 Component={Textfield}
-                columnWidths={{ md: 6 }}
+                columnWidths={{ lg: 6 }}
             />
             <RegisteredField
                 name="name"
                 title="Name"
                 Component={Textfield}
-                columnWidths={{ md: 6 }}
+                columnWidths={{ lg: 6 }}
             />
             <ControlledField
                 name="description"
                 title="Description"
                 Component={MarkdownTextarea}
-                columnWidths={{ md: 12 }}
+                columnWidths={{ sm: 12 }}
             />
             <ControlledField
                 name="additional_notes"

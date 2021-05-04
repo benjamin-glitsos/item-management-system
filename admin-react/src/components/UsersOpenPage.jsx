@@ -58,13 +58,13 @@ export default ({ action }) => {
                 name="username"
                 title="Username"
                 Component={Textfield}
-                columnWidths={{ md: 6 }}
+                columnWidths={{ lg: 6 }}
             />
             <RegisteredField
                 name="email_address"
                 title="Email address"
                 Component={Textfield}
-                columnWidths={{ md: 6 }}
+                columnWidths={{ lg: 6 }}
             />
             <RegisteredField
                 name="first_name"

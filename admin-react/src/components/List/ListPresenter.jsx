@@ -11,6 +11,7 @@ import Pagination from "%/components/Pagination";
 import { ListContext } from "%/components/List/List";
 import PageLayout from "%/components/PageLayout";
 import config from "%/config";
+import styled from "styled-components";
 
 export default () => {
     const context = useContext(ListContext);
@@ -36,22 +37,34 @@ export default () => {
                 >
                     {context.title}
                 </PageHeader>
-                <DynamicTable
-                    head={context.head}
-                    rows={context.rows}
-                    isLoading={context.state.isLoading}
-                    emptyView={<NoData />}
-                    sortKey={sort[0]}
-                    sortOrder={sort[1]}
-                    defaultSortKey="created_at"
-                    defaultSortOrder="DESC"
-                    onSort={e => {
-                        context.setDeselectAll();
-                        context.setSort([e.key, e.sortOrder]);
-                    }}
-                />
+                <TableStyles>
+                    <DynamicTable
+                        head={context.head}
+                        rows={context.rows}
+                        isLoading={context.state.isLoading}
+                        emptyView={<NoData />}
+                        sortKey={sort[0]}
+                        sortOrder={sort[1]}
+                        defaultSortKey="created_at"
+                        defaultSortOrder="DESC"
+                        onSort={e => {
+                            context.setDeselectAll();
+                            context.setSort([e.key, e.sortOrder]);
+                        }}
+                    />
+                </TableStyles>
                 <Pagination />
             </FullwidthLayout>
         </PageLayout>
     );
 };
+
+const TableStyles = styled.div`
+    overflow-y: auto;
+    margin-bottom: 22px;
+
+    & > div {
+        min-width: 800px;
+        margin-bottom: 2px;
+    }
+`;

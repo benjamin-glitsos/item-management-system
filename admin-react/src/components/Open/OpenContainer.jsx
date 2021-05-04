@@ -174,10 +174,8 @@ export default ({
 
     const getFormFields = schemaProperties => {
         if (!schemaProperties) {
-            console.log("Bad");
             return [];
         } else {
-            console.log("Good");
             return Object.keys(schemaProperties);
         }
     };
@@ -286,7 +284,6 @@ export default ({
             if (!isCreate) {
                 const item = await requestItem();
                 setItem(item);
-                console.log(item);
                 for (const key of getFormFields(schema.properties)) {
                     setValue(key, nullToEmptyString(item[key]));
                 }
