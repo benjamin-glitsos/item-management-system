@@ -13,7 +13,7 @@ export default ({ children }) => {
     const context = useContext(OpenContext);
     const title = `${titleCase(
         [context.action, context.nameSingular].join(" ")
-    )}${!context.isCreate ? `: ${context.key}` : ""}`;
+    )}${!context.isCreate ? ` : ${context.key}` : ""}`;
     const isCreate = context.isCreate;
     const isLoading = context.state.isLoading;
     return (
