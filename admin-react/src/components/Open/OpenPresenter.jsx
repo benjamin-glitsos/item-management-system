@@ -59,9 +59,6 @@ export default ({ children }) => {
                                     </form>
                                 </Col>
                                 <Col sm={2}>
-                                    <OpenSidebarItem label="Metakey">
-                                        {context.state.item.metakey}
-                                    </OpenSidebarItem>
                                     <OpenSidebarItem label="Created">
                                         <UpdateAuthorDetails
                                             at={context.state.item.created_at}
@@ -85,6 +82,9 @@ export default ({ children }) => {
                                     </OpenSidebarItem>
                                     <OpenSidebarItem label="Edits">
                                         {context.state.item.edits}
+                                    </OpenSidebarItem>
+                                    <OpenSidebarItem label="Metakey">
+                                        {context.state.item.metakey}
                                     </OpenSidebarItem>
                                 </Col>
                             </Row>
