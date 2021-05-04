@@ -7,8 +7,7 @@ import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
 import LoadingSpinner from "%/components/LoadingSpinner";
-import OpenSidebarItem from "%/components/OpenSidebarItem";
-import UpdateAuthorDetails from "%/components/UpdateAuthorDetails";
+import OpenSidebar from "%/components/OpenSidebar";
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
@@ -58,35 +57,7 @@ export default ({ children }) => {
                                         </Grid>
                                     </form>
                                 </Col>
-                                <Col sm={2}>
-                                    <OpenSidebarItem label="Created">
-                                        <UpdateAuthorDetails
-                                            at={context.state.item.created_at}
-                                            by={context.state.item.created_by}
-                                        />
-                                    </OpenSidebarItem>
-                                    <OpenSidebarItem label="Edited">
-                                        <UpdateAuthorDetails
-                                            at={context.state.item.edited_at}
-                                            by={context.state.item.edited_by}
-                                        />
-                                    </OpenSidebarItem>
-                                    <OpenSidebarItem label="Deleted">
-                                        <UpdateAuthorDetails
-                                            at={context.state.item.deleted_at}
-                                            by={context.state.item.deleted_by}
-                                        />
-                                    </OpenSidebarItem>
-                                    <OpenSidebarItem label="Opens">
-                                        {context.state.item.opens}
-                                    </OpenSidebarItem>
-                                    <OpenSidebarItem label="Edits">
-                                        {context.state.item.edits}
-                                    </OpenSidebarItem>
-                                    <OpenSidebarItem label="Metakey">
-                                        {context.state.item.metakey}
-                                    </OpenSidebarItem>
-                                </Col>
+                                <Col sm={2}>{!isCreate && <OpenSidebar />}</Col>
                             </Row>
                         </Grid>
                     </OffsetGridOuterPadding>
