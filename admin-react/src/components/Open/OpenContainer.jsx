@@ -46,15 +46,19 @@ export default ({
         axios({
             method: "GET",
             url: itemUrl
-        }).catch(() => {
-            history.replace("/page-not-found");
-        });
+        })
+            .then(x => x.data.data)
+            .catch(() => {
+                history.replace("/page-not-found");
+            });
 
     const requestSchema = () =>
         axios({
             method: "GET",
             url: schemaUrl
-        }).catch(axiosErrorHandler);
+        })
+            .then(x => x.data)
+            .catch(axiosErrorHandler);
 
     const submitItem = data => {
         if (!isCreate && isObjectEmpty(data)) {
@@ -134,13 +138,6 @@ export default ({
             draft.schema = schema;
         });
 
-    const schemaAction = () => {
-        (async () => {
-            const schema = await requestSchema();
-            setSchema(schema.data);
-        })();
-    };
-
     const yupConfig = {
         abortEarly: false
     };
@@ -175,12 +172,13 @@ export default ({
         );
     };
 
-    const getFormFieldsFromSchema = () => {
-        const properties = state.schema?.properties;
-        if (!properties) {
+    const getFormFields = schemaProperties => {
+        if (!schemaProperties) {
+            console.log("Bad");
             return [];
         } else {
-            return Object.keys(properties);
+            console.log("Good");
+            return Object.keys(schemaProperties);
         }
     };
 
@@ -222,7 +220,7 @@ export default ({
                     x => emptyStringsToNull(x),
                     x => removeAllUndefined(x),
                     x => diff(state.item, x),
-                    R.pick(getFormFieldsFromSchema())
+                    R.pick(getFormFields(state.schema?.properties))
                 )(data);
 
                 class Output {
@@ -272,28 +270,37 @@ export default ({
                 const item = await requestItem();
                 const data = item.data.data;
                 setItem(data);
+                for (const key of getFormFieldsFromSchema()) {
+                    setValue(key, nullToEmptyString(data[key]));
+                }
                 setLoading(false);
             })();
         }
     };
 
-    const itemValuesAction = () => {
-        const data = state.item;
-        for (const key of getFormFieldsFromSchema()) {
-            setValue(key, nullToEmptyString(data[key]));
-        }
+    const openAction = () => {
+        (async () => {
+            setLoading(true);
+            const schema = await requestSchema();
+            setSchema(schema);
+            if (!isCreate) {
+                const item = await requestItem();
+                setItem(item);
+                console.log(item);
+                for (const key of getFormFields(schema.properties)) {
+                    setValue(key, nullToEmptyString(item[key]));
+                }
+            }
+            setLoading(false);
+        })();
     };
 
-    useEffect(openItemAction, [state.refreshes, location]);
-    useEffect(schemaAction, [state.refreshes]);
-    useEffect(itemValuesAction, [state.item]);
+    useEffect(openAction, [state.refreshes, location]);
 
     return {
         action,
         isCreate,
         key,
-        requestItem,
-        requestSchema,
         cancelHandler,
         register,
         handleSubmit,

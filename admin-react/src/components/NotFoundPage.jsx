@@ -1,3 +1,4 @@
+import { createContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { titleCase } from "title-case";
@@ -6,6 +7,10 @@ import PageContainer from "%/components/Page/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
 import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
+
+export const Context = createContext();
+
+const { Provider } = Context;
 
 export default () => {
     const nameSingular = "page not found";
@@ -18,8 +23,7 @@ export default () => {
         namePlural,
         title,
         slug,
-        description:
-            "The page at this location does not exist. Please click on the button below to return to the homepage."
+        description: "The page at this location does not exist."
     });
 
     const pageContext = { ...pageContainer };
