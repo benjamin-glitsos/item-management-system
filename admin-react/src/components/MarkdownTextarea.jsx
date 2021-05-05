@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import ReactMde from "react-mde";
 import formatNull from "%/utilities/formatNull";
 
-export default props => {
+export default ({ placeholder, ...props }) => {
     const [selectedTab, setSelectedTab] = useState("write");
     return (
         <ReactMde
@@ -12,7 +12,7 @@ export default props => {
             generateMarkdownPreview={markdown =>
                 Promise.resolve(<ReactMarkdown source={markdown} />)
             }
-            childProps={{ textArea: { placeholder: formatNull() } }}
+            childProps={{ textArea: { placeholder } }}
             {...props}
         />
     );
