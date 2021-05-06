@@ -279,10 +279,15 @@ export default ({
     const openAction = () => {
         (async () => {
             setLoading(true);
-            const schema = await requestSchema();
-            setSchema(schema);
-            if (!isCreate) {
-                const item = await requestItem();
+            if (isCreate) {
+                const schema = await requestSchema();
+                setSchema(schema);
+            } else {
+                const [schema, item] = await Promise.all([
+                    requestSchema(),
+                    requestItem()
+                ]);
+                setSchema(schema);
                 setItem(item);
                 for (const key of getFormFields(schema.properties)) {
                     setValue(key, nullToEmptyString(item[key]));
