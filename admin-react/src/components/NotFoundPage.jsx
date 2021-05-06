@@ -17,6 +17,7 @@ export default () => {
     const namePlural = nameSingular;
     const title = titleCase(namePlural);
     const slug = nameSingular;
+    const status = "404";
 
     const pageContainer = PageContainer({
         nameSingular,
@@ -43,9 +44,7 @@ export default () => {
             >
                 <ArticleLayout
                     title={pageContext.title}
-                    breadcrumbs={generateBreadcrumbs(
-                        pageContext.homeBreadcrumb
-                    )}
+                    breadcrumbs={[pageContext.homeBreadcrumb, [status, slug]]}
                 >
                     <p>{pageContext.description}</p>
                     <HomeButtonStyles>

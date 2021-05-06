@@ -43,7 +43,7 @@ export default () => (
                             <Route exact path="/create-item">
                                 <ItemsOpenPage action="create" />
                             </Route>
-                            <Route path="*">
+                            <Route path="*" status={404}>
                                 <NotFoundPage />
                             </Route>
                         </Switch>
