@@ -294,9 +294,11 @@ export default ({
                     requestItem()
                 ]);
                 setSchema(schema);
-                setItem(item);
-                for (const key of getFormFields(schema.properties)) {
-                    setValue(key, nullToEmptyString(item[key]));
+                if (item) {
+                    setItem(item);
+                    for (const key of getFormFields(schema.properties)) {
+                        setValue(key, nullToEmptyString(item[key]));
+                    }
                 }
             }
             setLoading(false);
