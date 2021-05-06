@@ -1,8 +1,12 @@
 import toast from "%/utilities/toast";
 import Message from "%/utilities/message";
 
-export default () => {
-    const error = new Message("error", "Error", "Something went wrong.");
+export default props => {
+    const error = new Message(
+        "error",
+        props?.title || "Error",
+        props?.description || "Something went wrong."
+    );
     console.error(error);
     toast(error);
 };
