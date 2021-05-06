@@ -14,6 +14,7 @@ import isObjectEmpty from "%/utilities/isObjectEmpty";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
 import successToast from "%/utilities/successToast";
+import prettyQuote from "%/utilities/prettyQuote";
 import mapObjKeys from "%/utilities/mapObjKeys";
 
 export default ({
@@ -76,7 +77,12 @@ export default ({
             })
                 .then(response => {
                     const responseData = response.data.data;
-                    successToast();
+                    successToast({
+                        title: "Successfully created",
+                        description: `The ${nameSingular} ${prettyQuote(
+                            data[keyField]
+                        )} was created.`
+                    });
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
                     } else {

@@ -1,11 +1,11 @@
 import toast from "%/utilities/toast";
 import Message from "%/utilities/message";
 
-export default () => {
+export default ({ title, description }) => {
     const message = new Message(
         "success",
-        "Success",
-        "Successfully completed."
+        title || "Success",
+        description || "Successfully completed."
     );
     toast(message);
 };
