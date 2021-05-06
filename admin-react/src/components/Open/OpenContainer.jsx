@@ -76,22 +76,26 @@ export default ({
                 }
             })
                 .then(response => {
-                    const responseData = response.data.data;
-                    successToast({
-                        title: "Successfully created",
-                        description: `The ${nameSingular} ${prettyQuote(
-                            data[keyField]
-                        )} was created.`
-                    });
                     if (isCreate) {
                         history.replace(`/${namePlural}/${data[keyField]}`);
+                        successToast({
+                            title: "Successfully created",
+                            description: `The ${nameSingular} ${prettyQuote(
+                                data[keyField]
+                            )} was created.`
+                        });
                     } else {
+                        const responseData = response.data.data;
                         setItem(responseData);
                         if (state.item[keyField] !== responseData[keyField]) {
                             history.replace(
                                 `/${namePlural}/${responseData[keyField]}`
                             );
                         }
+                        successToast({
+                            title: "Success",
+                            description: "Successfully edited"
+                        });
                     }
                 })
                 .catch(axiosErrorHandler);
