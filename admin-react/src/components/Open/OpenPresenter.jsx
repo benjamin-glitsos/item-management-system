@@ -30,6 +30,7 @@ export default ({ children }) => {
                         ? [titleCase(context.action), ""]
                         : [context.key, ""]
                 ]}
+                isLoading={isLoading}
             >
                 {!isCreate && isLoading ? (
                     <LoadingSpinner />
