@@ -62,7 +62,7 @@ export default ({
             .catch(axiosErrorHandler);
 
     const submitItem = data => {
-        if (!isCreate && isObjectEmpty(data)) {
+        if (isObjectEmpty(data) && state.schema.minProperties > 0) {
             noNewDataToSubmitToast();
         } else {
             axios({
@@ -124,6 +124,8 @@ export default ({
                     schema.properties[field].type = schema.properties[
                         field
                     ].type.filter(x => x !== "null")[0];
+
+                    schema.properties[field].nullable = true;
                 }
             }
 
@@ -242,9 +244,18 @@ export default ({
                     const formattedValues = emptyStringsToNull(values);
                     return new Output(formattedValues);
                 } catch (errors) {
+                    const errorsList = errors.inner.map(error => {
+                        const { message, path, type, value } = error;
+                        if (type === "typeError") {
+                            const errors = [`${path} is required`];
+                            return new Yup.ValidationError(errors, value, path);
+                        } else {
+                            return errors;
+                        }
+                    });
                     return {
                         ...new Output(),
-                        errors: formatYupErrors(errors.inner)
+                        errors: formatYupErrors(errorsList)
                     };
                 }
             },
