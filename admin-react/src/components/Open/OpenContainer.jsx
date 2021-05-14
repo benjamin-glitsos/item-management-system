@@ -63,6 +63,9 @@ export default ({
 
     const submitItem = data => {
         if (isObjectEmpty(data) && state.schema.minProperties > 0) {
+            for (const key of getFormFields(state.schema.properties)) {
+                setValue(key, nullToEmptyString(state.item[key]));
+            }
             noNewDataToSubmitToast();
         } else {
             axios({
@@ -87,6 +90,9 @@ export default ({
                     } else {
                         const responseData = response.data.data;
                         setItem(responseData);
+                        // for (const key of getFormFieldsFromSchema()) {
+                        //     setValue(key, nullToEmptyString(responseData[key]));
+                        // }
                         if (state.item[keyField] !== responseData[keyField]) {
                             history.replace(
                                 `/${namePlural}/${responseData[keyField]}`
@@ -296,9 +302,9 @@ export default ({
                 const item = await requestItem();
                 const data = item.data.data;
                 setItem(data);
-                for (const key of getFormFieldsFromSchema()) {
-                    setValue(key, nullToEmptyString(data[key]));
-                }
+                // for (const key of getFormFieldsFromSchema()) {
+                //     setValue(key, nullToEmptyString(data[key]));
+                // }
                 setLoading(false);
             })();
         }
