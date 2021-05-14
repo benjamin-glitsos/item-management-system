@@ -248,16 +248,19 @@ export default ({
                     const formattedValues = emptyStringsToNull(values);
                     return new Output(formattedValues);
                 } catch (errors) {
-                    console.log(errors);
                     const errorsList = errors.inner.map(error => {
                         const { message, path, type, value } = error;
                         if (type === "typeError") {
-                            const errors = [`${path} is required`];
-                            return new Yup.ValidationError(errors, value, path);
+                            return new Yup.ValidationError(
+                                [`${path} is required`],
+                                value,
+                                path
+                            );
                         } else {
                             return error;
                         }
                     });
+                    console.log(R.unnest(errorsList.map(x => x.errors)));
                     return {
                         ...new Output(),
                         errors: formatYupErrors(errorsList)
