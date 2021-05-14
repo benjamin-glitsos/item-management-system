@@ -214,6 +214,8 @@ export default ({
         }
     });
 
+    const trimAll = R.map(s => s.trim());
+
     const nullToEmptyString = x => (x === null ? "" : x);
 
     const formatYupErrors = R.pipe(
@@ -227,6 +229,7 @@ export default ({
         useCallback(
             async data => {
                 const formattedData = R.pipe(
+                    x => trimAll(x),
                     x => emptyStringsToNull(x),
                     x => removeAllUndefined(x),
                     x => diff(state.item, x),
