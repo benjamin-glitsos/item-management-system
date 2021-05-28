@@ -6,6 +6,7 @@ export default ({ title, breadcrumbs, actions, isLoading, children }) => (
         breadcrumbs={!isLoading ? breadcrumbs : []}
         actions={actions}
         maxWidth={"1200px"}
+        hasGrid={true}
     >
         {children}
     </ContentLayout>

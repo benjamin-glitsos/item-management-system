@@ -10,6 +10,7 @@ import FormButtons from "%/components/FormButtons";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import OpenSidebar from "%/components/OpenSidebar";
 import Button, { ButtonGroup } from "@atlaskit/button";
+import ChevronLeftIcon from "@atlaskit/icon/glyph/chevron-left";
 
 export default ({ children }) => {
     const history = useHistory();
@@ -42,7 +43,7 @@ export default ({ children }) => {
                                 history.push(`/${context.namePlural}`)
                             }
                         >
-                            Return to list
+                            <ChevronLeftIcon /> Return to list
                         </Button>
                     </ButtonGroup>
                 }
