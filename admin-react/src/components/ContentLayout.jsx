@@ -3,12 +3,13 @@ import PageHeader from "@atlaskit/page-header";
 import BreadcrumbBar from "%/components/BreadcrumbBar";
 import ContentMargins from "%/components/ContentMargins";
 
-export default ({ title, breadcrumbs, maxWidth, children }) => {
+export default ({ title, breadcrumbs, maxWidth, actions, children }) => {
     return (
         <MarginBottom>
             <ContentMargins maxWidth={maxWidth}>
                 <PageHeader
                     breadcrumbs={<BreadcrumbBar breadcrumbs={breadcrumbs} />}
+                    actions={actions}
                 >
                     {title}
                 </PageHeader>

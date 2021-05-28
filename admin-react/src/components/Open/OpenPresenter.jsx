@@ -8,6 +8,7 @@ import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import OpenSidebar from "%/components/OpenSidebar";
+import Button, { ButtonGroup } from "@atlaskit/button";
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
@@ -31,6 +32,16 @@ export default ({ children }) => {
                         : [context.key, ""]
                 ]}
                 isLoading={isLoading}
+                actions={
+                <ButtonGroup>
+                    <Button
+                        appearance="link"
+                        onClick={() => {}}
+                    >
+                        Return to list
+                    </Button>
+                </ButtonGroup>
+                }
             >
                 {!isCreate && isLoading ? (
                     <LoadingSpinner />

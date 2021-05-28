@@ -1,9 +1,10 @@
 import ContentLayout from "%/components/ContentLayout";
 
-export default ({ title, breadcrumbs, isLoading, children }) => (
+export default ({ title, breadcrumbs, actions, isLoading, children }) => (
     <ContentLayout
         title={!isLoading ? title : ""}
         breadcrumbs={!isLoading ? breadcrumbs : []}
+        actions={actions}
         maxWidth={"1200px"}
     >
         {children}
