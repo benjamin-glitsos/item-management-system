@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { titleCase } from "title-case";
 import { Grid, Row, Col } from "react-flexbox-grid";
@@ -11,6 +12,7 @@ import OpenSidebar from "%/components/OpenSidebar";
 import Button, { ButtonGroup } from "@atlaskit/button";
 
 export default ({ children }) => {
+    const history = useHistory();
     const context = useContext(OpenContext);
     const title = `${titleCase(
         [context.action, context.nameSingular].join(" ")
@@ -33,14 +35,16 @@ export default ({ children }) => {
                 ]}
                 isLoading={isLoading}
                 actions={
-                <ButtonGroup>
-                    <Button
-                        appearance="link"
-                        onClick={() => {}}
-                    >
-                        Return to list
-                    </Button>
-                </ButtonGroup>
+                    <ButtonGroup>
+                        <Button
+                            appearance="link"
+                            onClick={() =>
+                                history.push(`/${context.namePlural}`)
+                            }
+                        >
+                            Return to list
+                        </Button>
+                    </ButtonGroup>
                 }
             >
                 {!isCreate && isLoading ? (
