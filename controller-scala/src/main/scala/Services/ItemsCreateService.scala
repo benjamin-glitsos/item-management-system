@@ -17,7 +17,7 @@ trait ItemsCreateService extends ServiceTrait {
           description,
           additionalNotes
         )
-        .transact(xa)
+        .transact(transactor)
         .unsafeRunSync
       new String
     } catch {

@@ -23,7 +23,7 @@ trait UsersCreateService extends ServiceTrait {
           password,
           additionalNotes
         )
-        .transact(xa)
+        .transact(transactor)
         .unsafeRunSync
       new String
     } catch {

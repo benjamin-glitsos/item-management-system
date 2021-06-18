@@ -9,22 +9,22 @@ trait UsersDeleteService extends ServiceTrait {
         case "soft" =>
           UsersDAO
             .softDelete(usernames)
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
         case "restore" =>
           UsersDAO
             .restoreDelete(usernames)
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
         case "hard" =>
           UsersDAO
             .hardDelete(usernames)
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
         case "hard-delete-all-rows" =>
           UsersDAO
             .hardDeleteAllRows()
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
       }
       new String

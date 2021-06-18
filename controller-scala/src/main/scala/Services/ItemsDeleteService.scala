@@ -9,22 +9,22 @@ trait ItemsDeleteService extends ServiceTrait {
         case "soft" =>
           ItemsDAO
             .softDelete(keys)
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
         case "restore" =>
           ItemsDAO
             .restoreDelete(keys)
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
         case "hard" =>
           ItemsDAO
             .hardDelete(keys)
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
         case "hard-delete-all-rows" =>
           ItemsDAO
             .hardDeleteAllRows()
-            .transact(xa)
+            .transact(transactor)
             .unsafeRunSync
       }
       new String

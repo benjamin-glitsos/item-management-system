@@ -91,7 +91,7 @@ trait UsersListService extends ListServiceTrait {
           )
 
         } yield (output))
-          .transact(xa)
+          .transact(transactor)
           .unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)

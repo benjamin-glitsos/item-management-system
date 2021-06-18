@@ -35,7 +35,7 @@ trait UsersEditService extends ServiceTrait {
           val output: String = createDataOutput(writeJs(data))
 
         } yield (output))
-          .transact(xa)
+          .transact(transactor)
           .unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
