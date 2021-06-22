@@ -7,9 +7,9 @@ DECLARE
     record_key text := '';
 BEGIN
     CASE table_name
-        WHEN 'users' THEN table_key := 'user';
-        WHEN 'items' THEN table_key := 'item';
-        ELSE table_key := 'meta';
+        WHEN 'users' THEN table_key := 'User';
+        WHEN 'items' THEN table_key := 'Item';
+        ELSE table_key := 'Meta';
     END CASE;
     FOR i IN 1..key_length LOOP
       record_key := record_key || allowed_chars[1+random()*(array_length(allowed_chars, 1)-1)];
