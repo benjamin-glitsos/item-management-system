@@ -1,0 +1,4 @@
+CREATE DOMAIN one_or_more AS SMALLINT
+CHECK (
+    VALUE >= 1
+);
