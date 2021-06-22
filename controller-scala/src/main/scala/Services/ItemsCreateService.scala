@@ -4,7 +4,7 @@ import doobie_import.connection._
 
 trait ItemsCreateService extends ServiceTrait {
   final def create(
-      key: String,
+      sku: String,
       name: String,
       description: Option[String],
       additionalNotes: Option[String]
@@ -12,7 +12,7 @@ trait ItemsCreateService extends ServiceTrait {
     try {
       ItemsDAO
         .create(
-          key,
+          sku,
           name,
           description,
           additionalNotes

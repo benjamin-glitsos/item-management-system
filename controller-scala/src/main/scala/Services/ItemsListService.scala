@@ -34,13 +34,13 @@ trait ItemsListService extends ListServiceTrait {
               val pageItemsEnd       = dataFirstRow._4
 
               val items: List[ItemsList] = data.map(x => {
-                val key         = x._5
+                val sku         = x._5
                 val name        = x._6
                 val description = x._7
                 val created_at  = x._8
                 val edited_at   = x._9
 
-                ItemsList(key, name, description, created_at, edited_at)
+                ItemsList(sku, name, description, created_at, edited_at)
               })
 
               (

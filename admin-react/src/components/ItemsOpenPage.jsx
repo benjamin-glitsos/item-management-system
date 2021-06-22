@@ -16,7 +16,7 @@ export default ({ action }) => {
 
     const { key } = useParams();
 
-    const keyField = "key";
+    const keyField = "sku";
     const [nameSingular, namePlural] = config.names.items;
     const title = isCreate
         ? titleCase(`${action} ${nameSingular}`)
@@ -57,8 +57,8 @@ export default ({ action }) => {
         <Open context={pageContext}>
             <FormSubheading level={3}>Details</FormSubheading>
             <RegisteredField
-                name="key"
-                title="Key"
+                name="sku"
+                title="SKU"
                 Component={Textfield}
                 columnWidths={{ lg: 6 }}
             />

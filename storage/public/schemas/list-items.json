@@ -24,7 +24,7 @@
                 {
                     "type": "string",
                     "enum": [
-                        "key",
+                        "sku",
                         "name",
                         "description",
                         "created_at",

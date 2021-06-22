@@ -1,6 +1,6 @@
 CREATE VIEW items_open AS
     SELECT
-        i.key
+        i.sku
       , i.name
       , i.description
       , m.additional_notes

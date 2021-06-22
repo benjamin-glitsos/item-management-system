@@ -6,8 +6,8 @@ import upickle_import.general._
 
 trait ItemsEditService extends ServiceTrait {
   final def edit(
-      oldKey: String,
-      newKey: Option[String],
+      oldSku: String,
+      newSku: Option[String],
       name: Option[String],
       description: Option[Option[String]],
       additionalNotes: Option[Option[String]]
@@ -17,14 +17,14 @@ trait ItemsEditService extends ServiceTrait {
         (for {
           _ <- ItemsDAO
             .edit(
-              oldKey,
-              newKey,
+              oldSku,
+              newSku,
               name,
               description,
               additionalNotes
             )
 
-          data <- ItemsDAO.open(newKey.getOrElse(oldKey))
+          data <- ItemsDAO.open(newSku.getOrElse(oldSku))
 
           val output: String = createDataOutput(writeJs(data))
 

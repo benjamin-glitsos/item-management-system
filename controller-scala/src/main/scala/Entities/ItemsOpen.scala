@@ -1,5 +1,5 @@
 case class ItemsOpen(
-    key: String,
+    sku: String,
     name: String,
     description: Option[String],
     additional_notes: Option[String],

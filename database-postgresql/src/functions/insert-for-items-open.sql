@@ -1,5 +1,5 @@
 CREATE FUNCTION insert_for_items_open(
-    _key text
+    _sku text
   , _name text
   , _description text
   , _additional_notes text
@@ -12,13 +12,13 @@ BEGIN
         RETURNING id
     )
     INSERT INTO items (
-        key
+        sku
       , name
       , description
       , meta_id
     )
     VALUES (
-        _key
+        _sku
       , _name
       , _description
       , (SELECT id FROM insert_meta)

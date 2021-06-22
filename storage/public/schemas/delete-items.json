@@ -7,7 +7,7 @@
             "type": "string",
             "enum": ["soft", "hard", "restore"]
         },
-        "keys": {
+        "skus": {
             "type": "array",
             "minItems": 1,
             "maxItems": 100,
@@ -15,11 +15,11 @@
             "items": {
                 "type": "string",
                 "pattern": "^[-A-Z0-9]*$",
-                "patternDescription": "key can only contain uppercase letters (A-Z), numbers (0-9), and the hyphen symbol (-)",
+                "patternDescription": "skus can only contain uppercase letters (A-Z), numbers (0-9), and the hyphen symbol (-)",
                 "minLength": 1,
                 "maxLength": 255
             }
         }
     },
-    "required": ["method", "keys"]
+    "required": ["method", "skus"]
 }

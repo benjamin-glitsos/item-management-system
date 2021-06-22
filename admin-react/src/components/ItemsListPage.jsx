@@ -8,8 +8,8 @@ import config from "%/config";
 
 export default () => {
     const [nameSingular, namePlural] = config.names.items;
-    const keyColumnSingular = "key";
-    const keyColumnPlural = "keys";
+    const keyColumnSingular = "sku";
+    const keyColumnPlural = "skus";
     const title = titleCase(namePlural);
     const slug = namePlural;
 
@@ -26,7 +26,7 @@ export default () => {
 
     const listContainer = ListContainer({
         headContentColumns: [
-            { key: "key", content: "Key", isSortable: true },
+            { key: "sku", content: "SKU", isSortable: true },
             { key: "name", content: "Name", isSortable: true },
             {
                 key: "description",

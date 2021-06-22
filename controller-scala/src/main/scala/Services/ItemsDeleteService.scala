@@ -3,22 +3,22 @@ import doobie.implicits._
 import doobie_import.connection._
 
 trait ItemsDeleteService extends ServiceTrait {
-  final def delete(method: String, keys: List[String] = List()): String = {
+  final def delete(method: String, skus: List[String] = List()): String = {
     try {
       method match {
         case "soft" =>
           ItemsDAO
-            .softDelete(keys)
+            .softDelete(skus)
             .transact(transactor)
             .unsafeRunSync
         case "restore" =>
           ItemsDAO
-            .restoreDelete(keys)
+            .restoreDelete(skus)
             .transact(transactor)
             .unsafeRunSync
         case "hard" =>
           ItemsDAO
-            .hardDelete(keys)
+            .hardDelete(skus)
             .transact(transactor)
             .unsafeRunSync
         case "hard-delete-all-rows" =>

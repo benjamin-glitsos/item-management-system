@@ -1,4 +1,4 @@
-CREATE FUNCTION soft_delete_for_items_open(_key text)
+CREATE FUNCTION soft_delete_for_items_open(_sku text)
 RETURNS void AS $$
 BEGIN
     UPDATE meta SET
@@ -9,7 +9,7 @@ BEGIN
     WHERE id=(
         SELECT meta_id
         FROM items
-        WHERE key=_key
+        WHERE sku=_sku
     );
 END;
 $$ LANGUAGE plpgsql;

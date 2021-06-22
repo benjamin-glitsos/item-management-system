@@ -2,7 +2,7 @@ import doobie_import.database.dc._
 
 trait ItemsCreateDAO {
   final def create(
-      key: String,
+      sku: String,
       name: String,
       description: Option[String],
       additionalNotes: Option[String]
@@ -11,7 +11,7 @@ trait ItemsCreateDAO {
       quote(
         query[ItemsOpen]
           .insert(
-            _.key              -> lift(key),
+            _.sku              -> lift(sku),
             _.name             -> lift(name),
             _.description      -> lift(description),
             _.additional_notes -> lift(additionalNotes)

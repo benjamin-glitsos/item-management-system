@@ -1,6 +1,6 @@
 CREATE VIEW items_list AS
     SELECT
-        i.key
+        i.sku
       , i.name
       , abbreviate_multiline_text(i.description) AS description
       , m.created_at

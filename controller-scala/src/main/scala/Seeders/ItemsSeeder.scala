@@ -15,7 +15,7 @@ object ItemsSeeder extends EntitySeederTrait {
     val text: TextProducer = fairy.textProducer();
 
     ItemsService.create(
-      key = System.getenv("DEMO_ITEM_KEY"),
+      sku = System.getenv("DEMO_ITEM_SKU"),
       name = System.getenv("DEMO_ITEM_NAME"),
       description = MarkdownSeeder(text),
       additionalNotes = MarkdownSeeder(text)
@@ -31,12 +31,12 @@ object ItemsSeeder extends EntitySeederTrait {
         StringUtilities.toTitleCase(
           text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
         )
-      val key: String                     = createKey(name)
+      val sku: String                     = createSku(name)
       val description: Option[String]     = MarkdownSeeder(text)
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       ItemsService.create(
-        key,
+        sku,
         name,
         description,
         additionalNotes

@@ -1,5 +1,5 @@
 case class ItemsList(
-    key: String,
+    sku: String,
     name: String,
     description: Option[String],
     created_at: String,

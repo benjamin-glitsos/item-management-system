@@ -8,18 +8,18 @@ object ItemsRoutes {
     DeleteItemsRoutes()
   )
 
-  private final def keyRoutes(): Route = pathPrefix(Segment) { key: String =>
+  private final def skuRoutes(): Route = pathPrefix(Segment) { sku: String =>
     {
-      val keyToUpperCase = key.toUpperCase()
+      val skuToUpperCase = sku.toUpperCase()
       concat(
-        OpenItemsRoutes(keyToUpperCase),
-        EditItemsRoutes(keyToUpperCase)
+        OpenItemsRoutes(skuToUpperCase),
+        EditItemsRoutes(skuToUpperCase)
       )
     }
   }
 
   final def apply(): Route = concat(
-    keyRoutes(),
+    skuRoutes(),
     rootRoutes()
   )
 }

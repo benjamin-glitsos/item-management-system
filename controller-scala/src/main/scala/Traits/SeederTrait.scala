@@ -66,7 +66,7 @@ trait SeederTrait {
 
   final def overwriteText(c: Char, s: String): String = s.map(x => c)
 
-  final def createKey(words: String): String = {
+  final def createSku(words: String): String = {
     def abbreviate(word: String): String = if (word.length() <= 3) {
       word
     } else {

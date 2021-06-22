@@ -8,9 +8,9 @@ object DeleteItemsRoutes {
     ValidationMiddleware("delete-items") { body: ujson.Value =>
       {
         val method: String     = body("method").str
-        val keys: List[String] = read[List[String]](body("keys"))
+        val skus: List[String] = read[List[String]](body("skus"))
 
-        complete(NoContent, ItemsService.delete(method, keys))
+        complete(NoContent, ItemsService.delete(method, skus))
       }
     }
   }

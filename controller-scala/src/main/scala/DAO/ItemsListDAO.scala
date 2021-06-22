@@ -12,8 +12,8 @@ trait ItemsListDAO extends ListDAOTrait {
   ) = {
     val trimmedSearch = trimSearch(search)
 
-    val matchesKeyFragment: Option[Fragment] =
-      trimmedSearch.map(s => fr"key ILIKE ${s"%$s%"}")
+    val matchesSkuFragment: Option[Fragment] =
+      trimmedSearch.map(s => fr"sku ILIKE ${s"%$s%"}")
 
     val matchesNameFragment: Option[Fragment] =
       trimmedSearch.map(s => fr"name ILIKE ${s"%$s%"}")
@@ -23,7 +23,7 @@ trait ItemsListDAO extends ListDAOTrait {
 
     val whereFragment: Fragment =
       whereOrOpt(
-        matchesKeyFragment,
+        matchesSkuFragment,
         matchesNameFragment,
         matchesDescriptionFragment
       )
@@ -44,7 +44,7 @@ trait ItemsListDAO extends ListDAOTrait {
       , filtered_count
       , page_start
       , page_end
-      , key
+      , sku
       , name
       , description
       , created_at

@@ -6,8 +6,8 @@ import doobie.implicits._
 
 trait ItemsEditDAO {
   final def edit(
-      oldKey: String,
-      newKey: Option[String],
+      oldSku: String,
+      newSku: Option[String],
       name: Option[String],
       description: Option[Option[String]],
       additionalNotes: Option[Option[String]]
@@ -16,13 +16,13 @@ trait ItemsEditDAO {
       fr"UPDATE items_open"
 
     val set: Fragment = setOpt(
-      newKey.map(s => fr"key=$s"),
+      newSku.map(s => fr"sku=$s"),
       name.map(s => fr"name=$s"),
       description.map(s => fr"description=$s"),
       additionalNotes.map(s => fr"additional_notes=$s")
     )
 
-    val where: Fragment = whereAnd(fr"key=$oldKey")
+    val where: Fragment = whereAnd(fr"sku=$oldSku")
 
     (update ++ set ++ where).update.run
   }

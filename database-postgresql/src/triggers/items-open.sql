@@ -4,7 +4,7 @@ AS $$
 BEGIN
     IF TG_OP = 'INSERT' THEN
         PERFORM insert_for_items_open(
-            NEW.key
+            NEW.sku
           , NEW.name
           , NEW.description
           , NEW.additional_notes
@@ -12,30 +12,30 @@ BEGIN
 
     ELSIF TG_OP = 'UPDATE' AND NEW.opens > OLD.opens THEN
         PERFORM open_for_items_open(
-            OLD.key
+            OLD.sku
         );
 
     ElSIF TG_OP = 'UPDATE' AND NEW.is_deleted IS true AND OLD.is_deleted IS false THEN
         PERFORM soft_delete_for_items_open(
-            OLD.key
+            OLD.sku
         );
 
     ELSIF TG_OP = 'UPDATE' AND NEW.is_deleted IS false AND OLD.is_deleted IS true THEN
         PERFORM restore_delete_for_items_open(
-            OLD.key
+            OLD.sku
         );
 
     ELSIF TG_OP = 'DELETE' THEN
         PERFORM hard_delete_for_items_open(
-            OLD.key
+            OLD.sku
         );
 
     ELSIF TG_OP = 'UPDATE'
         AND NEW.* IS DISTINCT FROM OLD.*
         AND OLD.is_deleted IS false THEN
         PERFORM update_for_items_open(
-            OLD.key
-          , NEW.key
+            OLD.sku
+          , NEW.sku
           , NEW.name
           , NEW.description
           , NEW.additional_notes

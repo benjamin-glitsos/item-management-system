@@ -1,6 +1,6 @@
 CREATE FUNCTION update_for_items_open(
-    old_key text
-  , new_key text
+    old_sku text
+  , new_sku text
   , new_name text
   , new_description text
   , new_additional_notes text
@@ -9,10 +9,10 @@ RETURNS void AS $$
 BEGIN
     WITH items_update AS (
         UPDATE items
-        SET key=new_key
+        SET sku=new_sku
         , name=new_name
         , description=new_description
-        WHERE key=old_key
+        WHERE sku=old_sku
         RETURNING meta_id
     )
     UPDATE meta

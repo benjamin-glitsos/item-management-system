@@ -3,10 +3,10 @@
   "title": "Edit Items",
   "type": "object",
   "properties": {
-    "key": {
+    "sku": {
       "type": "string",
       "pattern": "^[-A-Z0-9]*$",
-      "patternDescription": "key can only contain uppercase letters (A-Z), numbers (0-9), and the hyphen symbol (-). Ensure that it is all uppercase",
+      "patternDescription": "sku can only contain uppercase letters (A-Z), numbers (0-9), and the hyphen symbol (-). Ensure that it is all uppercase",
       "minLength": 1,
       "maxLength": 255
     },

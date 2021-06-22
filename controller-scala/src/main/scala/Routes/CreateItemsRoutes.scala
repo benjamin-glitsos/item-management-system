@@ -6,7 +6,7 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 object CreateItemsRoutes {
   final def apply(): Route = post {
     ValidationMiddleware("create-items") { body: ujson.Value =>
-      val key: String                 = body("key").str
+      val sku: String                 = body("sku").str
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
       val additionalNotes: Option[String] =
@@ -15,7 +15,7 @@ object CreateItemsRoutes {
       complete(
         NoContent,
         ItemsService.create(
-          key,
+          sku,
           name,
           description,
           additionalNotes
