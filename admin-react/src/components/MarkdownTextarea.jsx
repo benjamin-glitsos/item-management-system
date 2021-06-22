@@ -13,6 +13,7 @@ export default ({ placeholder, ...props }) => {
                 Promise.resolve(<ReactMarkdown source={markdown} />)
             }
             childProps={{ textArea: { placeholder } }}
+            maxEditorHeight={150}
             {...props}
         />
     );
