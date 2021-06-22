@@ -7,6 +7,7 @@ import OpenContainer from "%/components/Open/OpenContainer";
 import RegisteredField from "%/components/RegisteredField";
 import ControlledField from "%/components/ControlledField";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
+import FormSubheading from "%/components/FormSubheading";
 import Open from "%/components/Open/Open";
 import config from "%/config";
 
@@ -54,6 +55,7 @@ export default ({ action }) => {
 
     return (
         <Open context={pageContext}>
+            <FormSubheading level={3}>Details</FormSubheading>
             <RegisteredField
                 name="username"
                 title="Username"
@@ -84,6 +86,7 @@ export default ({ action }) => {
                 Component={Textfield}
                 columnWidths={{ lg: 4 }}
             />
+            <FormSubheading level={3}>Misc.</FormSubheading>
             <ControlledField
                 name="additional_notes"
                 title="Additional notes"
