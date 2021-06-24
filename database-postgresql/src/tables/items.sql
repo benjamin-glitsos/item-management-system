@@ -7,6 +7,6 @@ CREATE TABLE items (
   , acquisition_date DATE NOT NULL
   , expiration_date DATE
   , unit_price MONEY NOT NULL
-  , unit_quantity ONE_OR_MORE NOT NULL
+  , unit_quantity INT_MIN_ONE NOT NULL
   , meta_id INTEGER UNIQUE NOT NULL REFERENCES meta(id)
 );
