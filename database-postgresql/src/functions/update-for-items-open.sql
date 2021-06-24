@@ -21,7 +21,7 @@ BEGIN
           , expiration_date  = new_expiration_date
           , unit_price       = new_unit_price
           , unit_quantity    = new_unit_quantity
-        WHERE sku=old_sku
+        WHERE sku = old_sku
         RETURNING meta_id
     )
     UPDATE meta
@@ -29,6 +29,6 @@ BEGIN
       , edited_by        = 1
       , additional_notes = new_additional_notes
       , edits            = edits + 1
-    WHERE id=(SELECT meta_id FROM items_update);
+    WHERE id = (SELECT meta_id FROM items_update);
 END;
 $$ LANGUAGE plpgsql;

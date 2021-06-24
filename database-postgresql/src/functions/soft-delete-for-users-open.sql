@@ -6,10 +6,10 @@ BEGIN
       , deleted_at = NOW()
       , deleted_by = 1
       , edits      = edits + 1
-    WHERE id=(
+    WHERE id = (
         SELECT meta_id
         FROM users
-        WHERE username=_username
+        WHERE username = _username
     );
 END;
 $$ LANGUAGE plpgsql;

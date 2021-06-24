@@ -3,14 +3,14 @@ RETURNS void AS $$
 BEGIN
     WITH delete_items AS (
         DELETE FROM items
-        WHERE sku=_sku
+        WHERE sku = _sku
         RETURNING meta_id
     )
     DELETE FROM meta
-    WHERE id=(
+    WHERE id = (
         SELECT meta_id
         FROM items
-        WHERE sku=_sku
+        WHERE sku = _sku
     );
 END;
 $$ LANGUAGE plpgsql;

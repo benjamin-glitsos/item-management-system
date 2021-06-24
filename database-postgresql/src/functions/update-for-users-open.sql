@@ -18,7 +18,7 @@ BEGIN
           , last_name     = new_last_name
           , other_names   = new_other_names
           , password      = sha1_encrypt(new_password)
-        WHERE username=old_username
+        WHERE username = old_username
         RETURNING meta_id
     )
     UPDATE meta
@@ -26,6 +26,6 @@ BEGIN
       , edited_by        = 1
       , additional_notes = new_additional_notes
       , edits            = edits + 1
-    WHERE id=(SELECT meta_id FROM users_update);
+    WHERE id = (SELECT meta_id FROM users_update);
 END;
 $$ LANGUAGE plpgsql;

@@ -6,10 +6,10 @@ BEGIN
       , deleted_at = NOW()
       , deleted_by = 1
       , edits      = edits + 1
-    WHERE id=(
+    WHERE id = (
         SELECT meta_id
         FROM items
-        WHERE sku=_sku
+        WHERE sku = _sku
     );
 END;
 $$ LANGUAGE plpgsql;
