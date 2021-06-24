@@ -1,8 +1,13 @@
 CREATE VIEW items_open AS
     SELECT
         i.sku
+      , i.upc
       , i.name
       , i.description
+      , i.acquisition_date
+      , i.expiration_date
+      , i.unit_price
+      , i.unit_quantity
       , m.additional_notes
       , m.metakey
       , m.opens

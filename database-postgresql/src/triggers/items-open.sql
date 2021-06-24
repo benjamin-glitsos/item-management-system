@@ -5,8 +5,13 @@ BEGIN
     IF TG_OP = 'INSERT' THEN
         PERFORM insert_for_items_open(
             NEW.sku
+          , NEW.upc
           , NEW.name
           , NEW.description
+          , NEW.acquisition_date
+          , NEW.expiration_date
+          , NEW.unit_price
+          , NEW.unit_quantity
           , NEW.additional_notes
         );
 
@@ -36,8 +41,13 @@ BEGIN
         PERFORM update_for_items_open(
             OLD.sku
           , NEW.sku
+          , NEW.upc
           , NEW.name
           , NEW.description
+          , NEW.acquisition_date
+          , NEW.expiration_date
+          , NEW.unit_price
+          , NEW.unit_quantity
           , NEW.additional_notes
         );
 
