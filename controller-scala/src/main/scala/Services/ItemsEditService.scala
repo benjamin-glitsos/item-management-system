@@ -8,8 +8,15 @@ trait ItemsEditService extends ServiceTrait {
   final def edit(
       oldSku: String,
       newSku: Option[String],
+      upc: String,
       name: Option[String],
       description: Option[Option[String]],
+      acquisition_date: String,
+      expiration_date: String,
+      unit_cost: String,
+      unit_price: String,
+      quantity_available: Int,
+      quantity_sold: Int,
       additionalNotes: Option[Option[String]]
   ): ujson.Value = {
     read[ujson.Value](
@@ -19,8 +26,15 @@ trait ItemsEditService extends ServiceTrait {
             .edit(
               oldSku,
               newSku,
+              upc,
               name,
               description,
+              acquisition_date,
+              expiration_date,
+              unit_cost,
+              unit_price,
+              quantity_available,
+              quantity_sold,
               additionalNotes
             )
 
