@@ -1,6 +1,7 @@
-import scala.math.round
+import scala.math.{round, BigDecimal}
 import scala.util.Random
 import org.apache.commons.lang3.StringUtils.{left, right}
+import java.time.{Instant, Duration}
 
 trait SeederTrait {
   implicit final def times(n: Int) = new {
@@ -13,6 +14,8 @@ trait SeederTrait {
 
   final def randomIntegerBetween(min: Int, max: Int): Int =
     Random.between(min, max)
+
+  final def coinFlip(): Boolean = Random.nextBoolean
 
   final def biasedCoinFlip(probability: Double): Boolean = {
     val precision = MathUtilities.powerOfTen(2).toInt
@@ -110,5 +113,29 @@ trait SeederTrait {
       .filter(!StringUtilities.isEmpty(_))
       .mkString("-")
       .toUpperCase()
+  }
+
+  final def randomDouble = Random.nextDouble
+
+  final def randomCurrency(): Double = {
+    val d = randomDouble * 10
+    val b =
+      new BigDecimal(d).setScale(2, BigDecimal.ROUND_HALF_UP)
+    b.doubleValue
+  }
+
+  final def randomDateBetween(min: Date, max: Date): Date =
+    Date.from(Instant.of(Random.between(min.getTime, max.getTime + 1)))
+
+  final def yearsAgo(years: Int): Date = {
+    val daysAgo: Int   = years * 365
+    val today: Instant = Instant.now()
+    val past: Instant  = today.minus(Duration.ofDays(daysAgo))
+    Date.from(past)
+  }
+
+  final def addRandomDays(date: Date, min: Int, max: Int): Date = {
+    val future: Instant = date.plus(Duration.ofDays(daysAgo))
+    Date.from(future)
   }
 }

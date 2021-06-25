@@ -37,20 +37,28 @@ object ItemsSeeder extends EntitySeederTrait {
       val fairy: Fairy       = Fairy.create()
       val text: TextProducer = fairy.textProducer()
 
-      val seed_name: String = StringUtilities.toTitleCase(
+      val seedIsForSale: Boolean = biasedCoinFlip(0.75)
+      val seedName: String = StringUtilities.toTitleCase(
         text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
       )
+      val seedUnitCost: Double = randomCurrency()
+      val seedUnitPrice: Double =
+        Option.when(seedIsForSale)(seedCost * randomDouble)
 
-      val sku: String                     = createSku(seed_name)
-      val upc: String                     = createUpc()
-      val name: String                    = seed_name
-      val description: Option[String]     = MarkdownSeeder(text)
-      val acquisitionDate: Date           = DateUtilities.parse("2021-01-01")
-      val expirationDate: Option[Date]    = None
-      val unitCost: Double                = "1.00".toDouble
-      val unitPrice: Option[Double]       = None
-      val quantityAvailable: Int          = 0
-      val quantitySold: Int               = 0
+      val sku: String                 = createSku(seedName)
+      val upc: String                 = createUpc()
+      val name: String                = seedName
+      val description: Option[String] = MarkdownSeeder(text)
+      val acquisitionDate: Date       = randomDateBetween(yearsAgo(10), new Date())
+      val expirationDate: Option[Date] =
+        Option.when(coinFlip)(
+          addRandomDays(date = acquisitionDate, min = 0, max = 10 * 365)
+        )
+      val unitCost: Double          = seedUnitCost
+      val unitPrice: Option[Double] = seedUnitPrice
+      val quantityAvailable: Int    = randomIntegerBetween(0, 20)
+      val quantitySold: Int =
+        if (seedIsForSale) randomIntegerBetween(0, 100) else 0
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       ItemsService.create(
