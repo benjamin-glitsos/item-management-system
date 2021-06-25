@@ -20,13 +20,19 @@ trait SeederTrait {
     probability >= flip
   }
 
-  final def randomPrintableChars(length: Int): String = {
-    Seq.fill(length)(Random.nextPrintableChar()).mkString(new String)
+  final def randomFixedLength(random: () => Char, length: Int): String = {
+    Seq.fill(length)(random()).mkString(new String)
   }
 
-  final def randomNumbers(length: Int): String = {
-    Seq.fill(length)(Random.nextInt(9)).mkString(new String)
-  }
+  final def randomPrintable(length: Int): String = randomFixedLength(
+    Random.nextPrintableChar,
+    length
+  )
+
+  final def randomNumbers(length: Int): String = randomFixedLength(
+    Random.nextInt(9),
+    length
+  )
 
   final def randomAlphanumerics(length: Int): String = Random.alphanumeric
     .take(length)

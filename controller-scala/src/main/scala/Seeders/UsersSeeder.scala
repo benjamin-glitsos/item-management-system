@@ -52,7 +52,7 @@ object UsersSeeder extends EntitySeederTrait {
           }
         ).mkString(" ").trim()
       )
-      val password: String                = randomPrintableChars(length = 15)
+      val password: String                = randomPrintable(length = 15)
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       UsersService.create(
