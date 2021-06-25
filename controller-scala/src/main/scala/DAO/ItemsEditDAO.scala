@@ -12,9 +12,9 @@ trait ItemsEditDAO {
       name: Option[String],
       description: Option[Option[String]],
       acquisition_date: Option[String],
-      expiration_date: Option[String],
+      expiration_date: Option[Option[String]],
       unit_cost: Option[String],
-      unit_price: Option[String],
+      unit_price: Option[Option[String]],
       quantity_available: Option[Int],
       quantity_sold: Option[Int],
       additionalNotes: Option[Option[String]]

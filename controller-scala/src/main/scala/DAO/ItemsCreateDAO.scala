@@ -7,9 +7,9 @@ trait ItemsCreateDAO {
       name: String,
       description: Option[String],
       acquisition_date: String,
-      expiration_date: String,
+      expiration_date: Option[String],
       unit_cost: String,
-      unit_price: String,
+      unit_price: Option[String],
       quantity_available: Int,
       quantity_sold: Int,
       additionalNotes: Option[String]

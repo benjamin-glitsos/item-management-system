@@ -17,12 +17,12 @@ object EditItemsRoutes {
           Try(body("description").strOpt).toOption
         val acquisition_date: Option[String] =
           Try(body("acquisition_date").str).toOption
-        val expiration_date: Option[String] =
-          Try(body("expiration_date").str).toOption
+        val expiration_date: Option[Option[String]] =
+          Try(body("expiration_date").strOpt).toOption
         val unit_cost: Option[String] =
           Try(body("unit_cost").str).toOption
-        val unit_price: Option[String] =
-          Try(body("unit_price").str).toOption
+        val unit_price: Option[Option[String]] =
+          Try(body("unit_price").strOpt).toOption
         val quantity_available: Option[Int] =
           Try(body("quantity_available").num).toOption
         val quantity_sold: Option[Int] =

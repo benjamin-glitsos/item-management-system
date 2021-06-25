@@ -12,9 +12,9 @@ trait ItemsEditService extends ServiceTrait {
       name: Option[String],
       description: Option[Option[String]],
       acquisition_date: String,
-      expiration_date: String,
+      expiration_date: Option[String],
       unit_cost: String,
-      unit_price: String,
+      unit_price: Option[String],
       quantity_available: Int,
       quantity_sold: Int,
       additionalNotes: Option[Option[String]]

@@ -11,11 +11,12 @@ object CreateItemsRoutes {
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
       val acquisition_date: String    = body("acquisition_date").str
-      val expiration_date: String     = body("expiration_date").str
-      val unit_cost: String           = body("unit_cost").str
-      val unit_price: String          = body("unit_price").str
-      val quantity_available: Int     = body("quantity_available").num
-      val quantity_sold: Int          = body("quantity_sold").num
+      val expiration_date: Option[String] =
+        Try(body("expiration_date").str).toOption
+      val unit_cost: String          = body("unit_cost").str
+      val unit_price: Option[String] = Try(body("unit_price").str).toOption
+      val quantity_available: Int    = body("quantity_available").num
+      val quantity_sold: Int         = body("quantity_sold").num
       val additionalNotes: Option[String] =
         Try(body("additional_notes").str).toOption
 
