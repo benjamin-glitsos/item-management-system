@@ -51,16 +51,16 @@ trait UsersListService extends ListServiceTrait {
               val pageItemsEnd       = dataFirstRow._4
 
               val items: List[UsersList] = data.map(x => {
-                val username      = x._5
-                val email_address = x._6
-                val firstName     = x._7
-                val lastName      = x._8
-                val otherNames    = x._9
-                val created_at    = x._10
-                val edited_at     = x._11
-                val name          = formatName(firstName, lastName, otherNames)
+                val username     = x._5
+                val emailAddress = x._6
+                val firstName    = x._7
+                val lastName     = x._8
+                val otherNames   = x._9
+                val createdAt    = x._10
+                val editedAt     = x._11
+                val name         = formatName(firstName, lastName, otherNames)
 
-                UsersList(username, name, email_address, created_at, edited_at)
+                UsersList(username, name, emailAddress, createdAt, editedAt)
               })
 
               (

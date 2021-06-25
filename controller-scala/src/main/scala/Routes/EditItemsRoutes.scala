@@ -24,9 +24,9 @@ object EditItemsRoutes {
         val unitPrice: Option[Option[String]] =
           Try(body("unit_price").strOpt).toOption
         val quantityAvailable: Option[Int] =
-          Try(body("quantity_available").num).toOption
+          Try(body("quantity_available").num.toInt).toOption
         val quantitySold: Option[Int] =
-          Try(body("quantity_sold").num).toOption
+          Try(body("quantity_sold").num.toInt).toOption
         val additionalNotes: Option[Option[String]] =
           Try(body("additional_notes").strOpt).toOption
 
