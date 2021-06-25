@@ -42,7 +42,7 @@ object ItemsSeeder extends EntitySeederTrait {
         text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
       )
       val seedUnitCost: Double = randomCurrency()
-      val seedUnitPrice: Double =
+      val seedUnitPrice: Option[Double] =
         Option.when(seedIsForSale)(seedCost * randomDouble)
 
       val sku: String                 = createSku(seedName)
