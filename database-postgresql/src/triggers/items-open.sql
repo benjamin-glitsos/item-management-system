@@ -10,8 +10,10 @@ BEGIN
           , NEW.description
           , NEW.acquisition_date
           , NEW.expiration_date
+          , NEW.unit_cost
           , NEW.unit_price
-          , NEW.unit_quantity
+          , NEW.quantity_available
+          , NEW.quantity_sold
           , NEW.additional_notes
         );
 
@@ -46,8 +48,10 @@ BEGIN
           , NEW.description
           , NEW.acquisition_date
           , NEW.expiration_date
+          , NEW.unit_cost
           , NEW.unit_price
-          , NEW.unit_quantity
+          , NEW.quantity_available
+          , NEW.quantity_sold
           , NEW.additional_notes
         );
 

@@ -5,8 +5,10 @@ CREATE FUNCTION insert_for_items_open(
   , _description text
   , _acquisition_date date
   , _expiration_date date
+  , _unit_cost money
   , _unit_price money
-  , _unit_quantity integer
+  , _quantity_available integer
+  , _quantity_sold integer
   , _additional_notes text
 )
 RETURNS void AS $$
@@ -23,8 +25,10 @@ BEGIN
       , description
       , acquisition_date
       , expiration_date
+      , unit_cost
       , unit_price
-      , unit_quantity
+      , quanity_available
+      , quanity_sold
       , meta_id
     )
     VALUES (
@@ -34,8 +38,10 @@ BEGIN
       , _description
       , _acquisition_date
       , _expiration_date
+      , _unit_cost
       , _unit_price
-      , _unit_quantity
+      , _quantity_available
+      , _quantity_sold
       , (SELECT id FROM insert_meta)
     );
 END;

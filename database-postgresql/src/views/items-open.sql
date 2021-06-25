@@ -6,8 +6,10 @@ CREATE VIEW items_open AS
       , i.description
       , i.acquisition_date
       , i.expiration_date
+      , i.unit_cost
       , i.unit_price
-      , i.unit_quantity
+      , i.quantity_available
+      , i.quantity_sold
       , m.additional_notes
       , m.metakey
       , m.opens
