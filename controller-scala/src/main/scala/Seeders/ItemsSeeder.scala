@@ -24,21 +24,36 @@ object ItemsSeeder extends EntitySeederTrait {
 
   final def seed(): Unit = {
     def seedRow(): Unit = {
-      val fairy: Fairy       = Fairy.create();
-      val text: TextProducer = fairy.textProducer();
+      val fairy: Fairy       = Fairy.create()
+      val text: TextProducer = fairy.textProducer()
 
-      val name: String =
-        StringUtilities.toTitleCase(
-          text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
-        )
-      val sku: String                     = createSku(name)
+      val seed_name: String = StringUtilities.toTitleCase(
+        text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
+      )
+
+      val sku: String                     = createSku(seed_name)
+      val upc: String                     = ""
+      val name: String                    = seed_name
       val description: Option[String]     = MarkdownSeeder(text)
+      val acquisitionDate: String         = ""
+      val expirationDate: Option[String]  = None
+      val unitCost: String                = ""
+      val unitPrice: Option[String]       = None
+      val quantityAvailable: Int          = ""
+      val quantitySold: Int               = ""
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       ItemsService.create(
         sku,
+        upc,
         name,
         description,
+        acquisitionDate,
+        expirationDate,
+        unitCost,
+        unitPrice,
+        quantityAvailable,
+        quantitySold,
         additionalNotes
       )
     }
