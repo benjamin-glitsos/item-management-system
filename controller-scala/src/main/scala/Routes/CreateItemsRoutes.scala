@@ -15,8 +15,8 @@ object CreateItemsRoutes {
         Try(body("expiration_date").str).toOption
       val unitCost: String          = body("unit_cost").str
       val unitPrice: Option[String] = Try(body("unit_price").str).toOption
-      val quantityAvailable: Int    = body("quantity_available").num
-      val quantitySold: Int         = body("quantity_sold").num
+      val quantityAvailable: Int    = body("quantity_available").num.toInt
+      val quantitySold: Int         = body("quantity_sold").num.toInt
       val additionalNotes: Option[String] =
         Try(body("additional_notes").str).toOption
 

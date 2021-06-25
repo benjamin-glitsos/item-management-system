@@ -39,8 +39,8 @@ object ItemsSeeder extends EntitySeederTrait {
       val expirationDate: Option[String]  = None
       val unitCost: String                = ""
       val unitPrice: Option[String]       = None
-      val quantityAvailable: Int          = ""
-      val quantitySold: Int               = ""
+      val quantityAvailable: Int          = 0
+      val quantitySold: Int               = 0
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       ItemsService.create(
