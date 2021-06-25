@@ -6,12 +6,12 @@ trait ItemsCreateDAO {
       upc: String,
       name: String,
       description: Option[String],
-      acquisition_date: String,
-      expiration_date: Option[String],
-      unit_cost: String,
-      unit_price: Option[String],
-      quantity_available: Int,
-      quantity_sold: Int,
+      acquisitionDate: String,
+      expirationDate: Option[String],
+      unitCost: String,
+      unitPrice: Option[String],
+      quantityAvailable: Int,
+      quantitySold: Int,
       additionalNotes: Option[String]
   ) = {
     run(
@@ -22,12 +22,12 @@ trait ItemsCreateDAO {
             _.upc                -> lift(upc),
             _.name               -> lift(name),
             _.description        -> lift(description),
-            _.acquisition_date   -> lift(acquisition_date),
-            _.expiration_date    -> lift(expiration_date),
-            _.unit_cost          -> lift(unit_cost),
-            _.unit_price         -> lift(unit_price),
-            _.quantity_available -> lift(quantity_available),
-            _.quantity_sold      -> lift(quantity_sold),
+            _.acquisition_date   -> lift(acquisitionDate),
+            _.expiration_date    -> lift(expirationDate),
+            _.unit_cost          -> lift(unitCost),
+            _.unit_price         -> lift(unitPrice),
+            _.quantity_available -> lift(quantityAvailable),
+            _.quantity_sold      -> lift(quantitySold),
             _.additional_notes   -> lift(additionalNotes)
           )
       )

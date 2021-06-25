@@ -10,13 +10,13 @@ object CreateItemsRoutes {
       val upc: String                 = body("upc").str
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
-      val acquisition_date: String    = body("acquisition_date").str
-      val expiration_date: Option[String] =
+      val acquisitionDate: String     = body("acquisition_date").str
+      val expirationDate: Option[String] =
         Try(body("expiration_date").str).toOption
-      val unit_cost: String          = body("unit_cost").str
-      val unit_price: Option[String] = Try(body("unit_price").str).toOption
-      val quantity_available: Int    = body("quantity_available").num
-      val quantity_sold: Int         = body("quantity_sold").num
+      val unitCost: String          = body("unit_cost").str
+      val unitPrice: Option[String] = Try(body("unit_price").str).toOption
+      val quantityAvailable: Int    = body("quantity_available").num
+      val quantitySold: Int         = body("quantity_sold").num
       val additionalNotes: Option[String] =
         Try(body("additional_notes").str).toOption
 
@@ -27,12 +27,12 @@ object CreateItemsRoutes {
           upc,
           name,
           description,
-          acquisition_date,
-          expiration_date,
-          unit_cost,
-          unit_price,
-          quantity_available,
-          quantity_sold,
+          acquisitionDate,
+          expirationDate,
+          unitCost,
+          unitPrice,
+          quantityAvailable,
+          quantitySold,
           additionalNotes
         )
       )

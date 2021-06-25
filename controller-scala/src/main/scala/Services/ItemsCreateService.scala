@@ -8,12 +8,12 @@ trait ItemsCreateService extends ServiceTrait {
       upc: String,
       name: String,
       description: Option[String],
-      acquisition_date: String,
-      expiration_date: Option[String],
-      unit_cost: String,
-      unit_price: Option[String],
-      quantity_available: Int,
-      quantity_sold: Int,
+      acquisitionDate: String,
+      expirationDate: Option[String],
+      unitCost: String,
+      unitPrice: Option[String],
+      quantityAvailable: Int,
+      quantitySold: Int,
       additionalNotes: Option[String]
   ): String = {
     try {
@@ -23,12 +23,12 @@ trait ItemsCreateService extends ServiceTrait {
           upc,
           name,
           description,
-          acquisition_date,
-          expiration_date,
-          unit_cost,
-          unit_price,
-          quantity_available,
-          quantity_sold,
+          acquisitionDate,
+          expirationDate,
+          unitCost,
+          unitPrice,
+          quantityAvailable,
+          quantitySold,
           additionalNotes
         )
         .transact(transactor)

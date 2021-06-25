@@ -11,12 +11,12 @@ trait ItemsEditDAO {
       upc: Option[String],
       name: Option[String],
       description: Option[Option[String]],
-      acquisition_date: Option[String],
-      expiration_date: Option[Option[String]],
-      unit_cost: Option[String],
-      unit_price: Option[Option[String]],
-      quantity_available: Option[Int],
-      quantity_sold: Option[Int],
+      acquisitionDate: Option[String],
+      expirationDate: Option[Option[String]],
+      unitCost: Option[String],
+      unitPrice: Option[Option[String]],
+      quantityAvailable: Option[Int],
+      quantitySold: Option[Int],
       additionalNotes: Option[Option[String]]
   ) = {
     val update: Fragment =
@@ -27,12 +27,12 @@ trait ItemsEditDAO {
       upc.map(s => fr"upc=$s"),
       name.map(s => fr"name=$s"),
       description.map(s => fr"description=$s"),
-      acquisition_date.map(s => fr"acquisition_date=$s"),
-      expiration_date.map(s => fr"expiration_date=$s"),
-      unit_cost.map(s => fr"unit_cost=$s"),
-      unit_price.map(s => fr"unit_price=$s"),
-      quantity_available.map(s => fr"quantity_available=$s"),
-      quantity_sold.map(s => fr"quantity_sold=$s"),
+      acquisitionDate.map(s => fr"acquisition_date=$s"),
+      expirationDate.map(s => fr"expiration_date=$s"),
+      unitCost.map(s => fr"unit_cost=$s"),
+      unitPrice.map(s => fr"unit_price=$s"),
+      quantityAvailable.map(s => fr"quantity_available=$s"),
+      quantitySold.map(s => fr"quantity_sold=$s"),
       additionalNotes.map(s => fr"additional_notes=$s")
     )
 
