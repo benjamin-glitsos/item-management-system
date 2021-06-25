@@ -22,9 +22,9 @@ object EditItemsRoutes {
           Try(
             body("expiration_date").strOpt.map(DateUtilities.parse(_))
           ).toOption
-        val unitCost: Option[String] =
+        val unitCost: Option[Double] =
           Try(body("unit_cost").str).toOption
-        val unitPrice: Option[Option[String]] =
+        val unitPrice: Option[Option[Double]] =
           Try(body("unit_price").strOpt).toOption
         val quantityAvailable: Option[Int] =
           Try(body("quantity_available").num.toInt).toOption

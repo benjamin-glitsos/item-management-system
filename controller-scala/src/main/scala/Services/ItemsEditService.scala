@@ -14,8 +14,8 @@ trait ItemsEditService extends ServiceTrait {
       description: Option[Option[String]],
       acquisitionDate: Option[Date],
       expirationDate: Option[Option[Date]],
-      unitCost: Option[String],
-      unitPrice: Option[Option[String]],
+      unitCost: Option[Double],
+      unitPrice: Option[Option[Double]],
       quantityAvailable: Option[Int],
       quantitySold: Option[Int],
       additionalNotes: Option[Option[String]]

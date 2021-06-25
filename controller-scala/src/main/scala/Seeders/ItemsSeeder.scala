@@ -24,8 +24,8 @@ object ItemsSeeder extends EntitySeederTrait {
         DateUtilities.parse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
       expirationDate =
         sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(DateUtilities.parse(_)),
-      unitCost = System.getenv("DEMO_ITEM_UNIT_COST"),
-      unitPrice = sys.env.get("DEMO_ITEM_UNIT_PRICE"),
+      unitCost = System.getenv("DEMO_ITEM_UNIT_COST").toDouble,
+      unitPrice = sys.env.get("DEMO_ITEM_UNIT_PRICE").map(_.toDouble),
       quantityAvailable = System.getenv("DEMO_ITEM_QUANTITY_AVAILABLE").toInt,
       quantitySold = System.getenv("DEMO_ITEM_QUANTITY_SOLD").toInt,
       additionalNotes = MarkdownSeeder(text)
@@ -42,13 +42,13 @@ object ItemsSeeder extends EntitySeederTrait {
       )
 
       val sku: String                     = createSku(seed_name)
-      val upc: String                     = ""
+      val upc: String                     = "11111111"
       val name: String                    = seed_name
       val description: Option[String]     = MarkdownSeeder(text)
       val acquisitionDate: Date           = DateUtilities.parse("2021-01-01")
       val expirationDate: Option[Date]    = None
-      val unitCost: String                = "1.00"
-      val unitPrice: Option[String]       = None
+      val unitCost: Double                = "1.00".toDouble
+      val unitPrice: Option[Double]       = None
       val quantityAvailable: Int          = 0
       val quantitySold: Int               = 0
       val additionalNotes: Option[String] = MarkdownSeeder(text)

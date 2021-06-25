@@ -11,8 +11,8 @@ trait ItemsCreateService extends ServiceTrait {
       description: Option[String],
       acquisitionDate: Date,
       expirationDate: Option[Date],
-      unitCost: String,
-      unitPrice: Option[String],
+      unitCost: Double,
+      unitPrice: Option[Double],
       quantityAvailable: Int,
       quantitySold: Int,
       additionalNotes: Option[String]
