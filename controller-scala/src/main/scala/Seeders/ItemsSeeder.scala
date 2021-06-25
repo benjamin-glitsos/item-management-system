@@ -16,15 +16,15 @@ object ItemsSeeder extends EntitySeederTrait {
 
     ItemsService.create(
       sku = System.getenv("DEMO_ITEM_SKU"),
-      upc = "",
+      upc = System.getenv("DEMO_ITEM_UPC"),
       name = System.getenv("DEMO_ITEM_NAME"),
       description = MarkdownSeeder(text),
       acquisitionDate = "",
       expirationDate = None,
-      unitCost = "",
-      unitPrice = None,
-      quantityAvailable = 0,
-      quantitySold = 0,
+      unitCost = "5.00",
+      unitPrice = Some("10.00"),
+      quantityAvailable = 10,
+      quantitySold = 25,
       additionalNotes = MarkdownSeeder(text)
     )
   }
