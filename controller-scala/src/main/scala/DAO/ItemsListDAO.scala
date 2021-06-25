@@ -47,6 +47,7 @@ trait ItemsListDAO extends ListDAOTrait {
       , sku
       , name
       , description
+      , acquisition_date 
       , created_at
       , edited_at
     FROM page
@@ -62,6 +63,7 @@ trait ItemsListDAO extends ListDAOTrait {
             String,
             String,
             Option[String],
+            String,
             String,
             Option[String]
         )
