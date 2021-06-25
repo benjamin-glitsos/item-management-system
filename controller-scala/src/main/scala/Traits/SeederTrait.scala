@@ -13,7 +13,7 @@ trait SeederTrait {
     }
   }
 
-  final def randomIntegerBetween(min: Int, max: Int): Int =
+  final def randomBetween(min: Int, max: Int): Int =
     Random.between(min, max)
 
   final def coinFlip(): Boolean = Random.nextBoolean
@@ -34,7 +34,7 @@ trait SeederTrait {
   )
 
   final def randomNumbers(length: Int): String = randomFixedLength(
-    () => Random.nextInt(9),
+    () => Random.nextInt(9).toChar,
     length
   )
 
@@ -138,7 +138,8 @@ trait SeederTrait {
   }
 
   final def addRandomDays(date: Date, min: Int, max: Int): Date = {
-    val future: Instant = date.plus(Duration.ofDays(daysAgo))
+    val future: Instant =
+      date.toInstant.plus(Duration.ofDays(randomBetween(min, max)))
     Date.from(future)
   }
 }

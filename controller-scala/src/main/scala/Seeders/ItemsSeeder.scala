@@ -43,7 +43,7 @@ object ItemsSeeder extends EntitySeederTrait {
       )
       val seedUnitCost: Double = randomCurrency()
       val seedUnitPrice: Option[Double] =
-        Option.when(seedIsForSale)(seedCost * randomDouble)
+        Option.when(seedIsForSale)(seedUnitCost * randomDouble)
 
       val sku: String                 = createSku(seedName)
       val upc: String                 = createUpc()
@@ -56,9 +56,9 @@ object ItemsSeeder extends EntitySeederTrait {
         )
       val unitCost: Double          = seedUnitCost
       val unitPrice: Option[Double] = seedUnitPrice
-      val quantityAvailable: Int    = randomIntegerBetween(0, 20)
+      val quantityAvailable: Int    = randomBetween(0, 20)
       val quantitySold: Int =
-        if (seedIsForSale) randomIntegerBetween(0, 100) else 0
+        if (seedIsForSale) randomBetween(0, 100) else 0
       val additionalNotes: Option[String] = MarkdownSeeder(text)
 
       ItemsService.create(
