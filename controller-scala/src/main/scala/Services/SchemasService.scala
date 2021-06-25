@@ -19,7 +19,7 @@ object SchemasService extends ServiceTrait {
   }
 
   final def loadJson(name: String, isFull: Boolean): ujson.Value = {
-    val schemaUjson: ujson.Value = read[ujson.Value](load(name).toString())
+    val schemaUjson: ujson.Value = read[ujson.Value](load(name).toString)
     if (!isFull) {
       schemaUjson.obj.remove("title")
       schemaUjson.obj.remove("description")

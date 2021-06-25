@@ -15,10 +15,11 @@ object CreateItemsRoutes {
         DateUtilities.parse(body("acquisition_date").str)
       val expirationDate: Option[Date] =
         Try(DateUtilities.parse(body("expiration_date").str)).toOption
-      val unitCost: Double          = body("unit_cost").str
-      val unitPrice: Option[Double] = Try(body("unit_price").str).toOption
-      val quantityAvailable: Int    = body("quantity_available").num.toInt
-      val quantitySold: Int         = body("quantity_sold").num.toInt
+      val unitCost: Double = body("unit_cost").str.toDouble
+      val unitPrice: Option[Double] =
+        Try(body("unit_price").str.toDouble).toOption
+      val quantityAvailable: Int = body("quantity_available").num.toInt
+      val quantitySold: Int      = body("quantity_sold").num.toInt
       val additionalNotes: Option[String] =
         Try(body("additional_notes").str).toOption
 

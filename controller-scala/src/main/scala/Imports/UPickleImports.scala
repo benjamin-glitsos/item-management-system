@@ -25,19 +25,19 @@ package upickle_import {
     implicit final val upickleDate: ReadWriter[Date] =
       readwriter[ujson.Value].bimap[Date](
         x => x.toString,
-        json => DateUtilities.parse(json.toString())
+        json => DateUtilities.parse(json.toString)
       )
 
     implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
       readwriter[ujson.Value].bimap[LocalDateTime](
         x => x.toString,
-        json => LocalDateTimeUtilities.parse(json.toString())
+        json => LocalDateTimeUtilities.parse(json.toString)
       )
 
     implicit final val upickleCaseInsensitive: ReadWriter[CIString] =
       readwriter[ujson.Value].bimap[CIString](
         cistring => cistring.toString.toLowerCase,
-        json => CIString(json.toString())
+        json => CIString(json.toString)
       )
 
     implicit final val upickleUsersOpen: ReadWriter[UsersOpen] = macroRW

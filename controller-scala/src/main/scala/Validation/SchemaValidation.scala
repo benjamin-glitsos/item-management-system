@@ -17,7 +17,7 @@ object SchemaValidation extends ValidationTrait {
 
     Try(schema.validate(entityObject)) match {
       case Success(_) => {
-        read[ujson.Value](entityObject.toString()).validNec
+        read[ujson.Value](entityObject.toString).validNec
       }
       case Failure(e: ValidationException) =>
         e.getCausingExceptions()

@@ -40,7 +40,7 @@ object ServerExitRepl {
             .fg(MAGENTA)
             .a("Use 'exit' to shutdown the server... \n")
             .reset()
-            .toString()
+            .toString
         )
         .stripMargin
         .stripLineEnd
