@@ -24,6 +24,10 @@ trait SeederTrait {
     Seq.fill(length)(Random.nextPrintableChar()).mkString(new String)
   }
 
+  final def randomNumbers(length: Int): String = {
+    Seq.fill(length)(Random.nextInt(9)).mkString(new String)
+  }
+
   final def randomAlphanumerics(length: Int): String = Random.alphanumeric
     .take(length)
     .mkString
@@ -65,6 +69,8 @@ trait SeederTrait {
   }
 
   final def overwriteText(c: Char, s: String): String = s.map(x => c)
+
+  final def createUpc(): String = randomNumbers(12)
 
   final def createSku(words: String): String = {
     def abbreviate(word: String): String = if (word.length() <= 3) {

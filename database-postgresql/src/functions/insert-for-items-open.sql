@@ -27,8 +27,8 @@ BEGIN
       , expiration_date
       , unit_cost
       , unit_price
-      , quanity_available
-      , quanity_sold
+      , quantity_available
+      , quantity_sold
       , meta_id
     )
     VALUES (

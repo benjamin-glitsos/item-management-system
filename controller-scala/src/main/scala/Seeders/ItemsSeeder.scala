@@ -42,7 +42,7 @@ object ItemsSeeder extends EntitySeederTrait {
       )
 
       val sku: String                     = createSku(seed_name)
-      val upc: String                     = "11111111"
+      val upc: String                     = createUpc()
       val name: String                    = seed_name
       val description: Option[String]     = MarkdownSeeder(text)
       val acquisitionDate: Date           = DateUtilities.parse("2021-01-01")
