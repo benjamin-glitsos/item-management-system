@@ -45,20 +45,20 @@ trait UsersListService extends ListServiceTrait {
           ) = data.headOption match {
             case None => emptyListData[UsersList]();
             case Some(dataFirstRow) => {
-              val totalItemsCount    = dataFirstRow._1
-              val filteredItemsCount = dataFirstRow._2
-              val pageItemsStart     = dataFirstRow._3
-              val pageItemsEnd       = dataFirstRow._4
+              val totalItemsCount: Int    = dataFirstRow._1
+              val filteredItemsCount: Int = dataFirstRow._2
+              val pageItemsStart: Int     = dataFirstRow._3
+              val pageItemsEnd: Int       = dataFirstRow._4
 
               val items: List[UsersList] = data.map(x => {
-                val username     = x._5
-                val emailAddress = x._6
-                val firstName    = x._7
-                val lastName     = x._8
-                val otherNames   = x._9
-                val createdAt    = x._10
-                val editedAt     = x._11
-                val name         = formatName(firstName, lastName, otherNames)
+                val username: String           = x._5
+                val emailAddress: String       = x._6
+                val firstName: String          = x._7
+                val lastName: String           = x._8
+                val otherNames: Option[String] = x._9
+                val createdAt: String          = x._10
+                val editedAt: Option[String]   = x._11
+                val name: String               = formatName(firstName, lastName, otherNames)
 
                 UsersList(username, name, emailAddress, createdAt, editedAt)
               })

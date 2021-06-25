@@ -1,5 +1,5 @@
+import java.util.Date
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import upickle.default._
 import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model.{HttpEntity}
@@ -22,14 +22,16 @@ package upickle_import {
       }
     }
 
+    implicit final val upickleDate: ReadWriter[Date] =
+      readwriter[ujson.Value].bimap[Date](
+        x => x.toString,
+        json => DateUtilities.parse(json.toString())
+      )
+
     implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
       readwriter[ujson.Value].bimap[LocalDateTime](
         x => x.toString,
-        json => {
-          val defaultFormat: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss.zzz");
-          LocalDateTime.parse(json.toString(), defaultFormat)
-        }
+        json => LocalDateTimeUtilities.parse(json.toString())
       )
 
     implicit final val upickleCaseInsensitive: ReadWriter[CIString] =
@@ -39,10 +41,10 @@ package upickle_import {
       )
 
     implicit final val upickleUsersOpen: ReadWriter[UsersOpen] = macroRW
-    implicit final val upickleUsersList: ReadWriter[UsersList]         = macroRW
+    implicit final val upickleUsersList: ReadWriter[UsersList] = macroRW
 
     implicit final val upickleItemsOpen: ReadWriter[ItemsOpen] = macroRW
-    implicit final val upickleItemsList: ReadWriter[ItemsList]         = macroRW
+    implicit final val upickleItemsList: ReadWriter[ItemsList] = macroRW
 
     implicit final val upickleError: ReadWriter[Error] = macroRW
 

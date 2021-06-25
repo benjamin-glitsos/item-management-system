@@ -1,3 +1,4 @@
+import java.util.Date
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
@@ -19,12 +20,14 @@ object ItemsSeeder extends EntitySeederTrait {
       upc = System.getenv("DEMO_ITEM_UPC"),
       name = System.getenv("DEMO_ITEM_NAME"),
       description = MarkdownSeeder(text),
-      acquisitionDate = "",
-      expirationDate = None,
-      unitCost = "5.00",
-      unitPrice = Some("10.00"),
-      quantityAvailable = 10,
-      quantitySold = 25,
+      acquisitionDate =
+        DateUtilities.parse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
+      expirationDate =
+        sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(DateUtilities.parse(_)),
+      unitCost = System.getenv("DEMO_ITEM_UNIT_COST"),
+      unitPrice = sys.env.get("DEMO_ITEM_UNIT_PRICE"),
+      quantityAvailable = System.getenv("DEMO_ITEM_QUANTITY_AVAILABLE").toInt,
+      quantitySold = System.getenv("DEMO_ITEM_QUANTITY_SOLD").toInt,
       additionalNotes = MarkdownSeeder(text)
     )
   }
@@ -42,9 +45,9 @@ object ItemsSeeder extends EntitySeederTrait {
       val upc: String                     = ""
       val name: String                    = seed_name
       val description: Option[String]     = MarkdownSeeder(text)
-      val acquisitionDate: String         = ""
-      val expirationDate: Option[String]  = None
-      val unitCost: String                = ""
+      val acquisitionDate: Date           = DateUtilities.parse("2021-01-01")
+      val expirationDate: Option[Date]    = None
+      val unitCost: String                = "1.00"
       val unitPrice: Option[String]       = None
       val quantityAvailable: Int          = 0
       val quantitySold: Int               = 0

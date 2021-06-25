@@ -1,3 +1,4 @@
+import java.util.Date
 import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
@@ -8,8 +9,8 @@ trait ItemsCreateService extends ServiceTrait {
       upc: String,
       name: String,
       description: Option[String],
-      acquisitionDate: String,
-      expirationDate: Option[String],
+      acquisitionDate: Date,
+      expirationDate: Option[Date],
       unitCost: String,
       unitPrice: Option[String],
       quantityAvailable: Int,

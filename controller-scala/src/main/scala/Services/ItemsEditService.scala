@@ -1,3 +1,4 @@
+import java.util.Date
 import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
@@ -11,8 +12,8 @@ trait ItemsEditService extends ServiceTrait {
       upc: Option[String],
       name: Option[String],
       description: Option[Option[String]],
-      acquisitionDate: Option[String],
-      expirationDate: Option[Option[String]],
+      acquisitionDate: Option[Date],
+      expirationDate: Option[Option[Date]],
       unitCost: Option[String],
       unitPrice: Option[Option[String]],
       quantityAvailable: Option[Int],

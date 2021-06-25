@@ -1,10 +1,12 @@
+import java.util.Date
+
 case class ItemsOpen(
     sku: String,
     upc: String,
     name: String,
     description: Option[String],
-    acquisition_date: String,
-    expiration_date: Option[String],
+    acquisition_date: Date,
+    expiration_date: Option[Date],
     unit_cost: String,
     unit_price: Option[String],
     quantity_available: Int,

@@ -1,3 +1,4 @@
+import java.util.Date
 import doobie_import.database.dc._
 
 trait ItemsCreateDAO {
@@ -6,8 +7,8 @@ trait ItemsCreateDAO {
       upc: String,
       name: String,
       description: Option[String],
-      acquisitionDate: String,
-      expirationDate: Option[String],
+      acquisitionDate: Date,
+      expirationDate: Option[Date],
       unitCost: String,
       unitPrice: Option[String],
       quantityAvailable: Int,

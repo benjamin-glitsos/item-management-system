@@ -1,3 +1,4 @@
+import java.util.Date
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.{Try}
@@ -10,9 +11,10 @@ object CreateItemsRoutes {
       val upc: String                 = body("upc").str
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
-      val acquisitionDate: String     = body("acquisition_date").str
-      val expirationDate: Option[String] =
-        Try(body("expiration_date").str).toOption
+      val acquisitionDate: Date =
+        DateUtilities.parse(body("acquisition_date").str)
+      val expirationDate: Option[Date] =
+        Try(DateUtilities.parse(body("expiration_date").str)).toOption
       val unitCost: String          = body("unit_cost").str
       val unitPrice: Option[String] = Try(body("unit_price").str).toOption
       val quantityAvailable: Int    = body("quantity_available").num.toInt

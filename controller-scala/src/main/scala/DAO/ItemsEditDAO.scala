@@ -1,3 +1,4 @@
+import java.util.Date
 import doobie_import.database.dc._
 import doobie.Fragment
 import doobie.Fragments.{setOpt, whereAnd}
@@ -11,8 +12,8 @@ trait ItemsEditDAO {
       upc: Option[String],
       name: Option[String],
       description: Option[Option[String]],
-      acquisitionDate: Option[String],
-      expirationDate: Option[Option[String]],
+      acquisitionDate: Option[Date],
+      expirationDate: Option[Option[Date]],
       unitCost: Option[String],
       unitPrice: Option[Option[String]],
       quantityAvailable: Option[Int],
