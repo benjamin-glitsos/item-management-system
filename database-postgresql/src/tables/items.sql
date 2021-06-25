@@ -8,7 +8,7 @@ CREATE TABLE items (
   , expiration_date DATE
   , unit_cost CURRENCY NOT NULL
   , unit_price CURRENCY
-  , quantity_available INT_MIN_ONE NOT NULL
-  , quantity_sold INT_MIN_ONE NOT NULL
+  , quantity_available INT_POSITIVE NOT NULL
+  , quantity_sold INT_POSITIVE NOT NULL
   , meta_id INTEGER UNIQUE NOT NULL REFERENCES meta(id)
 );

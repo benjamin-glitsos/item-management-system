@@ -5,8 +5,8 @@ CREATE FUNCTION insert_for_items_open(
   , _description text
   , _acquisition_date date
   , _expiration_date date
-  , _unit_cost money
-  , _unit_price money
+  , _unit_cost numeric
+  , _unit_price numeric
   , _quantity_available integer
   , _quantity_sold integer
   , _additional_notes text

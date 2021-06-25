@@ -1,4 +1,0 @@
-CREATE DOMAIN int_min_one AS SMALLINT
-CHECK (
-    VALUE >= 1
-);

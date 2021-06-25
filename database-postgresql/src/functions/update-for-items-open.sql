@@ -6,8 +6,8 @@ CREATE FUNCTION update_for_items_open(
   , new_description text
   , new_acquisition_date date
   , new_expiration_date date
-  , new_unit_cost money
-  , new_unit_price money
+  , new_unit_cost numeric
+  , new_unit_price numeric
   , new_quantity_available integer
   , new_quantity_sold integer
   , new_additional_notes text
