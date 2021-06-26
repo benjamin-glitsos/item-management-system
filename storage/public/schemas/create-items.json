@@ -41,22 +41,22 @@
     "unit_cost": {
       "type": "number",
       "minimum": 0,
-      "maximum": 0
+      "maximum": 1048576
     },
     "unit_price": {
       "type": ["number", "null"],
       "minimum": 0,
-      "maximum": 0
+      "maximum": 1048576
     },
     "quantity_available": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 0
+      "maximum": 1048576
     },
     "quantity_sold": {
       "type": "integer",
       "minimum": 0,
-      "maximum": 0
+      "maximum": 1048576
     },
     "additional_notes": {
       "type": ["string", "null"],

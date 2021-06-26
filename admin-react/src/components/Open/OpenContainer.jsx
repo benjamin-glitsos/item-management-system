@@ -99,7 +99,7 @@ export default ({
                             );
                         }
                         successToast({
-                            title: "Success",
+                            title: "Saved",
                             description: "Successfully edited"
                         });
                     }
@@ -220,7 +220,13 @@ export default ({
         }
     });
 
-    const trimAll = R.map(s => s.trim());
+    const trimAll = R.map(x => {
+        if (typeof x === "string") {
+            return x.trim();
+        } else {
+            return x;
+        }
+    });
 
     const nullToEmptyString = x => (x === null ? "" : x);
 
