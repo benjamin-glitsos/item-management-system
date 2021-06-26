@@ -3,6 +3,7 @@ import { titleCase } from "title-case";
 import Textfield from "@atlaskit/textfield";
 import InputDate from "%/components/InputDate";
 import InputNumber from "%/components/InputNumber";
+import InputCurrency from "%/components/InputCurrency";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import PageContainer from "%/components/Page/PageContainer";
 import OpenContainer from "%/components/Open/OpenContainer";
@@ -95,16 +96,16 @@ export default ({ action }) => {
                 Component={InputDate}
                 columnWidths={{ lg: 6 }}
             />
-            <RegisteredField
+            <ControlledField
                 name="unit_cost"
                 title="Unit cost"
-                Component={Textfield}
+                Component={InputCurrency}
                 columnWidths={{ lg: 3, md: 6 }}
             />
-            <RegisteredField
+            <ControlledField
                 name="unit_price"
                 title="Unit price"
-                Component={Textfield}
+                Component={InputCurrency}
                 columnWidths={{ lg: 3, md: 6 }}
             />
             <ControlledField
