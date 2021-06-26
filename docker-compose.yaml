@@ -45,3 +45,13 @@ services:
     stdin_open: true
     ports:
       - ${ADMIN_PORT}:${ADMIN_PORT}
+
+    session_redis:
+      build:
+        context: ./session-redis/
+      image: session-redis
+      container_name: session-redis
+      env_file: .env
+      restart: on-failure
+      ports:
+        - 6379:6379
