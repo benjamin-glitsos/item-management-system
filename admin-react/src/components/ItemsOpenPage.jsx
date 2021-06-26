@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { titleCase } from "title-case";
 import Textfield from "@atlaskit/textfield";
 import InputDate from "%/components/InputDate";
+import InputNumber from "%/components/InputNumber";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import PageContainer from "%/components/Page/PageContainer";
 import OpenContainer from "%/components/Open/OpenContainer";
@@ -106,16 +107,16 @@ export default ({ action }) => {
                 Component={Textfield}
                 columnWidths={{ lg: 3, md: 6 }}
             />
-            <RegisteredField
+            <ControlledField
                 name="quantity_available"
                 title="Quantity available"
-                Component={Textfield}
+                Component={InputNumber}
                 columnWidths={{ lg: 3, md: 6 }}
             />
-            <RegisteredField
+            <ControlledField
                 name="quantity_sold"
                 title="Quantity sold"
-                Component={Textfield}
+                Component={InputNumber}
                 columnWidths={{ lg: 3, md: 6 }}
             />
             <FormSubheading level={3}>Misc.</FormSubheading>
