@@ -125,10 +125,11 @@ trait SeederTrait {
     b.doubleValue
   }
 
-  final def randomDateBetween(min: Date, max: Date): Date =
+  final def randomDateBetween(min: Date, max: Date): Date = {
     Date.from(
-      Instant.ofEpochSecond(Random.between(min.getTime, max.getTime + 1))
+      Instant.ofEpochMilli(Random.between(min.getTime, max.getTime + 1))
     )
+  }
 
   final def yearsAgo(years: Int): Date = {
     val daysAgo: Int   = years * 365
