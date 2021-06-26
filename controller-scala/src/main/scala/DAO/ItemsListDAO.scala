@@ -3,6 +3,7 @@ import doobie.Fragment
 import doobie.Fragments.{whereOrOpt}
 import doobie._
 import doobie.implicits._
+import doobie_import.database._
 
 trait ItemsListDAO extends ListDAOTrait {
   final def list(

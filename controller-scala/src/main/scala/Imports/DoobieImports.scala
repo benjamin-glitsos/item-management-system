@@ -39,8 +39,8 @@ package doobie_import {
       schemaMeta[ItemsList]("items_list")
 
     implicit val jodaLocalDateTimeMeta: DoobieMeta[LocalDateTime] =
-      DoobieMeta[LocalDateTime].timap(LocalDateTimeUtilities.format(x))(x =>
-        x => LocalDateTimeUtilities.parse(x)
+      DoobieMeta[String].timap(LocalDateTimeUtilities.parse)(
+        LocalDateTimeUtilities.format
       )
   }
 }

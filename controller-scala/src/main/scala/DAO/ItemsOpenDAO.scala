@@ -1,4 +1,5 @@
 import doobie_import.database.dc._
+import doobie_import.database._
 
 trait ItemsOpenDAO {
   final def open(sku: String) = {
