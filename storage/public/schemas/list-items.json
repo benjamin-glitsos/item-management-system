@@ -27,6 +27,7 @@
                         "sku",
                         "name",
                         "description",
+                        "acquisition_date",
                         "created_at",
                         "edited_at"
                     ]

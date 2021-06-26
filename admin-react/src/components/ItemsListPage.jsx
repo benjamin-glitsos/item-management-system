@@ -37,8 +37,7 @@ export default () => {
             {
                 key: "acquisition_date",
                 content: "Acquired",
-                isSortable: true,
-                width: 15
+                isSortable: true
             }
         ],
         nameSingular,

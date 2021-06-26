@@ -36,8 +36,7 @@
       "type": ["string", "null"],
       "pattern": "^[^<>%$&]*$",
       "patternDescription": "other_names cannot include certain characters (^, <, >, %, $, &)",
-      "maxLength": 120,
-      "nullable": true
+      "maxLength": 120
     },
     "password": {
       "type": "string",
@@ -49,8 +48,7 @@
     "additional_notes": {
       "type": ["string", "null"],
       "minLength": 1,
-      "maxLength": 1048576,
-      "nullable": true
+      "maxLength": 1048576
     }
   },
   "required": [

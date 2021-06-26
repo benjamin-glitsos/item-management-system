@@ -10,6 +10,13 @@
       "minLength": 1,
       "maxLength": 255
     },
+    "upc": {
+      "type": "string",
+      "pattern": "^[0-9]*$",
+      "patternDescription": "upc must only contain numbers (0-9). Ensure that there are no spaces or any other characters",
+      "minLength": 12,
+      "maxLength": 12
+    },
     "name": {
       "type": "string",
       "pattern": "^[^<>%$&]*$",
@@ -19,13 +26,41 @@
     },
     "description": {
       "type": ["string", "null"],
-      "maxLength": 1048576,
-      "nullable": true
+      "maxLength": 1048576
+    },
+    "acquisition_date": {
+      "type": "string",
+      "format": "date",
+      "maxLength": 10
+    },
+    "expiration_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "maxLength": 10
+    },
+    "unit_cost": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 0
+    },
+    "unit_price": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 0
+    },
+    "quantity_available": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 0
+    },
+    "quantity_sold": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 0
     },
     "additional_notes": {
       "type": ["string", "null"],
-      "maxLength": 1048576,
-      "nullable": true
+      "maxLength": 1048576
     }
   },
   "required": ["sku", "name"]

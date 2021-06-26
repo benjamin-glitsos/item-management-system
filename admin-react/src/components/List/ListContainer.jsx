@@ -140,14 +140,12 @@ export default ({
         {
             key: "created_at",
             content: "Created",
-            isSortable: true,
-            width: 15
+            isSortable: true
         },
         {
             key: "edited_at",
             content: "Edited",
-            isSortable: true,
-            width: 15
+            isSortable: true
         }
     ];
 

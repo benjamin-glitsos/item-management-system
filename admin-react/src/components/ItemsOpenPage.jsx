@@ -57,6 +57,12 @@ export default ({ action }) => {
         <Open context={pageContext}>
             <FormSubheading level={3}>Details</FormSubheading>
             <RegisteredField
+                name="name"
+                title="Name"
+                Component={Textfield}
+                columnWidths={{ lg: 6, md: 12 }}
+            />
+            <RegisteredField
                 name="sku"
                 title="SKU"
                 Component={Textfield}
@@ -67,12 +73,6 @@ export default ({ action }) => {
                 title="UPC"
                 Component={Textfield}
                 columnWidths={{ lg: 3, md: 6 }}
-            />
-            <RegisteredField
-                name="name"
-                title="Name"
-                Component={Textfield}
-                columnWidths={{ lg: 6, md: 12 }}
             />
             <ControlledField
                 name="description"
