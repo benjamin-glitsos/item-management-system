@@ -4,6 +4,7 @@ import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import List from "%/components/List/List";
 import formatNull from "%/utilities/formatNull";
+import formatDate from "%/utilities/formatDate";
 import config from "%/config";
 
 export default () => {
@@ -36,14 +37,18 @@ export default () => {
             {
                 key: "acquisition_date",
                 content: "Acquired",
-                isSortable: true
+                isSortable: true,
+                width: 15
             }
         ],
         nameSingular,
         namePlural,
         keyColumnSingular,
         keyColumnPlural,
-        rowTransform: R.evolve({ description: formatNull })
+        rowTransform: R.evolve({
+            description: formatNull,
+            acquisition_date: d => formatDate(d, false)
+        })
     });
 
     const pageContext = {

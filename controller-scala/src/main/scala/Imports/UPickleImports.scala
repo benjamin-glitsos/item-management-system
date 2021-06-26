@@ -24,7 +24,7 @@ package upickle_import {
 
     implicit final val upickleDate: ReadWriter[Date] =
       readwriter[ujson.Value].bimap[Date](
-        x => x.toString,
+        x => DateUtilities.format(x),
         json => DateUtilities.parse(json.toString)
       )
 

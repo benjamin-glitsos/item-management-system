@@ -8,7 +8,13 @@ TimeAgo.addDefaultLocale(en);
 
 const timeAgo = new TimeAgo();
 
-export default (d = null) => {
+const Today = ({ date, formattedDate }) => (
+    <Tooltip content={formattedDate}>
+        {capitaliseFirstLetter(timeAgo.format(date, { future: false }))}
+    </Tooltip>
+);
+
+export default (d = null, hasTime = true) => {
     if (d === undefined) {
         return d;
     } else if (d === null) {
@@ -17,18 +23,21 @@ export default (d = null) => {
         const now = new Date();
         const date = new Date(d);
         const oneDay = 1000 * 60 * 60 * 24;
-        const isLessThanOneDayAgo = date > now - oneDay;
-        const fullDate = dateFormat(now, 'mmmm dS, yyyy "at" h:MMtt');
-        if (isLessThanOneDayAgo) {
-            return (
-                <Tooltip content={fullDate}>
-                    {capitaliseFirstLetter(
-                        timeAgo.format(date, { future: false })
-                    )}
-                </Tooltip>
-            );
+        const isToday = date > now - oneDay;
+        if (!hasTime) {
+            const formattedDate = dateFormat(date, "mmmm dS, yyyy");
+            if (isToday) {
+                return <Today date={date} formattedDate={formattedDate} />;
+            } else {
+                return <div>{formattedDate}</div>;
+            }
         } else {
-            return <div>{fullDate}</div>;
+            const formattedDate = dateFormat(now, 'mmmm dS, yyyy "at" h:MMtt');
+            if (isToday) {
+                return <Today date={date} formattedDate={formattedDate} />;
+            } else {
+                return <div>{formattedDate}</div>;
+            }
         }
     }
 };
