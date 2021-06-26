@@ -3,7 +3,6 @@ import doobie.Fragment
 import doobie.Fragments.whereOrOpt
 import doobie._
 import doobie.implicits._
-import doobie_import.database._
 
 trait UsersListDAO extends ListDAOTrait {
   final def list(
@@ -64,6 +63,22 @@ trait UsersListDAO extends ListDAOTrait {
     FROM page
     """
 
-    queryFragment.query[UsersList].to[List]
+    queryFragment
+      .query[
+        (
+            Int,
+            Int,
+            Int,
+            Int,
+            String,
+            String,
+            String,
+            String,
+            Option[String],
+            LocalDateTime,
+            Option[LocalDateTime]
+        )
+      ]
+      .to[List]
   }
 }

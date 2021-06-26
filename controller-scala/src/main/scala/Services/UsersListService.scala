@@ -59,7 +59,8 @@ trait UsersListService extends ListServiceTrait {
                 val otherNames: Option[String]      = x._9
                 val createdAt: LocalDateTime        = x._10
                 val editedAt: Option[LocalDateTime] = x._11
-                val name: String                    = formatName(firstName, lastName, otherNames)
+
+                val name: String = formatName(firstName, lastName, otherNames)
 
                 UsersList(username, name, emailAddress, createdAt, editedAt)
               })
