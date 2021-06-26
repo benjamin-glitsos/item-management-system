@@ -34,7 +34,7 @@ trait SeederTrait {
   )
 
   final def randomNumbers(length: Int): String = randomFixedLength(
-    () => Random.nextInt(9).toChar,
+    () => Random.nextInt(9).toString.charAt(0),
     length
   )
 
@@ -80,9 +80,9 @@ trait SeederTrait {
 
   final def overwriteText(c: Char, s: String): String = s.map(x => c)
 
-  final def createUpc(): String = randomNumbers(12)
+  final def randomUpc(): String = randomNumbers(12)
 
-  final def createSku(words: String): String = {
+  final def randomSku(words: String): String = {
     def abbreviate(word: String): String = if (word.length() <= 3) {
       word
     } else {
