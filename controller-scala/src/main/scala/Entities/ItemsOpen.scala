@@ -1,4 +1,5 @@
 import java.util.Date
+import org.joda.time.LocalDateTime
 
 case class ItemsOpen(
     sku: String,
@@ -16,10 +17,10 @@ case class ItemsOpen(
     opens: Int,
     edits: Int,
     is_deleted: Boolean,
-    created_at: String,
+    created_at: LocalDateTime,
     created_by: String,
-    edited_at: Option[String],
+    edited_at: Option[LocalDateTime],
     edited_by: Option[String],
-    deleted_at: Option[String],
+    deleted_at: Option[LocalDateTime],
     deleted_by: Option[String]
 )

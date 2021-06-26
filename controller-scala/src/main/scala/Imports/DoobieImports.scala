@@ -1,9 +1,10 @@
 import cats.effect._
 import scala.concurrent._
-import doobie.{Meta => _, _}
+import doobie.{Meta => DoobieMeta, _}
 import doobie.util.ExecutionContexts
 import io.getquill.{idiom => _, _}
 import doobie.quill.DoobieContext
+import org.joda.time.LocalDateTime
 
 package doobie_import {
   object connection {
@@ -36,5 +37,10 @@ package doobie_import {
       schemaMeta[ItemsOpen]("items_open")
     implicit final val itemsListSchema =
       schemaMeta[ItemsList]("items_list")
+
+    implicit val jodaLocalDateTimeMeta: DoobieMeta[LocalDateTime] =
+      DoobieMeta[LocalDateTime].timap(LocalDateTimeUtilities.format(x))(x =>
+        x => LocalDateTimeUtilities.parse(x)
+      )
   }
 }

@@ -1,7 +1,9 @@
+import org.joda.time.LocalDateTime
 import doobie.Fragment
 import doobie.Fragments.whereOrOpt
 import doobie._
 import doobie.implicits._
+import doobie_import.database._
 
 trait UsersListDAO extends ListDAOTrait {
   final def list(
@@ -62,22 +64,6 @@ trait UsersListDAO extends ListDAOTrait {
     FROM page
     """
 
-    queryFragment
-      .query[
-        (
-            Int,
-            Int,
-            Int,
-            Int,
-            String,
-            String,
-            String,
-            String,
-            Option[String],
-            String,
-            Option[String]
-        )
-      ]
-      .to[List]
+    queryFragment.query[UsersList].to[List]
   }
 }
