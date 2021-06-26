@@ -1,5 +1,3 @@
-import org.joda.time.LocalDateTime
-
 case class UsersOpen(
     username: String,
     email_address: String,
@@ -12,10 +10,10 @@ case class UsersOpen(
     opens: Int,
     edits: Int,
     is_deleted: Boolean,
-    created_at: LocalDateTime,
+    created_at: String,
     created_by: String,
-    edited_at: Option[LocalDateTime],
+    edited_at: Option[String],
     edited_by: Option[String],
-    deleted_at: Option[LocalDateTime],
+    deleted_at: Option[String],
     deleted_by: Option[String]
 )

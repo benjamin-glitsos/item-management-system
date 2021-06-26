@@ -1,9 +1,7 @@
-import org.joda.time.LocalDateTime
 import doobie.Fragment
 import doobie.Fragments.whereOrOpt
 import doobie._
 import doobie.implicits._
-import doobie_import.database._
 
 trait UsersListDAO extends ListDAOTrait {
   final def list(
@@ -76,8 +74,8 @@ trait UsersListDAO extends ListDAOTrait {
             String,
             String,
             Option[String],
-            LocalDateTime,
-            Option[LocalDateTime]
+            String,
+            Option[String]
         )
       ]
       .to[List]

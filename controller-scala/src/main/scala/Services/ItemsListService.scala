@@ -1,5 +1,4 @@
 import java.util.Date
-import org.joda.time.LocalDateTime
 import java.sql.SQLException
 import upickle.default._
 import doobie.implicits._
@@ -36,12 +35,12 @@ trait ItemsListService extends ListServiceTrait {
               val pageItemsEnd: Int       = dataFirstRow._4
 
               val items: List[ItemsList] = data.map(x => {
-                val sku: String                     = x._5
-                val name: String                    = x._6
-                val description: Option[String]     = x._7
-                val acquisitionDate: Date           = x._8
-                val createdAt: LocalDateTime        = x._9
-                val editedAt: Option[LocalDateTime] = x._10
+                val sku: String                 = x._5
+                val name: String                = x._6
+                val description: Option[String] = x._7
+                val acquisitionDate: Date       = DateUtilities.parse(x._8)
+                val createdAt: String           = x._9
+                val editedAt: Option[String]    = x._10
 
                 ItemsList(
                   sku,

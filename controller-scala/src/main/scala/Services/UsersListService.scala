@@ -1,4 +1,3 @@
-import org.joda.time.LocalDateTime
 import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
@@ -52,13 +51,13 @@ trait UsersListService extends ListServiceTrait {
               val pageItemsEnd: Int       = dataFirstRow._4
 
               val items: List[UsersList] = data.map(x => {
-                val username: String                = x._5
-                val emailAddress: String            = x._6
-                val firstName: String               = x._7
-                val lastName: String                = x._8
-                val otherNames: Option[String]      = x._9
-                val createdAt: LocalDateTime        = x._10
-                val editedAt: Option[LocalDateTime] = x._11
+                val username: String           = x._5
+                val emailAddress: String       = x._6
+                val firstName: String          = x._7
+                val lastName: String           = x._8
+                val otherNames: Option[String] = x._9
+                val createdAt: String          = x._10
+                val editedAt: Option[String]   = x._11
 
                 val name: String = formatName(firstName, lastName, otherNames)
 
