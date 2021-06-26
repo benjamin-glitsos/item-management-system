@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { titleCase } from "title-case";
 import Textfield from "@atlaskit/textfield";
+import { DatePicker } from "@atlaskit/datetime-picker";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import PageContainer from "%/components/Page/PageContainer";
 import OpenContainer from "%/components/Open/OpenContainer";
@@ -84,13 +85,13 @@ export default ({ action }) => {
             <RegisteredField
                 name="acquisition_date"
                 title="Acquisition date"
-                Component={Textfield}
+                Component={DatePicker}
                 columnWidths={{ lg: 6 }}
             />
             <RegisteredField
                 name="expiration_date"
                 title="Expiration date"
-                Component={Textfield}
+                Component={DatePicker}
                 columnWidths={{ lg: 6 }}
             />
             <RegisteredField
