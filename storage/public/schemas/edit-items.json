@@ -10,6 +10,13 @@
       "minLength": 1,
       "maxLength": 255
     },
+    "upc": {
+      "type": "string",
+      "pattern": "^[0-9]*$",
+      "patternDescription": "upc must only contain numbers (0-9). Ensure that there are no spaces or any other characters",
+      "minLength": 12,
+      "maxLength": 12
+    },
     "name": {
       "type": "string",
       "pattern": "^[^<>%$&]*$",
