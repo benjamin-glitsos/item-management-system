@@ -82,13 +82,13 @@ export default ({ action }) => {
                 columnWidths={{ sm: 12 }}
             />
             <FormSubheading level={3}>Stock</FormSubheading>
-            <RegisteredField
+            <ControlledField
                 name="acquisition_date"
                 title="Acquisition date"
                 Component={DatePicker}
                 columnWidths={{ lg: 6 }}
             />
-            <RegisteredField
+            <ControlledField
                 name="expiration_date"
                 title="Expiration date"
                 Component={DatePicker}
