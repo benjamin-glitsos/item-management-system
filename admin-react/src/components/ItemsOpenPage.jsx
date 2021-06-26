@@ -60,19 +60,62 @@ export default ({ action }) => {
                 name="sku"
                 title="SKU"
                 Component={Textfield}
-                columnWidths={{ lg: 6 }}
+                columnWidths={{ lg: 3, md: 6 }}
+            />
+            <RegisteredField
+                name="upc"
+                title="UPC"
+                Component={Textfield}
+                columnWidths={{ lg: 3, md: 6 }}
             />
             <RegisteredField
                 name="name"
                 title="Name"
                 Component={Textfield}
-                columnWidths={{ lg: 6 }}
+                columnWidths={{ lg: 6, md: 12 }}
             />
             <ControlledField
                 name="description"
                 title="Description"
                 Component={MarkdownTextarea}
                 columnWidths={{ sm: 12 }}
+            />
+            <FormSubheading level={3}>Stock</FormSubheading>
+            <RegisteredField
+                name="acquisition_date"
+                title="Acquisition date"
+                Component={Textfield}
+                columnWidths={{ lg: 6 }}
+            />
+            <RegisteredField
+                name="expiration_date"
+                title="Expiration date"
+                Component={Textfield}
+                columnWidths={{ lg: 6 }}
+            />
+            <RegisteredField
+                name="unit_cost"
+                title="Unit cost"
+                Component={Textfield}
+                columnWidths={{ lg: 3, md: 6 }}
+            />
+            <RegisteredField
+                name="unit_price"
+                title="Unit price"
+                Component={Textfield}
+                columnWidths={{ lg: 3, md: 6 }}
+            />
+            <RegisteredField
+                name="quantity_available"
+                title="Quantity available"
+                Component={Textfield}
+                columnWidths={{ lg: 3, md: 6 }}
+            />
+            <RegisteredField
+                name="quantity_sold"
+                title="Quantity sold"
+                Component={Textfield}
+                columnWidths={{ lg: 3, md: 6 }}
             />
             <FormSubheading level={3}>Misc.</FormSubheading>
             <ControlledField
