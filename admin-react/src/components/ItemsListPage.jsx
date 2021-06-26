@@ -32,6 +32,11 @@ export default () => {
                 key: "description",
                 content: "Description",
                 isSortable: true
+            },
+            {
+                key: "acquisition_date",
+                content: "Acquired",
+                isSortable: true
             }
         ],
         nameSingular,
