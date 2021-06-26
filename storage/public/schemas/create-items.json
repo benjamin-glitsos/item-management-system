@@ -63,5 +63,13 @@
       "maxLength": 1048576
     }
   },
-  "required": ["sku", "name"]
+  "required":[
+     "sku",
+     "upc",
+     "name",
+     "acquisition_date",
+     "unit_cost",
+     "quantity_available",
+     "quantity_sold"
+  ]
 }
