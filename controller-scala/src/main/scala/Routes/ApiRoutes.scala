@@ -3,6 +3,6 @@ import akka.http.scaladsl.server.Route
 
 object ApiRoutes {
   final def apply(): Route = concat(
-    pathPrefix("rest")(RestRoutes())
+    pathPrefix("v1")(Version1Routes())
   )
 }
