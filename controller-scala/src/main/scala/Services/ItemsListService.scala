@@ -1,4 +1,5 @@
 import java.util.Date
+import java.time.LocalDateTime
 import java.sql.SQLException
 import upickle.default._
 import doobie.implicits._
@@ -39,8 +40,10 @@ trait ItemsListService extends ListServiceTrait {
                 val name: String                = x._6
                 val description: Option[String] = x._7
                 val acquisitionDate: Date       = DateUtilities.parse(x._8)
-                val createdAt: String           = x._9
-                val editedAt: Option[String]    = x._10
+                val createdAt: LocalDateTime =
+                  LocalDateTimeUtilities.parse(x._9)
+                val editedAt: Option[LocalDateTime] =
+                  x._10.map(LocalDateTimeUtilities.parse(_))
 
                 ItemsList(
                   sku,

@@ -1,4 +1,5 @@
 import java.sql.SQLException
+import java.time.LocalDateTime
 import doobie.implicits._
 import doobie_import.connection._
 import cats.implicits._
@@ -56,8 +57,10 @@ trait UsersListService extends ListServiceTrait {
                 val firstName: String          = x._7
                 val lastName: String           = x._8
                 val otherNames: Option[String] = x._9
-                val createdAt: String          = x._10
-                val editedAt: Option[String]   = x._11
+                val createdAt: LocalDateTime =
+                  LocalDateTimeUtilities.parse(x._10)
+                val editedAt: Option[LocalDateTime] =
+                  x._11.map(LocalDateTimeUtilities.parse(_))
 
                 val name: String = formatName(firstName, lastName, otherNames)
 
