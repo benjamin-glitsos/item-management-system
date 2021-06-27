@@ -7,6 +7,7 @@ object Version1Routes {
     (AccessControlMiddleware() & HandleRejectionsMiddleware())(
       concat(
         pathPrefix("schemas")(SchemasRoutes()),
+        pathPrefix("sessions")(SessionsRoutes()),
         pathPrefix("users")(UsersRoutes()),
         pathPrefix("items")(ItemsRoutes()),
         PreflightRoutes()
