@@ -1,0 +1,2 @@
+object SessionsService
+    with SessionsLoginService {}

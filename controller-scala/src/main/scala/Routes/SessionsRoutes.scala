@@ -6,15 +6,15 @@ object SessionsRoutes {
     LoginSessionsRoutes()
   )
 
-  private final def sessionTokenRoutes(): Route = pathPrefix(Segment) {
-    sessionToken: String =>
-      concat(
-        LogoutSessionsRoutes(sessionToken)
-      )
-  }
+  // private final def sessionTokenRoutes(): Route = pathPrefix(Segment) {
+  //   sessionToken: String =>
+  //     concat(
+  //       LogoutSessionsRoutes(sessionToken)
+  //     )
+  // }
 
   final def apply(): Route = concat(
-    sessionTokenRoutes(),
+    // sessionTokenRoutes(),
     rootRoutes()
   )
 }
