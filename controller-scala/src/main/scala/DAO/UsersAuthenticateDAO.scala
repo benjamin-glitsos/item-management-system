@@ -18,4 +18,16 @@ trait UsersAuthenticateDAO {
     FROM users
     """.query[Boolean].unique
   }
+
+  final def authenticate(username: String, password: String) = {
+    run(
+      quote(
+        query[Boolean].filter(
+          _.username == lift(username) && _.password == lift(
+            infix"sha1_encrypt(${password})"
+          )
+        )
+      )
+    ).map(x => true)
+  }
 }
