@@ -1,6 +1,8 @@
 import java.sql.SQLException
 import doobie.implicits._
 import doobie_import.connection._
+import upickle.default._
+import upickle_import.general._
 
 trait SessionsLoginService extends ServiceTrait {
   final def login(username: String, password: String): String = {
@@ -9,6 +11,7 @@ trait SessionsLoginService extends ServiceTrait {
         .authenticate(username, password)
         .transact(transactor)
         .unsafeRunSync
+        .toString
     } catch {
       case e: SQLException => handleSqlException(e)
     }

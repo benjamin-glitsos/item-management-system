@@ -1,2 +1,1 @@
-object SessionsService
-    with SessionsLoginService {}
+object SessionsService extends SessionsLoginService {}

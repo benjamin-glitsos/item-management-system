@@ -16,6 +16,6 @@ trait UsersAuthenticateDAO {
       AND   password = sha1_encrypt($password)
     )
     FROM users
-    """.query[Boolean].head
+    """.query[Boolean].unique
   }
 }
