@@ -25,6 +25,6 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 * Domain constraints ensure data integrity
 * Fourth normal form (4NF)
 
-## License
+### License
 
 Apache License 2.0
