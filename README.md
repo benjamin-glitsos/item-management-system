@@ -24,3 +24,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 * Trigram indexes speed up text search
 * Domain constraints ensure data integrity
 * Fourth normal form (4NF)
+
+## License
+
+Apache License 2.0
