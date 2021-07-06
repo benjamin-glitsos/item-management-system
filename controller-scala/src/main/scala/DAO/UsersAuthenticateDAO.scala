@@ -5,28 +5,18 @@ import doobie._
 import doobie.implicits._
 
 trait UsersAuthenticateDAO {
-  // final def authenticate(
-  //     username: String,
-  //     password: String
-  // ) = {
-  //   fr"""
-  //   SELECT EXISTS (
-  //     SELECT true FROM users
-  //     WHERE username = $username
-  //     AND   password = sha1_encrypt($password)
-  //   )
-  //   FROM users
-  //   """.query[Boolean].unique
-  // }
-
-  final def authenticate(username: String, password: String) = run(
-    quote(
-      query[Boolean]
-        .filter(x =>
-          x.username == lift(username) && x.password ==
-            infix"sha1_encrypt(${lift(password)})"
-        )
-        .map(x => true)
-    )
-  )
+  final def authenticate(
+      username: String,
+      password: String
+  ) = {
+    fr"""
+    SELECT true
+    """.query[Boolean].unique
+  }
 }
+// SELECT EXISTS (
+//   SELECT true FROM users
+//   WHERE username = $username
+//   AND   password = sha1_encrypt($password)
+// )
+// FROM users
