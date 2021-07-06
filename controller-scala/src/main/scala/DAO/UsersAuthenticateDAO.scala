@@ -21,11 +21,12 @@ trait UsersAuthenticateDAO {
 
   final def authenticate(username: String, password: String) = run(
     quote(
-      query[Boolean].filter(
-        _.username == lift(username) && _.password == lift(
-          infix"sha1_encrypt(${password})"
+      query[Boolean]
+        .filter(x =>
+          x.username == lift(username) && x.password ==
+            infix"sha1_encrypt(${lift(password)})"
         )
-      )
+        .map(x => true)
     )
-  ).map(x => true)
+  )
 }
