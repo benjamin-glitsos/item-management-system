@@ -2,9 +2,8 @@ import java.util.Date
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.Try
-import upickle_import.general._
 
-object EditItemsRoutes {
+object EditItemsRoutes extends UpickleTrait {
   final def apply(sku: String): Route = patch {
     ValidationMiddleware("edit-items") { body: ujson.Value =>
       {

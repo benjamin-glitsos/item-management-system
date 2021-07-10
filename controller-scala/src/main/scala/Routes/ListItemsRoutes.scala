@@ -1,11 +1,10 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import upickle_import.general._
 import upickle.default._
 import CustomMethodMiddlewares.report
 import scala.util.{Try}
 
-object ListItemsRoutes extends ListTrait {
+object ListItemsRoutes extends ListTrait with UpickleTrait {
   final def apply(): Route = report {
     ValidationMiddleware("list-items") { body: ujson.Value =>
       {

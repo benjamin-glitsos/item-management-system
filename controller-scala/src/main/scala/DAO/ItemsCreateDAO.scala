@@ -1,7 +1,6 @@
 import java.util.Date
-import doobie_import.database.dc._
 
-trait ItemsCreateDAO {
+trait ItemsCreateDAO extends DoobieDatabaseTrait {
   final def create(
       sku: String,
       upc: String,

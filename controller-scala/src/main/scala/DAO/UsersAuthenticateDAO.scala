@@ -1,10 +1,9 @@
-import doobie_import.database.dc._
 import doobie.Fragment
 import doobie.Fragments.{setOpt, whereAnd}
 import doobie._
 import doobie.implicits._
 
-trait UsersAuthenticateDAO {
+trait UsersAuthenticateDAO extends DoobieDatabaseTrait {
   final def authenticate(
       username: String,
       password: String

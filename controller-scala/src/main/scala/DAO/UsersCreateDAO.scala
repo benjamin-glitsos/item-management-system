@@ -1,6 +1,4 @@
-import doobie_import.database.dc._
-
-trait UsersCreateDAO {
+trait UsersCreateDAO extends DoobieDatabaseTrait {
   final def create(
       username: String,
       emailAddress: String,

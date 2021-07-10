@@ -11,6 +11,8 @@ trait DoobieDatabaseTrait {
   implicit final val cs: ContextShift[IO] =
     IO.contextShift(ExecutionContexts.synchronous)
 
+  import dc._
+
   implicit final val usersOpenSchema =
     schemaMeta[UsersOpen]("users_open")
   implicit final val usersListSchema =

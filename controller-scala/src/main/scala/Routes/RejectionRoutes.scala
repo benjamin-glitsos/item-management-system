@@ -2,9 +2,8 @@ import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes._
 import cats.data.NonEmptyChain
-import upickle_import.general._
 
-object RejectionRoutes {
+object RejectionRoutes extends UpickleTrait {
   final def notFound(): Route = complete(
     NotFound,
     SerialisedErrors(
