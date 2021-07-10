@@ -1,5 +1,4 @@
 import cats.effect._
-import scala.concurrent._
 import doobie.{Meta => _, _}
 import doobie.util.ExecutionContexts
 import io.getquill.{idiom => _, _}

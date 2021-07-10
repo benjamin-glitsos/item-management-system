@@ -2,8 +2,6 @@ import cats.effect._
 import scala.concurrent._
 import doobie.{Meta => _, _}
 import doobie.util.ExecutionContexts
-import io.getquill.{idiom => _, _}
-import doobie.quill.DoobieContext
 
 trait DoobieConnectionTrait {
   implicit final val contextShift: ContextShift[IO] =

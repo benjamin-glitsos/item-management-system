@@ -1,9 +1,10 @@
 import java.sql.SQLException
 import doobie.implicits._
+import doobie_import.connection._
 import upickle.default._
 import upickle_import.general._
 
-trait ItemsOpenService extends ServiceTrait with DoobieConnectionTrait {
+trait ItemsOpenService extends ServiceTrait {
   final def open(sku: String): ujson.Value = {
     read[ujson.Value](
       try {

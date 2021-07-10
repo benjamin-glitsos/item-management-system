@@ -5,8 +5,6 @@ import doobie._
 import doobie.implicits._
 
 trait ItemsEditDAO extends DoobieDatabaseTrait {
-  import dc.{setOpt => _, _}
-
   final def edit(
       oldSku: String,
       newSku: Option[String],

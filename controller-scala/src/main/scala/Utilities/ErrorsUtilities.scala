@@ -1,8 +1,7 @@
 import cats.data.NonEmptyChain
 import upickle.default._
-import upickle_import.general._
 
-object ErrorsUtilities {
+object ErrorsUtilities extends UpickleTrait {
   final def serialiseErrors(errors: NonEmptyChain[Error]): String = {
     write(
       errors.toChain.toList

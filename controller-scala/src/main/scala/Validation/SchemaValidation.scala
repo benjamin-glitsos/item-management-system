@@ -4,9 +4,8 @@ import scala.jdk.CollectionConverters._
 import upickle.default._
 import cats.implicits._
 import scala.util.{Try, Success, Failure}
-import upickle_import.general._
 
-object SchemaValidation extends ValidationTrait {
+object SchemaValidation extends ValidationTrait with UpickleTrait {
   final def apply(
       endpointName: String,
       entityText: String

@@ -1,7 +1,5 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import scala.util.{Try}
-import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object LoginSessionsRoutes {
   final def apply(): Route = post {

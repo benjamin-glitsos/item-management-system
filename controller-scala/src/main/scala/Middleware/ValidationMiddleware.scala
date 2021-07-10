@@ -4,9 +4,8 @@ import scala.concurrent.duration._
 import akka.http.scaladsl.model.HttpEntity
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
-import upickle_import.general._
 
-object ValidationMiddleware {
+object ValidationMiddleware extends UpickleTrait {
   private final val staticEndpoints = List("open-users", "open-items")
 
   final def apply(endpointName: String): Directive1[ujson.Value] =
