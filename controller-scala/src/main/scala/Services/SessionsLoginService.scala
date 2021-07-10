@@ -7,11 +7,11 @@ import upickle_import.general._
 trait SessionsLoginService extends ServiceTrait {
   final def login(username: String, password: String): String = {
     try {
-      UsersDAO
+      val isAuthenticated: Boolean = UsersDAO
         .authenticate(username, password)
         .transact(transactor)
         .unsafeRunSync
-        .toString
+      new String
     } catch {
       case e: SQLException => handleSqlException(e)
     }

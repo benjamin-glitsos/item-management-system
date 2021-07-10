@@ -10,6 +10,7 @@ val uPickleVersion = "0.9.5"
 val caseInsensitiveVersion = "0.3.0"
 val akkaVersion = "2.6.8"
 val akkaHttpVersion = "10.2.2"
+val jedisVersion = "3.6.0"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -29,7 +30,8 @@ libraryDependencies ++= Seq(
     "com.github.everit-org.json-schema" % "org.everit.json.schema" % jsonSchemaVersion,
     "org.fusesource.jansi" % "jansi" % jansiVersion,
     "com.lihaoyi" %% "upickle" % uPickleVersion,
-    "org.typelevel" %% "case-insensitive" % caseInsensitiveVersion
+    "org.typelevel" %% "case-insensitive" % caseInsensitiveVersion,
+    "redis.clients" % "jedis" % jedisVersion
 )
 
 libraryDependencies ++= Seq(
