@@ -4,6 +4,8 @@ import doobie._
 import doobie.implicits._
 
 trait UsersEditDAO extends DoobieDatabaseTrait {
+  import dc.{setOpt => _, _}
+
   final def edit(
       oldUsername: String,
       newUsername: Option[String],

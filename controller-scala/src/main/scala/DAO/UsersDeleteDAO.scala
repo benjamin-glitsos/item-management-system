@@ -1,4 +1,6 @@
 trait UsersDeleteDAO extends DoobieDatabaseTrait {
+  import dc._
+
   final def softDelete(usernames: List[String]) = run(
     quote(
       query[UsersOpen]

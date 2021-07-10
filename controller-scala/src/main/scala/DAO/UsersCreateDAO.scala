@@ -1,4 +1,6 @@
 trait UsersCreateDAO extends DoobieDatabaseTrait {
+  import dc._
+
   final def create(
       username: String,
       emailAddress: String,

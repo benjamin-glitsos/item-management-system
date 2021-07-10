@@ -1,4 +1,6 @@
 trait ItemsDeleteDAO extends DoobieDatabaseTrait {
+  import dc._
+
   final def softDelete(skus: List[String]) = run(
     quote(
       query[ItemsOpen]
