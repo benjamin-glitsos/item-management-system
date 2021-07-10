@@ -1,9 +1,8 @@
 import java.util.Date
 import java.sql.SQLException
 import doobie.implicits._
-import doobie_import.connection._
 
-trait ItemsCreateService extends ServiceTrait {
+trait ItemsCreateService extends ServiceTrait with DoobieConnectionTrait {
   final def create(
       sku: String,
       upc: String,

@@ -1,10 +1,11 @@
 import java.sql.SQLException
 import doobie.implicits._
-import doobie_import.connection._
 import upickle.default._
-import upickle_import.general._
 
-trait UsersEditService extends ServiceTrait {
+trait UsersEditService
+    extends ServiceTrait
+    with DoobieConnectionTrait
+    with UpickleTrait {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],

@@ -1,11 +1,12 @@
 import java.util.Date
 import java.sql.SQLException
 import doobie.implicits._
-import doobie_import.connection._
 import upickle.default._
-import upickle_import.general._
 
-trait ItemsEditService extends ServiceTrait {
+trait ItemsEditService
+    extends ServiceTrait
+    with DoobieConnectionTrait
+    with UpickleTrait {
   final def edit(
       oldSku: String,
       newSku: Option[String],

@@ -1,9 +1,7 @@
 import java.sql.SQLException
 import doobie.implicits._
-import doobie_import.connection._
-import upickle_import.general._
 
-trait SessionsLoginService extends ServiceTrait {
+trait SessionsLoginService extends ServiceTrait with DoobieConnectionTrait {
   final def login(username: String, password: String): String = {
     try {
       val isAuthenticated: Boolean = UsersDAO

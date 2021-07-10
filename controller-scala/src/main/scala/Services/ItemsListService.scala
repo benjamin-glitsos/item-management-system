@@ -1,12 +1,12 @@
 import java.util.Date
 import java.sql.SQLException
-import upickle.default._
 import doobie.implicits._
-import doobie_import.connection._
 import upickle.default._
-import upickle_import.general._
 
-trait ItemsListService extends ListServiceTrait {
+trait ItemsListService
+    extends ListServiceTrait
+    with DoobieConnectionTrait
+    with UpickleTrait {
   final def list(
       pageNumber: Int,
       pageLength: Int,

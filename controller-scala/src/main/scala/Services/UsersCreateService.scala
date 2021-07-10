@@ -1,8 +1,7 @@
 import java.sql.SQLException
 import doobie.implicits._
-import doobie_import.connection._
 
-trait UsersCreateService extends ServiceTrait {
+trait UsersCreateService extends ServiceTrait with DoobieConnectionTrait {
   final def create(
       username: String,
       emailAddress: String,
