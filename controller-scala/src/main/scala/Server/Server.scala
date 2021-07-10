@@ -27,7 +27,7 @@ object Server {
         .withSettings(serverSettings)
         .bind(Routes())
 
-    ServerExitRepl()
+    ServerRepl()
 
     bindingFuture
       .flatMap(_.unbind())

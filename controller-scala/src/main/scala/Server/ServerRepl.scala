@@ -3,7 +3,7 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-object ServerExitRepl {
+object ServerRepl {
   AnsiConsole.systemInstall();
 
   final def apply(): Unit = {
@@ -11,12 +11,12 @@ object ServerExitRepl {
       ansi()
         .a("\n")
         .fg(MAGENTA)
-        .a("The server is online at ")
+        .a("The API is online at ")
         .bold()
         .a(s"http://localhost:${System.getenv("CONTROLLER_PORT")}/")
         .a("\n")
         .fg(MAGENTA)
-        .a("The admin panel is online at ")
+        .a("The Admin Panel is online at ")
         .bold()
         .a(s"http://localhost:${System.getenv("ADMIN_PORT")}/")
         .reset()
