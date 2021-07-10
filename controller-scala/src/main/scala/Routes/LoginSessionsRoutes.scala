@@ -9,10 +9,7 @@ object LoginSessionsRoutes {
       val username: String = body("username").str
       val password: String = body("password").str
 
-      complete(
-        // NoContent,
-        SessionsService.login(username, password)
-      )
+      complete(SessionsService.login(username, password))
     }
   }
 }
