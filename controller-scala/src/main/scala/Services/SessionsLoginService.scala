@@ -7,12 +7,18 @@ trait SessionsLoginService
     with RedisMixin {
   final def login(username: String, password: String): String = {
     try {
-      val isAuthenticated: Boolean = UsersDAO
+      val metakeyIfAuthenticated: Option[String] = UsersDAO
         .authenticate(username, password)
         .transact(transactor)
         .unsafeRunSync
-      redis.set("foo", "bar")
-      redis.get("foo")
+
+      metakeyIfAuthenticated match {
+        case None => {
+          redis.set("foo", "bar")
+          redis.get("foo")
+        }
+        case Some(metakey) => metakey
+      }
     } catch {
       case e: SQLException => handleSqlException(e)
     }
