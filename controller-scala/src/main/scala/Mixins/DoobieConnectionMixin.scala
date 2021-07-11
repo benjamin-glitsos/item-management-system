@@ -3,7 +3,7 @@ import scala.concurrent._
 import doobie.{Meta => _, _}
 import doobie.util.ExecutionContexts
 
-trait DoobieConnectionTrait {
+trait DoobieConnectionMixin {
   implicit final val contextShift: ContextShift[IO] =
     IO.contextShift(ExecutionContext.global)
 

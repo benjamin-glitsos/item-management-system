@@ -1,7 +1,7 @@
 import java.sql.SQLException
 import upickle.default._
 
-trait ServiceTrait {
+trait ServiceMixin {
   def createDataOutput(data: ujson.Value): String = write(
     ujson.Obj(
       "data" -> data

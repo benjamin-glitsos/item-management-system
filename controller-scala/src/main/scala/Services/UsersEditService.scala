@@ -3,9 +3,9 @@ import doobie.implicits._
 import upickle.default._
 
 trait UsersEditService
-    extends ServiceTrait
-    with DoobieConnectionTrait
-    with UpickleTrait {
+    extends ServiceMixin
+    with DoobieConnectionMixin
+    with UpickleMixin {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],

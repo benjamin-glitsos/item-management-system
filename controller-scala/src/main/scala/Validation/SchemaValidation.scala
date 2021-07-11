@@ -5,7 +5,7 @@ import upickle.default._
 import cats.implicits._
 import scala.util.{Try, Success, Failure}
 
-object SchemaValidation extends ValidationTrait with UpickleTrait {
+object SchemaValidation extends ValidationMixin with UpickleMixin {
   final def apply(
       endpointName: String,
       entityText: String

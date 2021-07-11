@@ -1,4 +1,4 @@
-trait UsersCreateDAO extends DoobieDatabaseTrait {
+trait UsersCreateDAO extends DoobieDatabaseMixin {
   import dc._
 
   final def create(

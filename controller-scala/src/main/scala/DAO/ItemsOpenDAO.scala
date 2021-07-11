@@ -1,4 +1,4 @@
-trait ItemsOpenDAO extends DoobieDatabaseTrait {
+trait ItemsOpenDAO extends DoobieDatabaseMixin {
   import dc._
 
   final def open(sku: String) = {

@@ -1,4 +1,4 @@
-trait UsersOpenDAO extends DoobieDatabaseTrait {
+trait UsersOpenDAO extends DoobieDatabaseMixin {
   import dc._
 
   final def open(username: String) = {

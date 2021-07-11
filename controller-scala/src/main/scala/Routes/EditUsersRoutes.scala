@@ -2,7 +2,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.{Try}
 
-object EditUsersRoutes extends UpickleTrait {
+object EditUsersRoutes extends UpickleMixin {
   final def apply(username: String): Route = patch {
     ValidationMiddleware("edit-users") { body: ujson.Value =>
       {

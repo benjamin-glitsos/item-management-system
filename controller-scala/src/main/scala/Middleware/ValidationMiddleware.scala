@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.HttpEntity
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 
-object ValidationMiddleware extends UpickleTrait {
+object ValidationMiddleware extends ErrorMixin with UpickleMixin {
   private final val staticEndpoints = List("open-users", "open-items")
 
   final def apply(endpointName: String): Directive1[ujson.Value] =
@@ -20,7 +20,7 @@ object ValidationMiddleware extends UpickleTrait {
             case Valid(v) => provide(v)
             case Invalid(e) =>
               reject(
-                ValidationRejection(ErrorsUtilities.serialiseErrors(e))
+                ValidationRejection(serialiseErrors(e))
               )
           }
         }

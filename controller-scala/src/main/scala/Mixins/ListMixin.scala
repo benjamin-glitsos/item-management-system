@@ -1,3 +1,3 @@
-trait ListTrait {
+trait ListMixin {
   type Sort = (String, String)
 }

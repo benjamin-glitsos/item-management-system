@@ -4,9 +4,9 @@ import doobie.implicits._
 import upickle.default._
 
 trait ItemsEditService
-    extends ServiceTrait
-    with DoobieConnectionTrait
-    with UpickleTrait {
+    extends ServiceMixin
+    with DoobieConnectionMixin
+    with UpickleMixin {
   final def edit(
       oldSku: String,
       newSku: Option[String],

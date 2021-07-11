@@ -1,4 +1,4 @@
-trait ItemsDeleteDAO extends DoobieDatabaseTrait {
+trait ItemsDeleteDAO extends DoobieDatabaseMixin {
   import dc._
 
   final def softDelete(skus: List[String]) = run(

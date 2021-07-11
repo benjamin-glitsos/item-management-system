@@ -1,4 +1,4 @@
-object AuthorisationFailedError extends ErrorTrait {
+object AuthorisationFailedError extends ErrorMixin {
   final def apply(): Error = {
     Error(
       AUTHORISATION_FAILED,

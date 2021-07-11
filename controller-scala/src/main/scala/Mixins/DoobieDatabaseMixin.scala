@@ -4,7 +4,7 @@ import doobie.util.ExecutionContexts
 import io.getquill.{idiom => _, _}
 import doobie.quill.DoobieContext
 
-trait DoobieDatabaseTrait {
+trait DoobieDatabaseMixin {
   final val dc = new DoobieContext.Postgres(SnakeCase)
 
   implicit final val cs: ContextShift[IO] =

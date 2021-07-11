@@ -6,7 +6,7 @@ import akka.http.scaladsl.model.{HttpEntity}
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import org.typelevel.ci.CIString
 
-trait UpickleTrait {
+trait UpickleMixin {
   implicit def OptionWriter[T: Writer]: Writer[Option[T]] =
     implicitly[Writer[T]].comap[Option[T]] {
       case None    => null.asInstanceOf[T]
@@ -23,14 +23,14 @@ trait UpickleTrait {
 
   implicit final val upickleDate: ReadWriter[Date] =
     readwriter[ujson.Value].bimap[Date](
-      x => DateUtilities.format(x),
-      json => DateUtilities.parse(json.toString)
+      x => DateMixin.format(x),
+      json => DateMixin.parse(json.toString)
     )
 
   implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
     readwriter[ujson.Value].bimap[LocalDateTime](
       x => x.toString,
-      json => LocalDateTimeUtilities.parse(json.toString)
+      json => LocalDateTimeMixin.parse(json.toString)
     )
 
   implicit final val upickleCaseInsensitive: ReadWriter[CIString] =

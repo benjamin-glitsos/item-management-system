@@ -1,5 +1,5 @@
 import cats.data.ValidatedNec
 
-trait ValidationTrait {
+trait ValidationMixin {
   type Validated[A] = ValidatedNec[Error, A]
 }

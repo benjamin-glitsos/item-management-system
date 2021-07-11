@@ -1,7 +1,7 @@
 import java.sql.SQLException
 import doobie.implicits._
 
-trait ItemsDeleteService extends ServiceTrait with DoobieConnectionTrait {
+trait ItemsDeleteService extends ServiceMixin with DoobieConnectionMixin {
   final def delete(method: String, skus: List[String] = List()): String = {
     try {
       method match {

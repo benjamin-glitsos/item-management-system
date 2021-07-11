@@ -3,11 +3,11 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes._
 import cats.data.NonEmptyChain
 
-object RejectionRoutes extends UpickleTrait {
+object RejectionRoutes extends ErrorMixin with UpickleMixin {
   final def notFound(): Route = complete(
     NotFound,
     SerialisedErrors(
-      ErrorsUtilities.serialiseErrors(NonEmptyChain(NotFoundError()))
+      serialiseErrors(NonEmptyChain(NotFoundError()))
     )
   )
 
@@ -24,7 +24,7 @@ object RejectionRoutes extends UpickleTrait {
   final def authorisationFailed(): Route = complete(
     Forbidden,
     SerialisedErrors(
-      ErrorsUtilities.serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
+      serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
     )
   )
 }

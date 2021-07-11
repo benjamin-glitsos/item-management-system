@@ -3,9 +3,9 @@ import doobie.implicits._
 import upickle.default._
 
 trait UsersOpenService
-    extends ServiceTrait
-    with DoobieConnectionTrait
-    with UpickleTrait {
+    extends ServiceMixin
+    with DoobieConnectionMixin
+    with UpickleMixin {
   final def open(username: String): ujson.Value = {
     read[ujson.Value](
       try {

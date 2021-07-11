@@ -4,7 +4,7 @@ import doobie._
 import cats.implicits._
 import upickle.default._
 
-trait ListServiceTrait extends ListTrait with ServiceTrait {
+trait ListServiceMixin extends ListMixin with ServiceMixin {
   final def emptyListData[A](): (Int, Int, Int, Int, List[A]) =
     (0, 0, 0, 0, List())
 
@@ -58,7 +58,7 @@ trait ListServiceTrait extends ListTrait with ServiceTrait {
       seeder: () => Unit
   ): ConnectionIO[Unit] = {
     if (
-      LogicUtilities.all(
+      LogicMixin.all(
         List(
           totalItemsCount <= 15,
           totalItemsCount != 0,

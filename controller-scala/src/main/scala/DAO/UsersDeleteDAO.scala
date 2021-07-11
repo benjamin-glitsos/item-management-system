@@ -1,4 +1,4 @@
-trait UsersDeleteDAO extends DoobieDatabaseTrait {
+trait UsersDeleteDAO extends DoobieDatabaseMixin {
   import dc._
 
   final def softDelete(usernames: List[String]) = run(

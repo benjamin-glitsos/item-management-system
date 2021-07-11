@@ -3,7 +3,7 @@ import org.everit.json.schema.loader.SchemaLoader
 import org.json.JSONObject
 import upickle.default._
 
-object SchemasService extends ServiceTrait {
+object SchemasService extends ServiceMixin {
   private final def load(name: String): JSONObject = SchemasDAO.load(name)
 
   final def loadSchema(name: String): Schema = {

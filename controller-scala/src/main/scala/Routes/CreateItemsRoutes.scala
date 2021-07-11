@@ -12,9 +12,9 @@ object CreateItemsRoutes {
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
       val acquisitionDate: Date =
-        DateUtilities.parse(body("acquisition_date").str)
+        DateMixin.parse(body("acquisition_date").str)
       val expirationDate: Option[Date] =
-        Try(DateUtilities.parse(body("expiration_date").str)).toOption
+        Try(DateMixin.parse(body("expiration_date").str)).toOption
       val unitCost: Double = body("unit_cost").str.toDouble
       val unitPrice: Option[Double] =
         Try(body("unit_price").str.toDouble).toOption

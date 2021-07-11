@@ -4,9 +4,9 @@ import cats.implicits._
 import upickle.default._
 
 trait UsersListService
-    extends ListServiceTrait
-    with DoobieConnectionTrait
-    with UpickleTrait {
+    extends ListServiceMixin
+    with DoobieConnectionMixin
+    with UpickleMixin {
   private final def formatName(
       firstName: String,
       lastName: String,

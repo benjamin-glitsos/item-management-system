@@ -1,6 +1,6 @@
 import java.util.Date
 
-trait ItemsCreateDAO extends DoobieDatabaseTrait {
+trait ItemsCreateDAO extends DoobieDatabaseMixin {
   import dc._
 
   final def create(

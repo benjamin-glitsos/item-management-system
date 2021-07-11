@@ -3,7 +3,7 @@ import doobie.Fragments.{whereOrOpt}
 import doobie._
 import doobie.implicits._
 
-trait ItemsListDAO extends ListDAOTrait {
+trait ItemsListDAO extends ListDAOMixin {
   final def list(
       offset: Int,
       pageLength: Int,

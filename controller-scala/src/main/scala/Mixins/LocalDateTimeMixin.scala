@@ -1,7 +1,7 @@
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-object LocalDateTimeUtilities {
+object LocalDateTimeMixin {
   private val formatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss.zzz");
 

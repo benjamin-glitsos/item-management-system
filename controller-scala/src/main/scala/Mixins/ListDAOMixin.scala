@@ -2,7 +2,7 @@ import doobie.Fragment
 import doobie._
 import doobie.implicits._
 
-trait ListDAOTrait extends ListTrait {
+trait ListDAOMixin extends ListMixin {
   final def trimSearch(search: Option[String]): Option[String] =
     search.map(_.trim)
 

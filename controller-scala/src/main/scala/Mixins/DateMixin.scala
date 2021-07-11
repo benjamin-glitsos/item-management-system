@@ -1,7 +1,7 @@
 import java.util.Date
 import java.text.SimpleDateFormat
 
-object DateUtilities {
+object DateMixin {
   private val formatter: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
 
   final def parse(s: String): Date = formatter.parse(s)

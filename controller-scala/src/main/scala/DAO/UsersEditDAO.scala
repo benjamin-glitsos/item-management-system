@@ -3,7 +3,7 @@ import doobie.Fragments.{setOpt, whereAnd}
 import doobie._
 import doobie.implicits._
 
-trait UsersEditDAO extends DoobieDatabaseTrait {
+trait UsersEditDAO extends DoobieDatabaseMixin {
   final def edit(
       oldUsername: String,
       newUsername: Option[String],

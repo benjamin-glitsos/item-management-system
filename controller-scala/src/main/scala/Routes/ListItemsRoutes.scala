@@ -4,7 +4,7 @@ import upickle.default._
 import CustomMethodMiddlewares.report
 import scala.util.{Try}
 
-object ListItemsRoutes extends ListTrait with UpickleTrait {
+object ListItemsRoutes extends ListMixin with UpickleMixin {
   final def apply(): Route = report {
     ValidationMiddleware("list-items") { body: ujson.Value =>
       {
