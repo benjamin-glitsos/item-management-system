@@ -1,13 +1,12 @@
 CREATE FUNCTION authenticate(_username text, _password text)
 RETURNS text AS $$
-DECLARE
-    metakey_if_authenticated TABLE := (
+BEGIN
+    metakey_if_authenticated := (
         SELECT metakey FROM users_open
         WHERE username = _username
         AND   password = sha1_encrypt(_password)
-    )
-BEGIN
-    RETURN query metakey_if_authenticated;
+    );
+    RETURN metakey_if_authenticated;
 END;
 $$ LANGUAGE plpgsql;
 
