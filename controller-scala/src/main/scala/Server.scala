@@ -9,18 +9,10 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-import redis.clients.jedis.Jedis
-
 object Server extends SessionMixin {
   AnsiConsole.systemInstall();
 
   final def apply(): Unit = {
-    val redis = new Jedis("session-redis")
-    redis.auth(System.getenv("REDIS_PASSWORD"))
-    redis.set("foo", "bar")
-    val r = redis.get("foo")
-    println(r)
-
     implicit val system           = ActorSystem(Behaviors.empty, "actor-system")
     implicit val executionContext = system.executionContext
 
