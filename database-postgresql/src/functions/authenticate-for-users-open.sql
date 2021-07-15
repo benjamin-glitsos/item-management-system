@@ -1,5 +1,7 @@
-CREATE FUNCTION authenticate(_username text, _password text)
+CREATE FUNCTION authenticate_for_users_open(_username text, _password text)
 RETURNS text AS $$
+DECLARE
+    metakey_if_authenticated text;
 BEGIN
     metakey_if_authenticated := (
         SELECT metakey FROM users_open

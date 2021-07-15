@@ -4,7 +4,8 @@ import doobie.implicits._
 trait SessionsLoginService
     extends ServiceMixin
     with DoobieConnectionMixin
-    with RedisMixin {
+    // with RedisMixin
+    {
   final def login(username: String, password: String): String = {
     try {
       val metakeyIfAuthenticated: Option[String] = UsersDAO
@@ -14,8 +15,9 @@ trait SessionsLoginService
 
       metakeyIfAuthenticated match {
         case None => {
-          redis.set("foo", "bar")
-          redis.get("foo")
+          // redis.set("foo", "bar")
+          // redis.get("foo")
+          new String
         }
         case Some(metakey) => metakey
       }
