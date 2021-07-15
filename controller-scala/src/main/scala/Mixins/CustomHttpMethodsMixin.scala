@@ -8,6 +8,4 @@ trait CustomHttpMethodsMixin {
     idempotent = true,
     requestEntityAcceptance = Expected
   )
-
-  final def apply(): List[HttpMethod] = List(REPORT)
 }
