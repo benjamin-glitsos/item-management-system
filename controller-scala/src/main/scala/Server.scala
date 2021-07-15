@@ -21,8 +21,8 @@ object Server extends SessionMixin {
     val r = redis.get("foo")
     println(r)
 
-    implicit val system                             = ActorSystem(Behaviors.empty, "actor-system")
-    implicit val executionContext: ExecutionContext = system.executionContext
+    implicit val system           = ActorSystem(Behaviors.empty, "actor-system")
+    implicit val executionContext = system.executionContext
 
     AnsiConsole.systemInstall();
 
