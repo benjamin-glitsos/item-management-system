@@ -3,4 +3,6 @@ FROM redis:6.2.4-alpine
 ARG REDIS_PORT
 ARG REDIS_PASSWORD
 
-CMD redis-server --port $REDIS_PORT
+COPY ./redis.conf /usr/local/etc/redis/redis.conf
+
+CMD redis-server /usr/local/etc/redis/redis.conf --port "$REDIS_PORT"

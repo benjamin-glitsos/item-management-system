@@ -6,8 +6,16 @@ import scala.concurrent.{Future, ExecutionContext}
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.settings.{ParserSettings, ServerSettings}
 
-object Server {
+import redis.clients.jedis.Jedis
+
+object Server extends SessionMixin {
   final def apply(): Unit = {
+    val redis = new Jedis("localhost", System.getenv("REDIS_PORT").toInt)
+    // redis.auth(System.getenv("REDIS_PASSWORD"))
+    redis.set("foo", "bar")
+    // val r = redis.get("foo")
+    // println(r)
+
     implicit val system                             = ActorSystem(Behaviors.empty, "actor-system")
     implicit val executionContext: ExecutionContext = system.executionContext
 

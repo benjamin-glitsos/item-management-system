@@ -16,13 +16,11 @@ trait SessionsLoginService
 
         metakeyIfAuthenticated match {
           case None => {
-            // redis.set("foo", "bar")
-            // redis.get("foo")
             new String
           }
           case Some(metakey) => {
-            val sessionToken = randomSessionToken()
-            val authenticationToken = makeAuthenticationToken(
+            val sessionToken: String = randomSessionToken()
+            val authenticationToken: String = makeAuthenticationToken(
               metakey,
               sessionToken
             )
