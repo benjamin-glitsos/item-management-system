@@ -12,8 +12,6 @@ services:
     env_file: .env
     environment:
       - TZ=${PROJECT_TIMEZONE}
-    ports:
-      - ${POSTGRES_PORT}:5432
 
   session_redis:
     build:
@@ -22,8 +20,6 @@ services:
     container_name: session-redis
     env_file: .env
     restart: on-failure
-    ports:
-      - ${REDIS_PORT}:6379
 
   controller_scala:
     build:

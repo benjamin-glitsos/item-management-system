@@ -10,7 +10,7 @@ import redis.clients.jedis.Jedis
 
 object Server extends SessionMixin {
   final def apply(): Unit = {
-    val redis = new Jedis("session-redis", System.getenv("REDIS_PORT").toInt)
+    val redis = new Jedis("session-redis")
     // redis.auth(System.getenv("REDIS_PASSWORD"))
     redis.set("foo", "bar")
     val r = redis.get("foo")
