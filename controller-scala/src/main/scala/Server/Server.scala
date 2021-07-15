@@ -5,10 +5,15 @@ import org.fusesource.jansi.AnsiConsole
 import scala.concurrent.{Future, ExecutionContext}
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.settings.{ParserSettings, ServerSettings}
+import org.fusesource.jansi.AnsiConsole
+import org.fusesource.jansi.Ansi._
+import org.fusesource.jansi.Ansi.Color._
 
 import redis.clients.jedis.Jedis
 
 object Server extends SessionMixin {
+  AnsiConsole.systemInstall();
+
   final def apply(): Unit = {
     val redis = new Jedis("session-redis")
     redis.auth(System.getenv("REDIS_PASSWORD"))
@@ -35,12 +40,33 @@ object Server extends SessionMixin {
         .withSettings(serverSettings)
         .bind(Routes())
 
-    ServerRepl()
+    println(
+      ansi()
+        .a("\n")
+        .fg(MAGENTA)
+        .a("The API is online at ")
+        .bold()
+        .a(s"http://localhost:${System.getenv("CONTROLLER_PORT")}/")
+        .a("\n")
+        .fg(MAGENTA)
+        .a("The Admin Panel is online at ")
+        .bold()
+        .a(s"http://localhost:${System.getenv("ADMIN_PORT")}/")
+        .reset()
+        .a("\n")
+    )
 
     bindingFuture
       .flatMap(_.unbind())
       .onComplete(_ => system.terminate())
 
-    println("Server shutdown complete.")
+    println(
+      ansi()
+        .a("\n")
+        .fg(MAGENTA)
+        .a("Server shutdown complete.")
+        .reset()
+        .a("\n")
+    )
   }
 }
