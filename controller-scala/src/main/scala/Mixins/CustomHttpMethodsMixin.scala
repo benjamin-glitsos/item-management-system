@@ -1,7 +1,7 @@
 import akka.http.scaladsl.model.HttpMethod
 import akka.http.scaladsl.model.RequestEntityAcceptance.Expected
 
-object CustomMethods {
+trait CustomHttpMethodsMixin {
   final val REPORT: HttpMethod = HttpMethod.custom(
     "REPORT",
     safe = true,

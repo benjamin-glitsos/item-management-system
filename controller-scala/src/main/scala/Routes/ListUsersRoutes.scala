@@ -1,7 +1,7 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle.default._
-import CustomMethodMiddlewares.report
+import CustomHttpMethodMiddlewares.report
 import scala.util.{Try}
 
 object ListUsersRoutes extends ListMixin with UpickleMixin {
