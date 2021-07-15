@@ -1,14 +1,15 @@
 CREATE FUNCTION authenticate_for_users_open(_username text, _password text)
 RETURNS text AS $$
 DECLARE
-    metakey_if_authenticated text;
+    maybe_metakey text;
 BEGIN
-    metakey_if_authenticated := (
-        SELECT metakey FROM users_open
-        WHERE username = _username
-        AND   password = sha1_encrypt(_password)
-    );
-    RETURN metakey_if_authenticated;
+    SELECT metakey
+    INTO maybe_metakey
+    FROM users_open
+    WHERE username = _username
+    AND   password = sha1_encrypt(_password);
+
+    RETURN maybe_metakey;
 END;
 $$ LANGUAGE plpgsql;
 
