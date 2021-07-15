@@ -15,6 +15,16 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
 
+  session_redis:
+    build:
+      context: ./session-redis/
+    image: session-redis
+    container_name: session-redis
+    env_file: .env
+    restart: on-failure
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+
   controller_scala:
     build:
       context: ./controller-scala/
@@ -27,6 +37,7 @@ services:
     env_file: .env
     stdin_open: true
     depends_on:
+      - "session_redis"
       - "database_postgresql"
     ports:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
@@ -45,13 +56,3 @@ services:
     stdin_open: true
     ports:
       - ${ADMIN_PORT}:${ADMIN_PORT}
-
-  session_redis:
-    build:
-      context: ./session-redis/
-    image: session-redis
-    container_name: session-redis
-    env_file: .env
-    restart: on-failure
-    ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
