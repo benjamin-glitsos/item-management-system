@@ -21,7 +21,7 @@ object Server extends SessionMixin {
 
     AnsiConsole.systemInstall();
 
-    val host: String  = "controller_scala"
+    val host: String  = "controller-scala"
     val port: Integer = System.getenv("CONTROLLER_PORT").toInt
 
     val parserSettings =
