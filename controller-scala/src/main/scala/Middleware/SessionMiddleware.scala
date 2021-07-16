@@ -5,6 +5,13 @@ import akka.http.scaladsl.model.HttpEntity
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 
-object SessionMiddleware {
+object SessionMiddleware extends StringMixin {
   final def apply(): Directive0[ujson.Value] =
+    headerValueByName("Authorization") { authorisationValue =>
+      {
+        if (isEmpty(SessionsDAO.get(authorisationToken))) {
+          reject(AuthorisationFailedRejection())
+        }
+      }
+    }
 }
