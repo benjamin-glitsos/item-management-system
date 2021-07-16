@@ -25,33 +25,37 @@ trait SessionsLoginService
 
             val sessionKey: String = sessionNamespace(metakey)
 
-            val existingSessionValue: String = SessionsDAO.get(sessionKey)
+            // SessionsDAO.get(sessionKey)
+            //
+            // SessionsDAO.set(sessionKey, "1")
 
-            if (!isEmpty(existingSessionValue)) {
-              "TODO" // TODO
-            } else {
-              val sessionValue: String = write(
-                ujson.Obj(
-                  "token"     -> ujson.Str(sessionToken),
-                  "timestamp" -> ujson.Num(epochNow)
-                )
-              )
+            sessionKey
 
-              val authenticationToken: String = makeAuthenticationToken(
-                metakey,
-                sessionToken
-              )
-
-              SessionsDAO.set(sessionKey, sessionValue)
-
-              write(
-                ujson.Obj(
-                  "data" -> ujson.Obj(
-                    "authentication_token" -> ujson.Str(authenticationToken)
-                  )
-                )
-              )
-            }
+            // if (!isEmpty(existingSessionValue)) {
+            //   "TODO" // TODO
+            // } else {
+            //   val sessionValue: String = write(
+            //     ujson.Obj(
+            //       "token"     -> ujson.Str(sessionToken),
+            //       "timestamp" -> ujson.Num(epochNow)
+            //     )
+            //   )
+            //
+            //   val authenticationToken: String = makeAuthenticationToken(
+            //     metakey,
+            //     sessionToken
+            //   )
+            //
+            //   SessionsDAO.set(sessionKey, sessionValue)
+            //
+            //   write(
+            //     ujson.Obj(
+            //       "data" -> ujson.Obj(
+            //         "authentication_token" -> ujson.Str(authenticationToken)
+            //       )
+            //     )
+            //   )
+            // }
           }
         }
       } catch {
