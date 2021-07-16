@@ -21,41 +21,48 @@ trait SessionsLoginService
             new String
           }
           case Some(metakey) => {
-            val sessionToken: String = randomSessionToken()
+            def makeOutput(authenticationToken: String): String = {
+              write(
+                ujson.Obj(
+                  "data" -> ujson.Obj(
+                    "authentication_token" -> ujson.Str(authenticationToken)
+                  )
+                )
+              )
+            }
 
             val sessionKey: String = sessionNamespace(metakey)
 
-            // SessionsDAO.get(sessionKey)
-            //
-            // SessionsDAO.set(sessionKey, "1")
+            val maybeSessionValue: Option[String] =
+              Option(SessionsDAO.get(sessionKey))
 
-            sessionKey
+            maybeSessionValue match {
+              case Some(sessionValue) => {
+                val value: ujson.Value = read[ujson.Value](sessionValue)
+                val sessionToken       = value("token").str
 
-            // if (!isEmpty(existingSessionValue)) {
-            //   "TODO" // TODO
-            // } else {
-            //   val sessionValue: String = write(
-            //     ujson.Obj(
-            //       "token"     -> ujson.Str(sessionToken),
-            //       "timestamp" -> ujson.Num(epochNow)
-            //     )
-            //   )
-            //
-            //   val authenticationToken: String = makeAuthenticationToken(
-            //     metakey,
-            //     sessionToken
-            //   )
-            //
-            //   SessionsDAO.set(sessionKey, sessionValue)
-            //
-            //   write(
-            //     ujson.Obj(
-            //       "data" -> ujson.Obj(
-            //         "authentication_token" -> ujson.Str(authenticationToken)
-            //       )
-            //     )
-            //   )
-            // }
+                makeOutput(makeAuthenticationToken(metakey, sessionToken))
+              }
+              case None => {
+                val sessionToken: String = randomSessionToken()
+
+                val sessionValue: String = write(
+                  ujson.Obj(
+                    "token"     -> ujson.Str(sessionToken),
+                    "timestamp" -> ujson.Num(epochNow)
+                  )
+                )
+
+                val authenticationToken: String = makeAuthenticationToken(
+                  metakey,
+                  sessionToken
+                )
+
+                SessionsDAO.set(sessionKey, sessionValue)
+
+                makeOutput(authenticationToken)
+              }
+            }
           }
         }
       } catch {
