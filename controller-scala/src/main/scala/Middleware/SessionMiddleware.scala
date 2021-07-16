@@ -7,7 +7,13 @@ object SessionMiddleware extends StringMixin {
       {
         println(request.method.name)
         println(request.uri.toString)
-        pass
+        println(request.headers.map(_.toString))
+        println("=============================")
+        if (true) {
+          pass
+        } else {
+          reject(new AuthorisationFailedRejection)
+        }
       }
     }
 
@@ -19,8 +25,6 @@ object SessionMiddleware extends StringMixin {
   //   }
   // }
 }
-
-// TODO: the Authorization header will use the "Bearer" type. So it will be like - Authorization: Bearer <authorisation_token>
 
 // import akka.http.scaladsl.server._
 // import akka.http.scaladsl.server.Directives._
