@@ -1,6 +1,6 @@
 import redis.clients.jedis.Jedis
 
-trait SessionMixin extends SeederMixin {
+trait SessionMixin extends SeederMixin with TupleMixin {
   val redis: Jedis = {
     val r = new Jedis("session-redis")
     r.auth(System.getenv("REDIS_PASSWORD"))
@@ -16,10 +16,7 @@ trait SessionMixin extends SeederMixin {
 
   final def decomposeAuthenticationToken(
       authenticationToken: String
-  ): (String, String) = ("wow", "ok")
-  //   authenticationToken.split(".") match {
-  //   case Array(a, b) => (a, b)
-  // }
+  ): (String, String) = bifurcate(authenticationToken, ".")
 
   final def sessionNamespace(key: String): String = s"session:$key"
 }
