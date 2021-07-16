@@ -1,9 +1,10 @@
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-object LocalDateTimeMixin {
-  private val formatter: DateTimeFormatter =
+trait LocalDateTimeMixin {
+  private val localDateTimeFormatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss.zzz");
 
-  final def parse(s: String): LocalDateTime = LocalDateTime.parse(s, formatter)
+  final def localDateTimeParse(s: String): LocalDateTime =
+    LocalDateTime.parse(s, formatter)
 }

@@ -1,9 +1,8 @@
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
-import OptionMixin.emptyStringToOption
 
-object UsersSeeder extends EntitySeederMixin {
+object UsersSeeder extends EntitySeederMixin with OptionMixin {
   override final val count: Int = 15
 
   final def clearData(): Unit = {

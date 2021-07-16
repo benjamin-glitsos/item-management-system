@@ -2,7 +2,7 @@ import java.util.Date
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object ItemsSeeder extends EntitySeederMixin with DateMixin {
+object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
@@ -37,7 +37,7 @@ object ItemsSeeder extends EntitySeederMixin with DateMixin {
       val text: TextProducer = fairy.textProducer()
 
       val seedIsForSale: Boolean = biasedCoinFlip(0.75)
-      val seedName: String = StringMixin.toTitleCase(
+      val seedName: String = toTitleCase(
         text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
       )
       val seedUnitCost: Double = randomCurrency()

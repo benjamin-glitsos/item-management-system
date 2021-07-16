@@ -4,7 +4,7 @@ import scala.util.Random
 import org.apache.commons.lang3.StringUtils.{left, right}
 import java.time.{Instant, Duration}
 
-trait SeederMixin {
+trait SeederMixin extends StringMixin with MathMixin {
   implicit final def times(n: Int) = new {
     def times(fn: => Unit) = {
       val seedFactor: Double = System.getenv("CONTROLLER_SEED_FACTOR").toDouble
@@ -19,7 +19,7 @@ trait SeederMixin {
   final def coinFlip(): Boolean = Random.nextBoolean
 
   final def biasedCoinFlip(probability: Double): Boolean = {
-    val precision = MathMixin.powerOfTen(2).toInt
+    val precision = powerOfTen(2).toInt
     val flip      = Random.between(1, precision).toDouble / precision
     probability >= flip
   }
@@ -111,7 +111,7 @@ trait SeederMixin {
       .map(abbreviate)
       .map(_.toLowerCase())
       .map(censorBlacklist) :+ randomCode)
-      .filter(!StringMixin.isEmpty(_))
+      .filter(!isEmpty(_))
       .mkString("-")
       .toUpperCase()
   }
