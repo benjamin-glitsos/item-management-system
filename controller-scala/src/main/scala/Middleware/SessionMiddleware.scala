@@ -17,19 +17,15 @@ object SessionMiddleware extends SessionMixin with StringMixin {
         if (isLogin) {
           pass // TODO: reject
         } else {
-          println(method)
-          println(uri)
           var maybeAuthenticationToken: Option[String] =
             request.getHeader("X-Auth-Token").toScala.map(_.value)
 
           maybeAuthenticationToken match {
             case None => pass // TODO: reject
             case Some(authenticationToken) => {
-              println(authenticationToken)
               val (metakey: String, sessionToken: String) =
                 decomposeAuthenticationToken(authenticationToken)
               val sessionData: String = SessionsDAO.get(sessionToken)
-              println(sessionData)
               pass
             }
           }

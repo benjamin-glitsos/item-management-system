@@ -3,12 +3,8 @@ import akka.http.scaladsl.server.Route
 
 object LogoutSessionsRoutes extends UpickleMixin {
   final def apply(): Route = delete {
-    ValidationMiddleware("logout-sessions") { body: ujson.Value =>
-      {
-        val authenticationToken: String = body("authentication_token").str
-
-        complete(SessionsService.logout(authenticationToken))
-      }
+    headerValueByName("X-Auth-Token") { authenticationToken =>
+      complete(SessionsService.logout(authenticationToken))
     }
   }
 }

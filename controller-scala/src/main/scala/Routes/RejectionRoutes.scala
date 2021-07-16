@@ -21,10 +21,8 @@ object RejectionRoutes extends ErrorMixin with UpickleMixin {
     SerialisedErrors(se)
   )
 
-  final def authorisationFailed(): Route = complete(
-    Forbidden,
-    SerialisedErrors(
-      serialiseErrors(NonEmptyChain(AuthorisationFailedError()))
-    )
+  final def missingHeader(headerName: String): Route = complete(
+    InternalServerError,
+    headerName
   )
 }

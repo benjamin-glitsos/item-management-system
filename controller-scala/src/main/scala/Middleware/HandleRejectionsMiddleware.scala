@@ -8,8 +8,8 @@ object HandleRejectionsMiddleware {
       .handle {
         case ValidationRejection(se: String, _) =>
           RejectionRoutes.badRequestError(se)
-        case ValidationRejection(se: String, _) =>
-          RejectionRoutes.authorisationFailed()
+        case MissingHeaderRejection(headerName: String) =>
+          RejectionRoutes.missingHeader(headerName)
       }
       .handleNotFound {
         RejectionRoutes.notFound()
