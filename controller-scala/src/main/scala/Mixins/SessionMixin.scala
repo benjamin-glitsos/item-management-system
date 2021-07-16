@@ -4,6 +4,7 @@ trait SessionMixin extends SeederMixin {
   val redis: Jedis = {
     val r = new Jedis("session-redis")
     r.auth(System.getenv("REDIS_PASSWORD"))
+    r
   }
 
   final def randomSessionToken(): String = randomAlphanumerics(32)

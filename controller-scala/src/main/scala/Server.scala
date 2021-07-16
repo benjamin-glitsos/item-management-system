@@ -5,11 +5,12 @@ import org.fusesource.jansi.AnsiConsole
 import scala.concurrent.{Future, ExecutionContext}
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.settings.{ParserSettings, ServerSettings}
+import scala.io.StdIn
 import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-object Server extends SessionMixin {
+object Server extends SessionMixin with CustomHttpMethodsMixin {
   AnsiConsole.systemInstall();
 
   final def apply(): Unit = {
@@ -22,7 +23,9 @@ object Server extends SessionMixin {
     val port: Integer = System.getenv("CONTROLLER_PORT").toInt
 
     val parserSettings =
-      ParserSettings.forServer(system).withCustomMethods(CustomMethods(): _*)
+      ParserSettings
+        .forServer(system)
+        .withCustomMethods(allCustomHttpMethods: _*)
     val serverSettings =
       ServerSettings(system).withParserSettings(parserSettings)
 
@@ -47,6 +50,29 @@ object Server extends SessionMixin {
         .reset()
         .a("\n")
     )
+
+    var terminal_input: String = new String
+    do {
+      if (terminal_input != new String && terminal_input != "exit") {
+        println(
+          ansi()
+            .fg(RED)
+            .a(s"The command '$terminal_input' does not exist")
+            .reset()
+        );
+      }
+
+      terminal_input = StdIn
+        .readLine(
+          ansi()
+            .fg(MAGENTA)
+            .a("Use 'exit' to shutdown the server... \n")
+            .reset()
+            .toString
+        )
+        .stripMargin
+        .stripLineEnd
+    } while (terminal_input != "exit")
 
     bindingFuture
       .flatMap(_.unbind())
