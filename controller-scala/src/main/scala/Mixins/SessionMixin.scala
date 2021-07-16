@@ -16,9 +16,10 @@ trait SessionMixin extends SeederMixin {
 
   final def decomposeAuthenticationToken(
       authenticationToken: String
-  ): (String, String) = authenticationToken.split(".") match {
-    case Array(a, b) => (a, b)
-  }
+  ): (String, String) = ("wow", "ok")
+  //   authenticationToken.split(".") match {
+  //   case Array(a, b) => (a, b)
+  // }
 
   final def sessionNamespace(key: String): String = s"session:$key"
 }
