@@ -6,6 +6,7 @@ trait SessionsLoginService
     extends ServiceMixin
     with DoobieConnectionMixin
     with EpochMixin
+    with StringMixin
     with SessionMixin {
   final def login(username: String, password: String): ujson.Value = {
     read[ujson.Value](
@@ -20,30 +21,37 @@ trait SessionsLoginService
             new String
           }
           case Some(metakey) => {
-            val authenticationToken: String = makeAuthenticationToken(
-              metakey,
-              randomSessionToken()
-            )
+            val sessionToken: String = randomSessionToken()
 
-            val sessionKey: String = sessionNamespace(authenticationToken)
+            val sessionKey: String = sessionNamespace(metakey)
 
-            val sessionValue: String = write(
-              ujson.Obj(
-                "timestamp" -> ujson.Num(epochNow)
-              )
-            )
+            val existingSessionValue: String = SessionsDAO.get(sessionKey)
 
-            val output: String = write(
-              ujson.Obj(
-                "data" -> ujson.Obj(
-                  "authentication_token" -> ujson.Str(authenticationToken)
+            if (!isEmpty(existingSessionValue)) {
+              "TODO" // TODO
+            } else {
+              val sessionValue: String = write(
+                ujson.Obj(
+                  "token"     -> ujson.Str(sessionToken),
+                  "timestamp" -> ujson.Num(epochNow)
                 )
               )
-            )
 
-            SessionsDAO.set(sessionKey, sessionValue)
+              val authenticationToken: String = makeAuthenticationToken(
+                metakey,
+                sessionToken
+              )
 
-            output
+              SessionsDAO.set(sessionKey, sessionValue)
+
+              write(
+                ujson.Obj(
+                  "data" -> ujson.Obj(
+                    "authentication_token" -> ujson.Str(authenticationToken)
+                  )
+                )
+              )
+            }
           }
         }
       } catch {
