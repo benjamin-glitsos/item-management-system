@@ -48,8 +48,8 @@ trait SessionsLoginService
 
                 val sessionValue: String = write(
                   ujson.Obj(
-                    "token"     -> ujson.Str(sessionToken),
-                    "timestamp" -> ujson.Num(epochNow)
+                    "timestamp" -> ujson.Num(epochNow),
+                    "token"     -> ujson.Str(sessionToken)
                   )
                 )
 

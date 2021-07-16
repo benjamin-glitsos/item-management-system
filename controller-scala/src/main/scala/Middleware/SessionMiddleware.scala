@@ -2,7 +2,7 @@ import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import scala.jdk.OptionConverters._
 
-object SessionMiddleware extends StringMixin {
+object SessionMiddleware extends SessionMixin with StringMixin {
   final def apply(): Directive0 =
     extractRequest flatMap { request =>
       {
@@ -26,7 +26,9 @@ object SessionMiddleware extends StringMixin {
             case None => pass // TODO: reject
             case Some(authenticationToken) => {
               println(authenticationToken)
-              val sessionData: String = SessionsDAO.get(authenticationToken)
+              val (metakey: String, sessionToken: String) =
+                decomposeAuthenticationToken(authenticationToken)
+              val sessionData: String = SessionsDAO.get(sessionToken)
               println(sessionData)
               pass
             }
