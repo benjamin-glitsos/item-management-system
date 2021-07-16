@@ -5,7 +5,8 @@ import upickle.default._
 trait SessionsLoginService
     extends ServiceMixin
     with DoobieConnectionMixin
-    with SessionMixin {
+    with SessionMixin
+    with EpochMixin {
   final def login(username: String, password: String): ujson.Value = {
     read[ujson.Value](
       try {
@@ -20,17 +21,32 @@ trait SessionsLoginService
           }
           case Some(metakey) => {
             val sessionToken: String = randomSessionToken()
+
             val authenticationToken: String = makeAuthenticationToken(
               metakey,
               sessionToken
             )
-            write(
+
+            val sessionKey: String = sessionNamespace(sessionToken)
+
+            val sessionValue: String = write(
+              ujson.Obj(
+                "metakey"   -> ujson.Str(metakey),
+                "timestamp" -> ujson.Num(epochNow)
+              )
+            )
+
+            val output: String = write(
               ujson.Obj(
                 "data" -> ujson.Obj(
                   "authentication_token" -> ujson.Str(authenticationToken)
                 )
               )
             )
+
+            redis.set(sessionKey, sessionValue)
+
+            output
           }
         }
       } catch {

@@ -1,16 +1,10 @@
 import redis.clients.jedis.Jedis
 
 trait SessionMixin extends SeederMixin {
-  // final val redis = new Jedis("localhost", System.getenv("REDIS_PORT").toInt)
-  //   val r = new Jedis("localhost", System.getenv("REDIS_PORT").toInt)
-  //   r.auth(System.getenv("REDIS_PASSWORD"))
-  //   r
-  // }
-  val redis = new Jedis("session-redis")
-  redis.auth(System.getenv("REDIS_PASSWORD"))
-  redis.set("foo", "bar")
-  val r = redis.get("foo")
-  println(r)
+  val redis: Jedis = {
+    val r = new Jedis("session-redis")
+    r.auth(System.getenv("REDIS_PASSWORD"))
+  }
 
   final def randomSessionToken(): String = randomAlphanumerics(32)
 
@@ -18,4 +12,6 @@ trait SessionMixin extends SeederMixin {
       metakey: String,
       sessionToken: String
   ): String = s"$metakey.$sessionToken"
+
+  final def sessionNamespace(key: String): String = s"session:$key"
 }
