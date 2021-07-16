@@ -1,6 +1,5 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.AuthenticationFailedRejection
 
 object SessionMiddleware extends StringMixin {
   final def apply(): Directive0 =
@@ -12,27 +11,29 @@ object SessionMiddleware extends StringMixin {
         var isLoginMethod: Boolean = method == "POST"
         var isLoginRoute: Boolean =
           uri.matches(
-            s"^http://localhost:${System.getenv("CONTROLLER_PORT")}/api/v[\d]+/sessions/"
+            s"^http://localhost:${System.getenv("CONTROLLER_PORT")}/api/v[\\d]+/sessions/$"
           )
 
         if (isLoginMethod && isLoginRoute) {
           pass
         } else {
-          var authenticationToken: List[String] =
-            request.getHeader("X-Auth-Token").headOption.map(_.toString)
-          val authenticationValue: String = SessionsDAO.get(authenticationToken)
+          var authenticationToken =
+            request.getHeader("X-Auth-Token").toString
+          // val authenticationValue: String = SessionsDAO.get(authenticationToken)
 
           println(method)
           println(uri)
           println(authenticationToken)
-          println(authenticationValue)
+          // println(authenticationValue)
           println("=============================")
 
-          if (isEmpty(authenticationValue)) {
-            pass
-          } else {
-            reject(new AuthenticationFailedRejection)
-          }
+          pass
+
+          // if (isEmpty(authenticationValue)) {
+          //   pass
+          // } else {
+          //   reject(ValidationRejection("test"))
+          // }
         }
       }
     }

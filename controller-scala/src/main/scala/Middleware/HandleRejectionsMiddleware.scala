@@ -8,7 +8,7 @@ object HandleRejectionsMiddleware {
       .handle {
         case ValidationRejection(se: String, _) =>
           RejectionRoutes.badRequestError(se)
-        case AuthorizationFailedRejection =>
+        case ValidationRejection(se: String, _) =>
           RejectionRoutes.authorisationFailed()
       }
       .handleNotFound {
