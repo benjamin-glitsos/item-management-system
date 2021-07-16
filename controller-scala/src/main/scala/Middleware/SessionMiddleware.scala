@@ -1,18 +1,19 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.AuthenticationFailedRejection
-import akka.http.scaladsl.model.{HttpMethod, POST}
 
 object SessionMiddleware extends StringMixin {
   final def apply(): Directive0 =
     extractRequest flatMap { request =>
       {
-        var method: HttpMethod = request.method
-        var uri: String        = request.uri.toString
+        var method: String = request.method.name
+        var uri: String    = request.uri.toString
 
-        var isLoginMethod: Boolean = method.isInstanceOf[POST]
+        var isLoginMethod: Boolean = method == "POST"
         var isLoginRoute: Boolean =
-          uri.startsWith(s"${Server.apiUri}/api/v1/sessions/")
+          uri.matches(
+            s"^http://localhost:${System.getenv("CONTROLLER_PORT")}/api/v[\d]+/sessions/"
+          )
 
         if (isLoginMethod && isLoginRoute) {
           pass
@@ -30,7 +31,7 @@ object SessionMiddleware extends StringMixin {
           if (isEmpty(authenticationValue)) {
             pass
           } else {
-            reject(new AuthorisationFailedRejection)
+            reject(new AuthenticationFailedRejection)
           }
         }
       }
