@@ -1,10 +1,12 @@
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle.default._
-import CustomHttpMethodMiddlewares.report
 import scala.util.{Try}
 
-object ListItemsRoutes extends ListMixin with UpickleMixin {
+object ListItemsRoutes
+    extends ListMixin
+    with UpickleMixin
+    with CustomHttpMethodsMixin {
   final def apply(): Route = report {
     ValidationMiddleware("list-items") { body: ujson.Value =>
       {

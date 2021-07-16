@@ -4,4 +4,7 @@ object SessionsDAO extends SessionMixin {
 
   def del(key: String): Unit =
     redis.del(key)
+
+  def get(key: String): String =
+    redis.get(key)
 }
