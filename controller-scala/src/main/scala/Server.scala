@@ -13,6 +13,11 @@ import org.fusesource.jansi.Ansi.Color._
 object Server extends SessionMixin with CustomHttpMethodsMixin {
   AnsiConsole.systemInstall();
 
+  final val apiUri: String =
+    s"http://localhost:${System.getenv("CONTROLLER_PORT")}"
+  final val adminUri: String =
+    s"http://localhost:${System.getenv("ADMIN_PORT")}"
+
   final def apply(): Unit = {
     implicit val system           = ActorSystem(Behaviors.empty, "actor-system")
     implicit val executionContext = system.executionContext
@@ -41,12 +46,12 @@ object Server extends SessionMixin with CustomHttpMethodsMixin {
         .fg(MAGENTA)
         .a("The API is online at ")
         .bold()
-        .a(s"http://localhost:${System.getenv("CONTROLLER_PORT")}/")
+        .a(s"$apiUri/")
         .a("\n")
         .fg(MAGENTA)
         .a("The Admin Panel is online at ")
         .bold()
-        .a(s"http://localhost:${System.getenv("ADMIN_PORT")}/")
+        .a(s"$adminUri/")
         .reset()
         .a("\n")
     )

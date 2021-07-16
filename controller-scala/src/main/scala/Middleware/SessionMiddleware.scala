@@ -1,54 +1,38 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.AuthenticationFailedRejection
+import akka.http.scaladsl.model.{HttpMethod, POST}
 
 object SessionMiddleware extends StringMixin {
   final def apply(): Directive0 =
     extractRequest flatMap { request =>
       {
-        println(request.method.name)
-        println(request.uri.toString)
-        println(request.headers.map(_.toString))
-        println("=============================")
-        if (true) {
+        var method: HttpMethod = request.method
+        var uri: String        = request.uri.toString
+
+        var isLoginMethod: Boolean = method.isInstanceOf[POST]
+        var isLoginRoute: Boolean =
+          uri.startsWith(s"${Server.apiUri}/api/v1/sessions/")
+
+        if (isLoginMethod && isLoginRoute) {
           pass
         } else {
-          reject(new AuthorisationFailedRejection)
+          var authenticationToken: List[String] =
+            request.getHeader("X-Auth-Token").headOption.map(_.toString)
+          val authenticationValue: String = SessionsDAO.get(authenticationToken)
+
+          println(method)
+          println(uri)
+          println(authenticationToken)
+          println(authenticationValue)
+          println("=============================")
+
+          if (isEmpty(authenticationValue)) {
+            pass
+          } else {
+            reject(new AuthorisationFailedRejection)
+          }
         }
       }
     }
-
-  // headerValueByName("Authorization") { authorisationValue =>
-  //   {
-  //     if (isEmpty(SessionsDAO.get(authorisationToken))) {
-  //       reject(AuthorisationFailedRejection())
-  //     }
-  //   }
-  // }
 }
-
-// import akka.http.scaladsl.server._
-// import akka.http.scaladsl.server.Directives._
-// import scala.concurrent.duration._
-// import akka.http.scaladsl.model.HttpEntity
-// import cats.implicits._
-// import cats.data.Validated.{Valid, Invalid}
-//
-// object SessionMiddleware extends StringMixin {
-//   final def apply(): Directive0 =
-//     extractStrictEntity(3.seconds)
-//       .flatMap((entity: HttpEntity.Strict) => {
-//         if (staticEndpoints contains endpointName) {
-//           provide(ujsonEmptyValue)
-//         } else {
-//           val entityText = entity.data.utf8String
-//
-//           SchemaValidation(endpointName, entityText) match {
-//             case Valid(v) => provide(v)
-//             case Invalid(e) =>
-//               reject(
-//                 ValidationRejection(serialiseErrors(e))
-//               )
-//           }
-//         }
-//       })
-// }
