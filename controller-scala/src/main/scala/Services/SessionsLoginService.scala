@@ -20,18 +20,15 @@ trait SessionsLoginService
             new String
           }
           case Some(metakey) => {
-            val sessionToken: String = randomSessionToken()
-
             val authenticationToken: String = makeAuthenticationToken(
               metakey,
-              sessionToken
+              randomSessionToken()
             )
 
-            val sessionKey: String = sessionNamespace(sessionToken)
+            val sessionKey: String = sessionNamespace(authenticationToken)
 
             val sessionValue: String = write(
               ujson.Obj(
-                "metakey"   -> ujson.Str(metakey),
                 "timestamp" -> ujson.Num(epochNow)
               )
             )
