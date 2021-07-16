@@ -1,4 +1,6 @@
-trait SessionsLogoutService extends SessionMixin {
+import java.sql.SQLException
+
+trait SessionsLogoutService extends ServiceMixin with SessionMixin {
   final def logout(authenticationToken: String): String = {
     try {
       redis.del(sessionNamespace(authenticationToken))

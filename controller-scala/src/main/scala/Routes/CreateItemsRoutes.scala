@@ -4,7 +4,7 @@ import akka.http.scaladsl.server.Route
 import scala.util.{Try}
 import akka.http.scaladsl.model.StatusCodes.NoContent
 
-object CreateItemsRoutes with DateMixin {
+object CreateItemsRoutes extends DateMixin {
   final def apply(): Route = post {
     ValidationMiddleware("create-items") { body: ujson.Value =>
       val sku: String                 = body("sku").str

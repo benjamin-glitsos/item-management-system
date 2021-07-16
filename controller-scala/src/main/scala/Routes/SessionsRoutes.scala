@@ -3,7 +3,7 @@ import akka.http.scaladsl.server.Route
 
 object SessionsRoutes {
   final def apply(): Route = concat(
-    LoginSessionsRoutes()
-      LogoutSessionsRoutes ()
+    LoginSessionsRoutes(),
+    LogoutSessionsRoutes()
   )
 }

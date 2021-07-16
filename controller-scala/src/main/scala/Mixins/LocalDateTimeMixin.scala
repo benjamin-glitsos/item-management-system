@@ -6,5 +6,5 @@ trait LocalDateTimeMixin {
     DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss.zzz");
 
   final def localDateTimeParse(s: String): LocalDateTime =
-    LocalDateTime.parse(s, formatter)
+    LocalDateTime.parse(s, localDateTimeFormatter)
 }

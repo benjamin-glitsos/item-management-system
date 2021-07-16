@@ -2,7 +2,7 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import org.fusesource.jansi.AnsiConsole
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.Future
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.settings.{ParserSettings, ServerSettings}
 import scala.io.StdIn
