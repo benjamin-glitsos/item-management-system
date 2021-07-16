@@ -3,7 +3,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import scala.util.Try
 
-object EditItemsRoutes extends UpickleMixin {
+object EditItemsRoutes extends UpickleMixin with DateMixin {
   final def apply(sku: String): Route = patch {
     ValidationMiddleware("edit-items") { body: ujson.Value =>
       {
@@ -16,10 +16,10 @@ object EditItemsRoutes extends UpickleMixin {
         val description: Option[Option[String]] =
           Try(body("description").strOpt).toOption
         val acquisitionDate: Option[Date] =
-          Try(DateMixin.parse(body("acquisition_date").str)).toOption
+          Try(dateParse(body("acquisition_date").str)).toOption
         val expirationDate: Option[Option[Date]] =
           Try(
-            body("expiration_date").strOpt.map(DateMixin.parse(_))
+            body("expiration_date").strOpt.map(dateParse(_))
           ).toOption
         val unitCost: Option[Double] =
           Try(body("unit_cost").num).toOption

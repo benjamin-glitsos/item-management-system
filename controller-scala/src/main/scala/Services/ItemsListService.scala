@@ -6,7 +6,8 @@ import upickle.default._
 trait ItemsListService
     extends ListServiceMixin
     with DoobieConnectionMixin
-    with UpickleMixin {
+    with UpickleMixin
+    with DateMixin {
   final def list(
       pageNumber: Int,
       pageLength: Int,
@@ -38,7 +39,7 @@ trait ItemsListService
                 val sku: String                 = x._5
                 val name: String                = x._6
                 val description: Option[String] = x._7
-                val acquisitionDate: Date       = DateMixin.parse(x._8)
+                val acquisitionDate: Date       = dateParse(x._8)
                 val createdAt: String           = x._9
                 val editedAt: Option[String]    = x._10
 

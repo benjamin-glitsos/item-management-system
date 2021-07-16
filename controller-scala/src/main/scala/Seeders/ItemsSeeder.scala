@@ -2,7 +2,7 @@ import java.util.Date
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object ItemsSeeder extends EntitySeederMixin {
+object ItemsSeeder extends EntitySeederMixin with DateMixin {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
@@ -20,10 +20,9 @@ object ItemsSeeder extends EntitySeederMixin {
       upc = System.getenv("DEMO_ITEM_UPC"),
       name = System.getenv("DEMO_ITEM_NAME"),
       description = MarkdownSeeder(text),
-      acquisitionDate =
-        DateMixin.parse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
+      acquisitionDate = dateParse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
       expirationDate =
-        sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(DateMixin.parse(_)),
+        sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(dateParse(_)),
       unitCost = System.getenv("DEMO_ITEM_UNIT_COST").toDouble,
       unitPrice = sys.env.get("DEMO_ITEM_UNIT_PRICE").map(_.toDouble),
       quantityAvailable = System.getenv("DEMO_ITEM_QUANTITY_AVAILABLE").toInt,
