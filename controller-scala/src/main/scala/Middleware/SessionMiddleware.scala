@@ -1,5 +1,6 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
+import scala.jdk.OptionConverters._
 
 object SessionMiddleware extends StringMixin {
   final def apply(): Directive0 =
@@ -10,30 +11,26 @@ object SessionMiddleware extends StringMixin {
 
         var isLoginMethod: Boolean = method == "POST"
         var isLoginRoute: Boolean =
-          uri.matches(
-            s"^http://localhost:${System.getenv("CONTROLLER_PORT")}/api/v[\\d]+/sessions/$"
-          )
+          uri.matches(s"^${Server.apiUri}/api/v[\\d]+/sessions/$$")
+        var isLogin: Boolean = isLoginMethod && isLoginRoute
 
-        if (isLoginMethod && isLoginRoute) {
-          pass
+        if (isLogin) {
+          pass // TODO: reject
         } else {
-          var authenticationToken =
-            request.getHeader("X-Auth-Token").toString
-          // val authenticationValue: String = SessionsDAO.get(authenticationToken)
-
           println(method)
           println(uri)
-          println(authenticationToken)
-          // println(authenticationValue)
-          println("=============================")
+          var maybeAuthenticationToken: Option[String] =
+            request.getHeader("X-Auth-Token").toScala.map(_.value)
 
-          pass
-
-          // if (isEmpty(authenticationValue)) {
-          //   pass
-          // } else {
-          //   reject(ValidationRejection("test"))
-          // }
+          maybeAuthenticationToken match {
+            case None => pass // TODO: reject
+            case Some(authenticationToken) => {
+              println(authenticationToken)
+              val sessionData: String = SessionsDAO.get(authenticationToken)
+              println(sessionData)
+              pass
+            }
+          }
         }
       }
     }
