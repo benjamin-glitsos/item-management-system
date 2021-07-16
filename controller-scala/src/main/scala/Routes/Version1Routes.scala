@@ -4,7 +4,7 @@ import akka.http.scaladsl.server._
 
 object Version1Routes {
   final def apply(): Route =
-    (CorsMiddleware() & HandleRejectionsMiddleware())(
+    (HandleRejectionsMiddleware() & CorsMiddleware() & SessionMiddleware())(
       concat(
         pathPrefix("schemas")(SchemasRoutes()),
         pathPrefix("sessions")(SessionsRoutes()),
