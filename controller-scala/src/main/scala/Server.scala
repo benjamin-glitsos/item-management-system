@@ -22,8 +22,6 @@ object Server extends SessionMixin with CustomHttpMethodsMixin {
     implicit val system           = ActorSystem(Behaviors.empty, "actor-system")
     implicit val executionContext = system.executionContext
 
-    AnsiConsole.systemInstall();
-
     val host: String  = "controller-scala"
     val port: Integer = System.getenv("CONTROLLER_PORT").toInt
 
