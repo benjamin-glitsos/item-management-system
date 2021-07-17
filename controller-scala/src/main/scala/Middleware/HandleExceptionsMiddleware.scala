@@ -9,9 +9,9 @@ import java.time.LocalDateTime
 object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
   final def apply(): Directive0 = extractRequest flatMap { request =>
     {
-      var timestamp: LocalDateTime = LocalDateTime.now()
-      var method: String           = request.method.name
-      var uri: String              = request.uri.toString
+      val timestamp: LocalDateTime = LocalDateTime.now()
+      val method: String           = request.method.name
+      val uri: String              = request.uri.toString
 
       handleExceptions(
         ExceptionHandler {

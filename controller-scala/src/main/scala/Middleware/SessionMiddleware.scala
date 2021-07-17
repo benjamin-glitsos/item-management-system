@@ -6,18 +6,18 @@ object SessionMiddleware extends SessionMixin with StringMixin {
   final def apply(): Directive0 =
     extractRequest flatMap { request =>
       {
-        var method: String = request.method.name
-        var uri: String    = request.uri.toString
+        val method: String = request.method.name
+        val uri: String    = request.uri.toString
 
-        var isLoginMethod: Boolean = method == "POST"
-        var isLoginRoute: Boolean =
+        val isLoginMethod: Boolean = method == "POST"
+        val isLoginRoute: Boolean =
           uri.matches(s"^${Server.apiUri}/api/v[\\d]+/sessions/$$")
-        var isLogin: Boolean = isLoginMethod && isLoginRoute
+        val isLogin: Boolean = isLoginMethod && isLoginRoute
 
         if (isLogin) {
           pass // TODO: reject
         } else {
-          var maybeAuthenticationToken: Option[String] =
+          val maybeAuthenticationToken: Option[String] =
             request.getHeader("X-Auth-Token").toScala.map(_.value)
 
           maybeAuthenticationToken match {
