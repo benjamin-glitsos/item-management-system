@@ -35,24 +35,23 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
     )
   }
 
-  final def getRootCause(th: Throwable) = { // TODO: add return type
-    @scala.annotation.tailrec
-    def inner(th: Throwable, v: Vector[Throwable]): Vector[Throwable] = {
-      val tail = v :+ th
-      if (th.getCause == null) tail else inner(th.getCause, tail)
+  final def getRootCause(t: Throwable): String = {
+    val rootCause: Vector[Throwable] = {
+      @scala.annotation.tailrec
+      def inner(th: Throwable, v: Vector[Throwable]): Vector[Throwable] = {
+        val tail = v :+ th
+        if (th.getCause == null) tail else inner(th.getCause, tail)
+      }
+      inner(th, Vector[Throwable]())
     }
-    inner(th, Vector[Throwable]())
-  }
 
-  final def throwableToString(th: Throwable): String = getStackTrace(th)
+    val rootCauseStr: String =
+      getRootCause(th).map(getStackTrace(_)).mkString("\n")
 
-  final def getRootCauseFormatted(th: Throwable): String = {
-    val s: String = getRootCause(th).map(throwableToString(_)).mkString("\n")
-
-    if (isEmpty(s)) {
+    if (isEmpty(rootCauseString)) {
       "None"
     } else {
-      s
+      rootCauseStr
     }
   }
 }
