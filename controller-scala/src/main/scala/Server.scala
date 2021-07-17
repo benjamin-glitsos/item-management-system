@@ -10,7 +10,7 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-object Server extends SessionMixin with CustomHttpMethodsMixin {
+object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
   AnsiConsole.systemInstall();
 
   final val apiUri: String =
@@ -57,12 +57,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin {
     var terminal_input: String = new String
     do {
       if (terminal_input != new String && terminal_input != "exit") {
-        System.err.println(
-          ansi()
-            .fg(RED)
-            .a(s"The command '$terminal_input' does not exist")
-            .reset()
-        );
+        printError(s"The command '$terminal_input' does not exist")
       }
 
       terminal_input = StdIn
