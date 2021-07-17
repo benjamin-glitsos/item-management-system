@@ -4,6 +4,7 @@ import upickle.default._
 import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
+import java.time.LocalDateTime
 
 trait ErrorMixin extends UpickleMixin {
   AnsiConsole.systemInstall();
@@ -12,13 +13,20 @@ trait ErrorMixin extends UpickleMixin {
   final val NOT_FOUND             = CaseInsensitive("not_found")
   final val INVALID_INPUT         = CaseInsensitive("invalid_input")
 
-  final def printError(message: String): Unit = System.err.println(
-    ansi()
-      .fg(RED)
-      .a(message)
-      .a("\n")
-      .reset()
-  )
+  final def printError(message: String, isColoured: Boolean = true): Unit =
+    System.err.println(
+      if (isColoured) {
+        ansi()
+          .fg(RED)
+          .a(message)
+          .reset()
+      } else {
+        message
+      }
+    )
+
+  final def printErrorHeading(timestamp: LocalDateTime, message: String): Unit =
+    printError(s"[$timestamp] $message")
 
   final def serialiseErrors(errors: NonEmptyChain[Error]): String = {
     write(
