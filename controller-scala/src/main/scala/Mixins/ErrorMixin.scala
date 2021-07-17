@@ -3,9 +3,9 @@ import cats.data.NonEmptyChain
 import upickle.default._
 
 trait ErrorMixin extends UpickleMixin {
-  final val NOT_FOUND            = CaseInsensitive("not_found")
-  final val INVALID_INPUT        = CaseInsensitive("invalid_input")
-  final val AUTHORISATION_FAILED = CaseInsensitive("authorisation_failed")
+  final val INTERNAL_SERVER_ERROR = CaseInsensitive("internal_server_error")
+  final val NOT_FOUND             = CaseInsensitive("not_found")
+  final val INVALID_INPUT         = CaseInsensitive("invalid_input")
 
   final def serialiseErrors(errors: NonEmptyChain[Error]): String = {
     write(

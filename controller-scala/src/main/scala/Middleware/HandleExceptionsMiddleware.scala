@@ -1,11 +1,14 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.model.StatusCodes.{
+  InternalServerError => InternalServerErrorStatusCode
+}
 import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
+import cats.data.NonEmptyChain
 
-object HandleExceptionsMiddleware {
+object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
   final def apply(): Directive0 = extractRequest flatMap { request =>
     {
       AnsiConsole.systemInstall();
@@ -15,11 +18,10 @@ object HandleExceptionsMiddleware {
 
       println(
         ansi()
-          .a("\n")
           .fg(RED)
           .a(s"Exception thrown from $method $uri")
-          .reset()
           .a("\n")
+          .reset()
       )
 
       handleExceptions(
@@ -30,8 +32,10 @@ object HandleExceptionsMiddleware {
             println(e.getStackTrace.mkString("\n"))
 
             complete(
-              InternalServerError,
-              "A server error has occurred."
+              InternalServerErrorStatusCode,
+              SerialisedErrors(
+                serialiseErrors(NonEmptyChain(InternalServerError()))
+              )
             )
           }
         }
