@@ -38,7 +38,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin {
         .withSettings(serverSettings)
         .bind(Routes())
 
-    println(
+    System.out.println(
       ansi()
         .a("\n")
         .fg(MAGENTA)
@@ -57,7 +57,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin {
     var terminal_input: String = new String
     do {
       if (terminal_input != new String && terminal_input != "exit") {
-        println(
+        System.err.println(
           ansi()
             .fg(RED)
             .a(s"The command '$terminal_input' does not exist")
@@ -81,7 +81,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin {
       .flatMap(_.unbind())
       .onComplete(_ => system.terminate())
 
-    println(
+    System.out.println(
       ansi()
         .a("\n")
         .fg(MAGENTA)

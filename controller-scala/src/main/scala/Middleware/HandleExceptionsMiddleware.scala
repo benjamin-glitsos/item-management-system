@@ -16,7 +16,7 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
       var method: String = request.method.name
       var uri: String    = request.uri.toString
 
-      println(
+      System.err.println(
         ansi()
           .fg(RED)
           .a(s"Exception thrown from $method $uri")
@@ -27,9 +27,9 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
       handleExceptions(
         ExceptionHandler {
           case e: Exception => {
-            println(e.getMessage)
-            println(e.getCause)
-            println(e.getStackTrace.mkString("\n"))
+            System.err.println(e.getMessage)
+            System.err.println(e.getCause)
+            System.err.println(e.getStackTrace.mkString("\n"))
 
             complete(
               InternalServerErrorStatus,
