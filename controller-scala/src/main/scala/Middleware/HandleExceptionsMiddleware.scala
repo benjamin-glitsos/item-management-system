@@ -19,13 +19,13 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
             printErrorHeading(timestamp, "Exception:".toUpperCase)
 
             printErrorHeading(timestamp, "* Request:")
-            printError(s"$method $uri", isColoured = false)
+            printErrorContent(s"$method $uri")
 
             printErrorHeading(timestamp, "* Message:")
-            printError(e.getMessage, isColoured = false)
+            printErrorContent(e.getMessage)
 
             printErrorHeading(timestamp, "* Cause:")
-            println(getRootCause(e))
+            printErrorContent(getRootCause(e))
 
             complete(
               InternalServerErrorStatus,
