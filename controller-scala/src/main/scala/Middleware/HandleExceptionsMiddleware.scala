@@ -1,7 +1,7 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes.{
-  InternalServerError => InternalServerErrorStatusCode
+  InternalServerError => InternalServerErrorStatus
 }
 import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
@@ -32,7 +32,7 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
             println(e.getStackTrace.mkString("\n"))
 
             complete(
-              InternalServerErrorStatusCode,
+              InternalServerErrorStatus,
               SerialisedErrors(
                 serialiseErrors(NonEmptyChain(InternalServerError()))
               )

@@ -3,7 +3,7 @@ object InternalServerError extends ErrorMixin {
     Error(
       INTERNAL_SERVER_ERROR,
       "Internal Server Error",
-      "A server error has occurred."
+      "An internal server error has occurred."
     )
   }
 }
