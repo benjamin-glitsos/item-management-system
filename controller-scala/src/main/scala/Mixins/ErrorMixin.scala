@@ -5,8 +5,9 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 import java.time.LocalDateTime
+import org.apache.commons.lang3.exception.ExceptionUtils._
 
-trait ErrorMixin extends UpickleMixin {
+trait ErrorMixin extends UpickleMixin with StringMixin {
   AnsiConsole.systemInstall();
 
   final val INTERNAL_SERVER_ERROR = CaseInsensitive("internal_server_error")
@@ -32,5 +33,26 @@ trait ErrorMixin extends UpickleMixin {
     write(
       errors.toChain.toList
     )
+  }
+
+  final def getRootCause(th: Throwable) = { // TODO: add return type
+    @scala.annotation.tailrec
+    def inner(th: Throwable, v: Vector[Throwable]): Vector[Throwable] = {
+      val tail = v :+ th
+      if (th.getCause == null) tail else inner(th.getCause, tail)
+    }
+    inner(th, Vector[Throwable]())
+  }
+
+  final def throwableToString(th: Throwable): String = getStackTrace(th)
+
+  final def getRootCauseFormatted(th: Throwable): String = {
+    val s: String = getRootCause(th).map(throwableToString(_)).mkString("\n")
+
+    if (isEmpty(s)) {
+      "None"
+    } else {
+      s
+    }
   }
 }

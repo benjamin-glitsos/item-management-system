@@ -22,11 +22,11 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
             printErrorHeading(timestamp, "Exception Message:")
             printError(e.getMessage, isColoured = false)
 
-            // printErrorHeading(timestamp, "Exception Cause:")
-            // printError(e.getCause.toString, isColoured = false)
-
             printErrorHeading(timestamp, "Exception Stack Trace:")
             printError(e.getStackTrace.mkString("\n"), isColoured = false)
+
+            printErrorHeading(timestamp, "Exception Cause:")
+            println(getRootCauseFormatted(e))
 
             complete(
               InternalServerErrorStatus,
