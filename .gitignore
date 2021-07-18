@@ -7,6 +7,10 @@
 # Controller Scala --------------------
 
 controller-scala/.metals/
+controller-scala/dumps/
+controller-scala/project/target/
+controller-scala/public/
+controller-scala/target/
 
 # Admin-React --------------------
 
