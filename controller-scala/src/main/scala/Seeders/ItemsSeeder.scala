@@ -2,7 +2,11 @@ import java.util.Date
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
+object ItemsSeeder
+    extends EntitySeederMixin
+    with DateMixin
+    with StringMixin
+    with MarkdownSeederMixin {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
@@ -19,7 +23,7 @@ object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
       sku = System.getenv("DEMO_ITEM_SKU"),
       upc = System.getenv("DEMO_ITEM_UPC"),
       name = System.getenv("DEMO_ITEM_NAME"),
-      description = MarkdownSeeder(text),
+      description = generateMarkdown(text),
       acquisitionDate = dateParse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
       expirationDate =
         sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(dateParse(_)),
@@ -27,7 +31,7 @@ object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
       unitPrice = sys.env.get("DEMO_ITEM_UNIT_PRICE").map(_.toDouble),
       quantityAvailable = System.getenv("DEMO_ITEM_QUANTITY_AVAILABLE").toInt,
       quantitySold = System.getenv("DEMO_ITEM_QUANTITY_SOLD").toInt,
-      additionalNotes = MarkdownSeeder(text)
+      additionalNotes = generateMarkdown(text)
     )
   }
 
@@ -47,7 +51,7 @@ object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
       val sku: String                 = randomSku(seedName)
       val upc: String                 = randomUpc()
       val name: String                = seedName
-      val description: Option[String] = MarkdownSeeder(text)
+      val description: Option[String] = generateMarkdown(text)
       val acquisitionDate: Date       = randomDateBetween(yearsAgo(10), new Date())
       val expirationDate: Option[Date] =
         Option.when(coinFlip)(
@@ -58,7 +62,7 @@ object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
       val quantityAvailable: Int    = randomBetween(0, 20)
       val quantitySold: Int =
         if (seedIsForSale) randomBetween(0, 100) else 0
-      val additionalNotes: Option[String] = MarkdownSeeder(text)
+      val additionalNotes: Option[String] = generateMarkdown(text)
 
       ItemsService.create(
         sku,
