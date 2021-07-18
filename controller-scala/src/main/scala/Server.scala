@@ -41,6 +41,11 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
     System.out.println(
       ansi()
         .a("\n")
+        .a(FilesDAO.open("banner.txt"))
+        .fg(MAGENTA)
+        .a(System.getenv("PROJECT_NAME").toUpperCase)
+        .a("\n")
+        .a("\n")
         .fg(MAGENTA)
         .a("The API is online at ")
         .bold()
