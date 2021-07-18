@@ -69,7 +69,8 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
         .readLine(
           ansi()
             .fg(BLUE)
-            .a("Use 'exit' to shutdown the server... \n")
+            .a("Use 'exit' to shutdown the server... ")
+            .a("\n")
             .reset()
             .toString
         )
