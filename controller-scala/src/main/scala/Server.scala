@@ -42,16 +42,16 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
       ansi()
         .a("\n")
         .a(FilesDAO.open("banner.txt"))
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a(System.getenv("PROJECT_NAME").toUpperCase)
         .a("\n")
         .a("\n")
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a("The API is online at ")
         .bold()
         .a(s"$apiUri/")
         .a("\n")
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a("The Admin Panel is online at ")
         .bold()
         .a(s"$adminUri/")
@@ -68,7 +68,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
       terminal_input = StdIn
         .readLine(
           ansi()
-            .fg(MAGENTA)
+            .fg(BLUE)
             .a("Use 'exit' to shutdown the server... \n")
             .reset()
             .toString
@@ -84,7 +84,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
     System.out.println(
       ansi()
         .a("\n")
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a("Server shutdown complete.")
         .reset()
         .a("\n")
