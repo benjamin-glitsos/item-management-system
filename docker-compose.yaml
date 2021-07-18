@@ -33,7 +33,7 @@ services:
     image: controller-scala
     container_name: controller-scala
     volumes:
-      - ./storage/public:/usr/src/app/public
+      - ./storage/public:/app/public
     env_file: .env
     stdin_open: true
     depends_on:

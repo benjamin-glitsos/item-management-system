@@ -34,5 +34,7 @@ rebuild:
 list:
 	@echo "$(PROJECT_ABBREV): Listing docker objects"
 	docker container ls
+	@echo ""
 	docker image ls
+	@echo ""
 	docker volume ls

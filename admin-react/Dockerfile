@@ -2,14 +2,16 @@ FROM node:current-alpine3.10
 
 ENV PATH=/app/node_modules/.bin:$PATH
 
-RUN useradd admin-react \
-&& groupadd admin-react \
+RUN addgroup -S dgroup \
+&& adduser -S duser -G dgroup \
+&& mkdir /app/ \
+&& mkdir /app/src/ \
 && mkdir /app/src/assets/ \
-&& chown admin-react:admin-react /app/src/assets/ \
+&& chown duser:dgroup /app/src/assets/ \
 && touch /app/src/assets/README.md \
-&& chown admin-react:admin-react /app/src/assets/README.md \
+&& chown duser:dgroup /app/src/assets/README.md \
 && mkdir /app/public/ \
-&& chown admin-react:admin-react /app/public/ \
+&& chown duser:dgroup /app/public/
 
 WORKDIR /app
 

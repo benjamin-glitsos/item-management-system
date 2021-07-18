@@ -4,12 +4,13 @@ RUN apk add --no-cache curl bash \
 &&  curl -Ls https://git.io/sbt > /usr/local/bin/sbt \
 &&  chmod 0755 /usr/local/bin/sbt
 
-RUN useradd controller-scala \
-&& groupadd controller-scala \
-&& mkdir /usr/src/app/public/ \
-&& chown controller-scala:controller-scala /usr/src/app/public/
+RUN addgroup -S dgroup \
+&& adduser -S duser -G dgroup \
+&& mkdir /app/ \
+&& mkdir /app/public/ \
+&& chown duser:dgroup /app/public/
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY . .
 
