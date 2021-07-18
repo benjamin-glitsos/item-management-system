@@ -12,6 +12,6 @@ trait DoobieConnectionMixin {
     s"jdbc:postgresql://database-postgresql/${System.getenv("POSTGRES_DATABASE")}",
     System.getenv("POSTGRES_USER"),
     System.getenv("POSTGRES_PASSWORD"),
-    Blocker.liftExecutionContext(ExecutionContexts.synchronous)
+    Blocker.liftExecutionContext(ExecutionContexts.cachedThreadPool[IO])
   )
 }
