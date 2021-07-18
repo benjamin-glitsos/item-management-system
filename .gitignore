@@ -4,6 +4,10 @@
 .env.*
 .DS_Store
 
+# Controller Scala --------------------
+
+controller-scala/.metals/
+
 # Admin-React --------------------
 
 admin-react/node_modules/

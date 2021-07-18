@@ -30,3 +30,9 @@ clean:
 rebuild:
 	@echo "$(PROJECT_ABBREV): Rebuilding  $(c)"
 	docker-compose up --force-recreate $(c)
+
+list:
+	@echo "$(PROJECT_ABBREV): Listing docker objects"
+	docker container ls
+	docker image ls
+	docker volume ls
