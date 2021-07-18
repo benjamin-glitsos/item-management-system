@@ -25,4 +25,4 @@ ssh:
 		echo "Please specify a container by using the \"c\"c argument";\
 	else
 		docker exec -it $(c) /bin/bash
-	fi
+	fi;
