@@ -23,9 +23,10 @@ object SessionMiddleware extends SessionMixin with StringMixin {
           maybeAuthenticationToken match {
             case None => pass // TODO: reject
             case Some(authenticationToken) => {
-              val (metakey: String, sessionToken: String) =
+              val Array(metakey: String, sessionToken: String) =
                 decomposeAuthenticationToken(authenticationToken)
-              val sessionData: String = SessionsDAO.get(sessionToken)
+              val sessionData: String =
+                SessionsDAO.get(sessionNamespace(metakey))
               pass
             }
           }
