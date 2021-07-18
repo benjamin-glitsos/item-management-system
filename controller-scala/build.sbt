@@ -1,4 +1,4 @@
-name := System.getenv("PROJECT_NAME")
+name := "Item Management System"
 version := "1.0"
 scalaVersion := "2.13.0"
 
