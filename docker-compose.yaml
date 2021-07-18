@@ -33,6 +33,7 @@ services:
     image: controller-scala
     container_name: controller-scala
     volumes:
+      - ./controller-scala:/app
       - ./storage/public:/app/public
     env_file: .env
     stdin_open: true
@@ -49,6 +50,7 @@ services:
     image: admin-react
     container_name: admin-react
     volumes:
+      - ./admin-react:/app
       - ./README.md:/app/src/assets/README.md
       - ./storage/public:/app/public
     env_file: .env
