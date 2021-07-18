@@ -2,7 +2,7 @@ import java.util.Date
 import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object ItemsSeeder extends EntitySeederTrait {
+object ItemsSeeder extends EntitySeederMixin with DateMixin with StringMixin {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
@@ -20,10 +20,9 @@ object ItemsSeeder extends EntitySeederTrait {
       upc = System.getenv("DEMO_ITEM_UPC"),
       name = System.getenv("DEMO_ITEM_NAME"),
       description = MarkdownSeeder(text),
-      acquisitionDate =
-        DateUtilities.parse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
+      acquisitionDate = dateParse(System.getenv("DEMO_ITEM_ACQUISITION_DATE")),
       expirationDate =
-        sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(DateUtilities.parse(_)),
+        sys.env.get("DEMO_ITEM_EXPIRATION_DATE").map(dateParse(_)),
       unitCost = System.getenv("DEMO_ITEM_UNIT_COST").toDouble,
       unitPrice = sys.env.get("DEMO_ITEM_UNIT_PRICE").map(_.toDouble),
       quantityAvailable = System.getenv("DEMO_ITEM_QUANTITY_AVAILABLE").toInt,
@@ -38,7 +37,7 @@ object ItemsSeeder extends EntitySeederTrait {
       val text: TextProducer = fairy.textProducer()
 
       val seedIsForSale: Boolean = biasedCoinFlip(0.75)
-      val seedName: String = StringUtilities.toTitleCase(
+      val seedName: String = toTitleCase(
         text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
       )
       val seedUnitCost: Double = randomCurrency()

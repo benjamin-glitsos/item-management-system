@@ -3,4 +3,5 @@ object UsersDAO
     with UsersOpenDAO
     with UsersCreateDAO
     with UsersEditDAO
-    with UsersDeleteDAO {}
+    with UsersDeleteDAO
+    with UsersAuthenticateDAO {}

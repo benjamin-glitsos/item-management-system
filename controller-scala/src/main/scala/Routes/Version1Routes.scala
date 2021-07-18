@@ -3,13 +3,20 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server._
 
 object Version1Routes {
-  final def apply(): Route =
-    (AccessControlMiddleware() & HandleRejectionsMiddleware())(
-      concat(
-        pathPrefix("schemas")(SchemasRoutes()),
-        pathPrefix("users")(UsersRoutes()),
-        pathPrefix("items")(ItemsRoutes()),
-        PreflightRoutes()
-      )
+  protected final val middlewares: Directive0 = (
+    HandleExceptionsMiddleware()
+      & HandleRejectionsMiddleware()
+      & CorsMiddleware()
+      & SessionMiddleware()
+  )
+
+  final def apply(): Route = middlewares(
+    concat(
+      pathPrefix("schemas")(SchemasRoutes()),
+      pathPrefix("sessions")(SessionsRoutes()),
+      pathPrefix("users")(UsersRoutes()),
+      pathPrefix("items")(ItemsRoutes()),
+      PreflightRoutes()
     )
+  )
 }

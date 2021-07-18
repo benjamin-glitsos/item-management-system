@@ -4,7 +4,7 @@ import akka.http.scaladsl.server.Route
 import scala.util.{Try}
 import akka.http.scaladsl.model.StatusCodes.NoContent
 
-object CreateItemsRoutes {
+object CreateItemsRoutes extends DateMixin {
   final def apply(): Route = post {
     ValidationMiddleware("create-items") { body: ujson.Value =>
       val sku: String                 = body("sku").str
@@ -12,9 +12,9 @@ object CreateItemsRoutes {
       val name: String                = body("name").str
       val description: Option[String] = Try(body("description").str).toOption
       val acquisitionDate: Date =
-        DateUtilities.parse(body("acquisition_date").str)
+        dateParse(body("acquisition_date").str)
       val expirationDate: Option[Date] =
-        Try(DateUtilities.parse(body("expiration_date").str)).toOption
+        Try(dateParse(body("expiration_date").str)).toOption
       val unitCost: Double = body("unit_cost").str.toDouble
       val unitPrice: Option[Double] =
         Try(body("unit_price").str.toDouble).toOption

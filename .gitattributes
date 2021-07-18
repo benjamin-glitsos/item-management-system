@@ -1,11 +1,5 @@
 *.csv linguist-detectable=true
-*.csv linguist-language=CSV
-
 *.json linguist-detectable=true
-*.json linguist-language=JSON
-
 *.yaml linguist-detectable=true
-*.yaml linguist-language=YAML
-
 *.sql linguist-detectable=true
-*.sql linguist-language=SQL
+*.xml linguist-detectable=true

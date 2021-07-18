@@ -1,4 +1,4 @@
-object NotFoundError extends ErrorTrait {
+object NotFoundError extends ErrorMixin {
   final def apply(): Error = {
     Error(
       NOT_FOUND,

@@ -1,12 +1,13 @@
 import java.util.Date
 import java.sql.SQLException
-import upickle.default._
 import doobie.implicits._
-import doobie_import.connection._
 import upickle.default._
-import upickle_import.general._
 
-trait ItemsListService extends ListServiceTrait {
+trait ItemsListService
+    extends ListServiceMixin
+    with DoobieConnectionMixin
+    with UpickleMixin
+    with DateMixin {
   final def list(
       pageNumber: Int,
       pageLength: Int,
@@ -38,7 +39,7 @@ trait ItemsListService extends ListServiceTrait {
                 val sku: String                 = x._5
                 val name: String                = x._6
                 val description: Option[String] = x._7
-                val acquisitionDate: Date       = DateUtilities.parse(x._8)
+                val acquisitionDate: Date       = dateParse(x._8)
                 val createdAt: String           = x._9
                 val editedAt: Option[String]    = x._10
 

@@ -1,11 +1,10 @@
 import java.util.Date
-import doobie_import.database.dc._
 import doobie.Fragment
 import doobie.Fragments.{setOpt, whereAnd}
 import doobie._
 import doobie.implicits._
 
-trait ItemsEditDAO {
+trait ItemsEditDAO extends DoobieDatabaseMixin {
   final def edit(
       oldSku: String,
       newSku: Option[String],

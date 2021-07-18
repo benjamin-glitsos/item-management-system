@@ -1,6 +1,6 @@
-import doobie_import.database.dc._
+trait UsersOpenDAO extends DoobieDatabaseMixin {
+  import dc._
 
-trait UsersOpenDAO {
   final def open(username: String) = {
     run(
       quote(

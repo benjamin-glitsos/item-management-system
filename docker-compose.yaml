@@ -14,6 +14,18 @@ services:
       - TZ=${PROJECT_TIMEZONE}
     ports:
       - ${POSTGRES_PORT}:5432
+    tty: true
+
+  session_redis:
+    build:
+      context: ./session-redis/
+    image: session-redis
+    container_name: session-redis
+    env_file: .env
+    restart: on-failure
+    ports:
+      - ${REDIS_PORT}:6379
+    tty: true
 
   controller_scala:
     build:
@@ -27,9 +39,11 @@ services:
     env_file: .env
     stdin_open: true
     depends_on:
+      - "session_redis"
       - "database_postgresql"
     ports:
       - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
+    tty: true
 
   admin_react:
     build:
@@ -45,3 +59,4 @@ services:
     stdin_open: true
     ports:
       - ${ADMIN_PORT}:${ADMIN_PORT}
+    tty: true
