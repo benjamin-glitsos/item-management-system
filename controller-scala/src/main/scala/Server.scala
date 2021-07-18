@@ -41,7 +41,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
     System.out.println(
       ansi()
         .a("\n")
-        .a(FilesDAO.open("banner.txt"))
+        .a(FilesDAO.open("files/banner.txt"))
         .fg(BLUE)
         .a(System.getenv("PROJECT_NAME").toUpperCase)
         .a("\n")
