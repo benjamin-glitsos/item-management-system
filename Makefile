@@ -15,10 +15,6 @@ kill:
 	@echo "$(PROJECT_ABBREV): Killing $(c)"
 	docker-compose kill $(c)
 
-clean:
-	@echo "$(PROJECT_ABBREV): Cleaning $(c)"
-	docker rm -f -v database-postgresql || true
-
 ssh:
 	@echo "$(PROJECT_ABBREV): SSHing into $(c)"
 	@if [ -z "$(c)" ]; then\
@@ -26,3 +22,11 @@ ssh:
 	else
 		docker exec -it $(c) /bin/bash
 	fi;
+
+clean:
+	@echo "$(PROJECT_ABBREV): Cleaning $(c)"
+	docker rm -f -v database-postgresql || true
+
+rebuild:
+	@echo "$(PROJECT_ABBREV): Rebuilding  $(c)"
+	docker-compose up --force-recreate $(c)

@@ -4,19 +4,7 @@
 .env.*
 .DS_Store
 
-# Controller Scala --------------------
-
-controller-scala/target/
-controller-scala/project/target/
-controller-scala/project/project/
-controller-scala/project/.bloop/
-controller-scala/volumes/
-controller-scala/dumps/
-controller-scala/.metals/
-controller-scala/.bloop/
-controller-scala/project/metals.sbt
-
-# Admin React --------------------
+# Admin-React --------------------
 
 admin-react/node_modules/
 admin-react/.pnp
