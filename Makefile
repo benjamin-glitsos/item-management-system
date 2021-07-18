@@ -17,11 +17,7 @@ kill:
 
 ssh:
 	@echo "$(PROJECT_ABBREV): SSHing into $(c)"
-	@if [ -z "$(c)" ]; then\
-		echo "Please specify a container by using the \"c\"c argument";\
-	else
-		docker exec -it $(c) /bin/bash
-	fi;
+	docker exec -it $(c) /bin/bash
 
 clean:
 	@echo "$(PROJECT_ABBREV): Cleaning $(c)"

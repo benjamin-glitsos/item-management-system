@@ -34,7 +34,8 @@ services:
     container_name: controller-scala
     volumes:
       - ./controller-scala:/app
-      - ./storage/public:/app/public
+      - ./files/public:/app/files/public
+      - ./files/private:/app/files/private
     env_file: .env
     stdin_open: true
     depends_on:
@@ -52,7 +53,7 @@ services:
     volumes:
       - ./admin-react:/app
       - ./README.md:/app/src/assets/README.md
-      - ./storage/public:/app/public
+      - ./files/public:/app/public
     env_file: .env
     restart: on-failure
     stdin_open: true

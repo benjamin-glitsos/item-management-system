@@ -7,8 +7,11 @@ RUN apk add --no-cache curl bash \
 RUN addgroup -S dgroup \
 && adduser -S duser -G dgroup \
 && mkdir /app/ \
-&& mkdir /app/public/ \
-&& chown duser:dgroup /app/public/
+&& mkdir /app/files/ \
+&& mkdir /app/files/public/ \
+&& mkdir /app/files/private/ \
+&& chown duser:dgroup /app/files/public/ \
+&& chown duser:dgroup /app/files/private/
 
 WORKDIR /app
 
