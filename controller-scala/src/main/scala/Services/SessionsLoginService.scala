@@ -53,10 +53,7 @@ trait SessionsLoginService
                   )
                 )
 
-                val authenticationToken: String = makeAuthenticationToken(
-                  metakey,
-                  sessionToken
-                )
+                val authenticationToken: String = s"$metakey.$sessionToken"
 
                 SessionsDAO.set(sessionKey, sessionValue)
 
