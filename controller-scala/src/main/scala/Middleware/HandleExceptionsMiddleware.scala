@@ -18,10 +18,6 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
           case e: Exception => {
             printError(s"EXCEPTION at $timestamp:")
 
-            printError("* Summary:")
-            printError(e.getMessage, isColoured = false)
-            printError(e.getStackTrace.head.toString, isColoured = false)
-
             printError("* Request:")
             printError(s"$method $uri", isColoured = false)
 
