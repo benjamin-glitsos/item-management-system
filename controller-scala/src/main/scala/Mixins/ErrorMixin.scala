@@ -26,12 +26,6 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
       }
     )
 
-  final def printErrorHeading(timestamp: LocalDateTime, message: String): Unit =
-    printError(s"[$timestamp] $message")
-
-  final def printErrorContent(message: String): Unit =
-    printError(message, isColoured = false)
-
   final def serialiseErrors(errors: NonEmptyChain[Error]): String = {
     write(
       errors.toChain.toList

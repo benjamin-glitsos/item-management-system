@@ -16,16 +16,17 @@ object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
       handleExceptions(
         ExceptionHandler {
           case e: Exception => {
-            printErrorHeading(timestamp, "Exception:".toUpperCase)
+            printError(s"EXCEPTION at $timestamp:")
 
-            printErrorHeading(timestamp, "* Request:")
-            printErrorContent(s"$method $uri")
+            printError("* Summary:")
+            printError(e.getMessage, isColoured = false)
+            printError(e.getStackTrace.head.toString, isColoured = false)
 
-            printErrorHeading(timestamp, "* Message:")
-            printErrorContent(e.getMessage)
+            printError("* Request:")
+            printError(s"$method $uri", isColoured = false)
 
-            printErrorHeading(timestamp, "* Cause:")
-            printErrorContent(getRootCause(e))
+            printError("* Cause:")
+            printError(getRootCause(e), isColoured = false)
 
             complete(
               InternalServerErrorStatus,
