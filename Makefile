@@ -8,10 +8,6 @@ start:
 	docker-compose up $(c)
 
 stop:
-	@echo "$(PROJECT_ABBREV): Stopping $(c)"
-	docker-compose down --remove-orphans $(c)
-
-kill:
 	@echo "$(PROJECT_ABBREV): Killing $(c)"
 	docker-compose kill $(c)
 
