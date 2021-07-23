@@ -10,12 +10,12 @@ object SchemaValidation
     with UpickleMixin
     with ErrorMessagesMixin {
   final def apply(
-      endpointName: String,
+      actionKey: String,
       entityText: String
   ): Validated[ujson.Value] = {
     val entityObject: JSONObject = new JSONObject(entityText)
 
-    val schema: Schema = SchemasService.loadSchema(endpointName)
+    val schema: Schema = SchemasService.loadSchema(actionKey)
 
     Try(schema.validate(entityObject)) match {
       case Success(_) => {
