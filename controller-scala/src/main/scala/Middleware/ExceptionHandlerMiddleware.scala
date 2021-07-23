@@ -6,23 +6,24 @@ import akka.http.scaladsl.model.StatusCodes.{
 import cats.data.NonEmptyChain
 import java.time.LocalDateTime
 
-object HandleExceptionsMiddleware extends ErrorMixin with UpickleMixin {
+object ExceptionHandlerMiddleware extends ErrorMixin with UpickleMixin {
   final def apply(): Directive0 = extractRequest flatMap { request =>
     {
-      val timestamp: LocalDateTime = LocalDateTime.now()
-      val method: String           = request.method.name
-      val uri: String              = request.uri.toString
+      val timestamp: String = LocalDateTime.now.toString
+      val method: String    = request.method.name
+      val uri: String       = request.uri.toString
+      val cause: String     = getRootCause(e)
 
       handleExceptions(
         ExceptionHandler {
           case e: Exception => {
-            printError(s"EXCEPTION at $timestamp:")
+            printError(s"Exception at $timestamp:".toUpperCase)
 
             printError("* Request:")
             printError(s"$method $uri", isColoured = false)
 
             printError("* Cause:")
-            printError(getRootCause(e), isColoured = false)
+            printError(cause, isColoured = false)
 
             complete(
               InternalServerErrorStatus,

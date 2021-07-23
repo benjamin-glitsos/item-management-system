@@ -4,8 +4,8 @@ import akka.http.scaladsl.server._
 
 object Version1Routes {
   protected final val middlewares: Directive0 = (
-    HandleExceptionsMiddleware()
-      & HandleRejectionsMiddleware()
+    ExceptionHandleMiddleware()
+      & RejectionHandleMiddleware()
       & CorsMiddleware()
       & SessionMiddleware()
   )
