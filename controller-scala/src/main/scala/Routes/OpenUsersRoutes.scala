@@ -3,8 +3,9 @@ import akka.http.scaladsl.server.Route
 
 object OpenUsersRoutes extends UpickleMixin {
   final def apply(username: String): Route = get {
-    ValidationMiddleware("open-users") { body: ujson.Value =>
-      complete(UsersService.open(username))
+    (SetActionKeyMiddleware("open-users") & ValidationMiddleware()) {
+      body: ujson.Value =>
+        complete(UsersService.open(username))
     }
   }
 }

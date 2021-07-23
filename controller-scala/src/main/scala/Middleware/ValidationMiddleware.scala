@@ -9,11 +9,12 @@ object ValidationMiddleware
     extends ErrorMixin
     with UpickleMixin
     with RejectionMixin {
-  private final val whitelist = List("open-users", "open-items")
+  private final val whitelist =
+    List("open-users", "open-items", "logout-sessions")
 
   final def apply(): Directive1[ujson.Value] =
-    headerValueByName("X-Action-Key") flatMap { actionKey =>
-      extractStrictEntity(3.seconds) flatMap { (entity: HttpEntity.Strict) =>
+    headerValueByName("X-Action-Key") flatMap { actionKey: String =>
+      extractStrictEntity(3.seconds) flatMap { entity: HttpEntity.Strict =>
         if (whitelist contains actionKey) {
           provide(ujsonEmptyValue)
         } else {
