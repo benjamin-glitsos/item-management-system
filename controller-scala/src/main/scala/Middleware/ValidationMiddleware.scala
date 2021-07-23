@@ -20,7 +20,8 @@ object ValidationMiddleware extends ErrorMixin with UpickleMixin {
             case Valid(v) => provide(v)
             case Invalid(e) =>
               reject(
-                ValidationRejection(serialiseErrors(e))
+                ValidationRejection("TODO")
+                // serialise(e)
               )
           }
         }

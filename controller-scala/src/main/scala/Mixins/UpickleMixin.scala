@@ -53,17 +53,5 @@ trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
     }
   }
 
-  implicit final def serialisedErrorsUpickleMarshaller
-      : ToEntityMarshaller[SerialisedErrors] = {
-    Marshaller.withFixedContentType(`application/json`) { serialisedErrors =>
-      HttpEntity(
-        `application/json`,
-        write(
-          ujson.Obj("errors" -> read[ujson.Value](serialisedErrors.errors))
-        )
-      )
-    }
-  }
-
   final val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
 }

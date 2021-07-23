@@ -11,7 +11,7 @@ object RejectionHandleMiddleware extends ErrorMixin with UpickleMixin {
         case ValidationRejection(se: String, _) =>
           complete(
             BadRequest,
-            SerialisedErrors(se)
+            se
           )
         case MissingHeaderRejection(headerName: String) =>
           complete(
@@ -22,9 +22,7 @@ object RejectionHandleMiddleware extends ErrorMixin with UpickleMixin {
       .handleNotFound {
         complete(
           NotFound,
-          SerialisedErrors(
-            serialiseErrors(NonEmptyChain(NotFoundError()))
-          )
+          serialise(NonEmptyChain(NotFoundError()))
         )
       }
       .result()

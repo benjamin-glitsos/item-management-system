@@ -4,7 +4,6 @@ import upickle.default._
 import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
-import java.time.LocalDateTime
 import org.apache.commons.lang3.exception.ExceptionUtils._
 
 trait ErrorMixin extends UpickleMixin with StringMixin {
@@ -26,12 +25,6 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
       }
     )
 
-  final def serialiseErrors(errors: NonEmptyChain[Error]): String = {
-    write(
-      errors.toChain.toList
-    )
-  }
-
   final def getRootCause(throwable: Throwable): String = {
     val rootCause: String = {
       @scala.annotation.tailrec
@@ -50,5 +43,15 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
     } else {
       rootCause
     }
+  }
+
+  final def serialise(errors: NonEmptyChain[Error]): ujson.Value = {
+    ujson.Obj(
+      "errors" -> read[ujson.Value](
+        write(
+          errors.toChain.toList
+        )
+      )
+    )
   }
 }
