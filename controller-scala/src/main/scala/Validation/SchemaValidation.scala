@@ -26,6 +26,7 @@ object SchemaValidation
           .asScala
           .map(e => invalidInputError(e.getMessage()).invalidNec)
           .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
+      case Failure(e: Throwable) => throw e
     }
   }
 }

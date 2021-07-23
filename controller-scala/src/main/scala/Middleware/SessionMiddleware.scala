@@ -24,31 +24,38 @@ object SessionMiddleware extends SessionMixin with StringMixin with EpochMixin {
           maybeAuthenticationToken match {
             case None => pass // TODO: reject
             case Some(authenticationToken) => {
-              var (metakey: String, sessionToken: String) =
-                splitAuthenticationToken(authenticationToken)
-              val maybeSessionData: Option[String] =
-                Option(SessionsDAO.get(sessionNamespace(metakey)))
+              if (
+                authenticationToken == System.getenv(
+                  "SESSION_SUPER_AUTHENTICATION_TOKEN"
+                )
+              ) {
+                pass
+              } else {
+                var (metakey: String, sessionToken: String) =
+                  splitAuthenticationToken(authenticationToken)
+                val maybeSessionData: Option[String] =
+                  Option(SessionsDAO.get(sessionNamespace(metakey)))
 
-              maybeSessionData match {
-                case None => pass // TODO: reject
-                case Some(sessionData) => {
-                  val j: ujson.Value = read[ujson.Value](sessionData)
-                  val timestamp: Int = j("timestamp").num.toInt
-                  val token: String  = j("token").str
+                maybeSessionData match {
+                  case None => pass // TODO: reject
+                  case Some(sessionData) => {
+                    val j: ujson.Value = read[ujson.Value](sessionData)
+                    val timestamp: Int = j("timestamp").num.toInt
+                    val token: String  = j("token").str
 
-                  val isYoungerThanThirtyMinutes: Boolean =
-                    (epochNow() - timestamp) < minutes(30)
+                    val isYoungerThanThirtyMinutes: Boolean =
+                      (epochNow() - timestamp) < minutes(30)
 
-                  if (!isYoungerThanThirtyMinutes) {
-                    pass // TODO: reject
-                  } else if (token != sessionToken) {
-                    pass // TODO: reject
-                  } else {
-                    pass
+                    if (!isYoungerThanThirtyMinutes) {
+                      pass // TODO: reject
+                    } else if (token != sessionToken) {
+                      pass // TODO: reject
+                    } else {
+                      pass
+                    }
                   }
                 }
               }
-              pass
             }
           }
         }

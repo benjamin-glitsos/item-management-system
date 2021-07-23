@@ -24,7 +24,7 @@ services:
     env_file: .env
     restart: on-failure
     ports:
-      - ${REDIS_PORT}:6379
+      - ${SESSION_PORT}:6379
     tty: true
 
   controller_scala:

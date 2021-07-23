@@ -21,7 +21,7 @@ clean:
 
 rebuild:
 	@echo "$(PROJECT_ABBREV): Rebuilding  $(c)"
-	docker-compose up --force-recreate $(c)
+	docker-compose build --no-cache $(c)
 
 list:
 	@echo "$(PROJECT_ABBREV): Listing docker objects"
