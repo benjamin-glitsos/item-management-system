@@ -45,7 +45,7 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
     }
   }
 
-  final def serialise(errors: NonEmptyChain[Error]): ujson.Value = {
+  final def formatErrors(errors: NonEmptyChain[Error]): ujson.Value = {
     ujson.Obj(
       "errors" -> read[ujson.Value](
         write(

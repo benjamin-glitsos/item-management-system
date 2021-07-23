@@ -23,10 +23,6 @@ object SchemaValidation extends ValidationMixin with UpickleMixin {
           .asScala
           .map(e => InvalidInputError(e.getMessage()).invalidNec)
           .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
-      case _ =>
-        InvalidInputError(
-          "Input validation failed for an unknown reason."
-        ).invalidNec
     }
   }
 }

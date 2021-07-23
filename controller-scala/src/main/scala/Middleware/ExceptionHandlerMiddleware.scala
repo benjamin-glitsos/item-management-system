@@ -26,7 +26,7 @@ object ExceptionHandlerMiddleware extends ErrorMixin with UpickleMixin {
 
           complete(
             InternalServerErrorStatus,
-            serialise(NonEmptyChain(InternalServerError()))
+            formatErrors(NonEmptyChain(InternalServerError()))
           )
         }
       }
