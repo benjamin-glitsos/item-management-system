@@ -1,12 +1,11 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.model.StatusCodes.{
-  InternalServerError => InternalServerErrorStatus
-}
-import cats.data.NonEmptyChain
 import java.time.LocalDateTime
 
-object ExceptionHandlerMiddleware extends ErrorMixin with UpickleMixin {
+object ExceptionHandlerMiddleware
+    extends ErrorMixin
+    with UpickleMixin
+    with RejectionMixin {
   final def apply(): Directive0 = extractRequest flatMap { request =>
     handleExceptions(
       ExceptionHandler {
@@ -16,18 +15,9 @@ object ExceptionHandlerMiddleware extends ErrorMixin with UpickleMixin {
           val uri: String       = request.uri.toString
           val cause: String     = getRootCause(e)
 
-          printError(s"Exception at $timestamp:".toUpperCase)
+          printException(timestamp, method, uri, cause)
 
-          printError("* Request:")
-          printError(s"$method $uri", isColoured = false)
-
-          printError("* Cause:")
-          printError(cause, isColoured = false)
-
-          complete(
-            InternalServerErrorStatus,
-            formatErrors(NonEmptyChain(InternalServerError()))
-          )
+          internalServerErrorRejection()
         }
       }
     )

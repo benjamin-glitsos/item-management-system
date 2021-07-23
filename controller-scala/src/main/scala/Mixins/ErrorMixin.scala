@@ -1,4 +1,3 @@
-import org.typelevel.ci.{CIString => CaseInsensitive}
 import cats.data.NonEmptyChain
 import upickle.default._
 import org.fusesource.jansi.AnsiConsole
@@ -8,22 +7,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils._
 
 trait ErrorMixin extends UpickleMixin with StringMixin {
   AnsiConsole.systemInstall();
-
-  final val INTERNAL_SERVER_ERROR = CaseInsensitive("internal_server_error")
-  final val NOT_FOUND             = CaseInsensitive("not_found")
-  final val INVALID_INPUT         = CaseInsensitive("invalid_input")
-
-  final def printError(message: String, isColoured: Boolean = true): Unit =
-    System.err.println(
-      if (isColoured) {
-        ansi()
-          .fg(RED)
-          .a(message)
-          .reset()
-      } else {
-        message
-      }
-    )
 
   final def getRootCause(throwable: Throwable): String = {
     val rootCause: String = {
@@ -45,7 +28,7 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
     }
   }
 
-  final def formatErrors(errors: NonEmptyChain[Error]): ujson.Value = {
+  final def formatErrorsNec(errors: NonEmptyChain[Error]): ujson.Value = {
     ujson.Obj(
       "errors" -> read[ujson.Value](
         write(
@@ -53,5 +36,32 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
         )
       )
     )
+  }
+
+  final def printError(message: String, isColoured: Boolean = true): Unit =
+    System.err.println(
+      if (isColoured) {
+        ansi()
+          .fg(RED)
+          .a(message)
+          .reset()
+      } else {
+        message
+      }
+    )
+
+  final def printException(
+      timestamp: String,
+      method: String,
+      uri: String,
+      cause: String
+  ): Unit = {
+    printError(s"Exception at $timestamp:".toUpperCase)
+
+    printError("* Request:")
+    printError(s"$method $uri", isColoured = false)
+
+    printError("* Cause:")
+    printError(cause, isColoured = false)
   }
 }

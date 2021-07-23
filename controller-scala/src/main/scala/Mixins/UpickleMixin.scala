@@ -55,7 +55,7 @@ trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
 
   final val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
 
-  final def formatErrors(errors: ujson.Value): ujson.Value = {
+  final def formatErrorsJson(errors: ujson.Value): ujson.Value = {
     ujson.Obj(
       "errors" -> errors
     )

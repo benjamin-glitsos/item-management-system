@@ -6,7 +6,7 @@ import scala.util.{Try}
 object ListItemsRoutes
     extends ListMixin
     with UpickleMixin
-    with CustomHttpMethodsMixin {
+    with HttpMethodsMixin {
   final def apply(): Route = report {
     ValidationMiddleware("list-items") { body: ujson.Value =>
       {

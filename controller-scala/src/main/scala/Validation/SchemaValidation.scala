@@ -5,7 +5,10 @@ import upickle.default._
 import cats.implicits._
 import scala.util.{Try, Success, Failure}
 
-object SchemaValidation extends ValidationMixin with UpickleMixin {
+object SchemaValidation
+    extends ValidationMixin
+    with UpickleMixin
+    with ErrorMessagesMixin {
   final def apply(
       endpointName: String,
       entityText: String
@@ -21,7 +24,7 @@ object SchemaValidation extends ValidationMixin with UpickleMixin {
       case Failure(e: ValidationException) =>
         e.getCausingExceptions()
           .asScala
-          .map(e => InvalidInputError(e.getMessage()).invalidNec)
+          .map(e => invalidInputError(e.getMessage()).invalidNec)
           .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
     }
   }

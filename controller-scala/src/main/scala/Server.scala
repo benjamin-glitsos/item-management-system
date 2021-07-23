@@ -10,7 +10,7 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
+object Server extends SessionMixin with HttpMethodsMixin with ErrorMixin {
   AnsiConsole.systemInstall();
 
   final val apiUri: String =
