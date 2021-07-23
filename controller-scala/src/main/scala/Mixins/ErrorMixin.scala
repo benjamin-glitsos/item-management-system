@@ -28,13 +28,9 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
     }
   }
 
-  final def formatErrorsNec(errors: NonEmptyChain[Error]): ujson.Value = {
-    ujson.Obj(
-      "errors" -> read[ujson.Value](
-        write(
-          errors.toChain.toList
-        )
-      )
+  final def necToJson(errors: NonEmptyChain[Error]): ujson.Value = {
+    write(
+      errors.toChain.toList
     )
   }
 

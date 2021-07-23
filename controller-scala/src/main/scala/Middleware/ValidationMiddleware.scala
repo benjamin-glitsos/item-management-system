@@ -18,11 +18,11 @@ object ValidationMiddleware
         if (whitelist contains actionKey) {
           provide(ujsonEmptyValue)
         } else {
-          val entityText = entity.data.utf8String
+          val body: String = entity.data.utf8String
 
-          SchemaValidation(actionKey, entityText) match {
+          SchemaValidation(actionKey, body) match {
             case Valid(v)   => provide(v)
-            case Invalid(e) => badRequestRejection(formatErrorsNec(e))
+            case Invalid(e) => badRequestRejection(necToJson(e))
           }
         }
       }

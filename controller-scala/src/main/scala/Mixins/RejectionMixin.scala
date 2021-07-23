@@ -6,16 +6,20 @@ import cats.data.NonEmptyChain
 trait RejectionMixin extends ErrorMixin with ErrorMessagesMixin {
   final def internalServerErrorRejection(): StandardRoute = complete(
     InternalServerError,
-    formatErrorsNec(NonEmptyChain(internalServerError()))
+    wrapErrors(
+      necToJson(NonEmptyChain(internalServerError()))
+    )
   )
 
   final def notFoundRejection(): StandardRoute = complete(
     NotFound,
-    formatErrorsNec(NonEmptyChain(notFoundError()))
+    wrapErrors(
+      necToJson(NonEmptyChain(notFoundError()))
+    )
   )
 
   final def badRequestRejection(body: ujson.Value): StandardRoute = complete(
     BadRequest,
-    body
+    wrapErrors(body)
   )
 }
