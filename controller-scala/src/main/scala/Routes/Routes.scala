@@ -4,7 +4,7 @@ import akka.http.scaladsl.server.Route
 
 object Routes {
   final def apply(): Route =
-    redirectToTrailingSlashIfMissing(StatusCodes.MovedPermanently) {
+    (ExceptionHandlerMiddleware() & CorsMiddleware() & RedirectTrailingSlashMiddleware()) {
       concat(
         pathPrefix("api")(ApiRoutes())
       )
