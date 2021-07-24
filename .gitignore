@@ -9,6 +9,10 @@
 controller-scala/.metals/
 controller-scala/dumps/
 controller-scala/project/
+controller-scala/project/metals.sbt
+controller-scala/project/target/
+controller-scala/project/project/
+controller-scala/project/.bloop/
 controller-scala/public/
 controller-scala/target/
 
