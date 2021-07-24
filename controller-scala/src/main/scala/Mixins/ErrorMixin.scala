@@ -49,6 +49,9 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
   final def printException(e: ServerError): Unit = {
     printError(s"Exception at ${e.timestamp}:".toUpperCase)
 
+    printError("* Action:")
+    printError(e.actionKey.orNull, isColoured = false)
+
     printError("* Request:")
     printError(s"${e.method} ${e.uri}", isColoured = false)
 

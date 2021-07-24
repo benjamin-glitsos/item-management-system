@@ -13,11 +13,12 @@ object LogLayoutXml extends PatternLayout {
     buffer.append(s"""
     |<error>
     |    <timestamp>${e.timestamp}</timestamp>
+    |    <action>${e.actionKey.orNull}</action>
     |    <method>${e.method}</method>
     |    <uri>${e.uri}</uri>
-    |    <cause>
+    |    <message>
     |        ${e.cause}
-    |    </cause>
+    |    </message>
     |</error>
     |""")
 

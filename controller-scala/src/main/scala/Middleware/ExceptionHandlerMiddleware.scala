@@ -12,6 +12,7 @@ object ExceptionHandlerMiddleware
         case e: Exception => {
           val error: ServerError = ServerError(
             timestamp = LocalDateTime.now.toString,
+            actionKey = request.getHeader("X-Action-Key"),
             method = request.method.name,
             uri = request.uri.toString,
             cause = getRootCause(e)
