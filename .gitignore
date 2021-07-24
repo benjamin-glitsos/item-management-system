@@ -7,7 +7,6 @@
 # Controller-Scala --------------------
 
 controller-scala/.metals/
-controller-scala/.metals/metals.lock.db
 controller-scala/dumps/
 controller-scala/project/
 controller-scala/project/metals.sbt
