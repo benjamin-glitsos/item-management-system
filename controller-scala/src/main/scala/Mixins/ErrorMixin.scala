@@ -46,18 +46,13 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
       }
     )
 
-  final def printException(
-      timestamp: String,
-      method: String,
-      uri: String,
-      cause: String
-  ): Unit = {
-    printError(s"Exception at $timestamp:".toUpperCase)
+  final def printException(e: ServerError): Unit = {
+    printError(s"Exception at ${e.timestamp}:".toUpperCase)
 
     printError("* Request:")
-    printError(s"$method $uri", isColoured = false)
+    printError(s"${e.method} ${e.uri}", isColoured = false)
 
     printError("* Cause:")
-    printError(cause, isColoured = false)
+    printError(e.cause, isColoured = false)
   }
 }

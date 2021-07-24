@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <File name="ServerErrorsFile" fileName="server-errors.log">
+            <!-- <PatternLayout> -->
+            <!--     <Pattern>%d %p %c{1.} [%t] %m%n</Pattern> -->
+            <!-- </PatternLayout> -->
+            <layout class="com.log4j.custom.LogLayoutXml" />
+        </File>
+        <Async name="Async">
+            <AppenderRef ref="ServerErrorsFile"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="error">
+            <AppenderRef ref="Async"/>
+        </Root>
+    </Loggers>
+</Configuration>

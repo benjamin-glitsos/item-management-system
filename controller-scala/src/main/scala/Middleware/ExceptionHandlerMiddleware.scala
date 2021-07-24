@@ -10,12 +10,14 @@ object ExceptionHandlerMiddleware
     handleExceptions(
       ExceptionHandler {
         case e: Exception => {
-          val timestamp: String = LocalDateTime.now.toString
-          val method: String    = request.method.name
-          val uri: String       = request.uri.toString
-          val cause: String     = getRootCause(e)
+          val error: ServerError = ServerError(
+            timestamp = LocalDateTime.now.toString,
+            method = request.method.name,
+            uri = request.uri.toString,
+            cause = getRootCause(e)
+          )
 
-          printException(timestamp, method, uri, cause)
+          printException(error)
 
           internalServerErrorRejection()
         }
