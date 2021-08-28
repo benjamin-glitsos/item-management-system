@@ -1,25 +1,20 @@
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import java.time.LocalDateTime
+import org.apache.logging.log4j.{LogManager, Logger};
 
 object ExceptionHandlerMiddleware
     extends ErrorMixin
     with UpickleMixin
     with RejectionMixin {
+  private final val log: Logger =
+    LogManager.getLogger(this.getClass.getSimpleName)
+
   final def apply(): Directive0 = extractRequest flatMap { request =>
     handleExceptions(
       ExceptionHandler {
         case e: Exception => {
-          val error: ServerError = ServerError(
-            timestamp = LocalDateTime.now.toString,
-            actionKey = request.getHeader("X-Action-Key"),
-            method = request.method.name,
-            uri = request.uri.toString,
-            cause = getRootCause(e)
-          )
-
-          printException(error)
-
+          log.error(e)
           internalServerErrorRejection()
         }
       }

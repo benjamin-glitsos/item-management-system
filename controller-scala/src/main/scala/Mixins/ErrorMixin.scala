@@ -8,26 +8,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils._
 trait ErrorMixin extends UpickleMixin with StringMixin {
   AnsiConsole.systemInstall();
 
-  final def getRootCause(throwable: Throwable): String = {
-    val rootCause: String = {
-      @scala.annotation.tailrec
-      def inner(t: Throwable, v: Vector[Throwable]): Vector[Throwable] = {
-        val tail = v :+ t
-        if (t.getCause == null) tail else inner(t.getCause, tail)
-      }
-
-      val causes: Vector[Throwable] = inner(throwable, Vector[Throwable]())
-
-      causes.map(getStackTrace(_)).mkString("\n")
-    }
-
-    if (isEmpty(rootCause)) {
-      "None"
-    } else {
-      rootCause
-    }
-  }
-
   final def necToJson(errors: NonEmptyChain[Error]): ujson.Value = {
     write(
       errors.toChain.toList
@@ -45,17 +25,4 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
         message
       }
     )
-
-  final def printException(e: ServerError): Unit = {
-    printError(s"Exception at ${e.timestamp}:".toUpperCase)
-
-    printError("* Action:")
-    printError(e.actionKey.orNull, isColoured = false)
-
-    printError("* Request:")
-    printError(s"${e.method} ${e.uri}", isColoured = false)
-
-    printError("* Cause:")
-    printError(e.cause, isColoured = false)
-  }
 }
