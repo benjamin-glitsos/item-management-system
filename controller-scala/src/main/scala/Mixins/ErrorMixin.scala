@@ -8,4 +8,21 @@ trait ErrorMixin extends UpickleMixin with StringMixin {
       errors.toChain.toList
     )
   }
+
+  final def getRootCause(throwable: Throwable): String = {
+    val rootCause: String = {
+      @scala.annotation.tailrec
+      def inner(t: Throwable, v: Vector[Throwable]): Vector[Throwable] = {
+        val tail = v :+ t
+        if (t.getCause == null) tail else inner(t.getCause, tail)
+      }
+      val causes: Vector[Throwable] = inner(throwable, Vector[Throwable]())
+      causes.map(getStackTrace(_)).mkString("\n")
+    }
+    if (isEmpty(rootCause)) {
+      "None"
+    } else {
+      rootCause
+    }
+  }
 }

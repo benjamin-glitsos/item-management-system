@@ -45,7 +45,7 @@ object UsersSeeder
 
       val firstName: String = person.getFirstName()
       val lastName: String  = person.getLastName()
-      val otherNames: Option[String] = emptyStringToOption(
+      val otherNames: Option[String] = maybeEmpty(
         repeatedRunArray[String](
           randomGaussianDiscrete(min = 0, max = 2),
           () => {

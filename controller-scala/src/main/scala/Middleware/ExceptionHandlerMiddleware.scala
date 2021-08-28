@@ -12,7 +12,7 @@ object ExceptionHandlerMiddleware
     ExceptionHandler {
       case e: Exception => {
         log.info(e)
-        println(e.getCause())
+        println(getRootCause(e))
         internalServerErrorRejection()
       }
     }
