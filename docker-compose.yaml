@@ -36,6 +36,7 @@ services:
       - ./controller-scala:/app
       - ./files/public:/app/files/public
       - ./files/private:/app/files/private
+      - /var/log/ims:/var/log
     env_file: .env
     stdin_open: true
     depends_on:

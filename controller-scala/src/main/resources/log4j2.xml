@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="root-path">/var/log/ims</Property>
-        <Property name="errors-pattern">%p %d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %c{1} %t - %m%n</Property>
+        <Property name="root-path">/var/log</Property>
+        <Property name="errors-pattern">%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %p %c{1} %t - %m%n</Property>
     </Properties>
     <Appenders>
         <Console name="console-appender" target="SYSTEM_OUT">
