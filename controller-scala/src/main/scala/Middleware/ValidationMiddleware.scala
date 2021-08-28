@@ -14,7 +14,7 @@ object ValidationMiddleware
 
   final def apply(): Directive1[ujson.Value] =
     headerValueByName("X-Action-Key") flatMap { actionKey: String =>
-      extractStrictEntity(3.seconds) flatMap { entity: HttpEntity.Strict =>
+      extractStrictEntity(1.seconds) flatMap { entity: HttpEntity.Strict =>
         if (whitelist contains actionKey) {
           provide(ujsonEmptyValue)
         } else {
