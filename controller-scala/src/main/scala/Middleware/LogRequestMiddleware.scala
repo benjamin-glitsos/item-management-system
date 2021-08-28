@@ -8,7 +8,8 @@ import org.apache.logging.log4j.{LogManager, Logger};
 object LogRequestMiddleware
     extends ErrorMixin
     with UpickleMixin
-    with RejectionMixin {
+    with RejectionMixin
+    with StringMixin {
   private final val log: Logger = LogManager.getLogger("request-logger")
 
   final def apply(): Directive0 =
@@ -16,11 +17,10 @@ object LogRequestMiddleware
       mapRequest((req: HttpRequest) => {
         log.info(
           List(
-            req.hashCode,
             req.method.name,
-            req.uri,
-            req.encoding.value,
-            entity.data.utf8String
+            req.uri.path.toString,
+            doubleQuote(entity.contentType.value),
+            inline(entity.data.utf8String)
           ).mkString(" ")
         )
         req
