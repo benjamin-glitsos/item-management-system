@@ -15,6 +15,7 @@ object ExceptionHandlerMiddleware
       ExceptionHandler {
         case e: Exception => {
           log.error(e)
+          println(e.cause)
           internalServerErrorRejection()
         }
       }

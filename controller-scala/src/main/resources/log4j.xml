@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+<Configuration status="ERROR">
     <Properties>
-        <Property name="basePath">logs</Property>
+        <Property name="root-path">/var/log/ims</Property>
+        <Property name="standard-pattern">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Property>
     </Properties>
     <Appenders>
-        <File name="FILE" fileName="${basePath}/errors.log" append="true">
-            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
-        </File>
-        <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+        <Console name="console-appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${standard-pattern}" />
         </Console>
+        <File name="file-appender" fileName="${root-path}/errors.log" append="true">
+            <PatternLayout pattern="${standard-pattern}" />
+        </File>
     </Appenders>
     <Loggers>
-        <Logger name="com.jcg" level="debug" />
-        <Root level="info">
-            <AppenderRef ref="STDOUT" />
-            <AppenderRef ref="FILE" />
+        <Root level="debug">
+            <AppenderRef ref="console-appender" />
+            <AppenderRef ref="file-appender" />
         </Root>
     </Loggers>
 </Configuration>
