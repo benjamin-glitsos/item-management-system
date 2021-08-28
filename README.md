@@ -25,7 +25,3 @@ A full-stack information system with a dockerised Model&ndash;Model&ndash;View&n
 * Trigram indexes speed up text search
 * Domain constraints ensure data integrity
 * Fourth normal form (4NF)
-
-### Session-Redis Container
-
-* Stores user-login sessions
