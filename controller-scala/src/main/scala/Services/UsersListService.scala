@@ -57,8 +57,8 @@ trait UsersListService
                 val firstName: String          = x._7
                 val lastName: String           = x._8
                 val otherNames: Option[String] = x._9
-                val createdAt: String          = x._10
-                val editedAt: Option[String]   = x._11
+                val createdAt: Int             = x._10
+                val editedAt: Option[Int]      = x._11
                 val name: String               = formatName(firstName, lastName, otherNames)
 
                 UsersList(username, name, emailAddress, createdAt, editedAt)

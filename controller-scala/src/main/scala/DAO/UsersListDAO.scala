@@ -74,8 +74,8 @@ trait UsersListDAO extends ListDAOMixin {
             String,
             String,
             Option[String],
-            String,
-            Option[String]
+            Int,
+            Option[Int]
         )
       ]
       .to[List]

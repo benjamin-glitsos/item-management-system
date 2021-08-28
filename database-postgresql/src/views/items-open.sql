@@ -15,11 +15,11 @@ CREATE VIEW items_open AS
       , m.opens
       , m.edits
       , m.is_deleted
-      , EXTRACT(epoch FROM m.created_at) AS created_at
+      , m.created_at
       , m.created_by
-      , EXTRACT(epoch FROM m.edited_at) AS edited_at
+      , m.edited_at
       , m.edited_by
-      , EXTRACT(epoch FROM m.deleted_at) AS deleted_at
+      , m.deleted_at
       , m.deleted_by
     FROM items i
     INNER JOIN meta_open m ON i.meta_id = m.id;
