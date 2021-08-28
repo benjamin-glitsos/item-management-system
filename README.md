@@ -8,6 +8,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 * JSON Schema is used for back-end and front-end validation, and custom properties are used for custom validation messages
 * RESTful API design
 * Strong type-safety by using monads and other Algebraic Data Types, and an SQL query builder
+* Error logging
 * Object-oriented multiple-trait-inheritance pattern
 * Optimised to minimise round-trips and network load
 
