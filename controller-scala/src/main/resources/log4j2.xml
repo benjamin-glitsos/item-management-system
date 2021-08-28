@@ -16,10 +16,10 @@
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="request-logger" level="info" additivity="false">
+        <Logger name="request-logger" level="INFO" additivity="false">
             <AppenderRef ref="request-file-appender" />
         </Logger>
-        <Logger name="error-logger" level="info" additivity="false">
+        <Logger name="error-logger" level="INFO" additivity="false">
             <AppenderRef ref="error-console-appender" />
             <AppenderRef ref="error-file-appender" />
         </Logger>
