@@ -1,12 +1,11 @@
 import java.util.Date
-import java.time.LocalDateTime
 import upickle.default._
 import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model.{HttpEntity}
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import org.typelevel.ci.CIString
 
-trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
+trait UpickleMixin extends DateMixin {
   implicit def OptionWriter[T: Writer]: Writer[Option[T]] =
     implicitly[Writer[T]].comap[Option[T]] {
       case None    => null.asInstanceOf[T]
@@ -25,12 +24,6 @@ trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
     readwriter[ujson.Value].bimap[Date](
       x => dateFormat(x),
       json => dateParse(json.toString)
-    )
-
-  implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
-    readwriter[ujson.Value].bimap[LocalDateTime](
-      x => x.toString,
-      json => localDateTimeParse(json.toString)
     )
 
   implicit final val upickleCaseInsensitive: ReadWriter[CIString] =
