@@ -1,3 +1,4 @@
+import java.util.Date
 import doobie.Fragment
 import doobie.Fragments.{whereOrOpt}
 import doobie._
@@ -63,7 +64,7 @@ trait ItemsListDAO extends ListDAOMixin {
             String,
             String,
             Option[String],
-            String,
+            Date,
             Int,
             Option[Int]
         )

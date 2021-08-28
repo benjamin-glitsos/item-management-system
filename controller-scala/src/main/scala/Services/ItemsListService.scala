@@ -39,7 +39,7 @@ trait ItemsListService
                 val sku: String                 = x._5
                 val name: String                = x._6
                 val description: Option[String] = x._7
-                val acquisitionDate: Date       = dateParse(x._8)
+                val acquisitionDate: Date       = x._8
                 val createdAt: Int              = x._9
                 val editedAt: Option[Int]       = x._10
 
