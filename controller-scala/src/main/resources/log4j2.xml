@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="root-path">/var/log</Property>
-        <Property name="errors-pattern">%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %p %c{1} %t - %m%n</Property>
+        <Property name="path">/var/log</Property>
+        <Property name="pattern">%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %t - %m%n</Property>
     </Properties>
     <Appenders>
-        <Console name="console-appender" target="SYSTEM_OUT">
-            <PatternLayout pattern="${errors-pattern}" />
+        <File name="request-file-appender" fileName="${path}/request.log" append="true">
+            <PatternLayout pattern="${pattern}" />
+        </File>
+        <Console name="error-console-appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}" />
         </Console>
-        <File name="file-appender" fileName="${root-path}/errors.log" append="true">
-            <PatternLayout pattern="${errors-pattern}" />
+        <File name="error-file-appender" fileName="${path}/error.log" append="true">
+            <PatternLayout pattern="${pattern}" />
         </File>
     </Appenders>
     <Loggers>
-        <Root level="trace">
-            <AppenderRef ref="console-appender" />
-            <AppenderRef ref="file-appender" />
-        </Root>
+        <Logger name="request-logger" level="info" additivity="false">
+            <AppenderRef ref="request-file-appender" />
+        </Logger>
+        <Logger name="error-logger" level="info" additivity="false">
+            <AppenderRef ref="error-console-appender" />
+            <AppenderRef ref="error-file-appender" />
+        </Logger>
     </Loggers>
 </Configuration>
