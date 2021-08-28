@@ -8,14 +8,14 @@ object ExceptionHandlerMiddleware
     with UpickleMixin
     with RejectionMixin {
   private final val log: Logger =
-    LogManager.getLogger(this.getClass.getSimpleName)
+    LogManager.getLogger(this.getClass.getName)
 
   final def apply(): Directive0 = extractRequest flatMap { request =>
     handleExceptions(
       ExceptionHandler {
         case e: Exception => {
           log.error(e)
-          println(e.cause)
+          println(e.getCause())
           internalServerErrorRejection()
         }
       }
