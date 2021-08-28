@@ -4,6 +4,7 @@ import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.model.HttpEntity
 import scala.concurrent.duration._
 import org.apache.logging.log4j.{LogManager, Logger};
+import upickle.default._
 
 object LogRequestMiddleware
     extends ErrorMixin
@@ -15,12 +16,13 @@ object LogRequestMiddleware
   final def apply(): Directive0 =
     extractStrictEntity(1.seconds) flatMap { entity: HttpEntity.Strict =>
       mapRequest((req: HttpRequest) => {
+        val body: String = write(read[ujson.Value](entity.data.utf8String))
         log.info(
           List(
             req.method.name,
             req.uri.path.toString,
-            doubleQuote(entity.contentType.value),
-            inline(entity.data.utf8String)
+            entity.contentType.value,
+            body
           ).mkString(" ")
         )
         req
