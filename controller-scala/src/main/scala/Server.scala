@@ -10,7 +10,7 @@ import org.fusesource.jansi.AnsiConsole
 import org.fusesource.jansi.Ansi._
 import org.fusesource.jansi.Ansi.Color._
 
-object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
+object Server extends SessionMixin with HttpMethodsMixin {
   AnsiConsole.systemInstall();
 
   final val apiUri: String =
@@ -41,17 +41,17 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
     System.out.println(
       ansi()
         .a("\n")
-        .a(FilesDAO.open("banner.txt"))
-        .fg(MAGENTA)
+        .a(FilesDAO.openPrivateFile("resources/banner.txt"))
+        .fg(BLUE)
         .a(System.getenv("PROJECT_NAME").toUpperCase)
         .a("\n")
         .a("\n")
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a("The API is online at ")
         .bold()
         .a(s"$apiUri/")
         .a("\n")
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a("The Admin Panel is online at ")
         .bold()
         .a(s"$adminUri/")
@@ -62,14 +62,15 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
     var terminal_input: String = new String
     do {
       if (terminal_input != new String && terminal_input != "exit") {
-        printError(s"The command '$terminal_input' does not exist")
+        println(s"The command '$terminal_input' does not exist")
       }
 
       terminal_input = StdIn
         .readLine(
           ansi()
-            .fg(MAGENTA)
-            .a("Use 'exit' to shutdown the server... \n")
+            .fg(BLUE)
+            .a("Use 'exit' to shutdown the server... ")
+            .a("\n")
             .reset()
             .toString
         )
@@ -84,7 +85,7 @@ object Server extends SessionMixin with CustomHttpMethodsMixin with ErrorMixin {
     System.out.println(
       ansi()
         .a("\n")
-        .fg(MAGENTA)
+        .fg(BLUE)
         .a("Server shutdown complete.")
         .reset()
         .a("\n")

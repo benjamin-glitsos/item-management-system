@@ -2,7 +2,10 @@ import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object UsersSeeder extends EntitySeederMixin with OptionMixin {
+object UsersSeeder
+    extends EntitySeederMixin
+    with OptionMixin
+    with MarkdownSeederMixin {
   override final val count: Int = 15
 
   final def clearData(): Unit = {
@@ -20,7 +23,7 @@ object UsersSeeder extends EntitySeederMixin with OptionMixin {
       lastName = System.getenv("DEMO_USER_LAST_NAME"),
       otherNames = sys.env.get("DEMO_USER_OTHER_NAMES"),
       password = System.getenv("DEMO_USER_PASSWORD"),
-      additionalNotes = MarkdownSeeder(text)
+      additionalNotes = generateMarkdown(text)
     )
   }
 
@@ -42,7 +45,7 @@ object UsersSeeder extends EntitySeederMixin with OptionMixin {
 
       val firstName: String = person.getFirstName()
       val lastName: String  = person.getLastName()
-      val otherNames: Option[String] = emptyStringToOption(
+      val otherNames: Option[String] = maybeEmpty(
         repeatedRunArray[String](
           randomGaussianDiscrete(min = 0, max = 2),
           () => {
@@ -52,7 +55,7 @@ object UsersSeeder extends EntitySeederMixin with OptionMixin {
         ).mkString(" ").trim()
       )
       val password: String                = randomPrintable(length = 15)
-      val additionalNotes: Option[String] = MarkdownSeeder(text)
+      val additionalNotes: Option[String] = generateMarkdown(text)
 
       UsersService.create(
         username,

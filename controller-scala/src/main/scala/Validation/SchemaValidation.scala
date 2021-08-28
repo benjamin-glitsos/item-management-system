@@ -5,14 +5,17 @@ import upickle.default._
 import cats.implicits._
 import scala.util.{Try, Success, Failure}
 
-object SchemaValidation extends ValidationMixin with UpickleMixin {
+object SchemaValidation
+    extends ValidationMixin
+    with UpickleMixin
+    with ErrorMessagesMixin {
   final def apply(
-      endpointName: String,
+      actionKey: String,
       entityText: String
   ): Validated[ujson.Value] = {
     val entityObject: JSONObject = new JSONObject(entityText)
 
-    val schema: Schema = SchemasService.loadSchema(endpointName)
+    val schema: Schema = SchemasService.loadSchema(actionKey)
 
     Try(schema.validate(entityObject)) match {
       case Success(_) => {
@@ -21,12 +24,9 @@ object SchemaValidation extends ValidationMixin with UpickleMixin {
       case Failure(e: ValidationException) =>
         e.getCausingExceptions()
           .asScala
-          .map(e => InvalidInputError(e.getMessage()).invalidNec)
+          .map(e => invalidInputError(e.getMessage()).invalidNec)
           .fold(ujsonEmptyValue.validNec) { (a, b) => a <* b }
-      case _ =>
-        InvalidInputError(
-          "Input validation failed for an unknown reason."
-        ).invalidNec
+      case Failure(e: Throwable) => throw e
     }
   }
 }

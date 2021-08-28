@@ -5,13 +5,14 @@ import akka.http.scaladsl.model.StatusCodes.NoContent
 
 object DeleteUsersRoutes {
   final def apply(): Route = delete {
-    ValidationMiddleware("delete-users") { body: ujson.Value =>
-      {
-        val method: String          = body("method").str
-        val usernames: List[String] = read[List[String]](body("usernames"))
+    (SetActionKeyMiddleware("delete-users") & ValidationMiddleware()) {
+      body: ujson.Value =>
+        {
+          val method: String          = body("method").str
+          val usernames: List[String] = read[List[String]](body("usernames"))
 
-        complete(NoContent, UsersService.delete(method, usernames))
-      }
+          complete(NoContent, UsersService.delete(method, usernames))
+        }
     }
   }
 }

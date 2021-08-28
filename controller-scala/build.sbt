@@ -1,4 +1,4 @@
-name := System.getenv("PROJECT_NAME")
+name := "Item Management System"
 version := "1.0"
 scalaVersion := "2.13.0"
 
@@ -11,6 +11,7 @@ val caseInsensitiveVersion = "0.3.0"
 val akkaVersion = "2.6.8"
 val akkaHttpVersion = "10.2.2"
 val jedisVersion = "3.6.0"
+val log4jVersion = "2.14.1"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -19,11 +20,22 @@ resolvers := Seq(
 )
 
 libraryDependencies ++= Seq(
-    "org.tpolecat" %% "doobie-core",
-    "org.tpolecat" %% "doobie-hikari",
-    "org.tpolecat" %% "doobie-postgres",
-    "org.tpolecat" %% "doobie-quill"
-).map(_ % doobieVersion)
+    "doobie-core",
+    "doobie-hikari",
+    "doobie-postgres",
+    "doobie-quill"
+).map("org.tpolecat" %% _ % doobieVersion)
+
+libraryDependencies ++= Seq(
+    "log4j-api",
+    "log4j-core",
+).map("org.apache.logging.log4j" % _ % log4jVersion)
+
+libraryDependencies ++= Seq(
+    "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
+    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+    "com.typesafe.akka" %% "akka-http" % akkaHttpVersion
+)
 
 libraryDependencies ++= Seq(
     "com.devskiller" % "jfairy" % jfairyVersion,
@@ -32,12 +44,6 @@ libraryDependencies ++= Seq(
     "com.lihaoyi" %% "upickle" % uPickleVersion,
     "org.typelevel" %% "case-insensitive" % caseInsensitiveVersion,
     "redis.clients" % "jedis" % jedisVersion
-)
-
-libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
-    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
-    "com.typesafe.akka" %% "akka-http" % akkaHttpVersion
 )
 
 scalacOptions := Seq(

@@ -1,0 +1,4 @@
+CREATE DOMAIN int_pve AS SMALLINT
+CHECK (
+    VALUE >= 0
+);

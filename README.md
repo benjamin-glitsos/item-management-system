@@ -8,6 +8,7 @@ A full-stack information system with a dockerised Model&ndash;Model&ndash;View&n
 * JSON Schema is used for back-end and front-end validation, and custom properties are used for custom validation messages
 * RESTful API design
 * Strong type-safety by using monads and other Algebraic Data Types, and an SQL query builder
+* Middlewares used for logging, validation, and more
 * Object-oriented multiple-trait-inheritance pattern
 * Optimised to minimise round-trips and network load
 
@@ -25,10 +26,6 @@ A full-stack information system with a dockerised Model&ndash;Model&ndash;View&n
 * Domain constraints ensure data integrity
 * Fourth normal form (4NF)
 
-### Session&ndash;Redis Container
+### Session-Redis Container
 
 * Stores user-login sessions
-
-### License
-
-Apache License 2.0

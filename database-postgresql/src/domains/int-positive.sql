@@ -1,4 +1,0 @@
-CREATE DOMAIN int_positive AS SMALLINT
-CHECK (
-    VALUE >= 0
-);

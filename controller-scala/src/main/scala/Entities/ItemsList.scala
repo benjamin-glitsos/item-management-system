@@ -5,6 +5,6 @@ case class ItemsList(
     name: String,
     description: Option[String],
     acquisition_date: Date,
-    created_at: String,
-    edited_at: Option[String]
+    created_at: Int,
+    edited_at: Option[Int]
 )

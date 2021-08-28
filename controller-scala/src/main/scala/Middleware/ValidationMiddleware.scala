@@ -5,24 +5,26 @@ import akka.http.scaladsl.model.HttpEntity
 import cats.implicits._
 import cats.data.Validated.{Valid, Invalid}
 
-object ValidationMiddleware extends ErrorMixin with UpickleMixin {
-  private final val staticEndpoints = List("open-users", "open-items")
+object ValidationMiddleware
+    extends ErrorMixin
+    with UpickleMixin
+    with RejectionMixin {
+  private final val whitelist =
+    List("open-users", "open-items", "logout-sessions")
 
-  final def apply(endpointName: String): Directive1[ujson.Value] =
-    extractStrictEntity(3.seconds)
-      .flatMap((entity: HttpEntity.Strict) => {
-        if (staticEndpoints contains endpointName) {
+  final def apply(): Directive1[ujson.Value] =
+    headerValueByName("X-Action-Key") flatMap { actionKey: String =>
+      extractStrictEntity(1.seconds) flatMap { entity: HttpEntity.Strict =>
+        if (whitelist contains actionKey) {
           provide(ujsonEmptyValue)
         } else {
-          val entityText = entity.data.utf8String
+          val body: String = entity.data.utf8String
 
-          SchemaValidation(endpointName, entityText) match {
-            case Valid(v) => provide(v)
-            case Invalid(e) =>
-              reject(
-                ValidationRejection(serialiseErrors(e))
-              )
+          SchemaValidation(actionKey, body) match {
+            case Valid(v)   => provide(v)
+            case Invalid(e) => badRequestRejection(necToJson(e))
           }
         }
-      })
+      }
+    }
 }

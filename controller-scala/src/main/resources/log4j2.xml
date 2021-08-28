@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="path">/var/log</Property>
+        <Property name="pattern">%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %t - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <File name="request-file-appender" fileName="${path}/request.log" append="true">
+            <PatternLayout pattern="${pattern}" />
+        </File>
+        <Console name="error-console-appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}" />
+        </Console>
+        <File name="error-file-appender" fileName="${path}/error.log" append="true">
+            <PatternLayout pattern="${pattern}" />
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="request-logger" level="info" additivity="false">
+            <AppenderRef ref="request-file-appender" />
+        </Logger>
+        <Logger name="error-logger" level="info" additivity="false">
+            <AppenderRef ref="error-console-appender" />
+            <AppenderRef ref="error-file-appender" />
+        </Logger>
+    </Loggers>
+</Configuration>

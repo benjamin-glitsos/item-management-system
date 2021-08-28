@@ -1,12 +1,11 @@
 import java.util.Date
-import java.time.LocalDateTime
 import upickle.default._
 import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model.{HttpEntity}
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import org.typelevel.ci.CIString
 
-trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
+trait UpickleMixin extends DateMixin {
   implicit def OptionWriter[T: Writer]: Writer[Option[T]] =
     implicitly[Writer[T]].comap[Option[T]] {
       case None    => null.asInstanceOf[T]
@@ -25,12 +24,6 @@ trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
     readwriter[ujson.Value].bimap[Date](
       x => dateFormat(x),
       json => dateParse(json.toString)
-    )
-
-  implicit final val upickleLocalDateTime: ReadWriter[LocalDateTime] =
-    readwriter[ujson.Value].bimap[LocalDateTime](
-      x => x.toString,
-      json => localDateTimeParse(json.toString)
     )
 
   implicit final val upickleCaseInsensitive: ReadWriter[CIString] =
@@ -53,17 +46,11 @@ trait UpickleMixin extends DateMixin with LocalDateTimeMixin {
     }
   }
 
-  implicit final def serialisedErrorsUpickleMarshaller
-      : ToEntityMarshaller[SerialisedErrors] = {
-    Marshaller.withFixedContentType(`application/json`) { serialisedErrors =>
-      HttpEntity(
-        `application/json`,
-        write(
-          ujson.Obj("errors" -> read[ujson.Value](serialisedErrors.errors))
-        )
-      )
-    }
-  }
-
   final val ujsonEmptyValue: ujson.Value = write(ujson.Obj())
+
+  final def wrapErrors(errors: ujson.Value): ujson.Value = {
+    ujson.Obj(
+      "errors" -> errors
+    )
+  }
 }
