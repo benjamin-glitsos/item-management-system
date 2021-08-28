@@ -16,10 +16,10 @@ case class ItemsOpen(
     opens: Int,
     edits: Int,
     is_deleted: Boolean,
-    created_at: String,
+    created_at: Int,
     created_by: String,
-    edited_at: Option[String],
+    edited_at: Option[Int],
     edited_by: Option[String],
-    deleted_at: Option[String],
+    deleted_at: Option[Int],
     deleted_by: Option[String]
 )

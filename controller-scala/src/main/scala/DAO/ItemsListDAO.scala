@@ -64,8 +64,8 @@ trait ItemsListDAO extends ListDAOMixin {
             String,
             Option[String],
             String,
-            String,
-            Option[String]
+            Int,
+            Option[Int]
         )
       ]
       .to[List]
