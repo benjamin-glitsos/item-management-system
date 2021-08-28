@@ -1,3 +1,4 @@
+import java.util.UUID
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import scala.jdk.OptionConverters._
@@ -31,7 +32,7 @@ object SessionMiddleware extends SessionMixin with StringMixin with EpochMixin {
               ) {
                 pass
               } else {
-                var (metakey: String, sessionToken: String) =
+                var (metakey: String, sessionToken: UUID) =
                   splitAuthenticationToken(authenticationToken)
                 val maybeSessionData: Option[String] =
                   Option(SessionsDAO.get(sessionNamespace(metakey)))
