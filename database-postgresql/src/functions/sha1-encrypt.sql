@@ -1,4 +1,4 @@
-CREATE FUNCTION sha1_encrypt(secret text)
+CREATE FUNCTION sha1_encrypt(s text)
 RETURNS text AS $$
-    SELECT encode(digest(secret, 'sha1'), 'hex')
+    SELECT crypt(s, gen_salt('bf'));
 $$ LANGUAGE SQL STRICT IMMUTABLE;
