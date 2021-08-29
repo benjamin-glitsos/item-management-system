@@ -29,7 +29,7 @@ BEGIN
       , _first_name
       , _last_name
       , _other_names
-      , sha1_encrypt(_password)
+      , encrypt(_password)
       , (SELECT id FROM insert_meta)
     );
 END;

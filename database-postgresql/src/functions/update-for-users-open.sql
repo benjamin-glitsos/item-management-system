@@ -17,7 +17,7 @@ BEGIN
           , first_name    = new_first_name
           , last_name     = new_last_name
           , other_names   = new_other_names
-          , password      = sha1_encrypt(new_password)
+          , password      = encrypt(new_password)
         WHERE username = old_username
         RETURNING meta_id
     )
