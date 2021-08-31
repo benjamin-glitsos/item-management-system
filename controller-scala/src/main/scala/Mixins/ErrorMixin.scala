@@ -4,9 +4,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils._
 
 trait ErrorMixin extends UpickleMixin with StringMixin {
   final def necToJson(errors: NonEmptyChain[Error]): ujson.Value = {
-    write(
-      errors.toChain.toList
-    )
+    read[ujson.Value](write(errors.toChain.toList))
   }
 
   final def getRootCause(throwable: Throwable): String = {
