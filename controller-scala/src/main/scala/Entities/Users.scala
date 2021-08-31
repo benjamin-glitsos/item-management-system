@@ -6,10 +6,17 @@ import shapeless.syntax.std.product._
 import shapeless._, syntax.singleton._, record._
 
 object Users {
+  case class MetaEntity(
+      additional_notes: String,
+      metakey: String
+  )
 
-  case class Customer(name: String)
+  case class UsersEntity(
+      username: String,
+      email_address: String
+  )
 
-  val customer            = Customer("Matt")
-  val customerGeneric     = LabelledGeneric[Customer].to(customer)
-  val richCustomerGeneric = customerGeneric + ('suburb ->> "String")
+  val users     = LabelledGeneric[UsersEntity]
+  val meta      = LabelledGeneric[MetaEntity]
+  val usersList = users + ('suburb ->> "String")
 }
