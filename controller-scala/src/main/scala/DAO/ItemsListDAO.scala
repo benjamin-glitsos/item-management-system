@@ -1,4 +1,3 @@
-import java.util.Date
 import doobie.Fragment
 import doobie.Fragments.{whereOrOpt}
 import doobie._
@@ -54,21 +53,6 @@ trait ItemsListDAO extends ListDAOMixin {
     FROM page
     """
 
-    queryFragment
-      .query[
-        (
-            Int,
-            Int,
-            Int,
-            Int,
-            String,
-            String,
-            Option[String],
-            Date,
-            Int,
-            Option[Int]
-        )
-      ]
-      .to[List]
+    queryFragment.query[ItemsListResults].to[List]
   }
 }

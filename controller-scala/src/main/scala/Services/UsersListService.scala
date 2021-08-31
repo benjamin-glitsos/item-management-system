@@ -16,10 +16,13 @@ trait UsersListService
   ): ujson.Value = {
     read[ujson.Value](
       try {
-        val offset: Int = calculateOffset(pageNumber, pageLength)
-
         (for {
-          data <- UsersDAO.list(offset, pageLength, search, sort)
+          data <- UsersDAO.list(
+            calculateOffset(pageNumber, pageLength),
+            pageLength,
+            search,
+            sort
+          )
 
           val stats: ListStats = data.headOption match {
             case None => ListStats(0, 0, 0, 0)
