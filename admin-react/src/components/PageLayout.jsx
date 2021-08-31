@@ -6,6 +6,7 @@ export default ({ title, description, children }) => (
         <Helmet>
             <title>{title}</title>
             <meta name="description" content={description} />
+            <meta name="viewport" content="shrink-to-fit=yes" />
         </Helmet>
         {children}
     </Fragment>
