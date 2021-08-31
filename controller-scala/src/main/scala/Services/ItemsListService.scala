@@ -80,9 +80,7 @@ trait ItemsListService
             ItemsSeeder.apply
           )
 
-        } yield (output))
-          .transact(transactor)
-          .unsafeRunSync
+        } yield (output)).transact(transactor).unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
       }

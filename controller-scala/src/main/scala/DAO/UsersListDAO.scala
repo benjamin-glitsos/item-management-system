@@ -62,22 +62,6 @@ trait UsersListDAO extends ListDAOMixin {
     FROM page
     """
 
-    queryFragment
-      .query[
-        (
-            Int,
-            Int,
-            Int,
-            Int,
-            String,
-            String,
-            String,
-            String,
-            Option[String],
-            Int,
-            Option[Int]
-        )
-      ]
-      .to[List]
+    queryFragment.query[UsersListResults].to[List]
   }
 }

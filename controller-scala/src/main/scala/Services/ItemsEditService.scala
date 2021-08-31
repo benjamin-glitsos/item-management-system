@@ -44,9 +44,7 @@ trait ItemsEditService
 
           val output: String = createDataOutput(writeJs(data))
 
-        } yield (output))
-          .transact(transactor)
-          .unsafeRunSync
+        } yield (output)).transact(transactor).unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
       }
