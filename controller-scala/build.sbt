@@ -12,6 +12,7 @@ val akkaVersion = "2.6.8"
 val akkaHttpVersion = "10.2.2"
 val jedisVersion = "3.6.0"
 val log4jVersion = "2.14.1"
+val shapelessVersion = "2.3.3"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -43,7 +44,8 @@ libraryDependencies ++= Seq(
     "org.fusesource.jansi" % "jansi" % jansiVersion,
     "com.lihaoyi" %% "upickle" % uPickleVersion,
     "org.typelevel" %% "case-insensitive" % caseInsensitiveVersion,
-    "redis.clients" % "jedis" % jedisVersion
+    "redis.clients" % "jedis" % jedisVersion,
+    "com.chuusai" %% "shapeless" % shapelessVersion
 )
 
 scalacOptions := Seq(
