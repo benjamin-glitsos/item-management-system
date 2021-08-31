@@ -19,7 +19,7 @@ trait UsersEditService
     read[ujson.Value](
       try {
         (for {
-          _ <- UsersDAO
+          data <- UsersDAO
             .edit(
               oldUsername,
               newUsername,
@@ -30,8 +30,6 @@ trait UsersEditService
               password,
               additionalNotes
             )
-
-          data <- UsersDAO.open(newUsername.getOrElse(oldUsername))
 
           val output: String = createDataOutput(writeJs(data))
 

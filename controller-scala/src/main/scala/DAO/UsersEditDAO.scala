@@ -29,6 +29,26 @@ trait UsersEditDAO extends DoobieDatabaseMixin {
 
     val where: Fragment = whereAnd(fr"username=$oldUsername")
 
-    (update ++ set ++ where).update.run
+    val returning: Fragment = fr"""
+    RETURNING username
+            , email_address
+            , first_name
+            , last_name
+            , other_names
+            , password
+            , additional_notes
+            , metakey
+            , opens
+            , edits
+            , is_deleted
+            , created_at
+            , created_by
+            , edited_at
+            , edited_by
+            , deleted_at
+            , deleted_by
+    """
+
+    (update ++ set ++ where ++ returning).query[UsersOpen].to[List]
   }
 }
