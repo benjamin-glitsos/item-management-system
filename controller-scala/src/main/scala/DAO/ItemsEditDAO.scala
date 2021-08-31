@@ -38,6 +38,30 @@ trait ItemsEditDAO extends DoobieDatabaseMixin {
 
     val where: Fragment = whereAnd(fr"sku=$oldSku")
 
-    (update ++ set ++ where).update.run
+    val returning: Fragment = fr"""
+    RETURNING sku
+            , upc
+            , name
+            , description
+            , acquisition_date
+            , expiration_date
+            , unit_cost
+            , unit_price
+            , quantity_available
+            , quantity_sold
+            , additional_notes
+            , metakey
+            , opens
+            , edits
+            , is_deleted
+            , created_at
+            , created_by
+            , edited_at
+            , edited_by
+            , deleted_at
+            , deleted_by
+    """
+
+    (update ++ set ++ where ++ returning).query[ItemsOpen].to[List]
   }
 }

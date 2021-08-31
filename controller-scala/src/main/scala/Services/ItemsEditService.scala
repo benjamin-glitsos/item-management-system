@@ -24,7 +24,7 @@ trait ItemsEditService
     read[ujson.Value](
       try {
         (for {
-          _ <- ItemsDAO
+          data <- ItemsDAO
             .edit(
               oldSku,
               newSku,
@@ -39,8 +39,6 @@ trait ItemsEditService
               quantitySold,
               additionalNotes
             )
-
-          data <- ItemsDAO.open(newSku.getOrElse(oldSku))
 
           val output: String = createDataOutput(writeJs(data))
 
