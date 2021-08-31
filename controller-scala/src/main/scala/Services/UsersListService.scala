@@ -24,7 +24,7 @@ trait UsersListService
           val stats: ListStats = data.headOption match {
             case None => ListStats(0, 0, 0, 0)
             case Some(head) =>
-              List(
+              ListStats(
                 head.totalCount,
                 head.filteredCount,
                 head.pageStart,
@@ -38,7 +38,7 @@ trait UsersListService
               formatName(x.firstName, x.lastName, x.otherNames),
               x.emailAddress,
               x.createdAt,
-              editedAt
+              x.editedAt
             )
           )
 
@@ -54,7 +54,7 @@ trait UsersListService
           )
 
           a <- reseedIfNeeded(
-            totalItemsCount,
+            stats.totalCount,
             search,
             UsersSeeder.apply
           )

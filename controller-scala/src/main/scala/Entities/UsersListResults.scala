@@ -4,10 +4,10 @@ case class UsersListResults(
     pageStart: Int,
     pageEnd: Int,
     username: String,
+    emailAddress: String,
     firstName: String,
     lastName: String,
-    otherNames: String,
-    emailAddress: String,
+    otherNames: Option[String],
     createdAt: Int,
     editedAt: Option[Int]
 )
