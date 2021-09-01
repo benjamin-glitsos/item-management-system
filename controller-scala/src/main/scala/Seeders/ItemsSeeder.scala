@@ -7,13 +7,13 @@ object ItemsSeeder
     with MarkdownSeederMixin
     with DateMixin
     with StringMixin {
-  final val count: Int = 15
+  override final val count: Int = 15
 
-  final def clearData(): Unit = {
+  override final def reset(): Unit = {
     ItemsService.delete(method = "hard-delete-all-rows")
   }
 
-  final def predefinedData(): Unit = if (
+  override final def defaults(): Unit = if (
     System.getenv("PROJECT_MODE") != "production"
   ) {
     val fairy: Fairy       = Fairy.create();
@@ -35,7 +35,7 @@ object ItemsSeeder
     )
   }
 
-  final def seed(): Unit = {
+  override final def seed(): Unit = {
     def seedRow(): Unit = {
       val fairy: Fairy       = Fairy.create()
       val text: TextProducer = fairy.textProducer()
@@ -82,9 +82,9 @@ object ItemsSeeder
     count times seedRow()
   }
 
-  final def apply(): Unit = {
-    clearData()
-    predefinedData()
+  override final def apply(): Unit = {
+    reset()
+    defaults()
     seed()
   }
 }

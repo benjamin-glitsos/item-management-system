@@ -7,7 +7,13 @@ import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 
-trait SeederMixin extends StringMixin with MathMixin {
+trait SeederMixin extends StringMixin with MathMixin with OptionMixin {
+  protected val count: Int = 0
+  protected def reset(): Unit
+  protected def defaults(): Unit
+  protected def seed(): Unit
+  protected def apply(): Unit
+
   implicit final def times(n: Int) = new {
     def times(fn: => Unit) = {
       val seedFactor: Double = System.getenv("CONTROLLER_SEED_FACTOR").toDouble
@@ -146,4 +152,24 @@ trait SeederMixin extends StringMixin with MathMixin {
       date.toInstant.plus(Duration.ofDays(randomBetween(min, max)))
     Date.from(future)
   }
+
+  final def makeUsername(person: Person, code: String) =
+    person.getUsername() + code
+
+  final def makeEmailAddress(person: Person, code: String) = {
+    val atSymbol: String = "@"
+    val Array(emailUserName, emailDomainName) =
+      person.getEmail().split(atSymbol)
+    emailUserName + code + atSymbol + emailDomainName
+  }
+
+  final def makeOtherNames(fairy: Fairy) = maybeEmpty(
+    repeatedRunArray[String](
+      randomGaussianDiscrete(min = 0, max = 2),
+      () => {
+        val person: Person = fairy.person()
+        person.getMiddleName
+      }
+    ).mkString(" ").trim()
+  )
 }
