@@ -14,7 +14,7 @@ object SchemaValidation
   final def apply(
       actionKey: String,
       entityText: String
-  ): Future[Validated[ujson.Value]] = Future {
+  ): Validation[ujson.Value] = Future {
     val entityObject: JSONObject = new JSONObject(entityText)
 
     val schema: Schema = SchemasService.loadSchema(actionKey)
