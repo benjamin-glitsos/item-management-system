@@ -3,11 +3,11 @@ import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.text.TextProducer
 
 object ItemsSeeder
-    extends EntitySeederMixin
+    extends SeederMixin
+    with MarkdownSeederMixin
     with DateMixin
-    with StringMixin
-    with MarkdownSeederMixin {
-  override final val count: Int = 15
+    with StringMixin {
+  final val count: Int = 15
 
   final def clearData(): Unit = {
     ItemsService.delete(method = "hard-delete-all-rows")

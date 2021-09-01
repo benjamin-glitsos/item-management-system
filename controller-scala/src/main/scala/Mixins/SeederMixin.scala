@@ -3,6 +3,9 @@ import scala.math.{round, BigDecimal}
 import scala.util.Random
 import org.apache.commons.lang3.StringUtils.{left, right}
 import java.time.{Instant, Duration}
+import com.devskiller.jfairy.Fairy
+import com.devskiller.jfairy.producer.person.Person
+import com.devskiller.jfairy.producer.text.TextProducer
 
 trait SeederMixin extends StringMixin with MathMixin {
   implicit final def times(n: Int) = new {

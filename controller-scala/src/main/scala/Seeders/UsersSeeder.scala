@@ -3,10 +3,10 @@ import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 
 object UsersSeeder
-    extends EntitySeederMixin
-    with OptionMixin
-    with MarkdownSeederMixin {
-  override final val count: Int = 15
+    extends SeederMixin
+    with MarkdownSeederMixin
+    with OptionMixin {
+  final val count: Int = 15
 
   final def clearData(): Unit = {
     UsersService.delete(method = "hard-delete-all-rows")
