@@ -1,5 +1,8 @@
 import scala.util.{Success, Failure}
 import cats.data.Validated.{Valid, Invalid}
+import scala.concurrent._
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.server.Directives._
 import scala.concurrent.duration._
@@ -21,15 +24,11 @@ object ValidationMiddleware
         } else {
           val body: String = entity.data.utf8String
 
-          SchemaValidation(actionKey, body) onComplete {
-            case Success(validated) =>
-              validated match {
-                case Valid(v)   => provide(v)
-                case Invalid(e) => badRequestRejection(necToJson(e))
-              }
-            case Failure(e: Throwable) => badRequestRejection(necToJson(e))
-
+          Await.result(SchemaValidation(actionKey, body), 1.seconds) match {
+            case Valid(v)   => provide(v)
+            case Invalid(e) => badRequestRejection(necToJson(e))
           }
+
         }
       }
     }

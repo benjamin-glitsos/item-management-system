@@ -1,4 +1,5 @@
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Try, Success, Failure}
 import org.everit.json.schema.{Schema, ValidationException}
 import org.json.JSONObject
