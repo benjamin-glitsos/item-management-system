@@ -14,7 +14,7 @@ object LoggingMiddleware
   private final val log: Logger = LogManager.getLogger("request-logger")
 
   final def apply(): Directive0 =
-    extractStrictEntity(1 seconds) flatMap { entity: HttpEntity.Strict =>
+    extractStrictEntity(1.seconds) flatMap { entity: HttpEntity.Strict =>
       extractClientIP flatMap { clientIp: RemoteAddress =>
         mapRequest((req: HttpRequest) => {
           val body: String = maybeEmpty(entity.data.utf8String) match {

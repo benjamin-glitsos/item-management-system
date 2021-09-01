@@ -153,9 +153,6 @@ trait SeederMixin extends StringMixin with MathMixin with OptionMixin {
     Date.from(future)
   }
 
-  final def makeUsername(person: Person, code: String) =
-    person.getUsername() + code
-
   final def makeEmailAddress(person: Person, code: String) = {
     val atSymbol: String = "@"
     val Array(emailUserName, emailDomainName) =

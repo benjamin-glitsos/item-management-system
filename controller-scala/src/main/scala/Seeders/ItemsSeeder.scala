@@ -9,13 +9,10 @@ object ItemsSeeder
     with StringMixin {
   override final val count: Int = 15
 
-  override final def reset(): Unit = {
+  override final def reset(): Unit =
     ItemsService.delete(method = "hard-delete-all-rows")
-  }
 
-  override final def defaults(): Unit = if (
-    System.getenv("PROJECT_MODE") != "production"
-  ) {
+  override final def defaults(): Unit = {
     val fairy: Fairy       = Fairy.create();
     val text: TextProducer = fairy.textProducer();
 
@@ -36,55 +33,50 @@ object ItemsSeeder
   }
 
   override final def seed(): Unit = {
-    def seedRow(): Unit = {
-      val fairy: Fairy       = Fairy.create()
-      val text: TextProducer = fairy.textProducer()
+    val fairy: Fairy           = Fairy.create()
+    val text: TextProducer     = fairy.textProducer()
+    val seedIsForSale: Boolean = biasedCoinFlip(0.75)
+    val seedName: String = toTitleCase(
+      text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
+    )
+    val seedUnitCost: Double = randomCurrency()
+    val seedUnitPrice: Option[Double] =
+      Option.when(seedIsForSale)(seedUnitCost * (1 + randomDouble))
 
-      val seedIsForSale: Boolean = biasedCoinFlip(0.75)
-      val seedName: String = toTitleCase(
-        text.latinWord(randomGaussianDiscrete(min = 2, max = 15))
+    val sku: String                 = randomSku(seedName)
+    val upc: String                 = randomUpc()
+    val name: String                = seedName
+    val description: Option[String] = generateMarkdown(text)
+    val acquisitionDate: Date       = randomDateBetween(yearsAgo(10), new Date())
+    val expirationDate: Option[Date] =
+      Option.when(coinFlip)(
+        addRandomDays(date = acquisitionDate, min = 0, max = 10 * 365)
       )
-      val seedUnitCost: Double = randomCurrency()
-      val seedUnitPrice: Option[Double] =
-        Option.when(seedIsForSale)(seedUnitCost * (1 + randomDouble))
+    val unitCost: Double          = seedUnitCost
+    val unitPrice: Option[Double] = seedUnitPrice
+    val quantityAvailable: Int    = randomBetween(0, 20)
+    val quantitySold: Int =
+      if (seedIsForSale) randomBetween(0, 100) else 0
+    val additionalNotes: Option[String] = generateMarkdown(text)
 
-      val sku: String                 = randomSku(seedName)
-      val upc: String                 = randomUpc()
-      val name: String                = seedName
-      val description: Option[String] = generateMarkdown(text)
-      val acquisitionDate: Date       = randomDateBetween(yearsAgo(10), new Date())
-      val expirationDate: Option[Date] =
-        Option.when(coinFlip)(
-          addRandomDays(date = acquisitionDate, min = 0, max = 10 * 365)
-        )
-      val unitCost: Double          = seedUnitCost
-      val unitPrice: Option[Double] = seedUnitPrice
-      val quantityAvailable: Int    = randomBetween(0, 20)
-      val quantitySold: Int =
-        if (seedIsForSale) randomBetween(0, 100) else 0
-      val additionalNotes: Option[String] = generateMarkdown(text)
-
-      ItemsService.create(
-        sku,
-        upc,
-        name,
-        description,
-        acquisitionDate,
-        expirationDate,
-        unitCost,
-        unitPrice,
-        quantityAvailable,
-        quantitySold,
-        additionalNotes
-      )
-    }
-
-    count times seedRow()
+    ItemsService.create(
+      sku,
+      upc,
+      name,
+      description,
+      acquisitionDate,
+      expirationDate,
+      unitCost,
+      unitPrice,
+      quantityAvailable,
+      quantitySold,
+      additionalNotes
+    )
   }
 
   override final def apply(): Unit = {
     reset()
     defaults()
-    seed()
+    count times seed()
   }
 }

@@ -5,9 +5,8 @@ import com.devskiller.jfairy.producer.text.TextProducer
 object UsersSeeder extends SeederMixin with MarkdownSeederMixin {
   override final val count: Int = 15
 
-  override final def reset(): Unit = {
+  override final def reset(): Unit =
     UsersService.delete(method = "hard-delete-all-rows")
-  }
 
   override final def defaults(): Unit = {
     val fairy: Fairy       = Fairy.create()
@@ -30,7 +29,7 @@ object UsersSeeder extends SeederMixin with MarkdownSeederMixin {
     val text: TextProducer       = fairy.textProducer()
     val randomNumberCode: String = randomBetween(1, 99).toString
 
-    val username: String                = makeUsername(person, randomNumberCode)
+    val username: String                = person.getUsername() + randomNumberCode
     val emailAddress: String            = makeEmailAddress(person, randomNumberCode)
     val firstName: String               = person.getFirstName()
     val lastName: String                = person.getLastName()

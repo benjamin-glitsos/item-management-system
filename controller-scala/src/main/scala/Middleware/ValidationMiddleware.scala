@@ -18,13 +18,13 @@ object ValidationMiddleware
 
   final def apply(): Directive1[ujson.Value] =
     headerValueByName("X-Action-Key") flatMap { actionKey: String =>
-      extractStrictEntity(1 seconds) flatMap { entity: HttpEntity.Strict =>
+      extractStrictEntity(1.seconds) flatMap { entity: HttpEntity.Strict =>
         if (whitelist contains actionKey) {
           provide(ujsonEmptyValue)
         } else {
           val body: String = entity.data.utf8String
 
-          Await.result(SchemaValidation(actionKey, body), 1 seconds) match {
+          Await.result(SchemaValidation(actionKey, body), 1.seconds) match {
             case Valid(v)   => provide(v)
             case Invalid(e) => badRequestRejection(necToJson(e))
           }

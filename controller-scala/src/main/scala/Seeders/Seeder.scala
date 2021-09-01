@@ -1,5 +1,5 @@
 object Seeder extends LogicMixin {
-  private val isSeedingEnabled = all(
+  private val isSeedingEnabled: Boolean = all(
     List(
       System.getenv("PROJECT_MODE") != "production",
       System.getenv("CONTROLLER_SEED_RUN") == "yes"
