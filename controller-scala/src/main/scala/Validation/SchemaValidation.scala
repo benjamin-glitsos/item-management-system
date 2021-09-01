@@ -1,9 +1,10 @@
+import scala.concurrent.Future
+import scala.util.{Try, Success, Failure}
 import org.everit.json.schema.{Schema, ValidationException}
 import org.json.JSONObject
 import scala.jdk.CollectionConverters._
 import upickle.default._
 import cats.implicits._
-import scala.util.{Try, Success, Failure}
 
 object SchemaValidation
     extends ValidationMixin
@@ -12,7 +13,7 @@ object SchemaValidation
   final def apply(
       actionKey: String,
       entityText: String
-  ): Validated[ujson.Value] = {
+  ): Future[Validated[ujson.Value]] = Future {
     val entityObject: JSONObject = new JSONObject(entityText)
 
     val schema: Schema = SchemasService.loadSchema(actionKey)
