@@ -15,9 +15,10 @@ export default () => {
         return <div>Error</div>;
     }
 
+    const d = data.data.data;
     return (
         <Fragment>
-            <h1>Open2</h1>
+            <h1>Edit user: {d.username}</h1>
         </Fragment>
     );
 };
