@@ -8,12 +8,12 @@ import Page from "%/components/Page/PagePresenter";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import ToastContainer from "%/components/ToastContainer";
 
-const ReadmePage = lazy(() => import("%/components/ReadmePage"));
-const UsersListPage = lazy(() => import("%/components/UsersListPage"));
-const UsersOpenPage = lazy(() => import("%/components/UsersOpenPage"));
-const ItemsListPage = lazy(() => import("%/components/ItemsListPage"));
-const ItemsOpenPage = lazy(() => import("%/components/ItemsOpenPage"));
-const NotFoundPage = lazy(() => import("%/components/NotFoundPage"));
+const Readme = lazy(() => import("%/routes/Readme"));
+const UsersList = lazy(() => import("%/routes/UsersList"));
+const UsersOpen = lazy(() => import("%/routes/UsersOpen"));
+const ItemsList = lazy(() => import("%/routes/ItemsList"));
+const ItemsOpen = lazy(() => import("%/routes/ItemsOpen"));
+const NotFound = lazy(() => import("%/routes/NotFound"));
 
 export default () => (
     <Router history={createBrowserHistory()}>
@@ -23,28 +23,28 @@ export default () => (
                     <Suspense fallback={<LoadingSpinner />}>
                         <Switch>
                             <Route exact path="/">
-                                <ReadmePage />
+                                <Readme />
                             </Route>
                             <Route exact path="/users">
-                                <UsersListPage />
+                                <UsersList />
                             </Route>
                             <Route exact path="/users/:username">
-                                <UsersOpenPage action="edit" />
+                                <UsersOpen action="edit" />
                             </Route>
                             <Route exact path="/create-user">
-                                <UsersOpenPage action="create" />
+                                <UsersOpen action="create" />
                             </Route>
                             <Route exact path="/items">
-                                <ItemsListPage />
+                                <ItemsList />
                             </Route>
                             <Route exact path="/items/:key">
-                                <ItemsOpenPage action="edit" />
+                                <ItemsOpen action="edit" />
                             </Route>
                             <Route exact path="/create-item">
-                                <ItemsOpenPage action="create" />
+                                <ItemsOpen action="create" />
                             </Route>
                             <Route path="*" status={404}>
-                                <NotFoundPage />
+                                <NotFound />
                             </Route>
                         </Switch>
                     </Suspense>
