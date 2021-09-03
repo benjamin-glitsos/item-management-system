@@ -8,12 +8,12 @@ import Page from "%/components/Page/PagePresenter";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import ToastContainer from "%/components/ToastContainer";
 
-const Readme = lazy(() => import("%/routes/Readme"));
-const UsersList = lazy(() => import("%/routes/UsersList"));
-const UsersOpen = lazy(() => import("%/routes/UsersOpen"));
-const ItemsList = lazy(() => import("%/routes/ItemsList"));
-const ItemsOpen = lazy(() => import("%/routes/ItemsOpen"));
-const NotFound = lazy(() => import("%/routes/NotFound"));
+const Readme = lazy(() => import("./Readme"));
+const UsersList = lazy(() => import("./UsersList"));
+const UsersOpen = lazy(() => import("./UsersOpen"));
+const ItemsList = lazy(() => import("./ItemsList"));
+const ItemsOpen = lazy(() => import("./ItemsOpen"));
+const NotFound = lazy(() => import("./NotFound"));
 
 export default () => (
     <Router history={createBrowserHistory()}>
