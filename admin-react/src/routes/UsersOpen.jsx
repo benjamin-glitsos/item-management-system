@@ -11,7 +11,6 @@ import MarkdownTextarea from "%/components/MarkdownTextarea";
 import FormSubheading from "%/components/FormSubheading";
 import Open from "%/components/Open/Open";
 import config from "%/config";
-import Open2 from "%/components/Open";
 
 export default ({ action }) => {
     const isCreate = action === "create";
@@ -57,7 +56,6 @@ export default ({ action }) => {
 
     return (
         <Fragment>
-            <Open2 />
             <Open context={pageContext}>
                 <FormSubheading level={3}>Details</FormSubheading>
                 <RegisteredField
