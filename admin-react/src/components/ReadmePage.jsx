@@ -7,7 +7,7 @@ import PageContainer from "%/components/Page/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
 import GithubButton from "%/components/GithubButton";
-import ImagesLightbox from "%/components/ImagesLightbox";
+import ImagesLightboxComponent from "%/components/ImagesLightbox";
 
 export const Context = createContext();
 
@@ -45,38 +45,34 @@ export default () => {
                     <h2>Codebase</h2>
                     <GithubButton />
                     <h2>Data Validation BPMN Diagram</h2>
-                    <DiagramStyles>
-                        <ImagesLightbox
-                            images={[
-                                {
-                                    src:
-                                        process.env.PUBLIC_URL +
-                                        "/images/data-validation-diagram.svg",
-                                    alt: `BPMN diagram of the data validation paths of the ${process.env.PROJECT_ABBREV}`
-                                }
-                            ]}
-                        />
-                    </DiagramStyles>
+                    <ImagesLightbox
+                        images={[
+                            {
+                                src:
+                                    process.env.PUBLIC_URL +
+                                    "/images/data-validation-diagram.svg",
+                                alt: `BPMN diagram of the data validation paths of the ${process.env.PROJECT_ABBREV}`
+                            }
+                        ]}
+                    />
                     <h2>Database ER Diagram</h2>
-                    <DiagramStyles>
-                        <ImagesLightbox
-                            images={[
-                                {
-                                    src:
-                                        process.env.PUBLIC_URL +
-                                        "/images/er-diagram.svg",
-                                    alt: `Entity-Relationship diagram of the database of the ${process.env.PROJECT_ABBREV}`
-                                }
-                            ]}
-                        />
-                    </DiagramStyles>
+                    <ImagesLightbox
+                        images={[
+                            {
+                                src:
+                                    process.env.PUBLIC_URL +
+                                    "/images/er-diagram.svg",
+                                alt: `Entity-Relationship diagram of the database of the ${process.env.PROJECT_ABBREV}`
+                            }
+                        ]}
+                    />
                 </ArticleLayout>
             </PageLayout>
         </Provider>
     );
 };
 
-const DiagramStyles = styled.div`
+const ImagesLightbox = styled(ImagesLightboxComponent)`
     margin-top: 28px;
     img {
         max-width: 100%;

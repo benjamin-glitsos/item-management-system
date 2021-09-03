@@ -49,17 +49,15 @@ export default () => {
                     ]}
                 >
                     <p>{pageContext.description}</p>
-                    <HomeButtonStyles>
-                        <Button appearance="primary" onClick={handleReturnHome}>
-                            Back to Home
-                        </Button>
-                    </HomeButtonStyles>
+                    <HomeButton appearance="primary" onClick={handleReturnHome}>
+                        Back to Home
+                    </HomeButton>
                 </ArticleLayout>
             </PageLayout>
         </Provider>
     );
 };
 
-const HomeButtonStyles = styled.div`
+const HomeButton = styled(Button)`
     margin-top: 28px;
 `;

@@ -17,7 +17,7 @@ export default ({ images }) => {
     };
 
     return (
-        <Styles>
+        <ImagesLightbox>
             {images.map(({ src, alt }, index) => (
                 <img
                     src={src}
@@ -37,11 +37,11 @@ export default ({ images }) => {
                     }}
                 />
             )}
-        </Styles>
+        </ImagesLightbox>
     );
 };
 
-const Styles = styled.div`
+const ImagesLightbox = styled.div`
     .react-simple-image-viewer__close {
         font-weight: normal;
         top: 0;

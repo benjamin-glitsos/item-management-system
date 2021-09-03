@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { titleCase } from "title-case";
-import DynamicTable from "@atlaskit/dynamic-table";
+import AtlaskitDynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import FullwidthLayout from "%/components/FullwidthLayout";
 import BreadcrumbBar from "%/components/BreadcrumbBar";
@@ -37,29 +37,27 @@ export default () => {
                 >
                     {context.title}
                 </PageHeader>
-                <TableStyles>
-                    <DynamicTable
-                        head={context.head}
-                        rows={context.rows}
-                        isLoading={context.state.isLoading}
-                        emptyView={<NoData />}
-                        sortKey={sort[0]}
-                        sortOrder={sort[1]}
-                        defaultSortKey="created_at"
-                        defaultSortOrder="DESC"
-                        onSort={e => {
-                            context.setDeselectAll();
-                            context.setSort([e.key, e.sortOrder]);
-                        }}
-                    />
-                </TableStyles>
+                <DynamicTable
+                    head={context.head}
+                    rows={context.rows}
+                    isLoading={context.state.isLoading}
+                    emptyView={<NoData />}
+                    sortKey={sort[0]}
+                    sortOrder={sort[1]}
+                    defaultSortKey="created_at"
+                    defaultSortOrder="DESC"
+                    onSort={e => {
+                        context.setDeselectAll();
+                        context.setSort([e.key, e.sortOrder]);
+                    }}
+                />
                 <Pagination />
             </FullwidthLayout>
         </PageLayout>
     );
 };
 
-const TableStyles = styled.div`
+const DynamicTable = styled(AtlaskitDynamicTable)`
     overflow-y: auto;
     margin-bottom: 22px;
 

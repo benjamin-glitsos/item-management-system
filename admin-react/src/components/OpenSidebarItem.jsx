@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export default ({ label, children }) => (
-    <Wrapper>
+    <Styles>
         <Label>{label.toUpperCase()}</Label>
         <div>{children}</div>
-    </Wrapper>
+    </Styles>
 );
 
-const Wrapper = styled.div`
+const Styles = styled.div`
     margin-top: 8px;
     margin-bottom: 1em;
 `;

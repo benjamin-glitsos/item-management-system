@@ -19,7 +19,7 @@ export default ({
     const isRequired = isCreate && schemaProperties?.[name]?.required;
     const placeholder = isCreate ? "" : formatNull();
     return (
-        <Wrapper>
+        <Styles>
             <Label htmlFor={fieldId}>
                 {title}
                 {isRequired && <RequiredAsterisk />}
@@ -37,11 +37,11 @@ export default ({
                     ))}
                 </Errors>
             )}
-        </Wrapper>
+        </Styles>
     );
 };
 
-const Wrapper = styled.div`
+const Styles = styled.div`
     margin-top: 8px;
 `;
 

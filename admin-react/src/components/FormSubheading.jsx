@@ -8,13 +8,11 @@ const Heading = ({ level, children }) =>
 export default ({ level, children }) => {
     return (
         <Col sm={12}>
-            <Styles>
-                <Heading level={level}>{children}</Heading>
-            </Styles>
+            <StyledHeading level={level}>{children}</StyledHeading>
         </Col>
     );
 };
 
-const Styles = styled.div`
+const StyledHeading = styled(Heading)`
     margin-top: 1.5em;
 `;
