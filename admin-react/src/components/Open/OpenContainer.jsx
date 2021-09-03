@@ -3,7 +3,6 @@ import R from "ramda";
 import { useHistory, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useImmer } from "use-immer";
-import axios from "axios";
 import config from "%/config";
 import * as Yup from "yup";
 import { buildYup } from "json-schema-to-yup";
@@ -11,11 +10,13 @@ import { diff } from "deep-object-diff";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
-import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
 import successToast from "%/utilities/successToast";
 import prettyQuote from "%/utilities/prettyQuote";
 import mapObjKeys from "%/utilities/mapObjKeys";
+import urlPath from "%/utilities/urlPath";
+import axiosErrorHandler from "%/utilities/axiosErrorHandler";
+import { openService, createService, editService } from "%/services";
 
 export default ({
     action,
@@ -37,27 +38,21 @@ export default ({
 
     const [state, setState] = useImmer(defaultState);
 
-    const itemUrl = config.serverUrl + `v1/${namePlural}/${key}/`;
+    const itemUrl = urlPath([namePlural, key]);
 
     const createUrl = config.serverUrl + `v1/${namePlural}/`;
 
-    const schemaUrl = config.serverUrl + `v1/schemas/${action}-${namePlural}/`;
+    const schemaUrl = urlPath(["schemas", `${action}-${namePlural}/`]);
 
     const requestItem = () =>
-        axios({
-            method: "GET",
-            url: itemUrl
-        })
+        openService({ path: itemUrl })
             .then(x => x.data.data)
             .catch(() => {
                 history.replace("/page-not-found");
             });
 
     const requestSchema = () =>
-        axios({
-            method: "GET",
-            url: schemaUrl
-        })
+        openService({ path: schemaUrl })
             .then(x => x.data)
             .catch(axiosErrorHandler);
 
@@ -68,18 +63,17 @@ export default ({
             }
             noNewDataToSubmitToast();
         } else {
-            axios({
-                method: isCreate ? "POST" : "PATCH",
-                url: isCreate ? createUrl : itemUrl,
-                data: {
-                    ...data,
-                    ...(isCreate && namePlural === "users"
-                        ? { password: "DemoPassword" }
-                        : {})
-                }
-            })
-                .then(response => {
-                    if (isCreate) {
+            if (isCreate) {
+                createService({
+                    path: namePlural,
+                    body: {
+                        ...data,
+                        ...(namePlural === "users"
+                            ? { password: "DemoPassword" }
+                            : {})
+                    }
+                })
+                    .then(response => {
                         history.replace(`/${namePlural}/${data[keyField]}`);
                         successToast({
                             title: "Successfully created",
@@ -87,8 +81,12 @@ export default ({
                                 data[keyField]
                             )} was created.`
                         });
-                    } else {
-                        const responseData = response.data.data;
+                    })
+                    .catch(axiosErrorHandler);
+            } else {
+                editService({ path: itemUrl, body: data })
+                    .then(response => {
+                        const responseData = response.data.data[0];
                         setItem(responseData);
                         if (state.item[keyField] !== responseData[keyField]) {
                             history.replace(
@@ -99,9 +97,9 @@ export default ({
                             title: "Saved",
                             description: "Successfully edited"
                         });
-                    }
-                })
-                .catch(axiosErrorHandler);
+                    })
+                    .catch(axiosErrorHandler);
+            }
         }
     };
 
@@ -272,7 +270,6 @@ export default ({
                             return error;
                         }
                     });
-                    console.log(R.unnest(errorsList.map(x => x.errors)));
                     return {
                         ...new Output(),
                         errors: formatYupErrors(errorsList)

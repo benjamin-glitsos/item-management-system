@@ -15,6 +15,7 @@ import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import formatDate from "%/utilities/formatDate";
 import { listService, deleteService } from "%/services";
+import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import config from "%/config";
 
 export default ({
@@ -26,8 +27,6 @@ export default ({
     keyColumnPlural
 }) => {
     const history = useHistory();
-
-    const apiUrl = config.serverUrl + `v1/${namePlural}/`;
 
     const defaultState = {
         request: { body: {} },
@@ -92,16 +91,19 @@ export default ({
 
     const listItemsAction = async () => {
         setLoading(true);
-        await listService(
-            apiUrl,
-            { ...state.request.body, ...query },
-            setResponse
-        );
+        await listService({
+            path: namePlural,
+            params: { ...state.request.body, ...query }
+        })
+            .then(setResponse)
+            .catch(axiosErrorHandler);
         setLoading(false);
     };
 
     const deleteItemsAction = async (method, keys) => {
-        await deleteService(apiUrl, method, keys);
+        await deleteService({ path: namePlural, method, keys }).catch(
+            axiosErrorHandler
+        );
         listItemsAction();
         setDeselectAll();
     };
