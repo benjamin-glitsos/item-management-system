@@ -1,17 +1,19 @@
 import styled from "styled-components";
-import Button, { ButtonGroup as AtlaskitButtonGroup } from "@atlaskit/button";
+import Button, { ButtonGroup } from "@atlaskit/button";
 
 export default ({ cancelHandler }) => (
-    <ButtonGroup>
-        <Button appearance="subtle" onClick={cancelHandler}>
-            Cancel
-        </Button>
-        <Button type="submit" appearance="primary">
-            Submit
-        </Button>
-    </ButtonGroup>
+    <Styles>
+        <ButtonGroup>
+            <Button appearance="subtle" onClick={cancelHandler}>
+                Cancel
+            </Button>
+            <Button type="submit" appearance="primary">
+                Submit
+            </Button>
+        </ButtonGroup>
+    </Styles>
 );
 
-const ButtonGroup = styled(AtlaskitButtonGroup)`
+const Styles = styled.div`
     margin-top: 24px;
 `;

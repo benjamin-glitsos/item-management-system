@@ -1,13 +1,15 @@
 import styled from "styled-components";
-import AtlaskitDropdownMenu from "@atlaskit/dropdown-menu";
+import DropdownMenu from "@atlaskit/dropdown-menu";
 
 export default ({ name, children }) => (
-    <DropdownMenu trigger={name} triggerType="button">
-        {children}
-    </DropdownMenu>
+    <Styles>
+        <DropdownMenu trigger={name} triggerType="button">
+            {children}
+        </DropdownMenu>
+    </Styles>
 );
 
-const DropdownMenu = styled(AtlaskitDropdownMenu)`
+const Styles = styled.div`
     [role="menuitem"] {
         min-width: 120px;
         z-index: 4;
