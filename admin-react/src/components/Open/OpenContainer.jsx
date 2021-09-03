@@ -14,7 +14,7 @@ import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
 import successToast from "%/utilities/successToast";
 import prettyQuote from "%/utilities/prettyQuote";
 import mapObjKeys from "%/utilities/mapObjKeys";
-import urlPath from "%/utilities/urlPath";
+import joinPath from "%/utilities/joinPath";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import { openService, createService, editService } from "%/services";
 
@@ -38,11 +38,11 @@ export default ({
 
     const [state, setState] = useImmer(defaultState);
 
-    const itemUrl = urlPath([namePlural, key]);
+    const itemUrl = joinPath([namePlural, key]);
 
     const createUrl = config.serverUrl + `v1/${namePlural}/`;
 
-    const schemaUrl = urlPath(["schemas", `${action}-${namePlural}/`]);
+    const schemaUrl = joinPath(["schemas", `${action}-${namePlural}/`]);
 
     const requestItem = () =>
         openService({ path: itemUrl })

@@ -1,24 +1,23 @@
 import { Fragment } from "react";
 import useOpen from "%/hooks/useOpen";
+import LoadingSpinner from "%/components/LoadingSpinner";
 
 export default () => {
     const { isLoading, isError, error, data } = useOpen({
-        path: "users/benglitsos"
+        path: ["users", "benglitsos"]
     });
 
     if (isLoading) {
-        return <span>Loading...</span>;
+        return <LoadingSpinner />;
     }
 
     if (isError) {
-        return <span>Error: {error.message}</span>;
+        return <div>Error</div>;
     }
 
-    console.log(data);
     return (
         <Fragment>
-            <div>Open2:</div>
-            <pre>{JSON.stringify(data)}</pre>
+            <h1>Open2</h1>
         </Fragment>
     );
 };
