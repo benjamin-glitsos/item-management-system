@@ -16,15 +16,15 @@ export default ({ path }) => {
         }
     );
 
-    const action = "open";
+    const data = {
+        action: "open"
+    };
 
     return {
         ...query,
         data: {
-            response: query.data,
-            data: {
-                action
-            }
+            openResponse: query.data,
+            openData: data
         }
     };
 };
