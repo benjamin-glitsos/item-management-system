@@ -1,16 +1,16 @@
 import { useParams } from "react-router-dom";
-import { titleCase } from "title-case";
 import useOpen from "%/hooks/useOpen";
 import useProject from "%/hooks/useProject";
+import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
 import PageLayout from "%/components/PageLayout";
 import LoadingSpinner from "%/components/LoadingSpinner";
-import joinTitle from "%/utilities/joinTitle";
 
 export default () => {
     const { username } = useParams();
     const project = useProject();
     const user = useUser();
+
     const {
         isLoading,
         isError,
@@ -29,16 +29,17 @@ export default () => {
     }
 
     const openRes = openResponse.data.data;
-    const pageAction = joinTitle([
-        titleCase(`${openData.action} ${user.nameSingular}`),
-        openRes[user.keyField]
-    ]);
-    const pageTitle = joinTitle([pageAction, project.name]);
-    const pageDescription = `A ${user.nameSingular} in the ${project.name}.`;
+
+    const page = usePage({
+        action: openData.action,
+        key: openRes[user.keyField],
+        userNameSingular: user.nameSingular,
+        projectName: project.name
+    });
 
     return (
-        <PageLayout title={pageTitle} description={"wow"}>
-            <h1>{pageAction}</h1>
+        <PageLayout title={page.pageTitle} description={page.pageDescription}>
+            <h1>{page.actionTitle}</h1>
         </PageLayout>
     );
 };
