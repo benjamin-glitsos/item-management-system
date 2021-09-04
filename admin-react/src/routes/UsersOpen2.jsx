@@ -12,6 +12,7 @@ import Content from "%/components/Content";
 import OpenSidebar2 from "%/components/OpenSidebar2";
 import OpenForm from "%/components/OpenForm";
 import LoadingSpinner from "%/components/LoadingSpinner";
+import ErrorBanner from "%/components/ErrorBanner";
 
 export default () => {
     const { username } = useParams();
@@ -42,7 +43,7 @@ export default () => {
     if (isError) {
         return (
             <Content maxWidth={open.maxWidth}>
-                <div>Error</div>
+                <ErrorBanner />
             </Content>
         );
     }
