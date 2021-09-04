@@ -24,6 +24,8 @@ object SchemasService extends ServiceMixin {
       schemaUjson.obj.remove("title")
       schemaUjson.obj.remove("description")
     }
-    schemaUjson
+    ujson.Obj(
+      "data" -> schemaUjson
+    )
   }
 }

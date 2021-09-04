@@ -53,6 +53,8 @@ export default () => {
         );
     }
 
+    console.log(editClients);
+
     const [schemaQuery, userQuery] = editClients.map(x => x.data.data.data);
 
     const page = usePage({

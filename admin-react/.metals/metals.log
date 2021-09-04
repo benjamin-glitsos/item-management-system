@@ -5,3 +5,17 @@
 2021.09.04 12:03:45 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/UsersOpenService.scala
 2021.09.04 12:03:46 INFO  no build target: using presentation compiler with only scala-library
 2021.09.04 15:47:21 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Routes/Routes.scala
+2021.09.04 15:51:51 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:52:32 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SessionsLoginService.scala
+2021.09.04 15:52:59 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:01 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:04 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:05 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:23 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:24 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:30 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:34 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:53:40 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:54:06 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:54:06 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2021.09.04 15:54:34 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
