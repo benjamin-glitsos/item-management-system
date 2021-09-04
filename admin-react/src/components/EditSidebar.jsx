@@ -29,14 +29,14 @@ export default ({ data }) => (
         <Item label="Created">
             <Author at={data.created_at} by={data.created_by} />
         </Item>
-        <Item label="Edited">
+        <Item label="Opened">
             <Author at={data.edited_at} by={data.edited_by} />
         </Item>
         <Item label="Deleted">
             <Author at={data.deleted_at} by={data.deleted_by} />
         </Item>
         <Item label="Opens">{data.opens}</Item>
-        <Item label="Edits">{data.edits}</Item>
+        <Item label="Opens">{data.edits}</Item>
         <Item label="Metakey">{data.metakey}</Item>
     </Fragment>
 );

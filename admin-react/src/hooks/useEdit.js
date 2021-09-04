@@ -3,6 +3,6 @@ import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 
 export default () => ({
-    action: "open",
+    action: "edit",
     maxWidth: "1200px"
 });

@@ -2,16 +2,16 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import useOpen from "%/hooks/useOpen";
-import useOpenClients from "%/hooks/useOpenClients";
+import useEdit from "%/hooks/useEdit";
+import useEditClients from "%/hooks/useEditClients";
 import useEditClient from "%/hooks/useEditClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
 import Page from "%/components/Page";
 import Content from "%/components/Content";
-import OpenSidebar2 from "%/components/OpenSidebar2";
-import OpenForm from "%/components/OpenForm";
+import EditSidebar from "%/components/EditSidebar";
+import EditForm from "%/components/EditForm";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
@@ -21,43 +21,43 @@ export default () => {
     const history = useHistory();
 
     const project = useProject();
-    const open = useOpen();
+    const edit = useEdit();
     const user = useUser();
 
-    const openClients = useOpenClients({
+    const editClients = useEditClients({
         paths: [
-            ["schemas", `edit-${user.namePlural}`],
+            ["schemas", `${edit.action}-${user.namePlural}`],
             [user.namePlural, username]
         ]
     });
 
-    // const editClient = body =>
-    //     useEditClient({
-    //         path: [user.namePlural, username],
-    //         body
-    //     });
+    const editClient = body =>
+        useEditClient({
+            path: [user.namePlural, username],
+            body
+        });
 
-    if (someProp("isLoading", openClients)) {
+    if (someProp("isLoading", editClients)) {
         return (
-            <Content maxWidth={open.maxWidth}>
+            <Content maxWidth={edit.maxWidth}>
                 <LoadingSpinner />
             </Content>
         );
     }
 
-    if (someProp("isError", openClients)) {
+    if (someProp("isError", editClients)) {
         return (
-            <Content maxWidth={open.maxWidth}>
+            <Content maxWidth={edit.maxWidth}>
                 <ErrorBanner />
             </Content>
         );
     }
 
-    const [schemaQuery, userQuery] = openClients.map(x => x.data.data.data);
+    const [schemaQuery, userQuery] = editClients.map(x => x.data.data.data);
 
     const page = usePage({
         history,
-        action: open.action,
+        action: edit.action,
         key: userQuery[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
@@ -71,18 +71,18 @@ export default () => {
             title={page.tabTitle}
             description={page.pageDescription}
             breadcrumbs={[]}
-            maxWidth={open.maxWidth}
+            maxWidth={edit.maxWidth}
         >
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <OpenForm page={page} open={open}>
+                        <EditForm page={page} edit={edit}>
                             <code>{JSON.stringify(userQuery)}</code>
                             <code>{JSON.stringify(schemaQuery)}</code>
-                        </OpenForm>
+                        </EditForm>
                     </Col>
                     <Col sm={2}>
-                        <OpenSidebar2 data={userQuery} />
+                        <EditSidebar data={userQuery} />
                     </Col>
                 </Row>
             </Grid>
