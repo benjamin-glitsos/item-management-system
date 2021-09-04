@@ -3,7 +3,7 @@ import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
 
 export default ({ page, open, edit, form, children }) => (
-    <form onSubmit={form.handleSubmit(edit)}>
+    <form onSubmit={form.handleSubmit(x => console.log(x))}>
         <Grid fluid>
             <Row>{children}</Row>
             <Row end="xs">
