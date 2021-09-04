@@ -17,7 +17,8 @@ export default ({ path }) => {
     );
 
     const data = {
-        action: "open"
+        action: "open",
+        maxWidth: "1200px"
     };
 
     return {

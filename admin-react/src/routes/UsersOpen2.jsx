@@ -3,7 +3,7 @@ import useOpen from "%/hooks/useOpen";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
-import PageLayout from "%/components/PageLayout";
+import Page from "%/components/Page";
 import OpenLayout from "%/components/OpenLayout";
 import LoadingSpinner from "%/components/LoadingSpinner";
 
@@ -39,14 +39,13 @@ export default () => {
     });
 
     return (
-        <PageLayout title={page.tabTitle} description={page.pageDescription}>
-            <OpenLayout
-                title={page.pageTitle}
-                breadcrumbs={[]}
-                isLoading={isLoading}
-            >
-                Content
-            </OpenLayout>
-        </PageLayout>
+        <Page
+            title={page.tabTitle}
+            description={page.pageDescription}
+            breadcrumbs={[]}
+            maxWidth={openData.maxWidth}
+        >
+            Content
+        </Page>
     );
 };
