@@ -1,27 +1,20 @@
+import { useContext } from "react";
 import { Col } from "react-flexbox-grid";
 import Field from "%/components/Field";
+import { UsersEditContext } from "%/routes/UsersEdit";
 
-export default ({
-    name,
-    title,
-    Component,
-    columnWidths,
-    isCreate,
-    schemaProperties,
-    errors,
-    register,
-    ...props
-}) => {
+export default ({ name, title, Component, columnWidths, ...props }) => {
+    const context = useContext(UsersEditContext);
     return (
         <Col {...columnWidths}>
             <Field
                 name={name}
                 title={title}
                 Component={Component}
-                isCreate={isCreate}
-                schemaProperties={schemaProperties}
-                errors={errors}
-                additionalProps={register(name)}
+                isCreate={context?.create}
+                schemaProperties={{}}
+                errors={[]}
+                additionalProps={context.form.register(name)}
                 {...props}
             />
         </Col>
