@@ -13,6 +13,7 @@ import removeAllUndefined from "%/utilities/removeAllUndefined";
 export default ({ jsonSchema = {}, data = {}, useFormProps = {} }) => {
     // TODO: try adding the json schema as a literal object to here to test
     // TODO: try reducing this to be simple then building up
+    // TODO: try removing the useCallback hook from this
     const validationSchema = yup.object({
         firstName: yup.string().required("Required"),
         lastName: yup.string().required("Required")
