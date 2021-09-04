@@ -15,9 +15,9 @@ export default ({
 
     const pageDescription = `A ${nameSingular} in the ${projectName}.`;
 
-    const returnHandler = () => {
+    const handleReturn = () => {
         history.push(`/${namePlural}`);
     };
 
-    return { pageTitle, tabTitle, pageDescription, returnHandler };
+    return { pageTitle, tabTitle, pageDescription, handleReturn };
 };

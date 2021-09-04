@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import useOpen from "%/hooks/useOpen";
 import useOpenClient from "%/hooks/useOpenClient";
@@ -59,6 +60,8 @@ export default () => {
         projectName: project.name
     });
 
+    const form = useForm();
+
     return (
         <Page
             title={page.tabTitle}
@@ -69,7 +72,12 @@ export default () => {
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <OpenForm page={page} open={open} edit={() => edit}>
+                        <OpenForm
+                            page={page}
+                            open={open}
+                            edit={edit}
+                            form={form}
+                        >
                             <code>{JSON.stringify(openQuery)}</code>
                         </OpenForm>
                     </Col>
