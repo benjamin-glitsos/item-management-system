@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Textfield from "@atlaskit/textfield";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import useEdit from "%/hooks/useEdit";
 import useEditClients from "%/hooks/useEditClients";
@@ -13,10 +14,13 @@ import Content from "%/components/Content";
 import EditSidebar from "%/components/EditSidebar";
 import EditForm from "%/components/EditForm";
 import LoadingSpinner from "%/components/LoadingSpinner";
+import RegisteredField2 from "%/components/RegisteredField2";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
+import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 
 export default () => {
+    const form = useForm();
     const { username } = useParams();
     const history = useHistory();
 
@@ -53,8 +57,6 @@ export default () => {
         );
     }
 
-    console.log(editClients);
-
     const [schemaQuery, userQuery] = editClients.map(x => x.data.data.data);
 
     const page = usePage({
@@ -66,7 +68,9 @@ export default () => {
         projectName: project.name
     });
 
-    // const form = useForm();
+    for (const [key, value] of Object.entries(userQuery)) {
+        form.setValue(key, nullToEmptyStr(value));
+    }
 
     return (
         <Page
@@ -78,7 +82,17 @@ export default () => {
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <EditForm page={page} edit={edit}>
+                        <EditForm page={page} edit={edit} form={form}>
+                            <RegisteredField2
+                                name="username"
+                                title="Username"
+                                Component={Textfield}
+                                columnWidths={{ lg: 6 }}
+                                isCreate={edit.action === "create"}
+                                schemaProperties={{}}
+                                errors={[]}
+                                register={form.register}
+                            />
                             <code>{JSON.stringify(userQuery)}</code>
                             <code>{JSON.stringify(schemaQuery)}</code>
                         </EditForm>
