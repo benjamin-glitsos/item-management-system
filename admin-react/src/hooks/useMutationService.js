@@ -11,7 +11,7 @@ export default ({
     axiosOptions = {},
     queryOptions = {}
 }) =>
-    useQuery(id, () => service({ method, path, body, axiosOptions }), {
+    useQueryService(id, () => service({ method, path, body, axiosOptions }), {
         retry: false,
         ...queryOptions
     });

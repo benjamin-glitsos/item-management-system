@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import useOpen from "%/hooks/useOpen";
-import useOpenService from "%/hooks/useOpenService";
+import useOpenClient from "%/hooks/useOpenClient";
+import useEditClient from "%/hooks/useEditClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
@@ -20,9 +21,15 @@ export default () => {
     const open = useOpen();
     const user = useUser();
 
-    const { isLoading, isError, error, data } = useOpenService({
+    const { isLoading, isError, error, data } = useOpenClient({
         path: [user.namePlural, username]
     });
+
+    const { isError, error, mutate: edit, data } = body =>
+        useEditClient({
+            path: [user.namePlural, username],
+            body: {}
+        });
 
     if (isLoading) {
         return (
@@ -40,12 +47,12 @@ export default () => {
         );
     }
 
-    const openService = data.data.data;
+    const openQuery = data.data.data;
 
     const page = usePage({
         history,
         action: open.action,
-        key: openService[user.keyField],
+        key: openQuery[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
@@ -61,12 +68,12 @@ export default () => {
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <OpenForm page={page} open={open}>
-                            <code>{JSON.stringify(openService)}</code>
+                        <OpenForm page={page} open={open} edit={() => edit}>
+                            <code>{JSON.stringify(openQuery)}</code>
                         </OpenForm>
                     </Col>
                     <Col sm={2}>
-                        <OpenSidebar2 data={openService} />
+                        <OpenSidebar2 data={openQuery} />
                     </Col>
                 </Row>
             </Grid>

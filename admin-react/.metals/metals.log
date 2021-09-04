@@ -2,3 +2,5 @@
 2021.09.04 11:29:38 INFO  time: initialize in 0.3s
 2021.09.04 11:29:38 WARN  Build server is not auto-connectable.
 2021.09.04 11:29:38 WARN  no build tool detected in workspace '/home/bengyup/code/ims/admin-react'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2021.09.04 12:03:45 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/UsersOpenService.scala
+2021.09.04 12:03:46 INFO  no build target: using presentation compiler with only scala-library
