@@ -22,11 +22,14 @@ import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
+import yupSchemaFormResolver from "%/utilities/yupSchemaFormResolver";
 
 export const UsersEditContext = createContext();
 
 export default () => {
-    const form = useForm();
+    const form = useForm({
+        resolver: yupSchemaFormResolver
+    }); // TODO: make this into a hook: useJsonYupSchemaForm
     const { username } = useParams();
     const history = useHistory();
 
@@ -63,25 +66,27 @@ export default () => {
         );
     }
 
-    const [schemaQuery, userQuery] = editClients.map(x => x.data.data.data);
+    const [schemaQuery, usersQuery] = editClients.map(x => x.data.data.data);
 
     const page = usePage({
         history,
         action: edit.action,
-        key: userQuery[user.keyField],
+        key: usersQuery[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
     });
 
-    for (const [key, value] of Object.entries(userQuery)) {
+    for (const [key, value] of Object.entries(usersQuery)) {
         form.setValue(key, nullToEmptyStr(value));
     }
 
     const context = {
         page,
         edit,
-        form
+        form,
+        schemaQuery,
+        usersQuery
     };
 
     return (
@@ -136,12 +141,12 @@ export default () => {
                                     Component={MarkdownTextarea}
                                     columnWidths={{ sm: 12 }}
                                 />
-                                <code>{JSON.stringify(userQuery)}</code>
+                                <code>{JSON.stringify(usersQuery)}</code>
                                 <code>{JSON.stringify(schemaQuery)}</code>
                             </EditForm>
                         </Col>
                         <Col sm={2}>
-                            <EditSidebar data={userQuery} />
+                            <EditSidebar data={usersQuery} />
                         </Col>
                     </Row>
                 </Grid>

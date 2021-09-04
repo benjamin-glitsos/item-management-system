@@ -12,8 +12,8 @@ export default ({ name, title, Component, columnWidths, ...props }) => {
                 title={title}
                 Component={Component}
                 isCreate={context?.create}
-                schemaProperties={{}}
-                errors={[]}
+                schemaProperties={context.schemaQuery.properties}
+                errors={context.form.errors}
                 additionalProps={context.form.register(name)}
                 {...props}
             />
