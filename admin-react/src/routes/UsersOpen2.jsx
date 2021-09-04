@@ -14,6 +14,7 @@ import OpenSidebar2 from "%/components/OpenSidebar2";
 import OpenForm from "%/components/OpenForm";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import ErrorBanner from "%/components/ErrorBanner";
+import someProp from "%/utilities/someProp";
 
 export default () => {
     const { username } = useParams();
@@ -25,19 +26,18 @@ export default () => {
 
     const openClients = useOpenClients({
         paths: [
-            ["schemas", `${open.action}-${user.namePlural}`],
+            ["schemas", `edit-${user.namePlural}`],
             [user.namePlural, username]
         ]
     });
 
-    const { isError, error, mutate: edit, data } = body =>
-        useEditClient({
-            path: [user.namePlural, username],
-            body: {}
-        });
+    // const editClient = body =>
+    //     useEditClient({
+    //         path: [user.namePlural, username],
+    //         body
+    //     });
 
-    if (openClients.some(x => x.isLoading)) {
-        // TODO: use Ramda to abstract into function that can be used for both isLoading and isError R.some R.prop(s)
+    if (someProp("isLoading", openClients)) {
         return (
             <Content maxWidth={open.maxWidth}>
                 <LoadingSpinner />
@@ -45,7 +45,7 @@ export default () => {
         );
     }
 
-    if (openClients.some(x => x.isError)) {
+    if (someProp("isError", openClients)) {
         return (
             <Content maxWidth={open.maxWidth}>
                 <ErrorBanner />
@@ -53,7 +53,7 @@ export default () => {
         );
     }
 
-    const [schemaQuery, userQuery] = data.data.data;
+    const [schemaQuery, userQuery] = openClients.map(x => x.data.data.data);
 
     const page = usePage({
         history,
@@ -64,7 +64,7 @@ export default () => {
         projectName: project.name
     });
 
-    const form = useForm();
+    // const form = useForm();
 
     return (
         <Page
@@ -76,12 +76,7 @@ export default () => {
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <OpenForm
-                            page={page}
-                            open={open}
-                            edit={edit}
-                            form={form}
-                        >
+                        <OpenForm page={page} open={open}>
                             <code>{JSON.stringify(userQuery)}</code>
                             <code>{JSON.stringify(schemaQuery)}</code>
                         </OpenForm>

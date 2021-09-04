@@ -1,4 +1,4 @@
-import useMutationfrom "%/hooks/useMutation";
+import useMutation from "%/hooks/useMutation";
 import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 

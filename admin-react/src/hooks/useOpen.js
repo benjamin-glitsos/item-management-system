@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import service from "%/utilities/service";
 import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 

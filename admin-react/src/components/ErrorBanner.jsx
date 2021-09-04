@@ -1,1 +1,1 @@
-export default () => <div>An error has occurred</div>;
+export default () => <div>An error has occurred.</div>;
