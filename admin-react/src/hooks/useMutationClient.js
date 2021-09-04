@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
-import service from "%/utilities/service";
+import { useMutation } from "%/hooks/useMutation";
+import client from "%/utilities/client";
 import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 
@@ -11,7 +11,7 @@ export default ({
     axiosOptions = {},
     queryOptions = {}
 }) =>
-    useQueryService(id, () => service({ method, path, body, axiosOptions }), {
+    useMutation(id, () => client({ method, path, body, axiosOptions }), {
         retry: false,
         ...queryOptions
     });
