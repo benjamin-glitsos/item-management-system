@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { Grid, Row, Col } from "react-flexbox-grid";
 import useOpen from "%/hooks/useOpen";
 import useOpenService from "%/hooks/useOpenService";
 import useProject from "%/hooks/useProject";
@@ -6,7 +7,7 @@ import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
 import Page from "%/components/Page";
 import Content from "%/components/Content";
-import OpenLayout from "%/components/OpenLayout";
+import OpenSidebar2 from "%/components/OpenSidebar2";
 import LoadingSpinner from "%/components/LoadingSpinner";
 
 export default () => {
@@ -51,7 +52,14 @@ export default () => {
             breadcrumbs={[]}
             maxWidth={open.maxWidth}
         >
-            Content
+            <Grid fluid>
+                <Row>
+                    <Col sm={10}>Content</Col>
+                    <Col sm={2}>
+                        <OpenSidebar2 data={dataRes} />
+                    </Col>
+                </Row>
+            </Grid>
         </Page>
     );
 };
