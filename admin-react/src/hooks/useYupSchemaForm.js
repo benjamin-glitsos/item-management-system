@@ -1,10 +1,28 @@
+import { useCallback } from "react";
 import R from "ramda";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { buildYup } from "json-schema-to-yup";
+import { diff } from "deep-object-diff";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import mapObjKeys from "%/utilities/mapObjKeys";
+import trimAll from "%/utilities/trimAll";
+import emptyStringsToNull from "%/utilities/emptyStringsToNull";
+import removeAllUndefined from "%/utilities/removeAllUndefined";
 
-export default jsonSchema => {
+export default ({ jsonSchema = {}, data = {}, useFormProps = {} }) => {
+    const yupConfig = {
+        abortEarly: false
+    };
+
+    const getFormFields = schemaProperties => {
+        if (!schemaProperties) {
+            return [];
+        } else {
+            return Object.keys(schemaProperties);
+        }
+    };
+
     const getErrMessagesFromSchema = () => {
         const descriptionAttributePattern = /^(?<fieldName>.*)Description$/;
         return Object.fromEntries(
@@ -45,16 +63,23 @@ export default jsonSchema => {
         ? Yup.object()
         : buildYup(jsonSchema, jsonSchemaToYupConfig);
 
-    const formResolver = schema =>
+    const formatYupErrors = R.pipe(
+        R.map(e => ({ [e.path]: e.message })),
+        R.chain(R.toPairs),
+        R.groupBy(R.head),
+        R.map(R.pluck(1))
+    );
+
+    const resolver = () =>
         useCallback(
-            async data => {
+            async x => {
                 const formattedData = R.pipe(
                     x => trimAll(x),
                     x => emptyStringsToNull(x),
                     x => removeAllUndefined(x),
-                    x => diff(state.item, x),
+                    x => diff(data),
                     R.pick(getFormFields(jsonSchema?.properties))
-                )(data);
+                )(x);
 
                 class Output {
                     constructor(values = {}, errors = {}) {
@@ -64,7 +89,7 @@ export default jsonSchema => {
                 }
 
                 try {
-                    const values = await schema.validate(
+                    const values = await yupSchema.validate(
                         formattedData,
                         yupConfig
                     );
@@ -89,8 +114,10 @@ export default jsonSchema => {
                     };
                 }
             },
-            [schema]
+            [yupSchema]
         );
 
-    return formResolver(yupSchema);
+    return useForm({
+        resolver: resolver()
+    });
 };

@@ -1,13 +1,11 @@
 import { createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Textfield from "@atlaskit/textfield";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "%/hooks/useEdit";
 import useEditClients from "%/hooks/useEditClients";
-import useEditClient from "%/hooks/useEditClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
@@ -22,14 +20,11 @@ import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
-import yupSchemaFormResolver from "%/utilities/yupSchemaFormResolver";
+import useYupSchemaForm from "%/hooks/useYupSchemaForm";
 
 export const UsersEditContext = createContext();
 
 export default () => {
-    const form = useForm({
-        resolver: yupSchemaFormResolver
-    }); // TODO: make this into a hook: useJsonYupSchemaForm
     const { username } = useParams();
     const history = useHistory();
 
@@ -49,6 +44,11 @@ export default () => {
             path: [user.namePlural, username],
             body
         });
+
+    const form = useYupSchemaForm({
+        data: editClient[0]?.data?.data?.data || {},
+        jsonSchema: editClient[1]?.data?.data?.data || {}
+    });
 
     if (someProp("isLoading", editClients)) {
         return (
