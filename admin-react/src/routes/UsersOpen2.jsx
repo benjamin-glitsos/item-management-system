@@ -23,7 +23,7 @@ export default () => {
     const open = useOpen();
     const user = useUser();
 
-    const { isLoading, isError, error, data } = useOpenClients({
+    const openClients = useOpenClients({
         paths: [
             ["schemas", `${open.action}-${user.namePlural}`],
             [user.namePlural, username]
@@ -36,7 +36,8 @@ export default () => {
             body: {}
         });
 
-    if (isLoading) {
+    if (openClients.some(x => x.isLoading)) {
+        // TODO: use Ramda to abstract into function that can be used for both isLoading and isError R.some R.prop(s)
         return (
             <Content maxWidth={open.maxWidth}>
                 <LoadingSpinner />
@@ -44,7 +45,7 @@ export default () => {
         );
     }
 
-    if (isError) {
+    if (openClients.some(x => x.isError)) {
         return (
             <Content maxWidth={open.maxWidth}>
                 <ErrorBanner />
