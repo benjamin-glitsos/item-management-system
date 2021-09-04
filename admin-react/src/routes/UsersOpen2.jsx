@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import useOpen from "%/hooks/useOpen";
-import useOpenClient from "%/hooks/useOpenClient";
+import useOpenClients from "%/hooks/useOpenClients";
 import useEditClient from "%/hooks/useEditClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
@@ -23,8 +23,11 @@ export default () => {
     const open = useOpen();
     const user = useUser();
 
-    const { isLoading, isError, error, data } = useOpenClient({
-        path: [user.namePlural, username]
+    const { isLoading, isError, error, data } = useOpenClients({
+        paths: [
+            ["schemas", `${open.action}-${user.namePlural}`],
+            [user.namePlural, username]
+        ]
     });
 
     const { isError, error, mutate: edit, data } = body =>
@@ -49,12 +52,12 @@ export default () => {
         );
     }
 
-    const openQuery = data.data.data;
+    const [schemaQuery, userQuery] = data.data.data;
 
     const page = usePage({
         history,
         action: open.action,
-        key: openQuery[user.keyField],
+        key: userQuery[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
@@ -78,11 +81,12 @@ export default () => {
                             edit={edit}
                             form={form}
                         >
-                            <code>{JSON.stringify(openQuery)}</code>
+                            <code>{JSON.stringify(userQuery)}</code>
+                            <code>{JSON.stringify(schemaQuery)}</code>
                         </OpenForm>
                     </Col>
                     <Col sm={2}>
-                        <OpenSidebar2 data={openQuery} />
+                        <OpenSidebar2 data={userQuery} />
                     </Col>
                 </Row>
             </Grid>
