@@ -2,14 +2,14 @@ import { titleCase } from "title-case";
 import joinTitle from "%/utilities/joinTitle";
 
 export default ({ action, key, userNameSingular, projectName }) => {
-    const actionTitle = joinTitle([
+    const pageTitle = joinTitle([
         titleCase(`${action} ${userNameSingular}`),
         key
     ]);
 
-    const pageTitle = joinTitle([action, projectName]);
+    const tabTitle = joinTitle([pageTitle, projectName]);
 
     const pageDescription = `A ${userNameSingular} in the ${projectName}.`;
 
-    return { actionTitle, pageTitle, pageDescription };
+    return { pageTitle, tabTitle, pageDescription };
 };

@@ -4,6 +4,7 @@ import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
 import PageLayout from "%/components/PageLayout";
+import OpenLayout from "%/components/OpenLayout";
 import LoadingSpinner from "%/components/LoadingSpinner";
 
 export default () => {
@@ -38,8 +39,14 @@ export default () => {
     });
 
     return (
-        <PageLayout title={page.pageTitle} description={page.pageDescription}>
-            <h1>{page.actionTitle}</h1>
+        <PageLayout title={page.tabTitle} description={page.pageDescription}>
+            <OpenLayout
+                title={page.pageTitle}
+                breadcrumbs={[]}
+                isLoading={isLoading}
+            >
+                Content
+            </OpenLayout>
         </PageLayout>
     );
 };
