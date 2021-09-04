@@ -1,10 +1,20 @@
 import { Fragment } from "react";
+import { useParams } from "react-router-dom";
+import { titleCase } from "title-case";
 import useOpen from "%/hooks/useOpen";
+import useUser from "%/hooks/useUser";
 import LoadingSpinner from "%/components/LoadingSpinner";
 
 export default () => {
-    const { isLoading, isError, error, data } = useOpen({
-        path: ["users", "benglitsos"]
+    const { username } = useParams();
+    const user = useUser();
+    const {
+        isLoading,
+        isError,
+        error,
+        data: { response, data }
+    } = useOpen({
+        path: [user.namePlural, username]
     });
 
     if (isLoading) {
@@ -15,10 +25,13 @@ export default () => {
         return <div>Error</div>;
     }
 
-    const d = data.data.data;
+    console.log(response, data);
+    const res = response.data.data;
     return (
         <Fragment>
-            <h1>Edit user: {d.username}</h1>
+            <h1>
+                {titleCase(`${data.action} user`)} : {res.username}
+            </h1>
         </Fragment>
     );
 };

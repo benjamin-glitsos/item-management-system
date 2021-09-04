@@ -3,8 +3,8 @@ import service from "%/utilities/service";
 import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 
-export default ({ path }) =>
-    useQuery(
+export default ({ path }) => {
+    const query = useQuery(
         ["open", ...path],
         () => service({ method: "GET", path, body: null }),
         {
@@ -15,3 +15,16 @@ export default ({ path }) =>
             }
         }
     );
+
+    const action = "open";
+
+    return {
+        ...query,
+        data: {
+            response: query.data,
+            data: {
+                action
+            }
+        }
+    };
+};
