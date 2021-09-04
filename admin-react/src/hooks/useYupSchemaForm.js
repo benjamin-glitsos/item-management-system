@@ -11,6 +11,7 @@ import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 
 export default ({ jsonSchema = {}, data = {}, useFormProps = {} }) => {
+    console.log(jsonSchema);
     const yupConfig = {
         abortEarly: false
     };

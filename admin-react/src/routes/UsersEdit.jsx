@@ -39,15 +39,15 @@ export default () => {
         ]
     });
 
-    const editClient = body =>
-        useEditClient({
-            path: [user.namePlural, username],
-            body
-        });
+    // const editClient = body =>
+    //     useEditClient({
+    //         path: [user.namePlural, username],
+    //         body
+    //     });
 
     const form = useYupSchemaForm({
-        data: editClient[0]?.data?.data?.data || {},
-        jsonSchema: editClient[1]?.data?.data?.data || {}
+        jsonSchema: editClients[0]?.data?.data?.data,
+        data: editClients[1]?.data?.data?.data
     });
 
     if (someProp("isLoading", editClients)) {
