@@ -19,13 +19,14 @@ object SchemasService extends ServiceMixin {
   }
 
   final def loadJson(name: String, isFull: Boolean): ujson.Value = {
-    val schemaUjson: ujson.Value = read[ujson.Value](load(name).toString)
+    val schemaJson: ujson.Value = read[ujson.Value](load(name).toString)
     if (!isFull) {
-      schemaUjson.obj.remove("title")
-      schemaUjson.obj.remove("description")
+      schemaJson.obj.remove("title")
+      schemaJson.obj.remove("description")
+      schemaJson.obj.remove("minProperties")
     }
     ujson.Obj(
-      "data" -> schemaUjson
+      "data" -> schemaJson
     )
   }
 }

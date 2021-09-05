@@ -50,9 +50,9 @@ export default () => {
     //     });
 
     const maybeJsonSchema = editClients[0]?.data?.data?.data;
-    console.log(maybeJsonSchema);
 
     const yupSchema = Yup.object();
+    // maybeJsonSchema
     // ? jsonSchemaToYup(maybeJsonSchema)
     // : Yup.object();
 
@@ -98,6 +98,44 @@ export default () => {
         schemaQuery,
         usersQuery
     };
+
+    console.log(maybeJsonSchema);
+    const schema = {
+        $schema: "http://json-schema.org/draft-07/schema#",
+        $id: "http://example.com/person.schema.json",
+        title: "Person",
+        description: "A person",
+        type: "object",
+        properties: {
+            name: {
+                description: "Name of the person",
+                type: "string"
+            },
+            email: {
+                type: "string",
+                format: "email"
+            },
+            fooorbar: {
+                type: "string",
+                matches: "(foo|bar)"
+            },
+            age: {
+                description: "Age of person",
+                type: "number",
+                exclusiveMinimum: 0,
+                required: true
+            },
+            characterType: {
+                enum: ["good", "bad"],
+                enum_titles: ["Good", "Bad"],
+                type: "string",
+                title: "Type of people",
+                propertyOrder: 3
+            }
+        },
+        required: ["name", "email"]
+    };
+    console.log(jsonSchemaToYup(schema, {}));
 
     return (
         <UsersEditContext.Provider value={context}>
