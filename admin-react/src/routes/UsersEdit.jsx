@@ -102,9 +102,6 @@ export default () => {
     console.log(maybeJsonSchema);
     const schema = {
         $schema: "http://json-schema.org/draft-07/schema#",
-        $id: "http://example.com/person.schema.json",
-        title: "Person",
-        description: "A person",
         type: "object",
         properties: {
             name: {
@@ -113,7 +110,10 @@ export default () => {
             },
             email: {
                 type: "string",
-                format: "email"
+                format: "email",
+                emailDescription: "lalalala",
+                maxLength: 50,
+                minLength: 1
             },
             fooorbar: {
                 type: "string",
@@ -131,6 +131,12 @@ export default () => {
                 type: "string",
                 title: "Type of people",
                 propertyOrder: 3
+            },
+            additionalNotes: {
+                maxLength: 1048576,
+                type: ["string", "null"] // TODO: this is the cause of the issue. The array
+                // TODO: solution is upgrade to using this library instead: https://www.npmjs.com/package/schema-to-yup
+                // Then follow the instructions to add support for this in: https://www.npmjs.com/package/schema-to-yup#multi-type-constraints
             }
         },
         required: ["name", "email"]
