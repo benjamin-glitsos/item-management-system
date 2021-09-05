@@ -9,13 +9,59 @@ import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 
-export default validationSchema =>
-    useCallback(
+export default jsonSchema => {
+    const yupConfig = {
+        abortEarly: false
+    };
+
+    const schema = {
+        $schema: "http://json-schema.org/draft-07/schema#",
+        type: "object",
+        properties: {
+            name: {
+                description: "Name of the person",
+                type: "string"
+            },
+            email: {
+                type: "string",
+                format: "email",
+                emailDescription: "lalalala",
+                maxLength: 50,
+                minLength: 1
+            },
+            fooorbar: {
+                type: "string",
+                matches: "(foo|bar)"
+            },
+            age: {
+                description: "Age of person",
+                type: "number",
+                exclusiveMinimum: 0,
+                required: true
+            },
+            characterType: {
+                enum: ["good", "bad"],
+                enum_titles: ["Good", "Bad"],
+                type: "string",
+                title: "Type of people",
+                propertyOrder: 3
+            },
+            additionalNotes: {
+                maxLength: 1048576,
+                type: ["string", "null"] // TODO: this is the cause of the issue. The array
+                // TODO: solution is upgrade to using this library instead: https://www.npmjs.com/package/schema-to-yup
+                // Then follow the instructions to add support for this in: https://www.npmjs.com/package/schema-to-yup#multi-type-constraints
+            }
+        },
+        required: ["name", "email"]
+    };
+
+    const yupSchema = jsonSchemaToYup(schema, {});
+
+    return useCallback(
         async data => {
             try {
-                const values = await validationSchema.validate(data, {
-                    abortEarly: false
-                });
+                const values = await yupSchema.validate(data, yupConfig);
 
                 return {
                     values,
@@ -37,8 +83,9 @@ export default validationSchema =>
                 };
             }
         },
-        [validationSchema]
+        [yupSchema]
     );
+};
 
 // export default ({ jsonSchema = {}, data = {}, useFormProps = {} }) => {
 //     TODO: try adding the json schema as a literal object to here to test

@@ -48,6 +48,7 @@ export default () => {
     //         path: [user.namePlural, username],
     //         body
     //     });
+    //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
 
     const form = useForm({
         resolver: useYupSchemaResolver(jsonSchemaToYup(editClients[0]))
@@ -91,50 +92,6 @@ export default () => {
         schemaQuery,
         usersQuery
     };
-
-    console.log(maybeJsonSchema);
-    const schema = {
-        $schema: "http://json-schema.org/draft-07/schema#",
-        type: "object",
-        properties: {
-            name: {
-                description: "Name of the person",
-                type: "string"
-            },
-            email: {
-                type: "string",
-                format: "email",
-                emailDescription: "lalalala",
-                maxLength: 50,
-                minLength: 1
-            },
-            fooorbar: {
-                type: "string",
-                matches: "(foo|bar)"
-            },
-            age: {
-                description: "Age of person",
-                type: "number",
-                exclusiveMinimum: 0,
-                required: true
-            },
-            characterType: {
-                enum: ["good", "bad"],
-                enum_titles: ["Good", "Bad"],
-                type: "string",
-                title: "Type of people",
-                propertyOrder: 3
-            },
-            additionalNotes: {
-                maxLength: 1048576,
-                type: ["string", "null"] // TODO: this is the cause of the issue. The array
-                // TODO: solution is upgrade to using this library instead: https://www.npmjs.com/package/schema-to-yup
-                // Then follow the instructions to add support for this in: https://www.npmjs.com/package/schema-to-yup#multi-type-constraints
-            }
-        },
-        required: ["name", "email"]
-    };
-    console.log(jsonSchemaToYup(schema, {}));
 
     return (
         <UsersEditContext.Provider value={context}>
