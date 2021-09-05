@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Textfield from "@atlaskit/textfield";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
@@ -12,7 +13,7 @@ import useUser from "%/hooks/useUser";
 import Page from "%/components/Page";
 import Content from "%/components/Content";
 import EditSidebar from "%/components/EditSidebar";
-import EditForm from "%/components/EditForm";
+import Form from "%/components/Form";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import RegisteredField2 from "%/components/RegisteredField2";
 import ControlledField2 from "%/components/ControlledField2";
@@ -20,7 +21,9 @@ import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
-import useYupSchemaForm from "%/hooks/useYupSchemaForm";
+import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
+
+import * as yup from "yup";
 
 export const UsersEditContext = createContext();
 
@@ -45,9 +48,18 @@ export default () => {
     //         body
     //     });
 
-    const form = useYupSchemaForm({
-        jsonSchema: editClients[0]?.data?.data?.data,
-        data: editClients[1]?.data?.data?.data
+    // const form = useYupSchemaForm({
+    //     jsonSchema: editClients[0]?.data?.data?.data,
+    //     data: editClients[1]?.data?.data?.data
+    // });
+
+    const validationSchema = yup.object({
+        firstName: yup.string().required("Required"),
+        lastName: yup.string().required("Required")
+    });
+
+    const form = useForm({
+        resolver: useYupSchemaResolver(validationSchema)
     });
 
     if (someProp("isLoading", editClients)) {
@@ -100,7 +112,7 @@ export default () => {
                 <Grid fluid>
                     <Row>
                         <Col sm={10}>
-                            <EditForm page={page} edit={edit} form={form}>
+                            <Form page={page} edit={edit} form={form}>
                                 <FormSubheading level={3}>
                                     Details
                                 </FormSubheading>
@@ -143,7 +155,7 @@ export default () => {
                                 />
                                 <code>{JSON.stringify(usersQuery)}</code>
                                 <code>{JSON.stringify(schemaQuery)}</code>
-                            </EditForm>
+                            </Form>
                         </Col>
                         <Col sm={2}>
                             <EditSidebar data={usersQuery} />
