@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import R from "ramda";
 import * as Yup from "yup";
-import { buildYup } from "json-schema-to-yup";
+import { buildYup as jsonSchemaToYup } from "json-schema-to-yup";
 import { diff } from "deep-object-diff";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import mapObjKeys from "%/utilities/mapObjKeys";
@@ -94,7 +94,7 @@ export default validationSchema =>
 //
 //     const yupSchema = isObjectEmpty(jsonSchema)
 //         ? Yup.object()
-//         : buildYup(jsonSchema, jsonSchemaToYupConfig);
+//         : jsonSchemaToYup(jsonSchema, jsonSchemaToYupConfig);
 //
 //     const formatYupErrors = R.pipe(
 //         R.map(e => ({ [e.path]: e.message })),

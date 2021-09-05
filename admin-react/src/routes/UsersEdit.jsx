@@ -24,6 +24,7 @@ import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 
 import * as yup from "yup";
+import { buildYup as jsonSchemaToYup } from "json-schema-to-yup";
 
 export const UsersEditContext = createContext();
 
@@ -48,18 +49,14 @@ export default () => {
     //         body
     //     });
 
-    // const form = useYupSchemaForm({
-    //     jsonSchema: editClients[0]?.data?.data?.data,
-    //     data: editClients[1]?.data?.data?.data
-    // });
+    const maybeJsonSchema = editClients[0]?.data?.data?.data;
 
-    const validationSchema = yup.object({
-        firstName: yup.string().required("Required"),
-        lastName: yup.string().required("Required")
-    });
+    const yupSchema = maybeJsonSchema
+        ? jsonSchemaToYup(maybeJsonSchema, jsonSchemaToYupConfig)
+        : Yup.object();
 
     const form = useForm({
-        resolver: useYupSchemaResolver(validationSchema)
+        resolver: useYupSchemaResolver(yupSchema)
     });
 
     if (someProp("isLoading", editClients)) {
