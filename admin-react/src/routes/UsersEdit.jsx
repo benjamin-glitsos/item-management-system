@@ -23,7 +23,7 @@ import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 
-import * as yup from "yup";
+import * as Yup from "yup";
 import { buildYup as jsonSchemaToYup } from "json-schema-to-yup";
 
 export const UsersEditContext = createContext();
@@ -50,10 +50,11 @@ export default () => {
     //     });
 
     const maybeJsonSchema = editClients[0]?.data?.data?.data;
+    console.log(maybeJsonSchema);
 
-    const yupSchema = maybeJsonSchema
-        ? jsonSchemaToYup(maybeJsonSchema, jsonSchemaToYupConfig)
-        : Yup.object();
+    const yupSchema = Yup.object();
+    // ? jsonSchemaToYup(maybeJsonSchema)
+    // : Yup.object();
 
     const form = useForm({
         resolver: useYupSchemaResolver(yupSchema)
