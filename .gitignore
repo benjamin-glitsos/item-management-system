@@ -31,3 +31,4 @@ admin-react/*.iml
 admin-react/npm-debug.log*
 admin-react/yarn-debug.log*
 admin-react/yarn-error.log*
+admin-react/.metals/
