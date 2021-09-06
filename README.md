@@ -7,15 +7,15 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 ### Controller&ndash;Scala Container
 
 * Structure: Routes, Middleware, Validation, Service, DAO, Seeding, and Mixins.
-* Strong type safety using monads and other Algebraic Data Types.
 * Object-oriented structure with functional programming methods.
+* Strong type safety using monads and other Algebraic Data Types.
 * RESTful API design.
 * Middlewares used for validation and logging.
 * JSON Schemas are the source-of-truth for both back-end and front-end validation.
 
 ### Admin&ndash;React Container
 
-**Note:** refactoring in progress (so the code is still messy)
+**Note:** refactoring in progress, so the code is still messy.
 
 * Structure: Routes, Pages, Hooks, Components, and Utilities.
 * Server-state management using React Query.
