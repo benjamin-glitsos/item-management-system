@@ -7,7 +7,7 @@ BEGIN
     INTO maybe_metakey
     FROM users_open
     WHERE username = _username
-    AND   password = sha1_encrypt(_password);
+    AND   password = encrypt(_password);
 
     -- IF maybe_metakey THEN
     --     ...;

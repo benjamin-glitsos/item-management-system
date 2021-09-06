@@ -19,7 +19,7 @@ trait UsersEditService
     read[ujson.Value](
       try {
         (for {
-          _ <- UsersDAO
+          data <- UsersDAO
             .edit(
               oldUsername,
               newUsername,
@@ -31,13 +31,9 @@ trait UsersEditService
               additionalNotes
             )
 
-          data <- UsersDAO.open(newUsername.getOrElse(oldUsername))
-
           val output: String = createDataOutput(writeJs(data))
 
-        } yield (output))
-          .transact(transactor)
-          .unsafeRunSync
+        } yield (output)).transact(transactor).unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
       }

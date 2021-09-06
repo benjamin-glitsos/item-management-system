@@ -13,7 +13,7 @@ export default () => {
                     by={context.state.item.created_by}
                 />
             </OpenSidebarItem>
-            <OpenSidebarItem label="Edited">
+            <OpenSidebarItem label="Opened">
                 <UpdateAuthorDetails
                     at={context.state.item.edited_at}
                     by={context.state.item.edited_by}

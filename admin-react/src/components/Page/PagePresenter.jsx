@@ -1,28 +1,22 @@
 import styled from "styled-components";
 import Page from "@atlaskit/page";
 import "@atlaskit/css-reset";
-import SidebarNavigation from "%/components/SidebarNavigation";
+import SidebarNavigationComponent from "%/components/SidebarNavigation";
 
 export default ({ children }) => (
-    <PageStyles>
-        <Page
-            navigation={
-                <SidebarStyles>
-                    <SidebarNavigation />
-                </SidebarStyles>
-            }
-        >
-            <ContentStyles>{children}</ContentStyles>
+    <Styles>
+        <Page navigation={<SidebarNavigation />}>
+            <Content>{children}</Content>
         </Page>
-    </PageStyles>
+    </Styles>
 );
 
-const SidebarStyles = styled.div`
+const SidebarNavigation = styled(SidebarNavigationComponent)`
     overflow-y: auto;
     max-height: 100vh;
 `;
 
-const ContentStyles = styled.div`
+const Content = styled.div`
     background-color: white;
     min-height: calc(100vh - 15px);
     padding-bottom: 15px;
@@ -30,6 +24,6 @@ const ContentStyles = styled.div`
     margin-top: -3em;
 `;
 
-const PageStyles = styled.div`
+const Styles = styled.div`
     background-color: #fafbfc;
 `;

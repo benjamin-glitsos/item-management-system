@@ -5,19 +5,17 @@ import ContentMargins from "%/components/ContentMargins";
 
 export default ({ title, breadcrumbs, maxWidth, children }) => {
     return (
-        <MarginBottom>
-            <ContentMargins maxWidth={maxWidth}>
-                <PageHeader
-                    breadcrumbs={<BreadcrumbBar breadcrumbs={breadcrumbs} />}
-                >
-                    {title}
-                </PageHeader>
-                {children}
-            </ContentMargins>
-        </MarginBottom>
+        <Content maxWidth={maxWidth}>
+            <PageHeader
+                breadcrumbs={<BreadcrumbBar breadcrumbs={breadcrumbs} />}
+            >
+                {title}
+            </PageHeader>
+            {children}
+        </Content>
     );
 };
 
-const MarginBottom = styled.div`
+const Content = styled(ContentMargins)`
     margin-bottom: 28px;
 `;

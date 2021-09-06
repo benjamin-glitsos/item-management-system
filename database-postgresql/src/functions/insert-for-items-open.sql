@@ -15,7 +15,7 @@ RETURNS void AS $$
 BEGIN
     WITH insert_meta AS (
         INSERT INTO meta (metakey, created_by, additional_notes)
-        VALUES (generate_random_metakey('items'), 1, _additional_notes)
+        VALUES (gen_metakey('item'), 1, _additional_notes)
         RETURNING id
     )
     INSERT INTO items (

@@ -1,18 +1,18 @@
 import Textfield from "@atlaskit/textfield";
 import styled from "styled-components";
 
-const Symbol = () => <SymbolStyles>$</SymbolStyles>;
+const CurrencySymbol = () => <Symbol>$</Symbol>;
 
 export default ({ ...props }) => (
     <Textfield
         type="number"
         step="any"
-        elemBeforeInput={<Symbol />}
+        elemBeforeInput={<CurrencySymbol />}
         {...props}
     />
 );
 
-const SymbolStyles = styled.div`
+const Symbol = styled.div`
     margin-left: 0.5em;
     color: rgb(107, 119, 140);
 `;

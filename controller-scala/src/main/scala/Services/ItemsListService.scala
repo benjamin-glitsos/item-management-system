@@ -1,4 +1,3 @@
-import java.util.Date
 import java.sql.SQLException
 import doobie.implicits._
 import upickle.default._
@@ -16,73 +15,54 @@ trait ItemsListService
   ): ujson.Value = {
     read[ujson.Value](
       try {
-        val offset: Int = calculateOffset(pageNumber, pageLength)
-
         (for {
-          data <- ItemsDAO.list(offset, pageLength, search, sort)
+          data <- ItemsDAO.list(
+            calculateOffset(pageNumber, pageLength),
+            pageLength,
+            search,
+            sort
+          )
 
-          val (
-            totalItemsCount: Int,
-            filteredItemsCount: Int,
-            pageItemsStart: Int,
-            pageItemsEnd: Int,
-            items: List[ItemsList]
-          ) = data.headOption match {
-            case None => emptyListData[ItemsList]();
-            case Some(dataFirstRow) => {
-              val totalItemsCount: Int    = dataFirstRow._1
-              val filteredItemsCount: Int = dataFirstRow._2
-              val pageItemsStart: Int     = dataFirstRow._3
-              val pageItemsEnd: Int       = dataFirstRow._4
-
-              val items: List[ItemsList] = data.map(x => {
-                val sku: String                 = x._5
-                val name: String                = x._6
-                val description: Option[String] = x._7
-                val acquisitionDate: Date       = x._8
-                val createdAt: Int              = x._9
-                val editedAt: Option[Int]       = x._10
-
-                ItemsList(
-                  sku,
-                  name,
-                  description,
-                  acquisitionDate,
-                  createdAt,
-                  editedAt
-                )
-              })
-
-              (
-                totalItemsCount,
-                filteredItemsCount,
-                pageItemsStart,
-                pageItemsEnd,
-                items
+          val stats: ListStats = data.headOption match {
+            case None => ListStats(0, 0, 0, 0)
+            case Some(head) =>
+              ListStats(
+                head.totalCount,
+                head.filteredCount,
+                head.pageStart,
+                head.pageEnd
               )
-            };
           }
 
+          val items: List[ItemsList] = data.map(x =>
+            ItemsList(
+              x.sku,
+              x.name,
+              x.description,
+              x.acquisitionDate,
+              x.createdAt,
+              x.editedAt
+            )
+          )
+
           val output: String = createListOutput(
-            totalItemsCount,
-            filteredItemsCount,
+            totalItemsCount = stats.totalCount,
+            filteredItemsCount = stats.filteredCount,
             pageItemsCount = items.length,
-            pageItemsStart,
-            pageItemsEnd,
+            pageItemsStart = stats.pageStart,
+            pageItemsEnd = stats.pageEnd,
             pageNumber,
             pageLength,
             writeJs(items)
           )
 
           a <- reseedIfNeeded(
-            totalItemsCount,
+            stats.totalCount,
             search,
             ItemsSeeder.apply
           )
 
-        } yield (output))
-          .transact(transactor)
-          .unsafeRunSync
+        } yield (output)).transact(transactor).unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
       }

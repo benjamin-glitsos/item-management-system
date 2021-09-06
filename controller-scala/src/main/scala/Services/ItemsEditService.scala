@@ -24,7 +24,7 @@ trait ItemsEditService
     read[ujson.Value](
       try {
         (for {
-          _ <- ItemsDAO
+          data <- ItemsDAO
             .edit(
               oldSku,
               newSku,
@@ -40,13 +40,9 @@ trait ItemsEditService
               additionalNotes
             )
 
-          data <- ItemsDAO.open(newSku.getOrElse(oldSku))
-
           val output: String = createDataOutput(writeJs(data))
 
-        } yield (output))
-          .transact(transactor)
-          .unsafeRunSync
+        } yield (output)).transact(transactor).unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
       }

@@ -2,19 +2,15 @@ import com.devskiller.jfairy.Fairy
 import com.devskiller.jfairy.producer.person.Person
 import com.devskiller.jfairy.producer.text.TextProducer
 
-object UsersSeeder
-    extends EntitySeederMixin
-    with OptionMixin
-    with MarkdownSeederMixin {
+object UsersSeeder extends SeederMixin with MarkdownSeederMixin {
   override final val count: Int = 15
 
-  final def clearData(): Unit = {
+  override final def reset(): Unit =
     UsersService.delete(method = "hard-delete-all-rows")
-  }
 
-  final def predefinedData(): Unit = {
-    val fairy: Fairy       = Fairy.create();
-    val text: TextProducer = fairy.textProducer();
+  override final def defaults(): Unit = {
+    val fairy: Fairy       = Fairy.create()
+    val text: TextProducer = fairy.textProducer()
 
     UsersService.create(
       username = System.getenv("DEMO_USER_USERNAME"),
@@ -27,53 +23,34 @@ object UsersSeeder
     )
   }
 
-  final def seed(): Unit = {
-    def seedRow(): Unit = {
-      val fairy: Fairy       = Fairy.create();
-      val person: Person     = fairy.person();
-      val text: TextProducer = fairy.textProducer();
+  override final def seed(): Unit = {
+    val fairy: Fairy             = Fairy.create()
+    val person: Person           = fairy.person()
+    val text: TextProducer       = fairy.textProducer()
+    val randomNumberCode: String = randomBetween(1, 99).toString
 
-      val randomNumber: String = randomBetween(1, 99).toString
-      val username: String =
-        person.getUsername() + randomNumber
-      val emailAddress: String = {
-        val atSymbol: String = "@"
-        val Array(emailUserName, emailDomainName) =
-          person.getEmail().split(atSymbol)
-        emailUserName + randomNumber + atSymbol + emailDomainName
-      }
+    val username: String                = person.getUsername() + randomNumberCode
+    val emailAddress: String            = makeEmailAddress(person, randomNumberCode)
+    val firstName: String               = person.getFirstName()
+    val lastName: String                = person.getLastName()
+    val otherNames: Option[String]      = makeOtherNames(fairy)
+    val password: String                = randomPrintable(length = 15)
+    val additionalNotes: Option[String] = generateMarkdown(text)
 
-      val firstName: String = person.getFirstName()
-      val lastName: String  = person.getLastName()
-      val otherNames: Option[String] = maybeEmpty(
-        repeatedRunArray[String](
-          randomGaussianDiscrete(min = 0, max = 2),
-          () => {
-            val person: Person = fairy.person()
-            person.getMiddleName
-          }
-        ).mkString(" ").trim()
-      )
-      val password: String                = randomPrintable(length = 15)
-      val additionalNotes: Option[String] = generateMarkdown(text)
-
-      UsersService.create(
-        username,
-        emailAddress,
-        firstName,
-        lastName,
-        otherNames,
-        password,
-        additionalNotes
-      )
-    }
-
-    count times seedRow()
+    UsersService.create(
+      username,
+      emailAddress,
+      firstName,
+      lastName,
+      otherNames,
+      password,
+      additionalNotes
+    )
   }
 
-  final def apply(): Unit = {
-    clearData()
-    predefinedData()
-    seed()
+  override final def apply(): Unit = {
+    reset()
+    defaults()
+    count times seed()
   }
 }

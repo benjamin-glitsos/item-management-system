@@ -3,7 +3,6 @@ import { useHistory, Link } from "react-router-dom";
 import { useImmer } from "use-immer";
 import useThrottledEffect from "use-throttled-effect";
 import { useQueryParams, NumberParam, StringParam } from "use-query-params";
-import axios from "axios";
 import { Checkbox } from "@atlaskit/checkbox";
 import ActionsMenu from "%/components/ActionsMenu";
 import {
@@ -15,6 +14,7 @@ import {
 import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import formatDate from "%/utilities/formatDate";
+import { listService, deleteService } from "%/services";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import config from "%/config";
 
@@ -27,8 +27,6 @@ export default ({
     keyColumnPlural
 }) => {
     const history = useHistory();
-
-    const apiUrl = config.serverUrl + `v1/${namePlural}/`;
 
     const defaultState = {
         request: { body: {} },
@@ -45,25 +43,6 @@ export default ({
         search: StringParam,
         sort: CommaArrayParam
     });
-
-    const requestListItems = body =>
-        axios({
-            method: "REPORT",
-            url: apiUrl,
-            data: body
-        })
-            .then(setResponse)
-            .catch(axiosErrorHandler);
-
-    const requestDeleteItems = (method, keys) =>
-        axios({
-            method: "DELETE",
-            url: apiUrl,
-            data: {
-                method,
-                [keyColumnPlural]: keys
-            }
-        }).catch(axiosErrorHandler);
 
     const setLoading = bool =>
         setState(draft => {
@@ -112,12 +91,19 @@ export default ({
 
     const listItemsAction = async () => {
         setLoading(true);
-        await requestListItems({ ...state.request.body, ...query });
+        await listService({
+            path: namePlural,
+            params: { ...state.request.body, ...query }
+        })
+            .then(setResponse)
+            .catch(axiosErrorHandler);
         setLoading(false);
     };
 
     const deleteItemsAction = async (method, keys) => {
-        await requestDeleteItems(method, keys);
+        await deleteService({ path: namePlural, method, keys }).catch(
+            axiosErrorHandler
+        );
         listItemsAction();
         setDeselectAll();
     };

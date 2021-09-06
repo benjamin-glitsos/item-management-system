@@ -6,24 +6,8 @@ import upickle.default._
 trait UsersListService
     extends ListServiceMixin
     with DoobieConnectionMixin
-    with UpickleMixin {
-  private final def formatName(
-      firstName: String,
-      lastName: String,
-      otherNames: Option[String]
-  ): String = {
-    otherNames match {
-      case None => List(firstName, lastName).mkString(" ")
-      case Some(otherNames) => {
-        val otherNamesInitials =
-          otherNames.split(" ").filter(_.length >= 1).map(_.charAt(0) + ".")
-        (List(firstName) ++ otherNamesInitials ++ List(lastName))
-          .mkString(" ")
-      }
-
-    }
-  }
-
+    with UpickleMixin
+    with StringMixin {
   final def list(
       pageNumber: Int,
       pageLength: Int,
@@ -32,68 +16,53 @@ trait UsersListService
   ): ujson.Value = {
     read[ujson.Value](
       try {
-        val offset: Int = calculateOffset(pageNumber, pageLength)
-
         (for {
-          data <- UsersDAO.list(offset, pageLength, search, sort)
+          data <- UsersDAO.list(
+            calculateOffset(pageNumber, pageLength),
+            pageLength,
+            search,
+            sort
+          )
 
-          val (
-            totalItemsCount: Int,
-            filteredItemsCount: Int,
-            pageItemsStart: Int,
-            pageItemsEnd: Int,
-            items: List[UsersList]
-          ) = data.headOption match {
-            case None => emptyListData[UsersList]();
-            case Some(dataFirstRow) => {
-              val totalItemsCount: Int    = dataFirstRow._1
-              val filteredItemsCount: Int = dataFirstRow._2
-              val pageItemsStart: Int     = dataFirstRow._3
-              val pageItemsEnd: Int       = dataFirstRow._4
-
-              val items: List[UsersList] = data.map(x => {
-                val username: String           = x._5
-                val emailAddress: String       = x._6
-                val firstName: String          = x._7
-                val lastName: String           = x._8
-                val otherNames: Option[String] = x._9
-                val createdAt: Int             = x._10
-                val editedAt: Option[Int]      = x._11
-                val name: String               = formatName(firstName, lastName, otherNames)
-
-                UsersList(username, name, emailAddress, createdAt, editedAt)
-              })
-
-              (
-                totalItemsCount,
-                filteredItemsCount,
-                pageItemsStart,
-                pageItemsEnd,
-                items
+          val stats: ListStats = data.headOption match {
+            case None => ListStats(0, 0, 0, 0)
+            case Some(head) =>
+              ListStats(
+                head.totalCount,
+                head.filteredCount,
+                head.pageStart,
+                head.pageEnd
               )
-            };
           }
 
+          val items: List[UsersList] = data.map(x =>
+            UsersList(
+              x.username,
+              formatName(x.firstName, x.lastName, x.otherNames),
+              x.emailAddress,
+              x.createdAt,
+              x.editedAt
+            )
+          )
+
           val output: String = createListOutput(
-            totalItemsCount,
-            filteredItemsCount,
+            totalItemsCount = stats.totalCount,
+            filteredItemsCount = stats.filteredCount,
             pageItemsCount = items.length,
-            pageItemsStart,
-            pageItemsEnd,
+            pageItemsStart = stats.pageStart,
+            pageItemsEnd = stats.pageEnd,
             pageNumber,
             pageLength,
             writeJs(items)
           )
 
           a <- reseedIfNeeded(
-            totalItemsCount,
+            stats.totalCount,
             search,
             UsersSeeder.apply
           )
 
-        } yield (output))
-          .transact(transactor)
-          .unsafeRunSync
+        } yield (output)).transact(transactor).unsafeRunSync
       } catch {
         case e: SQLException => handleSqlException(e)
       }

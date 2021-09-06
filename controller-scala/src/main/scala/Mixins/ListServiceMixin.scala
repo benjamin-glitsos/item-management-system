@@ -5,10 +5,7 @@ import cats.implicits._
 import upickle.default._
 
 trait ListServiceMixin extends ListMixin with ServiceMixin with LogicMixin {
-  final def emptyListData[A](): (Int, Int, Int, Int, List[A]) =
-    (0, 0, 0, 0, List())
-
-  final def calculatePageCount(pageLength: Int, items: Int): Int =
+  private final def calculatePageCount(pageLength: Int, items: Int): Int =
     ceil(items.toFloat / pageLength).toInt
 
   final def calculateOffset(pageNumber: Int, pageLength: Int): Int =

@@ -17,7 +17,7 @@ export default () => {
 
     if (!isLoading && filteredPagesCount > 0 && pageItemsCount > 0) {
         return (
-            <PaginationStyles>
+            <Styles>
                 <Pagination
                     pages={enumerate(filteredPagesCount)}
                     selectedIndex={pageNumber}
@@ -26,14 +26,14 @@ export default () => {
                         setPageNumber(pageNumber);
                     }}
                 />
-            </PaginationStyles>
+            </Styles>
         );
     } else {
         return null;
     }
 };
 
-const PaginationStyles = styled.div`
+const Styles = styled.div`
     text-align: center;
     & > div {
         display: inline-flex !important;

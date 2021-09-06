@@ -11,7 +11,7 @@ RETURNS void AS $$
 BEGIN
     WITH insert_meta AS (
         INSERT INTO meta (metakey, created_by, additional_notes)
-        VALUES (generate_random_metakey('users'), 1, _additional_notes)
+        VALUES (gen_metakey('user'), 1, _additional_notes)
         RETURNING id
     )
     INSERT INTO users (
@@ -29,7 +29,7 @@ BEGIN
       , _first_name
       , _last_name
       , _other_names
-      , sha1_encrypt(_password)
+      , encrypt(_password)
       , (SELECT id FROM insert_meta)
     );
 END;

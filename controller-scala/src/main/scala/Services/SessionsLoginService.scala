@@ -1,3 +1,4 @@
+import java.util.UUID
 import java.sql.SQLException
 import doobie.implicits._
 import upickle.default._
@@ -39,17 +40,17 @@ trait SessionsLoginService
             maybeSessionValue match {
               case Some(sessionValue) => {
                 val value: ujson.Value = read[ujson.Value](sessionValue)
-                val sessionToken       = value("token").str
+                val sessionToken: UUID = UUID.fromString(value("token").str)
 
                 makeOutput(makeAuthenticationToken(metakey, sessionToken))
               }
               case None => {
-                val sessionToken: String = randomSessionToken()
+                val sessionToken: UUID = randomSessionToken()
 
                 val sessionValue: String = write(
                   ujson.Obj(
                     "timestamp" -> ujson.Num(epochNow),
-                    "token"     -> ujson.Str(sessionToken)
+                    "token"     -> ujson.Str(sessionToken.toString)
                   )
                 )
 
