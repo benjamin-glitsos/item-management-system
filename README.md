@@ -4,20 +4,20 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 
 ### Controller&ndash;Scala Container
 
-* Layered architecture: Routing, Middleware, Validation, Service, DAO, and Seeding layers
-* JSON Schema is used for back-end and front-end validation, and custom properties are used for custom validation messages
+* Architecture: Routing, Middleware, Validation, Service, DAO, and Seeding
+* Object-oriented mixin pattern
+* Strong type-safety using monads and other Algebraic Data Types
 * RESTful API design
-* Strong type-safety by using monads and other Algebraic Data Types, and an SQL query builder
 * Middlewares for authentication, logging, validation, and more
-* Object-oriented multiple-trait-inheritance pattern
 * Optimised to minimise round-trips and network load
+* JSON Schemas are the source-of-truth for both back-end and front-end validation
 
 ### Admin&ndash;React Container
 
-Note: refactoring in progress
+**Note:** refactoring in progress
 
+* Architecture: Pages, Component, and Hooks
 * Server-state management using React Query
-* Architecture uses custom React Hooks
 * Functional data pipelines using Ramda
 
 ### Database&ndash;PostgreSQL Container
