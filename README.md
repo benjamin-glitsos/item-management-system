@@ -2,7 +2,7 @@
 
 A full-stack information system with a dockerised <!-- Model&ndash; -->Model&ndash;View&ndash;Controller (MMVC) architecture.
 
-<ims.benglitsos.com.au>
+[ims.benglitsos.com.au](https://ims.benglitsos.com.au/)
 
 ### Controller&ndash;Scala Container
 
