@@ -13,7 +13,7 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 
 ### Admin&ndash;React Container
 
-**Note:** refactoring in progress
+**Note:** refactoring in progress (so the code is still messy)
 
 * Architecture: Routes, Pages, Hooks, Components, and Utilities
 * Server-state management using React Query
