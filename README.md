@@ -4,27 +4,30 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 
 ### Controller&ndash;Scala Container
 
-* Architecture: Routing, Middleware, Validation, Service, DAO, and Seeding
-* Object-oriented mixin pattern
-* Strong type-safety using monads and other Algebraic Data Types
+* Architecture: Routes, Middleware, Validation, Service, DAO, Seeding, and Mixins
+* Strong type safety using monads and other Algebraic Data Types
+* Object-oriented in the large, functional programming in the small
 * RESTful API design
-* Middlewares for authentication, logging, validation, and more
-* Optimised to minimise round-trips and network load
+* Middlewares for validation and logging
 * JSON Schemas are the source-of-truth for both back-end and front-end validation
 
 ### Admin&ndash;React Container
 
 **Note:** refactoring in progress
 
-* Architecture: Pages, Component, and Hooks
+* Architecture: Routes, Pages, Hooks, Components, and Utilities
 * Server-state management using React Query
-* Functional data pipelines using Ramda
+* Functional data transformations using Ramda
 
 ### Database&ndash;PostgreSQL Container
 
+* Architecture: Functions, Triggers, Views, Tables, Domains, and Indexes
+
+
 * Architecture: rich metadata is abstracted into a separate table, however the use of views, ‘instead of’ triggers and stored procedures allow operating as if the metadata was in the same table
-* Trigram indexes speed up text search
-* Domain constraints ensure data integrity
+
+* 
+* Functions reduce need for round trips to the controller
 * Fourth normal form (4NF)
 
 <!-- ### Session&ndash;Redis Container -->
