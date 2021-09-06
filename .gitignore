@@ -32,3 +32,4 @@ admin-react/npm-debug.log*
 admin-react/yarn-debug.log*
 admin-react/yarn-error.log*
 admin-react/src/assets/
+admin-react/.metals/
