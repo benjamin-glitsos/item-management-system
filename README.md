@@ -23,7 +23,7 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 
 * Architecture: Functions, Triggers, Views, Tables, Domains, and Indexes
 * Rich metadata is abstracted into a separate table, however the use of views, ‘instead of’ triggers and stored procedures allow operating as if the metadata was in the same table <!-- TODO: edit -->
-* Functions reduce need for round trips to the controller <!-- TODO: edit -->
+* Use of stored functions to reduce round trips <!-- TODO: edit -->
 * Fourth normal form (4NF)
 
 <!-- ### Session&ndash;Redis Container -->
