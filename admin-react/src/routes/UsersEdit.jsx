@@ -23,9 +23,6 @@ import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 
-import * as Yup from "yup";
-import jsonSchemaToYup from "%/utilities/jsonSchemaToYup";
-
 export const UsersEditContext = createContext();
 
 export default () => {
@@ -50,8 +47,49 @@ export default () => {
     //     });
     //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
 
+    const schema = {
+        $schema: "http://json-schema.org/draft-07/schema#",
+        type: "object",
+        properties: {
+            name: {
+                description: "Name of the person",
+                type: "string"
+            },
+            email: {
+                type: "string",
+                format: "email",
+                emailDescription: "lalalala",
+                maxLength: 50,
+                minLength: 1
+            },
+            fooorbar: {
+                type: "string",
+                matches: "(foo|bar)"
+            },
+            age: {
+                description: "Age of person",
+                type: "number",
+                exclusiveMinimum: 0,
+                required: true
+            },
+            characterType: {
+                enum: ["good", "bad"],
+                enum_titles: ["Good", "Bad"],
+                type: "string",
+                title: "Type of people",
+                propertyOrder: 3
+            },
+            additionalNotes: {
+                maxLength: 1048576,
+                type: "string"
+            }
+        },
+        required: ["name", "email"]
+    };
+
     const form = useForm({
-        resolver: useYupSchemaResolver(jsonSchemaToYup(editClients[0]))
+        resolver: useYupSchemaResolver(schema)
+        // editClients[0]
     });
 
     if (someProp("isLoading", editClients)) {

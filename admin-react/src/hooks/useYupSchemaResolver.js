@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import R from "ramda";
 import * as Yup from "yup";
-import { buildYup as jsonSchemaToYup } from "json-schema-to-yup";
+import { buildYup as schemaToYup } from "schema-to-yup";
 import { diff } from "deep-object-diff";
 import isObjectEmpty from "%/utilities/isObjectEmpty";
 import mapObjKeys from "%/utilities/mapObjKeys";
@@ -9,54 +9,30 @@ import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 
+// export default maybeSchemaResponse =>
+//     (schema => {
+//         return schema ? buildYup(schema) : Yup.object();
+//     })(maybeSchemaResponse?.data?.data?.data);
+
 export default jsonSchema => {
     const yupConfig = {
         abortEarly: false
     };
 
-    const schema = {
-        $schema: "http://json-schema.org/draft-07/schema#",
-        type: "object",
-        properties: {
-            name: {
-                description: "Name of the person",
-                type: "string"
-            },
-            email: {
-                type: "string",
-                format: "email",
-                emailDescription: "lalalala",
-                maxLength: 50,
-                minLength: 1
-            },
-            fooorbar: {
-                type: "string",
-                matches: "(foo|bar)"
-            },
-            age: {
-                description: "Age of person",
-                type: "number",
-                exclusiveMinimum: 0,
-                required: true
-            },
-            characterType: {
-                enum: ["good", "bad"],
-                enum_titles: ["Good", "Bad"],
-                type: "string",
-                title: "Type of people",
-                propertyOrder: 3
-            },
-            additionalNotes: {
-                maxLength: 1048576,
-                type: ["string", "null"] // TODO: this is the cause of the issue. The array
-                // TODO: solution is upgrade to using this library instead: https://www.npmjs.com/package/schema-to-yup
-                // Then follow the instructions to add support for this in: https://www.npmjs.com/package/schema-to-yup#multi-type-constraints
-            }
-        },
-        required: ["name", "email"]
-    };
+    function removeMultiTypeConstraints(schema) {
+        if (!schema?.properties) return schema;
 
-    const yupSchema = jsonSchemaToYup(schema, {});
+        for (const key in schema.properties) {
+            if (key?.type instanceof Array) {
+                schema.properties[key].type = key.type[0];
+            }
+        }
+
+        console.log(schema);
+        return schema;
+    }
+
+    const yupSchema = schemaToYup(removeMultiTypeConstraints(jsonSchema), {});
 
     return useCallback(
         async data => {

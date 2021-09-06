@@ -72,6 +72,7 @@
         "react-scripts": "4.0.3",
         "react-simple-image-viewer": "0.0.8",
         "react-toastify": "^7.0.3",
+        "schema-to-yup": "^1.10.0",
         "styled-components": "^5.2.3",
         "title-case": "^3.0.3",
         "use-immer": "^0.4.2",
