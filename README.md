@@ -14,8 +14,10 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 
 ### Admin-React Container
 
+Note: refactoring in progress
+
 * Server state management using React Query
-* Architecture based on custom React Hooks
+* Architecture uses custom React Hooks
 * Functional data pipelines using Ramda
 
 ### Database-PostgreSQL Container

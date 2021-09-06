@@ -28,6 +28,32 @@ export default jsonSchema => {
             }
         }
 
+        // TODO: use this code:
+        //
+        // for (const field in schema.properties) {
+        //     if (schema.properties[field].type instanceof Array) {
+        //         schema.properties[field].type = schema.properties[
+        //             field
+        //         ].type.filter(x => x !== "null")[0];
+        //
+        //         schema.properties[field].nullable = true;
+        //     }
+        // }
+        //
+        // const requiredList = schema?.required;
+        //
+        // if (requiredList) {
+        //     for (const requiredField of requiredList) {
+        //         schema.properties[requiredField].required = true;
+        //     }
+        //
+        //     delete schema.required;
+        // }
+        //
+        // if (namePlural === "users") {
+        //     delete schema.properties.password;
+        // }
+
         console.log(schema);
         return schema;
     }
