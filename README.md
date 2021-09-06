@@ -1,6 +1,6 @@
 ## Item Management System
 
-A full-stack information system with a dockerised Model&ndash;Model&ndash;View&ndash;Controller (MMVC) architecture.
+A full-stack information system with a dockerised <!-- Model&ndash; -->Model&ndash;View&ndash;Controller (MMVC) architecture.
 
 ### Controller&ndash;Scala Container
 

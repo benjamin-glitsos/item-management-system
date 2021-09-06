@@ -14,7 +14,7 @@ import {
 import RemoveAllSelected from "%/components/RemoveAllSelected";
 import { CommaArrayParam } from "%/utilities/commaArrayQueryParameter";
 import formatDate from "%/utilities/formatDate";
-import { listService, deleteService } from "%/services";
+import { listService, deleteService } from "%/utilities/services";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
 import config from "%/config";
 

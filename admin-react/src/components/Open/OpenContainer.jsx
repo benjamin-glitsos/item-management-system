@@ -16,7 +16,7 @@ import prettyQuote from "%/utilities/prettyQuote";
 import mapObjKeys from "%/utilities/mapObjKeys";
 import joinPath from "%/utilities/joinPath";
 import axiosErrorHandler from "%/utilities/axiosErrorHandler";
-import { openService, createService, editService } from "%/services";
+import { openService, createService, editService } from "%/utilities/services";
 
 export default ({
     action,
