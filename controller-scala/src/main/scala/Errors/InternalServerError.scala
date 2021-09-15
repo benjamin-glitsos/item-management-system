@@ -1,7 +1,9 @@
+import org.typelevel.ci.{CIString => CaseInsensitive}
+
 object InternalServerError extends ErrorMixin {
   final def apply(): Error = {
     Error(
-      INTERNAL_SERVER_ERROR,
+      CaseInsensitive("internal_server_error"),
       "Internal Server Error",
       "An internal server error has occurred."
     )

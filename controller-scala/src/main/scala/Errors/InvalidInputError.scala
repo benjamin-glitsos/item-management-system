@@ -1,5 +1,7 @@
+import org.typelevel.ci.{CIString => CaseInsensitive}
+
 object InvalidInputError extends ErrorMixin {
   final def apply(description: String): Error = {
-    Error(INVALID_INPUT, "Invalid Input", description)
+    Error(CaseInsensitive("invalid_input"), "Invalid Input", description)
   }
 }
