@@ -7,7 +7,13 @@ export default paths =>
     useReactQueries(
         paths.map(path => ({
             queryKey: path,
-            queryFn: () => axios.get(path),
+            queryFn: () => {
+                if (path.startsWith("/")) {
+                    fetch(path);
+                } else {
+                    axios.get(path);
+                }
+            },
             retry: false,
             queryOptions: {
                 onError: error => {

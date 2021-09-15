@@ -25,8 +25,6 @@ import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 import makeApiPath from "%/utilities/makeApiPath";
 import makeFilePath from "%/utilities/makeFilePath";
 
-import axios from "axios";
-
 export const UsersEditContext = createContext();
 
 export default () => {
@@ -41,7 +39,7 @@ export default () => {
         makeFilePath([
             "private",
             "schemas",
-            `${edit.action}-${user.namePlural}`
+            `${edit.action}-${user.namePlural}.json`
         ]),
         makeApiPath([user.namePlural, username])
     ]);
@@ -107,6 +105,7 @@ export default () => {
     }
 
     if (someProp("isError", queries)) {
+        console.log(queries);
         return (
             <Content maxWidth={edit.maxWidth}>
                 <ErrorBanner />
