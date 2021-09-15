@@ -17,7 +17,7 @@ object LoggingMiddleware
     extractStrictEntity(1.seconds) flatMap { entity: HttpEntity.Strict =>
       extractClientIP flatMap { clientIp: RemoteAddress =>
         mapRequest((req: HttpRequest) => {
-          val body: String = maybeEmpty(entity.data.utf8String) match {
+          val body: String = maybeEmptyString(entity.data.utf8String) match {
             case None    => write(ujson.Obj)
             case Some(s) => write(read[ujson.Value](s))
           }

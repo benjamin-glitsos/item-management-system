@@ -47,39 +47,6 @@ object Server extends SessionMixin with HttpMethodsMixin {
         .bold()
         .a(s"$adminUri/")
         .reset()
-        .a("\n")
-    )
-
-    var terminal_input: String = new String
-    do {
-      if (terminal_input != new String && terminal_input != "exit") {
-        println(s"The command '$terminal_input' does not exist")
-      }
-
-      terminal_input = StdIn
-        .readLine(
-          ansi()
-            .fg(BLUE)
-            .a("Use 'exit' to shutdown the server... ")
-            .a("\n")
-            .reset()
-            .toString
-        )
-        .stripMargin
-        .stripLineEnd
-    } while (terminal_input != "exit")
-
-    bindingFuture
-      .flatMap(_.unbind())
-      .onComplete(_ => system.terminate())
-
-    System.out.println(
-      ansi()
-        .a("\n")
-        .fg(BLUE)
-        .a("Server shutdown complete.")
-        .reset()
-        .a("\n")
     )
   }
 }
