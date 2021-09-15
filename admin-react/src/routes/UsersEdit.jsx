@@ -23,7 +23,7 @@ import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 import makeApiPath from "%/utilities/makeApiPath";
-import makeFilePath from "%/utilities/makeFilePath";
+import schema from "/app/private/schemas/edit-users.json";
 
 export const UsersEditContext = createContext();
 
@@ -35,14 +35,7 @@ export default () => {
     const edit = useEdit();
     const user = useUser();
 
-    const queries = useQueries([
-        makeFilePath([
-            "private",
-            "schemas",
-            `${edit.action}-${user.namePlural}.json`
-        ]),
-        makeApiPath([user.namePlural, username])
-    ]);
+    const queries = useQueries([makeApiPath([user.namePlural, username])]);
 
     // const editClient = body =>
     //     useEditClient({
