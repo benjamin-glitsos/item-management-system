@@ -23,6 +23,8 @@ import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 
+import axios from "axios";
+
 export const UsersEditContext = createContext();
 
 export default () => {
@@ -32,6 +34,8 @@ export default () => {
     const project = useProject();
     const edit = useEdit();
     const user = useUser();
+
+    console.log(axios.get("/app/private/schemas/edit-users.json"));
 
     const editClients = useEditClients({
         paths: [

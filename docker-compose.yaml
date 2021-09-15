@@ -55,6 +55,7 @@ services:
       - ./admin-react:/app
       - ./README.md:/app/src/assets/README.md
       - ./files/public:/app/public
+      - ./files/private:/app/private
     env_file: .env
     restart: on-failure
     stdin_open: true
