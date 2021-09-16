@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
 
-export default ({ page, open, edit, form, children }) => (
-    <form onSubmit={form.handleSubmit(x => console.log(x))}>
+export default ({ page, open, edit, handler, form, children }) => (
+    <form onSubmit={handler}>
         <Grid fluid>
             <Row>{children}</Row>
             <Row end="xs">

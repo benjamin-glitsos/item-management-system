@@ -6,7 +6,8 @@ import Textfield from "@atlaskit/textfield";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "%/hooks/useEdit";
-import useQueries from "%/hooks/useQueries";
+import useQueriesClient from "%/hooks/useQueriesClient";
+import useMutationClient from "%/hooks/useMutationClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
@@ -33,18 +34,16 @@ export default () => {
     const edit = useEdit();
     const user = useUser();
 
-    // TODO: use the schemas endpoint! Dont delete it!
-    const queries = useQueries([
+    const data = useQueriesClient([
         ["schemas", `${edit.action}-${user.namePlural}`],
         [user.namePlural, username]
     ]);
 
-    // const editClient = body =>
-    //     useEditClient({
-    //         path: [user.namePlural, username],
-    //         body
-    //     });
-    //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
+    const handleEdit = body =>
+        useMutationClient({
+            path: [user.namePlural, username],
+            body
+        });
 
     const schema = {
         $schema: "http://json-schema.org/draft-07/schema#",
@@ -91,35 +90,26 @@ export default () => {
         // queries[0]
     });
 
-    if (someProp("isLoading", queries)) {
-        return (
-            <Content maxWidth={edit.maxWidth}>
-                <LoadingSpinner />
-            </Content>
-        );
+    if (someProp("isLoading", data)) {
+        return <LoadingSpinner />;
     }
 
-    if (someProp("isError", queries)) {
-        console.log(queries);
-        return (
-            <Content maxWidth={edit.maxWidth}>
-                <ErrorBanner />
-            </Content>
-        );
+    if (someProp("isError", data)) {
+        return <ErrorBanner />;
     }
 
-    const [schemaQuery, usersQuery] = queries.map(x => x.data.data.data);
+    const [schemaData, usersData] = data.map(x => x.data.data.data);
 
     const page = usePage({
         history,
         action: edit.action,
-        key: usersQuery[user.keyField],
+        key: usersData[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
     });
 
-    for (const [key, value] of Object.entries(usersQuery)) {
+    for (const [key, value] of Object.entries(usersData)) {
         form.setValue(key, nullToEmptyStr(value));
     }
 
@@ -127,8 +117,8 @@ export default () => {
         page,
         edit,
         form,
-        schemaQuery,
-        usersQuery
+        schemaData,
+        usersData
     };
 
     return (
@@ -142,7 +132,12 @@ export default () => {
                 <Grid fluid>
                     <Row>
                         <Col sm={10}>
-                            <Form page={page} edit={edit} form={form}>
+                            <Form
+                                page={page}
+                                edit={edit}
+                                form={form}
+                                handler={handleEdit}
+                            >
                                 <FormSubheading level={3}>
                                     Details
                                 </FormSubheading>
@@ -183,12 +178,12 @@ export default () => {
                                     Component={MarkdownTextarea}
                                     columnWidths={{ sm: 12 }}
                                 />
-                                <code>{JSON.stringify(usersQuery)}</code>
-                                <code>{JSON.stringify(schemaQuery)}</code>
+                                <code>{JSON.stringify(usersData)}</code>
+                                <code>{JSON.stringify(schemaData)}</code>
                             </Form>
                         </Col>
                         <Col sm={2}>
-                            <EditSidebar data={usersQuery} />
+                            <EditSidebar data={usersData} />
                         </Col>
                     </Row>
                 </Grid>
