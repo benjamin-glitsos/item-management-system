@@ -45,49 +45,8 @@ export default () => {
             body
         });
 
-    const schema = {
-        $schema: "http://json-schema.org/draft-07/schema#",
-        type: "object",
-        properties: {
-            name: {
-                description: "Name of the person",
-                type: "string"
-            },
-            email: {
-                type: "string",
-                format: "email",
-                emailDescription: "lalalala",
-                maxLength: 50,
-                minLength: 1
-            },
-            fooorbar: {
-                type: "string",
-                matches: "(foo|bar)"
-            },
-            age: {
-                description: "Age of person",
-                type: "number",
-                exclusiveMinimum: 0,
-                required: true
-            },
-            characterType: {
-                enum: ["good", "bad"],
-                enum_titles: ["Good", "Bad"],
-                type: "string",
-                title: "Type of people",
-                propertyOrder: 3
-            },
-            additionalNotes: {
-                maxLength: 1048576,
-                type: "string"
-            }
-        },
-        required: ["name", "email"]
-    };
-
     const form = useForm({
-        resolver: useYupSchemaResolver(schema)
-        // queries[0]
+        resolver: useYupSchemaResolver(data[0])
     });
 
     if (someProp("isLoading", data)) {
@@ -132,12 +91,7 @@ export default () => {
                 <Grid fluid>
                     <Row>
                         <Col sm={10}>
-                            <Form
-                                page={page}
-                                edit={edit}
-                                form={form}
-                                handler={handleEdit}
-                            >
+                            <Form>
                                 <FormSubheading level={3}>
                                     Details
                                 </FormSubheading>

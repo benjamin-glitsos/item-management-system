@@ -9,56 +9,44 @@ import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 
-// export default maybeSchemaResponse =>
-//     (schema => {
-//         return schema ? buildYup(schema) : Yup.object();
-//     })(maybeSchemaResponse?.data?.data?.data);
+const yupConfig = {
+    abortEarly: false
+};
 
-export default jsonSchema => {
-    const yupConfig = {
-        abortEarly: false
-    };
+const schemaToYupConfig = {};
 
-    function removeMultiTypeConstraints(schema) {
-        if (!schema?.properties) return schema;
+export default schemaQueryData => {
+    const data = schemaQueryData?.data?.data?.data || {};
 
-        for (const key in schema.properties) {
-            if (key?.type instanceof Array) {
-                schema.properties[key].type = key.type[0];
-            }
+    const formattedSchema = (() => {
+        if (!!schema?.properties) {
+            schema.properties = R.map(x => {
+                if (x.type instanceof Array) {
+                    x.type = x.type.filter(x => x !== "null")[0];
+                    x.nullable = true;
+                }
+                return x;
+            })(schema.properties);
         }
 
-        // TODO: use this code:
-        //
-        // for (const field in schema.properties) {
-        //     if (schema.properties[field].type instanceof Array) {
-        //         schema.properties[field].type = schema.properties[
-        //             field
-        //         ].type.filter(x => x !== "null")[0];
-        //
-        //         schema.properties[field].nullable = true;
-        //     }
-        // }
-        //
-        // const requiredList = schema?.required;
-        //
-        // if (requiredList) {
-        //     for (const requiredField of requiredList) {
-        //         schema.properties[requiredField].required = true;
-        //     }
-        //
-        //     delete schema.required;
-        // }
-        //
-        // if (namePlural === "users") {
-        //     delete schema.properties.password;
-        // }
+        if (!!schema?.required) {
+            for (const field of schema.required) {
+                schema.properties[field].required = true;
+            }
 
-        console.log(schema);
+            delete schema.required;
+        }
+
+        if (schema.title.toLowerCase.contains("users")) {
+            delete schema.properties.password;
+        }
+
         return schema;
-    }
+    })();
 
-    const yupSchema = schemaToYup(removeMultiTypeConstraints(jsonSchema), {});
+    console.log(formattedSchema);
+
+    const yupSchema = schemaToYup(formattedSchema, schemaToYupConfig);
 
     return useCallback(
         async data => {
@@ -204,3 +192,48 @@ export default jsonSchema => {
 //         resolver: resolver()
 //     });
 // };
+
+// const schema = {
+//     $schema: "http://json-schema.org/draft-07/schema#",
+//     type: "object",
+//     properties: {
+//         name: {
+//             description: "Name of the person",
+//             type: "string"
+//         },
+//         email: {
+//             type: "string",
+//             format: "email",
+//             emailDescription: "lalalala",
+//             maxLength: 50,
+//             minLength: 1
+//         },
+//         fooorbar: {
+//             type: "string",
+//             matches: "(foo|bar)"
+//         },
+//         age: {
+//             description: "Age of person",
+//             type: "number",
+//             exclusiveMinimum: 0,
+//             required: true
+//         },
+//         characterType: {
+//             enum: ["good", "bad"],
+//             enum_titles: ["Good", "Bad"],
+//             type: "string",
+//             title: "Type of people",
+//             propertyOrder: 3
+//         },
+//         additionalNotes: {
+//             maxLength: 1048576,
+//             type: "string"
+//         }
+//     },
+//     required: ["name", "email"]
+// };
+
+// export default maybeSchemaResponse =>
+//     (schema => {
+//         return schema ? buildYup(schema) : Yup.object();
+//     })(maybeSchemaResponse?.data?.data?.data);
