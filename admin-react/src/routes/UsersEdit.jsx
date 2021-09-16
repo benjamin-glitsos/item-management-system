@@ -57,8 +57,6 @@ export default () => {
         return <ErrorBanner />;
     }
 
-    const [schemaData, usersData] = data.map(x => x.data.data.data);
-
     const page = usePage({
         history,
         action: edit.action,
@@ -71,6 +69,8 @@ export default () => {
     for (const [key, value] of Object.entries(usersData)) {
         form.setValue(key, nullToEmptyStr(value));
     }
+
+    const [schemaData, usersData] = data.map(x => x.data.data.data);
 
     const context = {
         page,

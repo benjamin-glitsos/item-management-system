@@ -23,8 +23,7 @@ const yupConfig = {
 const schemaToYupConfig = {};
 
 export default schemaQueryData => {
-    const data = schemaQueryData?.data?.data?.data || emptySchema;
-    const schema = data;
+    const schema = schemaQueryData?.data?.data?.data || emptySchema;
 
     const formattedSchema = (() => {
         if (!!schema?.properties) {
@@ -50,7 +49,6 @@ export default schemaQueryData => {
                 }
             }
         }
-        console.log(schema);
 
         return schema;
     })();
@@ -90,9 +88,6 @@ export default schemaQueryData => {
 //     TODO: try adding the json schema as a literal object to here to test
 //     TODO: try reducing this to be simple then building up
 //     TODO: try removing the useCallback hook from this
-//     const yupConfig = {
-//         abortEarly: false
-//     };
 //
 //     const getFormFields = schemaProperties => {
 //         if (!schemaProperties) {
@@ -201,48 +196,3 @@ export default schemaQueryData => {
 //         resolver: resolver()
 //     });
 // };
-
-// const schema = {
-//     $schema: "http://json-schema.org/draft-07/schema#",
-//     type: "object",
-//     properties: {
-//         name: {
-//             description: "Name of the person",
-//             type: "string"
-//         },
-//         email: {
-//             type: "string",
-//             format: "email",
-//             emailDescription: "lalalala",
-//             maxLength: 50,
-//             minLength: 1
-//         },
-//         fooorbar: {
-//             type: "string",
-//             matches: "(foo|bar)"
-//         },
-//         age: {
-//             description: "Age of person",
-//             type: "number",
-//             exclusiveMinimum: 0,
-//             required: true
-//         },
-//         characterType: {
-//             enum: ["good", "bad"],
-//             enum_titles: ["Good", "Bad"],
-//             type: "string",
-//             title: "Type of people",
-//             propertyOrder: 3
-//         },
-//         additionalNotes: {
-//             maxLength: 1048576,
-//             type: "string"
-//         }
-//     },
-//     required: ["name", "email"]
-// };
-
-// export default maybeSchemaResponse =>
-//     (schema => {
-//         return schema ? buildYup(schema) : Yup.object();
-//     })(maybeSchemaResponse?.data?.data?.data);
