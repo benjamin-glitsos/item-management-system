@@ -26,31 +26,33 @@ export default schemaQueryData => {
     const schema = schemaQueryData?.data?.data?.data || emptySchema;
 
     const formattedSchema = (() => {
-        if (!!schema?.properties) {
-            schema.properties = R.map(x => {
+        var sc = schema;
+
+        if (!!sc?.properties) {
+            sc.properties = R.map(x => {
                 if (x.type instanceof Array) {
                     x.type = x.type.filter(x => x !== "null")[0];
                     x.nullable = true;
                 }
                 return x;
-            })(schema.properties);
+            })(sc.properties);
 
-            if (!!schema?.required) {
-                for (const field of schema.required) {
-                    schema.properties[field].required = true;
+            if (!!sc?.required) {
+                for (const field of sc.required) {
+                    sc.properties[field].required = true;
                 }
 
-                delete schema.required;
+                delete sc.required;
             }
 
-            if (!!schema?.title) {
-                if (schema.title.match(/users/i)) {
-                    delete schema.properties.password;
+            if (!!sc?.title) {
+                if (sc.title.match(/users/i)) {
+                    delete sc.properties.password;
                 }
             }
         }
 
-        return schema;
+        return sc;
     })();
 
     const yupSchema = schemaToYup(formattedSchema, schemaToYupConfig);
