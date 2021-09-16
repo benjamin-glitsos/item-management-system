@@ -9,6 +9,13 @@ import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
 
+const emptySchema = {
+    $schema: "http://json-schema.org/draft-07/schema#",
+    title: "N/A",
+    type: "object",
+    properties: {}
+};
+
 const yupConfig = {
     abortEarly: false
 };
@@ -16,7 +23,8 @@ const yupConfig = {
 const schemaToYupConfig = {};
 
 export default schemaQueryData => {
-    const data = schemaQueryData?.data?.data?.data || {};
+    const data = schemaQueryData?.data?.data?.data || emptySchema;
+    const schema = data;
 
     const formattedSchema = (() => {
         if (!!schema?.properties) {
@@ -27,24 +35,25 @@ export default schemaQueryData => {
                 }
                 return x;
             })(schema.properties);
-        }
 
-        if (!!schema?.required) {
-            for (const field of schema.required) {
-                schema.properties[field].required = true;
+            if (!!schema?.required) {
+                for (const field of schema.required) {
+                    schema.properties[field].required = true;
+                }
+
+                delete schema.required;
             }
 
-            delete schema.required;
+            if (!!schema?.title) {
+                if (schema.title.match(/users/i)) {
+                    delete schema.properties.password;
+                }
+            }
         }
-
-        if (schema.title.toLowerCase.contains("users")) {
-            delete schema.properties.password;
-        }
+        console.log(schema);
 
         return schema;
     })();
-
-    console.log(formattedSchema);
 
     const yupSchema = schemaToYup(formattedSchema, schemaToYupConfig);
 
