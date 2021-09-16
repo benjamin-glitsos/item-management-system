@@ -159,7 +159,7 @@ trait SeederMixin extends StringMixin with MathMixin with OptionMixin {
     emailUserName + code + atSymbol + emailDomainName
   }
 
-  final def makeOtherNames(fairy: Fairy) = maybeEmptyString(
+  final def makeOtherNames(fairy: Fairy) = maybeEmpty(
     repeatedRunArray[String](
       randomGaussianDiscrete(min = 0, max = 2),
       () => {
