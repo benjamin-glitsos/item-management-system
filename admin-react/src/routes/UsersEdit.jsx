@@ -6,7 +6,7 @@ import Textfield from "@atlaskit/textfield";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "%/hooks/useEdit";
-import useEditClients from "%/hooks/useEditClients";
+import useQueries from "%/hooks/useQueries";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
@@ -22,6 +22,7 @@ import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
+import schema from "/app/private/schemas/edit-users.json";
 
 export const UsersEditContext = createContext();
 
@@ -33,12 +34,11 @@ export default () => {
     const edit = useEdit();
     const user = useUser();
 
-    const editClients = useEditClients({
-        paths: [
-            ["schemas", `${edit.action}-${user.namePlural}`],
-            [user.namePlural, username]
-        ]
-    });
+    // TODO: use the schemas endpoint! Dont delete it!
+    const queries = useQueries([
+        ["schemas", `${edit.action}-${user.namePlural}`],
+        [user.namePlural, username]
+    ]);
 
     // const editClient = body =>
     //     useEditClient({
@@ -89,10 +89,10 @@ export default () => {
 
     const form = useForm({
         resolver: useYupSchemaResolver(schema)
-        // editClients[0]
+        // queries[0]
     });
 
-    if (someProp("isLoading", editClients)) {
+    if (someProp("isLoading", queries)) {
         return (
             <Content maxWidth={edit.maxWidth}>
                 <LoadingSpinner />
@@ -100,7 +100,8 @@ export default () => {
         );
     }
 
-    if (someProp("isError", editClients)) {
+    if (someProp("isError", queries)) {
+        console.log(queries);
         return (
             <Content maxWidth={edit.maxWidth}>
                 <ErrorBanner />
@@ -108,7 +109,7 @@ export default () => {
         );
     }
 
-    const [schemaQuery, usersQuery] = editClients.map(x => x.data.data.data);
+    const [schemaQuery, usersQuery] = queries.map(x => x.data.data.data);
 
     const page = usePage({
         history,
