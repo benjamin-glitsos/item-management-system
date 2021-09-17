@@ -5,19 +5,19 @@ import { Grid, Row, Col } from "react-flexbox-grid";
 import { UsersEditContext } from "%/routes/UsersEdit";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 
-export default ({ children }) => {
-    const context = useContext(UsersEditContext);
+export default ({ context, children }) => {
+    const cx = useContext(context);
 
     const setFormValues = () => {
-        for (const [key, value] of Object.entries(context.usersData)) {
-            context.form.setValue(key, nullToEmptyStr(value));
+        for (const [key, value] of Object.entries(cx.usersData)) {
+            cx.form.setValue(key, nullToEmptyStr(value));
         }
     };
 
     useEffect(setFormValues, []);
 
     return (
-        <form onSubmit={context.form.handleSubmit(context.mutate)}>
+        <form onSubmit={cx.form.handleSubmit(cx.mutate)}>
             <Grid fluid>
                 <Row>{children}</Row>
                 <Row end="xs">
@@ -26,11 +26,15 @@ export default ({ children }) => {
                             <ButtonGroup>
                                 <Button
                                     appearance="subtle"
-                                    onClick={context.page.handleReturn}
+                                    onClick={cx.page.handleReturn}
                                 >
                                     Cancel
                                 </Button>
-                                <Button type="submit" appearance="primary">
+                                <Button
+                                    type="submit"
+                                    appearance="primary"
+                                    isLoading={cx.isMutateLoading}
+                                >
                                     Submit
                                 </Button>
                             </ButtonGroup>

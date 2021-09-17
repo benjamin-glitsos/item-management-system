@@ -1,3 +1,4 @@
+import R from "ramda";
 import axios from "axios";
 import { useMutation } from "react-query";
 import toast from "%/utilities/toast";
@@ -15,13 +16,19 @@ export default ({
     queryConfig = {}
 }) =>
     useMutation(
-        async body =>
-            await axios({
-                method,
-                url: makeApiPath(path),
-                data: body,
-                ...clientConfig
-            }),
+        async body => {
+            if (R.isEmpty(body)) {
+                noNewDataToSubmitToast();
+                return await {};
+            } else {
+                return await axios({
+                    method,
+                    url: makeApiPath(path),
+                    data: body,
+                    ...clientConfig
+                });
+            }
+        },
         {
             mutationKey: path,
             onError: handleQueryError,

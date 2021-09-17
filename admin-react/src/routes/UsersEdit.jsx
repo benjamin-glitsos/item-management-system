@@ -59,8 +59,7 @@ export default () => {
 
     const breadcrumbs = [page.breadcrumb, user.breadcrumb, edit.breadcrumb];
 
-    const { mutate } = useEditClient({
-        method: "PATCH",
+    const { mutate, isLoading: isMutateLoading } = useEditClient({
         path: [user.namePlural, username],
         context: {
             namePlural: user.namePlural,
@@ -76,6 +75,7 @@ export default () => {
         breadcrumbs,
         form,
         mutate,
+        isMutateLoading,
         schemaData,
         usersData
     };
@@ -97,7 +97,7 @@ export default () => {
                 maxWidth={edit.maxWidth}
             >
                 <SidebarLayout sidebar={<EditSidebar data={usersData} />}>
-                    <Form>
+                    <Form context={UsersEditContext}>
                         <FormSubheading level={3}>Details</FormSubheading>
                         <RegisteredField2
                             name="username"
