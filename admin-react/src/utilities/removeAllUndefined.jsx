@@ -1,3 +1,5 @@
 import R from "ramda";
 
-export default x => R.reject(R.equals(undefined))(x);
+const removeAllUndefined = R.reject(R.equals(undefined));
+
+export default removeAllUndefined;

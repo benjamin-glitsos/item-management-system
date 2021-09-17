@@ -7,7 +7,7 @@ import { UsersEditContext } from "%/routes/UsersEdit";
 export default ({ children }) => {
     const context = useContext(UsersEditContext);
     return (
-        <form onSubmit={context.form.handleSubmit(context.handleEdit)}>
+        <form onSubmit={context.form.handleSubmit(x => console.log(x))}>
             <Grid fluid>
                 <Row>{children}</Row>
                 <Row end="xs">

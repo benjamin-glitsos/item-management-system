@@ -11,6 +11,7 @@ import useMutationClient from "%/hooks/useMutationClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
+import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 import Page from "%/components/Page";
 import Content from "%/components/Content";
 import EditSidebar from "%/components/EditSidebar";
@@ -22,7 +23,7 @@ import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
-import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
+import getQueryData from "%/utilities/getQueryData";
 
 export const UsersEditContext = createContext();
 
@@ -46,7 +47,10 @@ export default () => {
         });
 
     const form = useForm({
-        resolver: useYupSchemaResolver(data[0])
+        resolver: useYupSchemaResolver({
+            schemaData: data[0],
+            queryData: data[1]
+        })
     });
 
     if (someProp("isLoading", data)) {
@@ -57,7 +61,7 @@ export default () => {
         return <ErrorBanner />;
     }
 
-    const [schemaData, usersData] = data.map(x => x.data.data.data);
+    const [schemaData, usersData] = data.map(getQueryData);
 
     const page = usePage({
         history,
@@ -132,7 +136,6 @@ export default () => {
                                     Component={MarkdownTextarea}
                                     columnWidths={{ sm: 12 }}
                                 />
-                                <code>{JSON.stringify(usersData)}</code>
                                 <code>{JSON.stringify(schemaData)}</code>
                             </Form>
                         </Col>

@@ -8,6 +8,7 @@ import mapObjKeys from "%/utilities/mapObjKeys";
 import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
+import getQueryData from "%/utilities/getQueryData";
 
 const emptySchema = {
     $schema: "http://json-schema.org/draft-07/schema#",
@@ -22,10 +23,21 @@ const yupConfig = {
 
 const schemaToYupConfig = {};
 
-export default schemaQueryData => {
-    const schema = schemaQueryData?.data?.data?.data || emptySchema;
+export default ({ schemaData, queryData }) => {
+    const schema = getQueryData(schemaData) || emptySchema;
+    const original = getQueryData(queryData) || {};
 
-    const formattedSchema = (() => {
+    const schemaFields = (() => {
+        const maybeSchemaProperties = schema?.properties;
+
+        if (!!maybeSchemaProperties) {
+            return Object.keys(maybeSchemaProperties);
+        } else {
+            return [];
+        }
+    })();
+
+    const cleanSchema = (() => {
         var sc = schema;
 
         if (!!sc?.properties) {
@@ -49,12 +61,20 @@ export default schemaQueryData => {
         return sc;
     })();
 
-    const yupSchema = schemaToYup(formattedSchema, schemaToYupConfig);
+    const yupSchema = schemaToYup(cleanSchema, schemaToYupConfig);
 
     return useCallback(
         async data => {
             try {
-                const values = await yupSchema.validate(data, yupConfig);
+                const cleanData = R.pipe(
+                    trimAll,
+                    emptyStringsToNull,
+                    x => diff(original, x),
+                    removeAllUndefined,
+                    R.pick(schemaFields)
+                )(data);
+
+                const values = await yupSchema.validate(cleanData, yupConfig);
 
                 return {
                     values,
@@ -81,10 +101,6 @@ export default schemaQueryData => {
 };
 
 // export default ({ jsonSchema = {}, data = {}, useFormProps = {} }) => {
-//     TODO: try adding the json schema as a literal object to here to test
-//     TODO: try reducing this to be simple then building up
-//     TODO: try removing the useCallback hook from this
-//
 //     const getFormFields = schemaProperties => {
 //         if (!schemaProperties) {
 //             return [];

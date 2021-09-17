@@ -1,5 +1,4 @@
 import { useMutation } from "react-query";
-import client from "%/utilities/client";
 import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 
