@@ -22,7 +22,6 @@ import ControlledField2 from "%/components/ControlledField2";
 import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
-import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import getQueryData from "%/utilities/getQueryData";
 
 export const UsersEditContext = createContext();
@@ -73,13 +72,12 @@ export default () => {
         projectName: project.name
     });
 
-    for (const [key, value] of Object.entries(usersData)) {
-        form.setValue(key, nullToEmptyStr(value));
-    }
+    const breadcrumbs = [page.breadcrumb, user.breadcrumb, edit.breadcrumb];
 
     const context = {
         page,
         edit,
+        breadcrumbs,
         form,
         schemaData,
         usersData
@@ -90,7 +88,7 @@ export default () => {
             <Page
                 title={page.tabTitle}
                 description={page.pageDescription}
-                breadcrumbs={[]}
+                breadcrumbs={breadcrumbs}
                 maxWidth={edit.maxWidth}
             >
                 <Grid fluid>

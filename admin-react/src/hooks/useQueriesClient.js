@@ -9,11 +9,11 @@ export default ({ paths, config }) =>
         paths.map(path => ({
             queryKey: path,
             queryFn: () => axios.get(makeApiPath(path)),
-            retry: false,
             onError: error => {
                 console.error(error);
                 unspecifiedErrorToast();
             },
+            retry: false,
             ...config
         }))
     );
