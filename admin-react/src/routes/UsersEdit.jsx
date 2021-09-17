@@ -43,7 +43,7 @@ export default () => {
         config: { refetchOnWindowFocus: false }
     });
 
-    const [schemaData, usersData] = data.map(getQueryData);
+    const [schemaData, usersData] = queries.map(getQueryData);
 
     const handleEdit = body =>
         useMutationClient({
@@ -137,7 +137,6 @@ export default () => {
                                     Component={MarkdownTextarea}
                                     columnWidths={{ sm: 12 }}
                                 />
-                                <code>{JSON.stringify(schemaData)}</code>
                             </Form>
                         </Col>
                         <Col sm={2}>

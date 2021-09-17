@@ -130,7 +130,6 @@ export default ({ schemaData, originalData }) => {
                     R.groupBy(R.head),
                     R.map(R.pluck(1))
                 )(errors);
-                console.log(cleanErrors);
 
                 return {
                     values: {},

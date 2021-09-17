@@ -7,24 +7,24 @@ import { UsersEditContext } from "%/routes/UsersEdit";
 export default ({ children }) => {
     const context = useContext(UsersEditContext);
     return (
-        <form
-            onSubmit={context.form.handleSubmit(x => console.log(context.form))}
-        >
+        <form onSubmit={context.form.handleSubmit(x => console.log(x))}>
             <Grid fluid>
                 <Row>{children}</Row>
                 <Row end="xs">
                     <Col sm={12}>
-                        <Buttons>
-                            <Button
-                                appearance="subtle"
-                                onClick={context.page.handleReturn}
-                            >
-                                Cancel
-                            </Button>
-                            <Button type="submit" appearance="primary">
-                                Submit
-                            </Button>
-                        </Buttons>
+                        <ButtonGroupStyles>
+                            <ButtonGroup>
+                                <Button
+                                    appearance="subtle"
+                                    onClick={context.page.handleReturn}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button type="submit" appearance="primary">
+                                    Submit
+                                </Button>
+                            </ButtonGroup>
+                        </ButtonGroupStyles>
                     </Col>
                 </Row>
             </Grid>
@@ -32,6 +32,6 @@ export default ({ children }) => {
     );
 };
 
-const Buttons = styled(ButtonGroup)`
+const ButtonGroupStyles = styled.div`
     margin-top: 24px;
 `;
