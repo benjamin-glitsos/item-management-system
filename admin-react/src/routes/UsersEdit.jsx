@@ -44,12 +44,11 @@ export default () => {
 
     const [schemaData, usersData] = queries.map(getQueryData);
 
-    const handleEdit = body =>
-        useMutationClient({
-            method: "PATCH",
-            path: [user.namePlural, username],
-            body
-        });
+    const { mutate } = useMutationClient({
+        method: "PATCH",
+        path: [user.namePlural, username]
+    });
+    // TODO: useMutationClient onSuccess
 
     const form = useForm({
         resolver: useYupSchemaResolver({ schemaData, originalData: usersData })
@@ -79,7 +78,7 @@ export default () => {
         edit,
         breadcrumbs,
         form,
-        handleEdit,
+        mutate,
         schemaData,
         usersData
     };

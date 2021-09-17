@@ -1,19 +1,20 @@
+import axios from "axios";
 import { useMutation } from "react-query";
 import toast from "%/utilities/toast";
 import handleQueryError from "%/utilities/handleQueryError";
+import makeApiPath from "%/utilities/makeApiPath";
 
-export default ({ method, path, body, clientConfig = {}, queryConfig = {} }) =>
+export default ({ method, path, clientConfig = {}, queryConfig = {} }) =>
     useMutation(
-        path,
-        () =>
-            axios({
+        async body =>
+            await axios({
                 method,
-                url: path,
+                url: makeApiPath(path),
                 data: body,
                 ...clientConfig
             }),
         {
-            retry: false,
+            mutationKey: path,
             onError: handleQueryError,
             ...queryConfig
         }

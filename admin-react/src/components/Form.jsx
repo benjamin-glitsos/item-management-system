@@ -17,7 +17,7 @@ export default ({ children }) => {
     useEffect(setFormValues, []);
 
     return (
-        <form onSubmit={context.form.handleSubmit(context.handleEdit)}>
+        <form onSubmit={context.form.handleSubmit(x => context.mutate(x))}>
             <Grid fluid>
                 <Row>{children}</Row>
                 <Row end="xs">
