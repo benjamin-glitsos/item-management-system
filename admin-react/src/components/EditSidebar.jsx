@@ -35,8 +35,8 @@ export default ({ data }) => (
         <Item label="Deleted">
             <Author at={data.deleted_at} by={data.deleted_by} />
         </Item>
+        <Item label="Edits">{data.edits}</Item>
         <Item label="Opens">{data.opens}</Item>
-        <Item label="Opens">{data.edits}</Item>
         <Item label="Metakey">{data.metakey}</Item>
     </Fragment>
 );

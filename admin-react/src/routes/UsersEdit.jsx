@@ -7,7 +7,7 @@ import SidebarLayout from "%/components/SidebarLayout";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "%/hooks/useEdit";
 import useQueriesClient from "%/hooks/useQueriesClient";
-import useMutationClient from "%/hooks/useMutationClient";
+import useEditClient from "%/hooks/useEditClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
@@ -44,33 +44,31 @@ export default () => {
 
     const [schemaData, usersData] = queries.map(getQueryData);
 
-    const { mutate } = useMutationClient({
-        method: "PATCH",
-        path: [user.namePlural, username]
-    });
-
     const form = useForm({
         resolver: useYupSchemaResolver({ schemaData, originalData: usersData })
     });
 
-    if (someProp("isLoading", queries)) {
-        return <LoadingSpinner />;
-    }
-
-    if (someProp("isError", queries)) {
-        return <ErrorBanner />;
-    }
-
     const page = usePage({
         history,
         action: edit.action,
-        key: usersData[user.keyField],
+        key: usersData?.[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
     });
 
     const breadcrumbs = [page.breadcrumb, user.breadcrumb, edit.breadcrumb];
+
+    const { mutate } = useEditClient({
+        method: "PATCH",
+        path: [user.namePlural, username],
+        context: {
+            namePlural: user.namePlural,
+            keyField: user.keyField,
+            history,
+            originalData: usersData
+        }
+    });
 
     const context = {
         page,
@@ -81,6 +79,14 @@ export default () => {
         schemaData,
         usersData
     };
+
+    if (someProp("isLoading", queries)) {
+        return <LoadingSpinner />;
+    }
+
+    if (someProp("isError", queries)) {
+        return <ErrorBanner />;
+    }
 
     return (
         <UsersEditContext.Provider value={context}>
