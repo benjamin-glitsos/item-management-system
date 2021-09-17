@@ -15,7 +15,7 @@
             "items": {
                 "type": "string",
                 "pattern": "^[-_a-zA-Z0-9]*$",
-                "patternDescription": "username can only contain letters (a-z and A-Z), numbers (0-9), and the hyphen (-) and underscore (_) symbols",
+                "patternDescription": "username can only contain letters (a-z, A-Z), numbers (0-9), and the hyphen (-) and underscore (_) symbols",
                 "minLength": 1,
                 "maxLength": 255
             }
