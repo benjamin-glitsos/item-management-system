@@ -35,33 +35,34 @@ export default () => {
     const edit = useEdit();
     const user = useUser();
 
-    const data = useQueriesClient([
-        ["schemas", `${edit.action}-${user.namePlural}`],
-        [user.namePlural, username]
-    ]);
+    const queries = useQueriesClient({
+        paths: [
+            ["schemas", `${edit.action}-${user.namePlural}`],
+            [user.namePlural, username]
+        ],
+        config: { refetchOnWindowFocus: false }
+    });
+
+    const [schemaData, usersData] = data.map(getQueryData);
 
     const handleEdit = body =>
         useMutationClient({
+            method: "PATCH",
             path: [user.namePlural, username],
             body
         });
 
     const form = useForm({
-        resolver: useYupSchemaResolver({
-            schemaData: data[0],
-            queryData: data[1]
-        })
+        resolver: useYupSchemaResolver({ schemaData, originalData: usersData })
     });
 
-    if (someProp("isLoading", data)) {
+    if (someProp("isLoading", queries)) {
         return <LoadingSpinner />;
     }
 
-    if (someProp("isError", data)) {
+    if (someProp("isError", queries)) {
         return <ErrorBanner />;
     }
-
-    const [schemaData, usersData] = data.map(getQueryData);
 
     const page = usePage({
         history,

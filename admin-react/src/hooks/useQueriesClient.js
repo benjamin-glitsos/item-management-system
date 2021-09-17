@@ -4,7 +4,7 @@ import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 import makeApiPath from "%/utilities/makeApiPath";
 
-export default paths =>
+export default ({ paths, config }) =>
     useQueries(
         paths.map(path => ({
             queryKey: path,
@@ -13,6 +13,7 @@ export default paths =>
             onError: error => {
                 console.error(error);
                 unspecifiedErrorToast();
-            }
+            },
+            ...config
         }))
     );

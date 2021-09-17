@@ -8,7 +8,6 @@ import mapObjKeys from "%/utilities/mapObjKeys";
 import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";
 import removeAllUndefined from "%/utilities/removeAllUndefined";
-import getQueryData from "%/utilities/getQueryData";
 
 const emptySchema = {
     $schema: "http://json-schema.org/draft-07/schema#",
@@ -21,9 +20,9 @@ const yupConfig = {
     abortEarly: false
 };
 
-export default ({ schemaData, queryData }) => {
-    const schema = getQueryData(schemaData) || emptySchema;
-    const original = getQueryData(queryData) || {};
+export default ({ schemaData, originalData }) => {
+    const schema = schemaData || emptySchema;
+    const original = originalData || {};
 
     const schemaFields = (() => {
         const maybeSchemaProperties = schema?.properties;
@@ -131,6 +130,7 @@ export default ({ schemaData, queryData }) => {
                     R.groupBy(R.head),
                     R.map(R.pluck(1))
                 )(errors);
+                console.log(cleanErrors);
 
                 return {
                     values: {},
