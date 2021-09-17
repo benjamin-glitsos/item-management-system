@@ -44,12 +44,6 @@ export default schemaQueryData => {
 
                 delete sc.required;
             }
-
-            if (!!sc?.title) {
-                if (sc.title.match(/users/i)) {
-                    delete sc.properties.password;
-                }
-            }
         }
 
         return sc;

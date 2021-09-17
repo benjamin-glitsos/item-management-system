@@ -3,8 +3,16 @@ import client from "%/utilities/client";
 import toast from "%/utilities/toast";
 import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
 
-export default ({ path, body }) =>
-    useMutation(path, () => axios.get(path, body), {
-        // TODO: make it accept method, instead of using get method
-        retry: false
-    });
+export default ({ method, path, body }) =>
+    useMutation(
+        path,
+        () =>
+            axios({
+                method,
+                url: path,
+                data: body
+            }),
+        {
+            retry: false
+        }
+    );

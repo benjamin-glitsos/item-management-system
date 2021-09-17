@@ -2,6 +2,7 @@ import org.everit.json.schema.Schema
 import org.everit.json.schema.loader.SchemaLoader
 import org.json.JSONObject
 import upickle.default._
+import scala.util.Try
 
 object SchemasService extends ServiceMixin {
   private final def load(name: String): JSONObject = SchemasDAO.load(name)
@@ -19,13 +20,17 @@ object SchemasService extends ServiceMixin {
   }
 
   final def loadJson(name: String, isFull: Boolean): ujson.Value = {
-    val schemaJson: ujson.Value = read[ujson.Value](load(name).toString)
+    val data: ujson.Value = read[ujson.Value](load(name).toString)
     if (!isFull) {
-      schemaJson.obj.remove("description")
-      schemaJson.obj.remove("minProperties")
+      data.obj.remove("title")
+      data.obj.remove("description")
+      data.obj.remove("minProperties")
+    }
+    if (Try(data("properties")("password").obj).isSuccess) {
+      data("properties").obj.remove("password")
     }
     ujson.Obj(
-      "data" -> schemaJson
+      "data" -> data
     )
   }
 }
