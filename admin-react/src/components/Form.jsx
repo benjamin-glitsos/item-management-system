@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import { UsersEditContext } from "%/routes/UsersEdit";
+import { UsersEditContext } from "%/pages/UsersEdit";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 
 export default ({ context, children }) => {

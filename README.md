@@ -17,7 +17,7 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 
 **Note:** refactoring in progress, so the code is still messy.
 
-* Structure: Routes, Pages, Hooks, Components, and Utilities.
+* Structure: Pages, Hooks, Components, and Utilities.
 * Server-state management using React Query.
 * Functional data transformations using Ramda.
 
