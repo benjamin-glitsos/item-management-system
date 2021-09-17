@@ -48,7 +48,6 @@ export default () => {
         method: "PATCH",
         path: [user.namePlural, username]
     });
-    // TODO: useMutationClient onSuccess
 
     const form = useForm({
         resolver: useYupSchemaResolver({ schemaData, originalData: usersData })
