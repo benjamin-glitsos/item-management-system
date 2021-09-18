@@ -3,16 +3,12 @@ import styled from "styled-components";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import { UsersEditContext } from "%/pages/UsersEdit";
-import nullToEmptyStr from "%/utilities/nullToEmptyStr";
+import setFormValues from "%/utilities/setFormValues";
 
 export default ({ context, children }) => {
     const cx = useContext(context);
 
-    const setFormValues = () => {
-        for (const [key, value] of Object.entries(cx.entityData)) {
-            cx.form.setValue(key, nullToEmptyStr(value));
-        }
-    };
+    setFormValues(cx.form.setValue, cx.entityData);
 
     useEffect(setFormValues, []);
 

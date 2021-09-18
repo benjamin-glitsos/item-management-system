@@ -68,7 +68,8 @@ export default () => {
             namePlural: entity.namePlural,
             keyField: entity.keyField,
             history,
-            originalData: entityData
+            originalData: entityData,
+            setValue: form.setValue
         }
     });
 

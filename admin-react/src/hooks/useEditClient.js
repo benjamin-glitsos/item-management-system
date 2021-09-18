@@ -1,9 +1,10 @@
 import useMutationClient from "%/hooks/useMutationClient";
 import successToast from "%/utilities/successToast";
+import setFormValues from "%/utilities/setFormValues";
 
 export default ({
     path,
-    context: { namePlural, keyField, history, originalData },
+    context: { namePlural, keyField, history, originalData, setValue },
     clientConfig = {},
     queryConfig = {}
 }) =>
@@ -19,6 +20,8 @@ export default ({
                         "/" + joinPath([namePlural, maybeData[keyField]])
                     );
                 }
+
+                setFormValues(setValue, maybeData);
 
                 successToast({
                     title: "Saved",

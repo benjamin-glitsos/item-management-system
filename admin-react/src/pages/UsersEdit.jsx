@@ -65,7 +65,8 @@ export default () => {
             namePlural: entity.namePlural,
             keyField: entity.keyField,
             history,
-            originalData: entityData
+            originalData: entityData,
+            setValue: form.setValue
         }
     });
 
@@ -76,8 +77,7 @@ export default () => {
         breadcrumbs,
         form,
         mutation,
-        schemaData,
-        entityData
+        schemaData
     };
 
     if (someProp("isLoading", queries)) {
@@ -90,9 +90,11 @@ export default () => {
 
     return (
         <UsersEditContext.Provider value={context}>
-            <Page2 context={Context}>
-                <SidebarLayout sidebar={<EditSidebar2 context={Context} />}>
-                    <Form context={Context}>
+            <Page2 context={UsersEditContext}>
+                <SidebarLayout
+                    sidebar={<EditSidebar2 context={UsersEditContext} />}
+                >
+                    <Form context={UsersEditContext}>
                         <FormSubheading level={3}>Details</FormSubheading>
                         <RegisteredField2
                             name="username"
