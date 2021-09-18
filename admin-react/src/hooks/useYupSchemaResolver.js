@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import R from "ramda";
-import * as Yup from "yup";
+import * as yup from "yup";
 import { buildYup as jsonSchemaToYup } from "schema-to-yup";
 import { diff } from "deep-object-diff";
 import mapObjKeys from "%/utilities/mapObjKeys";
@@ -115,7 +115,7 @@ export default ({ schemaData, originalData }) => {
                         errors.inner.map(error => {
                             const { message, path, type, value } = error;
                             if (type === "typeError") {
-                                return new Yup.ValidationError(
+                                return new yup.ValidationError(
                                     [`${path} is required`],
                                     value,
                                     path

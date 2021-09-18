@@ -1,7 +1,7 @@
 import { titleCase } from "title-case";
 
 export default () => {
-    const keyField = "key";
+    const keyField = "sku";
 
     const nameSingular = "item";
 

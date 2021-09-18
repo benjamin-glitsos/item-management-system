@@ -39,19 +39,23 @@
         },
         "unit_cost": {
             "type": "number",
-            "minimum": 0
+            "minimum": 1,
+            "positive": true
         },
         "unit_price": {
             "type": ["number", "null"],
-            "minimum": 0
+            "minimum": 0,
+            "positive": true
         },
         "quantity_available": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "positive": true
         },
         "quantity_sold": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "positive": true
         },
         "additional_notes": {
             "type": ["string", "null"],

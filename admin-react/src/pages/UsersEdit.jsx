@@ -77,7 +77,8 @@ export default () => {
         breadcrumbs,
         form,
         mutation,
-        schemaData
+        schemaData,
+        entityData
     };
 
     if (someProp("isLoading", queries)) {

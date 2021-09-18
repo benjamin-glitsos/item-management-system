@@ -8,9 +8,7 @@ import setFormValues from "%/utilities/setFormValues";
 export default ({ context, children }) => {
     const cx = useContext(context);
 
-    setFormValues(cx.form.setValue, cx.entityData);
-
-    useEffect(setFormValues, []);
+    useEffect(() => setFormValues(cx.form.setValue, cx.entityData), []);
 
     return (
         <form onSubmit={cx.form.handleSubmit(cx.mutation.mutate)}>
