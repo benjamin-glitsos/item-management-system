@@ -37,7 +37,7 @@ export default () => {
                                 )}
                                 iconBefore={
                                     <AppLogo
-                                        src={makeImagePath(["images/logo.svg"])}
+                                        src={makeImagePath(["logo.svg"])}
                                         alt={`${projectName} logo`}
                                     />
                                 }

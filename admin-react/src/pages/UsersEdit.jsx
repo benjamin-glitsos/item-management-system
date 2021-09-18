@@ -84,7 +84,8 @@ export default () => {
         return <LoadingSpinner />;
     }
 
-    if (someProp("isError", queries)) {
+    if (true) {
+        // someProp("isError", queries)
         return <ErrorBanner />;
     }
 
