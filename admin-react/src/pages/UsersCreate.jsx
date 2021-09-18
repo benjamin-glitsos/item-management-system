@@ -14,7 +14,6 @@ import Page2 from "%/components/Page2";
 import EditSidebar2 from "%/components/EditSidebar2";
 import LoadingBanner from "%/components/LoadingBanner";
 import ErrorBanner from "%/components/ErrorBanner";
-import someProp from "%/utilities/someProp";
 import getQueryData from "%/utilities/getQueryData";
 import UsersForm from "%/components/UsersForm";
 
@@ -28,18 +27,15 @@ export default () => {
     const edit = useEdit();
     const entity = useUser();
 
-    const queries = useQueriesClient({
-        paths: [
-            [`schemas/${edit.action}-${entity.namePlural}`],
-            [entity.namePlural, username]
-        ],
+    const query = useQueriesClient({
+        paths: [[`schemas/${edit.action}-${entity.namePlural}`]],
         config: { refetchOnWindowFocus: false }
-    });
+    })[0];
 
-    const [schemaData, entityData] = queries.map(getQueryData);
+    const schemaData = getQueryData(query);
 
     const form = useForm({
-        resolver: useYupSchemaResolver({ schemaData, originalData: entityData })
+        resolver: useYupSchemaResolver({ schemaData })
     });
 
     const page = usePage({
@@ -75,11 +71,11 @@ export default () => {
         entityData
     };
 
-    if (someProp("isLoading", queries)) {
+    if (query?.isLoading) {
         return <LoadingBanner />;
     }
 
-    if (someProp("isError", queries)) {
+    if (query?.isError) {
         return <ErrorBanner />;
     }
 

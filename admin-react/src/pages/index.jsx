@@ -13,8 +13,8 @@ const queryClient = new QueryClient();
 
 const Readme = lazy(() => import("./Readme"));
 const UsersList = lazy(() => import("./UsersList"));
-const UsersOpen = lazy(() => import("./UsersOpen"));
 const UsersEdit = lazy(() => import("./UsersEdit"));
+const UsersCreate = lazy(() => import("./UsersCreate"));
 const ItemsList = lazy(() => import("./ItemsList"));
 const ItemsOpen = lazy(() => import("./ItemsOpen"));
 const ItemsEdit = lazy(() => import("./ItemsEdit"));
@@ -38,7 +38,7 @@ export default () => (
                                     <UsersEdit />
                                 </Route>
                                 <Route exact path="/create-user">
-                                    <UsersOpen action="create" />
+                                    <UsersCreate />
                                 </Route>
                                 <Route exact path="/items">
                                     <ItemsList />

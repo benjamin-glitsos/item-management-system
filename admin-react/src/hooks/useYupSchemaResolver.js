@@ -19,7 +19,7 @@ const yupConfig = {
     abortEarly: false
 };
 
-export default ({ schemaData, originalData }) => {
+export default ({ schemaData, originalData = {} }) => {
     const schema = schemaData || emptySchema;
     const original = originalData || {};
 
