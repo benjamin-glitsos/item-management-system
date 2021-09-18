@@ -31,25 +31,25 @@ export default ({ context }) => {
         <Fragment>
             <Item label="Created">
                 <Author
-                    at={cx.usersData.created_at}
-                    by={cx.usersData.created_by}
+                    at={cx.entityData.created_at}
+                    by={cx.entityData.created_by}
                 />
             </Item>
             <Item label="Opened">
                 <Author
-                    at={cx.usersData.edited_at}
-                    by={cx.usersData.edited_by}
+                    at={cx.entityData.edited_at}
+                    by={cx.entityData.edited_by}
                 />
             </Item>
             <Item label="Deleted">
                 <Author
-                    at={cx.usersData.deleted_at}
-                    by={cx.usersData.deleted_by}
+                    at={cx.entityData.deleted_at}
+                    by={cx.entityData.deleted_by}
                 />
             </Item>
-            <Item label="Edits">{cx.usersData.edits}</Item>
-            <Item label="Opens">{cx.usersData.opens}</Item>
-            <Item label="Metakey">{cx.usersData.metakey}</Item>
+            <Item label="Edits">{cx.entityData.edits}</Item>
+            <Item label="Opens">{cx.entityData.opens}</Item>
+            <Item label="Metakey">{cx.entityData.metakey}</Item>
         </Fragment>
     );
 };

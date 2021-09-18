@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { Controller } from "react-hook-form";
 import { Col } from "react-flexbox-grid";
 import Field from "%/components/Field";
-import { UsersEditContext } from "%/pages/UsersEdit";
+import { Context } from "%/pages/UsersEdit";
 
 export default ({ name, title, Component, columnWidths, ...props }) => {
-    const context = useContext(UsersEditContext);
+    const context = useContext(Context);
     return (
         <Col {...columnWidths}>
             <Controller

@@ -9,7 +9,7 @@ export default ({ context, children }) => {
     const cx = useContext(context);
 
     const setFormValues = () => {
-        for (const [key, value] of Object.entries(cx.usersData)) {
+        for (const [key, value] of Object.entries(cx.entityData)) {
             cx.form.setValue(key, nullToEmptyStr(value));
         }
     };

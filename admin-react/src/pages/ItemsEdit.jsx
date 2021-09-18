@@ -10,7 +10,7 @@ import useQueriesClient from "%/hooks/useQueriesClient";
 import useEditClient from "%/hooks/useEditClient";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
-import useUser from "%/hooks/useUser";
+import useItem from "%/hooks/useItem";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 import Page2 from "%/components/Page2";
 import Content from "%/components/Content";
@@ -27,17 +27,17 @@ import getQueryData from "%/utilities/getQueryData";
 export const Context = createContext();
 
 export default () => {
-    const { username } = useParams();
+    const { key } = useParams();
     const history = useHistory();
 
     const project = useProject();
     const edit = useEdit();
-    const entity = useUser();
+    const entity = useItem();
 
     const queries = useQueriesClient({
         paths: [
             [`schemas/${edit.action}-${entity.namePlural}`],
-            [entity.namePlural, username]
+            [entity.namePlural, key]
         ],
         config: { refetchOnWindowFocus: false }
     });
@@ -60,7 +60,7 @@ export default () => {
     const breadcrumbs = [page.breadcrumb, entity.breadcrumb, edit.breadcrumb];
 
     const mutation = useEditClient({
-        path: [entity.namePlural, username],
+        path: [entity.namePlural, key],
         context: {
             namePlural: entity.namePlural,
             keyField: entity.keyField,

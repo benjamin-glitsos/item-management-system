@@ -4,8 +4,8 @@ import styled from "styled-components";
 export default ({ sidebar, children }) => (
     <StyledGrid fluid>
         <Row>
-            <Col sm={10}>{children}</Col>
-            <Col sm={2}>{sidebar}</Col>
+            <Col lg={10}>{children}</Col>
+            <Col lg={2}>{sidebar}</Col>
         </Row>
     </StyledGrid>
 );

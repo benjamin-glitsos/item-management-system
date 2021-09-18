@@ -17,6 +17,7 @@ const UsersOpen = lazy(() => import("./UsersOpen"));
 const UsersEdit = lazy(() => import("./UsersEdit"));
 const ItemsList = lazy(() => import("./ItemsList"));
 const ItemsOpen = lazy(() => import("./ItemsOpen"));
+const ItemsEdit = lazy(() => import("./ItemsEdit"));
 const NotFound = lazy(() => import("./NotFound"));
 
 export default () => (
@@ -43,7 +44,7 @@ export default () => (
                                     <ItemsList />
                                 </Route>
                                 <Route exact path="/items/:key">
-                                    <ItemsOpen action="edit" />
+                                    <ItemsEdit />
                                 </Route>
                                 <Route exact path="/create-item">
                                     <ItemsOpen action="create" />
