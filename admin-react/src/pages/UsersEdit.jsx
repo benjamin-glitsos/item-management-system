@@ -12,9 +12,9 @@ import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
-import Page from "%/components/Page";
+import Page2 from "%/components/Page2";
 import Content from "%/components/Content";
-import EditSidebar from "%/components/EditSidebar";
+import EditSidebar2 from "%/components/EditSidebar2";
 import Form from "%/components/Form";
 import LoadingBanner from "%/components/LoadingBanner";
 import RegisteredField2 from "%/components/RegisteredField2";
@@ -59,7 +59,7 @@ export default () => {
 
     const breadcrumbs = [page.breadcrumb, user.breadcrumb, edit.breadcrumb];
 
-    const { mutate, isLoading: isMutateLoading } = useEditClient({
+    const mutation = useEditClient({
         path: [user.namePlural, username],
         context: {
             namePlural: user.namePlural,
@@ -74,8 +74,7 @@ export default () => {
         edit,
         breadcrumbs,
         form,
-        mutate,
-        isMutateLoading,
+        mutation,
         schemaData,
         usersData
     };
@@ -90,13 +89,10 @@ export default () => {
 
     return (
         <UsersEditContext.Provider value={context}>
-            <Page
-                title={page.tabTitle}
-                description={page.pageDescription}
-                breadcrumbs={breadcrumbs}
-                maxWidth={edit.maxWidth}
-            >
-                <SidebarLayout sidebar={<EditSidebar data={usersData} />}>
+            <Page2 context={UsersEditContext}>
+                <SidebarLayout
+                    sidebar={<EditSidebar2 context={UsersEditContext} />}
+                >
                     <Form context={UsersEditContext}>
                         <FormSubheading level={3}>Details</FormSubheading>
                         <RegisteredField2
@@ -138,7 +134,7 @@ export default () => {
                         />
                     </Form>
                 </SidebarLayout>
-            </Page>
+            </Page2>
         </UsersEditContext.Provider>
     );
 };

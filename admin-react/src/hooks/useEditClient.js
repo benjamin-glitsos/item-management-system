@@ -12,16 +12,19 @@ export default ({
         path,
         context: { namePlural, keyField, history, originalData },
         onSuccess: successData => {
-            const data = successData?.data?.data?.[0];
+            const maybeData = successData?.data?.data?.[0];
+            if (maybeData) {
+                if (originalData[keyField] !== maybeData[keyField]) {
+                    history.replace(
+                        "/" + joinPath([namePlural, maybeData[keyField]])
+                    );
+                }
 
-            if (originalData[keyField] !== data[keyField]) {
-                history.replace("/" + joinPath([namePlural, data[keyField]]));
+                successToast({
+                    title: "Saved",
+                    description: "Successfully edited"
+                });
             }
-
-            successToast({
-                title: "Saved",
-                description: "Successfully edited"
-            });
         },
         clientConfig,
         queryConfig

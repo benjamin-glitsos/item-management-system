@@ -8,6 +8,5 @@ export default props => {
         props?.description ||
             "No values in the form are different to the data that is already present on the server."
     );
-    console.log(message);
     toast(message);
 };

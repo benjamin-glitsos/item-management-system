@@ -1,11 +1,11 @@
 import R from "ramda";
 import axios from "axios";
 import { useMutation } from "react-query";
-import toast from "%/utilities/toast";
 import handleQueryError from "%/utilities/handleQueryError";
 import makeApiPath from "%/utilities/makeApiPath";
 import successToast from "%/utilities/successToast";
 import joinPath from "%/utilities/joinPath";
+import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
 
 export default ({
     method,
@@ -19,7 +19,7 @@ export default ({
         async body => {
             if (R.isEmpty(body)) {
                 noNewDataToSubmitToast();
-                return await {};
+                return {};
             } else {
                 return await axios({
                     method,

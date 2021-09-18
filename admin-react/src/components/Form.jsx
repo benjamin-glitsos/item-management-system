@@ -17,7 +17,7 @@ export default ({ context, children }) => {
     useEffect(setFormValues, []);
 
     return (
-        <form onSubmit={cx.form.handleSubmit(cx.mutate)}>
+        <form onSubmit={cx.form.handleSubmit(cx.mutation.mutate)}>
             <Grid fluid>
                 <Row>{children}</Row>
                 <Row end="xs">
@@ -30,11 +30,7 @@ export default ({ context, children }) => {
                                 >
                                     Cancel
                                 </Button>
-                                <Button
-                                    type="submit"
-                                    appearance="primary"
-                                    isLoading={cx.isMutateLoading}
-                                >
+                                <Button type="submit" appearance="primary">
                                     Submit
                                 </Button>
                             </ButtonGroup>
