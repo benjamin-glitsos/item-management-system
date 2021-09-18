@@ -13,6 +13,7 @@ import HomeCircleIcon from "@atlaskit/icon/glyph/home-circle";
 import PeopleIcon from "@atlaskit/icon/glyph/people";
 import DocumentsIcon from "@atlaskit/icon/glyph/documents";
 import doesMatchRouterLocation from "%/utilities/doesMatchRouterLocation";
+import makeImagePath from "%/utilities/makeImagePath";
 
 export default () => {
     const location = useLocation();
@@ -36,10 +37,7 @@ export default () => {
                                 )}
                                 iconBefore={
                                     <AppLogo
-                                        src={
-                                            process.env.PUBLIC_URL +
-                                            "/images/logo.svg"
-                                        }
+                                        src={makeImagePath(["images/logo.svg"])}
                                         alt={`${projectName} logo`}
                                     />
                                 }

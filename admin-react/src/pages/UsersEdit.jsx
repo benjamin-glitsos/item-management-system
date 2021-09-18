@@ -36,7 +36,7 @@ export default () => {
 
     const queries = useQueriesClient({
         paths: [
-            ["schemas", `${edit.action}-${user.namePlural}`],
+            [`schemas/${edit.action}-${user.namePlural}`],
             [user.namePlural, username]
         ],
         config: { refetchOnWindowFocus: false }
