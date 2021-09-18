@@ -6,23 +6,19 @@ import Content from "%/components/Content";
 
 export default ({ context, children }) => {
     const cx = useContext(context);
-    const title = cx.page.tabTitle;
-    const description = cx.page.pageDescription;
-    const breadcrumbs = cx.breadcrumbs;
-    const maxWidth = cx.edit.maxWidth;
 
     return (
         <Fragment>
             <Helmet>
-                <title>{title}</title>
-                <meta name="description" content={description} />
+                <title>{cx.page.tabTitle}</title>
+                <meta name="description" content={cx.page.pageDescription} />
                 <meta name="viewport" content="shrink-to-fit=yes" />
             </Helmet>
-            <Content maxWidth={maxWidth}>
+            <Content maxWidth={cx.edit.maxWidth}>
                 <PageHeader
-                    breadcrumbs={<BreadcrumbBar breadcrumbs={breadcrumbs} />}
+                    breadcrumbs={<BreadcrumbBar breadcrumbs={cx.breadcrumbs} />}
                 >
-                    {title}
+                    {cx.page.pageTitle}
                 </PageHeader>
                 {children}
             </Content>
