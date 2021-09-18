@@ -3,7 +3,6 @@ import R from "ramda";
 import * as Yup from "yup";
 import { buildYup as jsonSchemaToYup } from "schema-to-yup";
 import { diff } from "deep-object-diff";
-import isObjectEmpty from "%/utilities/isObjectEmpty";
 import mapObjKeys from "%/utilities/mapObjKeys";
 import trimAll from "%/utilities/trimAll";
 import emptyStringsToNull from "%/utilities/emptyStringsToNull";

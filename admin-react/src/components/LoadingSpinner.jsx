@@ -1,9 +1,13 @@
 import styled from "styled-components";
-import AtlaskitSpinner from "@atlaskit/spinner";
+import Spinner from "@atlaskit/spinner";
 
-export default () => <Spinner size="large" delay={0} />;
+export default () => (
+    <Styles>
+        <Spinner size="large" delay={0} />
+    </Styles>
+);
 
-const Spinner = styled(AtlaskitSpinner)`
+const Styles = styled.div`
     margin-top: 40px;
 
     svg {
