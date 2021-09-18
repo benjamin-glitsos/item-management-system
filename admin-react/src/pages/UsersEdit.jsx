@@ -24,7 +24,7 @@ import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import getQueryData from "%/utilities/getQueryData";
 
-export const Context = createContext();
+export const UsersEditContext = createContext();
 
 export default () => {
     const { username } = useParams();
@@ -89,7 +89,7 @@ export default () => {
     }
 
     return (
-        <Context.Provider value={context}>
+        <UsersEditContext.Provider value={context}>
             <Page2 context={Context}>
                 <SidebarLayout sidebar={<EditSidebar2 context={Context} />}>
                     <Form context={Context}>
@@ -99,30 +99,35 @@ export default () => {
                             title="Username"
                             Component={Textfield}
                             columnWidths={{ lg: 6 }}
+                            context={UsersEditContext}
                         />
                         <RegisteredField2
                             name="email_address"
                             title="Email address"
                             Component={Textfield}
                             columnWidths={{ lg: 6 }}
+                            context={UsersEditContext}
                         />
                         <RegisteredField2
                             name="first_name"
                             title="First name"
                             Component={Textfield}
                             columnWidths={{ lg: 4 }}
+                            context={UsersEditContext}
                         />
                         <RegisteredField2
                             name="last_name"
                             title="Last name"
                             Component={Textfield}
                             columnWidths={{ lg: 4 }}
+                            context={UsersEditContext}
                         />
                         <RegisteredField2
                             name="other_names"
                             title="Other names"
                             Component={Textfield}
                             columnWidths={{ lg: 4 }}
+                            context={UsersEditContext}
                         />
                         <FormSubheading level={3}>Misc.</FormSubheading>
                         <ControlledField2
@@ -130,10 +135,11 @@ export default () => {
                             title="Additional notes"
                             Component={MarkdownTextarea}
                             columnWidths={{ sm: 12 }}
+                            context={UsersEditContext}
                         />
                     </Form>
                 </SidebarLayout>
             </Page2>
-        </Context.Provider>
+        </UsersEditContext.Provider>
     );
 };

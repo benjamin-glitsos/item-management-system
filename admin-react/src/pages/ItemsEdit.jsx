@@ -21,10 +21,13 @@ import RegisteredField2 from "%/components/RegisteredField2";
 import ControlledField2 from "%/components/ControlledField2";
 import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
+import InputDate from "%/components/InputDate";
+import InputNumber from "%/components/InputNumber";
+import InputCurrency from "%/components/InputCurrency";
 import someProp from "%/utilities/someProp";
 import getQueryData from "%/utilities/getQueryData";
 
-export const Context = createContext();
+export const ItemsEditContext = createContext();
 
 export default () => {
     const { key } = useParams();
@@ -89,40 +92,83 @@ export default () => {
     }
 
     return (
-        <Context.Provider value={context}>
-            <Page2 context={Context}>
-                <SidebarLayout sidebar={<EditSidebar2 context={Context} />}>
-                    <Form context={Context}>
+        <ItemsEditContext.Provider value={context}>
+            <Page2 context={ItemsEditContext}>
+                <SidebarLayout
+                    sidebar={<EditSidebar2 context={ItemsEditContext} />}
+                >
+                    <Form context={ItemsEditContext}>
                         <FormSubheading level={3}>Details</FormSubheading>
                         <RegisteredField2
-                            name="username"
-                            title="Username"
+                            name="name"
+                            title="Name"
                             Component={Textfield}
+                            columnWidths={{ lg: 6, md: 12 }}
+                            context={ItemsEditContext}
+                        />
+                        <RegisteredField2
+                            name="sku"
+                            title="SKU"
+                            Component={Textfield}
+                            columnWidths={{ lg: 3, md: 6 }}
+                            context={ItemsEditContext}
+                        />
+                        <RegisteredField2
+                            name="upc"
+                            title="UPC"
+                            Component={Textfield}
+                            columnWidths={{ lg: 3, md: 6 }}
+                            context={ItemsEditContext}
+                        />
+                        <ControlledField2
+                            name="description"
+                            title="Description"
+                            Component={MarkdownTextarea}
+                            columnWidths={{ sm: 12 }}
+                            context={ItemsEditContext}
+                        />
+                        <FormSubheading level={3}>Stock</FormSubheading>
+                        <ControlledField2
+                            name="acquisition_date"
+                            title="Acquisition date"
+                            Component={InputDate}
                             columnWidths={{ lg: 6 }}
+                            context={ItemsEditContext}
                         />
-                        <RegisteredField2
-                            name="email_address"
-                            title="Email address"
-                            Component={Textfield}
+                        <ControlledField2
+                            name="expiration_date"
+                            title="Expiration date"
+                            Component={InputDate}
                             columnWidths={{ lg: 6 }}
+                            context={ItemsEditContext}
                         />
-                        <RegisteredField2
-                            name="first_name"
-                            title="First name"
-                            Component={Textfield}
-                            columnWidths={{ lg: 4 }}
+                        <ControlledField2
+                            name="unit_cost"
+                            title="Unit cost"
+                            Component={InputCurrency}
+                            columnWidths={{ lg: 3, md: 6 }}
+                            context={ItemsEditContext}
                         />
-                        <RegisteredField2
-                            name="last_name"
-                            title="Last name"
-                            Component={Textfield}
-                            columnWidths={{ lg: 4 }}
+                        <ControlledField2
+                            name="unit_price"
+                            title="Unit price"
+                            Component={InputCurrency}
+                            columnWidths={{ lg: 3, md: 6 }}
+                            context={ItemsEditContext}
                         />
-                        <RegisteredField2
-                            name="other_names"
-                            title="Other names"
-                            Component={Textfield}
-                            columnWidths={{ lg: 4 }}
+                        <ControlledField2
+                            name="quantity_available"
+                            title="Quantity available"
+                            Component={InputNumber}
+                            columnWidths={{ lg: 3, md: 6 }}
+                            context={ItemsEditContext}
+                        />
+                        <ControlledField2
+                            name="quantity_sold"
+                            title="Quantity sold"
+                            Component={InputNumber}
+                            columnWidths={{ lg: 3, md: 6 }}
+                            context={ItemsEditContext}
                         />
                         <FormSubheading level={3}>Misc.</FormSubheading>
                         <ControlledField2
@@ -130,10 +176,11 @@ export default () => {
                             title="Additional notes"
                             Component={MarkdownTextarea}
                             columnWidths={{ sm: 12 }}
+                            context={ItemsEditContext}
                         />
                     </Form>
                 </SidebarLayout>
             </Page2>
-        </Context.Provider>
+        </ItemsEditContext.Provider>
     );
 };
