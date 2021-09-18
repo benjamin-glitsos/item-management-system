@@ -80,12 +80,12 @@ export default () => {
         usersData
     };
 
-    if (someProp("isLoading", queries)) {
+    if (true) {
+        // someProp("isLoading", queries)
         return <LoadingSpinner />;
     }
 
-    if (true) {
-        // someProp("isError", queries)
+    if (someProp("isError", queries)) {
         return <ErrorBanner />;
     }
 

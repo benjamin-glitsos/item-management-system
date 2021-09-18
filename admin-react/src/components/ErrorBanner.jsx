@@ -13,13 +13,13 @@ export default ({ goBackUrl, title, description }) => {
         <Styles>
             <Grid fluid>
                 <Row middle="xs">
-                    <Col sm={6}>
+                    <Col md={6}>
                         <img
                             src={makeImagePath(["error.jpg"])}
                             alt="Illustration that represents an 'error' - a man picks up a shape that has fallen to the ground"
                         />
                     </Col>
-                    <Col sm={6}>
+                    <Col md={6}>
                         <h2>{title || "Oh no! Something went wrong"}</h2>
                         <p>
                             {description ||
