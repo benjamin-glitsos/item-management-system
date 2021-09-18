@@ -4,7 +4,14 @@ import { Grid, Row, Col } from "react-flexbox-grid";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import makeImagePath from "%/utilities/makeImagePath";
 
-export default ({ goBackUrl, title, description }) => {
+export default ({
+    title,
+    description,
+    goBackTitle,
+    goBackUrl,
+    enableGoBackButton = true,
+    enableReloadPageButton = true
+}) => {
     const history = useHistory();
     const handleReload = () => window.location.reload();
     const handleGoBack = () => history.push(goBackUrl || "/");
@@ -26,12 +33,22 @@ export default ({ goBackUrl, title, description }) => {
                                 "An error occurred; sorry about that."}
                         </p>
                         <ButtonGroup>
-                            <Button appearance="primary" onClick={handleGoBack}>
-                                Go back
-                            </Button>
-                            <Button appearance="subtle" onClick={handleReload}>
-                                Reload page
-                            </Button>
+                            {enableGoBackButton && (
+                                <Button
+                                    appearance="primary"
+                                    onClick={handleGoBack}
+                                >
+                                    Go back to {goBackTitle || "Home"}
+                                </Button>
+                            )}
+                            {enableReloadPageButton && (
+                                <Button
+                                    appearance="subtle"
+                                    onClick={handleReload}
+                                >
+                                    Reload page
+                                </Button>
+                            )}
                         </ButtonGroup>
                     </Col>
                 </Row>

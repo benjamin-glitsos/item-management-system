@@ -16,7 +16,7 @@ import Page from "%/components/Page";
 import Content from "%/components/Content";
 import EditSidebar from "%/components/EditSidebar";
 import Form from "%/components/Form";
-import LoadingSpinner from "%/components/LoadingSpinner";
+import LoadingBanner from "%/components/LoadingBanner";
 import RegisteredField2 from "%/components/RegisteredField2";
 import ControlledField2 from "%/components/ControlledField2";
 import FormSubheading from "%/components/FormSubheading";
@@ -80,9 +80,8 @@ export default () => {
         usersData
     };
 
-    if (true) {
-        // someProp("isLoading", queries)
-        return <LoadingSpinner />;
+    if (someProp("isLoading", queries)) {
+        return <LoadingBanner />;
     }
 
     if (someProp("isError", queries)) {

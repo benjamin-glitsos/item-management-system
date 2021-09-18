@@ -6,7 +6,7 @@ import { OpenContext } from "%/components/Open/Open";
 import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
-import LoadingSpinner from "%/components/LoadingSpinner";
+import LoadingBanner from "%/components/LoadingBanner";
 import OpenSidebar from "%/components/OpenSidebar";
 
 export default ({ children }) => {
@@ -33,7 +33,7 @@ export default ({ children }) => {
                 isLoading={isLoading}
             >
                 {!isCreate && isLoading ? (
-                    <LoadingSpinner />
+                    <LoadingBanner />
                 ) : (
                     <OffsetGridOuterPadding>
                         <Grid fluid>

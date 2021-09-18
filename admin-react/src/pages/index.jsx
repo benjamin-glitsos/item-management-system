@@ -5,7 +5,7 @@ import { QueryParamProvider } from "use-query-params";
 import Analytics from "react-router-ga";
 import "react-toastify/dist/ReactToastify.min.css";
 import Page from "%/components/Page/PagePresenter";
-import LoadingSpinner from "%/components/LoadingSpinner";
+import LoadingBanner from "%/components/LoadingBanner";
 import ToastContainer from "%/components/ToastContainer";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -25,7 +25,7 @@ export default () => (
             <QueryClientProvider client={queryClient}>
                 <QueryParamProvider>
                     <Page>
-                        <Suspense fallback={<LoadingSpinner />}>
+                        <Suspense fallback={<LoadingBanner />}>
                             <Switch>
                                 <Route exact path="/">
                                     <Readme />
