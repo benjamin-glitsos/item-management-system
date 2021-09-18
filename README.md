@@ -1,6 +1,6 @@
 ## Item Management System
 
-A full-stack information system with a dockerised <!-- Model&ndash; -->Model&ndash;View&ndash;Controller (MMVC) architecture.
+A full-stack information system with a dockerised Model&ndash;View&ndash;Controller (MMVC) architecture.
 
 [ims.benglitsos.com.au](https://ims.benglitsos.com.au/)
 
@@ -27,7 +27,3 @@ A full-stack information system with a dockerised <!-- Model&ndash; -->Model&nda
 * Rich metadata on all entities is stored in a separate table. The use of views and triggers allows operating as if it were in the same table.
 * Use of stored functions to reduce round trips.
 * Fourth normal form (4NF).
-
-<!-- ### Session&ndash;Redis Container -->
-<!--  -->
-<!-- * Stores user-login sessions -->
