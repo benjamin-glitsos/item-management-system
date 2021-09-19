@@ -15,7 +15,7 @@ A full-stack information system with a dockerised Model&ndash;View&ndash;Control
 
 ### Admin&ndash;React Container
 
-**Note:** refactoring in progress, so the code is still messy except for [UsersEdit.jsx](https://github.com/benjamin-glitsos/item-management-system/blob/main/admin-react/src/pages/UsersEdit.jsx)
+**Note:** refactoring in progress, so the code is still messy except for the [UsersEdit.jsx](https://github.com/benjamin-glitsos/item-management-system/blob/main/admin-react/src/pages/UsersEdit.jsx) page.
 
 * Structure: Pages, Hooks, Components, and Utilities.
 * Server-state management using React Query.
