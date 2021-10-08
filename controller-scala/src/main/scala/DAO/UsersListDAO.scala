@@ -25,7 +25,7 @@ trait UsersListDAO extends ListDAOMixin {
 
     val matchesFirstNameOtherNamesLastNameFragment: Option[Fragment] =
       trimmedSearch.map(s =>
-        fr"CONCAT_WS(' ', first_name, other_names last_name) ILIKE ${s"%$s%"}"
+        fr"CONCAT_WS(' ', first_name, other_names, last_name) ILIKE ${s"%$s%"}"
       )
 
     val whereFragment: Fragment =
