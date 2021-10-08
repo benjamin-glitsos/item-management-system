@@ -35,7 +35,7 @@ export default ({ context }) => {
                     by={cx.entityData.created_by}
                 />
             </Item>
-            <Item label="Opened">
+            <Item label="Edited">
                 <Author
                     at={cx.entityData.edited_at}
                     by={cx.entityData.edited_by}
