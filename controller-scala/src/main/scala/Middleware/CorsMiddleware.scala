@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.headers.RawHeader
 
 object CorsMiddleware {
   def apply(): Directive0 = {
-    val allowOriginUrl = if (System.getenv("PROJECT_MODE") == "production") {
+    val allowOriginUrl = if (true) {
       val projectDomain  = System.getenv("PROJECT_DOMAIN")
       val adminSubdomain = System.getenv("ADMIN_SUBDOMAIN")
       s"https://$adminSubdomain.$projectDomain"

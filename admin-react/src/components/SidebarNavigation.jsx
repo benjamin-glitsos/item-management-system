@@ -17,8 +17,7 @@ import makeImagePath from "%/utilities/makeImagePath";
 
 export default () => {
     const location = useLocation();
-    const projectMode =
-        process.env.REACT_APP_PROJECT_MODE || process.env.NODE_ENV;
+    const projectMode = "production";
     const projectName =
         process.env.REACT_APP_PROJECT_NAME || "Item Management System";
     const projectAbbrev = process.env.REACT_APP_PROJECT_ABBREV || "IMS";

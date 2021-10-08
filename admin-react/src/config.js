@@ -1,6 +1,6 @@
 export default {
     serverUrl:
-        process.env.REACT_APP_PROJECT_MODE === "production"
+        true
             ? `https://${process.env.REACT_APP_CONTROLLER_SUBDOMAIN}.${process.env.REACT_APP_PROJECT_DOMAIN}/`
             : `http://localhost:${process.env.REACT_APP_CONTROLLER_PORT}/api/`,
     pageLengths: [10, 25, 50, 100],
