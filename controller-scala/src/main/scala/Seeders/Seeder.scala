@@ -1,13 +1,6 @@
-object Seeder extends LogicMixin {
-  private val isSeedingEnabled: Boolean = all(
-    List(
-      System.getenv("PROJECT_MODE") != "production",
-      System.getenv("CONTROLLER_SEED_RUN") == "yes"
-    )
-  )
-
+object Seeder {
   final def apply() = {
-    if (isSeedingEnabled) {
+    if (System.getenv("CONTROLLER_SEED_RUN") == "yes") {
       UsersSeeder()
       ItemsSeeder()
     }
