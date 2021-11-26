@@ -8,8 +8,7 @@ export default paths =>
     useReactQueries(
         paths.map(path => ({
             queryKey: path,
-            queryFn: () => axios.get(makeApiPath(path))
-            },
+            queryFn: () => axios.get(makeApiPath(path)),
             retry: false,
             queryOptions: {
                 onError: error => {

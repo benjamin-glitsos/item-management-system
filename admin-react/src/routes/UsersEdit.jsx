@@ -22,7 +22,6 @@ import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
-import schema from "/app/private/schemas/edit-users.json";
 
 export const UsersEditContext = createContext();
 
