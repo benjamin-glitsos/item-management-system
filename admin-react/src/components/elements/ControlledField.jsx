@@ -13,14 +13,14 @@ export default ({
 }) => (
     <Col {...columnWidths}>
         <Controller
-            control={context?.form?.control}
+            control={context.form.control}
             name={name}
             render={({ field: { onChange, onBlur, value, ref } }) => (
                 <Field
                     name={name}
                     title={title}
                     Component={Component}
-                    errors={context?.form?.errors}
+                    errors={context.form.errors}
                     isCreate={!!context?.create}
                     schemaProperties={context?.schema?.properties}
                     onBlur={onBlur}

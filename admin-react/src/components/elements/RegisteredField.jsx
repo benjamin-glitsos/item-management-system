@@ -16,8 +16,8 @@ export default ({
             Component={Component}
             isCreate={!!context?.create}
             schemaProperties={context?.schema?.properties}
-            errors={context.form?.errors}
-            additionalProps={context.form?.register(name)}
+            errors={context.form.errors}
+            additionalProps={context.form.register(name)}
             {...props}
         />
     </Col>
