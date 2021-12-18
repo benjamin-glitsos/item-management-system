@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Col } from "react-flexbox-grid";
-import Field from "%/components/Field";
+import Field from "elements/Field";
 import { OpenContext } from "%/components/Open/Open";
 
 export default ({ name, title, Component, columnWidths, ...props }) => {

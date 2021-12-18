@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Controller } from "react-hook-form";
 import { Col } from "react-flexbox-grid";
-import Field from "%/components/Field";
+import Field from "elements/Field";
 import { UsersEditContext } from "%/pages/UsersEdit";
 
 export default ({ name, title, Component, columnWidths, ...props }) => {

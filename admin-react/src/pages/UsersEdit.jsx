@@ -2,8 +2,6 @@ import { createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import Textfield from "@atlaskit/textfield";
-import MarkdownTextarea from "%/components/MarkdownTextarea";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "%/hooks/useEdit";
 import useQueries from "%/hooks/useQueries";
@@ -15,13 +13,11 @@ import Content from "%/components/Content";
 import EditSidebar from "%/components/EditSidebar";
 import Form from "%/components/Form";
 import LoadingSpinner from "%/components/LoadingSpinner";
-import RegisteredField2 from "%/components/RegisteredField2";
-import ControlledField2 from "%/components/ControlledField2";
-import FormSubheading from "%/components/FormSubheading";
 import ErrorBanner from "%/components/ErrorBanner";
 import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
+import UsersEditForm from "modules/UsersEditForm";
 
 export const UsersEditContext = createContext();
 
@@ -141,50 +137,13 @@ export default () => {
                 <Grid fluid>
                     <Row>
                         <Col sm={10}>
-                            <Form page={page} edit={edit} form={form}>
-                                <FormSubheading level={3}>
-                                    Details
-                                </FormSubheading>
-                                <RegisteredField2
-                                    name="username"
-                                    title="Username"
-                                    Component={Textfield}
-                                    columnWidths={{ lg: 6 }}
-                                />
-                                <RegisteredField2
-                                    name="email_address"
-                                    title="Email address"
-                                    Component={Textfield}
-                                    columnWidths={{ lg: 6 }}
-                                />
-                                <RegisteredField2
-                                    name="first_name"
-                                    title="First name"
-                                    Component={Textfield}
-                                    columnWidths={{ lg: 4 }}
-                                />
-                                <RegisteredField2
-                                    name="last_name"
-                                    title="Last name"
-                                    Component={Textfield}
-                                    columnWidths={{ lg: 4 }}
-                                />
-                                <RegisteredField2
-                                    name="other_names"
-                                    title="Other names"
-                                    Component={Textfield}
-                                    columnWidths={{ lg: 4 }}
-                                />
-                                <FormSubheading level={3}>Misc.</FormSubheading>
-                                <ControlledField2
-                                    name="additional_notes"
-                                    title="Additional notes"
-                                    Component={MarkdownTextarea}
-                                    columnWidths={{ sm: 12 }}
-                                />
-                                <code>{JSON.stringify(usersQuery)}</code>
-                                <code>{JSON.stringify(schemaQuery)}</code>
-                            </Form>
+                            <UsersEditForm
+                                page={page}
+                                edit={edit}
+                                form={form}
+                            />
+                            <code>{JSON.stringify(usersQuery)}</code>
+                            <code>{JSON.stringify(schemaQuery)}</code>
                         </Col>
                         <Col sm={2}>
                             <EditSidebar data={usersQuery} />

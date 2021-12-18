@@ -13,7 +13,15 @@ module.exports = {
     ],
     webpack: {
         alias: {
-            "%": path.resolve(__dirname, "src/")
+            "%": path.resolve(__dirname, "src/"),
+            "assets": path.resolve(__dirname, "src/assets/"),
+            "hooks": path.resolve(__dirname, "src/hooks/"),
+            "pages": path.resolve(__dirname, "src/pages/"),
+            "services": path.resolve(__dirname, "src/services/"),
+            "utilities": path.resolve(__dirname, "src/utilities/"),
+            "elements": path.resolve(__dirname, "src/components/elements/"),
+            "modules": path.resolve(__dirname, "src/components/modules/"),
+            "templates": path.resolve(__dirname, "src/components/templates/")
         }
     },
     eslint: {
