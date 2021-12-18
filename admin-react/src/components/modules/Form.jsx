@@ -1,3 +1,4 @@
+import { cloneElement } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Button, { ButtonGroup } from "@atlaskit/button";
@@ -13,6 +14,8 @@ export default ({ context, children }) => {
         })
     });
 
+    const cx = { ...context, form };
+
     for (const [key, value] of Object.entries(context.data)) {
         form.setValue(key, nullToEmptyStr(value));
     }
@@ -20,7 +23,7 @@ export default ({ context, children }) => {
     return (
         <form onSubmit={form.handleSubmit(x => console.log(x))}>
             <Grid fluid>
-                <Row>{children}</Row>
+                <Row>{cloneElement(children, { context: cx })}</Row>
                 <Row end="xs">
                     <Col sm={12}>
                         <Buttons>

@@ -65,7 +65,7 @@ export default () => {
 
     return (
         <UsersEditContext.Provider value={context}>
-            <EditTemplate context={context} form={UsersEditForm} />
+            <EditTemplate context={context} form={<UsersEditForm />} />
         </UsersEditContext.Provider>
     );
 };
