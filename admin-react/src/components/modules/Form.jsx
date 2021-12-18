@@ -8,13 +8,11 @@ import nullToEmptyStr from "utilities/nullToEmptyStr";
 
 export default ({ context, children }) => {
     const form = useForm({
-        resolver: useYupSchemaResolver({
-            schema: context.schema,
-            data: context.data
-        })
+        // resolver: useYupSchemaResolver({
+        //     schema: context.schema,
+        //     data: context.data
+        // })
     });
-
-    const cx = { ...context, form };
 
     for (const [key, value] of Object.entries(context.data)) {
         form.setValue(key, nullToEmptyStr(value));
@@ -23,7 +21,9 @@ export default ({ context, children }) => {
     return (
         <form onSubmit={form.handleSubmit(x => console.log(x))}>
             <Grid fluid>
-                <Row>{cloneElement(children, { context: cx })}</Row>
+                <Row>
+                    {cloneElement(children, { context: { ...context, form } })}
+                </Row>
                 <Row end="xs">
                     <Col sm={12}>
                         <Buttons>
