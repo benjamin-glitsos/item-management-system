@@ -116,11 +116,14 @@ export default () => {
 
     return (
         <UsersEditContext.Provider value={context}>
-            <EditTemplate page={page} edit={edit} usersQuery={usersQuery}>
-                <UsersEditForm page={page} edit={edit} form={form} />
-                <code>{JSON.stringify(usersQuery)}</code>
-                <code>{JSON.stringify(schemaQuery)}</code>
-            </EditTemplate>
+            <EditTemplate
+                page={page}
+                edit={edit}
+                sidebarData={usersQuery}
+                form={<UsersEditForm page={page} edit={edit} form={form} />}
+            />
+            <code>{JSON.stringify(usersQuery)}</code>
+            <code>{JSON.stringify(schemaQuery)}</code>
         </UsersEditContext.Provider>
     );
 };
