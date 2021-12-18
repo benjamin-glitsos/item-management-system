@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useQueries as useReactQueries } from "react-query";
-import toast from "%/utilities/toast";
-import unspecifiedErrorToast from "%/utilities/unspecifiedErrorToast";
-import makeApiPath from "%/utilities/makeApiPath";
+import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
+import makeApiPath from "utilities/makeApiPath";
 
 export default paths =>
     useReactQueries(

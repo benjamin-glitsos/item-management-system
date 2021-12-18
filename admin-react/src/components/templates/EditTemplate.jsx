@@ -1,23 +1,22 @@
-import { useContext } from "react";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Page from "modules/Page";
 import EditSidebar from "modules/EditSidebar";
 
-export default ({ context, form }) => {
-    const cx = useContext(context);
-
+export default ({ context, Form }) => {
     return (
         <Page
-            title={cx.page.tabTitle}
-            description={cx.page.pageDescription}
+            title={context.page.tabTitle}
+            description={context.page.pageDescription}
             breadcrumbs={[]}
-            maxWidth={cx.edit.maxWidth}
+            maxWidth={context.edit.maxWidth}
         >
             <Grid fluid>
                 <Row>
-                    <Col sm={10}>{form}</Col>
+                    <Col sm={10}>
+                        <Form context={context} />
+                    </Col>
                     <Col sm={2}>
-                        <EditSidebar usersQuery={cx.usersQuery} />
+                        <EditSidebar usersQuery={context.usersQuery} />
                     </Col>
                 </Row>
             </Grid>

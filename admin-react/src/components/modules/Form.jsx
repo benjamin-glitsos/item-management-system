@@ -1,18 +1,24 @@
-import { useContext } from "react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
+import useYupSchemaResolver from "hooks/useYupSchemaResolver";
 import nullToEmptyStr from "utilities/nullToEmptyStr";
 
 export default ({ context, children }) => {
-    const cx = useContext(context);
+    const form = useForm({
+        resolver: useYupSchemaResolver({
+            schemaQuery: context.schemaQuery,
+            originalData: context.usersQuery
+        })
+    });
 
-    for (const [key, value] of Object.entries(cx.usersQuery)) {
-        cx.form.setValue(key, nullToEmptyStr(value));
+    for (const [key, value] of Object.entries(context.usersQuery)) {
+        form.setValue(key, nullToEmptyStr(value));
     }
 
     return (
-        <form onSubmit={cx.form.handleSubmit(x => console.log(x))}>
+        <form onSubmit={form.handleSubmit(x => console.log(x))}>
             <Grid fluid>
                 <Row>{children}</Row>
                 <Row end="xs">
@@ -21,7 +27,7 @@ export default ({ context, children }) => {
                             <ButtonGroup>
                                 <Button
                                     appearance="subtle"
-                                    onClick={cx.page.handleReturn}
+                                    onClick={context.page.handleReturn}
                                 >
                                     Cancel
                                 </Button>
@@ -40,3 +46,49 @@ export default ({ context, children }) => {
 const Buttons = styled.div`
     margin-top: 24px;
 `;
+
+// const schema = {
+//     $schema: "http://json-schema.org/draft-07/schema#",
+//     type: "object",
+//     properties: {
+//         name: {
+//             description: "Name of the person",
+//             type: "string"
+//         },
+//         email: {
+//             type: "string",
+//             format: "email",
+//             emailDescription: "lalalala",
+//             maxLength: 50,
+//             minLength: 1
+//         },
+//         fooorbar: {
+//             type: "string",
+//             matches: "(foo|bar)"
+//         },
+//         age: {
+//             description: "Age of person",
+//             type: "number",
+//             exclusiveMinimum: 0,
+//             required: true
+//         },
+//         characterType: {
+//             enum: ["good", "bad"],
+//             enum_titles: ["Good", "Bad"],
+//             type: "string",
+//             title: "Type of people",
+//             propertyOrder: 3
+//         },
+//         additionalNotes: {
+//             maxLength: 1048576,
+//             type: "string"
+//         }
+//     },
+//     required: ["name", "email"]
+// };
+//
+// const form = useForm({
+//     resolver: useYupSchemaResolver(schema)
+//     // queries[0]
+// });
+//
