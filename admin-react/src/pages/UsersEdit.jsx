@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import R from "ramda";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "react-mde/lib/styles/css/react-mde-all.css";
@@ -76,9 +77,20 @@ export default () => {
         required: ["name", "email"]
     };
 
+    // const form = useForm({
+    //     resolver: useYupSchemaResolver(schema)
+    //     // queries[0]
+    // });
+    //
+    const [schemaQuery, usersQuery] = queries.map(
+        R.path("data", "data", "data")
+    );
+
     const form = useForm({
-        resolver: useYupSchemaResolver(schema)
-        // queries[0]
+        resolver: useYupSchemaResolver({
+            schemaQuery,
+            originalData: usersQuery
+        })
     });
 
     if (someProp("isLoading", queries)) {
@@ -88,8 +100,6 @@ export default () => {
     if (someProp("isError", queries)) {
         return <ErrorMessageContent maxWidth={edit.maxWidth} />;
     }
-
-    const [schemaQuery, usersQuery] = queries.map(x => x.data.data.data);
 
     const page = usePage({
         history,
