@@ -19,10 +19,7 @@ const yupConfig = {
     abortEarly: false
 };
 
-export default ({ schemaData, originalData = {} }) => {
-    const schema = schemaData || emptySchema;
-    const original = originalData || {};
-
+export default ({ schema = emptySchema, data = {} }) => {
     const schemaFields = (() => {
         const maybeSchemaProperties = schema?.properties;
 
@@ -98,7 +95,7 @@ export default ({ schemaData, originalData = {} }) => {
                 const cleanData = R.pipe(
                     trimAll,
                     emptyStringsToNull,
-                    x => diff(original, x),
+                    x => diff(data, x),
                     removeAllUndefined,
                     R.pick(schemaFields)
                 )(data);

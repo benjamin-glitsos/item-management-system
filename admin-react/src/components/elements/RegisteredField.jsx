@@ -12,9 +12,9 @@ export default ({ name, title, Component, columnWidths, ...props }) => {
                 title={title}
                 Component={Component}
                 isCreate={!!context?.create}
-                schemaProperties={context.schemaQuery.properties}
-                errors={context.form.errors}
-                additionalProps={context.form.register(name)}
+                schemaProperties={context?.schema?.properties}
+                errors={context?.form?.errors}
+                additionalProps={context?.form?.register(name)}
                 {...props}
             />
         </Col>

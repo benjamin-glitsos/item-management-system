@@ -9,16 +9,16 @@ export default ({ name, title, Component, columnWidths, ...props }) => {
     return (
         <Col {...columnWidths}>
             <Controller
-                control={context.form.control}
+                control={context?.form?.control}
                 name={name}
                 render={({ field: { onChange, onBlur, value, ref } }) => (
                     <Field
                         name={name}
                         title={title}
                         Component={Component}
-                        errors={context.form.errors}
+                        errors={context?.form?.errors}
                         isCreate={!!context?.create}
-                        schemaProperties={context.schemaQuery.properties}
+                        schemaProperties={context?.schema?.properties}
                         onBlur={onBlur}
                         inputRef={ref}
                         onChange={onChange}

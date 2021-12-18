@@ -37,7 +37,7 @@ export default () => {
     //     });
     //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
 
-    const [schemaQuery, usersQuery] = queries.map(x => x?.data?.data?.data);
+    const [schema, data] = queries.map(x => x?.data?.data?.data);
 
     if (someProp("isLoading", queries)) {
         return <LoadingSpinnerContent maxWidth={edit.maxWidth} />;
@@ -50,7 +50,7 @@ export default () => {
     const page = usePage({
         history,
         action: edit.action,
-        key: usersQuery[user.keyField],
+        key: data[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
@@ -59,13 +59,13 @@ export default () => {
     const context = {
         page,
         edit,
-        schemaQuery,
-        usersQuery
+        schema,
+        data
     };
 
     return (
         <UsersEditContext.Provider value={context}>
-            <EditTemplate context={context} Form={UsersEditForm} />
+            <EditTemplate context={context} form={UsersEditForm} />
         </UsersEditContext.Provider>
     );
 };

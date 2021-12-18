@@ -1,8 +1,9 @@
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Page from "modules/Page";
 import EditSidebar from "modules/EditSidebar";
+import Form from "modules/Form";
 
-export default ({ context, Form }) => {
+export default ({ context, form }) => {
     return (
         <Page
             title={context.page.tabTitle}
@@ -13,10 +14,10 @@ export default ({ context, Form }) => {
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <Form context={context} />
+                        <Form context={context}>{form}</Form>
                     </Col>
                     <Col sm={2}>
-                        <EditSidebar usersQuery={context.usersQuery} />
+                        <EditSidebar data={context.data} />
                     </Col>
                 </Row>
             </Grid>

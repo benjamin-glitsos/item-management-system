@@ -23,19 +23,19 @@ const Author = ({ at, by }) => {
     }
 };
 
-export default ({ usersQuery }) => (
+export default ({ data }) => (
     <Fragment>
         <Item label="Created">
-            <Author at={usersQuery.created_at} by={usersQuery.created_by} />
+            <Author at={data.created_at} by={data.created_by} />
         </Item>
         <Item label="Opened">
-            <Author at={usersQuery.edited_at} by={usersQuery.edited_by} />
+            <Author at={data.edited_at} by={data.edited_by} />
         </Item>
         <Item label="Deleted">
-            <Author at={usersQuery.deleted_at} by={usersQuery.deleted_by} />
+            <Author at={data.deleted_at} by={data.deleted_by} />
         </Item>
-        <Item label="Edits">{usersQuery.edits}</Item>
-        <Item label="Metakey">{usersQuery.metakey}</Item>
+        <Item label="Edits">{data.edits}</Item>
+        <Item label="Metakey">{data.metakey}</Item>
     </Fragment>
 );
 

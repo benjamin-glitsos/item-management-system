@@ -8,12 +8,12 @@ import nullToEmptyStr from "utilities/nullToEmptyStr";
 export default ({ context, children }) => {
     const form = useForm({
         resolver: useYupSchemaResolver({
-            schemaQuery: context.schemaQuery,
-            originalData: context.usersQuery
+            schema: context.schema,
+            data: context.data
         })
     });
 
-    for (const [key, value] of Object.entries(context.usersQuery)) {
+    for (const [key, value] of Object.entries(context.data)) {
         form.setValue(key, nullToEmptyStr(value));
     }
 
