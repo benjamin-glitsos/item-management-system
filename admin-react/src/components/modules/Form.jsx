@@ -8,10 +8,7 @@ import nullToEmptyStr from "utilities/nullToEmptyStr";
 
 export default ({ context, children }) => {
     const form = useForm({
-        // resolver: useYupSchemaResolver({
-        //     schema: context.schema,
-        //     data: context.data
-        // })
+        resolver: useYupSchemaResolver(context.schema)
     });
 
     for (const [key, value] of Object.entries(context.data)) {
