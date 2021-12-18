@@ -5,9 +5,9 @@ import RegisteredField from "elements/RegisteredField";
 import ControlledField from "elements/ControlledField";
 import MarkdownTextarea from "elements/MarkdownTextarea";
 
-export default ({ page, edit, form }) => {
+export default ({ context }) => {
     return (
-        <Form page={page} edit={edit} form={form}>
+        <Form context={context}>
             <FormSubheading level={3}>Details</FormSubheading>
             <RegisteredField
                 name="username"
