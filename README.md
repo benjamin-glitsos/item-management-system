@@ -16,6 +16,7 @@ A full-stack information system with a dockerised Model-View-Controller (MVC) ar
 
 Note: refactoring in progress
 
+* Design system inspired by Atomic Design but composed of: Elements, Modules, Templates, and Pages
 * Server-state management using React Query
 * Architecture uses custom React Hooks
 * Functional data pipelines using Ramda

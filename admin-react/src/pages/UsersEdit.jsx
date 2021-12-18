@@ -33,7 +33,6 @@ export default () => {
     const edit = useEdit();
     const user = useUser();
 
-    // TODO: use the schemas endpoint! Dont delete it!
     const queries = useQueries([
         ["schemas", `${edit.action}-${user.namePlural}`],
         [user.namePlural, username]
