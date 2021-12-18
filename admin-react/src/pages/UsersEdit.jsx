@@ -2,18 +2,16 @@ import { createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import useEdit from "%/hooks/useEdit";
-import useQueries from "%/hooks/useQueries";
-import useProject from "%/hooks/useProject";
-import usePage from "%/hooks/usePage";
-import useUser from "%/hooks/useUser";
-import Content from "%/components/Content";
-import Form from "%/components/Form";
-import LoadingSpinner from "%/components/LoadingSpinner";
-import ErrorBanner from "%/components/ErrorBanner";
-import someProp from "%/utilities/someProp";
-import nullToEmptyStr from "%/utilities/nullToEmptyStr";
-import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
+import someProp from "utilities/someProp";
+import nullToEmptyStr from "utilities/nullToEmptyStr";
+import useEdit from "hooks/useEdit";
+import useQueries from "hooks/useQueries";
+import useProject from "hooks/useProject";
+import usePage from "hooks/usePage";
+import useUser from "hooks/useUser";
+import useYupSchemaResolver from "hooks/useYupSchemaResolver";
+import LoadingSpinnerContent from "modules/LoadingSpinnerContent";
+import ErrorMessageContent from "modules/ErrorMessageContent";
 import UsersEditForm from "modules/UsersEditForm";
 import EditTemplate from "templates/EditTemplate";
 
@@ -85,20 +83,12 @@ export default () => {
     });
 
     if (someProp("isLoading", queries)) {
-        return (
-            <Content maxWidth={edit.maxWidth}>
-                <LoadingSpinner />
-            </Content>
-        );
+        return <LoadingSpinnerContent maxWidth={edit.maxWidth} />;
     }
 
     if (someProp("isError", queries)) {
         console.log(queries);
-        return (
-            <Content maxWidth={edit.maxWidth}>
-                <ErrorBanner />
-            </Content>
-        );
+        return <ErrorMessageContent maxWidth={edit.maxWidth} />;
     }
 
     const [schemaQuery, usersQuery] = queries.map(x => x.data.data.data);
