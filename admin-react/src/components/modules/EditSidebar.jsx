@@ -1,8 +1,7 @@
 import { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
-import formatDate from "%/utilities/formatDate";
-import { OpenContext } from "%/components/Open";
 import styled from "styled-components";
+import formatDate from "utilities/formatDate";
 
 const Item = ({ label, children }) => (
     <Styles>

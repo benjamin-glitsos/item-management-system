@@ -6,7 +6,7 @@ import ActionsMenu from "%/components/ActionsMenu";
 import PageLengthSelect from "%/components/PageLengthSelect";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import Textfield from "@atlaskit/textfield";
-import { ListContext } from "%/components/List/List";
+import { ListContext } from "%/components/List";
 
 export default () => {
     const context = useContext(ListContext);

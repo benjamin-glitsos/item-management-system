@@ -1,5 +1,5 @@
 import { Fragment, useContext } from "react";
-import { OpenContext } from "%/components/Open/Open";
+import { OpenContext } from "%/components/Open";
 import OpenSidebarItem from "%/components/OpenSidebarItem";
 import UpdateAuthorDetails from "%/components/UpdateAuthorDetails";
 

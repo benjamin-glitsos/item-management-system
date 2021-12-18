@@ -1,16 +1,13 @@
 import { createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Grid, Row, Col } from "react-flexbox-grid";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "%/hooks/useEdit";
 import useQueries from "%/hooks/useQueries";
 import useProject from "%/hooks/useProject";
 import usePage from "%/hooks/usePage";
 import useUser from "%/hooks/useUser";
-import Page from "%/components/Page";
 import Content from "%/components/Content";
-import EditSidebar from "%/components/EditSidebar";
 import Form from "%/components/Form";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import ErrorBanner from "%/components/ErrorBanner";
@@ -18,6 +15,7 @@ import someProp from "%/utilities/someProp";
 import nullToEmptyStr from "%/utilities/nullToEmptyStr";
 import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
 import UsersEditForm from "modules/UsersEditForm";
+import EditTemplate from "templates/EditTemplate";
 
 export const UsersEditContext = createContext();
 
@@ -128,29 +126,11 @@ export default () => {
 
     return (
         <UsersEditContext.Provider value={context}>
-            <Page
-                title={page.tabTitle}
-                description={page.pageDescription}
-                breadcrumbs={[]}
-                maxWidth={edit.maxWidth}
-            >
-                <Grid fluid>
-                    <Row>
-                        <Col sm={10}>
-                            <UsersEditForm
-                                page={page}
-                                edit={edit}
-                                form={form}
-                            />
-                            <code>{JSON.stringify(usersQuery)}</code>
-                            <code>{JSON.stringify(schemaQuery)}</code>
-                        </Col>
-                        <Col sm={2}>
-                            <EditSidebar data={usersQuery} />
-                        </Col>
-                    </Row>
-                </Grid>
-            </Page>
+            <EditTemplate page={page} edit={edit} usersQuery={usersQuery}>
+                <UsersEditForm page={page} edit={edit} form={form} />
+                <code>{JSON.stringify(usersQuery)}</code>
+                <code>{JSON.stringify(schemaQuery)}</code>
+            </EditTemplate>
         </UsersEditContext.Provider>
     );
 };

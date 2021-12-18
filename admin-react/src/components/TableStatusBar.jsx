@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import NonBreakingSpace from "%/components/NonBreakingSpace";
 import numbersToWords from "number-to-words";
-import { ListContext } from "%/components/List/List";
+import { ListContext } from "%/components/List";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 import isBlank from "%/utilities/isBlank";
 

@@ -5,13 +5,13 @@ import InputDate from "%/components/InputDate";
 import InputNumber from "%/components/InputNumber";
 import InputCurrency from "%/components/InputCurrency";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import PageContainer from "%/components/Page/PageContainer";
-import OpenContainer from "%/components/Open/OpenContainer";
+import PageContainer from "%/components/PageContainer";
+import OpenContainer from "%/components/OpenContainer";
 import RegisteredField from "%/components/RegisteredField";
 import ControlledField from "%/components/ControlledField";
 import MarkdownTextarea from "%/components/MarkdownTextarea";
 import FormSubheading from "%/components/FormSubheading";
-import Open from "%/components/Open/Open";
+import Open from "%/components/Open";
 import config from "%/config";
 
 export default ({ action }) => {

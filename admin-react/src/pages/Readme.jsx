@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { titleCase } from "title-case";
 import readme from "%/assets/README.md";
-import PageContainer from "%/components/Page/PageContainer";
+import PageContainer from "%/components/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
 import GithubButton from "%/components/GithubButton";

@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { titleCase } from "title-case";
 import Button from "@atlaskit/button";
-import PageContainer from "%/components/Page/PageContainer";
+import PageContainer from "%/components/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
 import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";

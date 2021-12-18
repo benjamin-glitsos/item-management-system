@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { QueryParamProvider } from "use-query-params";
 import Analytics from "react-router-ga";
 import "react-toastify/dist/ReactToastify.min.css";
-import Page from "%/components/Page/PagePresenter";
+import Page from "%/components/PagePresenter";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import ToastContainer from "%/components/ToastContainer";
 import { QueryClient, QueryClientProvider } from "react-query";

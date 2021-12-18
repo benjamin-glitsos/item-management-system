@@ -8,7 +8,7 @@ import TableStatusBar from "%/components/TableStatusBar";
 import NoData from "%/components/NoData";
 import ActionsBar from "%/components/ActionsBar";
 import Pagination from "%/components/Pagination";
-import { ListContext } from "%/components/List/List";
+import { ListContext } from "%/components/List";
 import PageLayout from "%/components/PageLayout";
 import config from "%/config";
 import styled from "styled-components";
