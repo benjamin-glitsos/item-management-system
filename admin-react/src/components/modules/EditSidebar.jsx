@@ -34,7 +34,6 @@ export default ({ usersQuery }) => (
         <Item label="Deleted">
             <Author at={usersQuery.deleted_at} by={usersQuery.deleted_by} />
         </Item>
-        <Item label="Opens">{usersQuery.opens}</Item>
         <Item label="Edits">{usersQuery.edits}</Item>
         <Item label="Metakey">{usersQuery.metakey}</Item>
     </Fragment>

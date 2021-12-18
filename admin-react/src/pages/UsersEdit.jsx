@@ -3,7 +3,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import someProp from "utilities/someProp";
-import nullToEmptyStr from "utilities/nullToEmptyStr";
 import useEdit from "hooks/useEdit";
 import useQueries from "hooks/useQueries";
 import useProject from "hooks/useProject";
@@ -87,7 +86,6 @@ export default () => {
     }
 
     if (someProp("isError", queries)) {
-        console.log(queries);
         return <ErrorMessageContent maxWidth={edit.maxWidth} />;
     }
 
@@ -102,10 +100,6 @@ export default () => {
         projectName: project.name
     });
 
-    for (const [key, value] of Object.entries(usersQuery)) {
-        form.setValue(key, nullToEmptyStr(value));
-    }
-
     const context = {
         page,
         edit,
@@ -113,8 +107,6 @@ export default () => {
         schemaQuery,
         usersQuery
     };
-
-    console.log(context);
 
     return (
         <UsersEditContext.Provider value={context}>

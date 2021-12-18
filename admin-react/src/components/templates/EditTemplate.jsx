@@ -5,6 +5,7 @@ import EditSidebar from "modules/EditSidebar";
 
 export default ({ context, form }) => {
     const cx = useContext(context);
+
     return (
         <Page
             title={cx.page.tabTitle}

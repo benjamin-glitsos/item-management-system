@@ -2,9 +2,15 @@ import { useContext } from "react";
 import styled from "styled-components";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
+import nullToEmptyStr from "utilities/nullToEmptyStr";
 
 export default ({ context, children }) => {
     const cx = useContext(context);
+
+    for (const [key, value] of Object.entries(cx.usersQuery)) {
+        cx.form.setValue(key, nullToEmptyStr(value));
+    }
+
     return (
         <form onSubmit={cx.form.handleSubmit(x => console.log(x))}>
             <Grid fluid>
