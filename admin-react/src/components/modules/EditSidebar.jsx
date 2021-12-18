@@ -28,7 +28,7 @@ export default ({ data }) => (
         <Item label="Created">
             <Author at={data.created_at} by={data.created_by} />
         </Item>
-        <Item label="Opened">
+        <Item label="Edited">
             <Author at={data.edited_at} by={data.edited_by} />
         </Item>
         <Item label="Deleted">
