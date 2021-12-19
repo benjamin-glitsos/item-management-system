@@ -36,7 +36,8 @@ export default () => {
         ],
         {
             refetchOnMount: false,
-            enabled: isQueryEnabled
+            enabled: isQueryEnabled,
+            onSuccess: () => setIsQueryEnabled(false)
         }
     );
 
@@ -70,9 +71,7 @@ export default () => {
         page,
         edit,
         schema,
-        data,
-        isQueryEnabled,
-        setIsQueryEnabled
+        data
     };
 
     return (
