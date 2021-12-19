@@ -7,6 +7,7 @@ import mapObjKeys from "utilities/mapObjKeys";
 import trimAll from "utilities/trimAll";
 import emptyStringsToNull from "utilities/emptyStringsToNull";
 import removeAllUndefined from "utilities/removeAllUndefined";
+import noNewDataToSubmitToast from "utilities/noNewDataToSubmitToast";
 
 class FormData {
     constructor({ values = {}, errors = {} }) {
@@ -121,13 +122,19 @@ export default ({ schema, originalData }) =>
         async data => {
             if (schema?.properties) {
                 try {
-                    return new FormData({
-                        values: await yupSchemaValidate(
-                            schema,
-                            originalData,
-                            data
-                        )
-                    });
+                    const submitData = cleanData(schema, originalData, data);
+                    if (R.isEmpty(submitData)) {
+                        noNewDataToSubmitToast();
+                        return new FormData({});
+                    } else {
+                        return new FormData({
+                            values: await yupSchemaValidate(
+                                schema,
+                                originalData,
+                                data
+                            )
+                        });
+                    }
                 } catch (errors) {
                     return new FormData({ errors: cleanErrors(errors) });
                 }

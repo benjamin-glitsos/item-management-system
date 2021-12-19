@@ -34,7 +34,11 @@ export default ({ context, children }) => {
                                 >
                                     Cancel
                                 </Button>
-                                <Button type="submit" appearance="primary">
+                                <Button
+                                    type="submit"
+                                    appearance="primary"
+                                    isDisabled={!context.schema?.properties}
+                                >
                                     Submit
                                 </Button>
                             </ButtonGroup>

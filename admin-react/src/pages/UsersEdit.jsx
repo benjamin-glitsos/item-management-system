@@ -25,10 +25,17 @@ export default () => {
 
     const user = useUser();
 
-    const queries = useQueries([
-        `schemas/${edit.action}-${user.namePlural}`,
-        `${user.namePlural}/${username}`
-    ]);
+    const queries = useQueries(
+        [
+            `schemas/${edit.action}-${user.namePlural}`,
+            `${user.namePlural}/${username}`
+        ],
+        {
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false
+        }
+    );
 
     // const editClient = body =>
     //     useEditClient({
