@@ -7,7 +7,6 @@ import mapObjKeys from "utilities/mapObjKeys";
 import trimAll from "utilities/trimAll";
 import emptyStringsToNull from "utilities/emptyStringsToNull";
 import removeAllUndefined from "utilities/removeAllUndefined";
-import noNewDataToSubmitToast from "utilities/noNewDataToSubmitToast";
 
 class FormData {
     constructor({ values = {}, errors = {} }) {
@@ -124,7 +123,6 @@ export default ({ schema, originalData }) =>
                 try {
                     const submitData = cleanData(schema, originalData, data);
                     if (R.isEmpty(submitData)) {
-                        noNewDataToSubmitToast();
                         return new FormData({});
                     } else {
                         return new FormData({

@@ -20,7 +20,7 @@ export default ({
                     name={name}
                     title={title}
                     Component={Component}
-                    errors={context.form.errors}
+                    errors={context.form.formState.errors}
                     isCreate={!!context?.create}
                     schemaProperties={context?.schema?.properties}
                     onBlur={onBlur}

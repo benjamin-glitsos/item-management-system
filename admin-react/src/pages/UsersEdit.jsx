@@ -15,6 +15,8 @@ import EditTemplate from "templates/EditTemplate";
 export const UsersEditContext = createContext();
 
 export default () => {
+    // TODO: make the form not refresh once submitted. Make it retain the data properly.
+
     const { username } = useParams();
 
     const history = useHistory();

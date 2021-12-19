@@ -1,10 +1,12 @@
 import { cloneElement } from "react";
+import R from "ramda";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import useYupSchemaResolver from "hooks/useYupSchemaResolver";
 import nullToEmptyStr from "utilities/nullToEmptyStr";
+import formHandler from "utilities/formHandler";
 
 export default ({ context, children }) => {
     const form = useForm({
@@ -18,8 +20,10 @@ export default ({ context, children }) => {
         form.setValue(key, nullToEmptyStr(value));
     }
 
+    const isReady = !context.schema?.properties;
+
     return (
-        <form onSubmit={form.handleSubmit(x => console.log(x))}>
+        <form onSubmit={form.handleSubmit(formHandler)}>
             <Grid fluid>
                 <Row>
                     {cloneElement(children, { context: { ...context, form } })}
@@ -37,7 +41,7 @@ export default ({ context, children }) => {
                                 <Button
                                     type="submit"
                                     appearance="primary"
-                                    isDisabled={!context.schema?.properties}
+                                    isDisabled={isReady}
                                 >
                                     Submit
                                 </Button>
