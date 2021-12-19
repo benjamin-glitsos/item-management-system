@@ -15,6 +15,7 @@ import EditTemplate from "templates/EditTemplate";
 export const UsersEditContext = createContext();
 
 export default () => {
+    // TODO: set useQueries to enabled=false when the form has changes within it. Use useState to accomplish this
     const { username } = useParams();
 
     const history = useHistory();
@@ -31,9 +32,7 @@ export default () => {
             `${user.namePlural}/${username}`
         ],
         {
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            refetchOnWindowFocus: false
+            refetchOnMount: false
         }
     );
 
