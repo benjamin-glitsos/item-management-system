@@ -12,7 +12,8 @@ export default ({ context, children }) => {
     const form = useForm({
         resolver: useYupSchemaResolver({
             schema: context.schema,
-            originalData: context.data
+            originalData: context.data,
+            setIsQueryEnabled: context.setIsQueryEnabled
         })
     });
 

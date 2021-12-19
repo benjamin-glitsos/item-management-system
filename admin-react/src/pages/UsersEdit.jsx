@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import someProp from "utilities/someProp";
@@ -15,7 +15,10 @@ import EditTemplate from "templates/EditTemplate";
 export const UsersEditContext = createContext();
 
 export default () => {
-    // TODO: set useQueries to enabled=false when the form has changes within it. Use useState to accomplish this
+    // TODO: set useQueries to enabled=false when the form has changes within it. Use useState to accomplish this. IN PROGRESS
+    const [isQueryEnabled, setIsQueryEnabled] = useState(true);
+    console.log(isQueryEnabled);
+
     const { username } = useParams();
 
     const history = useHistory();
@@ -32,7 +35,8 @@ export default () => {
             `${user.namePlural}/${username}`
         ],
         {
-            refetchOnMount: false
+            refetchOnMount: false,
+            enabled: isQueryEnabled
         }
     );
 
@@ -66,7 +70,9 @@ export default () => {
         page,
         edit,
         schema,
-        data
+        data,
+        isQueryEnabled,
+        setIsQueryEnabled
     };
 
     return (

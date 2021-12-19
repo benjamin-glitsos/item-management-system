@@ -116,15 +116,17 @@ const cleanErrors = errors =>
         R.map(R.pluck(1))
     )(errors);
 
-export default ({ schema, originalData }) =>
+export default ({ schema, originalData, setIsQueryEnabled }) =>
     useCallback(
         async data => {
             if (schema?.properties) {
                 try {
                     const submitData = cleanData(schema, originalData, data);
                     if (R.isEmpty(submitData)) {
+                        setIsQueryEnabled(true);
                         return new FormData({});
                     } else {
+                        setIsQueryEnabled(false);
                         return new FormData({
                             values: await yupSchemaValidate(
                                 schema,
@@ -134,9 +136,11 @@ export default ({ schema, originalData }) =>
                         });
                     }
                 } catch (errors) {
+                    setIsQueryEnabled(false);
                     return new FormData({ errors: cleanErrors(errors) });
                 }
             } else {
+                setIsQueryEnabled(true);
                 return new FormData({});
             }
         },
