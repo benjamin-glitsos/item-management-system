@@ -16,16 +16,20 @@ export default ({ context, children }) => {
         })
     });
 
-    useEffect(() => {
+    const refreshForm = () => {
         for (const [key, value] of Object.entries(context.data)) {
             form.setValue(key, nullToEmptyStr(value));
         }
-    }, []);
+    };
+
+    useEffect(() => refreshForm(), []);
 
     const isReady = !context.schema?.properties;
 
     return (
-        <form onSubmit={form.handleSubmit(formHandler)}>
+        <form
+            onSubmit={form.handleSubmit(data => formHandler(refreshForm, data))}
+        >
             <Grid fluid>
                 <Row>
                     {cloneElement(children, { context: { ...context, form } })}

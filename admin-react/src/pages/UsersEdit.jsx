@@ -15,8 +15,6 @@ import EditTemplate from "templates/EditTemplate";
 export const UsersEditContext = createContext();
 
 export default () => {
-    // TODO: improve the way the form refetches and submits values after it submits it once. e.g. now it refetches each time the screen reloads but doesnt update values so this isnt neccesary
-
     const { username } = useParams();
 
     const history = useHistory();
