@@ -124,9 +124,12 @@ export default ({ schema, originalData }) =>
                     // return new FormData({
                     //     values: await yupSchemaValidate(schema, data)
                     // });
-                    // const a = await yupSchemaValidate(schema, data);
-                    console.log(cleanData(schema, originalData, data));
-                    // console.log(a);
+                    const a = await yupSchemaValidate(
+                        schema,
+                        originalData,
+                        data
+                    );
+                    console.log(a);
                     return new FormData({});
                 } catch (errors) {
                     console.log(errors);
