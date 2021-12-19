@@ -3,10 +3,10 @@ import R from "ramda";
 import * as yup from "yup";
 import { buildYup as jsonSchemaToYup } from "schema-to-yup";
 import { diff } from "deep-object-diff";
-import mapObjKeys from "%/utilities/mapObjKeys";
-import trimAll from "%/utilities/trimAll";
-import emptyStringsToNull from "%/utilities/emptyStringsToNull";
-import removeAllUndefined from "%/utilities/removeAllUndefined";
+import mapObjKeys from "utilities/mapObjKeys";
+import trimAll from "utilities/trimAll";
+import emptyStringsToNull from "utilities/emptyStringsToNull";
+import removeAllUndefined from "utilities/removeAllUndefined";
 
 class FormData {
     constructor({ values = {}, errors = {} }) {
@@ -129,9 +129,8 @@ export default ({ schema, originalData }) =>
                         )
                     });
                 } catch (errors) {
-                    console.log(errors);
-                    // return new FormData({ errors: cleanErrors(errors) });
-                    return new FormData({});
+                    console.log(cleanErrors(errors));
+                    return new FormData({ errors: cleanErrors(errors) });
                 }
             } else {
                 return new FormData({});
