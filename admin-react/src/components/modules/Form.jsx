@@ -1,4 +1,4 @@
-import { cloneElement } from "react";
+import { cloneElement, useEffect } from "react";
 import R from "ramda";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -16,9 +16,11 @@ export default ({ context, children }) => {
         })
     });
 
-    for (const [key, value] of Object.entries(context.data)) {
-        form.setValue(key, nullToEmptyStr(value));
-    }
+    useEffect(() => {
+        for (const [key, value] of Object.entries(context.data)) {
+            form.setValue(key, nullToEmptyStr(value));
+        }
+    }, []);
 
     const isReady = !context.schema?.properties;
 
