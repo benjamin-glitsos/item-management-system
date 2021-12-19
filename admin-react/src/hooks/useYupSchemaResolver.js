@@ -117,15 +117,14 @@ export default schema =>
         async data => {
             if (schema?.properties) {
                 try {
-                    const values = await yupSchemaValidate(schema, data);
-                    return new FormData({ values });
+                    return new FormData({
+                        values: await yupSchemaValidate(schema, data)
+                    });
                 } catch (errors) {
-                    console.error(errors);
-                    // return new FormData({ errors: cleanErrors(errors) });
-                    return new FormData({});
+                    return new FormData({ errors: cleanErrors(errors) });
                 }
             } else {
-                return new FormData();
+                return new FormData({});
             }
         },
         [schema]
