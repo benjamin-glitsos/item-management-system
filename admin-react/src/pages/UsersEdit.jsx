@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import R from "ramda";
 import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import someProp from "utilities/someProp";
@@ -11,6 +12,7 @@ import LoadingSpinnerContent from "modules/LoadingSpinnerContent";
 import ErrorMessageContent from "modules/ErrorMessageContent";
 import UsersEditForm from "modules/UsersEditForm";
 import EditTemplate from "templates/EditTemplate";
+import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 
 export const UsersEditContext = createContext();
 
@@ -29,17 +31,16 @@ export default () => {
 
     const user = useUser();
 
-    const queries = useQueries(
-        [
+    const queries = useQueries({
+        paths: [
             `schemas/${edit.action}-${user.namePlural}`,
             `${user.namePlural}/${username}`
         ],
-        {
-            refetchOnMount: false,
+        options: {
             enabled: isQueryEnabled,
             onSuccess: () => setIsQueryEnabled(false)
         }
-    );
+    });
 
     // const editClient = body =>
     //     useEditClient({
@@ -50,18 +51,18 @@ export default () => {
 
     const [schema, data] = queries.map(x => x?.data?.data?.data);
 
-    if (someProp("isLoading", queries)) {
-        return <LoadingSpinnerContent maxWidth={edit.maxWidth} />;
-    }
-
     if (someProp("isError", queries)) {
         return <ErrorMessageContent maxWidth={edit.maxWidth} />;
+    }
+
+    if (someProp("isLoading", queries) || !data) {
+        return <LoadingSpinnerContent maxWidth={edit.maxWidth} />;
     }
 
     const page = usePage({
         history,
         action: edit.action,
-        key: data[user.keyField],
+        key: data?.[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name

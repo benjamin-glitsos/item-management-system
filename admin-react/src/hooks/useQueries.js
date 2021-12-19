@@ -1,19 +1,20 @@
 import axios from "axios";
-import { useQueries as useReactQueries } from "react-query";
+import { useQueries } from "react-query";
 import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 import makeApiPath from "utilities/makeApiPath";
 
-export default paths =>
-    useReactQueries(
+export default ({ paths, options }) =>
+    useQueries(
         paths.map(path => ({
             queryKey: path,
             queryFn: () => axios.get(makeApiPath(path)),
             retry: false,
-            queryOptions: {
-                onError: error => {
-                    console.error(error);
-                    unspecifiedErrorToast();
-                }
-            }
+            refetchOnMount: false,
+            onError: error => {
+                console.error(error);
+                unspecifiedErrorToast();
+            },
+            enabled: true,
+            ...options
         }))
     );

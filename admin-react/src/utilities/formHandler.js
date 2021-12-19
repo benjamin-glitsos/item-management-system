@@ -8,7 +8,6 @@ export default data => {
         noNewDataToSubmitToast();
     } else {
         const numberOfChanges = Object.keys(data).length;
-        console.log(data);
         successToast({
             title: simplur`Changed ${numberOfChanges} field[|s]`,
             description: "Changes were submitted."
