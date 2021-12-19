@@ -79,18 +79,21 @@ const schemaToYupConfig = schema => ({
 const yupSchema = schema =>
     jsonSchemaToYup(cleanSchema(schema), schemaToYupConfig(schema));
 
-const cleanData = (schema, data) =>
+const cleanData = (schema, originalData, data) =>
     R.pipe(
-        trimAll
+        trimAll,
         emptyStringsToNull,
-        x => diff(data, x),
+        x => diff(originalData, x),
         removeAllUndefined,
-        R.pick(schemaFields(schema))
+        R.pick(schemaFields(schema)),
+        R.omit(["password"])
     )(data);
 
-const yupSchemaValidate = (schema, data) => {
-    return yupSchema(schema).validate(cleanData(schema, data), yupConfig);
-};
+const yupSchemaValidate = (schema, originalData, data) =>
+    yupSchema(schema).validate(
+        cleanData(schema, originalData, data),
+        yupConfig
+    );
 
 const cleanErrors = errors =>
     R.pipe(
@@ -113,16 +116,21 @@ const cleanErrors = errors =>
         R.map(R.pluck(1))
     )(errors);
 
-export default schema =>
+export default ({ schema, originalData }) =>
     useCallback(
         async data => {
             if (schema?.properties) {
                 try {
-                    return new FormData({
-                        values: await yupSchemaValidate(schema, data)
-                    });
+                    // return new FormData({
+                    //     values: await yupSchemaValidate(schema, data)
+                    // });
+                    // const a = await yupSchemaValidate(schema, data);
+                    console.log(cleanData(schema, originalData, data));
+                    // console.log(a);
+                    return new FormData({});
                 } catch (errors) {
-                    return new FormData({ errors: cleanErrors(errors) });
+                    console.log(errors);
+                    // return new FormData({ errors: cleanErrors(errors) });
                 }
             } else {
                 return new FormData({});
