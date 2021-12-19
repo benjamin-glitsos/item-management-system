@@ -81,15 +81,16 @@ const yupSchema = schema =>
 
 const cleanData = (schema, data) =>
     R.pipe(
-        trimAll,
+        trimAll
         emptyStringsToNull,
         x => diff(data, x),
         removeAllUndefined,
         R.pick(schemaFields(schema))
     )(data);
 
-const yupSchemaValidate = (schema, data) =>
-    yupSchema(schema).validate(cleanData(schema, data), yupConfig);
+const yupSchemaValidate = (schema, data) => {
+    return yupSchema(schema).validate(cleanData(schema, data), yupConfig);
+};
 
 const cleanErrors = errors =>
     R.pipe(
