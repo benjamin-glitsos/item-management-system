@@ -129,7 +129,6 @@ export default ({ schema, originalData }) =>
                         )
                     });
                 } catch (errors) {
-                    console.log(cleanErrors(errors));
                     return new FormData({ errors: cleanErrors(errors) });
                 }
             } else {

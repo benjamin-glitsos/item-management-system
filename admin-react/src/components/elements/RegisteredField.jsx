@@ -16,7 +16,7 @@ export default ({
             Component={Component}
             isCreate={!!context?.create}
             schemaProperties={context?.schema?.properties}
-            errors={context.form.errors}
+            errors={context.form.formState.errors}
             additionalProps={context.form.register(name)}
             {...props}
         />
