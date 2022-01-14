@@ -15,8 +15,7 @@ const Author = ({ at, by }) => {
     if (at && by) {
         return (
             <Fragment>
-                {formatDate(at)}
-                by <Link to={`/users/${by}`}>{by}</Link>
+                {formatDate(at)} by <Link to={`/users/${by}`}>{by}</Link>
             </Fragment>
         );
     } else {

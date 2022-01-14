@@ -29,14 +29,14 @@ export default (d = null, hasTime = true) => {
             if (isToday) {
                 return <Today date={date} formattedDate={formattedDate} />;
             } else {
-                return <div>{formattedDate}</div>;
+                return formattedDate;
             }
         } else {
             const formattedDate = dateFormat(now, 'mmmm dS, yyyy "at" h:MMtt');
             if (isToday) {
                 return <Today date={date} formattedDate={formattedDate} />;
             } else {
-                return <div>{formattedDate}</div>;
+                return formattedDate;
             }
         }
     }
