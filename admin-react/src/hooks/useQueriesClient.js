@@ -14,6 +14,7 @@ export default (paths, clientOptions = {}, queryOptions = {}) =>
                 console.error(error);
                 unspecifiedErrorToast();
             },
+            enabled: false,
             ...queryOptions
         }))
     );

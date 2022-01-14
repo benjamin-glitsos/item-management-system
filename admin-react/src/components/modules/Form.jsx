@@ -33,7 +33,7 @@ export default ({ context, children }) => {
             noNewDataToSubmitToast();
         } else {
             setIsSubmitting(true);
-            context.editMutation.mutate(data, {
+            context.mutation.mutate(data, {
                 onSettled: () => setIsSubmitting(false),
                 onError: () => unspecifiedErrorToast(),
                 onSuccess: async () => {

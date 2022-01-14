@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
 import useQueriesClient from "hooks/useQueriesClient";
+import useQueriesFetch from "hooks/useQueriesFetch";
 
 import useMutationClient from "hooks/useMutationClient";
 import axios from "axios";
@@ -20,35 +21,18 @@ export const UsersEditContext = createContext();
 
 export default () => {
     const { username } = useParams();
-
     const history = useHistory();
-
     const project = useProject();
-
     const edit = useEdit();
-
     const user = useUser();
 
-    const queries = useQueriesClient(
-        [
-            `schemas/${edit.action}-${user.namePlural}`,
-            `${user.namePlural}/${username}`
-        ],
-        {
-            enabled: false
-        }
-    );
+    const schemaPath = `schemas/${edit.action}-${user.namePlural}`;
+    const itemPath = `${user.namePlural}/${username}`;
 
-    const editMutation = useMutationClient(
-        "PATCH",
-        `${user.namePlural}/${username}`
-    );
+    const queries = useQueriesClient([schemaPath, itemPath]);
+    const mutation = useMutationClient("PATCH", itemPath);
 
-    useEffect(async () => {
-        for await (const query of queries) {
-            query.refetch();
-        }
-    }, []);
+    useQueriesFetch(queries);
 
     const [schema, data] = queries.map(x => x?.data?.data?.data);
 
@@ -66,7 +50,7 @@ export default () => {
         edit,
         schema,
         data,
-        editMutation,
+        mutation,
         queries
     };
 
