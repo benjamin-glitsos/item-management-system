@@ -16,7 +16,6 @@ import useUser from "hooks/useUser";
 import QueryResult from "modules/QueryResult";
 import UsersEditForm from "modules/UsersEditForm";
 import EditTemplate from "templates/EditTemplate";
-import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 
 export const UsersEditContext = createContext();
 
@@ -40,13 +39,6 @@ export default () => {
             enabled: false
         }
     );
-
-    // TODO: make mutation work by passing arguments properly.
-    // const submitMutation = useMutation(
-    //     "PATCH",
-    //     [user.namePlural, username],
-    //     body
-    // );
 
     const editMutation = useMutation(
         body =>
@@ -82,7 +74,8 @@ export default () => {
         edit,
         schema,
         data,
-        editMutation
+        editMutation,
+        queries
     };
 
     return (

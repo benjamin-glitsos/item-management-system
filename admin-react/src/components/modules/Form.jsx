@@ -36,7 +36,8 @@ export default ({ context, children }) => {
             context.editMutation.mutate(data, {
                 onSettled: () => setIsSubmitting(false),
                 onError: () => unspecifiedErrorToast(),
-                onSuccess: () => {
+                onSuccess: async () => {
+                    await context.queries[1].refetch();
                     const numberOfChanges = Object.keys(data).length;
                     successToast({
                         title: simplur`Changed ${numberOfChanges} field[|s]`,
