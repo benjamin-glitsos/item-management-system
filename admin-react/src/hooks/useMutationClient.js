@@ -12,6 +12,7 @@ export default (method, path, clientOptions = {}, queryOptions = {}) =>
                 ...clientOptions
             }),
         {
+            mutationKey: `${method} ${path}`,
             retry: false,
             ...queryOptions
         }

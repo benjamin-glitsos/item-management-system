@@ -12,6 +12,7 @@ import useUser from "hooks/useUser";
 import QueryResult from "modules/QueryResult";
 import UsersEditForm from "modules/UsersEditForm";
 import EditTemplate from "templates/EditTemplate";
+import queriesData from "utilities/queriesData";
 
 export const UsersEditContext = createContext();
 
@@ -30,7 +31,7 @@ export default () => {
 
     useQueriesFetch(queries);
 
-    const [schemaData, itemData] = queries.map(x => x?.data?.data?.data);
+    const [schemaData, itemData] = queriesData(queries);
 
     const page = usePage({
         history,
