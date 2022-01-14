@@ -4,7 +4,12 @@ import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
 import useQueries from "hooks/useQueries";
-import useMutation from "hooks/useMutation";
+
+// import useMutation from "hooks/useMutation";
+import { useMutation } from "react-query";
+import axios from "axios";
+import makeApiPath from "utilities/makeApiPath";
+
 import useProject from "hooks/useProject";
 import usePage from "hooks/usePage";
 import useUser from "hooks/useUser";
@@ -37,13 +42,23 @@ export default () => {
     );
 
     // TODO: make mutation work by passing arguments properly.
-    const submitMutation = useMutation(
-        "PATCH",
-        [user.namePlural, username],
-        body
-    );
+    // const submitMutation = useMutation(
+    //     "PATCH",
+    //     [user.namePlural, username],
+    //     body
+    // );
 
-    console.log(submitMutation({ other_names: "wow" }));
+    const editMutation = useMutation(
+        body =>
+            axios.request({
+                url: makeApiPath(`${user.namePlural}/${username}`),
+                method: "PATCH",
+                data: body
+            }),
+        {
+            retry: false
+        }
+    );
 
     useEffect(async () => {
         for await (const query of queries) {
@@ -67,7 +82,7 @@ export default () => {
         edit,
         schema,
         data,
-        submitMutation
+        editMutation
     };
 
     return (

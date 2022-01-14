@@ -6,6 +6,7 @@ export default ({
     title,
     Component,
     columnWidths,
+    isDisabled,
     context,
     ...props
 }) => (
@@ -17,6 +18,7 @@ export default ({
             isCreate={!!context?.create}
             schemaProperties={context?.schema?.properties}
             errors={context.form.formState.errors}
+            isDisabled={isDisabled}
             additionalProps={context.form.register(name)}
             {...props}
         />

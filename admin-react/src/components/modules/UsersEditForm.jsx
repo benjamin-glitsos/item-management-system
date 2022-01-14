@@ -5,7 +5,7 @@ import RegisteredField from "elements/RegisteredField";
 import ControlledField from "elements/ControlledField";
 import MarkdownTextarea from "elements/MarkdownTextarea";
 
-export default ({ context }) => (
+export default ({ isDisabled, context }) => (
     <Fragment>
         <FormSubheading level={3}>Details</FormSubheading>
         <RegisteredField
@@ -13,6 +13,7 @@ export default ({ context }) => (
             title="Username"
             Component={Textfield}
             columnWidths={{ lg: 6 }}
+            isDisabled={isDisabled}
             context={context}
         />
         <RegisteredField
@@ -20,6 +21,7 @@ export default ({ context }) => (
             title="Email address"
             Component={Textfield}
             columnWidths={{ lg: 6 }}
+            isDisabled={isDisabled}
             context={context}
         />
         <RegisteredField
@@ -27,6 +29,7 @@ export default ({ context }) => (
             title="First name"
             Component={Textfield}
             columnWidths={{ lg: 4 }}
+            isDisabled={isDisabled}
             context={context}
         />
         <RegisteredField
@@ -34,6 +37,7 @@ export default ({ context }) => (
             title="Last name"
             Component={Textfield}
             columnWidths={{ lg: 4 }}
+            isDisabled={isDisabled}
             context={context}
         />
         <RegisteredField
@@ -41,6 +45,7 @@ export default ({ context }) => (
             title="Other names"
             Component={Textfield}
             columnWidths={{ lg: 4 }}
+            isDisabled={isDisabled}
             context={context}
         />
         <FormSubheading level={3}>Misc.</FormSubheading>
@@ -49,6 +54,7 @@ export default ({ context }) => (
             title="Additional notes"
             Component={MarkdownTextarea}
             columnWidths={{ sm: 12 }}
+            isDisabled={isDisabled}
             context={context}
         />
     </Fragment>

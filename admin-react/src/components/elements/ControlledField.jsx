@@ -8,6 +8,7 @@ export default ({
     title,
     Component,
     columnWidths,
+    isDisabled,
     context,
     ...props
 }) => (
@@ -26,6 +27,7 @@ export default ({
                     onBlur={onBlur}
                     inputRef={ref}
                     onChange={onChange}
+                    isDisabled={isDisabled}
                     value={value}
                     {...props}
                 />

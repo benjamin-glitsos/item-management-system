@@ -1,14 +1,19 @@
-import { cloneElement } from "react";
+import { useState, cloneElement } from "react";
 import R from "ramda";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import Button, { ButtonGroup } from "@atlaskit/button";
+import Button, { ButtonGroup, LoadingButton } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import useYupSchemaResolver from "hooks/useYupSchemaResolver";
 import nullToEmptyStr from "utilities/nullToEmptyStr";
-import formHandler from "utilities/formHandler";
+import noNewDataToSubmitToast from "utilities/noNewDataToSubmitToast";
+import successToast from "utilities/successToast";
+import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
+import simplur from "simplur";
 
 export default ({ context, children }) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const form = useForm({
         resolver: useYupSchemaResolver({
             schema: context.schema,
@@ -23,11 +28,33 @@ export default ({ context, children }) => {
 
     const isReady = !context.schema?.properties;
 
+    const handler = form.handleSubmit(data => {
+        if (R.isEmpty(data)) {
+            noNewDataToSubmitToast();
+        } else {
+            setIsSubmitting(true);
+            context.editMutation.mutate(data, {
+                onSettled: () => setIsSubmitting(false),
+                onError: () => unspecifiedErrorToast(),
+                onSuccess: () => {
+                    const numberOfChanges = Object.keys(data).length;
+                    successToast({
+                        title: simplur`Changed ${numberOfChanges} field[|s]`,
+                        description: "Changes were submitted."
+                    });
+                }
+            });
+        }
+    });
+
     return (
-        <form onSubmit={form.handleSubmit(formHandler)}>
+        <form onSubmit={handler}>
             <Grid fluid>
                 <Row>
-                    {cloneElement(children, { context: { ...context, form } })}
+                    {cloneElement(children, {
+                        isDisabled: isSubmitting,
+                        context: { ...context, form }
+                    })}
                 </Row>
                 <Row end="xs">
                     <Col sm={12}>
@@ -39,13 +66,14 @@ export default ({ context, children }) => {
                                 >
                                     Cancel
                                 </Button>
-                                <Button
+                                <LoadingButton
                                     type="submit"
                                     appearance="primary"
-                                    isDisabled={isReady}
+                                    isDisabled={isReady || isSubmitting}
+                                    isLoading={isSubmitting}
                                 >
                                     Submit
-                                </Button>
+                                </LoadingButton>
                             </ButtonGroup>
                         </Buttons>
                     </Col>

@@ -9,6 +9,7 @@ export default ({
     Component,
     errors,
     isCreate,
+    isDisabled,
     schemaProperties,
     additionalProps,
     ...props
@@ -27,6 +28,7 @@ export default ({
             <Component
                 id={fieldId}
                 placeholder={placeholder}
+                isDisabled={isDisabled}
                 {...additionalProps}
                 {...props}
             />
