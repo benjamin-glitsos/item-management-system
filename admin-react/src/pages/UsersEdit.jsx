@@ -41,12 +41,6 @@ export default () => {
         }
     }, []);
 
-    return (
-        <QueryResult queries={queries} maxWidth={edit.maxWidth}>
-            <p>success</p>
-        </QueryResult>
-    );
-
     // const editClient = body =>
     //     useEditClient({
     //         path: [user.namePlural, username],
@@ -54,26 +48,30 @@ export default () => {
     //     });
     //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
 
-    // const page = usePage({
-    //     history,
-    //     action: edit.action,
-    //     key: data?.[user.keyField],
-    //     nameSingular: user.nameSingular,
-    //     namePlural: user.namePlural,
-    //     projectName: project.name
-    // });
+    const [schema, data] = queries.map(x => x?.data?.data?.data);
 
-    // const context = {
-    //     page,
-    //     edit,
-    //     schema,
-    //     data,
-    //     queries
-    // };
+    const page = usePage({
+        history,
+        action: edit.action,
+        key: data?.[user.keyField],
+        nameSingular: user.nameSingular,
+        namePlural: user.namePlural,
+        projectName: project.name
+    });
 
-    // return (
-    //     <UsersEditContext.Provider value={context}>
-    //         <EditTemplate context={context} form={<UsersEditForm />} />
-    //     </UsersEditContext.Provider>
-    // );
+    const context = {
+        page,
+        edit,
+        schema,
+        data,
+        queries
+    };
+
+    return (
+        <QueryResult queries={queries} maxWidth={edit.maxWidth}>
+            <UsersEditContext.Provider value={context}>
+                <EditTemplate context={context} form={<UsersEditForm />} />
+            </UsersEditContext.Provider>
+        </QueryResult>
+    );
 };
