@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
 import useQueries from "hooks/useQueries";
+import useMutation from "hooks/useMutation";
 import useProject from "hooks/useProject";
 import usePage from "hooks/usePage";
 import useUser from "hooks/useUser";
@@ -35,18 +36,20 @@ export default () => {
         }
     );
 
+    // TODO: make mutation work by passing arguments properly.
+    const submitMutation = useMutation(
+        "PATCH",
+        [user.namePlural, username],
+        body
+    );
+
+    console.log(submitMutation({ other_names: "wow" }));
+
     useEffect(async () => {
         for await (const query of queries) {
             query.refetch();
         }
     }, []);
-
-    // const editClient = body =>
-    //     useEditClient({
-    //         path: [user.namePlural, username],
-    //         body
-    //     });
-    //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
 
     const [schema, data] = queries.map(x => x?.data?.data?.data);
 
@@ -64,7 +67,7 @@ export default () => {
         edit,
         schema,
         data,
-        queries
+        submitMutation
     };
 
     return (
