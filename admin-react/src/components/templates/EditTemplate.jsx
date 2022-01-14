@@ -3,7 +3,7 @@ import Page from "modules/Page";
 import EditSidebar from "modules/EditSidebar";
 import Form from "modules/Form";
 
-export default ({ context, form }) => {
+export default ({ context, children }) => {
     return (
         <Page
             title={context.page.tabTitle}
@@ -14,7 +14,7 @@ export default ({ context, form }) => {
             <Grid fluid>
                 <Row>
                     <Col sm={10}>
-                        <Form context={context}>{form}</Form>
+                        <Form context={context}>{children}</Form>
                     </Col>
                     <Col sm={2}>
                         <EditSidebar data={context.itemData} />

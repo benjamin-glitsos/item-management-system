@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import R from "ramda";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
 import useQueriesClient from "hooks/useQueriesClient";
@@ -9,16 +9,13 @@ import useQueriesFetch from "hooks/useQueriesFetch";
 import useProject from "hooks/useProject";
 import usePage from "hooks/usePage";
 import useUser from "hooks/useUser";
-import QueryResult from "modules/QueryResult";
+import QueryState from "modules/QueryState";
 import UsersEditForm from "modules/UsersEditForm";
 import EditTemplate from "templates/EditTemplate";
 import queriesData from "utilities/queriesData";
 
-export const UsersEditContext = createContext();
-
 export default () => {
     const { username } = useParams();
-    const history = useHistory();
     const project = useProject();
     const edit = useEdit();
     const user = useUser();
@@ -51,11 +48,14 @@ export default () => {
         queries
     };
 
+    // TODO: consider using redux or zustand instead of Context
+
     return (
-        <QueryResult queries={queries} maxWidth={edit.maxWidth}>
-            <UsersEditContext.Provider value={context}>
-                <EditTemplate context={context} form={<UsersEditForm />} />
-            </UsersEditContext.Provider>
-        </QueryResult>
+        <QueryState queries={queries} maxWidth={edit.maxWidth}>
+            <EditTemplate context={context}>
+                <UsersEditForm />
+            </EditTemplate>
+            >
+        </QueryState>
     );
 };
