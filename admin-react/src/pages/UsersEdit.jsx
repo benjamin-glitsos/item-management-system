@@ -3,10 +3,9 @@ import R from "ramda";
 import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
-import useQueries from "hooks/useQueries";
+import useQueriesClient from "hooks/useQueriesClient";
 
-// import useMutation from "hooks/useMutation";
-import { useMutation } from "react-query";
+import useMutationClient from "hooks/useMutationClient";
 import axios from "axios";
 import makeApiPath from "utilities/makeApiPath";
 
@@ -30,7 +29,7 @@ export default () => {
 
     const user = useUser();
 
-    const queries = useQueries(
+    const queries = useQueriesClient(
         [
             `schemas/${edit.action}-${user.namePlural}`,
             `${user.namePlural}/${username}`
@@ -40,16 +39,9 @@ export default () => {
         }
     );
 
-    const editMutation = useMutation(
-        body =>
-            axios.request({
-                url: makeApiPath(`${user.namePlural}/${username}`),
-                method: "PATCH",
-                data: body
-            }),
-        {
-            retry: false
-        }
+    const editMutation = useMutationClient(
+        "PATCH",
+        `${user.namePlural}/${username}`
     );
 
     useEffect(async () => {
