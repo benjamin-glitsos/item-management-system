@@ -16,17 +16,17 @@ export default ({ context, children }) => {
 
     const form = useForm({
         resolver: useYupSchemaResolver({
-            schema: context.schema,
-            originalData: context.data,
+            schema: context.schemaData,
+            originalData: context.itemData,
             setIsQueryEnabled: context.setIsQueryEnabled
         })
     });
 
-    for (const [key, value] of Object.entries(context.data)) {
+    for (const [key, value] of Object.entries(context.itemData)) {
         form.setValue(key, nullToEmptyStr(value));
     }
 
-    const isReady = !context.schema?.properties;
+    const isReady = !context.schemaData?.properties;
 
     const handler = form.handleSubmit(data => {
         if (R.isEmpty(data)) {

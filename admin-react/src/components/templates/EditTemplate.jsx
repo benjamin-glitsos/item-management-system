@@ -17,7 +17,7 @@ export default ({ context, form }) => {
                         <Form context={context}>{form}</Form>
                     </Col>
                     <Col sm={2}>
-                        <EditSidebar data={context.data} />
+                        <EditSidebar data={context.itemData} />
                     </Col>
                 </Row>
             </Grid>

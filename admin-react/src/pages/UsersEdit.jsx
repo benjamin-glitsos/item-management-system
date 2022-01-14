@@ -4,12 +4,8 @@ import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
 import useQueriesClient from "hooks/useQueriesClient";
-import useQueriesFetch from "hooks/useQueriesFetch";
-
 import useMutationClient from "hooks/useMutationClient";
-import axios from "axios";
-import makeApiPath from "utilities/makeApiPath";
-
+import useQueriesFetch from "hooks/useQueriesFetch";
 import useProject from "hooks/useProject";
 import usePage from "hooks/usePage";
 import useUser from "hooks/useUser";
@@ -34,12 +30,12 @@ export default () => {
 
     useQueriesFetch(queries);
 
-    const [schema, data] = queries.map(x => x?.data?.data?.data);
+    const [schemaData, itemData] = queries.map(x => x?.data?.data?.data);
 
     const page = usePage({
         history,
         action: edit.action,
-        key: data?.[user.keyField],
+        key: itemData?.[user.keyField],
         nameSingular: user.nameSingular,
         namePlural: user.namePlural,
         projectName: project.name
@@ -48,8 +44,8 @@ export default () => {
     const context = {
         page,
         edit,
-        schema,
-        data,
+        schemaData,
+        itemData,
         mutation,
         queries
     };
