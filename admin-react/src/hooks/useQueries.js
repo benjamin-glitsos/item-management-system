@@ -3,7 +3,7 @@ import { useQueries } from "react-query";
 import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 import makeApiPath from "utilities/makeApiPath";
 
-export default ({ paths, options }) =>
+export default (paths, options) =>
     useQueries(
         paths.map(path => ({
             queryKey: path,
@@ -14,7 +14,6 @@ export default ({ paths, options }) =>
                 console.error(error);
                 unspecifiedErrorToast();
             },
-            enabled: true,
             ...options
         }))
     );

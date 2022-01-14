@@ -1,15 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import R from "ramda";
 import { useHistory, useParams } from "react-router-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import someProp from "utilities/someProp";
 import useEdit from "hooks/useEdit";
 import useQueries from "hooks/useQueries";
 import useProject from "hooks/useProject";
 import usePage from "hooks/usePage";
 import useUser from "hooks/useUser";
-import LoadingSpinnerContent from "modules/LoadingSpinnerContent";
-import ErrorMessageContent from "modules/ErrorMessageContent";
+import QueryResult from "modules/QueryResult";
 import UsersEditForm from "modules/UsersEditForm";
 import EditTemplate from "templates/EditTemplate";
 import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
@@ -17,10 +15,6 @@ import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 export const UsersEditContext = createContext();
 
 export default () => {
-    // TODO: set useQueries to enabled=false when the form has changes within it. Use useState to accomplish this. IN PROGRESS
-    const [isQueryEnabled, setIsQueryEnabled] = useState(true);
-    console.log(isQueryEnabled);
-
     const { username } = useParams();
 
     const history = useHistory();
@@ -31,16 +25,27 @@ export default () => {
 
     const user = useUser();
 
-    const queries = useQueries({
-        paths: [
+    const queries = useQueries(
+        [
             `schemas/${edit.action}-${user.namePlural}`,
             `${user.namePlural}/${username}`
         ],
-        options: {
-            enabled: isQueryEnabled,
-            onSuccess: () => setIsQueryEnabled(false)
+        {
+            enabled: false
         }
-    });
+    );
+
+    useEffect(async () => {
+        for await (const query of queries) {
+            query.refetch();
+        }
+    }, []);
+
+    return (
+        <QueryResult queries={queries} maxWidth={edit.maxWidth}>
+            <p>success</p>
+        </QueryResult>
+    );
 
     // const editClient = body =>
     //     useEditClient({
@@ -49,35 +54,26 @@ export default () => {
     //     });
     //     TODO: make this mutation hook useEditClient again. I accidentally deleted it
 
-    const [schema, data] = queries.map(x => x?.data?.data?.data);
+    // const page = usePage({
+    //     history,
+    //     action: edit.action,
+    //     key: data?.[user.keyField],
+    //     nameSingular: user.nameSingular,
+    //     namePlural: user.namePlural,
+    //     projectName: project.name
+    // });
 
-    if (someProp("isError", queries)) {
-        return <ErrorMessageContent maxWidth={edit.maxWidth} />;
-    }
+    // const context = {
+    //     page,
+    //     edit,
+    //     schema,
+    //     data,
+    //     queries
+    // };
 
-    if (someProp("isLoading", queries) || !data) {
-        return <LoadingSpinnerContent maxWidth={edit.maxWidth} />;
-    }
-
-    const page = usePage({
-        history,
-        action: edit.action,
-        key: data?.[user.keyField],
-        nameSingular: user.nameSingular,
-        namePlural: user.namePlural,
-        projectName: project.name
-    });
-
-    const context = {
-        page,
-        edit,
-        schema,
-        data
-    };
-
-    return (
-        <UsersEditContext.Provider value={context}>
-            <EditTemplate context={context} form={<UsersEditForm />} />
-        </UsersEditContext.Provider>
-    );
+    // return (
+    //     <UsersEditContext.Provider value={context}>
+    //         <EditTemplate context={context} form={<UsersEditForm />} />
+    //     </UsersEditContext.Provider>
+    // );
 };
