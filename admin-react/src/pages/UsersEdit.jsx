@@ -13,8 +13,7 @@ import FormSection from "modules/FormSection";
 import EditTemplate from "templates/EditTemplate";
 import queriesData from "utilities/queriesData";
 import Textfield from "@atlaskit/textfield";
-import RegisteredField from "elements/RegisteredField";
-import ControlledField from "elements/ControlledField";
+import Field from "elements/Field";
 import MarkdownTextarea from "elements/MarkdownTextarea";
 
 export default () => {
@@ -52,6 +51,7 @@ export default () => {
     };
 
     // TODO:
+    // * Make the registered field and controlled field both use the single Field component
     // * Pass the data to the fields using context prop
     // * Put the name into the JSON Schema
     // * Modules will consume context. Elements will be reusable so will never consume context
