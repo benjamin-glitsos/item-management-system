@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { titleCase } from "title-case";
 import readme from "%/assets/README.md";
-import PageContainer from "%/components/Page/PageContainer";
+import PageContainer from "%/components/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
 import GithubButton from "%/components/GithubButton";
@@ -44,6 +44,17 @@ export default () => {
                     <ReactMarkdown source={readme} />
                     <h2>Codebase</h2>
                     <GithubButton />
+                    <h2>Data Validation BPMN Diagram</h2>
+                    <ImagesLightbox
+                        images={[
+                            {
+                                src:
+                                    process.env.PUBLIC_URL +
+                                    "/images/data-validation-diagram.svg",
+                                alt: `BPMN diagram of the data validation paths of the ${process.env.PROJECT_ABBREV}`
+                            }
+                        ]}
+                    />
                     <h2>Database ER Diagram</h2>
                     <ImagesLightbox
                         images={[

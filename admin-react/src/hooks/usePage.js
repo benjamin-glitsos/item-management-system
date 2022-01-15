@@ -15,17 +15,9 @@ export default ({
 
     const pageDescription = `A ${nameSingular} in the ${projectName}.`;
 
-    const breadcrumb = ["Home", "/"];
-
     const handleReturn = () => {
         history.push(`/${namePlural}`);
     };
 
-    return {
-        pageTitle,
-        tabTitle,
-        pageDescription,
-        breadcrumb,
-        handleReturn
-    };
+    return { pageTitle, tabTitle, pageDescription, handleReturn };
 };

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { titleCase } from "title-case";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import { OpenContext } from "%/components/Open/Open";
+import { OpenContext } from "%/components/Open";
 import OpenLayout from "%/components/OpenLayout";
 import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";

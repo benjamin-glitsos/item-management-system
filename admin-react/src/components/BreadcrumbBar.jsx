@@ -30,20 +30,18 @@ export default ({ breadcrumbs }) => {
         }));
 
     return (
-        <Styles>
-            <Breadcrumbs>
-                {breadcrumbsData.map(props => (
-                    <BreadcrumbsItem
-                        {...props}
-                        onClick={() => handleClick(props.href)}
-                    />
-                ))}
-            </Breadcrumbs>
-        </Styles>
+        <BreadcrumbBar>
+            {breadcrumbsData.map(props => (
+                <BreadcrumbsItem
+                    {...props}
+                    onClick={() => handleClick(props.href)}
+                />
+            ))}
+        </BreadcrumbBar>
     );
 };
 
-const Styles = styled.div`
+const BreadcrumbBar = styled(Breadcrumbs)`
     a[disabled] {
         cursor: default !important;
     }

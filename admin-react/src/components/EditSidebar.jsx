@@ -1,7 +1,7 @@
 import { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import formatDate from "%/utilities/formatDate";
-import { OpenContext } from "%/components/Open/Open";
+import { OpenContext } from "%/components/Open";
 import styled from "styled-components";
 
 const Item = ({ label, children }) => (
@@ -15,8 +15,7 @@ const Author = ({ at, by }) => {
     if (at && by) {
         return (
             <Fragment>
-                {formatDate(at)}
-                by <Link to={`/users/${by}`}>{by}</Link>
+                {formatDate(at)} by <Link to={`/users/${by}`}>{by}</Link>
             </Fragment>
         );
     } else {
@@ -35,8 +34,7 @@ export default ({ data }) => (
         <Item label="Deleted">
             <Author at={data.deleted_at} by={data.deleted_by} />
         </Item>
-        <Item label="Edits">{data.edits}</Item>
-        <Item label="Opens">{data.opens}</Item>
+        <Item label="Opens">{data.edits}</Item>
         <Item label="Metakey">{data.metakey}</Item>
     </Fragment>
 );

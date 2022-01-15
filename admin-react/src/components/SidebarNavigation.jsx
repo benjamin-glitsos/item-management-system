@@ -37,7 +37,10 @@ export default () => {
                                 )}
                                 iconBefore={
                                     <AppLogo
-                                        src={makeImagePath(["logo.svg"])}
+                                        src={
+                                            process.env.PUBLIC_URL +
+                                            "/images/logo.svg"
+                                        }
                                         alt={`${projectName} logo`}
                                     />
                                 }

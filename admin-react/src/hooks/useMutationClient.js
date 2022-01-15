@@ -1,38 +1,19 @@
-import R from "ramda";
 import axios from "axios";
 import { useMutation } from "react-query";
-import handleQueryError from "%/utilities/handleQueryError";
-import makeApiPath from "%/utilities/makeApiPath";
-import successToast from "%/utilities/successToast";
-import joinPath from "%/utilities/joinPath";
-import noNewDataToSubmitToast from "%/utilities/noNewDataToSubmitToast";
+import makeApiPath from "utilities/makeApiPath";
 
-export default ({
-    method,
-    path,
-    context: { namePlural, keyField, history, originalData },
-    onSuccess,
-    clientConfig = {},
-    queryConfig = {}
-}) =>
+export default (method, path, clientOptions = {}, queryOptions = {}) =>
     useMutation(
-        async body => {
-            if (R.isEmpty(body)) {
-                noNewDataToSubmitToast();
-                return {};
-            } else {
-                return await axios({
-                    method,
-                    url: makeApiPath(path),
-                    data: body,
-                    ...clientConfig
-                });
-            }
-        },
+        body =>
+            axios.request({
+                method,
+                url: makeApiPath(path),
+                data: body,
+                ...clientOptions
+            }),
         {
-            mutationKey: path,
-            onError: handleQueryError,
-            onSuccess,
-            ...queryConfig
+            mutationKey: `${method} ${path}`,
+            retry: false,
+            ...queryOptions
         }
     );

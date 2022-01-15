@@ -4,8 +4,8 @@ import { createBrowserHistory } from "history";
 import { QueryParamProvider } from "use-query-params";
 import Analytics from "react-router-ga";
 import "react-toastify/dist/ReactToastify.min.css";
-import Page from "%/components/Page/PagePresenter";
-import LoadingBanner from "%/components/LoadingBanner";
+import Page from "%/components/PagePresenter";
+import LoadingSpinner from "%/components/LoadingSpinner";
 import ToastContainer from "%/components/ToastContainer";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -13,11 +13,10 @@ const queryClient = new QueryClient();
 
 const Readme = lazy(() => import("./Readme"));
 const UsersList = lazy(() => import("./UsersList"));
+const UsersOpen = lazy(() => import("./UsersOpen"));
 const UsersEdit = lazy(() => import("./UsersEdit"));
-const UsersCreate = lazy(() => import("./UsersCreate"));
 const ItemsList = lazy(() => import("./ItemsList"));
 const ItemsOpen = lazy(() => import("./ItemsOpen"));
-const ItemsEdit = lazy(() => import("./ItemsEdit"));
 const NotFound = lazy(() => import("./NotFound"));
 
 export default () => (
@@ -26,7 +25,7 @@ export default () => (
             <QueryClientProvider client={queryClient}>
                 <QueryParamProvider>
                     <Page>
-                        <Suspense fallback={<LoadingBanner />}>
+                        <Suspense fallback={<LoadingSpinner />}>
                             <Switch>
                                 <Route exact path="/">
                                     <Readme />
@@ -35,16 +34,16 @@ export default () => (
                                     <UsersList />
                                 </Route>
                                 <Route exact path="/users/:username">
-                                    <UsersEdit />
+                                    <UsersEdit action="edit" />
                                 </Route>
                                 <Route exact path="/create-user">
-                                    <UsersCreate />
+                                    <UsersOpen action="create" />
                                 </Route>
                                 <Route exact path="/items">
                                     <ItemsList />
                                 </Route>
                                 <Route exact path="/items/:key">
-                                    <ItemsEdit />
+                                    <ItemsOpen action="edit" />
                                 </Route>
                                 <Route exact path="/create-item">
                                     <ItemsOpen action="create" />

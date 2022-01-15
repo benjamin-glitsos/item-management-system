@@ -2,140 +2,121 @@ import { useCallback } from "react";
 import R from "ramda";
 import * as yup from "yup";
 import { buildYup as jsonSchemaToYup } from "schema-to-yup";
-import { diff } from "deep-object-diff";
-import mapObjKeys from "%/utilities/mapObjKeys";
-import trimAll from "%/utilities/trimAll";
-import emptyStringsToNull from "%/utilities/emptyStringsToNull";
-import removeAllUndefined from "%/utilities/removeAllUndefined";
+import mapObjKeys from "utilities/mapObjKeys";
 
-const emptySchema = {
-    $schema: "http://json-schema.org/draft-07/schema#",
-    title: "N/A",
-    type: "object",
-    properties: {}
-};
+class FormData {
+    constructor({ values = {}, errors = {} }) {
+        this.values = values;
+        this.errors = errors;
+    }
+}
 
 const yupConfig = {
     abortEarly: false
 };
 
-export default ({ schemaData, originalData = {} }) => {
-    const schema = schemaData || emptySchema;
-    const original = originalData || {};
+const cleanSchema = schema => {
+    var sc = schema;
 
-    const schemaFields = (() => {
-        const maybeSchemaProperties = schema?.properties;
-
-        if (!!maybeSchemaProperties) {
-            return Object.keys(maybeSchemaProperties);
-        } else {
-            return [];
+    sc.properties = R.map(x => {
+        if (x.type instanceof Array) {
+            x.type = x.type.filter(x => x !== "null")[0];
+            x.nullable = true;
         }
-    })();
+        return x;
+    })(sc.properties);
 
-    const cleanSchema = (() => {
-        var sc = schema;
-
-        if (!!sc?.properties) {
-            sc.properties = R.map(x => {
-                if (x.type instanceof Array) {
-                    x.type = x.type.filter(x => x !== "null")[0];
-                    x.nullable = true;
-                }
-                return x;
-            })(sc.properties);
-
-            if (!!sc?.required) {
-                for (const field of sc.required) {
-                    sc.properties[field].required = true;
-                }
-
-                delete sc.required;
-            }
+    if (!!sc?.required) {
+        for (const field of sc.required) {
+            sc.properties[field].required = true;
         }
 
-        return sc;
-    })();
+        delete sc.required;
+    }
 
-    const jsonSchemaToYupConfig = {
-        errMessages: (() => {
-            const descriptionAttributePattern = /^(?<fieldName>.*)Description$/;
+    return sc;
+};
 
-            return Object.fromEntries(
-                Object.entries(schema?.properties || []).reduce(
-                    (accumulator, current) => {
-                        const [key, attributes] = current;
+const schemaFields = schema => Object.keys(schema.properties);
 
-                        const descriptionAttributes = R.pipe(
-                            R.pickBy((value, key) =>
-                                key.match(descriptionAttributePattern)
-                            ),
-                            mapObjKeys(
-                                key =>
-                                    descriptionAttributePattern.exec(key)
-                                        ?.groups?.fieldName
-                            )
-                        )(attributes);
+const schemaToYupConfig = schema => ({
+    errMessages: (() => {
+        const descriptionAttributePattern = /^(?<fieldName>.*)Description$/;
 
-                        const attributesPair =
-                            Object.keys(descriptionAttributes).length > 0
-                                ? [[key, descriptionAttributes]]
-                                : [];
+        return Object.fromEntries(
+            Object.entries(schema?.properties || []).reduce(
+                (accumulator, current) => {
+                    const [key, attributes] = current;
 
-                        return [...accumulator, ...attributesPair];
-                    },
-                    []
-                )
-            );
-        })()
-    };
+                    const descriptionAttributes = R.pipe(
+                        R.pickBy((value, key) =>
+                            key.match(descriptionAttributePattern)
+                        ),
+                        mapObjKeys(
+                            key =>
+                                descriptionAttributePattern.exec(key)?.groups
+                                    ?.fieldName
+                        )
+                    )(attributes);
 
-    const yupSchema = jsonSchemaToYup(cleanSchema, jsonSchemaToYupConfig);
+                    const attributesPair =
+                        Object.keys(descriptionAttributes).length > 0
+                            ? [[key, descriptionAttributes]]
+                            : [];
 
-    return useCallback(
+                    return [...accumulator, ...attributesPair];
+                },
+                []
+            )
+        );
+    })()
+});
+
+const yupSchema = schema =>
+    jsonSchemaToYup(cleanSchema(schema), schemaToYupConfig(schema));
+
+const yupSchemaValidate = (schema, data) =>
+    yupSchema(schema).validate(data, yupConfig);
+
+const cleanErrors = errors =>
+    R.pipe(
+        errors =>
+            errors.inner.map(error => {
+                const { message, path, type, value } = error;
+                if (type === "typeError") {
+                    return new yup.ValidationError(
+                        [`${path} is required`],
+                        value,
+                        path
+                    );
+                } else {
+                    return error;
+                }
+            }),
+        R.map(e => ({ [e.path]: e.message })),
+        R.chain(R.toPairs),
+        R.groupBy(R.head),
+        R.map(R.pluck(1))
+    )(errors);
+
+export default schemaData =>
+    useCallback(
         async data => {
-            try {
-                const cleanData = R.pipe(
-                    trimAll,
-                    emptyStringsToNull,
-                    x => diff(original, x),
-                    removeAllUndefined,
-                    R.pick(schemaFields)
-                )(data);
-
-                const values = await yupSchema.validate(cleanData, yupConfig);
-
-                return {
-                    values,
-                    errors: {}
-                };
-            } catch (errors) {
-                const cleanErrors = R.pipe(
-                    errors =>
-                        errors.inner.map(error => {
-                            const { message, path, type, value } = error;
-                            if (type === "typeError") {
-                                return new yup.ValidationError(
-                                    [`${path} is required`],
-                                    value,
-                                    path
-                                );
-                            } else {
-                                return error;
-                            }
-                        }),
-                    R.map(e => ({ [e.path]: e.message })),
-                    R.chain(R.toPairs),
-                    R.groupBy(R.head),
-                    R.map(R.pluck(1))
-                )(errors);
-
-                return {
-                    values: {},
-                    errors: cleanErrors
-                };
+            if (schemaData?.properties) {
+                try {
+                    if (R.isEmpty(data)) {
+                        return new FormData({});
+                    } else {
+                        return new FormData({
+                            values: await yupSchemaValidate(schemaData, data)
+                        });
+                    }
+                } catch (errors) {
+                    return new FormData({ errors: cleanErrors(errors) });
+                }
+            } else {
+                return new FormData({});
             }
         },
-        [yupSchema]
+        [schemaData]
     );
-};

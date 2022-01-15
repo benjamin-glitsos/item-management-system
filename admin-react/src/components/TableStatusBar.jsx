@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import NonBreakingSpace from "%/components/NonBreakingSpace";
-import numbersToWords from "number-to-words";
-import { ListContext } from "%/components/List/List";
+import { ListContext } from "%/components/List";
 import capitaliseFirstLetter from "%/utilities/capitaliseFirstLetter";
 import isBlank from "%/utilities/isBlank";
 
@@ -42,10 +41,6 @@ export default () => {
         const totalStatus =
             filteredItemsCount < totalItemsCount && `out of ${totalItemsCount}`;
         return [filteredStatus, totalStatus].filter(x => !!x).join(" ") + ".";
-    } else if (numberOfSelected < 10) {
-        const numberToWorded = n =>
-            capitaliseFirstLetter(numbersToWords.toWords(n));
-        return `${numberToWorded(numberOfSelected)} ${name} selected.`;
     } else {
         return `${numberOfSelected} ${name} selected.`;
     }

@@ -1,97 +1,108 @@
-import { createContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useState } from "react";
+import R from "ramda";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import SidebarLayout from "%/components/SidebarLayout";
+import useYupSchemaResolver from "hooks/useYupSchemaResolver";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import useEdit from "%/hooks/useEdit";
-import useQueriesClient from "%/hooks/useQueriesClient";
-import useEditClient from "%/hooks/useEditClient";
-import useProject from "%/hooks/useProject";
-import usePage from "%/hooks/usePage";
-import useUser from "%/hooks/useUser";
-import useYupSchemaResolver from "%/hooks/useYupSchemaResolver";
-import Page2 from "%/components/Page2";
-import EditSidebar2 from "%/components/EditSidebar2";
-import LoadingBanner from "%/components/LoadingBanner";
-import ErrorBanner from "%/components/ErrorBanner";
-import someProp from "%/utilities/someProp";
-import getQueryData from "%/utilities/getQueryData";
-import UsersForm from "%/components/UsersForm";
-
-export const UsersEditContext = createContext();
+import useEdit from "hooks/useEdit";
+import useQueriesClient from "hooks/useQueriesClient";
+import useMutationClient from "hooks/useMutationClient";
+import useQueriesFetch from "hooks/useQueriesFetch";
+import useProject from "hooks/useProject";
+import usePage from "hooks/usePage";
+import useUser from "hooks/useUser";
+import FormSection from "modules/FormSection";
+import EditTemplate from "templates/EditTemplate";
+import queriesData from "utilities/queriesData";
+import Field from "elements/Field";
 
 export default () => {
-    const { username } = useParams();
-    const history = useHistory();
+    const [update, setUpdate] = useState(0);
 
+    const { username } = useParams();
     const project = useProject();
     const edit = useEdit();
-    const entity = useUser();
+    const user = useUser();
 
-    const queries = useQueriesClient({
-        paths: [
-            [`schemas/${edit.action}-${entity.namePlural}`],
-            [entity.namePlural, username]
-        ],
-        config: { refetchOnWindowFocus: false }
-    });
+    const schemaPath = `schemas/${edit.action}-${user.namePlural}`;
+    const itemPath = `${user.namePlural}/${username}`;
 
-    const [schemaData, entityData] = queries.map(getQueryData);
+    const queries = useQueriesClient([schemaPath, itemPath]);
+    const mutation = useMutationClient("PATCH", itemPath);
+
+    useQueriesFetch(queries);
+
+    const [schemaData, itemData] = queriesData(queries);
 
     const form = useForm({
-        resolver: useYupSchemaResolver({ schemaData, originalData: entityData })
+        resolver: useYupSchemaResolver(schemaData)
     });
 
     const page = usePage({
         history,
         action: edit.action,
-        key: entityData?.[entity.keyField],
-        nameSingular: entity.nameSingular,
-        namePlural: entity.namePlural,
+        key: itemData?.[user.keyField],
+        nameSingular: user.nameSingular,
+        namePlural: user.namePlural,
         projectName: project.name
     });
 
-    const breadcrumbs = [page.breadcrumb, entity.breadcrumb, edit.breadcrumb];
-
-    const mutation = useEditClient({
-        path: [entity.namePlural, username],
-        context: {
-            namePlural: entity.namePlural,
-            keyField: entity.keyField,
-            history,
-            originalData: entityData,
-            setValue: form.setValue
-        }
-    });
-
     const context = {
-        page,
         edit,
-        entity,
-        breadcrumbs,
-        form,
-        mutation,
         schemaData,
-        entityData
+        itemData,
+        mutation,
+        queries,
+        form,
+        page
     };
 
-    if (someProp("isLoading", queries)) {
-        return <LoadingBanner />;
-    }
+    // TODO: the useForm consumes undefined itemData because that is returned by async action. Fix this issue.
 
-    if (someProp("isError", queries)) {
-        return <ErrorBanner />;
-    }
+    // NOTE: Modules will consume context. Elements will be reusable so will never consume context
 
     return (
-        <UsersEditContext.Provider value={context}>
-            <Page2 context={UsersEditContext}>
-                <SidebarLayout
-                    sidebar={<EditSidebar2 context={UsersEditContext} />}
-                >
-                    <UsersForm context={UsersEditContext} />
-                </SidebarLayout>
-            </Page2>
-        </UsersEditContext.Provider>
+        <EditTemplate context={context}>
+            <FormSection title="Details">
+                <Field
+                    name="username"
+                    columnWidths={{ lg: 6 }}
+                    isControlled={false}
+                    context={context}
+                />
+                <Field
+                    name="email_address"
+                    columnWidths={{ lg: 6 }}
+                    isControlled={false}
+                    context={context}
+                />
+                <Field
+                    name="first_name"
+                    columnWidths={{ lg: 4 }}
+                    isControlled={false}
+                    context={context}
+                />
+                <Field
+                    name="last_name"
+                    columnWidths={{ lg: 4 }}
+                    isControlled={false}
+                    context={context}
+                />
+                <Field
+                    name="other_names"
+                    columnWidths={{ lg: 4 }}
+                    isControlled={false}
+                    context={context}
+                />
+            </FormSection>
+            <FormSection title="Misc.">
+                <Field
+                    name="additional_notes"
+                    columnWidths={{ sm: 12 }}
+                    isControlled={true}
+                    context={context}
+                />
+            </FormSection>
+        </EditTemplate>
     );
 };

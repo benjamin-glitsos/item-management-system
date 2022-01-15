@@ -25,7 +25,8 @@
             "maxLength": 255
         },
         "description": {
-            "type": ["string", "null"]
+            "type": ["string", "null"],
+            "maxLength": 1048576
         },
         "acquisition_date": {
             "type": "string",
@@ -39,23 +40,23 @@
         },
         "unit_cost": {
             "type": "number",
-            "minimum": 1,
-            "positive": true
+            "minimum": 0,
+            "maximum": 1048576
         },
         "unit_price": {
             "type": ["number", "null"],
             "minimum": 0,
-            "positive": true
+            "maximum": 1048576
         },
         "quantity_available": {
             "type": "integer",
             "minimum": 0,
-            "positive": true
+            "maximum": 1048576
         },
         "quantity_sold": {
             "type": "integer",
             "minimum": 0,
-            "positive": true
+            "maximum": 1048576
         },
         "additional_notes": {
             "type": ["string", "null"],

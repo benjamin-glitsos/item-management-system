@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import ListPresenter from "%/components/List/ListPresenter";
+import ListPresenter from "%/components/ListPresenter";
 
 export const ListContext = createContext();
 

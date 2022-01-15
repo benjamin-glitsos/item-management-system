@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import OpenPresenter from "%/components/Open/OpenPresenter";
+import OpenPresenter from "%/components/OpenPresenter";
 
 export const OpenContext = createContext();
 

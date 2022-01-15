@@ -1,41 +1,27 @@
-import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import Button, { ButtonGroup } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import { UsersEditContext } from "%/pages/UsersEdit";
-import setFormValues from "%/utilities/setFormValues";
 
-export default ({ context, children }) => {
-    const cx = useContext(context);
+export default ({ page, edit, form, children }) => (
+    <form onSubmit={form.handleSubmit(x => console.log(x))}>
+        <Grid fluid>
+            <Row>{children}</Row>
+            <Row end="xs">
+                <Col sm={12}>
+                    <Buttons>
+                        <Button appearance="subtle" onClick={page.handleReturn}>
+                            Cancel
+                        </Button>
+                        <Button type="submit" appearance="primary">
+                            Submit
+                        </Button>
+                    </Buttons>
+                </Col>
+            </Row>
+        </Grid>
+    </form>
+);
 
-    useEffect(() => setFormValues(cx.form.setValue, cx.entityData), []);
-
-    return (
-        <form onSubmit={cx.form.handleSubmit(cx.mutation.mutate)}>
-            <Grid fluid>
-                <Row>{children}</Row>
-                <Row end="xs">
-                    <Col sm={12}>
-                        <ButtonGroupStyles>
-                            <ButtonGroup>
-                                <Button
-                                    appearance="subtle"
-                                    onClick={cx.page.handleReturn}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button type="submit" appearance="primary">
-                                    Submit
-                                </Button>
-                            </ButtonGroup>
-                        </ButtonGroupStyles>
-                    </Col>
-                </Row>
-            </Grid>
-        </form>
-    );
-};
-
-const ButtonGroupStyles = styled.div`
+const Buttons = styled(ButtonGroup)`
     margin-top: 24px;
 `;

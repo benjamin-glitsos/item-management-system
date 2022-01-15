@@ -1,8 +1,8 @@
 import R from "ramda";
 import { titleCase } from "title-case";
-import PageContainer from "%/components/Page/PageContainer";
-import ListContainer from "%/components/List/ListContainer";
-import List from "%/components/List/List";
+import PageContainer from "%/components/PageContainer";
+import ListContainer from "%/components/ListContainer";
+import List from "%/components/List";
 import formatNull from "%/utilities/formatNull";
 import formatDate from "%/utilities/formatDate";
 import config from "%/config";
