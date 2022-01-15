@@ -12,9 +12,7 @@ import useUser from "hooks/useUser";
 import FormSection from "modules/FormSection";
 import EditTemplate from "templates/EditTemplate";
 import queriesData from "utilities/queriesData";
-import Textfield from "@atlaskit/textfield";
 import Field from "elements/Field";
-import MarkdownTextarea from "elements/MarkdownTextarea";
 
 export default () => {
     const { username } = useParams();
@@ -53,18 +51,18 @@ export default () => {
     // TODO:
     // * Make the registered field and controlled field both use the single Field component
     // * Pass the data to the fields using context prop
-    // * Put the name into the JSON Schema
+    // * Put the title into the JSON Schema
     // * Modules will consume context. Elements will be reusable so will never consume context
 
     return (
         <EditTemplate context={context}>
             <FormSection title="Details">
                 <Field
-                    key="username"
-                    Component={Textfield}
+                    name="username"
+                    type="textarea"
                     columnWidths={{ lg: 6 }}
-                    context={context}
                     isControlled={false}
+                    context={context}
                 />
                 {/* <RegisteredField */}
                 {/*     name="email_address" */}

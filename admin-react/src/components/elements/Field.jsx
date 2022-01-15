@@ -2,21 +2,39 @@ import styled from "styled-components";
 import { Controller } from "react-hook-form";
 import { Col } from "react-flexbox-grid";
 import formatNull from "%/utilities/formatNull";
+import Textfield from "@atlaskit/textfield";
+import MarkdownTextarea from "elements/MarkdownTextarea";
 
 const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
 
-export default ({ key, Component, columnWidths, isControlled, ...props }) => {
-    const fieldId = `Field/${key}`;
-    const errorId = `Field/Error/${key}`;
-    const schemaProperties = context?.schema?.properties;
-    const title = schemaProperties?.[key]?.title;
-    const isRequired = schemaProperties?.[key]?.required;
-    const fieldErrors = context.form.formState.errors?.[key];
-    const placeholder = formatNull();
-
-    {
-        /* const Element = ({ ...props }) => (<Component id={fieldId} placeholder={placeholder} {context.form.register(name)} {...props} />) */
+const Component = ({ type }) => {
+    switch (type) {
+        case "textarea":
+            return Textfield;
+            break;
+        case "markdown_textarea":
+            return MarkdownTextarea;
+            break;
+        default:
+            return Textfield;
     }
+};
+
+export default ({
+    name,
+    type,
+    columnWidths,
+    isControlled,
+    context,
+    ...props
+}) => {
+    const fieldId = `Field/${name}`;
+    const errorId = `Field/Error/${name}`;
+    const schemaProperties = context?.schema?.properties;
+    const title = schemaProperties?.[name]?.title;
+    const isRequired = schemaProperties?.[name]?.required;
+    const fieldErrors = context.form.formState.errors?.[name];
+    const placeholder = formatNull();
 
     return (
         <Col {...columnWidths}>
@@ -25,24 +43,35 @@ export default ({ key, Component, columnWidths, isControlled, ...props }) => {
                     {title}
                     {isRequired && <RequiredAsterisk />}
                 </Label>
-                {/* {!isControlled ?  */}
-                {/*     <Element /> :  */}
-                {/*         ( */}
-                {/*             <Controller */}
-                {/*                 control={context.form.control} */}
-                {/*                 name={name} */}
-                {/*             render={({ field: { onChange, onBlur, value, ref } }) => ( */}
-                {/* <Element */}
-                {/*     onBlur={onBlur} */}
-                {/*     inputRef={ref} */}
-                {/*     onChange={onChange} */}
-                {/*     isDisabled={isDisabled} */}
-                {/*     value={value} */}
-                {/* /> */}
-                {/*                 )} */}
-                {/*             </Controller> */}
-                {/*         ) */}
-                {/* } */}
+                {!isControlled ? (
+                    <Component
+                        key={fieldId}
+                        name={name}
+                        placeholder={placeholder}
+                        {...context.form.register(name)}
+                        {...props}
+                    />
+                ) : (
+                    <Controller
+                        control={context.form.control}
+                        name={name}
+                        render={({
+                            field: { onChange, onBlur, value, ref }
+                        }) => (
+                            <Component
+                                key={fieldId}
+                                name={name}
+                                placeholder={placeholder}
+                                onChange={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                                inputRef={ref}
+                                {...props}
+                            />
+                        )}
+                    />
+                )}
+
                 {fieldErrors && (
                     <Errors>
                         {fieldErrors.map((error, i) => (
