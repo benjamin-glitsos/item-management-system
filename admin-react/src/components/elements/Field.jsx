@@ -1,18 +1,23 @@
 import styled from "styled-components";
+import { Controller } from "react-hook-form";
 import { Col } from "react-flexbox-grid";
 import formatNull from "%/utilities/formatNull";
 
 const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
 
-
-export default ({ key, Component, columnWidths, ...props }) => {
+export default ({ key, Component, columnWidths, isControlled, ...props }) => {
     const fieldId = `Field/${key}`;
     const errorId = `Field/Error/${key}`;
-    const schemaProperties = context?.schema?.properties
+    const schemaProperties = context?.schema?.properties;
     const title = schemaProperties?.[key]?.title;
     const isRequired = schemaProperties?.[key]?.required;
     const fieldErrors = context.form.formState.errors?.[key];
     const placeholder = formatNull();
+
+    {
+        /* const Element = ({ ...props }) => (<Component id={fieldId} placeholder={placeholder} {context.form.register(name)} {...props} />) */
+    }
+
     return (
         <Col {...columnWidths}>
             <Styles>
@@ -20,12 +25,24 @@ export default ({ key, Component, columnWidths, ...props }) => {
                     {title}
                     {isRequired && <RequiredAsterisk />}
                 </Label>
-                <Component
-                    id={fieldId}
-                    placeholder={placeholder}
-                    {context.form.register(name)}
-                    {...props}
-                />
+                {/* {!isControlled ?  */}
+                {/*     <Element /> :  */}
+                {/*         ( */}
+                {/*             <Controller */}
+                {/*                 control={context.form.control} */}
+                {/*                 name={name} */}
+                {/*             render={({ field: { onChange, onBlur, value, ref } }) => ( */}
+                {/* <Element */}
+                {/*     onBlur={onBlur} */}
+                {/*     inputRef={ref} */}
+                {/*     onChange={onChange} */}
+                {/*     isDisabled={isDisabled} */}
+                {/*     value={value} */}
+                {/* /> */}
+                {/*                 )} */}
+                {/*             </Controller> */}
+                {/*         ) */}
+                {/* } */}
                 {fieldErrors && (
                     <Errors>
                         {fieldErrors.map((error, i) => (
