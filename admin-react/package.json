@@ -48,7 +48,7 @@
         "@babel/plugin-proposal-optional-chaining": "^7.13.8",
         "@baristalabs/craco-raw-loader": "^1.2.0",
         "@craco/craco": "^6.1.1",
-        "axios": "^0.21.1",
+        "axios": "^0.21.2",
         "babel-plugin-ramda": "^2.0.0",
         "dateformat": "^4.5.1",
         "deep-object-diff": "^1.1.0",
