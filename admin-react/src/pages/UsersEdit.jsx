@@ -52,7 +52,7 @@ export default () => {
     };
 
     // TODO:
-    // * EditTemplate will contain EditContext which will get passed the context values
+    // * Pass the data to the fields in an elegant way
     // * Modules will consume context. Elements will be reusable so will never consume context
 
     return (
@@ -63,52 +63,40 @@ export default () => {
                     title="Username"
                     Component={Textfield}
                     columnWidths={{ lg: 6 }}
-                    isDisabled={false}
-                    context={context}
                 />
-                <RegisteredField
-                    name="email_address"
-                    title="Email address"
-                    Component={Textfield}
-                    columnWidths={{ lg: 6 }}
-                    isDisabled={false}
-                    context={context}
-                />
-                <RegisteredField
-                    name="first_name"
-                    title="First name"
-                    Component={Textfield}
-                    columnWidths={{ lg: 4 }}
-                    isDisabled={false}
-                    context={context}
-                />
-                <RegisteredField
-                    name="last_name"
-                    title="Last name"
-                    Component={Textfield}
-                    columnWidths={{ lg: 4 }}
-                    isDisabled={false}
-                    context={context}
-                />
-                <RegisteredField
-                    name="other_names"
-                    title="Other names"
-                    Component={Textfield}
-                    columnWidths={{ lg: 4 }}
-                    isDisabled={false}
-                    context={context}
-                />
+                {/* <RegisteredField */}
+                {/*     name="email_address" */}
+                {/*     title="Email address" */}
+                {/*     Component={Textfield} */}
+                {/*     columnWidths={{ lg: 6 }} */}
+                {/* /> */}
+                {/* <RegisteredField */}
+                {/*     name="first_name" */}
+                {/*     title="First name" */}
+                {/*     Component={Textfield} */}
+                {/*     columnWidths={{ lg: 4 }} */}
+                {/* /> */}
+                {/* <RegisteredField */}
+                {/*     name="last_name" */}
+                {/*     title="Last name" */}
+                {/*     Component={Textfield} */}
+                {/*     columnWidths={{ lg: 4 }} */}
+                {/* /> */}
+                {/* <RegisteredField */}
+                {/*     name="other_names" */}
+                {/*     title="Other names" */}
+                {/*     Component={Textfield} */}
+                {/*     columnWidths={{ lg: 4 }} */}
+                {/* /> */}
             </FormSection>
-            <FormSection title="Misc.">
-                <ControlledField
-                    name="additional_notes"
-                    title="Additional notes"
-                    Component={MarkdownTextarea}
-                    columnWidths={{ sm: 12 }}
-                    isDisabled={false}
-                    context={context}
-                />
-            </FormSection>
+            {/* <FormSection title="Misc."> */}
+            {/*     <ControlledField */}
+            {/*         name="additional_notes" */}
+            {/*         title="Additional notes" */}
+            {/*         Component={MarkdownTextarea} */}
+            {/*         columnWidths={{ sm: 12 }} */}
+            {/*     /> */}
+            {/* </FormSection> */}
         </EditTemplate>
     );
 };

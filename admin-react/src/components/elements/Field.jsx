@@ -4,7 +4,7 @@ import formatNull from "%/utilities/formatNull";
 const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
 
 export default ({
-    name,
+    key,
     title,
     Component,
     errors,
@@ -14,10 +14,10 @@ export default ({
     additionalProps,
     ...props
 }) => {
-    const fieldId = `Field/${name}`;
-    const errorId = `Field/Error/${name}`;
-    const fieldErrors = errors?.[name];
-    const isRequired = isCreate && schemaProperties?.[name]?.required;
+    const fieldId = `Field/${key}`;
+    const errorId = `Field/Error/${key}`;
+    const fieldErrors = errors?.[key];
+    const isRequired = isCreate && schemaProperties?.[key]?.required;
     const placeholder = isCreate ? "" : formatNull();
     return (
         <Styles>

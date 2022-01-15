@@ -5,6 +5,7 @@ import SidebarItem from "elements/SidebarItem";
 
 export default () => {
     const context = useContext(EditContext);
+
     return (
         <Fragment>
             <SidebarItem label="Created">

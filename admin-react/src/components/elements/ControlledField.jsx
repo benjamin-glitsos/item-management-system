@@ -1,7 +1,6 @@
 import { Controller } from "react-hook-form";
 import { Col } from "react-flexbox-grid";
 import Field from "elements/Field";
-import { UsersEditContext } from "%/pages/UsersEdit";
 
 export default ({
     name,
@@ -9,7 +8,6 @@ export default ({
     Component,
     columnWidths,
     isDisabled,
-    context,
     ...props
 }) => (
     <Col {...columnWidths}>

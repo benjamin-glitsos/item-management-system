@@ -2,17 +2,16 @@ import { Col } from "react-flexbox-grid";
 import Field from "elements/Field";
 
 export default ({
-    name,
+    key,
     title,
     Component,
     columnWidths,
     isDisabled,
-    context,
     ...props
 }) => (
     <Col {...columnWidths}>
         <Field
-            name={name}
+            key={key}
             title={title}
             Component={Component}
             isCreate={!!context?.create}

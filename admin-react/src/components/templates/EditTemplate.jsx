@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Page from "modules/Page";
 import EditSidebar from "modules/EditSidebar";
-import Form from "modules/Form";
+import EditForm from "modules/EditForm";
 import QueryState from "modules/QueryState";
 
 export const EditContext = createContext();
@@ -20,6 +20,7 @@ export default ({ context, children }) => (
                     <Row>
                         <Col sm={10}>
                             {/* <Form context={context}>{children}</Form> */}
+                            {/* <EditForm>{children}</EditForm> */}
                         </Col>
                         <Col sm={2}>
                             <EditSidebar />

@@ -1,9 +1,10 @@
-Import { useState, cloneElement } from "react";
+import { useState, useContext, cloneElement } from "react";
 import R from "ramda";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Button, { ButtonGroup, LoadingButton } from "@atlaskit/button";
 import { Grid, Row, Col } from "react-flexbox-grid";
+import { EditContext } from "templates/EditTemplate";
 import useYupSchemaResolver from "hooks/useYupSchemaResolver";
 import nullToEmptyStr from "utilities/nullToEmptyStr";
 import noNewDataToSubmitToast from "utilities/noNewDataToSubmitToast";
@@ -11,7 +12,9 @@ import successToast from "utilities/successToast";
 import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 import simplur from "simplur";
 
-export default ({ context, children }) => {
+export default ({ children }) => {
+    const context = useContext(EditContext);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm({
@@ -50,13 +53,12 @@ export default ({ context, children }) => {
 
     return (
         <form onSubmit={handler}>
+            {/* {cloneElement(children, { */}
+            {/*     isDisabled: isSubmitting, */}
+            {/*     context: { ...context, form } */}
+            {/* })} */}
             <Grid fluid>
-                <Row>
-                    {cloneElement(children, {
-                        isDisabled: isSubmitting,
-                        context: { ...context, form }
-                    })}
-                </Row>
+                <Row></Row>
                 <Row end="xs">
                     <Col sm={12}>
                         <Buttons>
