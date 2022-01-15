@@ -4,21 +4,9 @@ import { Col } from "react-flexbox-grid";
 import formatNull from "%/utilities/formatNull";
 import Textfield from "@atlaskit/textfield";
 import MarkdownTextarea from "elements/MarkdownTextarea";
+import nullToEmptyStr from "utilities/nullToEmptyStr";
 
 const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
-
-const Component = ({ type }) => {
-    switch (type) {
-        case "textarea":
-            return <Textfield />;
-            break;
-        case "markdown_textarea":
-            return <MarkdownTextarea />;
-            break;
-        default:
-            return <Textfield />;
-    }
-};
 
 export default ({
     name,
@@ -30,13 +18,15 @@ export default ({
 }) => {
     const fieldId = `Field/${name}`;
     const errorId = `Field/Error/${name}`;
-    const schemaProperties = context?.schema?.properties;
+    const schemaProperties = context?.schemaData?.properties;
     const title = schemaProperties?.[name]?.title;
     const isRequired = schemaProperties?.[name]?.required;
-    const fieldErrors = context?.form?.formState.errors?.[name];
+    const fieldErrors = context.form.formState.errors[name];
     const placeholder = formatNull();
+    const value = context.itemData[name];
 
-    console.log(context);
+    context.form.setValue(name, nullToEmptyStr(value));
+
     return (
         <Col {...columnWidths}>
             <Styles>
@@ -45,12 +35,13 @@ export default ({
                     {isRequired && <RequiredAsterisk />}
                 </Label>
                 {!isControlled ? (
-                    <Component
+                    <Textfield
                         key={fieldId}
                         name={name}
+                        type={type}
                         placeholder={placeholder}
                         isDisabled={context.isDisabled}
-                        {...context?.form?.register(name)}
+                        {...context.form.register(name)}
                         {...props}
                     />
                 ) : (
@@ -60,9 +51,10 @@ export default ({
                         render={({
                             field: { onChange, onBlur, value, ref }
                         }) => (
-                            <Component
+                            <MarkdownTextarea
                                 key={fieldId}
                                 name={name}
+                                type={type}
                                 placeholder={placeholder}
                                 onChange={onChange}
                                 onBlur={onBlur}

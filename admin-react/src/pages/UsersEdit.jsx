@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import R from "ramda";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import useYupSchemaResolver from "hooks/useYupSchemaResolver";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import useEdit from "hooks/useEdit";
 import useQueriesClient from "hooks/useQueriesClient";
@@ -30,6 +32,13 @@ export default () => {
 
     const [schemaData, itemData] = queriesData(queries);
 
+    const form = useForm({
+        resolver: useYupSchemaResolver({
+            schema: schemaData,
+            originalData: itemData
+        })
+    });
+
     const page = usePage({
         history,
         action: edit.action,
@@ -40,12 +49,13 @@ export default () => {
     });
 
     const context = {
-        page,
         edit,
         schemaData,
         itemData,
         mutation,
-        queries
+        queries,
+        form,
+        page
     };
 
     // TODO:
@@ -66,12 +76,13 @@ export default () => {
                     isControlled={false}
                     context={context}
                 />
-                {/* <RegisteredField */}
-                {/*     name="email_address" */}
-                {/*     title="Email address" */}
-                {/*     Component={Textfield} */}
-                {/*     columnWidths={{ lg: 6 }} */}
-                {/* /> */}
+                <Field
+                    name="email_address"
+                    type="textarea"
+                    columnWidths={{ lg: 6 }}
+                    isControlled={false}
+                    context={context}
+                />
                 {/* <RegisteredField */}
                 {/*     name="first_name" */}
                 {/*     title="First name" */}
