@@ -2,11 +2,7 @@ import { useCallback } from "react";
 import R from "ramda";
 import * as yup from "yup";
 import { buildYup as jsonSchemaToYup } from "schema-to-yup";
-import { diff } from "deep-object-diff";
 import mapObjKeys from "utilities/mapObjKeys";
-import trimAll from "utilities/trimAll";
-import emptyStringsToNull from "utilities/emptyStringsToNull";
-import removeAllUndefined from "utilities/removeAllUndefined";
 
 class FormData {
     constructor({ values = {}, errors = {} }) {
@@ -79,16 +75,8 @@ const schemaToYupConfig = schema => ({
 const yupSchema = schema =>
     jsonSchemaToYup(cleanSchema(schema), schemaToYupConfig(schema));
 
-const cleanData = (itemData, data) =>
-    R.pipe(
-        trimAll,
-        emptyStringsToNull,
-        x => diff(itemData, x),
-        removeAllUndefined
-    )(data);
-
-const yupSchemaValidate = (schema, itemData, data) =>
-    yupSchema(schema).validate(cleanData(itemData, data), yupConfig);
+const yupSchemaValidate = (schema, data) =>
+    yupSchema(schema).validate(data, yupConfig);
 
 const cleanErrors = errors =>
     R.pipe(
@@ -111,22 +99,16 @@ const cleanErrors = errors =>
         R.map(R.pluck(1))
     )(errors);
 
-export default ({ schemaData, itemData }) =>
+export default schemaData =>
     useCallback(
         async data => {
             if (schemaData?.properties) {
                 try {
-                    const submitData = cleanData(itemData, data);
-                    console.log(itemData);
-                    if (R.isEmpty(submitData)) {
+                    if (R.isEmpty(data)) {
                         return new FormData({});
                     } else {
                         return new FormData({
-                            values: await yupSchemaValidate(
-                                schemaData,
-                                itemData,
-                                data
-                            )
+                            values: await yupSchemaValidate(schemaData, data)
                         });
                     }
                 } catch (errors) {

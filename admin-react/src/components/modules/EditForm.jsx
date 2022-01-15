@@ -8,6 +8,7 @@ import noNewDataToSubmitToast from "utilities/noNewDataToSubmitToast";
 import successToast from "utilities/successToast";
 import unspecifiedErrorToast from "utilities/unspecifiedErrorToast";
 import simplur from "simplur";
+import cleanSubmitData from "utilities/cleanSubmitData";
 
 export default ({ children }) => {
     const context = useContext(EditContext);
@@ -15,14 +16,16 @@ export default ({ children }) => {
     const isReady = !context.schemaData?.properties;
 
     const handler = context.form.handleSubmit(data => {
-        if (R.isEmpty(data)) {
+        const submitData = cleanSubmitData(context.itemData, data);
+        console.log(submitData);
+        if (R.isEmpty(submitData)) {
             noNewDataToSubmitToast();
         } else {
-            context.mutation.mutate(data, {
+            context.mutation.mutate(submitData, {
                 onError: () => unspecifiedErrorToast(),
                 onSuccess: async () => {
                     await context.queries[1].refetch();
-                    const numberOfChanges = Object.keys(data).length;
+                    const numberOfChanges = Object.keys(submitData).length;
                     successToast({
                         title: simplur`Changed ${numberOfChanges} field[|s]`,
                         description: "Changes were submitted."

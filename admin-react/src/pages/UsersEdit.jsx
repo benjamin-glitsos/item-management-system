@@ -35,10 +35,7 @@ export default () => {
     const [schemaData, itemData] = queriesData(queries);
 
     const form = useForm({
-        resolver: useYupSchemaResolver({
-            schemaData,
-            itemData
-        })
+        resolver: useYupSchemaResolver(schemaData)
     });
 
     const page = usePage({
