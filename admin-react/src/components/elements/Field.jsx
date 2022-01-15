@@ -16,6 +16,7 @@ export default ({ name, columnWidths, isControlled, context, ...props }) => {
     const isRequired = schemaProperties?.[name]?.required;
     const fieldErrors = context.form.formState.errors[name];
     const placeholder = formatNull();
+    const isDisabled = context.mutation.isLoading;
     const value = context.itemData[name];
 
     context.form.setValue(name, nullToEmptyStr(value));
@@ -32,7 +33,7 @@ export default ({ name, columnWidths, isControlled, context, ...props }) => {
                         key={fieldId}
                         name={name}
                         placeholder={placeholder}
-                        isDisabled={context.isDisabled}
+                        isDisabled={isDisabled}
                         {...context.form.register(name)}
                         {...props}
                     />
@@ -51,7 +52,6 @@ export default ({ name, columnWidths, isControlled, context, ...props }) => {
                                 onBlur={onBlur}
                                 value={value}
                                 inputRef={ref}
-                                isDisabled={context.isDisabled}
                                 {...props}
                             />
                         )}
