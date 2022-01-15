@@ -52,11 +52,8 @@ export default () => {
     };
 
     // TODO:
-    // * Move QueryState into EditTemplate
     // * EditTemplate will contain EditContext which will get passed the context values
     // * Modules will consume context. Elements will be reusable so will never consume context
-    // * Put the body content (the form fields) back on this UsersEdit page
-    // * Instead of FormSubheading, create a module called FormSection that contains the form elements as its children
 
     return (
         <EditTemplate context={context}>

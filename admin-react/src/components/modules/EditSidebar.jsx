@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { EditContext } from "templates/EditTemplate";
 import formatDate from "utilities/formatDate";
 
 const Item = ({ label, children }) => (
@@ -23,21 +24,33 @@ const Author = ({ at, by }) => {
     }
 };
 
-export default ({ data }) => (
-    <Fragment>
-        <Item label="Created">
-            <Author at={data.created_at} by={data.created_by} />
-        </Item>
-        <Item label="Edited">
-            <Author at={data.edited_at} by={data.edited_by} />
-        </Item>
-        <Item label="Deleted">
-            <Author at={data.deleted_at} by={data.deleted_by} />
-        </Item>
-        <Item label="Edits">{data.edits}</Item>
-        <Item label="Metakey">{data.metakey}</Item>
-    </Fragment>
-);
+export default () => {
+    const context = useContext(EditContext);
+    return (
+        <Fragment>
+            <Item label="Created">
+                <Author
+                    at={context.itemData.created_at}
+                    by={context.itemData.created_by}
+                />
+            </Item>
+            <Item label="Edited">
+                <Author
+                    at={context.itemData.edited_at}
+                    by={context.itemData.edited_by}
+                />
+            </Item>
+            <Item label="Deleted">
+                <Author
+                    at={context.itemData.deleted_at}
+                    by={context.itemData.deleted_by}
+                />
+            </Item>
+            <Item label="Edits">{context.itemData.edits}</Item>
+            <Item label="Metakey">{context.itemData.metakey}</Item>
+        </Fragment>
+    );
+};
 
 const Styles = styled.div`
     margin-top: 8px;
