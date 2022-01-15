@@ -52,17 +52,18 @@ export default () => {
     };
 
     // TODO:
-    // * Pass the data to the fields in an elegant way
+    // * Pass the data to the fields using context prop
     // * Modules will consume context. Elements will be reusable so will never consume context
 
     return (
         <EditTemplate context={context}>
             <FormSection title="Details">
                 <RegisteredField
-                    name="username"
+                    key="username"
                     title="Username"
                     Component={Textfield}
                     columnWidths={{ lg: 6 }}
+                    context={context}
                 />
                 {/* <RegisteredField */}
                 {/*     name="email_address" */}

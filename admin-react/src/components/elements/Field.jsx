@@ -8,8 +8,6 @@ export default ({
     title,
     Component,
     errors,
-    isCreate,
-    isDisabled,
     schemaProperties,
     additionalProps,
     ...props
@@ -17,8 +15,8 @@ export default ({
     const fieldId = `Field/${key}`;
     const errorId = `Field/Error/${key}`;
     const fieldErrors = errors?.[key];
-    const isRequired = isCreate && schemaProperties?.[key]?.required;
-    const placeholder = isCreate ? "" : formatNull();
+    const isRequired = schemaProperties?.[key]?.required;
+    const placeholder = formatNull();
     return (
         <Styles>
             <Label htmlFor={fieldId}>
@@ -28,7 +26,6 @@ export default ({
             <Component
                 id={fieldId}
                 placeholder={placeholder}
-                isDisabled={isDisabled}
                 {...additionalProps}
                 {...props}
             />
