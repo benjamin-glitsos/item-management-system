@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import AtlaskitSpinner from "@atlaskit/spinner";
 
-export default () => <Spinner size="large" delay={0} />;
+export default ({ size = "large" }) => <Spinner size={size} delay={0} />;
 
 const Spinner = styled(AtlaskitSpinner)`
     margin-top: 40px;

@@ -49,6 +49,8 @@ export default () => {
     };
 
     // TODO:
+    // * Move the form functions up from EditForm to UsersEdit (this file) so they can be accessed in the state within the fields
+    //
     // * Make the registered field and controlled field both use the single Field component
     // * Pass the data to the fields using context prop
     // * Put the title into the JSON Schema

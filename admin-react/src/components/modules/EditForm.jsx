@@ -50,14 +50,13 @@ export default ({ children }) => {
             });
         }
     });
-
-    console.log(form);
+    {
+        /* form, isDisabled: isSubmitting */
+    }
 
     return (
         <form onSubmit={handler}>
-            {cloneElement(children, {
-                context: { ...context, form, isDisabled: isSubmitting }
-            })}
+            {children}
             <Grid fluid>
                 <Row></Row>
                 <Row end="xs">

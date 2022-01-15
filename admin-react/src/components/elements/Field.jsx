@@ -36,6 +36,7 @@ export default ({
     const fieldErrors = context?.form?.formState.errors?.[name];
     const placeholder = formatNull();
 
+    console.log(context);
     return (
         <Col {...columnWidths}>
             <Styles>
