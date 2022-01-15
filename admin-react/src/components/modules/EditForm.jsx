@@ -34,9 +34,8 @@ export default ({ children }) => {
 
     return (
         <form onSubmit={handler}>
-            {children}
             <Grid fluid>
-                <Row></Row>
+                <Row>{children}</Row>
                 <Row end="xs">
                     <Col sm={12}>
                         <Buttons>

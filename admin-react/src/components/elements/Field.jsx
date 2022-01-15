@@ -8,14 +8,7 @@ import nullToEmptyStr from "utilities/nullToEmptyStr";
 
 const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
 
-export default ({
-    name,
-    type,
-    columnWidths,
-    isControlled,
-    context,
-    ...props
-}) => {
+export default ({ name, columnWidths, isControlled, context, ...props }) => {
     const fieldId = `Field/${name}`;
     const errorId = `Field/Error/${name}`;
     const schemaProperties = context?.schemaData?.properties;
@@ -38,7 +31,6 @@ export default ({
                     <Textfield
                         key={fieldId}
                         name={name}
-                        type={type}
                         placeholder={placeholder}
                         isDisabled={context.isDisabled}
                         {...context.form.register(name)}
@@ -54,7 +46,6 @@ export default ({
                             <MarkdownTextarea
                                 key={fieldId}
                                 name={name}
-                                type={type}
                                 placeholder={placeholder}
                                 onChange={onChange}
                                 onBlur={onBlur}

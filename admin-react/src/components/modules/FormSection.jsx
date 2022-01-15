@@ -1,11 +1,18 @@
 import { Fragment } from "react";
-import { Col } from "react-flexbox-grid";
+import { Row, Col } from "react-flexbox-grid";
+import styled from "styled-components";
 
 export default ({ title, children }) => {
     return (
-        <Col sm={12}>
-            <h3>{title}</h3>
+        <Fragment>
+            <Col sm={12}>
+                <Heading>{title}</Heading>
+            </Col>
             {children}
-        </Col>
+        </Fragment>
     );
 };
+
+const Heading = styled.h3`
+    padding-top: 1rem;
+`;

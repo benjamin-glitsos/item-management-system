@@ -71,45 +71,43 @@ export default () => {
             <FormSection title="Details">
                 <Field
                     name="username"
-                    type="textarea"
                     columnWidths={{ lg: 6 }}
                     isControlled={false}
                     context={context}
                 />
                 <Field
                     name="email_address"
-                    type="textarea"
                     columnWidths={{ lg: 6 }}
                     isControlled={false}
                     context={context}
                 />
-                {/* <RegisteredField */}
-                {/*     name="first_name" */}
-                {/*     title="First name" */}
-                {/*     Component={Textfield} */}
-                {/*     columnWidths={{ lg: 4 }} */}
-                {/* /> */}
-                {/* <RegisteredField */}
-                {/*     name="last_name" */}
-                {/*     title="Last name" */}
-                {/*     Component={Textfield} */}
-                {/*     columnWidths={{ lg: 4 }} */}
-                {/* /> */}
-                {/* <RegisteredField */}
-                {/*     name="other_names" */}
-                {/*     title="Other names" */}
-                {/*     Component={Textfield} */}
-                {/*     columnWidths={{ lg: 4 }} */}
-                {/* /> */}
+                <Field
+                    name="first_name"
+                    columnWidths={{ lg: 4 }}
+                    isControlled={false}
+                    context={context}
+                />
+                <Field
+                    name="last_name"
+                    columnWidths={{ lg: 4 }}
+                    isControlled={false}
+                    context={context}
+                />
+                <Field
+                    name="other_names"
+                    columnWidths={{ lg: 4 }}
+                    isControlled={false}
+                    context={context}
+                />
             </FormSection>
-            {/* <FormSection title="Misc."> */}
-            {/*     <ControlledField */}
-            {/*         name="additional_notes" */}
-            {/*         title="Additional notes" */}
-            {/*         Component={MarkdownTextarea} */}
-            {/*         columnWidths={{ sm: 12 }} */}
-            {/*     /> */}
-            {/* </FormSection> */}
+            <FormSection title="Misc.">
+                <Field
+                    name="additional_notes"
+                    columnWidths={{ sm: 12 }}
+                    isControlled={true}
+                    context={context}
+                />
+            </FormSection>
         </EditTemplate>
     );
 };
