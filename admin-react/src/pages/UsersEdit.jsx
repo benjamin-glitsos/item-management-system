@@ -53,17 +53,18 @@ export default () => {
 
     // TODO:
     // * Pass the data to the fields using context prop
+    // * Put the name into the JSON Schema
     // * Modules will consume context. Elements will be reusable so will never consume context
 
     return (
         <EditTemplate context={context}>
             <FormSection title="Details">
-                <RegisteredField
+                <Field
                     key="username"
-                    title="Username"
                     Component={Textfield}
                     columnWidths={{ lg: 6 }}
                     context={context}
+                    isControlled={false}
                 />
                 {/* <RegisteredField */}
                 {/*     name="email_address" */}

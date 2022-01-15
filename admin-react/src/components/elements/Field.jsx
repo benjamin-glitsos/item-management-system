@@ -1,42 +1,40 @@
 import styled from "styled-components";
+import { Col } from "react-flexbox-grid";
 import formatNull from "%/utilities/formatNull";
 
 const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
 
-export default ({
-    key,
-    title,
-    Component,
-    errors,
-    schemaProperties,
-    additionalProps,
-    ...props
-}) => {
+
+export default ({ key, Component, columnWidths, ...props }) => {
     const fieldId = `Field/${key}`;
     const errorId = `Field/Error/${key}`;
-    const fieldErrors = errors?.[key];
+    const schemaProperties = context?.schema?.properties
+    const title = schemaProperties?.[key]?.title;
     const isRequired = schemaProperties?.[key]?.required;
+    const fieldErrors = context.form.formState.errors?.[key];
     const placeholder = formatNull();
     return (
-        <Styles>
-            <Label htmlFor={fieldId}>
-                {title}
-                {isRequired && <RequiredAsterisk />}
-            </Label>
-            <Component
-                id={fieldId}
-                placeholder={placeholder}
-                {...additionalProps}
-                {...props}
-            />
-            {fieldErrors && (
-                <Errors>
-                    {fieldErrors.map((error, i) => (
-                        <li key={`${errorId}/${i}`}>{error}</li>
-                    ))}
-                </Errors>
-            )}
-        </Styles>
+        <Col {...columnWidths}>
+            <Styles>
+                <Label htmlFor={fieldId}>
+                    {title}
+                    {isRequired && <RequiredAsterisk />}
+                </Label>
+                <Component
+                    id={fieldId}
+                    placeholder={placeholder}
+                    {context.form.register(name)}
+                    {...props}
+                />
+                {fieldErrors && (
+                    <Errors>
+                        {fieldErrors.map((error, i) => (
+                            <li key={`${errorId}/${i}`}>{error}</li>
+                        ))}
+                    </Errors>
+                )}
+            </Styles>
+        </Col>
     );
 };
 
