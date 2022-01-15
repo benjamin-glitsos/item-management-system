@@ -10,13 +10,13 @@ const RequiredAsterisk = () => <Asterisk> *</Asterisk>;
 const Component = ({ type }) => {
     switch (type) {
         case "textarea":
-            return Textfield;
+            return <Textfield />;
             break;
         case "markdown_textarea":
-            return MarkdownTextarea;
+            return <MarkdownTextarea />;
             break;
         default:
-            return Textfield;
+            return <Textfield />;
     }
 };
 
@@ -33,7 +33,7 @@ export default ({
     const schemaProperties = context?.schema?.properties;
     const title = schemaProperties?.[name]?.title;
     const isRequired = schemaProperties?.[name]?.required;
-    const fieldErrors = context.form.formState.errors?.[name];
+    const fieldErrors = context?.form?.formState.errors?.[name];
     const placeholder = formatNull();
 
     return (
@@ -48,7 +48,8 @@ export default ({
                         key={fieldId}
                         name={name}
                         placeholder={placeholder}
-                        {...context.form.register(name)}
+                        isDisabled={context.isDisabled}
+                        {...context?.form?.register(name)}
                         {...props}
                     />
                 ) : (
@@ -66,12 +67,12 @@ export default ({
                                 onBlur={onBlur}
                                 value={value}
                                 inputRef={ref}
+                                isDisabled={context.isDisabled}
                                 {...props}
                             />
                         )}
                     />
                 )}
-
                 {fieldErrors && (
                     <Errors>
                         {fieldErrors.map((error, i) => (

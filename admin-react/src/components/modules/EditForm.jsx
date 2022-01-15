@@ -51,12 +51,13 @@ export default ({ children }) => {
         }
     });
 
+    console.log(form);
+
     return (
         <form onSubmit={handler}>
-            {/* {cloneElement(children, { */}
-            {/*     isDisabled: isSubmitting, */}
-            {/*     context: { ...context, form } */}
-            {/* })} */}
+            {cloneElement(children, {
+                context: { ...context, form, isDisabled: isSubmitting }
+            })}
             <Grid fluid>
                 <Row></Row>
                 <Row end="xs">
