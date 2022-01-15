@@ -52,7 +52,7 @@
         "babel-plugin-ramda": "^2.0.0",
         "dateformat": "^4.5.1",
         "deep-object-diff": "^1.1.0",
-        "immer": "^8.0.1",
+        "immer": "^9.0.6",
         "javascript-time-ago": "^2.3.4",
         "json-schema-to-yup": "^1.8.8",
         "query-string": "^5.1.1",
