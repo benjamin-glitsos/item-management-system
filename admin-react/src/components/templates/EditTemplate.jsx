@@ -1,9 +1,12 @@
 import { createContext } from "react";
+import styled from "styled-components";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import Page from "modules/Page";
 import EditSidebar from "modules/EditSidebar";
 import EditForm from "modules/EditForm";
 import QueryState from "modules/QueryState";
+import PageHeader from "@atlaskit/page-header";
+import BreadcrumbBar from "%/components/BreadcrumbBar";
 
 export const EditContext = createContext();
 
@@ -18,8 +21,20 @@ export default ({ context, children }) => (
             <EditContext.Provider value={context}>
                 <Grid fluid>
                     <Row>
+                        <Col sm={12}>
+                            <PageHeaderStyles>
+                                <PageHeader
+                                    breadcrumbs={
+                                        <BreadcrumbBar breadcrumbs={[]} />
+                                    }
+                                >
+                                    {context.page.tabTitle}
+                                </PageHeader>
+                            </PageHeaderStyles>
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col sm={10}>
-                            {/* <Form context={context}>{children}</Form> */}
                             <EditForm>{children}</EditForm>
                         </Col>
                         <Col sm={2}>
@@ -31,3 +46,7 @@ export default ({ context, children }) => (
         </QueryState>
     </Page>
 );
+
+const PageHeaderStyles = styled.div`
+    margin-left: 16px;
+`;
