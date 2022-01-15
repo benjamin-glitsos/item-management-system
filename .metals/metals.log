@@ -1,0 +1,483 @@
+2022.01.15 17:13:09 INFO  Started: Metals version 0.9.6 in workspace '/home/bengyup/code/ims' .
+2022.01.15 17:13:09 INFO  time: initialize in 0.4s
+2022.01.15 17:13:09 WARN  Build server is not auto-connectable.
+2022.01.15 17:13:09 WARN  no build tool detected in workspace '/home/bengyup/code/ims'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2022.01.15 17:13:09 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Errors/InvalidInputError.scala
+2022.01.15 17:13:09 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Errors/NotFoundError.scala
+2022.01.15 17:13:09 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Middleware/CorsMiddleware.scala
+2022.01.15 17:13:09 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Seeders/Seeder.scala
+2022.01.15 17:13:09 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2022.01.15 17:13:11 INFO  no build target: using presentation compiler with only scala-library
+Jan 15, 2022 5:13:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:13:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:13:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:13:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:13:45 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:16:52 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:16:52 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:16:52 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:16:53 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:16:53 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:17:39 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:18:22 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:18:23 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:18:23 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:18:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+2022.01.15 17:18:29 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+2022.01.15 17:18:29 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Services/SchemasService.scala
+Jan 15, 2022 5:18:29 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+2022.01.15 17:18:38 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Seeders/Seeder.scala
+2022.01.15 17:18:38 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Seeders/Seeder.scala
+Jan 15, 2022 5:18:38 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+Jan 15, 2022 5:18:40 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint logIssues
+WARNING: Issue found in NotificationMessage: Message could not be parsed.
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.Gson.fromJson(Gson.java:900)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.fromJson(MessageTypeAdapter.java:329)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.parseParams(MessageTypeAdapter.java:249)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.adapters.MessageTypeAdapter.read(MessageTypeAdapter.java:55)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:119)
+	at org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler.parseMessage(MessageJsonHandler.java:114)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:193)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:94)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:113)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.IllegalStateException: Expected a string but was BEGIN_ARRAY at line 1 column 67 path $.params
+	at com.google.gson.stream.JsonReader.nextString(JsonReader.java:825)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:401)
+	at com.google.gson.internal.bind.TypeAdapters$16.read(TypeAdapters.java:389)
+	at com.google.gson.Gson.fromJson(Gson.java:888)
+	... 15 more
+
+2022.01.15 17:18:40 WARN  no build target for: /home/bengyup/code/ims/controller-scala/src/main/scala/Errors/NotFoundError.scala

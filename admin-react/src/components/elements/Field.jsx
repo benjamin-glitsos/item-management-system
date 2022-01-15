@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { Controller } from "react-hook-form";
 import { Col } from "react-flexbox-grid";
@@ -19,7 +20,7 @@ export default ({ name, columnWidths, isControlled, context, ...props }) => {
     const isDisabled = context.mutation.isLoading;
     const value = context.itemData[name];
 
-    context.form.setValue(name, nullToEmptyStr(value));
+    useEffect(() => context.form.setValue(name, nullToEmptyStr(value)), []);
 
     return (
         <Col {...columnWidths}>

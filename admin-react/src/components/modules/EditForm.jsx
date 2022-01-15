@@ -15,25 +15,32 @@ export default ({ children }) => {
 
     const isReady = !context.schemaData?.properties;
 
-    const handler = context.form.handleSubmit(data => {
-        const submitData = cleanSubmitData(context.itemData, data);
-        console.log(submitData);
-        if (R.isEmpty(submitData)) {
-            noNewDataToSubmitToast();
-        } else {
-            context.mutation.mutate(submitData, {
-                onError: () => unspecifiedErrorToast(),
-                onSuccess: async () => {
-                    await context.queries[1].refetch();
-                    const numberOfChanges = Object.keys(submitData).length;
-                    successToast({
-                        title: simplur`Changed ${numberOfChanges} field[|s]`,
-                        description: "Changes were submitted."
-                    });
-                }
-            });
-        }
-    });
+    const handler = context.form.handleSubmit(
+        data => {
+            const submitData = cleanSubmitData(context.itemData, data);
+            if (R.isEmpty(submitData)) {
+                noNewDataToSubmitToast();
+            } else {
+                context.mutation.mutate(submitData, {
+                    onError: () => unspecifiedErrorToast(),
+                    onSuccess: async () => {
+                        await context.queries[1].refetch();
+                        const numberOfChanges = Object.keys(submitData).length;
+                        successToast({
+                            title: simplur`Changed ${numberOfChanges} field[|s]`,
+                            description: "Changes were submitted."
+                        });
+                    }
+                });
+            }
+        },
+        err =>
+            unspecifiedErrorToast({
+                title: "Input errors",
+                description:
+                    "Please fix errors in the form it can be submitted."
+            })
+    );
 
     return (
         <form onSubmit={handler}>
