@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import R from "ramda";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -17,6 +17,8 @@ import queriesData from "utilities/queriesData";
 import Field from "elements/Field";
 
 export default () => {
+    const [update, setUpdate] = useState(0);
+
     const { username } = useParams();
     const project = useProject();
     const edit = useEdit();
@@ -34,8 +36,8 @@ export default () => {
 
     const form = useForm({
         resolver: useYupSchemaResolver({
-            schema: schemaData,
-            originalData: itemData
+            schemaData,
+            itemData
         })
     });
 
@@ -58,13 +60,7 @@ export default () => {
         page
     };
 
-    // TODO:
-    // * Move the form functions up from EditForm to UsersEdit (this file) so they can be accessed in the state within the fields
-    //
-    // * Make the registered field and controlled field both use the single Field component
-    // * Pass the data to the fields using context prop
-    // * Put the title into the JSON Schema
-    // * Modules will consume context. Elements will be reusable so will never consume context
+    // NOTE: Modules will consume context. Elements will be reusable so will never consume context
 
     return (
         <EditTemplate context={context}>

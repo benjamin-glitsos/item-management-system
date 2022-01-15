@@ -79,21 +79,16 @@ const schemaToYupConfig = schema => ({
 const yupSchema = schema =>
     jsonSchemaToYup(cleanSchema(schema), schemaToYupConfig(schema));
 
-const cleanData = (schema, originalData, data) =>
+const cleanData = (itemData, data) =>
     R.pipe(
         trimAll,
         emptyStringsToNull,
-        x => diff(originalData, x),
-        removeAllUndefined,
-        R.pick(schemaFields(schema)),
-        R.omit(["password"])
+        x => diff(itemData, x),
+        removeAllUndefined
     )(data);
 
-const yupSchemaValidate = (schema, originalData, data) =>
-    yupSchema(schema).validate(
-        cleanData(schema, originalData, data),
-        yupConfig
-    );
+const yupSchemaValidate = (schema, itemData, data) =>
+    yupSchema(schema).validate(cleanData(itemData, data), yupConfig);
 
 const cleanErrors = errors =>
     R.pipe(
@@ -116,19 +111,20 @@ const cleanErrors = errors =>
         R.map(R.pluck(1))
     )(errors);
 
-export default ({ schema, originalData }) =>
+export default ({ schemaData, itemData }) =>
     useCallback(
         async data => {
-            if (schema?.properties) {
+            if (schemaData?.properties) {
                 try {
-                    const submitData = cleanData(schema, originalData, data);
+                    const submitData = cleanData(itemData, data);
+                    console.log(itemData);
                     if (R.isEmpty(submitData)) {
                         return new FormData({});
                     } else {
                         return new FormData({
                             values: await yupSchemaValidate(
-                                schema,
-                                originalData,
+                                schemaData,
+                                itemData,
                                 data
                             )
                         });
@@ -140,5 +136,5 @@ export default ({ schema, originalData }) =>
                 return new FormData({});
             }
         },
-        [schema]
+        [schemaData]
     );
