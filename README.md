@@ -1,7 +1,5 @@
 ## Item Management System
 
-⚠️ **Down for maintenance:** [ims.benglitsos.com.au](https://ims.benglitsos.com.au/) ⚠️
-
 A full-stack information system with a dockerised Model&ndash;View&ndash;Controller (MMVC) architecture.
 
 ### Controller&ndash;Scala Container
@@ -14,8 +12,6 @@ A full-stack information system with a dockerised Model&ndash;View&ndash;Control
 * JSON Schemas are the source-of-truth for both back-end and front-end validation.
 
 ### Admin&ndash;React Container
-
-**Note:** refactoring in progress, so this container’s code is messy except for the [UsersEdit.jsx](https://github.com/benjamin-glitsos/item-management-system/blob/main/admin-react/src/pages/UsersEdit.jsx) page.
 
 * Structure: Pages, Hooks, Components, and Utilities.
 * Server-state management using React Query.
