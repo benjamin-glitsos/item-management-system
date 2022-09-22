@@ -1,25 +1,26 @@
 ## Item Management System
 
-A full-stack information system with a dockerised Model&ndash;View&ndash;Controller (MMVC) architecture.
+A full-stack web application with a containerised MVC architecture.
 
-### Controller&ndash;Scala Container
+### Controller container (Scala)
 
-* Structure: Routes, Middleware, Validation, Service, DAO, Seeding, and Mixins.
-* Object-oriented structure with functional programming methods.
-* Strong type safety using monads and other Algebraic Data Types.
+This is the back-end logic and API.
+
+* Object-oriented and Functional paradigms.
+* Strong type safety.
 * RESTful API design.
-* Middlewares used for validation and logging.
-* JSON Schemas are the source-of-truth for both back-end and front-end validation.
+* JSON Schema validation.
 
-### Admin&ndash;React Container
+### Front-end container (React)
 
-* Structure: Pages, Hooks, Components, and Utilities.
-* Server-state management using React Query.
-* Functional data transformations using Ramda.
+This is the web interface.
 
-### Database&ndash;PostgreSQL Container
+* Reactive and Functional paradigms.
+* Server state management.
 
-* Structure: Functions, Triggers, Views, Tables, Domains, and Indexes.
-* Rich metadata on all entities is stored in a separate table. The use of views and triggers allows operating as if it were in the same table.
-* Use of stored functions to reduce round trips.
-* Fourth normal form (4NF).
+### Database container (PostgreSQL)
+
+This is the relational database.
+
+* Data is normalised.
+* Joined tables are simplified using views and triggers.
