@@ -3,6 +3,7 @@
 .env
 .env.*
 .DS_Store
+.metals/
 
 # Controller-Scala --------------------
 
@@ -15,6 +16,7 @@ controller-scala/project/project/
 controller-scala/project/.bloop/
 controller-scala/public/
 controller-scala/target/
+controller-scala/volumes/
 
 # Admin-React --------------------
 
