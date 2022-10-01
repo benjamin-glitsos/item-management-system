@@ -42,7 +42,7 @@ const { Provider } = Context;
 export default () => {
     const nameSingular = "item management system";
     const namePlural = nameSingular;
-    const title = sentenceCase(namePlural);
+    const title = "Item Management System";
     const slug = nameSingular;
 
     const pageContainer = PageContainer({
