@@ -49,5 +49,5 @@ const LightboxStyles = styled.div`
 `;
 
 const Image = styled.img`
-    max-width: 550px;
+    max-width: 550px !important;
 `;
