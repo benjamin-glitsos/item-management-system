@@ -55,19 +55,20 @@ export default () => {
                         {projectAbbrev}
                     </Header>
                 </NavigationHeader>
-                <Section key="SideNavigation/Section/Home" title="Home">
+                <LinkItem
+                    key="SideNavigation/LinkItem/Readme"
+                    iconBefore={<HomeCircleIcon size="medium" />}
+                    href="/"
+                    isSelected={doesMatchRouterLocation("/", location)}
+                >
+                    Home
+                </LinkItem>
+                <Section
+                    key="SideNavigation/Section/Content"
+                    title="Item management"
+                >
                     <LinkItem
-                        key="SideNavigation/LinkItem/Readme"
-                        iconBefore={<HomeCircleIcon size="medium" />}
-                        href="/"
-                        isSelected={doesMatchRouterLocation("/", location)}
-                    >
-                        Home
-                    </LinkItem>
-                </Section>
-                <Section key="SideNavigation/Section/Content" title="Content">
-                    <LinkItem
-                        key="SideNavigation/LinkItem/Items"
+                        key="SideNavigation/LinkItem/ItemManagement"
                         iconBefore={<DocumentsIcon size="medium" />}
                         href="/items"
                         isSelected={doesMatchRouterLocation("/items", location)}
@@ -75,9 +76,12 @@ export default () => {
                         Items
                     </LinkItem>
                 </Section>
-                <Section key="SideNavigation/Section/System" title="System">
+                <Section
+                    key="SideNavigation/Section/System"
+                    title="Configuration"
+                >
                     <LinkItem
-                        key="SideNavigation/LinkItem/Users"
+                        key="SideNavigation/LinkItem/Configuration"
                         iconBefore={<PeopleIcon size="medium" />}
                         href="/users"
                         isSelected={doesMatchRouterLocation("/users", location)}
