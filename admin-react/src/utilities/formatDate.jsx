@@ -25,14 +25,14 @@ export default (d = null, hasTime = true) => {
         const oneDay = 1000 * 60 * 60 * 24;
         const isToday = date > now - oneDay;
         if (!hasTime) {
-            const formattedDate = dateFormat(date, "mmmm dS, yyyy");
+            const formattedDate = dateFormat(date, "d mmm yyyy");
             if (isToday) {
                 return <Today date={date} formattedDate={formattedDate} />;
             } else {
                 return <div>{formattedDate}</div>;
             }
         } else {
-            const formattedDate = dateFormat(now, 'mmmm dS, yyyy "at" h:MMtt');
+            const formattedDate = dateFormat(now, 'd mmm yyyy "at" h:MMtt');
             if (isToday) {
                 return <Today date={date} formattedDate={formattedDate} />;
             } else {
