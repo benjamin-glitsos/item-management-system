@@ -1,63 +1,62 @@
-version: '3.1'
+version: "3.1"
 services:
-  database_postgresql:
-    build:
-      context: ./database-postgresql/
-    image: database-postgresql
-    container_name: database-postgresql
-    volumes:
-      - ./database-postgresql/initialise.sh:/docker-entrypoint-initdb.d/initialise.sh
-      - ./database-postgresql/src:/docker-entrypoint-initdb.d/src
-    restart: on-failure
-    env_file: .env
-    environment:
-      - TZ=${PROJECT_TIMEZONE}
-    ports:
-      - ${POSTGRES_PORT}:5432
-    tty: true
+    database_postgresql:
+        build:
+            context: ./database-postgresql/
+        image: database-postgresql
+        container_name: database-postgresql
+        volumes:
+            - ./database-postgresql/initialise.sh:/docker-entrypoint-initdb.d/initialise.sh
+            - ./database-postgresql/src:/docker-entrypoint-initdb.d/src
+        restart: on-failure
+        env_file: .env
+        environment:
+            - TZ=${PROJECT_TIMEZONE}
+        ports:
+            - ${POSTGRES_PORT}:5432
+        tty: true
 
-  session_redis:
-    build:
-      context: ./session-redis/
-    image: session-redis
-    container_name: session-redis
-    env_file: .env
-    restart: on-failure
-    ports:
-      - ${SESSION_PORT}:6379
-    tty: true
+    session_redis:
+        build:
+            context: ./session-redis/
+        image: session-redis
+        container_name: session-redis
+        env_file: .env
+        restart: on-failure
+        ports:
+            - ${SESSION_PORT}:6379
+        tty: true
 
-  controller_scala:
-    build:
-      context: ./controller-scala/
-    image: controller-scala
-    container_name: controller-scala
-    volumes:
-      - ./controller-scala:/app
-      - ./files/public:/app/files/public
-      - ./files/private:/app/files/private
-      - /var/log/ims:/var/log
-    env_file: .env
-    stdin_open: true
-    depends_on:
-      - "session_redis"
-      - "database_postgresql"
-    ports:
-      - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
-    tty: true
+    controller_scala:
+        build:
+            context: ./controller-scala/
+        image: controller-scala
+        container_name: controller-scala
+        volumes:
+            - ./controller-scala:/app
+            - ./files/public:/app/files/public
+            - ./files/private:/app/files/private
+            - /var/log/ims:/var/log
+        env_file: .env
+        stdin_open: true
+        depends_on:
+            - "session_redis"
+            - "database_postgresql"
+        ports:
+            - ${CONTROLLER_PORT}:${CONTROLLER_PORT}
+        tty: true
 
-  admin_react:
-    build:
-      context: ./admin-react/
-    image: admin-react
-    container_name: admin-react
-    volumes:
-      - ./admin-react:/app
-      - ./README.md:/app/src/assets/README.md
-      - ./files/public:/app/public
-    env_file: .env
-    restart: on-failure
-    stdin_open: true
-    ports:
-      - ${ADMIN_PORT}:${ADMIN_PORT}
-    tty: true
+    admin_react:
+        build:
+            context: ./admin-react/
+        image: admin-react
+        container_name: admin-react
+        volumes:
+            - ./admin-react:/app
+            - ./files/public:/app/public
+        env_file: .env
+        restart: on-failure
+        stdin_open: true
+        ports:
+            - ${ADMIN_PORT}:${ADMIN_PORT}
+        tty: true

@@ -24,6 +24,7 @@ export default ({ images }) => {
                     onClick={() => openImageViewer(index)}
                     key={`ImageLightbox/${src},${index}`}
                     alt={alt}
+                    style={{ maxWidth: "550px" }}
                 />
             ))}
 
