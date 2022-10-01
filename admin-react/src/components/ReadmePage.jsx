@@ -9,9 +9,7 @@ import GithubButton from "%/components/GithubButton";
 import ImagesLightbox from "%/components/ImagesLightbox";
 
 const readme = `
-## Item Management System
-
-A full-stack web application with a containerised MVC architecture which is structured as follows.
+A full-stack web application with a containerised MVC architecture, structured as follows.
 
 ### Controller container (Scala)
 
@@ -42,7 +40,7 @@ export const Context = createContext();
 const { Provider } = Context;
 
 export default () => {
-    const nameSingular = "readme";
+    const nameSingular = "item management system";
     const namePlural = nameSingular;
     const title = titleCase(namePlural);
     const slug = nameSingular;
@@ -70,9 +68,9 @@ export default () => {
                     breadcrumbs={[pageContext.homeBreadcrumb]}
                 >
                     <ReactMarkdown source={readme} />
-                    <h2>Codebase</h2>
+                    <h2>View the code</h2>
                     <GithubButton />
-                    <h2>Database ER Diagram</h2>
+                    <h2>Database schema</h2>
                     <DiagramStyles>
                         <ImagesLightbox
                             images={[

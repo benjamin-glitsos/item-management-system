@@ -1,6 +1,6 @@
 ## Item Management System
 
-A full-stack web application with a containerised MVC architecture which is structured as follows.
+A full-stack web application with a containerised MVC architecture, structured as follows.
 
 ### Controller container (Scala)
 
