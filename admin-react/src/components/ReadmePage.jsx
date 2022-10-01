@@ -11,11 +11,11 @@ import ImagesLightbox from "%/components/ImagesLightbox";
 const readme = `
 ## Item Management System
 
-A full-stack web application with a containerised MVC architecture.
+A full-stack web application with a containerised MVC architecture which is structured as follows.
 
 ### Controller container (Scala)
 
-This is the back-end logic and API.
+This is the business logic and API.
 
 * Object-oriented and Functional paradigms.
 * Strong type safety.
@@ -24,7 +24,7 @@ This is the back-end logic and API.
 
 ### Front-end container (React)
 
-This is the web interface.
+This is the user interface.
 
 * Reactive and Functional paradigms.
 * Server state management.
@@ -33,8 +33,8 @@ This is the web interface.
 
 This is the relational database.
 
-* Data is normalised.
-* Joined tables are simplified using views and triggers.
+* Joined tables are abstracted using views and triggers.
+* Structure is normalised.
 `;
 
 export const Context = createContext();
