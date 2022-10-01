@@ -62,7 +62,7 @@ export default () => {
                         href="/"
                         isSelected={doesMatchRouterLocation("/", location)}
                     >
-                        Readme
+                        Home
                     </LinkItem>
                 </Section>
                 <Section key="SideNavigation/Section/Content" title="Content">
