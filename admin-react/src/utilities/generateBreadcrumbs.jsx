@@ -1,4 +1,4 @@
-import { titleCase } from "title-case";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export default homeBreadcrumb => {
     const pathBreadcrumbs = location.pathname.split("/").filter(s => s !== "");
@@ -6,7 +6,8 @@ export default homeBreadcrumb => {
         homeBreadcrumb,
         ...pathBreadcrumbs.map((s, i) => {
             const path = s;
-            const title = i + 1 !== pathBreadcrumbs.length ? titleCase(s) : s;
+            const title =
+                i + 1 !== pathBreadcrumbs.length ? sentenceCase(s) : s;
             return [title, path];
         })
     ];

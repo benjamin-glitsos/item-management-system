@@ -1,17 +1,17 @@
 import R from "ramda";
-import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import List from "%/components/List/List";
 import formatNull from "%/utilities/formatNull";
 import formatDate from "%/utilities/formatDate";
 import config from "%/config";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export default () => {
     const [nameSingular, namePlural] = config.names.items;
     const keyColumnSingular = "sku";
     const keyColumnPlural = "skus";
-    const title = titleCase(namePlural);
+    const title = sentenceCase(namePlural);
     const slug = namePlural;
 
     const pageContainer = PageContainer({

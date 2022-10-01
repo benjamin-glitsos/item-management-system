@@ -1,12 +1,12 @@
 import { createContext } from "react";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
-import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
 import GithubButton from "%/components/GithubButton";
 import ImagesLightbox from "%/components/ImagesLightbox";
+import sentenceCase from "%/utilities/sentenceCase";
 
 const readme = `
 A full-stack web application with a containerised MVC architecture, structured as follows.
@@ -42,7 +42,7 @@ const { Provider } = Context;
 export default () => {
     const nameSingular = "item management system";
     const namePlural = nameSingular;
-    const title = titleCase(namePlural);
+    const title = sentenceCase(namePlural);
     const slug = nameSingular;
 
     const pageContainer = PageContainer({

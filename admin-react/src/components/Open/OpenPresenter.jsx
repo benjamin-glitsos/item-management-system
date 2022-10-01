@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { titleCase } from "title-case";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import { OpenContext } from "%/components/Open/Open";
 import OpenLayout from "%/components/OpenLayout";
@@ -8,10 +7,11 @@ import PageLayout from "%/components/PageLayout";
 import FormButtons from "%/components/FormButtons";
 import LoadingSpinner from "%/components/LoadingSpinner";
 import OpenSidebar from "%/components/OpenSidebar";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export default ({ children }) => {
     const context = useContext(OpenContext);
-    const title = `${titleCase(
+    const title = `${sentenceCase(
         [context.action, context.nameSingular].join(" ")
     )}${!context.isCreate ? ` : ${context.key}` : ""}`;
     const isCreate = context.isCreate;
@@ -25,9 +25,12 @@ export default ({ children }) => {
                 title={title}
                 breadcrumbs={[
                     context.homeBreadcrumb,
-                    [titleCase(context.namePlural), `./${context.namePlural}`],
+                    [
+                        sentenceCase(context.namePlural),
+                        `./${context.namePlural}`
+                    ],
                     context.isCreate
-                        ? [titleCase(context.action), ""]
+                        ? [sentenceCase(context.action), ""]
                         : [context.key, ""]
                 ]}
                 isLoading={isLoading}

@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { titleCase } from "title-case";
 import Textfield from "@atlaskit/textfield";
 import InputDate from "%/components/InputDate";
 import InputNumber from "%/components/InputNumber";
@@ -13,6 +12,7 @@ import MarkdownTextarea from "%/components/MarkdownTextarea";
 import FormSubheading from "%/components/FormSubheading";
 import Open from "%/components/Open/Open";
 import config from "%/config";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export default ({ action }) => {
     const isCreate = action === "create";
@@ -22,8 +22,8 @@ export default ({ action }) => {
     const keyField = "sku";
     const [nameSingular, namePlural] = config.names.items;
     const title = isCreate
-        ? titleCase(`${action} ${nameSingular}`)
-        : titleCase(namePlural);
+        ? sentenceCase(`${action} ${nameSingular}`)
+        : sentenceCase(namePlural);
     const slug = namePlural;
     const description = isCreate
         ? `Create a ${nameSingular} in the ${

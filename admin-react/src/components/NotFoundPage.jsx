@@ -1,12 +1,11 @@
 import { createContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { titleCase } from "title-case";
 import Button from "@atlaskit/button";
 import PageContainer from "%/components/Page/PageContainer";
 import PageLayout from "%/components/PageLayout";
 import ArticleLayout from "%/components/ArticleLayout";
-import generateBreadcrumbs from "%/utilities/generateBreadcrumbs";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export const Context = createContext();
 
@@ -15,7 +14,7 @@ const { Provider } = Context;
 export default () => {
     const nameSingular = "page not found";
     const namePlural = nameSingular;
-    const title = titleCase(namePlural);
+    const title = sentenceCase(namePlural);
     const slug = nameSingular;
 
     const pageContainer = PageContainer({

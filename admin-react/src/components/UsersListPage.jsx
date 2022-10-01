@@ -1,14 +1,14 @@
-import { titleCase } from "title-case";
 import PageContainer from "%/components/Page/PageContainer";
 import ListContainer from "%/components/List/ListContainer";
 import List from "%/components/List/List";
 import config from "%/config";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export default () => {
     const [nameSingular, namePlural] = config.names.users;
     const keyColumnSingular = "username";
     const keyColumnPlural = "usernames";
-    const title = titleCase(namePlural);
+    const title = sentenceCase(namePlural);
     const slug = namePlural;
 
     const pageContainer = PageContainer({

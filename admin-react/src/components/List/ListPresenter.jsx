@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { titleCase } from "title-case";
 import DynamicTable from "@atlaskit/dynamic-table";
 import PageHeader from "@atlaskit/page-header";
 import FullwidthLayout from "%/components/FullwidthLayout";
@@ -12,6 +11,7 @@ import { ListContext } from "%/components/List/List";
 import PageLayout from "%/components/PageLayout";
 import config from "%/config";
 import styled from "styled-components";
+import sentenceCase from "%/utilities/sentenceCase";
 
 export default () => {
     const context = useContext(ListContext);
@@ -26,7 +26,7 @@ export default () => {
                             breadcrumbs={[
                                 context.homeBreadcrumb,
                                 [
-                                    titleCase(context.namePlural),
+                                    sentenceCase(context.namePlural),
                                     `./${context.namePlural}`
                                 ]
                             ]}
