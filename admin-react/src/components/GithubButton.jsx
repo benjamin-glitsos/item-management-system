@@ -13,7 +13,7 @@ export default () => (
             target="_blank"
             iconBefore={<GithubIcon />}
         >
-            View the code on GitHub
+            GitHub (benjamin-glitsos/item-management-system)
         </Button>
     </Styles>
 );
