@@ -17,14 +17,13 @@ export default ({ images }) => {
     };
 
     return (
-        <Styles>
+        <LightboxStyles>
             {images.map(({ src, alt }, index) => (
-                <img
+                <Image
                     src={src}
                     onClick={() => openImageViewer(index)}
                     key={`ImageLightbox/${src},${index}`}
                     alt={alt}
-                    style={{ maxWidth: "550px" }}
                 />
             ))}
 
@@ -38,13 +37,17 @@ export default ({ images }) => {
                     }}
                 />
             )}
-        </Styles>
+        </LightboxStyles>
     );
 };
 
-const Styles = styled.div`
+const LightboxStyles = styled.div`
     .react-simple-image-viewer__close {
         font-weight: normal;
         top: 0;
     }
+`;
+
+const Image = styled.img`
+    max-width: 550px;
 `;
