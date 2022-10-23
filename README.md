@@ -6,7 +6,7 @@ A full-stack web application with a containerised MVC architecture, structured a
 
 This is the business logic and API.
 
-* Uses Scala language, based on Java.
+* Uses Scala, based on Java.
 * Object-oriented and Functional paradigms.
 * Strong type safety.
 * RESTful API design.
