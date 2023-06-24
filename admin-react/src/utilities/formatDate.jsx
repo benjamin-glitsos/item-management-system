@@ -18,7 +18,7 @@ export default (d = null, hasTime = true) => {
     if (d === undefined) {
         return d;
     } else if (d === null) {
-        return "(Never)";
+        return "Never";
     } else {
         const now = new Date();
         const date = new Date(d);
