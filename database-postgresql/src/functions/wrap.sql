@@ -1,8 +1,8 @@
 CREATE FUNCTION wrap(source text)
 RETURNS text AS $$
 DECLARE
-    pilcrow text := CHR(182);
+    linebreak_symbol text := '/';
 BEGIN
-    RETURN regexp_replace(source, E'[\\n\\r]+', ' ' || pilcrow || ' ', 'g' );
+    RETURN regexp_replace(source, E'[\\n\\r]+', ' ' || linebreak_symbol || ' ', 'g' );
 END;
 $$ LANGUAGE plpgsql;
