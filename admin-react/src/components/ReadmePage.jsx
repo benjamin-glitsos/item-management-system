@@ -11,9 +11,7 @@ import sentenceCase from "%/utilities/sentenceCase";
 const readme = `
 A full-stack web application with a containerised MVC architecture, structured as follows.
 
-### Controller container (Scala)
-
-This is the business logic and API.
+### Back-end service (Scala)
 
 * Uses Scala, based on Java language.
 * Object-oriented and Functional paradigms.
@@ -21,16 +19,12 @@ This is the business logic and API.
 * RESTful API design.
 * JSON Schema validation.
 
-### Front-end container (React)
-
-This is the user interface.
+### Front-end service (React)
 
 * Reactive and Functional paradigms.
 * Server state management.
 
-### Database container (PostgreSQL)
-
-This is the relational database.
+### Database (PostgreSQL)
 
 * Joined tables are abstracted using views and triggers.
 * Structure is normalised.
